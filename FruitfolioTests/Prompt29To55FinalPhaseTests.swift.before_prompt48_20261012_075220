@@ -1,0 +1,48 @@
+import XCTest
+@testable import Fruitfolio
+
+final class Prompt29To55FinalPhaseTests: XCTestCase {
+    func testFAQContainsAllCanonicalSections() {
+        let ids = Set(Prompt29FAQCatalog.sections.map(\.id))
+        XCTAssertEqual(ids, ["about", "encyclopedia", "cycle", "basket", "privacy", "purchase", "brand"])
+    }
+
+    func testSeriousHealthRouterIsDeterministic() {
+        let urgent = Prompt34LocalSafetyRouter.classify("I have severe bleeding and fainted")
+        XCTAssertEqual(urgent.level, .urgent)
+        XCTAssertTrue(urgent.requiresSeriousTone)
+    }
+
+    func testMinimumHitArea() {
+        XCTAssertGreaterThanOrEqual(DesignTokens.Layout.minimumHitTarget, 44)
+    }
+
+    func testPageTurnAudioPolicyUsesExistingProductionAPI() {
+        XCTAssertEqual(Prompt39PageTurnPolicy.soundID(for: .forward), "audio_page_turn")
+        XCTAssertEqual(Prompt39PageTurnPolicy.soundID(for: .backward), "audio_page_turn")
+    }
+
+    func testPageTurnNavigationTransitionsRemainUnverified() throws {
+        throw XCTSkip("PROMPT 39 GAP: No verified forward/reverse/local navigation-transition policy or UI integration. Audio selection does not satisfy this requirement.")
+    }
+
+    func testPrivacyAnalyticsDoesNotExposeRawQuestionAPI() async {
+        await Prompt43PrivacySafeAnalytics.shared.reset()
+        await Prompt43PrivacySafeAnalytics.shared.recordRawHealthQuestion("sensitive health question")
+        let events = await Prompt43PrivacySafeAnalytics.shared.events
+        XCTAssertTrue(events.isEmpty)
+    }
+
+    func testSymptomSemanticRoleIsRecognized() {
+        XCTAssertEqual(Prompt48SemanticStylePolicy.style(for: "symptom"), .symptom)
+        XCTAssertEqual(FruitfolioSemanticSpan(text: "cramps", emphasis: .symptomOrPracticalUnderline).emphasis, .symptomOrPracticalUnderline)
+    }
+
+    func testAutomaticSymptomUnderliningRemainsUnverified() throws {
+        throw XCTSkip("PROMPT 48 GAP: Symptom recognition and underline rendering exist separately, but no verified production mapping from detected symptoms to rendered underline spans was found.")
+    }
+
+    func testUnicodeRoundTrip() {
+        XCTAssertTrue(Prompt51UnicodeIntegrity.isRoundTripStable("﹒ ⋆ ⋆ ₊⊹ ꩜ 𓂃 ♡"))
+    }
+}

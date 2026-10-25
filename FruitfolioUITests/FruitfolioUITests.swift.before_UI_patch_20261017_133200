@@ -1,0 +1,401 @@
+import XCTest
+
+final class FruitfolioUITests: XCTestCase {
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+    }
+
+    func testAppLaunchesAndPresentsFruitfolioUI() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch()
+
+        XCTAssertTrue(
+            app.windows.firstMatch.waitForExistence(timeout: 8),
+            "Fruitfolio should present a window after launch."
+        )
+        XCTAssertTrue(app.state == .runningForeground)
+    }
+
+    func testAppSurvivesBackgroundAndForeground() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch()
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 8))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 5))
+        XCTAssertEqual(app.state, .runningForeground)
+    }
+
+    func testFruitfolioBatchVisualAudit() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch()
+
+        var captured = 0
+        var blocked: [String] = []
+
+        func screenshot(_ name: String) {
+            let attachment = XCTAttachment(screenshot: app.screenshot())
+            attachment.name = name
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            captured += 1
+            print("VISUAL_AUDIT_CAPTURED: \(name)")
+        }
+
+        func dismissInvitation() {
+            let explore = app.buttons["I'll explore"]
+            if explore.waitForExistence(timeout: 3) {
+                explore.tap()
+                sleep(1)
+            }
+        }
+
+        func returnToHub() {
+            app.terminate()
+            app.launch()
+            XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 10))
+            dismissInvitation()
+            sleep(1)
+        }
+
+        func visit(_ name: String, matching labels: [String]) {
+            returnToHub()
+            dismissInvitation()
+
+            let button = labels.lazy
+                .map {
+                    app.buttons.matching(
+                        NSPredicate(
+                            format: "label CONTAINS[c] %@",
+                            $0
+                        )
+                    ).firstMatch
+                }
+                .first { $0.exists }
+
+            guard let button else {
+                blocked.append("\(name): navigation button unavailable")
+                print("VISUAL_AUDIT_BLOCKED: \(name)")
+                return
+            }
+
+            button.tap()
+            sleep(2)
+            screenshot(name)
+        }
+
+        XCTAssertTrue(
+            app.windows.firstMatch.waitForExistence(timeout: 10)
+        )
+
+        screenshot("00_Initial_Launch")
+        dismissInvitation()
+        screenshot("01_Hub")
+
+        let sections: [(String, [String])] = [
+            ("02_Ask", ["ask the encyclopedia", "ask"]),
+            ("03_My_Encyclopedias", ["my encyclopedias", "encyclopedias"]),
+            ("04_Guide_Builder", ["build your own guide", "build guide"]),
+            ("05_Cycle_Tracker", ["cycle tracker"]),
+            ("06_Fruit_Basket", ["fruit basket"]),
+            ("07_FAQ", ["faq", "frequently asked"]),
+            ("08_Contact", ["contact"]),
+            ("09_Settings", ["settings"]),
+            ("10_Account", ["sign in", "account"])
+        ]
+
+        for (name, labels) in sections {
+            visit(name, matching: labels)
+        }
+
+        returnToHub()
+        screenshot("11_Final_Hub")
+
+        print("VISUAL_AUDIT_TOTAL_CAPTURED: \(captured)")
+        print("VISUAL_AUDIT_TOTAL_BLOCKED: \(blocked.count)")
+
+        for item in blocked {
+            print("VISUAL_AUDIT_BLOCKED_DETAIL: \(item)")
+        }
+
+        XCTAssertGreaterThan(captured, 1)
+    }
+
+
+
+    // FRUITFOLIO COMPLETE 8-TO-8 EXPLORATION AUDIT
+    func testFruitfolioCompleteDeepAudit() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+
+        var captured = 0
+        var reached = 0
+        var blocked: [String] = []
+        var explored: Set<String> = []
+
+        let unsafeWords = [
+            "delete", "erase", "remove", "discard",
+            "purchase", "buy", "checkout", "pay",
+            "submit", "send", "sign out",
+            "reset", "clear all", "delete account",
+            "remove from guide", "confirm deletion"
+        ]
+
+        func safeName(_ value: String) -> String {
+            let cleaned = value
+                .replacingOccurrences(
+                    of: "[^A-Za-z0-9_-]",
+                    with: "_",
+                    options: .regularExpression
+                )
+            return String(cleaned.prefix(65))
+        }
+
+        func capture(_ name: String) {
+            let attachment = XCTAttachment(screenshot: app.screenshot())
+            attachment.name = safeName(name)
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            captured += 1
+            print("EIGHT_TO_EIGHT_CAPTURED: \(name)")
+        }
+
+        func dismissInvitation() {
+            let explore = app.buttons["I'll explore"]
+            if explore.waitForExistence(timeout: 2) && explore.isHittable {
+                explore.tap()
+            }
+        }
+
+        func launchFresh() {
+            if app.state != .notRunning {
+                app.terminate()
+            }
+            app.launch()
+            _ = app.windows.firstMatch.waitForExistence(timeout: 15)
+            dismissInvitation()
+        }
+
+        func matchingButton(_ label: String) -> XCUIElement {
+            app.buttons.matching(
+                NSPredicate(format: "label ==[c] %@", label)
+            ).firstMatch
+        }
+
+        func enterSection(_ labels: [String]) -> Bool {
+            launchFresh()
+
+            for label in labels {
+                let button = app.buttons.matching(
+                    NSPredicate(format: "label CONTAINS[c] %@", label)
+                ).firstMatch
+
+                if button.exists && button.isHittable {
+                    button.tap()
+                    sleep(1)
+                    return true
+                }
+            }
+            return false
+        }
+
+        func safeButtons() -> [String] {
+            // Read a single accessibility-tree snapshot. Do not hold indexed
+            // XCUIElement references while SwiftUI is rebuilding the screen.
+            let snapshot = app.debugDescription
+            var labels: [String] = []
+            for line in snapshot.components(separatedBy: .newlines) {
+                guard line.contains("Button,") || line.contains("Button ") else { continue }
+                guard let range = line.range(of: #"label: ['\"]([^'\"]+)['\"]"#, options: .regularExpression) else { continue }
+                let match = String(line[range])
+                guard let firstQuote = match.firstIndex(where: { $0 == "'" || $0 == "\"" }) else { continue }
+                let quote = match[firstQuote]
+                let start = match.index(after: firstQuote)
+                guard let end = match[start...].firstIndex(of: quote) else { continue }
+                let label = String(match[start..<end]).trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !label.isEmpty else { continue }
+                let lower = label.lowercased()
+                guard !unsafeWords.contains(where: { lower.contains($0) }) else {
+                    print("EIGHT_TO_EIGHT_SKIPPED_UNSAFE: \(label)")
+                    continue
+                }
+                guard !labels.contains(label) else { continue }
+                labels.append(label)
+            }
+            return labels
+        }
+
+        func inspect(_ section: String, path: [String]) {
+            let location = ([section] + path).joined(separator: " > ")
+
+            let labels = safeButtons()
+
+            print("EIGHT_TO_EIGHT_SCREEN: \(location)")
+            print("EIGHT_TO_EIGHT_BUTTON_COUNT: \(labels.count)")
+
+            for label in labels {
+                print("EIGHT_TO_EIGHT_CONTROL: \(location) | \(label)")
+            }
+
+            capture("\(section)_\(path.count)_\(reached)")
+            reached += 1
+        }
+
+        let sections: [(String, [String])] = [
+            ("Ask", ["ask the encyclopedia", "ask"]),
+            ("My_Encyclopedias", ["my encyclopedias"]),
+            ("Guide_Builder", ["build your own guide", "build guide"]),
+            ("Cycle_Tracker", ["cycle tracker"]),
+            ("Fruit_Basket", ["fruit basket"]),
+            ("FAQ", ["faq", "frequently asked"]),
+            ("Contact", ["contact"]),
+            ("Settings", ["settings"]),
+            ("Account", ["account", "sign in"])
+        ]
+
+        launchFresh()
+        capture("00_Hub")
+
+        for (section, entryLabels) in sections {
+            print("EIGHT_TO_EIGHT_SECTION_START: \(section)")
+
+            guard enterSection(entryLabels) else {
+                blocked.append("\(section): entry unavailable")
+                print("EIGHT_TO_EIGHT_BLOCKED: \(section) entry")
+                continue
+            }
+
+            inspect(section, path: [])
+
+            // Explore nested paths. Relaunching between paths prevents
+            // an inaccessible Back button from blocking the audit.
+            var queue: [[String]] = [[]]
+            var processed = 0
+            let maxPaths = 16
+            let maxDepth = 3
+
+            while !queue.isEmpty && processed < maxPaths {
+                let path = queue.removeFirst()
+                processed += 1
+
+                guard enterSection(entryLabels) else {
+                    blocked.append("\(section): could not re-enter")
+                    continue
+                }
+
+                var navigated = true
+
+                for label in path {
+                    let button = matchingButton(label)
+
+                    guard button.exists && button.isHittable else {
+                        navigated = false
+                        blocked.append("\(section): path unavailable: \(path)")
+                        break
+                    }
+
+                    button.tap()
+                    sleep(1)
+                }
+
+                guard navigated else { continue }
+
+                let currentLabels = safeButtons()
+                let location = ([section] + path).joined(separator: " > ")
+
+                print("EIGHT_TO_EIGHT_VISITED: \(location)")
+                print("EIGHT_TO_EIGHT_VISIBLE_BUTTONS: \(currentLabels.joined(separator: " | "))")
+
+                if !path.isEmpty {
+                    inspect(section, path: path)
+                }
+
+                guard path.count < maxDepth else { continue }
+
+                let candidates = currentLabels.filter { label in
+                    let lower = label.lowercased()
+
+                    let navigationExclusions = [
+                        "back", "close", "cancel", "home",
+                        "exit", "previous", "next month",
+                        "previous month"
+                    ]
+
+                    return !navigationExclusions.contains(where: {
+                        lower == $0
+                    })
+                }
+
+                for label in candidates.prefix(8) {
+                    let nextPath = path + [label]
+                    let key = ([section] + nextPath).joined(separator: "|")
+
+                    if explored.insert(key).inserted {
+                        queue.append(nextPath)
+                    }
+                }
+            }
+
+            print("EIGHT_TO_EIGHT_SECTION_COMPLETE: \(section)")
+        }
+
+        // Cycle Tracker onboarding: inspect and attempt safe progress.
+        if enterSection(["cycle tracker"]) {
+            print("EIGHT_TO_EIGHT_CYCLE_ONBOARDING_START")
+
+            let preferredActions = [
+                ["get started"],
+                ["i’m not sure", "i'm not sure"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["skip", "continue"],
+                ["open my cycle tracker"]
+            ]
+
+            for (index, choices) in preferredActions.enumerated() {
+                inspect("Cycle_Onboarding", path: ["Step_\(index)"])
+
+                var selected: XCUIElement?
+
+                for choice in choices {
+                    let button = matchingButton(choice)
+                    if button.exists && button.isHittable && button.isEnabled {
+                        selected = button
+                        break
+                    }
+                }
+
+                guard let selected else {
+                    blocked.append("Cycle onboarding step \(index): no expected action")
+                    print("EIGHT_TO_EIGHT_ONBOARDING_BLOCKED: \(index)")
+                    break
+                }
+
+                print("EIGHT_TO_EIGHT_ONBOARDING_ACTION: \(index) | \(selected.label)")
+                selected.tap()
+                sleep(1)
+            }
+        }
+
+        print("EIGHT_TO_EIGHT_TOTAL_SCREEN_CAPTURES: \(captured)")
+        print("EIGHT_TO_EIGHT_TOTAL_SCREEN_INSPECTIONS: \(reached)")
+        print("EIGHT_TO_EIGHT_TOTAL_BLOCKED: \(blocked.count)")
+
+        for issue in blocked {
+            print("EIGHT_TO_EIGHT_BLOCKED_DETAIL: \(issue)")
+        }
+
+        XCTAssertGreaterThan(captured, 1)
+    }
+
+}

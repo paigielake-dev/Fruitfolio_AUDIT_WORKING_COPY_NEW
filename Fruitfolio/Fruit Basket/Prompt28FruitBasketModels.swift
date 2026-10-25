@@ -1,0 +1,427 @@
+import Foundation
+
+// PROMPT 28 / PHASE 28 — Fruit Basket
+// Canonical game/domain models. Educational difficulty, topic, and game level
+// intentionally remain independent.
+
+enum Prompt28EducationalDifficulty: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
+    case easy
+    case medium
+    case hard
+
+    var id: String { rawValue }
+
+    var displayName: String { rawValue }
+}
+
+enum Prompt28LearningTopic: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
+    case reproductiveHealth = "reproductive health"
+    case hormones
+    case nutrition
+    case surrogacy
+    case womensWellness = "women’s wellness"
+
+    var id: String { rawValue }
+    var displayName: String { rawValue }
+}
+
+enum Prompt28ControlMode: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
+    case catchMode = "catch"
+    case classification = "classification"
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .catchMode: return "catch"
+        case .classification: return "classification"
+        }
+    }
+}
+
+enum Prompt28FruitClassification: String, Codable, Sendable {
+    case good
+    case bad
+}
+
+enum Prompt28FruitID: String, Codable, CaseIterable, Hashable, Sendable, Identifiable {
+    case orange
+    case blueberry
+    case peach
+    case grape
+    case watermelon
+    case apple
+    case pear
+    case strawberry
+    case plum
+    case lemon
+
+    var id: String { rawValue }
+
+    var displayName: String { rawValue }
+
+    var assetID: FruitfolioAssetID {
+        switch self {
+        case .orange: return .fruitbasket_orange
+        case .blueberry: return .fruitbasket_blueberry
+        case .peach: return .fruitbasket_peach
+        case .grape: return .fruitbasket_grape
+        case .watermelon: return .fruitbasket_watermelon
+        case .apple: return .fruitbasket_apple
+        case .pear: return .fruitbasket_pear
+        case .strawberry: return .fruitbasket_strawberry
+        case .plum: return .fruitbasket_plum
+        case .lemon: return .fruitbasket_lemon
+        }
+    }
+}
+
+struct Prompt28AnswerOption: Identifiable, Hashable, Codable, Sendable {
+    let id: String
+    let text: String
+}
+
+struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
+    let id: String
+    let topicQuery: String
+    let normalizedTopic: String
+    let category: String
+    let educationalDifficulty: Prompt28EducationalDifficulty
+    let questionText: String
+    let answerOptions: [Prompt28AnswerOption]
+    let correctAnswerID: String
+    let explanation: String
+    let sourceIDs: [String]
+    let sourceTitles: [String]
+    let catchConceptID: String
+    let catchRule: String
+    let goodFruitIDs: [Prompt28FruitID]
+    let badFruitIDs: [Prompt28FruitID]
+    let contentVersion: String
+    let reviewStatus: String
+    let createdAt: Date
+
+    var isPlayable: Bool {
+        answerOptions.count >= 2
+            && answerOptions.contains(where: { $0.id == correctAnswerID })
+            && !sourceIDs.isEmpty
+            && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !goodFruitIDs.isEmpty
+            && !badFruitIDs.isEmpty
+            && Set(goodFruitIDs).isDisjoint(with: Set(badFruitIDs))
+    }
+}
+
+struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
+    let normalizedTopicID: String
+    var currentGameLevel: Int
+    var highestGameLevelReached: Int
+    var totalRoundsCompleted: Int
+    var totalFruitCaught: Int
+    var totalStarsEarned: Int
+    var totalSuccessfulRounds: Int
+    var bestScore: Int
+    var bestStreak: Int
+    var lastPlayedAt: Date
+
+    var id: String { normalizedTopicID }
+
+    init(
+        normalizedTopicID: String,
+        currentGameLevel: Int = 1,
+        highestGameLevelReached: Int = 1,
+        totalRoundsCompleted: Int = 0,
+        totalFruitCaught: Int = 0,
+        totalStarsEarned: Int = 0,
+        totalSuccessfulRounds: Int = 0,
+        bestScore: Int = 0,
+        bestStreak: Int = 0,
+        lastPlayedAt: Date = Date()
+    ) {
+        self.normalizedTopicID = normalizedTopicID
+        self.currentGameLevel = currentGameLevel
+        self.highestGameLevelReached = highestGameLevelReached
+        self.totalRoundsCompleted = totalRoundsCompleted
+        self.totalFruitCaught = totalFruitCaught
+        self.totalStarsEarned = totalStarsEarned
+        self.totalSuccessfulRounds = totalSuccessfulRounds
+        self.bestScore = bestScore
+        self.bestStreak = bestStreak
+        self.lastPlayedAt = lastPlayedAt
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case normalizedTopicID, currentGameLevel, highestGameLevelReached
+        case totalRoundsCompleted, totalFruitCaught, totalStarsEarned
+        case totalSuccessfulRounds, bestScore, bestStreak, lastPlayedAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        normalizedTopicID = try c.decode(String.self, forKey: .normalizedTopicID)
+        currentGameLevel = try c.decode(Int.self, forKey: .currentGameLevel)
+        highestGameLevelReached = try c.decode(Int.self, forKey: .highestGameLevelReached)
+        totalRoundsCompleted = try c.decode(Int.self, forKey: .totalRoundsCompleted)
+        totalFruitCaught = try c.decode(Int.self, forKey: .totalFruitCaught)
+        totalStarsEarned = try c.decodeIfPresent(Int.self, forKey: .totalStarsEarned) ?? 0
+        totalSuccessfulRounds = try c.decode(Int.self, forKey: .totalSuccessfulRounds)
+        bestScore = try c.decode(Int.self, forKey: .bestScore)
+        bestStreak = try c.decode(Int.self, forKey: .bestStreak)
+        lastPlayedAt = try c.decode(Date.self, forKey: .lastPlayedAt)
+    }
+
+}
+
+struct Prompt28Session: Hashable, Codable, Sendable {
+    let id: UUID
+    var rawTopicQuery: String
+    var normalizedTopicID: String
+    var educationalDifficulty: Prompt28EducationalDifficulty
+    var startingGameLevel: Int
+    var currentGameLevel: Int
+    var currentRound: Int
+    var score: Int
+    var fruitCaught: Int
+    var goodFruitCaughtThisRound: Int
+    var availableStarPasses: Int
+    var currentStreak: Int
+    let createdAt: Date
+
+    init(
+        id: UUID = UUID(),
+        rawTopicQuery: String,
+        normalizedTopicID: String,
+        educationalDifficulty: Prompt28EducationalDifficulty,
+        startingGameLevel: Int,
+        currentRound: Int = 1,
+        score: Int = 0,
+        fruitCaught: Int = 0,
+        goodFruitCaughtThisRound: Int = 0,
+        availableStarPasses: Int = 0,
+        currentStreak: Int = 0,
+        createdAt: Date = Date()
+    ) {
+        self.id = id
+        self.rawTopicQuery = rawTopicQuery
+        self.normalizedTopicID = normalizedTopicID
+        self.educationalDifficulty = educationalDifficulty
+        self.startingGameLevel = startingGameLevel
+        self.currentGameLevel = startingGameLevel
+        self.currentRound = currentRound
+        self.score = score
+        self.fruitCaught = fruitCaught
+        self.goodFruitCaughtThisRound = goodFruitCaughtThisRound
+        self.availableStarPasses = max(0, availableStarPasses)
+        self.currentStreak = currentStreak
+        self.createdAt = createdAt
+    }
+}
+
+struct Prompt28RoundRules: Hashable, Sendable {
+    static let canonical = Prompt28RoundRules(
+        goodFruitTarget: 10,
+        badFruitCatchLimit: 1,
+        goodFruitCatchScore: 10,
+        goodFruitMissPenalty: 0,
+        badFruitMissPenalty: 0,
+        wrongQuestionPenalty: 0,
+        goodFruitMissEndsRound: false,
+        badFruitCatchEndsRound: true
+    )
+
+    let goodFruitTarget: Int
+    let badFruitCatchLimit: Int
+    let goodFruitCatchScore: Int
+    let goodFruitMissPenalty: Int
+    let badFruitMissPenalty: Int
+    let wrongQuestionPenalty: Int
+    let goodFruitMissEndsRound: Bool
+    let badFruitCatchEndsRound: Bool
+}
+
+struct Prompt28GameLevelConfig: Identifiable, Hashable, Sendable {
+    let level: Int
+    let fallDurationRange: ClosedRange<Double>
+    let spawnIntervalRange: ClosedRange<Double>
+    let driftRange: ClosedRange<Double>
+    let goodProbability: Double
+    let obstacleProbability: Double
+    let branchEnabled: Bool
+    let puddleEnabled: Bool
+    let vinesEnabled: Bool
+    let windEnabled: Bool
+    let maxConcurrentItems: Int
+
+    var id: Int { level }
+}
+
+enum Prompt28RoundOutcome: Equatable, Sendable {
+    case active
+    case success
+    case badFruitBlockedByStar(badFruit: Prompt28FruitID)
+    case unsuccessful(badFruit: Prompt28FruitID)
+}
+
+struct Prompt28FallingFruit: Identifiable, Equatable, Sendable {
+    let id: UUID
+    let fruitID: Prompt28FruitID
+    let classification: Prompt28FruitClassification
+    var x: Double
+    var y: Double
+    let fallSpeed: Double
+    let horizontalDrift: Double
+    let rotationDegrees: Double
+
+    init(
+        id: UUID = UUID(),
+        fruitID: Prompt28FruitID,
+        classification: Prompt28FruitClassification,
+        x: Double,
+        y: Double = -0.12,
+        fallSpeed: Double,
+        horizontalDrift: Double,
+        rotationDegrees: Double
+    ) {
+        self.id = id
+        self.fruitID = fruitID
+        self.classification = classification
+        self.x = x
+        self.y = y
+        self.fallSpeed = fallSpeed
+        self.horizontalDrift = horizontalDrift
+        self.rotationDegrees = rotationDegrees
+    }
+}
+
+struct Prompt28FallingStar: Identifiable, Equatable, Sendable {
+    let id: UUID
+    var x: Double
+    var y: Double
+    let fallSpeed: Double
+    let horizontalDrift: Double
+    let rotationDegrees: Double
+
+    init(id: UUID = UUID(), x: Double, y: Double = -0.12, fallSpeed: Double, horizontalDrift: Double, rotationDegrees: Double) {
+        self.id = id; self.x = x; self.y = y; self.fallSpeed = fallSpeed
+        self.horizontalDrift = horizontalDrift; self.rotationDegrees = rotationDegrees
+    }
+}
+
+enum Prompt28Weather: Equatable, Sendable {
+    case clear
+    case breezy
+    case softRain
+}
+
+enum Prompt28ScreenState: Equatable, Sendable {
+    case home
+    case howItWorks
+    case learningSetup
+    case topicProgressChoice
+    case loading
+    case question
+    case correctFeedback
+    case incorrectFeedback
+    case catchIntro
+    case catchActive
+    case catchUnsuccessful
+    case basketReveal
+    case leaderboard
+    case paused
+    case resetConfirmation
+    case topicUnsupported
+    case topicExhausted
+    case error
+}
+
+
+enum Prompt28ObstacleKind: String, Hashable, Sendable {
+    case vines
+    case branch
+    case puddle
+    case wind
+}
+
+enum Prompt28LeaderboardUsernamePolicy {
+    static let minimumLength = 3
+    static let maximumLength = 16
+
+    private static let allowed = CharacterSet.alphanumerics
+        .union(CharacterSet(charactersIn: "._"))
+
+    // Local, deterministic guardrail for a public-facing pseudonym. This is
+    // intentionally conservative; server-side moderation must still validate
+    // again before a real public leaderboard submission is accepted.
+    private static let disallowedNormalizedFragments: [String] = [
+        "fuck", "shit", "bitch", "cunt", "dick", "cock", "pussy",
+        "vagina", "penis", "porn", "nude", "xxx", "sex", "slut",
+        "whore", "asshole", "motherfucker"
+    ]
+
+    static func sanitized(_ raw: String) -> String {
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        let scalars = trimmed.unicodeScalars.filter { allowed.contains($0) }
+        return String(String.UnicodeScalarView(scalars).prefix(maximumLength))
+    }
+
+    static func validationMessage(for raw: String) -> String? {
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return "pick a public username first ♡" }
+        guard trimmed.count >= minimumLength else { return "use at least \(minimumLength) characters ♡" }
+        guard trimmed.count <= maximumLength else { return "keep it to \(maximumLength) characters or fewer ♡" }
+        guard sanitized(trimmed) == trimmed else { return "use letters, numbers, periods, or underscores only ♡" }
+
+        let normalized = moderationNormalized(trimmed)
+        let lowercase = trimmed.lowercased()
+        let disguisedExplicit = lowercase.contains("f4ck")
+        if disguisedExplicit || disallowedNormalizedFragments.contains(where: normalized.contains) {
+            return "pick a non-explicit username for the public leaderboard ♡"
+        }
+        return nil
+    }
+
+    static func isValid(_ raw: String) -> Bool {
+        validationMessage(for: raw) == nil
+    }
+
+    private static func moderationNormalized(_ raw: String) -> String {
+        let replacements: [Character: Character] = [
+            "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t"
+        ]
+        return raw.lowercased().compactMap { character -> Character? in
+            if let replacement = replacements[character] { return replacement }
+            return character.isLetter || character.isNumber ? character : nil
+        }.map(String.init).joined()
+    }
+}
+
+struct Prompt28LeaderboardEntry: Identifiable, Hashable, Codable, Sendable {
+    let id: UUID
+    let pseudonym: String
+    let score: Int
+    let highestGameLevel: Int
+}
+
+struct Prompt28TourState: Hashable, Codable, Sendable {
+    var currentStep: Int = 0
+    var hasCompletedTour: Bool = false
+    var tutorialBasketCount: Int = 0
+    var tutorialCatchState: String = "idle"
+}
+
+// Lifetime statistics across every locally saved Fruit Basket topic.
+// These are personal on-device totals, NOT verified worldwide rankings.
+struct Prompt28LeaderboardTotals: Equatable, Sendable {
+    let fruitCollected: Int
+    let starsEarned: Int
+    let basketReveals: Int
+    let highestLevel: Int
+
+    init(progress: [String: Prompt28TopicProgress]) {
+        let entries = Array(progress.values)
+        fruitCollected = entries.reduce(0) { $0 + max(0, $1.totalFruitCaught) }
+        starsEarned = entries.reduce(0) { $0 + max(0, $1.totalStarsEarned) }
+        basketReveals = entries.reduce(0) { $0 + max(0, $1.totalSuccessfulRounds) }
+        highestLevel = entries.map(\.highestGameLevelReached).max() ?? 0
+    }
+}

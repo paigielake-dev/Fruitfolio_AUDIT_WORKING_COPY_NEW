@@ -1,0 +1,126 @@
+import Combine
+import Foundation
+
+/// Owns route mutations only. Business logic remains outside navigation.
+@MainActor
+final class NavigationCoordinator: ObservableObject {
+    @Published private(set) var root: FruitfolioRoute
+    @Published var path: [FruitfolioRoute] = []
+
+    private let popupCoordinator: PopupCoordinator
+    var onNavigationTransition: (() -> Void)?
+    private let minimumPushInterval: TimeInterval
+    private var lastPushTime: TimeInterval = -.infinity
+
+    init(
+        root: FruitfolioRoute = .intro,
+        popupCoordinator: PopupCoordinator,
+        minimumPushInterval: TimeInterval = 0.22
+    ) {
+        self.popupCoordinator = popupCoordinator
+        self.minimumPushInterval = max(0, minimumPushInterval)
+        self.root = Self.safeRoot(root)
+    }
+
+    var currentRoute: FruitfolioRoute {
+        path.last ?? root
+    }
+
+    func setRoot(_ route: FruitfolioRoute) {
+        guard !popupCoordinator.blocksNavigation else { return }
+
+        let destination = Self.safeRoot(route)
+        let didChangeScreen = currentRoute != destination
+
+        popupCoordinator.dismissForNavigation()
+
+        root = destination
+        path.removeAll(keepingCapacity: true)
+        lastPushTime = -.infinity
+
+        if didChangeScreen {
+            onNavigationTransition?()
+        }
+    }
+
+    func enterHub() {
+        setRoot(.hub)
+    }
+
+    /// Protects against repeated/rapid destination pushes during the transition window.
+    @discardableResult
+    func navigate(
+        to route: FruitfolioRoute,
+        now: TimeInterval = ProcessInfo.processInfo.systemUptime
+    ) -> Bool {
+        guard !popupCoordinator.blocksNavigation else { return false }
+
+        guard route != currentRoute else {
+            return false
+        }
+
+        guard route != .purchase ||
+                FruitfolioPurchasePolicy.allowsReservedPurchaseRouteForQA else {
+            #if DEBUG
+            print(
+                "[Fruitfolio][Navigation] Reserved purchase QA route ignored outside allowed configuration."
+            )
+            #endif
+            return false
+        }
+
+        guard now - lastPushTime >= minimumPushInterval else {
+            return false
+        }
+
+        popupCoordinator.dismissForNavigation()
+
+        path.append(route)
+        lastPushTime = now
+        onNavigationTransition?()
+
+        return true
+    }
+
+    func back() {
+        guard !popupCoordinator.blocksNavigation else { return }
+        popupCoordinator.dismissForNavigation()
+
+        guard !path.isEmpty else {
+            return
+        }
+
+        path.removeLast()
+        lastPushTime = -.infinity
+        onNavigationTransition?()
+    }
+
+    func returnToHub() {
+        setRoot(.hub)
+    }
+
+    func recoverFromInvalidRoute() {
+        popupCoordinator.dismissForNavigation()
+
+        root = .hub
+        path.removeAll(keepingCapacity: true)
+        lastPushTime = -.infinity
+
+        #if DEBUG
+        print(
+            "[Fruitfolio][Navigation] Recovered safely to Hub from an invalid or unavailable route."
+        )
+        #endif
+    }
+
+    private static func safeRoot(
+        _ route: FruitfolioRoute
+    ) -> FruitfolioRoute {
+        if route == .purchase &&
+            !FruitfolioPurchasePolicy.allowsReservedPurchaseRouteForQA {
+            return .hub
+        }
+
+        return route
+    }
+}

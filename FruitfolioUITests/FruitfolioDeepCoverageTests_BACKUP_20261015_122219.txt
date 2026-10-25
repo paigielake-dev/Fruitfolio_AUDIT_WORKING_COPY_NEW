@@ -1,0 +1,226 @@
+import XCTest
+
+// Standalone XCTest class: add this file to the FruitfolioUITests target.
+// Every test runs against the dedicated, disposable audit simulator.
+// These tests deliberately FAIL when a required control cannot be found;
+// screenshots alone are not counted as functional passes.
+final class FruitfolioDeepCoverageTests: XCTestCase {
+    override func setUpWithError() throws { continueAfterFailure = false }
+
+    private let destinations: [(String, [String])] = [
+        ("Ask", ["ask the encyclopedia", "ask"]),
+        ("My Encyclopedias", ["my encyclopedias", "encyclopedias"]),
+        ("Guide Builder", ["build your own guide", "build guide"]),
+        ("Cycle Tracker", ["cycle tracker"]),
+        ("Fruit Basket", ["fruit basket"]),
+        ("FAQ", ["faq", "frequently asked"]),
+        ("Contact", ["contact"]),
+        ("Settings", ["settings"]),
+        ("Account", ["sign in", "account"])
+    ]
+
+    private func launch() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch()
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15), "App failed to launch")
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 2) { explore.tap() }
+        return app
+    }
+
+    private func button(_ app: XCUIApplication, _ words: [String]) -> XCUIElement? {
+        for word in words {
+            let candidate = app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", word)).firstMatch
+            if candidate.exists && candidate.isHittable { return candidate }
+        }
+        return nil
+    }
+
+    @discardableResult
+    private func tap(_ app: XCUIApplication, _ words: [String], _ context: String) -> XCUIElement {
+        guard let match = button(app, words) else {
+            record(app, "MISSING_\(context)")
+            XCTFail("\(context): expected hittable button matching \(words)")
+            return app.buttons.firstMatch
+        }
+        match.tap()
+        return match
+    }
+
+    private func record(_ app: XCUIApplication, _ title: String) {
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = title
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        print("DEEP_COVERAGE_SCREENSHOT: \(title)")
+    }
+
+    private func open(_ app: XCUIApplication, _ name: String) {
+        guard let item = destinations.first(where: { $0.0 == name }) else {
+            XCTFail("Unknown destination: \(name)")
+            return
+        }
+        tap(app, item.1, "Hub_\(name)")
+        XCTAssertTrue(app.windows.firstMatch.exists)
+        record(app, "Entered_\(name)")
+    }
+
+    func test01EveryHubDestinationIsHittable() {
+        for (name, _) in destinations {
+            let app = launch()
+            open(app, name)
+            app.terminate()
+        }
+    }
+
+    func test02AskSuggestedQuestionDoesNotLoseEntireInterface() {
+        let app = launch(); open(app, "Ask")
+        let before = app.buttons.count
+        if let suggestion = button(app, ["what", "how", "why"]) {
+            suggestion.tap()
+            record(app, "Ask_After_Suggestion")
+            XCTAssertTrue(app.windows.firstMatch.exists, "Ask crashed after suggestion")
+            XCTAssertGreaterThan(app.buttons.count, 0, "Ask lost all controls")
+        } else {
+            record(app, "Ask_No_Hittable_Suggestion")
+            XCTFail("No suggested question accessible; submit-question lifecycle remains unverified")
+        }
+        XCTAssertGreaterThan(before, 0)
+    }
+
+    func test03GuideBuilderCoverSelectorAccessible() {
+        let app = launch(); open(app, "Guide Builder")
+        record(app, "Guide_Initial")
+        if let pink = button(app, ["pink cover"]) {
+            pink.tap()
+            record(app, "Guide_Pink_Selected")
+        } else {
+            record(app, "Guide_Pink_Unavailable")
+            XCTFail("Pink cover cannot be selected in initial guide-builder state; may require prerequisite")
+        }
+    }
+
+    func test04CycleOnboardingCanAdvanceBeyondIntro() {
+        let app = launch(); open(app, "Cycle Tracker")
+        tap(app, ["get started"], "Cycle_GetStarted")
+        record(app, "Cycle_Onboarding_Step1")
+        let action = button(app, ["i’m not sure", "i'm not sure", "skip", "continue"])
+        XCTAssertNotNil(action, "Cycle onboarding step 1 has no usable selection, skip, or continue action")
+        action?.tap()
+        record(app, "Cycle_After_First_Action")
+        XCTAssertTrue(app.windows.firstMatch.exists)
+    }
+
+    func test05CycleOnboardingCompleteOrReportFirstBlocker() {
+        let app = launch(); open(app, "Cycle Tracker")
+        tap(app, ["get started"], "Cycle_GetStarted")
+        var completed = false
+        for step in 1...20 {
+            record(app, "Cycle_State_\(step)")
+            if let finish = button(app, ["open my cycle tracker"]) {
+                finish.tap(); completed = true; break
+            }
+            if let gotIt = button(app, ["got it ♡"]) { gotIt.tap(); continue }
+            if let skip = button(app, ["skip"]) { skip.tap(); continue }
+            if let unsure = button(app, ["i’m not sure", "i'm not sure", "not right now"]) {
+                unsure.tap()
+            }
+            guard let next = button(app, ["continue"]) else {
+                record(app, "Cycle_Blocker_\(step)")
+                XCTFail("Cycle step \(step) has no accessible Continue or Skip; check prerequisites")
+                return
+            }
+            next.tap()
+        }
+        XCTAssertTrue(completed, "Cycle onboarding did not reach tracker within 20 transitions")
+        record(app, "Cycle_Completed")
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15))
+        record(app, "Cycle_After_Relaunch")
+    }
+
+    func test06FruitBasketTourAndMenu() {
+        let app = launch(); open(app, "Fruit Basket")
+        record(app, "FruitBasket_Entry")
+        if let close = button(app, ["i'll explore", "got it", "skip", "close", "let's play"]) {
+            close.tap()
+            record(app, "FruitBasket_After_Overlay")
+        }
+        guard let menu = button(app, ["how it works", "play", "leaderboard"]) else {
+            XCTFail("Fruit Basket home controls blocked by tour or inaccessible")
+            return
+        }
+        let title = menu.label
+        menu.tap()
+        record(app, "FruitBasket_Selected_\(title)")
+        XCTAssertTrue(app.windows.firstMatch.exists)
+    }
+
+    func test07FruitBasketLeaderboardAndTutorialFreshSessions() {
+        for (name, labels) in [("leaderboard", ["leaderboard"]), ("howItWorks", ["how it works"]), ("play", ["play"])] {
+            let app = launch(); open(app, "Fruit Basket")
+            if let dismiss = button(app, ["got it", "skip", "close"]) { dismiss.tap() }
+            tap(app, labels, "FruitBasket_\(name)")
+            record(app, "FruitBasket_\(name)")
+            app.terminate()
+        }
+    }
+
+    func test08ContactLinksAreHittableInFreshSessions() {
+        for (name, labels) in [("Instagram", ["Instagram"]), ("TikTok", ["TikTok"]), ("Email", ["email"]), ("Carrd", ["Carrd"])] {
+            let app = launch(); open(app, "Contact")
+            let target = button(app, labels)
+            XCTAssertNotNil(target, "Contact \(name) link inaccessible")
+            record(app, "Contact_\(name)_BeforeTap")
+            // Do not open third-party apps during unattended tests.
+            app.terminate()
+        }
+    }
+
+    func test09SettingsAccessibilityInventoryAndRelaunch() {
+        let app = launch(); open(app, "Settings")
+        record(app, "Settings_Before")
+        let controls = app.buttons.count + app.switches.count + app.sliders.count
+        XCTAssertGreaterThan(controls, 1, "Settings has no accessible controls")
+        print("DEEP_COVERAGE_SETTINGS_CONTROLS: \(controls)")
+        app.terminate(); app.launch()
+        XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 15))
+        open(app, "Settings")
+        record(app, "Settings_AfterRelaunch")
+    }
+
+    func test10AccountPrivacyNavigation() {
+        let app = launch(); open(app, "Account")
+        if let privacy = button(app, ["privacy"]) {
+            privacy.tap(); record(app, "Account_Privacy")
+            XCTAssertTrue(app.windows.firstMatch.exists)
+        } else {
+            record(app, "Account_Privacy_NotVisible")
+            XCTFail("Account → Privacy is not hittable without scrolling; needs explicit scroll/identifier test")
+        }
+    }
+
+    func test11ScreenAccessibilityInventory() {
+        for (name, _) in destinations {
+            let app = launch(); open(app, name)
+            let buttons = app.buttons.allElementsBoundByIndex
+            let unnamed = buttons.filter { $0.label.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+            print("DEEP_COVERAGE_ACCESSIBILITY \(name) buttons=\(buttons.count) unlabeled=\(unnamed.count)")
+            record(app, "Accessibility_\(name)")
+            XCTAssertTrue(unnamed.isEmpty, "\(name) has \(unnamed.count) unlabeled accessible buttons")
+            app.terminate()
+        }
+    }
+
+    func test12BackgroundForegroundForEveryMajorSection() {
+        for (name, _) in destinations {
+            let app = launch(); open(app, name)
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 10), "\(name) did not recover from background")
+            record(app, "Resumed_\(name)")
+            app.terminate()
+        }
+    }
+}
