@@ -13,6 +13,30 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  preserve-superseded-diagnostics:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fruitfolio/prompt-1b-alignment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inventory superseded diagnostics without deleting evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FRUITFOLIO_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 Tools/prune_superseded_verification.py inventory
+      - name: Preserve run, job, step and artifact inventory before superseding
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Superseded_Verification_State
+          path: verification-queue-state.json
+      - name: Free obsolete macOS attempts while preserving requested Run50 and Run51
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FRUITFOLIO_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 Tools/prune_superseded_verification.py cancel
   ios:
     runs-on: macos-latest
     timeout-minutes: 180
