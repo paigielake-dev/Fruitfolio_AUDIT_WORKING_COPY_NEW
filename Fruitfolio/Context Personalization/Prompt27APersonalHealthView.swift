@@ -11,7 +11,7 @@ struct Prompt27APersonalHealthView: View {
             BackControl(action: onBack)
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("personal health context").font(.title2).bold().accessibilityAddTraits(.isHeader)
+                    Text("personal health context").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold().accessibilityAddTraits(.isHeader)
                     Text("all of this is optional. choose only what you want to share, or leave everything blank. these are your reported details, not a diagnosis or a prediction.")
                     Text("choose a testing category only if you know it applies. having a test does not mean a particular laboratory technique was used.")
                     ForEach(Prompt27AHealthField.allCases) { field in
@@ -82,7 +82,7 @@ private struct Prompt27AHealthEntryEditor: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                Text(LocalizedStringKey(field.title)).font(.title2).bold()
+                Text(LocalizedStringKey(field.title)).font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
                 if let artwork = field.artwork { Image(artwork).resizable().scaledToFit().frame(maxWidth: 120).accessibilityHidden(true) }
                 Text("anything you want Fruitfolio to know?")
                 TextField("optional history", text: $text, axis: .vertical)

@@ -35,7 +35,7 @@ struct HormoneMeasurementHistoryChart: View {
         let groups = HormoneMeasurementSeries.groups(measurements)
         if !groups.isEmpty {
             VStack(alignment: .leading, spacing: 18) {
-                Text("recorded measurements over time").font(.headline).accessibilityAddTraits(.isHeader)
+                Text("recorded measurements over time").font(.custom("Chalkboard SE", size: 18, relativeTo: .headline)).accessibilityAddTraits(.isHeader)
                     .accessibilityIdentifier("hormone.history.actualPoints")
                 Text("each point is a result you entered, on its recorded test date. there are no estimated values or connecting curves. hormones, sample types, and exact units are shown separately.")
                 ForEach(groups) { group in

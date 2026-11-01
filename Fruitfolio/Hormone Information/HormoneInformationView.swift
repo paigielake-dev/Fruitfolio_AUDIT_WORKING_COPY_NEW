@@ -22,7 +22,7 @@ struct HormoneInformationView: View {
             BackControl(action: onBack)
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    Text("hormone information ♡").font(.title2).bold().accessibilityAddTraits(.isHeader)
+                    Text("hormone information ♡").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold().accessibilityAddTraits(.isHeader)
                     Image("hormone_estrogen").resizable().scaledToFit().frame(maxWidth: 120).accessibilityHidden(true)
                     Text("your measurements stay on this device. they are not sent to Ask or used to change cycle predictions.")
                     if let loadError = store.loadError { Text(loadError).accessibilityLabel(loadError) }
@@ -121,7 +121,7 @@ private struct HormoneMeasurementEditor: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                Text("record a measurement").font(.title2).bold()
+                Text("record a measurement").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
                 Picker("hormone", selection: $draft.hormone) {
                     ForEach(RecordedHormone.allCases) { Text(LocalizedStringKey($0.title)).tag($0) }
                 }
@@ -208,7 +208,7 @@ private struct HormoneResearchLibraryView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 FruitfolioControlPillButton(label: "back") { dismiss() }
-                Text("hormone library").font(.title2).bold()
+                Text("hormone library").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
                 Picker("hormone", selection: $selected) {
                     ForEach(RecordedHormone.allCases.filter { $0 != .other }) {
                         Text(LocalizedStringKey($0.title)).tag($0)
