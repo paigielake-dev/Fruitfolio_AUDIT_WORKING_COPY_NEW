@@ -201,7 +201,7 @@ struct Prompt09AskView: View {
                 }
             }
             .fruitfolioModalBlur(
-                active: pendingLibrarySave != nil,
+                active: pendingLibrarySave != nil || showingHelp,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
@@ -247,7 +247,7 @@ struct Prompt09AskView: View {
         ) {
             inputBar
                 .fruitfolioModalBlur(
-                    active: pendingLibrarySave != nil,
+                    active: pendingLibrarySave != nil || showingHelp,
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
         }
@@ -264,25 +264,15 @@ struct Prompt09AskView: View {
                 .zIndex(100)
             }
         }
-        .overlay(
-            alignment: .topTrailing
-        ) {
+        .overlay {
             if showingHelp {
-                InfoTooltip(
-                    message:
-                        "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used."
-                )
-                .padding(.top, 74)
-                .padding(.trailing, 18)
-                .transition(
-                    .opacity.combined(
-                        with:
-                            .scale(
-                                scale: 0.98
-                            )
-                    )
-                )
-                .zIndex(20)
+                Prompt12ConfirmationPopup(assetName: "popup_info", title: "ask Fruitfolio",
+                    message: "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used.",
+                    primaryLabel: "got it", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { audioManager.play(.popupClose); showingHelp = false },
+                    secondaryAction: nil, destructiveAction: nil)
+                    .accessibilityAction(.escape) { audioManager.play(.popupClose); showingHelp = false }
+                    .zIndex(20)
             }
         }
         .task {
@@ -349,8 +339,8 @@ struct Prompt09AskView: View {
                                             0.18
                                     )
                                 ) {
-                                    showingHelp
-                                        .toggle()
+                                    inputFocused = false
+                                    showingHelp.toggle()
                                 }
                             }
                         ) {
@@ -724,10 +714,10 @@ struct Prompt09AskView: View {
                     if viewModel.phase ==
                         .answering {
 
-                        Text(
-                            viewModel
-                                .displayedAnswerText
-                        )
+                        FruitfolioSemanticText(document: answer.resolvedSemanticDocument.prefix(
+                            characters: viewModel.displayedAnswerText.count),
+                            baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
+                        .accessibilityIdentifier("ask.progressiveAnswer")
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -1121,10 +1111,7 @@ struct Prompt09AskView: View {
                     )
                     .bold()
                 )
-                .lineLimit(1)
-                .minimumScaleFactor(
-                    0.80
-                )
+                .fixedSize(horizontal: false, vertical: true)
                 .accessibilityLabel(
                     "sources"
                 )
@@ -1207,6 +1194,8 @@ struct Prompt09AskView: View {
                             .leading
                     )
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("ask.source." + source.id)
             }
         }
     }
@@ -1279,6 +1268,7 @@ struct Prompt09AskView: View {
                     .primaryBurgundy
             )
             .lineLimit(1...6)
+            .accessibilityIdentifier("ask.questionInput")
             .focused($inputFocused)
             .submitLabel(.send)
             .onSubmit {
@@ -1619,6 +1609,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         )
         textView.tintColor = Self.selectionHighlight
         textView.accessibilityLabel = "Fruitfolio answer"
+        textView.accessibilityIdentifier = "ask.completedAnswer"
 
         applyTextStyle(to: textView)
 

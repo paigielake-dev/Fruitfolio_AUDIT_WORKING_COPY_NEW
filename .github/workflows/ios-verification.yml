@@ -225,6 +225,36 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
             Fruitfolio_Verification_Evidence/Build/UserPages.xcresult
             Fruitfolio_Verification_Evidence/Visual/UserPages
+      - name: Verify grounded Ask answer and clear-on-exit lifecycle before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 8
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/AskGroundedJourneyUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-ask-journey-ui-test.log
+      - name: Export and preserve Ask lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/AskJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/AskJourney
+          fi
+      - name: Preserve focused Ask evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Ask_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-ask-journey-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/AskJourney
       - name: Run actual application UI tests
         timeout-minutes: 30
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
@@ -233,6 +263,7 @@ jobs:
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -only-testing:FruitfolioUITests \
+            -skip-testing:FruitfolioUITests/AskGroundedJourneyUITests \
             -skip-testing:FruitfolioUITests/UserAuthoredPageUITests \
             -skip-testing:FruitfolioUITests/SharedControlUITests \
             -skip-testing:FruitfolioUITests/HormoneMeasurementUITests \
