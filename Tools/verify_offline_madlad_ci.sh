@@ -32,7 +32,11 @@ restore() {
   if [[ "$filter_changed" == 1 ]]; then
     sudo pfctl -d >> "$evidence/filter-restoration.txt" 2>&1 || true
     sudo pfctl -f /etc/pf.conf >> "$evidence/filter-restoration.txt" 2>&1 || true
-    sudo pfctl -s info >> "$evidence/filter-restoration.txt" 2>&1 || true
+    sudo pfctl -s info > "$evidence/filter-restored-status.txt" 2>&1 || true
+    if ! rg -q 'Status: Disabled' "$evidence/filter-restored-status.txt"; then
+      echo "FAIL: runner filtering was not restored to its original disabled state."
+      outcome=6
+    fi
   fi
   exit "$outcome"
 }

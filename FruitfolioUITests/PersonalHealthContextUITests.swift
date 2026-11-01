@@ -7,8 +7,10 @@ final class PersonalHealthContextUITests: XCTestCase {
     }
     private func reach(_ app: XCUIApplication, _ target: XCUIElement) {
         XCTAssertTrue(target.waitForExistence(timeout: 10))
-        let scroll = app.scrollViews.allElementsBoundByIndex.last { $0.isHittable }
-        let owner = scroll ?? app
+        let identifier = target.identifier.isEmpty ? target.label : target.identifier
+        let containing = app.scrollViews.containing(target.elementType, identifier: identifier).firstMatch
+        let visibleScroll = app.scrollViews.allElementsBoundByIndex.last { $0.isHittable }
+        let owner = containing.exists ? containing : (visibleScroll ?? app)
         let visible = owner.frame.intersection(app.frame.insetBy(dx: 0, dy: 60))
         for _ in 0..<12 where !target.isHittable || !visible.contains(target.frame) {
             let up = target.frame.midY > visible.midY
@@ -26,13 +28,14 @@ final class PersonalHealthContextUITests: XCTestCase {
         let settings = button(app, "settings"); XCTAssertTrue(settings.waitForExistence(timeout: 15)); settings.tap()
         let context = button(app, "my context"); reach(app, context); context.tap()
         let profile = app.buttons[personalHealth ? "context.openPersonalHealth" : "context.editCycleSetup"]
-        XCTAssertTrue(profile.waitForExistence(timeout: 10)); profile.tap()
+        XCTAssertTrue(profile.waitForExistence(timeout: 10)); reach(app, profile); profile.tap()
         XCTAssertTrue(app.buttons[personalHealth ? "healthContext.field.heart" : "cycleSetup.edit.latestPeriod"].waitForExistence(timeout: 10))
     }
-    func testOptionalReportedHistorySavesReopensAfterRestartAndDeletesWithoutAffectingOtherContext() {
+    func testOptionalReportedHistorySavesReopensAfterRestartAndDeletesWithoutAffectingOtherContext() throws {
         let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]; app.launch()
         open(app); capture(app, "Categories")
-        let heart = app.buttons["healthContext.field.heart"]; heart.tap()
+        try fruitfolioStrictAccessibilityAudit(app)
+        let heart = app.buttons["healthContext.field.heart"]; reach(app, heart); heart.tap()
         let entry = app.descendants(matching: .any).matching(identifier: "healthContext.entryText").firstMatch
         XCTAssertTrue(entry.waitForExistence(timeout: 8)); entry.tap()
         let note = "my reported history " + UUID().uuidString
@@ -41,13 +44,14 @@ final class PersonalHealthContextUITests: XCTestCase {
         let save = button(app, "save context"); reach(app, save); save.tap()
         XCTAssertEqual(heart.value as? String, "your reported context • saved")
         capture(app, "Saved")
-        app.terminate(); app.launch(); open(app); heart.tap()
+        app.terminate(); app.launch(); open(app); reach(app, heart); heart.tap()
         XCTAssertTrue(entry.waitForExistence(timeout: 8)); XCTAssertEqual(entry.value as? String, note)
         capture(app, "PersistedOriginalText")
         let remove = button(app, "remove this context"); reach(app, remove); remove.tap()
-        XCTAssertTrue(app.alerts.buttons["remove"].waitForExistence(timeout: 5)); app.alerts.buttons["remove"].tap()
+        XCTAssertTrue(app.staticTexts["remove this context?"].waitForExistence(timeout: 8))
+        let confirmRemove = button(app, "remove"); reach(app, confirmRemove); confirmRemove.tap()
         XCTAssertEqual(heart.value as? String, "optional • removed")
-        heart.tap(); XCTAssertTrue(entry.waitForExistence(timeout: 8))
+        reach(app, heart); heart.tap(); XCTAssertTrue(entry.waitForExistence(timeout: 8))
         XCTAssertNotEqual(entry.value as? String, note)
         capture(app, "RemovedTextAbsent")
         let skip = button(app, "skip / cancel"); reach(app, skip); skip.tap()

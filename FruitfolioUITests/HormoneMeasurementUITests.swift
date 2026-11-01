@@ -39,7 +39,7 @@ final class HormoneMeasurementUITests: XCTestCase {
         XCTAssertTrue(button(app, prefix: "add measurement").waitForExistence(timeout: 8))
     }
 
-    func testCreateRestartEditAndDeleteMeasurement() {
+    func testCreateRestartEditAndDeleteMeasurement() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1"]
         app.launch()
@@ -140,7 +140,12 @@ final class HormoneMeasurementUITests: XCTestCase {
         XCTAssertTrue(delete.isHittable)
         delete.tap()
         capture(app, "DeleteConfirmation")
-        app.alerts.buttons["delete"].tap()
+        XCTAssertTrue(app.staticTexts["delete this measurement?"].waitForExistence(timeout: 8), "Actual destructive confirmation must be shown before deleting")
+        try fruitfolioStrictAccessibilityAudit(app)
+        let confirmDelete = app.buttons.matching(NSPredicate(format: "label == %@", "delete")).firstMatch
+        XCTAssertTrue(confirmDelete.waitForExistence(timeout: 8))
+        for _ in 0..<8 where !confirmDelete.isHittable { scrollSettings(app, up: true) }
+        XCTAssertTrue(confirmDelete.isHittable); confirmDelete.tap()
         XCTAssertFalse(app.staticTexts[displayed].waitForExistence(timeout: 2))
         capture(app, "AfterDeletion")
     }

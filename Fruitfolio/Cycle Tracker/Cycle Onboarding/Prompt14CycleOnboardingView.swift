@@ -56,10 +56,15 @@ struct Prompt14CycleOnboardingView: View {
         .fullScreenCover(isPresented: $showPersonalHealth) {
             Prompt27APersonalHealthView(store: contextStore) { showPersonalHealth = false }
         }
-        .confirmationDialog("leave without saving these changes?", isPresented: $showLeaveAfterSaveFailure, titleVisibility: .visible) {
-            Button("leave without saving", role: .destructive) { onExit() }
-            Button("keep editing", role: .cancel) { }
-        } message: { Text("Fruitfolio couldn’t save the latest changes. previously saved information remains available.") }
+        .fruitfolioModalBlur(active: showLeaveAfterSaveFailure, reduceMotion: motionPreferences.reduceMotionActive)
+        .overlay {
+            if showLeaveAfterSaveFailure {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "leave without saving these changes?",
+                    message: "Fruitfolio couldn’t save the latest changes. previously saved information remains available.",
+                    primaryLabel: "keep editing", secondaryLabel: nil, destructiveLabel: "leave without saving",
+                    primaryAction: { showLeaveAfterSaveFailure = false }, secondaryAction: nil, destructiveAction: onExit)
+            }
+        }
         .accessibilityIdentifier("cycle-tracker-entry")
         .task {
             await model.load()

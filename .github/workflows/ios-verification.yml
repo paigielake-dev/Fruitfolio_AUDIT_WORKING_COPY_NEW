@@ -466,7 +466,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Visual/GuideJourney
           retention-days: 90
       - name: Verify optional Personal Health Context lifecycle
-        timeout-minutes: 8
+        timeout-minutes: 12
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: |
           set -o pipefail

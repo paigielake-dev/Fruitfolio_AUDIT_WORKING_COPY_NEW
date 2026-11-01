@@ -18,20 +18,17 @@ struct Prompt27APersonalHealthView: View {
                         Button { selected = field } label: {
                             HStack(spacing: 14) {
                                 if let artwork = field.artwork {
-                                    Image(artwork).resizable().scaledToFit().frame(width: 60, height: 60)
+                                    Image(artwork).resizable().scaledToFit().frame(width: 60, height: 60).accessibilityHidden(true)
                                 }
                                 VStack(alignment: .leading, spacing: 5) {
                                     Text(LocalizedStringKey(field.title)).fontWeight(.semibold)
-                                    Text(LocalizedStringKey(status(field))).font(.footnote)
+                                    Text(LocalizedStringKey(status(field))).font(.footnote).accessibilityHidden(true)
                                 }
                                 Spacer(minLength: 0)
                             }
                             .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
-                            .accessibilityHidden(true)
                         }
-                        .accessibilityElement(children: .ignore)
                         .accessibilityAddTraits(.isButton)
-                        .accessibilityLabel(LocalizedStringKey(field.title))
                         .accessibilityValue(LocalizedStringKey(status(field)))
                         .accessibilityHint("opens an optional editable field")
                         .accessibilityIdentifier("healthContext.field." + field.rawValue)
@@ -64,6 +61,7 @@ private struct Prompt27AHealthEntryEditor: View {
     @ObservedObject var store: Prompt27AContextStore
     let field: Prompt27AHealthField
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var motion: MotionPreferences
     @State private var text: String
     @State private var clinicianConfirmed: Bool
     @State private var confirmDiscard = false
@@ -99,9 +97,10 @@ private struct Prompt27AHealthEntryEditor: View {
                 FruitfolioControlPillButton(label: "prefer not to say") {
                     store.setPersonalHealthField(field, text: "", status: .preferNotToSay); dismiss()
                 }
-                FruitfolioControlPillButton(label: "remove this context") { confirmRemove = true }
+                FruitfolioControlPillButton(label: "remove this context") { focused = false; confirmRemove = true }
                     .disabled(store.context.personalHealthFields[field]?.status != .supplied)
                 FruitfolioControlPillButton(label: "skip / cancel") {
+                    focused = false
                     if changed { confirmDiscard = true } else { dismiss() }
                 }
             }.padding(20).frame(maxWidth: 620, alignment: .leading).frame(maxWidth: .infinity)
@@ -117,13 +116,20 @@ private struct Prompt27AHealthEntryEditor: View {
             }
         }
         .interactiveDismissDisabled(changed)
-        .confirmationDialog("discard unsaved context?", isPresented: $confirmDiscard, titleVisibility: .visible) {
-            Button("discard", role: .destructive) { dismiss() }
-            Button("keep editing", role: .cancel) { }
+        .fruitfolioModalBlur(active: confirmDiscard || confirmRemove, reduceMotion: motion.reduceMotionActive)
+        .overlay {
+            if confirmDiscard {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "discard unsaved context?",
+                    message: "your saved context stays unchanged.", primaryLabel: "keep editing",
+                    secondaryLabel: nil, destructiveLabel: "discard", primaryAction: { confirmDiscard = false },
+                    secondaryAction: nil, destructiveAction: { dismiss() })
+            } else if confirmRemove {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "remove this context?",
+                    message: "the saved details will be removed. your cycle history and measurements stay unchanged.",
+                    primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "remove",
+                    primaryAction: { confirmRemove = false }, secondaryAction: nil,
+                    destructiveAction: { store.setPersonalHealthField(field, text: "", status: .removed); dismiss() })
+            }
         }
-        .alert("remove this context?", isPresented: $confirmRemove) {
-            Button("remove", role: .destructive) { store.setPersonalHealthField(field, text: "", status: .removed); dismiss() }
-            Button("cancel", role: .cancel) { }
-        } message: { Text("the saved details will be removed. your cycle history and measurements stay unchanged.") }
     }
 }

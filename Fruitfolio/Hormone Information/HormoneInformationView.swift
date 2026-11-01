@@ -3,6 +3,7 @@ import SwiftUI
 struct HormoneInformationView: View {
     @ObservedObject var store: HormoneMeasurementStore
     let onBack: () -> Void
+    @EnvironmentObject private var motion: MotionPreferences
     @State private var showLibrary = false
     @State private var showRhythm = false
     @State private var filter: RecordedHormone?
@@ -66,6 +67,23 @@ struct HormoneInformationView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .padding(20)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .fruitfolioModalBlur(active: pendingDeletion != nil || error != nil, reduceMotion: motion.reduceMotionActive)
+        .overlay {
+            if pendingDeletion != nil {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete this measurement?",
+                    message: "only this recorded result will be removed. cycle logs and predictions are unchanged.",
+                    primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "delete",
+                    primaryAction: { pendingDeletion = nil }, secondaryAction: nil, destructiveAction: {
+                        guard let record = pendingDeletion else { return }
+                        do { try store.delete(id: record.id) } catch { self.error = error.localizedDescription }
+                        pendingDeletion = nil
+                    })
+            } else if let error {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "measurement could not be changed",
+                    message: error, primaryLabel: "ok", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { self.error = nil }, secondaryAction: nil, destructiveAction: nil)
+            }
+        }
         .sheet(isPresented: $showLibrary) { HormoneResearchLibraryView() }
         .sheet(isPresented: $showRhythm) {
             ScrollView {
@@ -81,24 +99,12 @@ struct HormoneInformationView: View {
         .sheet(item: $editing) { record in
             HormoneMeasurementEditor(store: store, measurement: record)
         }
-        .alert("delete this measurement?", isPresented: Binding(
-            get: { pendingDeletion != nil }, set: { if !$0 { pendingDeletion = nil } }
-        )) {
-            Button("cancel", role: .cancel) { pendingDeletion = nil }
-            Button("delete", role: .destructive) {
-                guard let record = pendingDeletion else { return }
-                do { try store.delete(id: record.id) } catch { self.error = error.localizedDescription }
-                pendingDeletion = nil
-            }
-        } message: { Text("only this recorded result will be removed. cycle logs and predictions are unchanged.") }
-        .alert("measurement could not be changed", isPresented: Binding(
-            get: { error != nil }, set: { if !$0 { error = nil } }
-        )) { Button("ok") { error = nil } } message: { Text(error ?? "") }
     }
 }
 
 private struct HormoneMeasurementEditor: View {
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var motion: MotionPreferences
     @ObservedObject var store: HormoneMeasurementStore
     @State private var draft: HormoneMeasurement
     private let original: HormoneMeasurement
@@ -139,6 +145,7 @@ private struct HormoneMeasurementEditor: View {
                     do { try store.save(draft); dismiss() } catch { self.error = error.localizedDescription }
                 }.disabled(draft.validationError != nil)
                 FruitfolioControlPillButton(label: "cancel") {
+                    fieldFocused = false
                     if draft != original { showDiscard = true } else { dismiss() }
                 }
             }
@@ -164,9 +171,14 @@ private struct HormoneMeasurementEditor: View {
             }
         }
         .interactiveDismissDisabled(draft != original)
-        .confirmationDialog("discard unsaved measurement?", isPresented: $showDiscard, titleVisibility: .visible) {
-            Button("discard", role: .destructive) { dismiss() }
-            Button("keep editing", role: .cancel) { }
+        .fruitfolioModalBlur(active: showDiscard, reduceMotion: motion.reduceMotionActive)
+        .overlay {
+            if showDiscard {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "discard unsaved measurement?",
+                    message: "your saved measurements stay unchanged.", primaryLabel: "keep editing",
+                    secondaryLabel: nil, destructiveLabel: "discard", primaryAction: { showDiscard = false },
+                    secondaryAction: nil, destructiveAction: { dismiss() })
+            }
         }
     }
 
