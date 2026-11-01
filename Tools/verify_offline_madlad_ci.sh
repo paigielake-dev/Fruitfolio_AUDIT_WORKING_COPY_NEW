@@ -9,8 +9,14 @@ fi
 : "${FRUITFOLIO_SIMULATOR_ID:?Actual booted simulator is required}"
 evidence="Fruitfolio_Verification_Evidence/MADLAD/Offline"
 mkdir -p "$evidence"
+# pfctl may return nonzero when filtering is disabled. Inspect the actual
+# status text; that is the required safe baseline, not a failure to restore.
+set +e
 sudo pfctl -s info > "$evidence/filter-before.txt" 2>&1
-if ! rg -q 'Status: Disabled' "$evidence/filter-before.txt"; then
+status_outcome=$?
+set -e
+printf '%s\n' "$status_outcome" > "$evidence/filter-before-exit-status.txt"
+if ! /usr/bin/grep -q 'Status: Disabled' "$evidence/filter-before.txt"; then
   echo "Offline isolation was not executed: an existing active firewall will not be replaced."
   exit 2
 fi
@@ -33,7 +39,7 @@ restore() {
     sudo pfctl -d >> "$evidence/filter-restoration.txt" 2>&1 || true
     sudo pfctl -f /etc/pf.conf >> "$evidence/filter-restoration.txt" 2>&1 || true
     sudo pfctl -s info > "$evidence/filter-restored-status.txt" 2>&1 || true
-    if ! rg -q 'Status: Disabled' "$evidence/filter-restored-status.txt"; then
+    if ! /usr/bin/grep -q 'Status: Disabled' "$evidence/filter-restored-status.txt"; then
       echo "FAIL: runner filtering was not restored to its original disabled state."
       outcome=6
     fi

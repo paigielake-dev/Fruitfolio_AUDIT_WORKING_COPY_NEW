@@ -18,9 +18,19 @@ final class SettingsVolumeUITests: XCTestCase {
         XCTAssertTrue(app.sliders["settings.volume.music"].waitForExistence(timeout: 10))
     }
     private func reach(_ app: XCUIApplication, _ slider: XCUIElement) {
-        let visible = app.frame.insetBy(dx: 0, dy: 60)
-        for _ in 0..<10 where !slider.isHittable || !visible.contains(slider.frame) { scrollSettings(app, up: true) }
+        let owner = app.scrollViews["settings.mainScroll"]
+        let visible = app.frame.insetBy(dx: 0, dy: 60).intersection(owner.frame)
+        for _ in 0..<14 where !slider.isHittable || !visible.contains(slider.frame) {
+            scrollSettings(app, up: slider.frame.midY > visible.midY)
+        }
+        if !slider.isHittable || !visible.contains(slider.frame) {
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "Settings_UnreachableVolume_" + slider.identifier; screenshot.lifetime = .keepAlways; add(screenshot)
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "Settings_UnreachableVolumeHierarchy"; tree.lifetime = .keepAlways; add(tree)
+        }
         XCTAssertTrue(slider.isHittable)
+        XCTAssertTrue(visible.contains(slider.frame), "The entire real slider, including its thumb, must be inside its owning scroll viewport before interaction")
     }
     func testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart() {
         let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]; app.launch()
@@ -39,6 +49,12 @@ final class SettingsVolumeUITests: XCTestCase {
             let original = saved[name] ?? ""
             let target: CGFloat = original.hasPrefix("23") ? 0.71 : 0.23
             slider.adjust(toNormalizedSliderPosition: target)
+            let changedValue = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                guard let actual = slider.value as? String else { return false }
+                return actual != original
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [changedValue], timeout: 3), .completed,
+                           "The actual native slider must report the changed preference after its touch event")
             let changed = slider.value as? String
             XCTAssertNotNil(changed, "The actual adjustable control must expose its selected value")
             XCTAssertNotEqual(changed, original, "Dragging the painted \(name) slider must change its actual preference")

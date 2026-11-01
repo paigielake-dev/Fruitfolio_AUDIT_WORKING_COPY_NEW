@@ -16833,7 +16833,7 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
         "Original painted track and knob now rendered by a real native UISlider, replacing a custom accessibility representation whose scrubber coordinates were zero. Actual audio volume observer uses newly delivered preference value.",
@@ -16854,15 +16854,23 @@
             "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
             "2d06a17810125d9c33a719bc60663256372432f7"
           ]
+        },
+        {
+          "result": "FAIL",
+          "scope": "Actual Run50 SettingsVolumeUITests first slider adjustment, source 7ac5a9e; no claim that later journey steps ran"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run39/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run39/SettingsVolumes/Visual/SettingsVolumes/24B1D40E-CE76-4A13-A562-01253248D5DD.png",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Actual Run50 native music-slider value remained unchanged after synthesized drag. Bidirectional complete-viewport test-helper correction requires actual rerun; later category/master/restart steps were not reached."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -16878,6 +16886,10 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "PARTIAL"
+        },
+        {
+          "baseline": "Before actual Run50 native music-slider adjustment failure",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Add or verify separately adjustable volume controls for music, rain, sound effects, and typing.",
@@ -16887,7 +16899,7 @@
       },
       "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "verificationState": "FAIL in latest retrieved UI execution; prior functional/audio unit acceptance retained",
       "existingSourceFiles": [
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Global Controls/FruitfolioArtworkVolumeSlider.swift"
@@ -16915,10 +16927,12 @@
         "Fruitfolio_Verification_Evidence/AppleRuns/Run39/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run39/SettingsVolumes/Visual/SettingsVolumes/24B1D40E-CE76-4A13-A562-01253248D5DD.png",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS",
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL",
       "historicalEvidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run32/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ]
@@ -36996,7 +37010,7 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
         "Actual preference interactions, persistence and player API behavior tested. Audible quality is not asserted."
@@ -37017,15 +37031,23 @@
             "884184040db65aef0f4fd28a5963509fd9501748"
           ],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        },
+        {
+          "result": "FAIL",
+          "scope": "Actual Run50 SettingsVolumeUITests first slider adjustment, source 7ac5a9e; no claim that later journey steps ran"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Actual Run50 native music-slider value remained unchanged after synthesized drag. Bidirectional complete-viewport test-helper correction requires actual rerun; later category/master/restart steps were not reached."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -37046,6 +37068,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run50 native music-slider adjustment failure",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Test audio preferences and global mute.",
@@ -37055,7 +37081,7 @@
       },
       "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "verificationState": "FAIL in latest retrieved UI execution; prior functional/audio unit acceptance retained",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml",
         "Fruitfolio/Core/Assets/AudioManager.swift",
@@ -37090,10 +37116,12 @@
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-466",
@@ -38317,8 +38345,8 @@
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
   "implementationPassVerificationNote": "Actual Run48 unit/strict Contact/FAQ acceptance retained; Run50 bounded Chinese script fixture passed with one unrelated timestamp fixture failure. New popup/chart/LifeBridge/Fruit Basket/offline-Ask changes await their own actual Xcode results. No skipped or source-only item is PASS.",
   "summary": {
-    "PARTIAL": 110,
-    "PASS": 37,
+    "PARTIAL": 112,
+    "PASS": 35,
     "NOT VERIFIED": 321,
     "BLOCKED": 6,
     "FAIL": 4

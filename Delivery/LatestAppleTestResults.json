@@ -2531,24 +2531,24 @@
     "remainingStages": "PENDING"
   },
   "trackerCounts": {
-    "PARTIAL": 110,
-    "PASS": 37,
+    "PARTIAL": 112,
+    "PASS": 35,
     "NOT VERIFIED": 321,
     "BLOCKED": 6,
     "FAIL": 4
   },
   "latestAcceptedFullUnitRun": {
-    "id": 41356081841,
-    "runNumber": 48,
-    "commit": "2b02efa6ee30f0d811298940b1bebb833ad4ec5e",
+    "id": 41358742740,
+    "runNumber": 51,
+    "commit": "06b574e3affa1e4f9c21d5b02324543b397e839e",
     "XCTest": {
-      "executed": 507,
-      "PASS": 506,
+      "executed": 514,
+      "PASS": 513,
       "SKIP": 1,
       "FAIL": 0
     },
     "SwiftTestingPASS": 25,
-    "overallRun": "NOT PASS: focused Hormone/Username/PersonalHealth and native accessibility failures"
+    "overallRun": "IN PROGRESS at retrieval; offline setup failed before inference"
   },
   "run50": {
     "id": 41357420177,
@@ -2566,6 +2566,14 @@
     "MADLADChineseScriptFixture": "PASS: zh simplified and exact zh_Hant traditional output; bounded sentence only",
     "focusedSharedControls": "PASS",
     "focusedHormone": "FAIL: parent identifier propagated onto chart; repair pending",
-    "remainingStages": "Retrieve actual results; no inference from queued/in-progress states"
+    "remainingStages": "Retrieve actual results; no inference from queued/in-progress states",
+    "focusedVolumes": "FAIL: music slider unchanged after synthesized touch; full owning-scroll visibility test repair requires actual rerun"
+  },
+  "run51Offline": {
+    "result": "FAIL before inference",
+    "artifact": 13104874283,
+    "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run51/Offline/MADLAD/Offline/filter-before.txt",
+    "observed": "Only initial pfctl status exported; actual status Disabled. No inference or external blocking evidence, no offline PASS.",
+    "repair": "Capture pfctl status command outcome rather than stop before parsing; use system grep; strict external probes and native test assertions retained."
   }
 }
