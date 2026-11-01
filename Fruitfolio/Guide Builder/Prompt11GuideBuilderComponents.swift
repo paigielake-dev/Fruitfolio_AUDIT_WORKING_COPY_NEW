@@ -101,6 +101,8 @@ struct Prompt11GuideBookTile: View {
                 reduceMotion: reduceMotion
             )
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityAddTraits(.isButton)
         .accessibilityLabel(
             "\(encyclopedia.name). \(encyclopedia.savedPageCount) saved pages."
         )
@@ -136,6 +138,8 @@ struct Prompt11NewGuideTile: View {
                 reduceMotion: reduceMotion
             )
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityAddTraits(.isButton)
         .accessibilityLabel("Make a new guide")
     }
 }
