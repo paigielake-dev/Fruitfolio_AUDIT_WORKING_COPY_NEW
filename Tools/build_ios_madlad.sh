@@ -14,9 +14,16 @@ for target in aarch64-apple-ios aarch64-apple-ios-sim; do
     --manifest-path TranslationInvestigation/madlad-candle-probe/Cargo.toml
  done
 mkdir -p Vendor
+# Static XCFrameworks share Xcode's product include directory. Namespace
+# MADLAD's headers so its module map cannot overwrite llama's module map.
+headers_root="$(mktemp -d)"
+trap 'rm -rf "$headers_root"' EXIT
+mkdir -p "$headers_root/FruitfolioMADLADRuntime"
+cp TranslationInvestigation/madlad-candle-probe/include/FruitfolioMADLAD.h "$headers_root/FruitfolioMADLADRuntime/"
+cp TranslationInvestigation/madlad-candle-probe/include/module.modulemap "$headers_root/FruitfolioMADLADRuntime/"
 xcodebuild -create-xcframework \
  -library TranslationInvestigation/madlad-candle-probe/target/aarch64-apple-ios/release/libfruitfolio_madlad.a \
- -headers TranslationInvestigation/madlad-candle-probe/include \
+ -headers "$headers_root" \
  -library TranslationInvestigation/madlad-candle-probe/target/aarch64-apple-ios-sim/release/libfruitfolio_madlad.a \
- -headers TranslationInvestigation/madlad-candle-probe/include \
+ -headers "$headers_root" \
  -output Vendor/FruitfolioMADLAD.xcframework
