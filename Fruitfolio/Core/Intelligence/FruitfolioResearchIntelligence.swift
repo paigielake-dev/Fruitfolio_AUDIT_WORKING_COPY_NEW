@@ -426,6 +426,20 @@ nonisolated struct FruitfolioLocalResearchRetriever:
     Sendable
 {
     let package: FruitfolioResearchPackage
+    private let indexedNotes: [(chunk: FruitfolioResearchNoteChunk, heading: Set<String>, body: Set<String>)]
+    private let indexedSources: [(chunk: FruitfolioSourceChunk, body: Set<String>)]
+
+    init(package: FruitfolioResearchPackage) {
+        self.package = package
+        indexedNotes = package.researchNoteChunks.map { chunk in
+            (chunk, FruitfolioQueryNormalizer.tokens(chunk.heading),
+             chunk.semanticTags.isEmpty ? FruitfolioQueryNormalizer.tokens(chunk.text) : Set(chunk.semanticTags))
+        }
+        let eligible = Set(package.sources.filter(\.isApprovedForDisplay).map(\.sourceID))
+        indexedSources = package.sourceChunks.filter { eligible.contains($0.sourceID) }.map {
+            ($0, FruitfolioQueryNormalizer.tokens($0.text))
+        }
+    }
 
     func searchNotes(
         question: String,
@@ -440,29 +454,15 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             return []
         }
 
-        return package
-            .researchNoteChunks
+        let normalizedQuestion = FruitfolioQueryNormalizer.normalize(question)
+        return indexedNotes
             .compactMap {
-                chunk in
+                entry in
+                let chunk = entry.chunk
                 guard !Task.isCancelled else { return nil }
 
-                let headingTokens =
-                    FruitfolioQueryNormalizer.tokens(
-                        chunk.heading
-                    )
-
-                let bodyTokens: Set<String>
-
-                if chunk.semanticTags.isEmpty {
-                    bodyTokens =
-                        FruitfolioQueryNormalizer.tokens(
-                            chunk.text
-                        )
-                } else {
-                    bodyTokens = Set(
-                        chunk.semanticTags
-                    )
-                }
+                let headingTokens = entry.heading
+                let bodyTokens = entry.body
 
                 let headingHits = Double(
                     queryTokens
@@ -479,11 +479,6 @@ nonisolated struct FruitfolioLocalResearchRetriever:
                         )
                         .count
                 )
-
-                let normalizedQuestion =
-                    FruitfolioQueryNormalizer.normalize(
-                        question
-                    )
 
                 let exactBonus =
                     chunk.text
@@ -534,28 +529,23 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             return []
         }
 
-        let eligibleSourceIDs = Set(package.sources.filter(\.isApprovedForDisplay).map(\.sourceID))
         let queryTokens =
             FruitfolioQueryNormalizer.tokens(
                 question
             )
 
-        return package
-            .sourceChunks
+        return indexedSources
             .compactMap {
-                chunk in
+                entry in
+                let chunk = entry.chunk
                 guard !Task.isCancelled else { return nil }
 
-                guard eligibleSourceIDs.contains(chunk.sourceID),
-                    (approvedSourceIDs.isEmpty || approvedSourceIDs.contains(chunk.sourceID))
+                guard approvedSourceIDs.isEmpty || approvedSourceIDs.contains(chunk.sourceID)
                 else {
                     return nil
                 }
 
-                let bodyTokens =
-                    FruitfolioQueryNormalizer.tokens(
-                        chunk.text
-                    )
+                let bodyTokens = entry.body
 
                 let score = Double(
                     queryTokens
@@ -663,6 +653,14 @@ actor FruitfolioResearchPackageStore {
 
     private var cached:
         FruitfolioResearchPackage?
+    private var cachedRetriever: FruitfolioLocalResearchRetriever?
+
+    func retriever() throws -> FruitfolioLocalResearchRetriever {
+        if let cachedRetriever { return cachedRetriever }
+        let value = FruitfolioLocalResearchRetriever(package: try load())
+        cachedRetriever = value
+        return value
+    }
 
     func load() throws
         -> FruitfolioResearchPackage
@@ -1506,10 +1504,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
         progress?(.lookingThroughLibrary)
 
-        let retriever =
-            FruitfolioLocalResearchRetriever(
-                package: package
-            )
+        let retriever = try await packageStore.retriever()
 
         let noteSearch = Task.detached(priority: .userInitiated) {
             retriever.searchNotes(question: normalized)

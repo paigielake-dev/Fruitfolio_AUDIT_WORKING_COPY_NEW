@@ -20,6 +20,7 @@ final class AudioManager: ObservableObject {
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
     private var audioInterrupted = false
     private var applicationIsActive = true
+    private var lastTypingTick: TimeInterval = -Double.infinity
     private var notificationObservers: [NSObjectProtocol] = []
 
     init(settings: SettingsStore? = nil) {
@@ -113,6 +114,28 @@ final class AudioManager: ObservableObject {
             bundle: bundle
         )
     }
+
+    /// Reuses one player and throttles dense character updates to avoid audio piles.
+    func playTypingTick(bundle: Bundle = .main) {
+        guard !audioInterrupted, applicationIsActive, isEnabled(.typingASMR) else { return }
+        let now = ProcessInfo.processInfo.systemUptime
+        guard now - lastTypingTick >= 0.08 else { return }
+        lastTypingTick = now
+        if let player = oneShotPlayers[.typingASMR]?.first {
+            player.volume = volume(for: .typingASMR)
+            player.currentTime = 0
+            _ = player.play()
+        } else {
+            playOneShot(.typingSoft, category: .typingASMR, bundle: bundle)
+        }
+    }
+
+    #if DEBUG
+    var typingPlaybackState: (playerCount: Int, isPlaying: Bool, volume: Float) {
+        let players = oneShotPlayers[.typingASMR] ?? []
+        return (players.count, players.contains(where: \.isPlaying), players.first?.volume ?? 0)
+    }
+    #endif
 
     func fadeIn(
         _ id: FruitfolioAudioID,

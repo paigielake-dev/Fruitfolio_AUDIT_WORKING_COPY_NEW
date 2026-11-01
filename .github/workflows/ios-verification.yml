@@ -1,4 +1,4 @@
-name: Fruitfolio iOS verification (manual)
+name: Fruitfolio iOS verification
 on:
   workflow_dispatch:
   pull_request:
@@ -14,15 +14,37 @@ jobs:
         with:
           lfs: true
       - name: Capture Apple tool versions
+        id: apple-tools
         run: |
           mkdir -p Fruitfolio_Verification_Evidence/Build
           xcodebuild -version | tee Fruitfolio_Verification_Evidence/Build/xcode-version.txt
           swift --version | tee Fruitfolio_Verification_Evidence/Build/swift-version.txt
           xcrun simctl list devices available > Fruitfolio_Verification_Evidence/Build/simulators.txt
+          echo "xcode=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v4
+        id: runtime-cache
+        with:
+          path: Vendor/llama.xcframework
+          key: llama-ios-v1-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('llama.cpp/**', 'Tools/build_ios_llama.sh') }}
       - name: Build vendored iOS runtime
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
         run: |
           set -o pipefail
           bash Tools/build_ios_llama.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/llama.xcframework
+          key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Preserve built Apple runtime before app tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Apple_Runtime
+          path: |
+            Vendor/llama.xcframework
+            Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+            Fruitfolio_Verification_Evidence/Build/xcode-version.txt
+            Fruitfolio_Verification_Evidence/Build/swift-version.txt
       - name: Choose installed iPhone simulator
         run: |
           xcrun simctl list devices available -j > /tmp/fruitfolio-devices.json
@@ -33,11 +55,21 @@ jobs:
           if not iphones: raise SystemExit('No available iPhone simulator')
           with open(os.environ['GITHUB_ENV'],'a') as f: f.write('FRUITFOLIO_SIMULATOR_ID='+iphones[0]['udid']+'\n')
           PY
-      - name: Build and run XCTest and UI tests
+      - name: Build application and test targets
         run: |
           set -o pipefail
-          xcodebuild test -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+          xcodebuild build-for-testing -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Build.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-build.log
+      - name: Run XCTest and UI tests against built application
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-test.log
@@ -55,6 +87,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Fruitfolio_Verification_Evidence
-          path: |
-            Fruitfolio_Verification_Evidence
-            Vendor/llama.xcframework
+          path: Fruitfolio_Verification_Evidence

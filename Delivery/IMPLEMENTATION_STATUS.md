@@ -72,3 +72,11 @@ checkpoint is not named FINAL_COMPLETE and is not release-ready.
 The GitHub development branch and draft PR preserve the source changes. The
 Apple CI result and evidence index are authoritative for actual executed tests;
 static checks are never a substitute for Xcode or simulator behavior.
+
+Additional corrections after the first checkpoint: retrieval token indexes are
+cached in the research actor, avoiding full-library tokenization per question;
+Ask typing ASMR is connected to the independent audio channel with an 80 ms
+throttle and player reuse. A real AVAudioPlayer-state test is staged. A selected
+non-English language now receives an explicit original-English/translation-
+unavailable notice instead of silently pretending its Ask answer was translated.
+No new iOS test pass is asserted by these source changes.

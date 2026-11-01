@@ -3,6 +3,7 @@ import Combine
 import UIKit
 
 struct Prompt09AskView: View {
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var navigation: NavigationCoordinator
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -139,6 +140,7 @@ struct Prompt09AskView: View {
                         nearConversationBottom = bottom <= conversationViewportHeight + 80
                     }
                     .onChange(of: viewModel.displayedAnswerText.count) {
+                        if viewModel.phase == .answering { audioManager.playTypingTick() }
                         if nearConversationBottom { proxy.scrollTo("askConversationBottom", anchor: .bottom) }
                     }
                     .scrollDismissesKeyboard(
@@ -297,7 +299,11 @@ struct Prompt09AskView: View {
         .task {
             await revealSuggestions()
         }
+        .onChange(of: viewModel.phase) { _, phase in
+            if phase != .answering { audioManager.stop(category: .typingASMR) }
+        }
         .onDisappear {
+            audioManager.stop(category: .typingASMR)
             inputFocused = false
             viewModel.resetConversation()
             savedAnswerIDs.removeAll()
@@ -685,6 +691,14 @@ struct Prompt09AskView: View {
         _ answer: AskAnswer
     ) -> some View {
         VStack(spacing: 12) {
+            if settings.language != .english {
+                Text("this answer is shown in its original English because offline translation is unavailable. your language preference is unchanged.")
+                    .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 22)
+                    .accessibilityIdentifier("ask.translationUnavailable")
+            }
             ZStack {
                 VStack(
                     alignment: .leading,
