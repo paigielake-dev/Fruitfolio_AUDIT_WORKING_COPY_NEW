@@ -8,7 +8,7 @@ permissions:
 jobs:
   ios:
     runs-on: macos-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
@@ -195,14 +195,45 @@ jobs:
         with:
           name: Fruitfolio_Hormone_Functional_Evidence
           path: Fruitfolio_Verification_Evidence
+      - name: Verify user-authored page lifecycle before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/UserAuthoredPageUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/UserPages.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
+      - name: Export and preserve user-page lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/UserPages.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/UserPages
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/UserPages.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/UserPages
+          fi
+      - name: Preserve focused user-page evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_User_Page_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/UserPages.xcresult
+            Fruitfolio_Verification_Evidence/Visual/UserPages
       - name: Run actual application UI tests
-        timeout-minutes: 20
+        timeout-minutes: 30
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -only-testing:FruitfolioUITests \
+            -skip-testing:FruitfolioUITests/UserAuthoredPageUITests \
             -skip-testing:FruitfolioUITests/SharedControlUITests \
             -skip-testing:FruitfolioUITests/HormoneMeasurementUITests \
             -skip-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \

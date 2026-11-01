@@ -16,13 +16,15 @@ struct Prompt30ContactView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
+                    FruitfolioProtectedHeader {
                         Prompt12RouteHeader(
                             title: "contact",
                             subtitle: "questions, feedback, or just a little hello ♡",
                             assetName: nil,
                             onBack: onBack
                         )
+                    } decoration: { protected, space in
+                        ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
                             FruitfolioImage(id: .fruitbasket_watermelon)
@@ -37,15 +39,18 @@ struct Prompt30ContactView: View {
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)
+                        .fruitfolioAvoidProtectedContent(protected, in: space)
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
                             .frame(width: 92, height: 92)
+                            .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 72, y: -14)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
+                        }
                     }
 
                     VStack(spacing: 4) {

@@ -4,6 +4,7 @@ nonisolated enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case plain
     case anchorBold
     case spokenItalic
+    case anchorSpokenBoldItalic
     case symptomOrPracticalUnderline
     case actionableBoldUnderline
     case rareItalicUnderline

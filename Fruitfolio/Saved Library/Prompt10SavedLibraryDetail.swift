@@ -15,6 +15,7 @@ struct Prompt10EncyclopediaDetailView: View {
 
     @State private var selectedPage: Prompt10SavedPage?
     @State private var expandedChapterIDs: Set<UUID> = []
+    @State private var editingChapterID: UUID?
 
     private var encyclopedia: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -132,6 +133,13 @@ struct Prompt10EncyclopediaDetailView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .sheet(isPresented: Binding(get: { editingChapterID != nil }, set: { if !$0 { editingChapterID = nil } })) {
+            if let chapterID = editingChapterID {
+                Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: chapterID,
+                    onSaved: { page in editingChapterID = nil; selectedPage = page },
+                    onCancel: { editingChapterID = nil })
+            }
+        }
         .onAppear {
             // A saved encyclopedia should never open looking empty when it already
             // contains pages. Expand populated chapters by default; the user can
@@ -233,6 +241,7 @@ struct Prompt10EncyclopediaDetailView: View {
         let expanded = expandedChapterIDs.contains(chapter.id)
 
         return VStack(spacing: 8) {
+
             Button {
                 if expanded {
                     expandedChapterIDs.remove(chapter.id)
@@ -286,6 +295,9 @@ struct Prompt10EncyclopediaDetailView: View {
 
             if expanded {
                 VStack(spacing: 6) {
+                    FruitfolioControlPillButton(label: "add my own page") { editingChapterID = chapter.id }
+                        .accessibilityIdentifier("library.addPage.\(chapter.id)")
+
                     ForEach(
                         chapter.pages.sorted {
                             $0.order < $1.order
@@ -320,7 +332,7 @@ struct Prompt10EncyclopediaDetailView: View {
                                     .lineLimit(2)
 
                                     Text(
-                                        page.saveType == .excerpt
+                                        page.isUserAuthored == true ? "my own page" : page.saveType == .excerpt
                                             ? "saved excerpt"
                                             : "complete saved answer"
                                     )
@@ -369,6 +381,7 @@ struct Prompt10SavedPageView: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var mediaMessage: String?
     @State private var noteDraft = ""
+    @State private var editingPage = false
 
     var body: some View {
         ScrollView {
@@ -421,6 +434,9 @@ struct Prompt10SavedPageView: View {
                     )
                     .textSelection(.enabled)
 
+                if page.isUserAuthored == true {
+                    FruitfolioControlPillButton(label: "edit my page") { editingPage = true }
+                }
                 notesSection
                 importedImagesSection
 
@@ -464,6 +480,11 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .sheet(isPresented: $editingPage) {
+            Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: page.chapterID,
+                page: page, onSaved: { updated in onPageChanged(updated); editingPage = false },
+                onCancel: { editingPage = false })
+        }
     }
 
     private var notesSection: some View {
@@ -560,7 +581,7 @@ struct Prompt10SavedPageView: View {
             var ids = page.importedImageIDs ?? []
             ids.removeAll { $0 == id }
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
-            try Prompt10LocalMediaStore.shared.delete(id)
+            if !store.imageIsReferenced(id) { try Prompt10LocalMediaStore.shared.delete(id) }
             var updated = page
             updated.importedImageIDs = ids
             onPageChanged(updated)

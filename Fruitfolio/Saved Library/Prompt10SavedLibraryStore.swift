@@ -8,6 +8,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
 
     static let maximumEncyclopedias = 100
 
+    @Published private(set) var loadError: String?
     @Published private(set) var encyclopedias: [Prompt10Encyclopedia] = []
 
     private let defaults: UserDefaults
@@ -548,13 +549,19 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         try persist()
     }
 
+    func retryLoad() { load() }
+
     private func load() {
+        loadError = nil
         guard let data =
                 defaults.data(
                     forKey: persistenceKey
                 )
         else {
             encyclopedias = []
+            if defaults.object(forKey: persistenceKey) != nil {
+                loadError = "your library could not be read. the original data is preserved."
+            }
             return
         }
 
@@ -566,10 +573,15 @@ final class Prompt10SavedLibraryStore: ObservableObject {
                 )
         } catch {
             encyclopedias = []
+            loadError = "your library could not be read. the original data is preserved."
         }
     }
 
     private func persist() throws {
+        guard loadError == nil else {
+            encyclopedias = []
+            throw Prompt10LibraryError.persistenceFailure
+        }
         do {
             let data =
                 try JSONEncoder().encode(
@@ -581,6 +593,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
                 forKey: persistenceKey
             )
         } catch {
+            load() // Roll back a failed mutation to the last readable persisted state.
             throw Prompt10LibraryError
                 .persistenceFailure
         }
@@ -615,5 +628,51 @@ final class Prompt10SavedLibraryStore: ObservableObject {
                 .pages[index]
                 .order = index
         }
+    }
+}
+
+
+nonisolated enum Prompt10UserPageError: LocalizedError {
+    case emptyTitle, emptyContent, readOnlyEvidence
+    var errorDescription: String? {
+        switch self {
+        case .emptyTitle: return "please add a page title."
+        case .emptyContent: return "add some writing or an image before saving."
+        case .readOnlyEvidence: return "the sourced answer stays unchanged. you can add your own notes."
+        }
+    }
+}
+
+extension Prompt10SavedLibraryStore {
+    @discardableResult
+    func saveUserPage(pageID: UUID?, encyclopediaID: UUID, chapterID: UUID,
+                      title: String, document: FruitfolioSemanticDocument, imageIDs: [String]) throws -> Prompt10SavedPage {
+        guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw Prompt10UserPageError.emptyTitle }
+        guard !document.plainText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !imageIDs.isEmpty else { throw Prompt10UserPageError.emptyContent }
+        guard let book = encyclopedias.firstIndex(where: { $0.id == encyclopediaID }) else { throw Prompt10LibraryError.encyclopediaNotFound }
+        guard let chapter = encyclopedias[book].chapters.firstIndex(where: { $0.id == chapterID }) else { throw Prompt10LibraryError.chapterNotFound }
+        if let pageID {
+            guard let index = encyclopedias[book].chapters[chapter].pages.firstIndex(where: { $0.id == pageID }) else { throw Prompt10LibraryError.pageNotFound }
+            guard encyclopedias[book].chapters[chapter].pages[index].isUserAuthored == true else { throw Prompt10UserPageError.readOnlyEvidence }
+            var page = encyclopedias[book].chapters[chapter].pages[index]
+            page.question = title; page.answer = document.plainText; page.semanticDocument = document
+            page.importedImageIDs = imageIDs; page.updatedAt = Date()
+            encyclopedias[book].chapters[chapter].pages[index] = page
+            encyclopedias[book].updatedAt = Date()
+            try persist()
+            return page
+        }
+        return try savePage(.init(chapterID: chapterID, question: title, answer: document.plainText,
+            saveType: .fullAnswer, importedImageIDs: imageIDs, semanticDocument: document, isUserAuthored: true),
+            to: encyclopediaID, chapterID: chapterID)
+    }
+}
+
+
+extension Prompt10SavedLibraryStore {
+    func imageIsReferenced(_ id: String) -> Bool {
+        encyclopedias.contains { book in book.chapters.contains { chapter in
+            chapter.pages.contains { $0.importedImageIDs?.contains(id) == true }
+        } }
     }
 }

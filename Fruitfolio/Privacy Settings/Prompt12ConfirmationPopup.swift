@@ -43,7 +43,6 @@ struct Prompt12ConfirmationPopup: View {
                     .frame(maxWidth: 275)
 
                 WatercolorPrimaryButton(label: primaryLabel) {
-                    audioManager.play(.buttonSoftPop)
                     primaryAction()
                 }
 

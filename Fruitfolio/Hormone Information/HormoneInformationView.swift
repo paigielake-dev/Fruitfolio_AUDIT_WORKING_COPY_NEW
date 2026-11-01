@@ -92,6 +92,7 @@ private struct HormoneMeasurementEditor: View {
     @ObservedObject var store: HormoneMeasurementStore
     @State private var draft: HormoneMeasurement
     private let original: HormoneMeasurement
+    @FocusState private var fieldFocused: Bool
     @State private var showDiscard = false
     @State private var error: String?
 
@@ -138,6 +139,13 @@ private struct HormoneMeasurementEditor: View {
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .scrollDismissesKeyboard(.interactively)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("done") { fieldFocused = false }
+            }
+        }
         .interactiveDismissDisabled(draft != original)
         .confirmationDialog("discard unsaved measurement?", isPresented: $showDiscard, titleVisibility: .visible) {
             Button("discard", role: .destructive) { dismiss() }
@@ -150,6 +158,9 @@ private struct HormoneMeasurementEditor: View {
             Text(LocalizedStringKey(label))
             TextField(LocalizedStringKey(label), text: text, axis: .vertical)
                 .textFieldStyle(.roundedBorder)
+                .focused($fieldFocused)
+                .submitLabel(.done)
+                .onSubmit { fieldFocused = false }
                 .accessibilityLabel(LocalizedStringKey(label))
                 .autocorrectionDisabled()
         }

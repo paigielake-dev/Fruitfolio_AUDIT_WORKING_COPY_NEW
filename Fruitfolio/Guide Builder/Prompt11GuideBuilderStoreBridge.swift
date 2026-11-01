@@ -108,7 +108,8 @@ extension Prompt10SavedLibraryStore {
             notes: "",
             sourceSavedPageID: sourceKey,
             importedImageIDs: sourcePage.importedImageIDs,
-            semanticDocument: sourcePage.semanticDocument
+            semanticDocument: sourcePage.semanticDocument,
+            isUserAuthored: sourcePage.isUserAuthored
         )
 
         return try savePage(

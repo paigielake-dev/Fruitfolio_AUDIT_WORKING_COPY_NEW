@@ -39,7 +39,7 @@ struct FruitfolioControlPillArtwork: View {
                     .resizable(capInsets: EdgeInsets(
                         top: image.size.height * 0.40, leading: image.size.height * 0.48,
                         bottom: image.size.height * 0.40, trailing: image.size.height * 0.48
-                    ), resizingMode: .stretch)
+                    ), resizingMode: .tile)
             } else {
                 // Same registered original; asset loader exposes missing resources.
                 FruitfolioImage(id: .control_pill_outline).scaledToFit()

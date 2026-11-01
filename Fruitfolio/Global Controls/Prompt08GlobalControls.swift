@@ -93,6 +93,7 @@ struct WatercolorSecondaryButton: View {
 /// shell grows vertically when longer text or Dynamic Type needs more room.
 struct FruitfolioControlPillButton: View {
     let label: String
+    var playsSound = true
     let action: () -> Void
 
     @EnvironmentObject
@@ -103,7 +104,7 @@ struct FruitfolioControlPillButton: View {
 
     var body: some View {
         Button {
-            audioManager.play(.buttonSoftPop)
+            if playsSound { audioManager.play(.buttonSoftPop) }
             action()
         } label: {
             Text(label)
@@ -112,7 +113,7 @@ struct FruitfolioControlPillButton: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 30)
+                .padding(.horizontal, 46)
                 .padding(.vertical, 20)
                 .frame(maxWidth: 292, minHeight: 82, alignment: .center)
                 .background { FruitfolioControlPillArtwork() }

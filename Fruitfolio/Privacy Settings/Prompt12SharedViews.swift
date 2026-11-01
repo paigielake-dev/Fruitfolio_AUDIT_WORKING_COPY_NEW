@@ -60,6 +60,8 @@ struct Prompt12RouteHeader: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .fruitfolioProtectFromDecoration()
                     .padding(.horizontal, 58)
             }
 
@@ -77,6 +79,8 @@ struct Prompt12RouteHeader: View {
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .fruitfolioProtectFromDecoration()
                 .frame(maxWidth: 300)
         }
         .padding(.top, 10)

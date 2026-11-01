@@ -23,7 +23,7 @@ for path in (root / 'Fruitfolio/Assets.xcassets').rglob('Contents.json'):
 check('Asset catalog payloads exist', not missing, {'references': references, 'missing': missing})
 model = root / 'FruitfolioAI.gguf'
 with model.open('rb') as stream: magic = stream.read(4)
-check('Fruitfolio model is real GGUF, not LFS pointer', magic == b'GGUF', {'bytes': model.stat().st_size})
+check('Fruitfolio model is real GGUF, not LFS pointer', magic == b'GGUF' and model.stat().st_size == 491400032, {'bytes': model.stat().st_size})
 project = (root / 'Fruitfolio.xcodeproj/project.pbxproj').read_text()
 check('Desktop-only framework path removed', '/Users/' not in project, 'Does not prove Apple linking succeeds.')
 ET.parse(root / 'Fruitfolio.xcodeproj/xcshareddata/xcschemes/Fruitfolio.xcscheme')
@@ -35,7 +35,7 @@ parsed = []
 try:
     import tree_sitter, tree_sitter_swift
     parser = tree_sitter.Parser(tree_sitter.Language(tree_sitter_swift.language()))
-    changed = subprocess.check_output(['git','diff','--no-renames','defa3c9c062230325262e6f36296d0877655ad5e','--name-only','--diff-filter=ACMRTUXB'],cwd=root,text=True).splitlines()
+    changed = subprocess.check_output(['git','diff','--no-renames','defa3c9c062230325262e6f36296d0877655ad5e','--name-only','--diff-filter=ACMRTUXB','--',':(glob)**/*.swift'],cwd=root,text=True).splitlines()
     untracked = subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines()
     candidates = [root / p for p in changed + untracked if p.endswith('.swift')]
     candidates += list((root / 'Fruitfolio/Hormone Information').glob('*.swift'))

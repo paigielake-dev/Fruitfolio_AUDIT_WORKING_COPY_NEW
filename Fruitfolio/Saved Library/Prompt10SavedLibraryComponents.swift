@@ -274,30 +274,10 @@ struct Prompt10WatercolorPopup<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        GeometryReader { proxy in
-            let paperWidth = min(max(proxy.size.width - 32, 280), 340)
-            let safeBodyWidth = paperWidth * 0.80
-
-            ZStack {
-                DesignTokens.ColorToken.primaryBurgundy
-                    .opacity(0.10)
-                    .ignoresSafeArea()
-
-                ZStack(alignment: .center) {
-                    Image("popup_notebook_paper")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: paperWidth)
-                        .accessibilityHidden(true)
-
-                    content()
-                        .frame(width: safeBodyWidth, alignment: .center)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 30)
-                }
-                .frame(width: paperWidth, alignment: .center)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        FruitfolioPopupArtworkSurface(assetName: "popup_notebook_paper",
+            normalizedWriting: CGRect(x: 0.24, y: 0.14, width: 0.65, height: 0.76),
+            maximumWidth: 420) {
+                content().multilineTextAlignment(.center)
             }
-        }
     }
 }
