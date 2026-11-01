@@ -5,6 +5,7 @@ import XCTest
 final class HormoneMeasurementTests: XCTestCase {
     private func record() -> HormoneMeasurement {
         var value = HormoneMeasurement()
+        value.testDateWasProvided = true
         value.result = "2.50"
         value.unit = " ng/mL "
         return value
@@ -14,6 +15,9 @@ final class HormoneMeasurementTests: XCTestCase {
         var value = record()
         XCTAssertNil(value.validationError)
         XCTAssertEqual(value.unit, " ng/mL ")
+        value.testDateWasProvided = false
+        XCTAssertNotNil(value.validationError)
+        value.testDateWasProvided = true
         for invalid in ["", "NaN", "inf", "--2", "2.5 extra", "1,000.5"] {
             value.result = invalid
             XCTAssertNotNil(value.validationError, invalid)

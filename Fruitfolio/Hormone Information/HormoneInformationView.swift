@@ -112,6 +112,11 @@ private struct HormoneMeasurementEditor: View {
                 field("numerical result", text: $draft.result).keyboardType(.decimalPad)
                 field("unit (exactly as reported)", text: $draft.unit)
                 DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
+                    .onChange(of: draft.testDate) { _, _ in draft.testDateWasProvided = true }
+                if draft.testDateWasProvided != true {
+                    FruitfolioControlPillButton(label: "confirm test date") { draft.testDateWasProvided = true }
+                    Text("the displayed date is not saved until you choose or confirm it.")
+                }
                 field("sample type (optional)", text: $draft.sampleType)
                 field("cycle day (optional)", text: $draft.cycleDay).keyboardType(.numberPad)
                 field("laboratory-provided reference range (optional)", text: $draft.laboratoryReferenceRange)

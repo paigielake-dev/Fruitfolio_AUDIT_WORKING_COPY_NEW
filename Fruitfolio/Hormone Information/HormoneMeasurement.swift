@@ -24,6 +24,7 @@ struct HormoneMeasurement: Codable, Equatable, Identifiable, Sendable {
     var result = ""
     var unit = ""
     var testDate = Date()
+    var testDateWasProvided: Bool? = false
     var sampleType = ""
     var cycleDay = ""
     var laboratoryReferenceRange = ""
@@ -45,6 +46,7 @@ struct HormoneMeasurement: Codable, Equatable, Identifiable, Sendable {
         guard !unit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return "enter the unit exactly as shown on your result."
         }
+        guard testDateWasProvided == true else { return "choose or confirm the test date before saving." }
         if hormone == .other {
             let name = otherHormoneName.trimmingCharacters(in: .whitespacesAndNewlines)
             guard !name.isEmpty, name.count <= 100 else { return "enter a hormone name of 1–100 characters." }

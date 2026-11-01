@@ -48,6 +48,10 @@ final class HormoneMeasurementUITests: XCTestCase {
         unit.tap()
         let fixtureUnit = "fixture-" + String(UUID().uuidString.prefix(8)).lowercased()
         unit.typeText(fixtureUnit)
+        let confirmDate = button(app, prefix: "confirm test date")
+        for _ in 0..<6 where !confirmDate.isHittable { app.swipeUp() }
+        XCTAssertTrue(confirmDate.isHittable)
+        confirmDate.tap()
         let save = button(app, prefix: "save measurement")
         for _ in 0..<8 where !save.isHittable { app.swipeUp() }
         XCTAssertTrue(save.isEnabled && save.isHittable)

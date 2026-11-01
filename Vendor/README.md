@@ -1,18 +1,20 @@
-The app requires one llama.xcframework at Vendor/llama.xcframework.
-The baseline referenced /Users/paigelake/Desktop/llama.xcframework; that
-nonportable path has been replaced. The bundled Fruitfolio/Frameworks/llama.framework
-is a legacy macOS binary, not a verified iOS XCFramework, and is excluded from
-automatic app target membership. It is preserved in this checkpoint.
+Fruitfolio links one static llama.xcframework at Vendor/llama.xcframework.
+The original desktop-only absolute path has been replaced with this portable
+project-relative path. The legacy Fruitfolio/Frameworks/llama.framework is
+preserved but excluded from app target membership; it is a macOS binary.
 
-An iOS-compatible binary is still required before Xcode can build the app.
-Use the matching vendored llama.cpp source and Apple's iOS SDK to produce or
-verify a framework exposing module llama. Do not link both binaries.
-No iOS binary is fabricated by the Linux build. The Linux shared libraries
-are testing artifacts only and must never be embedded into the iOS app.
+The downloadable checkpoint includes the actual XCFramework produced from the
+vendored source by hosted macOS CI run 41265395203 (artifact 13066884149).
+Device arm64 and Simulator arm64 slices were compiled successfully with
+Xcode 26.6 (17F113), Swift 6.3.3, on macOS 26.6.2. The artifact SHA-256 is
+74ecf4025155b426269dfffb3939932491fac9ada6a9d1e20820edeb7b6ed601.
+The raw build log and tool versions are in Fruitfolio_Verification_Evidence.
+This dependency build does not establish app linking or inference acceptance.
 
-Tools/build_ios_llama.sh is the staged build recipe for arm64 iOS and arm64
-Simulator. It combines static llama/ggml archives, embeds the Metal library,
-and produces the expected XCFramework. This script has NOT run on macOS;
-its results and Swift import/link compatibility are NOT VERIFIED. Intel
-Mac simulator support is not included in this recipe. The Xcode target now
-links this static dependency without embedding it as a dynamic framework.
+The Git repository retains the source recipe and CI artifacts instead of
+tracking generated runtime binaries. Run Tools/build_ios_llama.sh on a Mac
+with Xcode and CMake to recreate the framework. It refuses to replace an
+existing framework implicitly. It embeds the Metal library and combines
+static llama/ggml archives. The app links it without dynamic embedding.
+Intel Mac simulator support is not included in this recipe or framework.
+See llama.cpp/LICENSE and its source licenses for the vendored dependencies.
