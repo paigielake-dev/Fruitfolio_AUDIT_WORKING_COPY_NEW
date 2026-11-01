@@ -104,3 +104,49 @@ that run. The legacy framework was preserved under Vendor/LegacyMacOS, outside
 Xcode's synchronized app tree, to prevent its automatic discovery/autolink.
 An explicit linked-library gate and short simulator smoke stage are added
 before the full UI traversal. A successful compile was not a runtime pass.
+
+
+Run9 now provides real successful execution at commit 36f985f4: app and both
+test targets compiled, obsolete dynamic-link gate passed, 436 XCTest plus 25
+Swift Testing cases passed with zero failures. The bundled native Qwen GGUF
+structured-draft test passed in 35.630 seconds without fallback. The real
+AVAudioPlayer typing state test passed. The actual simulator smoke test passed
+in 21.681 seconds, and two screenshots plus a 52.993-second video were downloaded
+with checksum verification and visually inspected. Full UI traversal remains
+pending. These results do not establish full specification acceptance.
+
+Review then confirmed that the original first-launch timing was below the
+required 6–8 seconds and Reduced Motion skipped stages. Commit 4b84f3d8 changes
+the first-launch clock to 7.43 seconds and reuses it for Reduced Motion while
+the view uses crossfades instead of arrival scaling, ripple motion and camera
+zoom. A second actual smoke case requests Reduced Motion explicitly. This new
+source correction requires its own Run10 build and runtime result; Run9 is not
+misrepresented as testing this later change.
+
+
+Run10 actually built and passed both normal/Reduced Motion simulator smoke tests,
+but one native test failed with invalid JSON (435 XCTest cases passed, one failed;
+all 25 Swift Testing cases passed). Source 04d55dbc adds grammar-constrained JSON,
+per-request permitted evidence-ID literals, greedy selection and separate English
+grounded generation. A fresh sampler is freed after each request. Native testing
+now requires evidence validation over two requests. Run11 compilation passed;
+its unit/native outcome is still pending. Linux grammar probes execute, but raw
+model prose can still contain unsupported claims, so grammar is not a replacement
+for independent medical/evidence validation.
+
+Original Candle 0.11.1 was built and actually executed the unmodified official
+MADLAD Q4 from local files. Its failing paragraph output exactly matches the
+converted model; see raw logs. Linux peak RSS was ~4.58 GiB. It remains disabled.
+
+Visual review of the updated Intro revealed doubled book-edge contours during
+blending of differently proportioned original assets. Seamless transition,
+full visual acceptance and complete app-wide language acceptance remain unfinished.
+
+
+Latest actual Run11 result: compilation passed; 436 XCTest cases ran, with one
+native case failing its evidence-validation assertion on both requests (two
+assertion failures). All 25 Swift Testing cases passed. Both drafts decoded,
+but neither passed the independent evidence validator. Native grounded-answer
+acceptance remains FAILED, despite the earlier weaker smoke pass. The test now
+attaches its synthetic-fixture drafts to support diagnosis in the next run.
+No test assertion or safety validator was weakened to obtain a pass.

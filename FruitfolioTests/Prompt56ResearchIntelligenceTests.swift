@@ -52,10 +52,15 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
                 question: "How does progesterone affect basal body temperature?",
                 evidence: evidence
             )
+            let encodedDraft = try JSONEncoder().encode(draft)
+            let attachment = XCTAttachment(data: encodedDraft, uniformTypeIdentifier: "public.json")
+            attachment.name = "NativeDraft_Request_\(attempt)"
+            attachment.lifetime = .keepAlways
+            add(attachment)
             XCTAssertFalse(draft.claims.isEmpty, "Native draft must contain a claim on request \(attempt)")
             XCTAssertNotNil(
                 FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: evidence),
-                "Native draft must retain the supplied evidence and identifier on request \(attempt)"
+                "Native draft must retain the supplied evidence and identifier on request \(attempt): \(String(decoding: encodedDraft, as: UTF8.self))"
             )
         }
     }

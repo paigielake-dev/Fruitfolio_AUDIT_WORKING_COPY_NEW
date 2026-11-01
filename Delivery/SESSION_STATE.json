@@ -1,0 +1,99 @@
+{
+  "task_status": "in_progress_not_final",
+  "baseline_commit": "defa3c9c062230325262e6f36296d0877655ad5e",
+  "remote_branch": "fruitfolio/prompt-1b-alignment",
+  "latest_published_commit": "04d55dbcd5c2972a1cfccb800be7b0ae7823c245",
+  "latest_published_tree": "3ca24f5f40279541669bfba81ed5192ceb8f56ad",
+  "draft_pr": "https://github.com/paigielake-dev/Fruitfolio_AUDIT_WORKING_COPY_NEW/pull/1",
+  "local_head_last_aligned": "04d55dbcd5c2972a1cfccb800be7b0ae7823c245",
+  "note": "Working source/index/branch aligned. Documentation/evidence are local additional artifacts. Current checkpoint is not final.",
+  "apple_runs": [
+    {
+      "run": 41264249278,
+      "job": 124723615027,
+      "commit": "fd098b26854240e26c075f8f62a71df5dcfbcc80",
+      "status": "runtime and simulator selection passed; app build/test still running"
+    },
+    {
+      "run": 41264919220,
+      "job": 124725602859,
+      "commit": "03d52c2ba77dcbca24b0aaca5a1985dfa78329d2",
+      "status": "runtime and simulator selection passed; app build/test still running; final artifact includes Vendor framework"
+    },
+    {
+      "run": 41265395203,
+      "job": 124727048159,
+      "commit": "87334c9a1360e335f210d34509e97c8499a1476b",
+      "status": "in progress; new workflow exports runtime early and separates build/tests"
+    },
+    {
+      "run": 41266242274,
+      "job": 124729528047,
+      "commit": "cc1fbb8751c3f19b96eec8a559bce41ae40fdf52",
+      "status": "App and both test targets built; actual tests running"
+    },
+    {
+      "run": 41266574801,
+      "job": 124730507960,
+      "commit": "7cc8f42b0e99727a1c20d05dd29ced8ed0c74574",
+      "status": "Build failed due duplicate runtime module path; raw evidence saved AppleRuns/Run6. Corrected in latest published commit."
+    },
+    {
+      "run": 41267001256,
+      "job": 124731776000,
+      "commit": "573455e69d7678ab84c82a16360ed02e1a52199d",
+      "status": "App/test build passed; unit session failed before executing cases: missing @rpath/llama.framework/llama. Raw Unit.xcresult and logs saved under AppleRuns/Run7/Build. Legacy framework now moved out of app in latest commit."
+    },
+    {
+      "run": 41268088746,
+      "job": 124735001351,
+      "commit": "36f985f4dbd9f7eee7ad5300bcc8ea0b91160006",
+      "status": "Actual app/test build PASS, linked-library gate PASS, 436 XCTest +25 Swift Testing cases PASS, native GGUF structured draft PASS 35.630s, typing player state PASS, actual simulator smoke PASS 21.681s. Two screenshots and real 52.993s video downloaded and reviewed. Full UI suite still running."
+    },
+    {
+      "run": 41269340352,
+      "commit": "4b84f3d80044e4315527673a33f7a9f410e53431",
+      "status": "App/test build PASS; normal and Reduced Motion simulator smoke tests PASS (2 cases, 40.095s). Unit suite 436 XCTest cases executed with one native invalidOutput failure; all 25 Swift Testing cases passed. Corrected subsequently; full UI still running."
+    },
+    {
+      "run": 41269988574,
+      "job": 124740604374,
+      "commit": "04d55dbcd5c2972a1cfccb800be7b0ae7823c245",
+      "status": "Build/link PASS. 436 XCTest cases ran; one native test failed evidence validation twice (two assertion failures), 25 Swift Testing passed. Both native drafts decoded; evidence acceptance failed. Actual Run11 logs/xcresult preserved. Smoke/full UI still pending."
+    }
+  ],
+  "apple_environment_observed": "macOS 26.6.2, Xcode 26.6 build 17F113, Apple Swift 6.3.3, macos-26-arm64 hosted GitHub runner",
+  "next_steps": [
+    "Inspect diagnostic native draft JSON attachments from the next run. Run11 native drafts decoded but neither passed evidence validation. Fix underlying generation/grounding without weakening medical validation; do not report native-grounding PASS.",
+    "Fetch complete Run9/10/11 UI results; lengthy baseline exploratory tests are still running and are not requirement acceptance merely because they capture screenshots.",
+    "Review real measurement UI creation/restart/edit/delete and accessibility audit cases; fix genuine failures, rerun and retain evidence.",
+    "Finish full Prompt1B reading, atomic requirement extraction and traceability. Existing source register is pending and cannot be presented as completed.",
+    "Fix observed doubled Intro book-edge contours during ripple blending; retain original art. Validate full intro timing, Reduce Motion, background recovery, smaller screens and Dynamic Type.",
+    "Verify actual bundled-research Ask queries and token budgets/claim-to-source relevance, not only the small native fixture; review 183 ambiguous reference blocks and APA/clinical entailment.",
+    "Complete Hormone Rhythm adjusted opt-in/localization, health-context synchronization, universal semantic/artwork/popup systems, genuine account/sync/StoreKit behavior.",
+    "MADLAD original Candle path and converted path both fail paragraph medical gate; investigate safe original-model/quantization processing and iOS runtime/device budgets. No silent model substitution.",
+    "Validate and save incomplete checkpoint ZIP including all original resources/models, exact filenames, extraction and hashes. Do not label FINAL_COMPLETE."
+  ],
+  "madlad": {
+    "official_resources": "../Models/MADLAD",
+    "q4_sha256": "ea6e5531a3e95213c7f0635988d119e078a655c09306e47851e15d4c0c3f9c37",
+    "experimental_repack": "../Models/MADLAD-llama-experimental.gguf",
+    "repack_sha256": "aeb817ba74e322de6fe26bc96eebe965f7773f7468a96f67aeb9fbd1875847b3",
+    "status": "Official original-format Q4 now actually executes in Candle 0.11.1 on Linux. It produces the identical medical-paragraph failure as llama adaptation (citation changed, safety warning omitted, invented TSH value). Not integrated. Original-format Candle peak 4,806,620 KiB RSS, 15.66s Linux; no iPhone claim.",
+    "evidence": "Fruitfolio_Verification_Evidence/MADLAD"
+  },
+  "research": {
+    "json": "Fruitfolio/FruitfolioResearchPackage.json",
+    "counts": {
+      "topics": 395,
+      "note_chunks": 5477,
+      "source_records": 294,
+      "eligible_records": 123,
+      "unresolved_reference_blocks": 183,
+      "guide_pages": 470
+    },
+    "provenance": "Delivery/ResearchImportProvenance.json",
+    "limitations": "Full APA normalization and claim-level/source accuracy not verified. Corpus mixed citation/note boundaries need manual review. Raw original paragraphs retained in provenance."
+  },
+  "apple_runtime_local": "Vendor/llama.xcframework (downloaded and checksum-verified actual Apple artifact)"
+}
