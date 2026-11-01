@@ -36,6 +36,7 @@ struct HormoneMeasurementHistoryChart: View {
         if !groups.isEmpty {
             VStack(alignment: .leading, spacing: 18) {
                 Text("recorded measurements over time").font(.headline).accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("hormone.history.actualPoints")
                 Text("each point is a result you entered, on its recorded test date. there are no estimated values or connecting curves. hormones, sample types, and exact units are shown separately.")
                 ForEach(groups) { group in
                     VStack(alignment: .leading, spacing: 10) {
@@ -69,10 +70,8 @@ struct HormoneMeasurementHistoryChart: View {
                             .accessibilityElement(children: .combine)
                         }
                     }
-                    .accessibilityIdentifier("hormone.history.series." + group.records[0].id.uuidString)
                 }
             }
-            .accessibilityIdentifier("hormone.history.actualPoints")
         }
     }
 }

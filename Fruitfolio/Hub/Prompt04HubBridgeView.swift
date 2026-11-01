@@ -1588,7 +1588,6 @@ private struct Prompt05HubUtilityButton:
             .contentShape(
                 Rectangle()
             )
-            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -1601,12 +1600,6 @@ private struct Prompt05HubUtilityButton:
         )
         .accessibilityHidden(
             !interactive
-        )
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(
-            label == "sign in"
-            ? "Sign In"
-            : label.capitalized
         )
         .accessibilityAddTraits(
             .isButton

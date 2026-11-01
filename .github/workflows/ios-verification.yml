@@ -308,7 +308,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Fruitfolio_Hormone_Functional_Evidence
-          path: Fruitfolio_Verification_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/Hormone.xcresult
+            Fruitfolio_Verification_Evidence/Build/xcode-hormone-ui-test.log
+            Fruitfolio_Verification_Evidence/Visual/HormoneInformation
       - name: Verify user-authored page lifecycle before broad traversal
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         timeout-minutes: 10

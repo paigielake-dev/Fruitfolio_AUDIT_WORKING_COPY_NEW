@@ -123,9 +123,9 @@ struct Prompt11NewGuideTile: View {
                     .scaledToFit()
                     .frame(width: 104, height: 122)
                     .accessibilityHidden(true)
-
+        
                 Text("make a new guide")
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .caption))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -133,16 +133,13 @@ struct Prompt11NewGuideTile: View {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
-            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
                 reduceMotion: reduceMotion
             )
         )
-        .accessibilityElement(children: .ignore)
         .accessibilityAddTraits(.isButton)
-        .accessibilityLabel("Make a new guide")
     }
 }
 

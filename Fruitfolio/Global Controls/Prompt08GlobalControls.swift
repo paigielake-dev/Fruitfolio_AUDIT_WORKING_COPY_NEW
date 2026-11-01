@@ -65,6 +65,7 @@ struct FruitfolioControlPillButton: View {
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
             }
+            .accessibilityElement(children: .contain)
             .padding(.horizontal, 46)
             .padding(.vertical, 20)
             .frame(maxWidth: 292, minHeight: 82, alignment: .center)
