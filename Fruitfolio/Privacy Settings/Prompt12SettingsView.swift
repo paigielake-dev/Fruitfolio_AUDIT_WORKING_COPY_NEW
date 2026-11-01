@@ -50,7 +50,7 @@ struct Prompt12SettingsView: View {
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 88, height: 88)
+                            .frame(width: 52, height: 52)
                             .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 74, y: -12)

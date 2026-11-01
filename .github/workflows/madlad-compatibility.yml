@@ -16,6 +16,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: false
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-apple-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
       - name: Capture runtime build tools
         run: |
           mkdir -p Fruitfolio_Verification_Evidence/MADLAD

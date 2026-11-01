@@ -42,7 +42,7 @@ struct Prompt30ContactView: View {
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 92, height: 92)
+                            .frame(width: 52, height: 52)
                             .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 72, y: -14)
