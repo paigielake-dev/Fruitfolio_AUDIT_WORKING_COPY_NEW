@@ -48,6 +48,7 @@ struct Prompt14CycleOnboardingView: View {
                 onboardingContent
             }
         }
+        .accessibilityIdentifier("cycle-tracker-entry")
         .task {
             await model.load()
             model.mergeSharedContextIfNeeded(contextStore.context)

@@ -74,7 +74,8 @@ final class FruitfolioDeepCoverageTests: XCTestCase {
         while Date() < deadline {
             switch destination {
             case "Cycle Tracker":
-                if app.staticTexts["your cycle, little by little"].exists ||
+                if app.descendants(matching: .any)["cycle-tracker-entry"].exists ||
+                   app.staticTexts["your cycle, little by little"].exists ||
                    app.staticTexts["your cycle, with the biology underneath"].exists ||
                    app.staticTexts["Loading cycle setup"].exists ||
                    app.buttons["get started"].exists ||

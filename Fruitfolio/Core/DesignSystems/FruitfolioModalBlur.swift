@@ -19,6 +19,8 @@ struct FruitfolioModalBlurModifier: ViewModifier {
             .blur(radius: isActive ? FruitfolioModalBlurSpec.radius : 0)
             .scaleEffect(isActive ? FruitfolioModalBlurSpec.contentScale : 1.0)
             .allowsHitTesting(!isActive)
+            // Blurred modal backgrounds must not remain reachable by VoiceOver.
+            .accessibilityHidden(isActive)
             .animation(
                 .easeOut(
                     duration: reduceMotion
