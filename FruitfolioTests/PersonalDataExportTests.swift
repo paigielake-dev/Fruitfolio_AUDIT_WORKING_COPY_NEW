@@ -7,13 +7,18 @@ final class PersonalDataExportTests: XCTestCase {
         let suite = "Fruitfolio.Export.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
         defaults.set("must never be exported", forKey: "unrelated.credential.fixture")
-        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
-        let book = try library.createEncyclopedia(name: "My own material", style: .coral)
-        let chapter = try XCTUnwrap(book.chapters.first)
+        // Fixed stored fixture timestamps retain the full-object equality
+        // assertion without a live-clock sub-millisecond format artifact.
+        let fixed = Date(timeIntervalSince1970: 1_700_000_000)
+        let bookID = UUID(); let chapterID = UUID()
         let reference = AskSourceRecord(id: "synthetic-reference", title: "Synthetic fixture", sourceText: "Exact synthetic APA reference.", contentVersion: "v1")
-        let page = Prompt10SavedPage(chapterID: chapter.id, question: "My saved question", answer: "Original quoted words, 2.500 ng/mL [synthetic-reference].", saveType: .fullAnswer,
-            sourceIDs: [reference.id], sourceVersions: [reference.id: "v1"], sourceSnapshots: [reference], knowledgeBaseVersion: "fixture-v1")
-        _ = try library.savePage(page, to: book.id, chapterID: chapter.id)
+        let page = Prompt10SavedPage(chapterID: chapterID, question: "My saved question", answer: "Original quoted words, 2.500 ng/mL [synthetic-reference].", saveType: .fullAnswer,
+            sourceIDs: [reference.id], sourceVersions: [reference.id: "v1"], sourceSnapshots: [reference], knowledgeBaseVersion: "fixture-v1", savedAt: fixed, updatedAt: fixed)
+        let chapter = Prompt10Chapter(id: chapterID, encyclopediaID: bookID, name: "saved", order: 0, pages: [page])
+        let book = Prompt10Encyclopedia(id: bookID, name: "My own material", style: .coral,
+            createdAt: fixed, updatedAt: fixed, chapters: [chapter])
+        defaults.set(try JSONEncoder().encode([book]), forKey: "library")
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
         let context = Prompt27AContextStore(defaults: defaults)
         context.setPersonalHealthField(.thyroid, text: "my exact reported history; not a confirmed diagnosis")
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
