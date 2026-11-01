@@ -140,11 +140,16 @@ private struct HormoneMeasurementEditor: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .scrollDismissesKeyboard(.interactively)
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("done") { fieldFocused = false }
-                    .accessibilityIdentifier("hormone.keyboardDone")
+        .safeAreaInset(edge: .bottom) {
+            if fieldFocused {
+                HStack {
+                    Spacer()
+                    Button("done") { fieldFocused = false }
+                        .accessibilityIdentifier("hormone.keyboardDone")
+                        .frame(minWidth: 44, minHeight: 44)
+                }
+                .padding(.horizontal, 20)
+                .background(DesignTokens.ColorToken.backgroundCream)
             }
         }
         .interactiveDismissDisabled(draft != original)

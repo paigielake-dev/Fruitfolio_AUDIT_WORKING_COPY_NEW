@@ -205,7 +205,8 @@ struct Prompt10EncyclopediaDetailView: View {
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
-                .buttonStyle(
+                .accessibilityValue(expanded ? "expanded" : "collapsed")
+            .buttonStyle(
                     CutePopButtonStyle(
                         reduceMotion:
                             motionPreferences.reduceMotionActive
