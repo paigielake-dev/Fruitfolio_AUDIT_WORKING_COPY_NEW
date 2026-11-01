@@ -47,10 +47,11 @@ struct FruitfolioPersonalDataExport: Codable {
                         library: Prompt10SavedLibraryStore, context: Prompt27AContextStore,
                         hormones: HormoneMeasurementStore,
                         cycle: Prompt13CycleStore = .shared, onboarding: Prompt14CycleOnboardingStore = .shared,
-                        fruitBasket: Prompt28FruitBasketStore = Prompt28FruitBasketStore(), now: Date = Date()) async throws -> Data {
+                        fruitBasket: Prompt28FruitBasketStore? = nil, now: Date = Date()) async throws -> Data {
         guard library.loadError == nil, hormones.loadError == nil, !context.didRecoverCorruptStoredContext else {
             throw Prompt12AccountPrivacyError.exportFailed
         }
+        let fruitBasket = fruitBasket ?? Prompt28FruitBasketStore()
         // Read the actual domain stores. No raw defaults dump, credentials,
         // purchase receipts, model binaries or unrelated files are exported.
         async let archive = cycle.snapshot()
