@@ -65,6 +65,20 @@ jobs:
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Build.xcresult \
             CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-build.log
+      - name: Reject obsolete dynamic runtime autolink
+        run: |
+          app=.ciDerivedData/Build/Products/Debug-iphonesimulator/Fruitfolio.app
+          for binary in "$app/Fruitfolio" "$app/Fruitfolio.debug.dylib"; do
+            if [ -f "$binary" ]; then
+              otool -L "$binary" >> Fruitfolio_Verification_Evidence/Build/linked-libraries.txt
+            fi
+          done
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          text=Path('Fruitfolio_Verification_Evidence/Build/linked-libraries.txt').read_text()
+          if '@rpath/llama.framework/llama' in text:
+              raise SystemExit('Obsolete dynamic llama framework is still autolinked')
+          PYCODE
       - name: Run unit and native inference tests
         run: |
           set -o pipefail
@@ -81,8 +95,48 @@ jobs:
           name: Fruitfolio_Unit_Build_Evidence
           path: |
             Fruitfolio_Verification_Evidence/Build
-      - name: Run actual application UI tests
+      - name: Simulator smoke test and representative recording
+        id: smoke
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
+          xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
+          python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
+            --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
+            > Fruitfolio_Verification_Evidence/Build/simulator-recording.log 2>&1 &
+          recorder=$!
+          set +e
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -only-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-smoke-test.log
+          test_status=${PIPESTATUS[0]}
+          wait "$recorder"
+          record_status=$?
+          set -e
+          if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
+          exit "$record_status"
+      - name: Export smoke screenshot attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Smoke.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/Smoke
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/Smoke
+          fi
+      - name: Preserve early simulator evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Smoke_Evidence
+          path: Fruitfolio_Verification_Evidence
+      - name: Run actual application UI tests
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \

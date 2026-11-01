@@ -18,3 +18,10 @@ existing framework implicitly. It embeds the Metal library and combines
 static llama/ggml archives. The app links it without dynamic embedding.
 Intel Mac simulator support is not included in this recipe or framework.
 See llama.cpp/LICENSE and its source licenses for the vendored dependencies.
+
+Runtime bootstrap correction: the legacy framework now lives under
+Vendor/LegacyMacOS/llama.framework, outside the synchronized app source group.
+Leaving it under Fruitfolio/Frameworks caused Xcode to discover and autolink
+its dynamic module even though it was excluded from target membership. Actual
+Run7 launch failed with dyld's missing @rpath/llama.framework/llama dependency.
+The app must link only the new static XCFramework; CI checks that dependency.

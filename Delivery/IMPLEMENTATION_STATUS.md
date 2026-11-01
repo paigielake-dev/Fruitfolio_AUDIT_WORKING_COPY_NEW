@@ -97,3 +97,10 @@ folder exposed the same module twice. The redundant explicit header paths were
 removed; active arm64 targeting and the mandatory native-inference test remain.
 Unit/native tests and UI tests are now separate CI steps with early evidence
 uploads, so a long UI traversal cannot hide the unit/model result.
+
+Actual Run7 unit execution did not bootstrap: dyld looked for the obsolete
+llama.framework dynamic dependency. No unit case can be counted as passed from
+that run. The legacy framework was preserved under Vendor/LegacyMacOS, outside
+Xcode's synchronized app tree, to prevent its automatic discovery/autolink.
+An explicit linked-library gate and short simulator smoke stage are added
+before the full UI traversal. A successful compile was not a runtime pass.
