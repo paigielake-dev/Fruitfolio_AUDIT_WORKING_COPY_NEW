@@ -7,8 +7,22 @@ final class UserAuthoredPageUITests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", text)).firstMatch
     }
     private func reach(_ app: XCUIApplication, _ target: XCUIElement) {
-        let visible = app.frame.insetBy(dx: 0, dy: 60)
-        for _ in 0..<10 where !target.isHittable || !visible.contains(target.frame) { app.swipeUp() }
+        XCTAssertTrue(target.waitForExistence(timeout: 8))
+        let scroll = app.scrollViews.containing(.button, identifier: target.label).firstMatch
+        let container = scroll.exists ? scroll : app
+        let visible = app.frame.insetBy(dx: 0, dy: 60).intersection(container.frame)
+        for _ in 0..<14 where !target.isHittable || !visible.contains(target.frame) {
+            let downward = target.frame.midY < visible.minY
+            // Drag within the owning scroll view's clear side margin. A full-app
+            // swipe can land in the nested text editor or outside a paper popup.
+            let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: downward ? 0.25 : 0.80))
+            let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: downward ? 0.80 : 0.25))
+            start.press(forDuration: 0.05, thenDragTo: finish)
+        }
+        if !target.isHittable || !visible.contains(target.frame) {
+            capture(app, "Unreachable_" + target.label)
+            let tree = XCTAttachment(string: app.debugDescription); tree.name = "UnreachableControlHierarchy"; tree.lifetime = .keepAlways; add(tree)
+        }
         XCTAssertTrue(visible.contains(target.frame))
         XCTAssertTrue(target.isHittable)
     }
