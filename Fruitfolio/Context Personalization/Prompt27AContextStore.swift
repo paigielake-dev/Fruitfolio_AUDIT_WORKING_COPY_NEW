@@ -96,6 +96,22 @@ final class Prompt27AContextStore: ObservableObject {
         // An explicitly removed onboarding answer must stop influencing the
         // shared context. Initial loading alone never erases independent edits.
         if let previous {
+            if previous.cycleAffectingContexts.contains(.preferNotToSay), !draft.cycleAffectingContexts.contains(.preferNotToSay) {
+                if updated.contraceptionContext.value == .preferNotToSpecify { updated.setContraceptionContext(.unspecified, at: now) }
+                if updated.fertilityTreatmentContext.value == .preferNotToSpecify { updated.setFertilityTreatmentContext(.unspecified, at: now) }
+            }
+            if previous.cycleAffectingContexts.contains(.none), !draft.cycleAffectingContexts.contains(.none) {
+                if updated.contraceptionContext.value == .none { updated.setContraceptionContext(.unspecified, at: now) }
+                if updated.fertilityTreatmentContext.value == .notCurrentlyUndergoing { updated.setFertilityTreatmentContext(.unspecified, at: now) }
+            }
+            if previous.recentContexts.contains(.preferNotToSay), !draft.recentContexts.contains(.preferNotToSay) {
+                if updated.reproductiveStage.value == .preferNotToSpecify { updated.setReproductiveStage(.unspecified, at: now) }
+                if updated.lactationContext.value == .preferNotToSpecify { updated.setLactationContext(.unspecified, at: now) }
+            }
+            if previous.recentContexts.contains(.none), !draft.recentContexts.contains(.none),
+               updated.lactationContext.value == .notCurrentlyBreastfeedingOrLactating {
+                updated.setLactationContext(.unspecified, at: now)
+            }
             if previous.cycleAffectingContexts.contains(.hormonalBirthControl),
                !draft.cycleAffectingContexts.contains(.hormonalBirthControl),
                updated.contraceptionContext.value == .hormonalContraception {

@@ -48,7 +48,11 @@ final class CycleSetupEditingTests: XCTestCase {
         await model.waitForPendingSaves()
         let saved = try await store.snapshot()
         XCTAssertEqual(saved.subjectiveRegularity, .variesALittle)
-        XCTAssertEqual(saved, model.draft)
+        XCTAssertEqual(saved.regularityState, model.draft.regularityState)
+        XCTAssertEqual(saved.completedAt, model.draft.completedAt)
+        XCTAssertEqual(saved.historicalPeriodStarts, model.draft.historicalPeriodStarts)
+        // Store commits intentionally stamp their own updatedAt. Persistence
+        // ordering concerns the last supplied answer, not equal clock samples.
     }
 
     func testRemovingReportedOnboardingContextRemovesItsSharedInfluenceWithoutInferringOtherStates() throws {
@@ -72,4 +76,24 @@ final class CycleSetupEditingTests: XCTestCase {
         store.syncFromCycleOnboarding(removed, previous: old)
         XCTAssertEqual(store.context.reproductiveStage.value, .pregnant, "An unrelated explicit current state must not be erased or inferred from an old removed answer")
     }
+    func testRemovingNoneAndDeclinedOnboardingAnswersDoesNotRetainHiddenSharedValues() throws {
+        for decline in [false, true] {
+            let suite = "Fruitfolio.SetupRemoval.\(UUID().uuidString)"
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt27AContextStore(defaults: defaults)
+            var old = Prompt14OnboardingDraft()
+            old.cycleContextState = .supplied; old.cycleAffectingContexts = decline ? [.preferNotToSay] : [.none]
+            old.recentContextState = .supplied; old.recentContexts = decline ? [.preferNotToSay] : [.none]
+            store.syncFromCycleOnboarding(old)
+            var removed = old
+            removed.cycleContextState = .skipped; removed.cycleAffectingContexts = []
+            removed.recentContextState = .skipped; removed.recentContexts = []
+            store.syncFromCycleOnboarding(removed, previous: old)
+            XCTAssertEqual(store.context.contraceptionContext.value, .unspecified)
+            XCTAssertEqual(store.context.fertilityTreatmentContext.value, .unspecified)
+            XCTAssertEqual(store.context.lactationContext.value, .unspecified)
+            XCTAssertEqual(store.context.reproductiveStage.value, .unspecified)
+        }
+    }
+
 }
