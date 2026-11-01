@@ -442,38 +442,8 @@ struct Prompt10SavedPageView: View {
                 }
 
                 if !page.sourceIDs.isEmpty {
-                    Divider()
-                        .overlay(
-                            DesignTokens.ColorToken.primaryBurgundy.opacity(0.18)
-                        )
-
-                    Text("sources")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13
-                            )
-                        )
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
-
-                    ForEach(
-                        Array(page.sourceIDs.enumerated()),
-                        id: \.offset
-                    ) { _, sourceID in
-                        Text(sourceID)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 11
-                                )
-                            )
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.secondaryBurgundy
-                            )
-                    }
+                    Divider().overlay(DesignTokens.ColorToken.primaryBurgundy.opacity(0.18))
+                    Prompt10SavedCitationsView(page: page)
                 }
             }
             .padding(.horizontal, 22)

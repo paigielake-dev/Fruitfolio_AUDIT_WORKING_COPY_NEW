@@ -1011,6 +1011,7 @@ struct Prompt09AskView: View {
                             return (source.id, version)
                         }
                     ),
+                sourceSnapshots: answer.sources.filter { answer.sourceIDs.contains($0.id) },
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
@@ -1059,6 +1060,7 @@ struct Prompt09AskView: View {
                             return (source.id, version)
                         }
                     ),
+                sourceSnapshots: answer.sources.filter { answer.sourceIDs.contains($0.id) },
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:

@@ -14,6 +14,7 @@ struct Prompt10PendingSavedContent: Equatable {
 
     let sourceIDs: [String]
     let sourceVersions: [String: String]
+    let sourceSnapshots: [AskSourceRecord]?
     let knowledgeBaseVersion: String?
     let generationTimestamp: Date?
     let semanticDocument: FruitfolioSemanticDocument?
@@ -27,6 +28,7 @@ struct Prompt10PendingSavedContent: Equatable {
         originalConversationID: String? = nil,
         sourceIDs: [String] = [],
         sourceVersions: [String: String] = [:],
+        sourceSnapshots: [AskSourceRecord]? = nil,
         knowledgeBaseVersion: String? = nil,
         generationTimestamp: Date? = nil,
         semanticDocument: FruitfolioSemanticDocument? = nil
@@ -39,6 +41,7 @@ struct Prompt10PendingSavedContent: Equatable {
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
         self.sourceVersions = sourceVersions
+        self.sourceSnapshots = sourceSnapshots
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
         self.semanticDocument = semanticDocument
@@ -433,6 +436,7 @@ struct Prompt10AskSaveDestination: View {
                     pending.sourceIDs,
                 sourceVersions:
                     pending.sourceVersions,
+                sourceSnapshots: pending.sourceSnapshots,
                 knowledgeBaseVersion:
                     pending.knowledgeBaseVersion,
                 generationTimestamp:

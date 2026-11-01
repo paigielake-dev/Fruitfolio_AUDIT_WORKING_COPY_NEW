@@ -50,6 +50,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
 
     var sourceIDs: [String]
     var sourceVersions: [String: String]
+    var sourceSnapshots: [AskSourceRecord]?
     var knowledgeBaseVersion: String?
     var generationTimestamp: Date?
 
@@ -74,6 +75,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         originalConversationID: String? = nil,
         sourceIDs: [String] = [],
         sourceVersions: [String: String] = [:],
+        sourceSnapshots: [AskSourceRecord]? = nil,
         knowledgeBaseVersion: String? = nil,
         generationTimestamp: Date? = nil,
         savedAt: Date = Date(),
@@ -95,6 +97,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
         self.sourceVersions = sourceVersions
+        self.sourceSnapshots = sourceSnapshots
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
         self.savedAt = savedAt

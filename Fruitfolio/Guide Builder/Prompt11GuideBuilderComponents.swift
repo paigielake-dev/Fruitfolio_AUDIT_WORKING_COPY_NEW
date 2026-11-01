@@ -233,24 +233,7 @@ struct Prompt11SavedPagePaper: View {
                 .lineSpacing(3)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            if !page.sourceIDs.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("sources")
-                        .font(.custom("Chalkboard SE", size: 11))
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
-
-                    ForEach(page.sourceIDs, id: \.self) { sourceID in
-                        Text(sourceID)
-                            .font(.custom("Chalkboard SE", size: 10))
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.secondaryBurgundy
-                            )
-                    }
-                }
-            }
+            Prompt10SavedCitationsView(page: page)
 
             if !page.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 VStack(alignment: .leading, spacing: 5) {
