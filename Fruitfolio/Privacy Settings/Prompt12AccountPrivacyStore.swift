@@ -6,6 +6,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     static let shared = Prompt12AccountPrivacyStore()
 
     @Published private(set) var ownershipState: Prompt12OwnershipState
+    @Published private(set) var ownershipVerifiedByStorefront = false
     @Published private(set) var authenticationState: Prompt12AuthenticationState
     @Published private(set) var syncState: Prompt12SyncState
     @Published private(set) var account: Prompt12AccountIdentity?
@@ -16,20 +17,28 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
 
     private let defaults: UserDefaults
     private let persistenceKey: String
+    private let ownershipValidator: any FruitfolioStorefrontOwnershipValidating
+    private let expectedBundleIdentifier: String
+    private var ownershipCheckID: UUID?
+    private var ownershipTask: Task<Void, Never>?
 
     init(
         defaults: UserDefaults = .standard,
-        persistenceKey: String = "fruitfolio.prompt12.accountPrivacy.v1"
+        persistenceKey: String = "fruitfolio.prompt12.accountPrivacy.v1",
+        ownershipValidator: any FruitfolioStorefrontOwnershipValidating = FruitfolioAppleOwnershipValidator(),
+        bundleIdentifier: String = Bundle.main.bundleIdentifier ?? ""
     ) {
         self.defaults = defaults
         self.persistenceKey = persistenceKey
+        self.ownershipValidator = ownershipValidator
+        self.expectedBundleIdentifier = bundleIdentifier
 
         if let data = defaults.data(forKey: persistenceKey),
            let snapshot = try? JSONDecoder().decode(
                 Prompt12StoreSnapshot.self,
                 from: data
            ) {
-            ownershipState = snapshot.ownershipState
+            ownershipState = snapshot.ownershipState == .validating ? .validationUnavailable : snapshot.ownershipState
             authenticationState = snapshot.authenticationState
             syncState = snapshot.syncState
             account = snapshot.account
@@ -62,17 +71,47 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func markPurchasedForInstalledApp() {
+        ownershipVerifiedByStorefront = false // Installed-app policy is not a signed storefront verification.
         ownershipState = .purchased
         saveSnapshot()
     }
 
     func beginQuietOwnershipValidation() {
-        ownershipState = .validating
-        saveSnapshot()
+        ownershipTask?.cancel()
+        ownershipTask = Task { [weak self] in
+            guard !Task.isCancelled else { return }
+            await self?.validateOwnership()
+        }
+    }
 
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 350_000_000)
+    func validateOwnership() async {
+        guard !Task.isCancelled else { return }
+        let checkID = UUID()
+        ownershipCheckID = checkID
+        ownershipState = .validating
+        ownershipVerifiedByStorefront = false
+        saveSnapshot()
+        let result = await ownershipValidator.validate()
+        guard !Task.isCancelled, ownershipCheckID == checkID else { return }
+        if case .verified(let bundleID) = result,
+           !expectedBundleIdentifier.isEmpty, bundleID == expectedBundleIdentifier {
             ownershipState = .purchased
+            ownershipVerifiedByStorefront = true
+        } else {
+            // Offline, unavailable or unverified storefront state never creates
+            // a second paywall for the legitimately installed paid app.
+            ownershipState = .validationUnavailable
+        }
+        saveSnapshot()
+    }
+
+    func cancelOwnershipValidation() {
+        ownershipTask?.cancel()
+        ownershipTask = nil
+        ownershipCheckID = nil
+        if ownershipState == .validating {
+            ownershipState = .validationUnavailable
+            ownershipVerifiedByStorefront = false
             saveSnapshot()
         }
     }
@@ -196,6 +235,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func resetLocalAccountPrivacyStateForTesting() {
+        ownershipVerifiedByStorefront = false
         ownershipState = .purchased
         authenticationState = .signedOut
         syncState = .localOnly

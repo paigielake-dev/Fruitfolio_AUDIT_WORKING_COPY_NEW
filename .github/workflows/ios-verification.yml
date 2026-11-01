@@ -159,6 +159,31 @@ jobs:
           name: Fruitfolio_Unit_Build_Evidence
           path: |
             Fruitfolio_Verification_Evidence/Build
+      - name: Build actual iPhone Release configuration
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        timeout-minutes: 15
+        run: |
+          set -o pipefail
+          trap 'rm -rf .ciReleaseData' EXIT
+          xcodebuild build -project Fruitfolio.xcodeproj -scheme Fruitfolio -configuration Release \
+            -destination 'generic/platform=iOS' -derivedDataPath .ciReleaseData \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Release.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-device-release-build.log
+          du -sk .ciReleaseData/Build/Products/Release-iphoneos/Fruitfolio.app \
+            > Fruitfolio_Verification_Evidence/Build/device-release-bundle-size.txt
+          otool -L .ciReleaseData/Build/Products/Release-iphoneos/Fruitfolio.app/Fruitfolio \
+            > Fruitfolio_Verification_Evidence/Build/device-release-linked-libraries.txt
+      - name: Preserve actual device Release build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Device_Release_Build_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-device-release-build.log
+            Fruitfolio_Verification_Evidence/Build/Release.xcresult
+            Fruitfolio_Verification_Evidence/Build/device-release-bundle-size.txt
+            Fruitfolio_Verification_Evidence/Build/device-release-linked-libraries.txt
       - name: Simulator smoke test and representative recording
         id: smoke
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
