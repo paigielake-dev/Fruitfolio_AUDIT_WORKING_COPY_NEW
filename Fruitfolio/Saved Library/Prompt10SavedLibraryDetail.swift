@@ -233,8 +233,6 @@ struct Prompt10EncyclopediaDetailView: View {
                 } else {
                     expandedChapterIDs.insert(chapter.id)
                 }
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
             } label: {
                 HStack {
                     Image("library_label")
@@ -272,6 +270,7 @@ struct Prompt10EncyclopediaDetailView: View {
                     minHeight:
                         DesignTokens.Layout.minimumHitTarget
                 )
+                .contentShape(Rectangle())
             }
             .buttonStyle(
                 CutePopButtonStyle(
