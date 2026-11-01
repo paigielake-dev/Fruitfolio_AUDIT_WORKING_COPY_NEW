@@ -361,9 +361,9 @@ final class AudioManager: ObservableObject {
 
         settings.$musicVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .music
+                    to: .music, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -372,9 +372,9 @@ final class AudioManager: ObservableObject {
 
         settings.$rainVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .rainAmbience
+                    to: .rainAmbience, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -383,9 +383,9 @@ final class AudioManager: ObservableObject {
 
         settings.$soundEffectsVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .soundEffects
+                    to: .soundEffects, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -394,9 +394,9 @@ final class AudioManager: ObservableObject {
 
         settings.$typingVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .typingASMR
+                    to: .typingASMR, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -765,11 +765,12 @@ final class AudioManager: ObservableObject {
     }
 
     private func applyCurrentVolume(
-        to category: FruitfolioAudioCategory
+        to category: FruitfolioAudioCategory,
+        explicitValue: Double? = nil
     ) {
         let currentVolume =
             isEnabled(category)
-            ? volume(for: category)
+            ? explicitValue.map { Float(min(max($0, 0), 1)) } ?? volume(for: category)
             : 0
 
         loopPlayers[category]?.volume =

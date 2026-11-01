@@ -225,6 +225,36 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
             Fruitfolio_Verification_Evidence/Build/UserPages.xcresult
             Fruitfolio_Verification_Evidence/Visual/UserPages
+      - name: Verify artwork volume settings and restart persistence before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/SettingsVolumeUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-settings-volumes-ui-test.log
+      - name: Export and preserve volume lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
+          fi
+      - name: Preserve focused volume evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Settings_Volume_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-settings-volumes-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult
+            Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
       - name: Verify grounded Ask answer and clear-on-exit lifecycle before broad traversal
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         timeout-minutes: 8
@@ -263,6 +293,7 @@ jobs:
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -only-testing:FruitfolioUITests \
+            -skip-testing:FruitfolioUITests/SettingsVolumeUITests \
             -skip-testing:FruitfolioUITests/AskGroundedJourneyUITests \
             -skip-testing:FruitfolioUITests/UserAuthoredPageUITests \
             -skip-testing:FruitfolioUITests/SharedControlUITests \

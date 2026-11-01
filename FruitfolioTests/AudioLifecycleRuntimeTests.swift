@@ -23,6 +23,10 @@ final class AudioLifecycleRuntimeTests: XCTestCase {
         XCTAssertGreaterThan(try XCTUnwrap(music.durations.first), 0)
         XCTAssertGreaterThan(try XCTUnwrap(rain.durations.first), 0)
         XCTAssertEqual(try XCTUnwrap(rain.volumes.first), 0.18, accuracy: 0.001)
+        settings.musicVolume = 0.09
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0.09, accuracy: 0.001,
+                       "A live volume change must apply the newly published value, not the previous setting")
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0.18, accuracy: 0.001)
         settings.musicEnabled = false
         try await Task.sleep(for: .milliseconds(400))
         XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0, accuracy: 0.001)

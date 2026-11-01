@@ -331,10 +331,7 @@ struct Prompt12VolumeRow: View {
             Text(title)
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
-            Slider(value: $value, in: 0...1)
-                .tint(DesignTokens.ColorToken.primaryBurgundy)
-                .accessibilityLabel(title)
-                .accessibilityValue("\(Int(value * 100)) percent")
+            FruitfolioArtworkVolumeSlider(title: title, value: $value)
         }.frame(minHeight: 44)
     }
 }
