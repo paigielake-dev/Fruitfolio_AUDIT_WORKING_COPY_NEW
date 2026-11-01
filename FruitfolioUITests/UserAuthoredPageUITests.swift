@@ -71,6 +71,8 @@ final class UserAuthoredPageUITests: XCTestCase {
         let edit = button(app, "edit my page"); reach(app, edit); edit.tap()
         let editor = app.textViews["userPage.content"]
         XCTAssertTrue(editor.waitForExistence(timeout: 8)); editor.tap(); editor.typeText(" unsaved addition")
+        XCTAssertTrue((editor.value as? String)?.contains(" unsaved addition") == true,
+            "Typing must preserve the exact entered character order before discard")
         button(app, "done").tap()
         let discard = button(app, "discard changes"); reach(app, discard); discard.tap()
         let confirm = button(app, "discard changes")

@@ -87,7 +87,7 @@ struct Prompt10UserPageEditor: View {
                 }
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
-                .padding(20).frame(maxWidth: 580).frame(maxWidth: .infinity)
+                .padding(20).padding(.bottom, 60).frame(maxWidth: 580).frame(maxWidth: .infinity)
             }
             .fruitfolioModalBlur(active: showUnsaved, reduceMotion: motion.reduceMotionActive)
             if showUnsaved {
@@ -164,13 +164,22 @@ struct Prompt10SemanticTextEditor: UIViewRepresentable {
         view.accessibilityLabel = "page content"
         view.accessibilityIdentifier = "userPage.content"
         view.attributedText = FruitfolioSemanticAttributedRenderer.render(document, traits: view.traitCollection)
+        context.coordinator.lastAppliedDocument = document
+        context.coordinator.lastContentSizeCategory = view.traitCollection.preferredContentSizeCategory
         view.typingAttributes = FruitfolioSemanticAttributedRenderer.render(
             .init(spans: [.init(text: " ")]), traits: view.traitCollection).attributes(at: 0, effectiveRange: nil)
         return view
     }
     func updateUIView(_ view: UITextView, context: Context) {
         context.coordinator.parent = self
+        // UIKit already contains edits emitted by its delegate. Reapplying the
+        // attributed string for each SwiftUI echo can move the insertion point
+        // between keystrokes and interleave the user's text.
+        guard context.coordinator.lastAppliedDocument != document
+                || context.coordinator.lastContentSizeCategory != view.traitCollection.preferredContentSizeCategory else { return }
         let rendered = FruitfolioSemanticAttributedRenderer.render(document, traits: view.traitCollection)
+        context.coordinator.lastAppliedDocument = document
+        context.coordinator.lastContentSizeCategory = view.traitCollection.preferredContentSizeCategory
         if !view.attributedText.isEqual(to: rendered) {
             let range = view.selectedRange
             context.coordinator.isApplying = true
@@ -181,13 +190,17 @@ struct Prompt10SemanticTextEditor: UIViewRepresentable {
     }
     final class Coordinator: NSObject, UITextViewDelegate {
         var isApplying = false
+        var lastAppliedDocument: FruitfolioSemanticDocument?
+        var lastContentSizeCategory: UIContentSizeCategory?
         weak var textView: UITextView?
         @objc func finishEditing() { textView?.resignFirstResponder() }
         var parent: Prompt10SemanticTextEditor
         init(_ parent: Prompt10SemanticTextEditor) { self.parent = parent }
         func textViewDidChange(_ view: UITextView) {
             guard !isApplying else { return }
-            parent.document = FruitfolioSemanticAttributedRenderer.document(from: view.attributedText)
+            let updated = FruitfolioSemanticAttributedRenderer.document(from: view.attributedText)
+            lastAppliedDocument = updated
+            parent.document = updated
         }
         func textViewDidChangeSelection(_ view: UITextView) { if !isApplying { parent.selection = view.selectedRange } }
     }

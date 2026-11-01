@@ -174,6 +174,17 @@ private func open(_ app: XCUIApplication, _ name: String) {
             let field = app.textFields["ex. my hormone guide"]
             field.tap()
             field.typeText("Fruitfolio QA Guide")
+            let done = app.buttons["guide.keyboardDone"]
+            XCTAssertTrue(done.waitForExistence(timeout: 5), "The actual popup must offer keyboard dismissal")
+            done.tap()
+            let createControl = app.buttons.matching(NSPredicate(format: "label == %@", "create my guide")).firstMatch
+            let paper = app.scrollViews.containing(.button, identifier: "create my guide").firstMatch
+            for _ in 0..<10 where !createControl.isHittable {
+                XCTAssertTrue(paper.exists, "Guide form must remain scrollable inside its paper")
+                let start = paper.coordinate(withNormalizedOffset: CGVector(dx: 0.90, dy: 0.80))
+                let end = paper.coordinate(withNormalizedOffset: CGVector(dx: 0.90, dy: 0.25))
+                start.press(forDuration: 0.05, thenDragTo: end)
+            }
             record(app, "Guide_NameEntered")
 
             if let create = button(app, ["create my guide"]) {
