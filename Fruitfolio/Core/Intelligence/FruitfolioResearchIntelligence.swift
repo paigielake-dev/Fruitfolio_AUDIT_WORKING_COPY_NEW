@@ -1879,11 +1879,15 @@ final class FruitfolioResearchIntelligenceEngine:
             )
         }
 
+        // Native and retrieval/model-failure paths pass through one presentation
+        // authority only after factual validation and actual-source attribution.
+        let voiced = FruitfolioCanonicalVoice.evidenceDocument(answerText,
+            serious: safety.requiresSeriousTone)
         return AskAnswer(
             originalQuestion:
                 trimmed,
             answerText:
-                answerText,
+                voiced.plainText,
             support:
                 support,
             supportMap:
@@ -1901,7 +1905,8 @@ final class FruitfolioResearchIntelligenceEngine:
             researchGap:
                 researchGap,
             isDevelopmentPreview:
-                false
+                false,
+            semanticDocument: voiced
         )
     }
 
@@ -1955,7 +1960,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
                     // A trailing qualifier or negation may be clinically material.
                     // Preserve the complete selected chunk; never clip at 680 chars.
-                    return "• \(clean)"
+                    return "☆ \(clean)"
                 }
 
         var parts: [String] = []

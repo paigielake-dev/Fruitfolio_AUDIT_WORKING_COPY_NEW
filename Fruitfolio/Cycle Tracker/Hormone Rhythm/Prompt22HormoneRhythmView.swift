@@ -239,12 +239,14 @@ struct Prompt22HormoneRhythmView: View {
                     .foregroundStyle(Prompt22Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
-                Text(displayedPresentation.subtitle)
-                    .font(Prompt22Type.subtitle)
-                    .foregroundStyle(
-                        Prompt22Palette.burgundy.opacity(0.68)
-                    )
-                    .fixedSize(horizontal: false, vertical: true)
+                if mode != .measurements {
+                    Text(displayedPresentation.subtitle)
+                        .font(Prompt22Type.subtitle)
+                        .foregroundStyle(
+                            Prompt22Palette.burgundy.opacity(0.68)
+                        )
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
 
             Spacer(minLength: 12)

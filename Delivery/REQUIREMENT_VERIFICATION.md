@@ -1,3 +1,5 @@
+> Historical baseline report retained for provenance. Current results are in CURRENT_REQUIREMENT_VERIFICATION.md, LatestAppleTestResults.json and ImplementationTracker478.json.
+
 # Requirement verification status — incomplete
 
 This is a partial verification report, not an exhaustive atomic Prompt 1B matrix.

@@ -83,5 +83,32 @@ final class SettingsVolumeUITests: XCTestCase {
         for _ in 0..<8 where !master.isHittable { scrollSettings(app, up: false) }
         XCTAssertTrue(master.isHittable); master.tap()
         XCTAssertEqual(master.value as? String, originalMaster, "Restore only the tested master preference; never reset user data")
+        var toggledChannels = channels
+        for name in names {
+            let toggle = app.descendants(matching: .any)["settings.enabled." + name]
+            let visible = app.frame.insetBy(dx: 0, dy: 60)
+            for _ in 0..<12 where !toggle.isHittable || !visible.contains(toggle.frame) {
+                scrollSettings(app, up: toggle.frame.midY > visible.midY)
+            }
+            XCTAssertTrue(toggle.isHittable); toggle.tap()
+            let changed = toggle.value as? String ?? ""
+            XCTAssertTrue(["on", "off"].contains(changed)); XCTAssertNotEqual(changed, channels[name])
+            toggledChannels[name] = changed
+            for other in names where other != name {
+                XCTAssertEqual(app.descendants(matching: .any)["settings.enabled." + other].value as? String,
+                               toggledChannels[other], "Each category toggle must preserve the other category settings")
+            }
+        }
+        app.terminate(); app.launch(); openSettings(app)
+        for name in names {
+            let toggle = app.descendants(matching: .any)["settings.enabled." + name]
+            XCTAssertEqual(toggle.value as? String, toggledChannels[name], "Each enabled preference must survive restart")
+            let visible = app.frame.insetBy(dx: 0, dy: 60)
+            for _ in 0..<12 where !toggle.isHittable || !visible.contains(toggle.frame) {
+                scrollSettings(app, up: toggle.frame.midY > visible.midY)
+            }
+            XCTAssertTrue(toggle.isHittable); toggle.tap()
+            XCTAssertEqual(toggle.value as? String, channels[name], "Restore the original individual category preference")
+        }
     }
 }

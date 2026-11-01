@@ -1,3 +1,11 @@
+# Current implementation follow-up — 2026-11-01
+
+Actual Run42 at6b6a24d built the simulator app and unsigned iPhone Release target, passed480 XCTest checks (one physical-device check skipped) and25 Swift Testing checks. Actual hormone record/rhythm-mode, four-volume/global-mute, and generated Ask/source/clear-on-exit journeys passed. Contact accessibility-XXXL contrast and native PhotosUI tap synthesis failed; repairs are retained for rerun.
+
+Follow-up corrections: separate painted-shell/text accessibility bounds; tap the observed system photo tile while retaining actual import/save/restart assertions; preserve incomplete username typing through the shared authority; pause completed audio fades and cancel obsolete pauses on rapid reentry; avoid educational-curve subtitles on actual measurement records; apply one post-validation evidence bridge to native/fallback Ask; enforce the founder kaomoji maximum of three and protected-domain suppression. New behavior is NOT VERIFIED until the next actual run. Strict evidence validator is byte-identical to6ed804a. No model/art/research text removed. Main unchanged.
+
+---
+
 # Committed changes from preserved baseline
 
 ```text

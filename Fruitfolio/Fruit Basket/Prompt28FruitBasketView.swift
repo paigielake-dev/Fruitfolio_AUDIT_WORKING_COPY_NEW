@@ -58,6 +58,8 @@ struct Prompt28FruitBasketView: View {
     @State private var showTour = false
     @State private var tourStep = 0
     @State private var leaderboardValidationMessage: String?
+    @State private var leaderboardUsernameDraft = ""
+    @FocusState private var leaderboardUsernameFocused: Bool
     @State private var selectedLeaderboardCategory: Prompt28LeaderboardCategory = .fruit
 
     init(
@@ -1581,10 +1583,18 @@ struct Prompt28FruitBasketView: View {
                         TextField(
                             "public username",
                             text: Binding(
-                                get: { usernameStore.username },
+                                get: { leaderboardUsernameDraft },
                                 set: { raw in
                                     let sanitized = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
-                                    leaderboardValidationMessage = usernameStore.setUsername(sanitized) ?? Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw)
+                                    // Keep incomplete typing in the editor. Binding directly
+                                    // to the validated authority discarded the first two
+                                    // characters, preventing ordinary keyboard entry.
+                                    leaderboardUsernameDraft = sanitized
+                                    if let error = Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw) {
+                                        leaderboardValidationMessage = error
+                                    } else {
+                                        leaderboardValidationMessage = usernameStore.setUsername(sanitized)
+                                    }
                                     if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(sanitized) {
                                         store.appearOnLeaderboard = false
                                     }
@@ -1594,6 +1604,10 @@ struct Prompt28FruitBasketView: View {
                         )
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                        .focused($leaderboardUsernameFocused)
+                        .submitLabel(.done)
+                        .onSubmit { leaderboardUsernameFocused = false }
+                        .accessibilityIdentifier("fruitBasket.publicUsername")
                         .prompt28Text(.body)
                         .padding(.horizontal, 14)
                         .frame(minHeight: 46)
@@ -1612,7 +1626,7 @@ struct Prompt28FruitBasketView: View {
                         HStack {
                             Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
                             Spacer()
-                            Text("\(usernameStore.username.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
+                            Text("\(leaderboardUsernameDraft.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
                                 .monospacedDigit()
                         }
                         .prompt28Text(.metadata)
@@ -1660,7 +1674,11 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .onChange(of: usernameStore.username) { _, newValue in
+            if leaderboardUsernameDraft != newValue { leaderboardUsernameDraft = newValue }
+        }
         .onAppear {
+            leaderboardUsernameDraft = usernameStore.username
             leaderboardValidationMessage = usernameStore.username.isEmpty
                 ? nil
                 : Prompt28LeaderboardUsernamePolicy.validationMessage(for: usernameStore.username)
@@ -1678,7 +1696,7 @@ struct Prompt28FruitBasketView: View {
                     return
                 }
 
-                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(usernameStore.username)
+                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(leaderboardUsernameDraft)
                 _ = usernameStore.setUsername(cleaned)
                 if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
                     store.appearOnLeaderboard = false

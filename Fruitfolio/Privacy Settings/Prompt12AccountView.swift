@@ -17,6 +17,7 @@ struct Prompt12AccountView: View {
     @State private var showDataExport = false
     @State private var usernameDraft = ""
     @State private var usernameMessage: String?
+    @FocusState private var usernameFocused: Bool
 
     var body: some View {
         ZStack {
@@ -118,6 +119,10 @@ struct Prompt12AccountView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             TextField("public username", text: $usernameDraft)
+                .focused($usernameFocused)
+                .submitLabel(.done)
+                .onSubmit { usernameFocused = false }
+                .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
@@ -133,6 +138,7 @@ struct Prompt12AccountView: View {
             }
 
             WatercolorSecondaryButton(label: "save username") {
+                usernameFocused = false
                 audioManager.play(.buttonSoftPop)
                 if let error = usernameStore.setUsername(usernameDraft) {
                     usernameMessage = error

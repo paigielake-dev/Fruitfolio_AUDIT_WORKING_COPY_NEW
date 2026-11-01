@@ -738,8 +738,8 @@ enum Prompt53ScreenInventory {
 // MARK: - Prompt 54 — Canonical voice boundary
 
 enum Prompt54CanonicalVoicePolicy {
-    static let maximumKaomojiPerAnswer = 4
-    static let preferredKaomojiRange = 0...2
+    static let maximumKaomojiPerAnswer = FruitfolioKaomojiSystem.absoluteMaximum
+    static let preferredKaomojiRange = 0...FruitfolioKaomojiSystem.usualMaximum
     static let seriousContentUsesKaomoji = false
     static let symptomsMustBeUnderlined = true
     static let foodNamesAreBolded = true

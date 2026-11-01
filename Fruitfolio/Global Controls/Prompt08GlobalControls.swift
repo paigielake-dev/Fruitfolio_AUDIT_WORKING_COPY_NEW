@@ -52,12 +52,17 @@ struct FruitfolioControlPillButton: View {
             if playsSound { audioManager.play(.buttonSoftPop) }
             action()
         } label: {
-            Text(label)
-                .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
-                .fontWeight(.semibold)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+            // The label's accessibility bounds belong to its actual text.
+            // Put shell padding/background on a layout container so painted
+            // borders are not part of the StaticText's contrast sampling area.
+            VStack(spacing: 0) {
+                Text(label)
+                    .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
                 .padding(.horizontal, 46)
                 .padding(.vertical, 20)
                 .frame(maxWidth: 292, minHeight: 82, alignment: .center)

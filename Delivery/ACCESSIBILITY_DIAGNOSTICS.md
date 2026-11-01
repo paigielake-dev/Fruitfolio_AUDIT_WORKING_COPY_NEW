@@ -9,3 +9,9 @@ https://developer.apple.com/documentation/xcuiautomation/xcuiaccessibilityauditi
 https://developer.apple.com/documentation/xcuiautomation/xcuiapplication/performaccessibilityaudit(for:_:)
 
 These additional diagnostics have not yet executed. Their source is not proof that any contrast, clipping, VoiceOver or other accessibility requirement passes.
+
+## Actual Run42 contrast viewport
+
+The strict audit still fails the accessibility-XXXL Contact TikTok StaticText. The newly captured actual audit viewport is `4B6E1731-F770-48E5-8A27-40F535B66B4D.png` from artifact13098716389 (SHA256 ea66072e4b13e0e1c3bde00c8aa72a3fa070c19a204f0e67f1bb1a3807e8344b). The failing StaticText frame exactly equals the whole 292×218.3-point painted button, including its watercolor border and padding. Text is visibly burgundy on pale paper.
+
+The candidate correction puts shell padding and background on a separate layout container, leaving the Text accessibility node bounded by its actual label. Artwork, color, font, wrapping, visual spacing, hit area and strict all-types audit are preserved. A new actual audit must establish whether this resolves the failure; no result is accepted from visual inspection alone.

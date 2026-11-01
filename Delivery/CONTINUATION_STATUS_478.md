@@ -1,3 +1,5 @@
+> Historical baseline report retained for provenance. Current results are in CURRENT_REQUIREMENT_VERIFICATION.md, LatestAppleTestResults.json and ImplementationTracker478.json.
+
 # Fruitfolio continuation — incomplete, not final delivery
 
 The authoritative checkpoint is preserved. Main has not been overwritten or merged.

@@ -139,3 +139,48 @@ extension AudioLifecycleRuntimeTests {
         }
     }
 }
+
+extension AudioLifecycleRuntimeTests {
+    func testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately() async throws {
+        let suite = "AudioFadePause-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeOut(category: .music, duration: 0.03)
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "A completed fade must pause its decoder, not keep a silent infinite loop running")
+        settings.musicVolume = 0.19
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeIn(.fruitBasketMusicbox, duration: 0)
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeOut(category: .music, duration: 0)
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+    }
+
+    func testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest() async throws {
+        let suite = "AudioFadeReentry-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.musicVolume = 0.19
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.fadeOut(category: .music, duration: 0.08)
+        try await Task.sleep(for: .milliseconds(20))
+        manager.fadeIn(.fruitBasketMusicbox, duration: 0)
+        try await Task.sleep(for: .milliseconds(150))
+        let observation = manager.playbackObservation(for: .music)
+        XCTAssertTrue(observation.isPlaying, "An obsolete delayed pause must not stop a newly requested loop")
+        XCTAssertEqual(observation.playerCount, 1)
+        XCTAssertEqual(try XCTUnwrap(observation.volumes.first), 0.19, accuracy: 0.001)
+        let evidence = XCTAttachment(string: "Actual bundled AVAudioPlayer survived rapid fade-out/reentry; pending pause cancelled; one loop at volume0.19. API observation, not audible-quality verification.")
+        evidence.name = "AudioFade_RapidReentryActualPlayer"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}

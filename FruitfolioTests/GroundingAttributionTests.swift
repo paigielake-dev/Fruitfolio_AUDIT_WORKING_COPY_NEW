@@ -58,6 +58,21 @@ final class GroundingAttributionTests: XCTestCase {
     }
 
     @MainActor
+    func testSelectedEvidenceAndModelFailureUseTheSameVoiceWithoutChangingCitations() async throws {
+        let original = "Temperature progesterone evidence is limited. TSH: 2.50 ng/mL. This does NOT confirm ovulation."
+        for fail in [false, true] {
+            let engine = FruitfolioResearchIntelligenceEngine(
+                packageStore: .init(package: package([note("a", original, source: "s1")])),
+                languageModel: FixtureModel(fail: fail))
+            let answer = try await engine.answer(question: "temperature progesterone evidence", conversation: [])
+            XCTAssertTrue(answer.answerText.hasPrefix(FruitfolioCanonicalVoice.evidenceBridge))
+            XCTAssertTrue(answer.answerText.contains("☆ " + original))
+            XCTAssertEqual(answer.sources.map(\.id), ["s1"])
+            XCTAssertEqual(answer.resolvedSemanticDocument.plainText, answer.answerText)
+        }
+    }
+
+    @MainActor
     func testFallbackRetainsQualifierBeyondOldClippingBoundary() async throws {
         let text = String(repeating: "Temperature progesterone evidence needs context. ", count: 24)
             + "This does not confirm ovulation."

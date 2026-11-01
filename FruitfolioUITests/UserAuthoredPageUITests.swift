@@ -63,7 +63,14 @@ final class UserAuthoredPageUITests: XCTestCase {
         let photo = app.scrollViews["photosView_content_scroll_view"].images
             .matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 15), "Select a real photo from the system picker; simulator photo fixture must be installed")
-        photo.tap()
+        XCTAssertTrue(app.frame.contains(photo.frame), "The actual selected photo must be visible inside the picker")
+        XCTAssertGreaterThan(photo.frame.width, 40)
+        capture(app, "UserPage_ActualSystemPhotoPicker")
+        // iOS26 PhotosUI exposes informational Image nodes without an AX hit
+        // point (-1,-1), despite a visible, selectable native photo tile.
+        // Tap its observed center; actual import/persistence assertions below
+        // still have to succeed through the real system picker and app code.
+        photo.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
         let imported = app.images["my imported image"]
         XCTAssertTrue(imported.waitForExistence(timeout: 15), "Actual photo import must finish before saving")
         reach(app, imported); capture(app, "UserPage_ActualPhotoImported")

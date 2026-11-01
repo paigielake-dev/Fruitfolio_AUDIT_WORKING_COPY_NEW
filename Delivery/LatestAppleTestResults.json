@@ -1,28 +1,28 @@
 {
-  "verifiedCommit": "ddc9203f8148db289d82a179b31aecc03b522e46",
-  "runID": 41335406908,
-  "unitArtifactID": 13095767049,
-  "unitArtifactSHA256": "17b5efe839f94bebe62f5092c02cd63b643719e5d972dc0e7bf927d7fe2e50a4",
+  "verifiedCommit": "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
+  "runID": 41343505271,
+  "unitArtifactID": 13097489065,
+  "unitArtifactSHA256": "3f6e627b6ffcbf987c561fabac604f16ace9d3ec4b9d4e68348db98629cdb361",
   "appBuild": "PASS",
   "XCTestCounts": {
-    "PASS": 469,
+    "PASS": 480,
     "SKIP": 1
   },
   "XCTestResults": [
     {
       "testID": "AAAA_MADLADRuntimeIntegrationTests/testCorruptTokenizerIsRejectedBeforeAnyModelInference",
       "result": "PASS",
-      "seconds": 0.037
+      "seconds": 0.02
     },
     {
       "testID": "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
       "result": "PASS",
-      "seconds": 75.074
+      "seconds": 25.615
     },
     {
       "testID": "ArtworkGeometryTests/testOriginalArtworkGeometryIsActuallyBundled",
       "result": "PASS",
-      "seconds": 0.014
+      "seconds": 0.008
     },
     {
       "testID": "ArtworkGeometryTests/testTransparentMarginsAreProjectedWithoutChangingAspectOrOrigin",
@@ -32,37 +32,47 @@
     {
       "testID": "AskSessionLifetimeTests/testMultipleAnswersRemainInMemoryWithTheirOriginalCitations",
       "result": "PASS",
-      "seconds": 0.009
+      "seconds": 0.006
     },
     {
       "testID": "AudioLifecycleRuntimeTests/testActualLoopStopsAndRestoresAcrossApplicationLifecycleNotifications",
       "result": "PASS",
-      "seconds": 1.083
+      "seconds": 0.654
     },
     {
       "testID": "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory",
       "result": "PASS",
-      "seconds": 1.291
+      "seconds": 1.003
+    },
+    {
+      "testID": "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
+      "result": "PASS",
+      "seconds": 0.842
+    },
+    {
+      "testID": "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart",
+      "result": "PASS",
+      "seconds": 0.01
     },
     {
       "testID": "BundledNativeGroundingTests/testNativeAnswerUsesActualBundledResearchAndDocumentCitations",
       "result": "PASS",
-      "seconds": 74.267
+      "seconds": 43.678
     },
     {
       "testID": "ChapterManagementTests/testInvalidChapterChangeDoesNotRemovePagesAndDeletionLeavesOtherChaptersIntact",
       "result": "PASS",
-      "seconds": 0.033
+      "seconds": 0.013
     },
     {
       "testID": "ChapterManagementTests/testMoveRenameAndReloadPreserveTheSameEvidenceAndUserFormatting",
       "result": "PASS",
-      "seconds": 0.016
+      "seconds": 0.007
     },
     {
       "testID": "FAQSemanticContentTests/testAuthoredMeaningPreservesEveryApprovedFAQAnswerVerbatim",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "FounderOverrideIntegrationTests/testPrompt40IsNotRepresentedAsANewProductionPass",
@@ -82,52 +92,62 @@
     {
       "testID": "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
       "result": "PASS",
-      "seconds": 0.013
+      "seconds": 0.006
     },
     {
       "testID": "GroundingAttributionTests/testFallbackRetainsQualifierBeyondOldClippingBoundary",
       "result": "PASS",
-      "seconds": 0.064
+      "seconds": 0.005
     },
     {
       "testID": "GroundingAttributionTests/testOnlyDisplayedEvidenceContributesSources",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.003
     },
     {
       "testID": "GroundingAttributionTests/testUnrelatedExtraCitationCannotRideAlongWithMatchingQuote",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.024
     },
     {
-      "testID": "HormoneMeasurementTests/testSaveEditRestartAndDeletePreserveRecords",
-      "result": "PASS",
-      "seconds": 0.054
-    },
-    {
-      "testID": "HormoneMeasurementTests/testUnreadableStorageCannotBeSilentlyOverwritten",
-      "result": "PASS",
-      "seconds": 0.009
-    },
-    {
-      "testID": "HormoneMeasurementTests/testValidationAndExactUnitPreservation",
-      "result": "PASS",
-      "seconds": 0.003
-    },
-    {
-      "testID": "LibraryBookshelfRenderingTests/testEmptyAndPopulatedLibraryUseIdenticalApprovedShelfPixels",
-      "result": "PASS",
-      "seconds": 0.267
-    },
-    {
-      "testID": "PopupLayoutTests/testNotebookWritingRegionAvoidsBindingAndRemainsInsideArtAtKeyboardAndPhoneSizes",
+      "testID": "HormoneMeasurementTests/testOtherHormoneNameAndMissingUnitRemainControlledWithoutInventedDefaults",
       "result": "PASS",
       "seconds": 0.002
     },
     {
+      "testID": "HormoneMeasurementTests/testRepeatedResultsRetainTheirOwnDatesOptionalFieldsAndExactStrings",
+      "result": "PASS",
+      "seconds": 0.007
+    },
+    {
+      "testID": "HormoneMeasurementTests/testSaveEditRestartAndDeletePreserveRecords",
+      "result": "PASS",
+      "seconds": 0.003
+    },
+    {
+      "testID": "HormoneMeasurementTests/testUnreadableStorageCannotBeSilentlyOverwritten",
+      "result": "PASS",
+      "seconds": 0.004
+    },
+    {
+      "testID": "HormoneMeasurementTests/testValidationAndExactUnitPreservation",
+      "result": "PASS",
+      "seconds": 0.001
+    },
+    {
+      "testID": "LibraryBookshelfRenderingTests/testEmptyAndPopulatedLibraryUseIdenticalApprovedShelfPixels",
+      "result": "PASS",
+      "seconds": 0.069
+    },
+    {
+      "testID": "PopupLayoutTests/testNotebookWritingRegionAvoidsBindingAndRemainsInsideArtAtKeyboardAndPhoneSizes",
+      "result": "PASS",
+      "seconds": 0.001
+    },
+    {
       "testID": "Prompt01AssetSystemTests/testCanonicalIDsAndPhysicalPathsAreUnique",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt01AssetSystemTests/testEducationalVisualsAreNeverDecorative",
@@ -147,7 +167,7 @@
     {
       "testID": "Prompt01AssetSystemTests/testPopupAssetsHaveCanonicalOwnership",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt01AssetSystemTests/testReferenceOnlyFilesAreNotInProductionRegistry",
@@ -162,7 +182,7 @@
     {
       "testID": "Prompt02DesignSystemTests/testAllAudioCategoriesRemainIndependent",
       "result": "PASS",
-      "seconds": 0.142
+      "seconds": 0.001
     },
     {
       "testID": "Prompt02DesignSystemTests/testBurgundyContrastOnCoreLightPaletteIsAtLeastAAForNormalText",
@@ -182,7 +202,7 @@
     {
       "testID": "Prompt02DesignSystemTests/testMotionRangesMatchCanonicalPrompt",
       "result": "PASS",
-      "seconds": 0.024
+      "seconds": 0.001
     },
     {
       "testID": "Prompt02DesignSystemTests/testPreferredMarginsRemain20To24",
@@ -192,22 +212,22 @@
     {
       "testID": "Prompt02DesignSystemTests/testPrompt01RegistryStillContains266Assets",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt02DesignSystemTests/testReferenceCanvasIsDesignReferenceSize",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt02DesignSystemTests/testScaleGuardrailsMatchCanonicalPrompt",
       "result": "PASS",
-      "seconds": 0.012
+      "seconds": 0.001
     },
     {
       "testID": "Prompt02DesignSystemTests/testSemanticHubColorMemoryMapIsStable",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt03ArchitectureTests/testAllRequiredTopLevelRoutesExist",
@@ -222,27 +242,27 @@
     {
       "testID": "Prompt03ArchitectureTests/testBackUsesLogicalStack",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "testID": "Prompt03ArchitectureTests/testInstalledAppStateIsNotSecondarilyPaywalled",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt03ArchitectureTests/testMotionPreferencesRespectSystemAndAppReduction",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.103
     },
     {
       "testID": "Prompt03ArchitectureTests/testNavigationAllowsNextPushAfterTransitionWindow",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt03ArchitectureTests/testNavigationPreventsDuplicateAndRapidPushes",
       "result": "PASS",
-      "seconds": 0.097
+      "seconds": 0.001
     },
     {
       "testID": "Prompt03ArchitectureTests/testNoNormalRouteRequiresSecondPurchaseGate",
@@ -252,12 +272,12 @@
     {
       "testID": "Prompt03ArchitectureTests/testPaidAppStoreDistributionModelIsCanonical",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt03ArchitectureTests/testPrompt01RegistryStillHasAllProductionAssets",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt03ArchitectureTests/testPurchaseRouteIsNotNormalHubDestination",
@@ -272,17 +292,17 @@
     {
       "testID": "Prompt03ArchitectureTests/testSettingsPersistAcrossInstances",
       "result": "PASS",
-      "seconds": 0.009
+      "seconds": 0.006
     },
     {
       "testID": "Prompt03ArchitectureTests/testVolumePersistenceClampsToValidRange",
       "result": "PASS",
-      "seconds": 0.2
+      "seconds": 0.004
     },
     {
       "testID": "Prompt04IntroTests/testAllCenteredBookStatesStayInsideSupportedPhoneWidths",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testAllFinalHubFounderAssetsAreInPrompt04Contract",
@@ -292,27 +312,27 @@
     {
       "testID": "Prompt04IntroTests/testAllFivePhysicalBookFilesAreInPrompt04Contract",
       "result": "PASS",
-      "seconds": 0.04
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testDebugLaunchOverrideParsing",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testFocusedRightPageActuallyZoomsAndMovesLeft",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testFounderSignatureIntroLastsSixToEightSeconds",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testHubLayoutKeepsThreeEqualUtilityColumns",
       "result": "PASS",
-      "seconds": 0.046
+      "seconds": 0.001
     },
     {
       "testID": "Prompt04IntroTests/testLaunchModeSemantics",
@@ -322,7 +342,7 @@
     {
       "testID": "Prompt04IntroTests/testLaunchStorePersistsSignatureCompletionSeparately",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.004
     },
     {
       "testID": "Prompt04IntroTests/testPrompt04RequiredCanonicalAssetsAreRegistered",
@@ -332,12 +352,12 @@
     {
       "testID": "Prompt04IntroTests/testStandaloneHubPaperIsPreloaded",
       "result": "PASS",
-      "seconds": 0.079
+      "seconds": 0.001
     },
     {
       "testID": "Prompt05MainHubTests/testHubAuthenticationLabelTracksAuthoritativeState",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt05MainHubTests/testHubRouteSetRemainsComplete",
@@ -347,7 +367,7 @@
     {
       "testID": "Prompt05MainHubTests/testPrompt04LayoutStillProvidesThreeEqualUtilityColumns",
       "result": "PASS",
-      "seconds": 0.404
+      "seconds": 0.023
     },
     {
       "testID": "Prompt06FruitPopupTests/testCanonicalCharacterAssetMapping",
@@ -357,47 +377,47 @@
     {
       "testID": "Prompt06FruitPopupTests/testCoordinatorShowsOnlyOnePopup",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt06FruitPopupTests/testDeduplicationPreventsRepeatedReactiveRequest",
       "result": "PASS",
-      "seconds": 0.054
+      "seconds": 0.001
     },
     {
       "testID": "Prompt06FruitPopupTests/testHigherPriorityReplacesLowerPriority",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt07FirstLaunchTourTests/testCanonicalCharacterAssignments",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt07FirstLaunchTourTests/testTourHasSixSteps",
       "result": "PASS",
-      "seconds": 0.026
+      "seconds": 0.001
     },
     {
       "testID": "Prompt07FirstLaunchTourTests/testTourNavigation",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt08GlobalControlsTests/testBookmarkButtonUsesLiveBooleanBinding",
       "result": "PASS",
-      "seconds": 0.061
+      "seconds": 0.029
     },
     {
       "testID": "Prompt08GlobalControlsTests/testCanonicalPrompt08ButtonsCanBeConstructed",
       "result": "PASS",
-      "seconds": 0.122
+      "seconds": 0.029
     },
     {
       "testID": "Prompt08GlobalControlsTests/testCurrentPrompt08TextControlsCanBeConstructed",
       "result": "PASS",
-      "seconds": 0.025
+      "seconds": 0.009
     },
     {
       "testID": "Prompt08GlobalControlsTests/testMinimumHitTargetRemainsFortyFourPoints",
@@ -407,22 +427,22 @@
     {
       "testID": "Prompt09AskTests/testCanonicalAskPresentationCopyRemainsExact",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt09AskTests/testEducationalRouterRegistersAllFortyFourCanonicalAssets",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt09AskTests/testEducationalVisualCannotBypassNoveltyBoundary",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt09AskTests/testEveryNewConversationStartsWithCanonicalGreeting",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt09AskTests/testFullAnswerSavePreservesProvenanceFields",
@@ -432,117 +452,117 @@
     {
       "testID": "Prompt09AskTests/testPrompt09DevelopmentEngineDoesNotFabricateSources",
       "result": "PASS",
-      "seconds": 0.449
+      "seconds": 0.425
     },
     {
       "testID": "Prompt09AskTests/testSupportedConceptSelectsSpecificEducationalVisual",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt09EducationalAssetRouterTests/testConceptLevelMatchCanRetrieveArtwork",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt09EducationalAssetRouterTests/testSingleOverlappingWordDoesNotRetrieveArtwork",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt10LocalMediaStoreTests/testDraftRecoveryPromotesReferencedBytesAndRemovesAbandonedDraftsOnly",
       "result": "PASS",
-      "seconds": 0.012
+      "seconds": 0.006
     },
     {
       "testID": "Prompt10LocalMediaStoreTests/testImportedMediaCompleteProtectionOnPhysicalDevice",
       "result": "SKIP",
-      "seconds": 0.025
+      "seconds": 0.008
     },
     {
       "testID": "Prompt10LocalMediaStoreTests/testImportedMediaRejectsPathTraversalAndIsExcludedFromBackup",
       "result": "PASS",
-      "seconds": 0.024
+      "seconds": 0.01
     },
     {
       "testID": "Prompt10LocalMediaStoreTests/testImportedMediaRoundTripAndDelete",
       "result": "PASS",
-      "seconds": 0.015
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10LocalMediaStoreTests/testReconciliationRemovesUnreferencedImportsButPreservesUnknownFiles",
       "result": "PASS",
-      "seconds": 0.019
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10SavedLibraryTests/testBlankTitleIsRejected",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10SavedLibraryTests/testChosenBookStylePersistsInsteadOfAutoCycling",
       "result": "PASS",
-      "seconds": 0.009
+      "seconds": 0.004
     },
     {
       "testID": "Prompt10SavedLibraryTests/testCorruptMetadataNeverDeletesImportedMediaDuringRecovery",
       "result": "PASS",
-      "seconds": 0.008
+      "seconds": 0.004
     },
     {
       "testID": "Prompt10SavedLibraryTests/testCreatePersistsAcrossStoreReinitialization",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.003
     },
     {
       "testID": "Prompt10SavedLibraryTests/testDeletingEncyclopediaDoesNotMutateAnotherEncyclopedia",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.003
     },
     {
       "testID": "Prompt10SavedLibraryTests/testDeletingOneBookAtLimitImmediatelyRestoresCreation",
       "result": "PASS",
-      "seconds": 0.147
+      "seconds": 0.078
     },
     {
       "testID": "Prompt10SavedLibraryTests/testExactSavedLibraryAssetManifestHasSixteenPhysicalPNGs",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10SavedLibraryTests/testExcerptDisplaysExactExcerptNotWholeAnswer",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10SavedLibraryTests/testFullAnswerPreservesPrompt09Provenance",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.002
     },
     {
       "testID": "Prompt10SavedLibraryTests/testMaximumIsEnforcedAtStoreLayer",
       "result": "PASS",
-      "seconds": 0.148
+      "seconds": 0.079
     },
     {
       "testID": "Prompt10SavedLibraryTests/testRenamePersists",
       "result": "PASS",
-      "seconds": 0.009
+      "seconds": 0.003
     },
     {
       "testID": "Prompt10SavedLibraryTests/testSearchMatchesTitlesCaseInsensitively",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.003
     },
     {
       "testID": "Prompt10SavedLibraryTests/testSharedImportedImageSurvivesOneBookDeletionAndIsRemovedAfterLastReference",
       "result": "PASS",
-      "seconds": 0.019
+      "seconds": 0.009
     },
     {
       "testID": "Prompt10SavedLibraryTests/testSortControlsDoNotAppearConceptuallyBeforeThirteenBooks",
       "result": "PASS",
-      "seconds": 0.015
+      "seconds": 0.01
     },
     {
       "testID": "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
@@ -552,87 +572,87 @@
     {
       "testID": "Prompt11GuideBuilderTests/testAllNineGuideBuilderAssetsUseExactCanonicalNames",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt11GuideBuilderTests/testDeletingGuideDoesNotDeleteSourceSavedMaterial",
       "result": "PASS",
-      "seconds": 0.054
+      "seconds": 0.02
     },
     {
       "testID": "Prompt11GuideBuilderTests/testGuideMetadataPersistsAcrossStoreReload",
       "result": "PASS",
-      "seconds": 0.01
+      "seconds": 0.005
     },
     {
       "testID": "Prompt11GuideBuilderTests/testGuideUsesSamePrompt10EncyclopediaObject",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.005
     },
     {
       "testID": "Prompt11GuideBuilderTests/testNewGuideStartsWithoutSyntheticSection",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.005
     },
     {
       "testID": "Prompt11GuideBuilderTests/testPersonalNoteRemainsAttachedToGuidePage",
       "result": "PASS",
-      "seconds": 0.012
+      "seconds": 0.005
     },
     {
       "testID": "Prompt11GuideBuilderTests/testSectionAndPageReorderPersist",
       "result": "PASS",
-      "seconds": 0.01
+      "seconds": 0.005
     },
     {
       "testID": "Prompt12AccountPrivacyStoreTests/testBlankEmailThrows",
       "result": "PASS",
-      "seconds": 0.012
+      "seconds": 0.007
     },
     {
       "testID": "Prompt12AccountPrivacyStoreTests/testDefaultStateIsPurchasedSignedOutAndLocalOnly",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt12AccountPrivacyStoreTests/testDemoSignInCreatesAccountWithoutRawCredentials",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.004
     },
     {
       "testID": "Prompt12AccountPrivacyStoreTests/testExportCreatesReadableExportRecord",
       "result": "PASS",
-      "seconds": 0.022
+      "seconds": 0.01
     },
     {
       "testID": "Prompt13CycleEngineTests/testArchiveRoundTripRegeneratesDerivedState",
       "result": "PASS",
-      "seconds": 0.06
+      "seconds": 0.05
     },
     {
       "testID": "Prompt13CycleEngineTests/testConfidenceChangesAsHistoryGrows",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testDeletedCycleStartIsExcludedFromCalculations",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt13CycleEngineTests/testDeletedObservationDisappearsFromInsights",
       "result": "PASS",
-      "seconds": 0.011
+      "seconds": 0.003
     },
     {
       "testID": "Prompt13CycleEngineTests/testDSTBoundaryUsesCalendarDatesNotHours",
       "result": "PASS",
-      "seconds": 0.348
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testDuplicateCycleStartDetection",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt13CycleEngineTests/testEditedCycleStartRecalculatesLength",
@@ -642,7 +662,7 @@
     {
       "testID": "Prompt13CycleEngineTests/testEducationalDataNeverBecomesRecorded",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testEraseAllLocalCycleDataClearsSensitiveRecords",
@@ -677,12 +697,12 @@
     {
       "testID": "Prompt13CycleEngineTests/testMissingBleedingDaysDoNotBecomeExactPeriodDuration",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt13CycleEngineTests/testNo28DayFallback",
       "result": "PASS",
-      "seconds": 0.018
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testNoDay14OvulationFallbackAndNoFertileFallback",
@@ -697,32 +717,32 @@
     {
       "testID": "Prompt13CycleEngineTests/testPatternInsightRequiresMinimumEvidence",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt13CycleEngineTests/testPredictionInvalidatesAfterHistoricalEdit",
       "result": "PASS",
-      "seconds": 0.028
+      "seconds": 0.002
     },
     {
       "testID": "Prompt13CycleEngineTests/testPredictionNeverBecomesRecordedHistory",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testPregnancyTestObservationDoesNotCreatePregnancyState",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testRetroactiveCycleStartPreservesCreationTimestamp",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testSpottingDoesNotCreateCycleStart",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testSymptomMissingDiffersFromExplicitNone",
@@ -732,12 +752,12 @@
     {
       "testID": "Prompt13CycleEngineTests/testSyncConflictDetectedForSameIDSameRevisionDifferentContent",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt13CycleEngineTests/testTemperatureConversionPreservesOriginal",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.009
     },
     {
       "testID": "Prompt13CycleEngineTests/testTimezoneChangeDoesNotMutateStoredLocalDate",
@@ -747,12 +767,12 @@
     {
       "testID": "Prompt13CycleEngineTests/testTwoConsecutiveStartsCalculateLength",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.0
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testBBTMeasurementTimePreferenceDoesNotCreateTemperatureObservation",
       "result": "PASS",
-      "seconds": 0.023
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testCompletingWithoutAnyPeriodDateStillSucceeds",
@@ -762,22 +782,22 @@
     {
       "testID": "Prompt14CycleOnboardingTests/testCompletionCommitsUserSuppliedStartsIntoPrompt13",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testCompletionRetryDoesNotDuplicateCycleStarts",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.03
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testEndCurrentPeriodPersistsExplicitEndWithoutChangingStart",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testEndCurrentPeriodRejectsDateBeforeRecordedStart",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testEndCurrentPeriodRejectsFutureDate",
@@ -787,27 +807,27 @@
     {
       "testID": "Prompt14CycleOnboardingTests/testFertilityPermissionRemainsPreferenceNotPrediction",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.004
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testMedicationContextClearsNone",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testNoneCycleContextClearsMedicationCategories",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testPostpartumAndBreastfeedingCanCoexist",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testRecentContextNoneClearsSubstantiveSelections",
       "result": "PASS",
-      "seconds": 0.175
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testSubjectiveRegularityIsIndependentValue",
@@ -822,42 +842,42 @@
     {
       "testID": "Prompt14CycleOnboardingTests/testTrackingPreferenceCanBeDeselected",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testTrackingPreferenceIsMultiSelect",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt14CycleOnboardingTests/testUnknownLatestPeriodDoesNotCreateDefaultDate",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt15CycleTrackerTests/testEveryPrimarySectionHasStableIdentity",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt15CycleTrackerTests/testPrimarySectionsRemainInCanonicalOrder",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.029
     },
     {
       "testID": "Prompt15CycleTrackerTests/testSectionCountIsExactlyFive",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt16TodayStateBuilderTests/testBBTShortcutRequiresBothTrackingPreferenceAndSetupChoice",
       "result": "PASS",
-      "seconds": 0.252
+      "seconds": 0.001
     },
     {
       "testID": "Prompt16TodayStateBuilderTests/testCurrentPeriodAnswerProducesMenstruationContextWithoutPrediction",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "testID": "Prompt16TodayStateBuilderTests/testNoHistoryDoesNotInventCycleDayOrPhase",
@@ -867,12 +887,12 @@
     {
       "testID": "Prompt18CycleWheelTests/testCurrentDayOutsideRepresentedCycleDoesNotFabricateMarker",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt18CycleWheelTests/testCurrentMarkerUsesActualCurrentCycleDayAndRepresentedCycleLength",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.054
     },
     {
       "testID": "Prompt18CycleWheelTests/testCurrentRegionNeverBecomesFertileBecauseFertileIsNotAnEndocrinePhase",
@@ -882,17 +902,17 @@
     {
       "testID": "Prompt18CycleWheelTests/testDateWindowAdapterConvertsOnlyExistingEstimatedWindows",
       "result": "PASS",
-      "seconds": 0.537
+      "seconds": 0.002
     },
     {
       "testID": "Prompt18CycleWheelTests/testEstimatedIntervalsAreClampedToRepresentedCycleLength",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt18CycleWheelTests/testFertileWindowRemainsAnOverlayRatherThanABasePhase",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.049
     },
     {
       "testID": "Prompt18CycleWheelTests/testFractionsRemainWithinZeroAndOne",
@@ -902,32 +922,32 @@
     {
       "testID": "Prompt18CycleWheelTests/testHistoryVersionAndConfidenceArePreservedFromPrompt17",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt18CycleWheelTests/testMissingOvulationEstimateDoesNotInventFollicularOrLutealBoundaries",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt18CycleWheelTests/testNoCycleLengthProducesNoFabricatedPersonalizedGeometry",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt18CycleWheelTests/testSegmentAngularFractionsAreProportionalToRepresentedDays",
       "result": "PASS",
-      "seconds": 0.214
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testAccessibilityLabelPreservesEstimateLanguage",
       "result": "PASS",
-      "seconds": 0.008
+      "seconds": 0.002
     },
     {
       "testID": "Prompt19CalendarEngineTests/testAugust2026RequiresSixRows",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testBuildIsDeterministic",
@@ -937,7 +957,7 @@
     {
       "testID": "Prompt19CalendarEngineTests/testCycleDayOneOnRecordedStart",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.002
     },
     {
       "testID": "Prompt19CalendarEngineTests/testCycleDayUsesRecordedDateDifference",
@@ -947,12 +967,12 @@
     {
       "testID": "Prompt19CalendarEngineTests/testFebruary2026UsesFourRows",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testFutureCycleDayIsNotFabricated",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testLeapFebruaryHas29RealDates",
@@ -962,32 +982,32 @@
     {
       "testID": "Prompt19CalendarEngineTests/testMergingDoesNotEraseExistingRecordedState",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "testID": "Prompt19CalendarEngineTests/testMetadataIsCappedAtTwoAndPrioritized",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testMonthGridPlacesFirstDayInCorrectWeekdayColumn",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testMonthShiftCrossesYearBoundary",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt19CalendarEngineTests/testRecordedPeriodDominatesEstimatedStates",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.0
     },
     {
       "testID": "Prompt19CalendarEngineTests/testWindowKeysStayInsideRequestedMonth",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testBasalTemperatureBecomesBBTCalendarMarker",
@@ -997,22 +1017,22 @@
     {
       "testID": "Prompt20CoreTests/testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testBleedingObservationDoesNotDeclarePeriodInCalendarBridge",
       "result": "PASS",
-      "seconds": 0.042
+      "seconds": 0.084
     },
     {
       "testID": "Prompt20CoreTests/testCalendarBridgeFiltersToDisplayedMonth",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testCalendarMetadataRespectsPrompt19TwoIndicatorPriority",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testCelsiusConvertsToFahrenheit",
@@ -1022,7 +1042,7 @@
     {
       "testID": "Prompt20CoreTests/testCervicalFluidStaysObservationOnly",
       "result": "PASS",
-      "seconds": 0.02
+      "seconds": 0.012
     },
     {
       "testID": "Prompt20CoreTests/testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped",
@@ -1032,7 +1052,7 @@
     {
       "testID": "Prompt20CoreTests/testCorruptPersistenceNeverSilentlyTurnsIntoEmptyStore",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.003
     },
     {
       "testID": "Prompt20CoreTests/testEditPreservesStableIDAndCreatedAtAndIncrementsRevision",
@@ -1042,7 +1062,7 @@
     {
       "testID": "Prompt20CoreTests/testEmptyDraftProducesNoRecordedObservations",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.028
     },
     {
       "testID": "Prompt20CoreTests/testFahrenheitConvertsToCanonicalCelsius",
@@ -1052,42 +1072,42 @@
     {
       "testID": "Prompt20CoreTests/testFailedFileWriteRollsBackInMemoryMutation",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.004
     },
     {
       "testID": "Prompt20CoreTests/testFileStorePersistsAndReloadsCanonicalLog",
       "result": "PASS",
-      "seconds": 0.01
+      "seconds": 0.007
     },
     {
       "testID": "Prompt20CoreTests/testFileStorePersistsDeletionTombstoneAsInactive",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.004
     },
     {
       "testID": "Prompt20CoreTests/testFutureDateRuleUsesLocalCalendarDayNotElapsedHours",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.03
     },
     {
       "testID": "Prompt20CoreTests/testGeneralNoteIsSensitiveDataFieldNotCalendarPrimaryState",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testGeneralTemperatureDoesNotBecomeBBTCalendarMarker",
       "result": "PASS",
-      "seconds": 0.227
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testInMemoryRepositoryEnforcesOneCanonicalLogPerOwnerAndDate",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testIntentionallyClearingExistingLogRemovesActiveLog",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testLocalDayRoundTripUsesCalendarDay",
@@ -1097,12 +1117,12 @@
     {
       "testID": "Prompt20CoreTests/testLocalDaySurvivesDSTBoundary",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.0
     },
     {
       "testID": "Prompt20CoreTests/testMedicationRequiresNameWhenOtherFieldsContainContent",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.011
     },
     {
       "testID": "Prompt20CoreTests/testMultipleMedicationsRemainSeparateRows",
@@ -1112,32 +1132,32 @@
     {
       "testID": "Prompt20CoreTests/testPartialBleedingOnlyLogIsValid",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testPersistedRequestIDRemainsIdempotentAfterStoreReload",
       "result": "PASS",
-      "seconds": 0.023
+      "seconds": 0.002
     },
     {
       "testID": "Prompt20CoreTests/testPersistencePreservesSubsecondRevisionTimestamps",
       "result": "PASS",
-      "seconds": 0.009
+      "seconds": 0.035
     },
     {
       "testID": "Prompt20CoreTests/testRepeatedRequestIDIsIdempotent",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testRepositoryRejectsFutureObservationSaveEvenIfUICheckIsBypassed",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testSymptomsRemainStructuredAndNoteSeparate",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testSymptomSummaryDoesNotInventSeverity",
@@ -1147,7 +1167,7 @@
     {
       "testID": "Prompt20CoreTests/testTemperatureContextWithoutValueIsRejectedRatherThanSilentlyDropped",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testTemperatureNoteWithoutValueIsRejectedRatherThanSilentlyDropped",
@@ -1157,7 +1177,7 @@
     {
       "testID": "Prompt20CoreTests/testTemperatureValidationAcceptsReasonableGeneralInput",
       "result": "PASS",
-      "seconds": 0.059
+      "seconds": 0.001
     },
     {
       "testID": "Prompt20CoreTests/testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft",
@@ -1172,12 +1192,12 @@
     {
       "testID": "Prompt21BodyBiologyCoreTests/testBroadFollicularContextMapsToEarlyBroadPresentation",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt21BodyBiologyCoreTests/testEstimatedOvulationUsesEstimateLanguageAndBlueberry",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt21BodyBiologyCoreTests/testExplicitLaterFollicularContextMapsToLaterPresentation",
@@ -1187,7 +1207,7 @@
     {
       "testID": "Prompt21BodyBiologyCoreTests/testFollicularStatesUseDifferentApprovedStageArt",
       "result": "PASS",
-      "seconds": 0.194
+      "seconds": 0.033
     },
     {
       "testID": "Prompt21BodyBiologyCoreTests/testLutealContextMapsToLuteal",
@@ -1207,7 +1227,7 @@
     {
       "testID": "Prompt21BodyBiologyCoreTests/testMenstruationUsesUterusAndEndometriumAssets",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "testID": "Prompt21BodyBiologyCoreTests/testNeutralPresentationDoesNotClaimPersonalizedBiology",
@@ -1222,7 +1242,7 @@
     {
       "testID": "Prompt21BodyBiologyCoreTests/testOvulationContextIsExplicitlyEstimatedState",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt21BodyBiologyCoreTests/testPeachAppearsOnlyForConfirmedDayOneInput",
@@ -1237,12 +1257,12 @@
     {
       "testID": "Prompt22CoreTests/testAllSevenCanonicalHormoneAssetsAreRegistered",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt22CoreTests/testAllThreeHormonesAreDistinctAndPresent",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt22CoreTests/testAlteredContextNeverGetsMarker",
@@ -1257,17 +1277,17 @@
     {
       "testID": "Prompt22CoreTests/testApprovedResearchCopyOverridesNeutralFallback",
       "result": "PASS",
-      "seconds": 0.008
+      "seconds": 0.001
     },
     {
       "testID": "Prompt22CoreTests/testContextMarkerCoordinatesRemainNormalized",
       "result": "PASS",
-      "seconds": 0.016
+      "seconds": 0.033
     },
     {
       "testID": "Prompt22CoreTests/testCoordinatesRemainNormalizedPresentationGeometry",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt22CoreTests/testCurrentCycleDayKeepsMarkerAvailableWithoutEstimatedLength",
@@ -1282,7 +1302,7 @@
     {
       "testID": "Prompt22CoreTests/testEstimatedOvulationMarkerUsesSameTimelineXAcrossHormones",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt22CoreTests/testExactTitleAndSubtitle",
@@ -1317,32 +1337,42 @@
     {
       "testID": "Prompt22CoreTests/testPrompt17TimelinePositionKeepsMarkerVisibleWhenSemanticContextIsNeutral",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt22CoreTests/testTestosteronePatternIsVisuallySubtler",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.0
     },
     {
       "testID": "Prompt22CoreTests/testTestosteroneUsesCanonicalAsset",
       "result": "PASS",
+      "seconds": 0.004
+    },
+    {
+      "testID": "Prompt22MeasurementPresentationTests/testOptInCannotCreateAnAdjustedCurveWithoutApprovedCalibration",
+      "result": "PASS",
       "seconds": 0.001
+    },
+    {
+      "testID": "Prompt22MeasurementPresentationTests/testReferencePresentationDoesNotInventValuesOrRewriteStoredMeasurements",
+      "result": "PASS",
+      "seconds": 0.002
     },
     {
       "testID": "Prompt23CoreTests/testDigestiveChangesUsesDedicatedFounderArtwork",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt23CoreTests/testDraftPreservesOtherDailyLogFields",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt23CoreTests/testEmptySelectionIsValid",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt23CoreTests/testMappedArtworkUsesCanonicalPhysicalStems",
@@ -1367,7 +1397,7 @@
     {
       "testID": "Prompt24TrendsCoreTests/testBBTUsesOnlyBasalWakingMeasurements",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt24TrendsCoreTests/testBinarySymptomsStayBinaryAndUsePhase23Taxonomy",
@@ -1382,22 +1412,22 @@
     {
       "testID": "Prompt24TrendsCoreTests/testCycleLengthsRemainActualCompletedHistoryOnly",
       "result": "PASS",
-      "seconds": 0.047
+      "seconds": 0.001
     },
     {
       "testID": "Prompt24TrendsCoreTests/testIncompletePeriodNeverBecomesDefinitiveDuration",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt24TrendsCoreTests/testPredictionNeverContaminatesHistoricalMedian",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "testID": "Prompt24TrendsCoreTests/testSupportedPatternRequiresThreeCyclesAndTwoThirds",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt24TrendsCoreTests/testTwoCyclesCannotBecomeSupportedPattern",
@@ -1407,12 +1437,12 @@
     {
       "testID": "Prompt25FertilizationCoreTests/testAllAssetNamesAreLowercaseSnakeCase",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testAllNineFertilizationFolderAssetsHaveReachableModuleUse",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testCanonicalSequenceHasExactlySixPrimaryStages",
@@ -1432,37 +1462,37 @@
     {
       "testID": "Prompt25FertilizationCoreTests/testNoExtraPrimaryEightCellZygoteOrImplantationStageExists",
       "result": "PASS",
-      "seconds": 2.352
+      "seconds": 0.001
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testOocytePrimaryArtIsNotMisrepresentedByFertilizationFolderArt",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.0
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testPreviousAndNextNeverSkipStages",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.0
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testStageIndicatorsAreStable",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.002
     },
     {
       "testID": "Prompt25FertilizationCoreTests/testUnavailableContentProviderNeverInventsScience",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testAllCanonicalPregnancyImagesResolveFromApplicationBundle",
       "result": "PASS",
-      "seconds": 0.027
+      "seconds": 0.005
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testAllTenPregnancyAssetsHaveReachableProductionUse",
       "result": "PASS",
-      "seconds": 0.08
+      "seconds": 0.002
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testAskIndexRequiresResearchSupportForEveryTopic",
@@ -1477,27 +1507,27 @@
     {
       "testID": "Prompt26PregnancyEducationTests/testClosureProviderReturnsOnlyInjectedApprovedContent",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testEveryTopicIsEducationalOnly",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testExactlySevenCanonicalTopicsExistInRequiredOrder",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testExactlyTenCanonicalPregnancyAssetsAreRegistered",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testFetalDevelopmentUsesReferencePeriodsNotUserPregnancyWeeks",
       "result": "PASS",
-      "seconds": 0.026
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testImageInterpretationRequestsAreRejectedByBoundary",
@@ -1507,7 +1537,7 @@
     {
       "testID": "Prompt26PregnancyEducationTests/testOrdinaryEducationalQuestionsRemainAllowed",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testPersonalizedPregnancyQuestionNeverBecomesProbabilityAnswer",
@@ -1517,7 +1547,7 @@
     {
       "testID": "Prompt26PregnancyEducationTests/testPredictedPeriodPassingNeverInfersPregnancy",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testPregnancySpecificArtworkRequiresIntentionalEducationalContext",
@@ -1532,17 +1562,17 @@
     {
       "testID": "Prompt26PregnancyEducationTests/testSymptomCombinationsNeverInferPregnancy",
       "result": "PASS",
-      "seconds": 0.17
+      "seconds": 0.001
     },
     {
       "testID": "Prompt26PregnancyEducationTests/testUnavailableProviderFailsClosedInsteadOfFabricatingContent",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test01NoContextSupplied",
       "result": "PASS",
-      "seconds": 0.053
+      "seconds": 0.021
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test02GeneralTracking",
@@ -1567,7 +1597,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test06NotSexuallyActive",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test07Pregnant",
@@ -1582,7 +1612,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test09BreastfeedingLactating",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test10PostpartumAndBreastfeeding",
@@ -1597,7 +1627,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test12Menopause",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.008
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test13PCOS",
@@ -1607,27 +1637,27 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test14Endometriosis",
       "result": "PASS",
-      "seconds": 0.21
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test15IrregularCycles",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test16FertilityTreatment",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test17HormonalContraception",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test18NonHormonalContraception",
       "result": "PASS",
-      "seconds": 0.107
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test19TTCAndPCOS",
@@ -1637,7 +1667,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test20TTCAndIrregularCycles",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test21TTCAndFertilityTreatment",
@@ -1647,7 +1677,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test22AvoidingPregnancyAndIrregularCycles",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test23PostpartumBreastfeedingSexuallyActive",
@@ -1667,7 +1697,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test26MenopauseWithHistoricalCycleRecordsPreservesHistoryPolicy",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.004
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test27PregnancyWithStoredTTCGoalKeepsGoalAndSuppressesPredictions",
@@ -1687,22 +1717,22 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test30ConflictingContextsUseCentralPrecedence",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test31HistoricalRecordsPreservedAfterContextChanges",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test32ContextDoesNotModifyPredictionMath",
       "result": "PASS",
-      "seconds": 0.033
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test33TTCDoesNotInferFertilization",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test34PregnancyNotInferredFromLatePeriod",
@@ -1712,12 +1742,12 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test35PregnancyNotInferredFromBBT",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test36PregnancyNotInferredFromSymptoms",
       "result": "PASS",
-      "seconds": 0.095
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test37PregnancyNotInferredFromSexualActivity",
@@ -1727,47 +1757,47 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test38PregnancyNotInferredFromFertileWindowInteraction",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test39PregnancyNotInferredFromPrompt25Use",
       "result": "PASS",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test40PCOSNotInferredFromIrregularCycles",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test41MenopauseNotInferredFromAgeOrAbsentBleeding",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test42PostpartumNotInferredFromPreviousPregnancyContext",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test43LactationDoesNotInferOvulationStatus",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test44AvoidingPregnancyNeverProducesSafeDay",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test45SexualActivityDoesNotInferIntercourseType",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test46SexualActivityDoesNotInferTTC",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test47SexualActivityDoesNotInferContraception",
@@ -1782,7 +1812,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test49FertilityTreatmentDoesNotInferTreatmentOutcome",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test50SuppressionPreservesUnderlyingHistoricalData",
@@ -1792,7 +1822,7 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test51ContextProvenanceIsAlwaysUserReportedForExplicitSelections",
       "result": "PASS",
-      "seconds": 0.083
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test52PerimenopauseAndMenopauseRemainDistinct",
@@ -1812,22 +1842,22 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test55CodecRoundTripsContext",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.003
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test56ExistingUserWithNoStoredDataMigratesToUnspecified",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test57CorruptStoredDataFailsSafeToUnspecified",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.007
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test58MinimizedAIContextDoesNotContainSexualActivity",
       "result": "PASS",
-      "seconds": 0.065
+      "seconds": 0.002
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test59InformationKindsRemainDistinct",
@@ -1837,17 +1867,17 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test60AccessibilitySelectionAssetsExistAsCanonicalNames",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test61SurrogacyPreparationSurfacesOnlyContextualEducation",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test62PregnantGestationalCarrierSuppressesOrdinaryCyclePredictions",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test63PostpartumAfterSurrogatePregnancyUsesPostpartumRecoveryWithoutParentingAssumption",
@@ -1857,12 +1887,12 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test64SurrogacyContextRoundTripsThroughCodec",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.004
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test65LegacyStoredContextWithoutSurrogacyMigratesToUnspecifiedSurrogacy",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test66SurrogacyContextClearsWithOtherContextWithoutTouchingHistoryPolicy",
@@ -1872,42 +1902,42 @@
     {
       "testID": "Prompt27AContextPersonalizationTests/test67SurrogacyContextDoesNotInferFertilityTreatmentOrTrackingGoal",
       "result": "PASS",
-      "seconds": 0.117
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test68SurrogacyDiscoveryCopyIsContextSpecificAndCompact",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test69SurrogacyAIContextIsExplicitOnly",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/test70SurrogacyContextNeverChangesPredictionMathematics",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27AContextPersonalizationTests/testUserReportedInfertilityIsExplicitAndBackwardCompatibleByDefault",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testAllCanonicalAssetsAreProductionEligible",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testAllPrompt27CanonicalImagesResolveFromApplicationBundle",
       "result": "PASS",
-      "seconds": 0.058
+      "seconds": 0.012
     },
     {
       "testID": "Prompt27ScienceContentTests/testBodySectionRoutesToOneExplicitBodyAsset",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt27ScienceContentTests/testBrowsingDoesNotBecomeMedicalState",
@@ -1927,27 +1957,27 @@
     {
       "testID": "Prompt27ScienceContentTests/testCanonicalFilenamesMatchPhysicalManifestExactly",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testClosureResearchProviderAcceptsApprovedSourcedContent",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testClosureResearchProviderRejectsUnsourcedContent",
       "result": "PASS",
-      "seconds": 0.039
+      "seconds": 0.007
     },
     {
       "testID": "Prompt27ScienceContentTests/testEducationalQuestionsRemainAllowed",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testForbiddenInferencesRemainForbidden",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testGeneticsSectionRoutesToOneExplicitGeneticsAsset",
@@ -1977,7 +2007,7 @@
     {
       "testID": "Prompt27ScienceContentTests/testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testRouterRejectsAssetInNoneContext",
@@ -1987,27 +2017,27 @@
     {
       "testID": "Prompt27ScienceContentTests/testRouterRejectsFamilyMismatch",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testRouterUsesCuratedMetadataRatherThanArticleKeywords",
       "result": "PASS",
-      "seconds": 0.102
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testUnapprovedScientificAssetFailsClosed",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.008
     },
     {
       "testID": "Prompt27ScienceContentTests/testUnavailableResearchProviderFailsClosed",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt27ScienceContentTests/testVisualFamilyRequiresExplicitCuratedAsset",
@@ -2017,17 +2047,17 @@
     {
       "testID": "Prompt28FruitBasketTests/testAllTenFruitAssetsHaveCanonicalMappings",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes",
       "result": "PASS",
-      "seconds": 0.069
+      "seconds": 0.003
     },
     {
       "testID": "Prompt28FruitBasketTests/testBadCatchWithoutStarPassEndsRound",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testCanonicalRoundRulesNeverScaleTarget",
@@ -2042,7 +2072,7 @@
     {
       "testID": "Prompt28FruitBasketTests/testEducationalDifficultyDoesNotChangePhysicsConfig",
       "result": "PASS",
-      "seconds": 0.098
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testFounderFacingLearningTopicsAreExact",
@@ -2057,7 +2087,7 @@
     {
       "testID": "Prompt28FruitBasketTests/testGoodCatchAddsExactlyTenPointsAndOneProgress",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.007
     },
     {
       "testID": "Prompt28FruitBasketTests/testLeaderboardTotalsAggregateAllTopics",
@@ -2067,27 +2097,27 @@
     {
       "testID": "Prompt28FruitBasketTests/testLeaderboardTotalsEmptyProgress",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testLegacyProgressDefaultsLifetimeStarsToZero",
       "result": "PASS",
-      "seconds": 0.005
+      "seconds": 0.002
     },
     {
       "testID": "Prompt28FruitBasketTests/testLifetimeStarsPersistAcrossEncoding",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testLifetimeStarsSurviveProgressStoreUpdates",
       "result": "PASS",
-      "seconds": 0.013
+      "seconds": 0.008
     },
     {
       "testID": "Prompt28FruitBasketTests/testMissingBadFruitHasNoPenalty",
@@ -2102,7 +2132,7 @@
     {
       "testID": "Prompt28FruitBasketTests/testNewAudioSemanticIDsAreRegistered",
       "result": "PASS",
-      "seconds": 0.011
+      "seconds": 0.046
     },
     {
       "testID": "Prompt28FruitBasketTests/testNewSessionKeepsTopicDifficultyAndGameLevelIndependent",
@@ -2112,27 +2142,27 @@
     {
       "testID": "Prompt28FruitBasketTests/testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.006
     },
     {
       "testID": "Prompt28FruitBasketTests/testObstaclePlanStaysLimitedAndLevelDriven",
       "result": "PASS",
-      "seconds": 0.037
+      "seconds": 0.002
     },
     {
       "testID": "Prompt28FruitBasketTests/testPuddleAddsMildInertiaWithoutTakingAwayBasketControl",
       "result": "PASS",
-      "seconds": 0.032
+      "seconds": 0.007
     },
     {
       "testID": "Prompt28FruitBasketTests/testQuestionRequiresSourcesAndDisjointFruitSets",
       "result": "PASS",
-      "seconds": 0.008
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28FruitBasketTests/testResetPreservesHistoricalProgress",
       "result": "PASS",
-      "seconds": 0.014
+      "seconds": 0.004
     },
     {
       "testID": "Prompt28FruitBasketTests/testSpawnPlannerNeverCreatesMoreThanTwoBadInARow",
@@ -2177,7 +2207,7 @@
     {
       "testID": "Prompt28OnlineLeaderboardPreparationTests/testDuplicateNameIsRejectedAcrossOwners",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "testID": "Prompt28OnlineLeaderboardPreparationTests/testLiveSyncDisabledUntilSecureServiceConfigured",
@@ -2187,37 +2217,37 @@
     {
       "testID": "Prompt28OnlineLeaderboardPreparationTests/testOnlyOwnerCanRelease",
       "result": "PASS",
-      "seconds": 0.025
+      "seconds": 0.001
     },
     {
       "testID": "Prompt28OnlineLeaderboardPreparationTests/testUsernameKeysAreCaseInsensitive",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testAutomaticSymptomUnderliningUsesProductionRenderer",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testFAQContainsAllCanonicalSections",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testMinimumHitArea",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.0
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testPageTurnAudioPolicyUsesExistingProductionAPI",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testPageTurnNavigationTracksForwardAndBackwardDirection",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.0
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testPrivacyAnalyticsDoesNotExposeRawQuestionAPI",
@@ -2227,7 +2257,7 @@
     {
       "testID": "Prompt29To55FinalPhaseTests/testSeriousHealthRouterIsDeterministic",
       "result": "PASS",
-      "seconds": 0.001
+      "seconds": 0.007
     },
     {
       "testID": "Prompt29To55FinalPhaseTests/testSymptomSemanticRoleIsRecognized",
@@ -2237,47 +2267,47 @@
     {
       "testID": "Prompt29To55FinalPhaseTests/testUnicodeRoundTrip",
       "result": "PASS",
-      "seconds": 0.037
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testBoundedTrackerContextContainsNoRawHistoryFields",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.003
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testGeneratedDraftRejectsInventedEvidenceID",
       "result": "PASS",
-      "seconds": 0.017
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
       "result": "PASS",
-      "seconds": 8.873
+      "seconds": 4.86
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testQueryNormalizationHandlesCommonCycleLanguage",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testQuestionDecompositionPreservesMultipleClaimNeeds",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testResearchRetrieverCanRunWithoutGeneration",
       "result": "PASS",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testUnsupportedEvidenceRemainsUnsupported",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "Prompt56ResearchIntelligenceTests/testZeroMeteredAIClientsInvariant",
@@ -2292,74 +2322,110 @@
     {
       "testID": "ResearchPackageBundleTests/testRealBundledResearchPackageDecodesAndHasNoOrphanSources",
       "result": "PASS",
-      "seconds": 0.215
+      "seconds": 0.068
     },
     {
       "testID": "SavedLibraryRecoveryTests/testCorruptLibraryCannotBeOverwrittenByCreatingNewBook",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.004
     },
     {
       "testID": "SavedLibraryRecoveryTests/testUnexpectedStoredTypeIsNotMistakenForEmptyLibrary",
       "result": "PASS",
-      "seconds": 0.007
+      "seconds": 0.004
     },
     {
       "testID": "SemanticDocumentTests/testPersistenceAndProgressiveDisplayPreserveNegationRolesAndUnicode",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "SemanticPipelineTests/testLegacyPageDecodesWithoutFormattingAndMismatchedMetadataCannotRewriteEvidence",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "testID": "SemanticPipelineTests/testRepeatedExcerptUsesSelectedOccurrenceAndUnicodeBoundaries",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "testID": "SemanticPipelineTests/testSameWordsReceiveOnlyTheirDeclaredContextualRole",
       "result": "PASS",
-      "seconds": 0.004
+      "seconds": 0.002
     },
     {
       "testID": "SemanticPipelineTests/testSavedPageAndGuideReopenRetainFormattingSourceAndImages",
       "result": "PASS",
-      "seconds": 0.016
+      "seconds": 0.005
     },
     {
       "testID": "SharedControlArtworkTests/testInvalidLayoutDoesNotAllocateArtwork",
       "result": "PASS",
-      "seconds": 0.002
+      "seconds": 0.029
     },
     {
       "testID": "SharedControlArtworkTests/testPreparedPillUsesOriginalAspectRatioAndReusesRaster",
       "result": "PASS",
-      "seconds": 0.026
+      "seconds": 0.009
+    },
+    {
+      "testID": "StorefrontOwnershipTests/testActualStoreKitAttemptReportsItsRealOutcome",
+      "result": "PASS",
+      "seconds": 0.724
+    },
+    {
+      "testID": "StorefrontOwnershipTests/testCancelledCheckCannotRestoreAStaleVerifiedResultOrLeaveSpinner",
+      "result": "PASS",
+      "seconds": 0.088
+    },
+    {
+      "testID": "StorefrontOwnershipTests/testInterruptedPersistedCheckDoesNotRemainIndefinitelyValidatingAfterRestart",
+      "result": "PASS",
+      "seconds": 0.005
+    },
+    {
+      "testID": "StorefrontOwnershipTests/testOnlyVerifiedMatchingBundleMarksStorefrontVerification",
+      "result": "PASS",
+      "seconds": 0.004
+    },
+    {
+      "testID": "StorefrontOwnershipTests/testUnverifiedUnavailableAndWrongBundleCannotBecomeVerifiedOrAddPaywall",
+      "result": "PASS",
+      "seconds": 0.008
     },
     {
       "testID": "TypingAudioRuntimeTests/testRealTypingPlayerRespectsMuteAndAvoidsDuplicatePlayers",
       "result": "PASS",
-      "seconds": 0.104
+      "seconds": 0.04
     },
     {
       "testID": "UserAuthoredPageTests/testCreateEditReloadAndFormattingAreSeparateFromApprovedResearch",
       "result": "PASS",
-      "seconds": 0.011
+      "seconds": 0.005
     },
     {
       "testID": "UserAuthoredPageTests/testEditorCombinesAndTogglesTraitsWithoutRewritingUserText",
       "result": "PASS",
-      "seconds": 0.006
+      "seconds": 0.001
     },
     {
       "testID": "UserAuthoredPageTests/testManualEditorCannotRewriteSourcedEvidenceAndRejectsEmptyDraft",
       "result": "PASS",
-      "seconds": 0.012
+      "seconds": 0.005
     }
   ],
-  "SwiftTestingSummary": "25 tests in 3 suites PASS, as recorded by the actual test runner",
-  "scope": "Actual Run39 unit results only; pending editor/Guide/Rhythm/diagnostic source changes are not verified by this run."
+  "SwiftTesting": "25 tests passed; actual runner log retained",
+  "deviceReleaseBuild": "PASS unsigned generic iOS arm64 compilation; no physical-device execution",
+  "storefrontActualOutcome": "UNAVAILABLE: actual AppTransaction.shared returned SKInternalErrorDomain Code12; signed production ownership is NOT VERIFIED",
+  "runtimeScope": "Actual bundled native grounding, actual AVAudioPlayer music/rain/effects/typing and master mute, actual linked official MADLAD bounded sentence fixtures. No audible-quality, complete medical translation, or physical-device acceptance claim.",
+  "UIResults": {
+    "smoke": "PASS actual simulator normal/reduced motion; recording produced",
+    "sharedControls": "FAIL Contact accessibility-XXXL strict contrast; other three SharedControl journeys PASS",
+    "hormoneLifecycle": "PASS actual create/restart/edit/rhythm separation/restore/confirmed delete; Run42 repeated the Run41 pass",
+    "userPages": "FAIL actual native PhotosUI tile has informational AX hit point(-1,-1); observed-coordinate tap repair pending",
+    "volumeSettings": "PASS actual four independent artwork sliders, master-toggle/category-preservation/restart journey 87.857 seconds",
+    "AskJourney": "PASS actual answer, document source and clear-on-exit journey82.405 seconds",
+    "broadUI": "Superseded by next repaired source; no overall PASS claimed"
+  }
 }

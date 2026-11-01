@@ -105,6 +105,8 @@ final class HormoneMeasurementUITests: XCTestCase {
         let mode = app.buttons["hormoneRhythm.mode"]
         XCTAssertTrue(mode.waitForExistence(timeout: 15)); mode.tap()
         app.buttons.matching(NSPredicate(format: "label == %@", "my measurements")).firstMatch.tap()
+        XCTAssertFalse(app.staticTexts["general patterns, not measured hormone levels ♡"].exists,
+                       "The educational-curve subtitle must not mislabel actual recorded measurements")
         let reference = rhythm.descendants(matching: .any)["hormoneRhythm.recorded." + measurementID]
         XCTAssertTrue(reference.waitForExistence(timeout: 8))
         XCTAssertTrue(reference.label.contains(displayed), "Reference mode must expose the actual entered value and unit")
