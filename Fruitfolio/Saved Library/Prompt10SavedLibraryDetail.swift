@@ -62,12 +62,6 @@ struct Prompt10EncyclopediaDetailView: View {
                     .accessibilityHidden(true)
 
                     VStack(spacing: 8) {
-                        Prompt10LibraryAssetImage(
-                            asset: .bookOpen
-                        )
-                        .frame(width: 82)
-                        .accessibilityHidden(true)
-
                         Text(encyclopedia.name)
                             .font(
                                 .custom(
@@ -115,22 +109,7 @@ struct Prompt10EncyclopediaDetailView: View {
                     }
                 }
 
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookmark
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .flower
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 18)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 44)
@@ -254,6 +233,8 @@ struct Prompt10EncyclopediaDetailView: View {
                 } else {
                     expandedChapterIDs.insert(chapter.id)
                 }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
             } label: {
                 HStack {
                     Image("library_label")

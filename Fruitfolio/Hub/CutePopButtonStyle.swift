@@ -14,6 +14,8 @@ struct CutePopButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         let reduceMotion = self.reduceMotion || systemReduceMotion || appReduceMotion
         return configuration.label
+            .frame(minWidth: 44, minHeight: 44)
+            .contentShape(Rectangle())
             .scaleEffect(
                 reduceMotion
                     ? 1.0

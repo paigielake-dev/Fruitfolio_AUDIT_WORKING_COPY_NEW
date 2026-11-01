@@ -35,6 +35,7 @@ final class UserAuthoredPageUITests: XCTestCase {
         let createBook = button(app, "create encyclopedia"); reach(app, createBook); createBook.tap()
         let book = button(app, name); XCTAssertTrue(book.waitForExistence(timeout: 10)); reach(app, book); book.tap()
         let chapter = button(app, "saved pages"); XCTAssertTrue(chapter.waitForExistence(timeout: 10)); chapter.tap()
+        capture(app, "Library_InsideBook_ChapterExpanded")
         let add = button(app, "add my own page"); reach(app, add); add.tap()
         let pageTitle = app.textFields["userPage.title"]
         XCTAssertTrue(pageTitle.waitForExistence(timeout: 8)); pageTitle.tap(); pageTitle.typeText("My independent reminder")

@@ -26,63 +26,8 @@ struct WatercolorSecondaryButton: View {
     let label: String
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 14,
-                        relativeTo: .body
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .frame(
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 1.6
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, action: action)
     }
 }
 
