@@ -32,7 +32,7 @@ enum FruitfolioContrast {
         return (lighter + 0.05) / (darker + 0.05)
     }
 
-    static let primaryBurgundy = FruitfolioRGB(hex: 0x6F273D)
+    static let primaryBurgundy = FruitfolioRGB(hex: 0x800000)
     static let cream = FruitfolioRGB(hex: 0xFFF9F0)
     static let mint = FruitfolioRGB(hex: 0xCBDAC3)
     static let sage = FruitfolioRGB(hex: 0xE2DEAF)

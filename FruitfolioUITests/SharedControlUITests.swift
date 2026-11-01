@@ -26,6 +26,7 @@ final class SharedControlUITests: XCTestCase {
         XCTAssertTrue(visible.contains(button.frame), "Audit and screenshot must include the entire painted control and its actual label")
         XCTAssertTrue(button.isHittable, "Long contact action must remain reachable")
         XCTAssertGreaterThanOrEqual(button.frame.height, 44)
+        XCTAssertEqual(button.staticTexts.count, 0, "The actual named Button must be one accessibility action, without a duplicate label node over its artwork")
         return button
     }
 

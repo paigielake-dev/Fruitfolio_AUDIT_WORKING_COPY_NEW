@@ -184,3 +184,48 @@ extension AudioLifecycleRuntimeTests {
         evidence.name = "AudioFade_RapidReentryActualPlayer"; evidence.lifetime = .keepAlways; add(evidence)
     }
 }
+
+extension AudioLifecycleRuntimeTests {
+    func testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops() async throws {
+        let suite = "AudioZeroVolume-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.soundEffectsEnabled = true; settings.typingASMREnabled = true
+        settings.musicVolume = 0.21; settings.rainVolume = 0.18
+        settings.soundEffectsVolume = 0.15; settings.typingVolume = 0.08
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        settings.musicVolume = 0
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying,
+                      "A zero music slider must not mute rain")
+        settings.rainVolume = 0; settings.soundEffectsVolume = 0; settings.typingVolume = 0
+        XCTAssertFalse(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        XCTAssertEqual(manager.playbackObservation(for: .typingASMR).playerCount, 0)
+        settings.musicEnabled = false
+        settings.musicVolume = 0.11
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "Raising a disabled category's volume must not start it")
+        settings.musicEnabled = true
+        settings.rainVolume = 0.13
+        settings.soundEffectsVolume = 0.07; settings.typingVolume = 0.04
+        try await Task.sleep(for: .milliseconds(200))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0.11, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0.13, accuracy: 0.001)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        XCTAssertEqual(manager.playbackObservation(for: .typingASMR).playerCount, 0)
+        let evidence = XCTAttachment(string: "Actual AVAudioPlayer zero-volume category pause/resume; independent music/rain; no old effects/typing replay. API observation, not audible-quality verification.")
+        evidence.name = "AudioZeroVolume_ActualPlayerObservation"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}

@@ -24,6 +24,7 @@ final class AudioManager: ObservableObject {
     // @Published emits before SettingsStore updates its stored value. Cache the
     // delivered master state so every playback gate observes the new value.
     private var allAudioMuted = false
+    private var categoryVolumes: [FruitfolioAudioCategory: Float] = [:]
     private var lastTypingTick: TimeInterval = -Double.infinity
     private var notificationObservers: [NSObjectProtocol] = []
 
@@ -44,6 +45,7 @@ final class AudioManager: ObservableObject {
 
     func attach(settings: SettingsStore) {
         self.settings = settings
+        categoryVolumes.removeAll()
         allAudioMuted = settings.allAudioMuted
         observe(settings: settings)
         synchronizePlaybackWithSettings()
@@ -470,6 +472,7 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory
     ) {
         guard !allAudioMuted, !audioInterrupted, applicationIsActive,
+              volume(for: category) > 0,
               !suspendedLoopCategories.contains(category) else {
             return
         }
@@ -730,7 +733,7 @@ final class AudioManager: ObservableObject {
     private func isEnabled(
         _ category: FruitfolioAudioCategory
     ) -> Bool {
-        guard !allAudioMuted else { return false }
+        guard !allAudioMuted, volume(for: category) > 0 else { return false }
         guard let settings else {
             return true
         }
@@ -754,6 +757,7 @@ final class AudioManager: ObservableObject {
     private func volume(
         for category: FruitfolioAudioCategory
     ) -> Float {
+        if let delivered = categoryVolumes[category] { return delivered }
         guard let settings else {
             switch category {
 
@@ -800,19 +804,27 @@ final class AudioManager: ObservableObject {
         to category: FruitfolioAudioCategory,
         explicitValue: Double? = nil
     ) {
-        let currentVolume =
-            isEnabled(category)
-            ? explicitValue.map { Float(min(max($0, 0), 1)) } ?? volume(for: category)
-            : 0
-
+        // @Published sends before its stored value changes. Keep the delivered
+        // category value so zero-volume mute/resume uses the current preference.
+        if let explicitValue {
+            categoryVolumes[category] = Float(min(max(explicitValue, 0), 1))
+        }
+        let currentVolume = isEnabled(category) ? volume(for: category) : 0
+        if isContinuousCategory(category) {
+            if currentVolume == 0 {
+                muteContinuousAudio(category: category)
+            } else if loopPlayers[category]?.isPlaying != true,
+                      !suspendedLoopCategories.contains(category) {
+                resumeContinuousAudio(category: category)
+            }
+        } else if currentVolume == 0 {
+            // A later slider change must not replay old effects/typing cues.
+            stopOneShots(category: category)
+        }
         loopPlayers[category]?.volume =
             suspendedLoopCategories.contains(category) ? 0 : currentVolume
-
         if let players = oneShotPlayers[category] {
-            for player in players {
-                player.volume =
-                    currentVolume
-            }
+            for player in players { player.volume = currentVolume }
         }
     }
 

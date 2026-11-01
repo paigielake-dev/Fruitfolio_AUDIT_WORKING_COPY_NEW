@@ -1310,6 +1310,7 @@ private struct Prompt05PrimaryHubButton:
         .accessibilityHidden(
             !interactive
         )
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel(
             accessibilityLabel
         )
@@ -1604,6 +1605,7 @@ private struct Prompt05HubUtilityButton:
         .accessibilityHidden(
             !interactive
         )
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel(
             label == "sign in"
             ? "Sign In"

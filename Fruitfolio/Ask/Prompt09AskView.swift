@@ -378,8 +378,8 @@ struct Prompt09AskView: View {
                         .ColorToken
                         .primaryBurgundy
                 )
-                .lineLimit(1)
-                .minimumScaleFactor(0.72)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(
                     .horizontal,
                     58
