@@ -45,14 +45,19 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
 
         // Calling the llama actor directly ensures a fallback cannot pass this test.
         // A thrown error (including invalid JSON) fails the test.
-        let draft = try await model.generateDraft(
-            question: "How does progesterone affect basal body temperature?",
-            evidence: evidence
-        )
-        let hasContent = !(draft.bridge ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            || !draft.claims.isEmpty
-            || !(draft.limitation ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        XCTAssertTrue(hasContent, "Native llama must generate nonempty structured content")
+        // Two native requests also exercise grammar reset and KV cleanup on
+        // the retained actor. Neither a mock nor fallback can satisfy this.
+        for attempt in 1...2 {
+            let draft = try await model.generateDraft(
+                question: "How does progesterone affect basal body temperature?",
+                evidence: evidence
+            )
+            XCTAssertFalse(draft.claims.isEmpty, "Native draft must contain a claim on request \(attempt)")
+            XCTAssertNotNil(
+                FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: evidence),
+                "Native draft must retain the supplied evidence and identifier on request \(attempt)"
+            )
+        }
     }
 #else
     func testNativeRuntimeMustBeLinkedForAIValidation() {

@@ -795,14 +795,9 @@ actor LlamaFruitfolioLanguageModel:
     private var model: OpaquePointer?
     private var context: OpaquePointer?
     private var vocab: OpaquePointer?
-    private var sampler: UnsafeMutablePointer<llama_sampler>?
     private var backendInitialized = false
 
     deinit {
-        if let sampler {
-            llama_sampler_free(sampler)
-        }
-
         if let context {
             llama_free(context)
         }
@@ -846,8 +841,7 @@ actor LlamaFruitfolioLanguageModel:
 
         guard
             let context,
-            let vocab,
-            let sampler
+            let vocab
         else {
             throw FruitfolioLlamaError
                 .couldNotCreateContext
@@ -858,7 +852,14 @@ actor LlamaFruitfolioLanguageModel:
             true
         )
         defer { llama_memory_clear(llama_get_memory(context), true) }
-        llama_sampler_reset(sampler)
+        let existingIDs = Set(evidence.researchNoteChunks.map(\.chunkID)
+            + evidence.sourceChunks.map(\.sourceChunkID))
+        let permittedIDs = Set(evidence.claimEvidenceMap.flatMap {
+            $0.noteChunkIDs + $0.sourceChunkIDs
+        }).intersection(existingIDs).sorted()
+        guard !permittedIDs.isEmpty else { throw FruitfolioLlamaError.invalidOutput }
+        let sampler = try makeDraftSampler(vocab: vocab, permittedIDs: permittedIDs)
+        defer { llama_sampler_free(sampler) }
 
         let evidencePrompt =
             FruitfolioEvidencePromptBuilder.prompt(
@@ -968,8 +969,7 @@ actor LlamaFruitfolioLanguageModel:
         if
             model != nil,
             context != nil,
-            vocab != nil,
-            sampler != nil
+            vocab != nil
         {
             return
         }
@@ -1033,32 +1033,45 @@ actor LlamaFruitfolioLanguageModel:
             throw FruitfolioLlamaError.couldNotCreateContext
         }
 
-        let samplerParameters = llama_sampler_chain_default_params()
-
-        guard
-            let loadedSampler = llama_sampler_chain_init(
-                samplerParameters
-            )
-        else {
-            llama_free(loadedContext)
-            llama_model_free(loadedModel)
-            throw FruitfolioLlamaError.couldNotCreateContext
-        }
-
-        llama_sampler_chain_add(
-            loadedSampler,
-            llama_sampler_init_temp(0.20)
-        )
-        llama_sampler_chain_add(
-            loadedSampler,
-            llama_sampler_init_dist(42)
-        )
-
         model = loadedModel
         context = loadedContext
         vocab = loadedVocab
-        sampler = loadedSampler
     }
+
+    private func makeDraftSampler(
+        vocab: OpaquePointer,
+        permittedIDs: [String]
+    ) throws -> UnsafeMutablePointer<llama_sampler> {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.withoutEscapingSlashes]
+        // Encode twice: first as the JSON value to emit, then as a GBNF
+        // quoted literal. IDs cannot inject grammar or be silently rewritten.
+        let alternatives = try permittedIDs.map { id in
+            let jsonID = String(decoding: try encoder.encode(id), as: UTF8.self)
+            return String(decoding: try encoder.encode(jsonID), as: UTF8.self) + " ws"
+        }.joined(separator: " | ")
+        let grammar = Self.draftGrammar + "\nevidence-id ::= " + alternatives + "\n"
+        guard let chain = llama_sampler_chain_init(llama_sampler_chain_default_params()) else {
+            throw FruitfolioLlamaError.couldNotCreateContext
+        }
+        guard let syntax = llama_sampler_init_grammar(vocab, grammar, "root") else {
+            llama_sampler_free(chain)
+            throw FruitfolioLlamaError.couldNotCreateContext
+        }
+        llama_sampler_chain_add(chain, syntax)
+        llama_sampler_chain_add(chain, llama_sampler_init_greedy())
+        return chain
+    }
+
+    /// Syntax is constrained here; evidence/medical validity is still checked
+    /// independently by FruitfolioGeneratedDraftValidator before display.
+    private static let draftGrammar = #"""
+    root ::= "{" ws "\"bridge\"" ws ":" ws nullable "," ws "\"claims\"" ws ":" ws "[" ws claim ("," ws claim){0,3} "]" ws "," ws "\"limitation\"" ws ":" ws nullable "}" ws
+    claim ::= "{" ws "\"text\"" ws ":" ws string "," ws "\"evidenceIDs\"" ws ":" ws "[" ws evidence-id ("," ws evidence-id){0,7} "]" ws "}" ws
+    nullable ::= string | "null" ws
+    string ::= "\"" ([^"\\\x7F\x00-\x1F] | "\\" (["\\bfnrt] | "u" [0-9a-fA-F]{4}))* "\"" ws
+    ws ::= [ \t\n\r]{0,8}
+    """#
 
     private func qwenPrompt(
         _ evidencePrompt: String
@@ -1282,7 +1295,9 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
             trackerContext = "[none supplied]"
         }
 
-        let outputLanguage = FruitfolioLanguagePreferences.current.nativeDisplayName
+        // Grounded generation and translation are separate responsibilities.
+        // Do not silently ask the small research model to substitute for MADLAD.
+        let outputLanguage = "English"
 
         return """
         You are Fruitfolio's local synthesis layer. Write all user-facing bridge, claim, and limitation text in \(outputLanguage), while preserving the exact scientific meaning of the approved evidence and leaving evidence IDs unchanged. Use ONLY the supplied approved evidence for substantive health or scientific claims. Do not supplement from pretrained knowledge. Do not invent facts, user biology, diagnoses, citations, authors, dates, URLs, or study details. If evidence supports only part of the question, answer only that part and state the limitation. Keep recorded, calculated, estimated, predicted, educational, and user-reported information distinct. Symptoms are semantically underlined by the renderer; do not replace that rule with italics. Serious health content must be calm and non-playful.
