@@ -48,16 +48,38 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
             Fruitfolio_Verification_Evidence/Build/xcode-version.txt
             Fruitfolio_Verification_Evidence/Build/swift-version.txt
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
         id: madlad-runtime-cache
         with:
           path: Vendor/FruitfolioMADLAD.xcframework
           key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh', 'Tools/prepare_candle_madlad.py') }}
+      - uses: actions/cache/restore@v4
+        id: madlad-cargo-cache
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-apple-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
       - name: Build linked MADLAD Apple runtime
         if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
         run: |
           set -o pipefail
           bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/madlad-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: ${{ steps.madlad-runtime-cache.outputs.cache-primary-key }}
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true' && steps.madlad-cargo-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: ${{ steps.madlad-cargo-cache.outputs.cache-primary-key }}
       - name: Preserve compiled translation runtime before app tests
         if: always()
         uses: actions/upload-artifact@v4
@@ -65,12 +87,18 @@ jobs:
           name: Fruitfolio_MADLAD_Apple_Runtime
           path: Vendor/FruitfolioMADLAD.xcframework
           if-no-files-found: warn
-      - uses: actions/cache@v4
+      - uses: actions/cache/restore@v4
+        id: madlad-model-cache
         with:
           path: Models/MADLAD
           key: madlad-official-resources-ea6e5531a3e95213-v1
       - name: Acquire and verify approved translation resources
         run: python3 Tools/prepare_madlad_resources.py
+      - uses: actions/cache/save@v4
+        if: steps.madlad-model-cache.outputs.cache-hit != 'true'
+        with:
+          path: Models/MADLAD
+          key: ${{ steps.madlad-model-cache.outputs.cache-primary-key }}
       - name: Choose installed iPhone simulator
         run: |
           xcrun simctl list devices available -j > /tmp/fruitfolio-devices.json
