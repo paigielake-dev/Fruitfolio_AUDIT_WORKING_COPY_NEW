@@ -78,12 +78,16 @@ struct Prompt04IntroView: View {
         .accessibilityElement(children: .contain)
     }
 
+    private var usesReducedMotion: Bool {
+        motionPreferences.reduceMotionActive || launchMode?.usesReducedMotion == true
+    }
+
     @ViewBuilder
     private func introComposition(metrics: Prompt04BookLayout.Metrics) -> some View {
         let arrival = clamped(machine.bookArrivalProgress)
         let slight = clamped(machine.slightlyOpenProgress)
         let full = clamped(machine.fullyOpenProgress)
-        let focus = clamped(machine.rightPageFocusProgress)
+        let focus = usesReducedMotion ? 0 : clamped(machine.rightPageFocusProgress)
         let paper = clamped(machine.standalonePaperProgress)
 
         let closedOpacity = 1 - slight
@@ -125,7 +129,7 @@ struct Prompt04IntroView: View {
             // STATES 1 + 2 — blank closed book, then exact branded closed book.
             closedBookComposition(metrics: metrics)
                 .opacity(closedOpacity)
-                .scaleEffect(0.94 + (0.06 * arrival))
+                .scaleEffect(usesReducedMotion ? 1 : 0.94 + (0.06 * arrival))
                 .opacity(arrival)
 
             // Hub controls appear only on the standalone paper, never over the
@@ -157,9 +161,13 @@ struct Prompt04IntroView: View {
                 .scaledToFit()
                 .frame(width: metrics.closedBookWidth)
                 .mask {
-                    Prompt04WatercolorPuddleMask(
-                        progress: machine.logoRevealProgress
-                    )
+                    if usesReducedMotion {
+                        Color.white.opacity(machine.logoRevealProgress)
+                    } else {
+                        Prompt04WatercolorPuddleMask(
+                            progress: machine.logoRevealProgress
+                        )
+                    }
                 }
                 .opacity(machine.logoRevealProgress > 0 ? 1 : 0)
         }
