@@ -82,3 +82,11 @@ unavailable notice instead of silently pretending its Ask answer was translated.
 No new iOS test pass is asserted by these source changes.
 
 The Debug build configuration now explicitly enables DEBUG, -Onone and incremental Swift compilation. Native XCTest accessibility audits for Hub and feature opening states are staged without suppressing audit issues; these are not substitutes for manual VoiceOver testing. New measurement test dates require explicit selection/confirmation rather than silently saving the current date.
+
+Actual Run3 failed its test build because the DEBUG-only audio observation was
+not compiled. The explicit Debug flags address that cause. The build log also
+showed x86_64 compilation against an arm64-only simulator runtime and no direct
+runtime-header search path. Debug/CI now target active arm64 and receive the
+SDK-specific runtime module headers. The native model test now explicitly
+fails if the llama module is absent, rather than conditionally disappearing.
+These corrections require their own successful Apple rerun.

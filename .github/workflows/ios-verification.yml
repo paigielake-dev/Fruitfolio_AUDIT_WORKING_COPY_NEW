@@ -62,7 +62,7 @@ jobs:
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData \
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Build.xcresult \
-            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-build.log
       - name: Run XCTest and UI tests against built application
         run: |
@@ -71,7 +71,7 @@ jobs:
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData \
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
-            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-test.log
       - name: Export actual XCTest screenshot attachments
         if: always()

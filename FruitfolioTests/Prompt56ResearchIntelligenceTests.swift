@@ -54,6 +54,10 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             || !(draft.limitation ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         XCTAssertTrue(hasContent, "Native llama must generate nonempty structured content")
     }
+#else
+    func testNativeRuntimeMustBeLinkedForAIValidation() {
+        XCTFail("The llama module is unavailable. Native inference must not be reported as verified by conditionally omitting its test.")
+    }
 #endif
 
     func testQueryNormalizationHandlesCommonCycleLanguage() {
