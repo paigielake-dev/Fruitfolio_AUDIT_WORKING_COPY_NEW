@@ -90,3 +90,10 @@ runtime-header search path. Debug/CI now target active arm64 and receive the
 SDK-specific runtime module headers. The native model test now explicitly
 fails if the llama module is absent, rather than conditionally disappearing.
 These corrections require their own successful Apple rerun.
+
+Run6 exposed a module redefinition: Xcode already copies the XCFramework module
+map into its product include directory, so adding its original SDK header
+folder exposed the same module twice. The redundant explicit header paths were
+removed; active arm64 targeting and the mandatory native-inference test remain.
+Unit/native tests and UI tests are now separate CI steps with early evidence
+uploads, so a long UI traversal cannot hide the unit/model result.
