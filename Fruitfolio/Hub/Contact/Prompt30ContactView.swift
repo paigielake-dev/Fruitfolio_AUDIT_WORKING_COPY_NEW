@@ -27,15 +27,13 @@ struct Prompt30ContactView: View {
                         ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_watermelon)
+                            FruitfolioImage(id: .cycledecor_green_flecks)
                                 .frame(width: 52, height: 52)
 
-                            FruitfolioImage(id: .fruitbasket_grape)
+                            FruitfolioImage(id: .fruitbasket_plum)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
+
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)

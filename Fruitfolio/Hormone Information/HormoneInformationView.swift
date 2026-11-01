@@ -121,7 +121,7 @@ private struct HormoneMeasurementEditor: View {
                 field("sample type (optional)", text: $draft.sampleType)
                 field("cycle day (optional)", text: $draft.cycleDay).keyboardType(.numberPad)
                 field("laboratory-provided reference range (optional)", text: $draft.laboratoryReferenceRange)
-                field("notes (optional)", text: $draft.notes)
+                field("notes (optional)", text: $draft.notes, multiline: true)
                 Text("enter a decimal separator only for decimals; do not enter thousands separators. units are saved exactly as entered and are never converted.")
                 if let validation = draft.validationError { Text(LocalizedStringKey(validation)).font(.footnote) }
                 if let error { Text(error).accessibilityLabel(error) }
@@ -144,6 +144,7 @@ private struct HormoneMeasurementEditor: View {
             ToolbarItemGroup(placement: .keyboard) {
                 Spacer()
                 Button("done") { fieldFocused = false }
+                    .accessibilityIdentifier("hormone.keyboardDone")
             }
         }
         .interactiveDismissDisabled(draft != original)
@@ -153,10 +154,10 @@ private struct HormoneMeasurementEditor: View {
         }
     }
 
-    private func field(_ label: String, text: Binding<String>) -> some View {
+    private func field(_ label: String, text: Binding<String>, multiline: Bool = false) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(LocalizedStringKey(label))
-            TextField(LocalizedStringKey(label), text: text, axis: .vertical)
+            TextField(LocalizedStringKey(label), text: text, axis: multiline ? .vertical : .horizontal)
                 .textFieldStyle(.roundedBorder)
                 .focused($fieldFocused)
                 .submitLabel(.done)

@@ -48,7 +48,7 @@ final class HormoneMeasurementUITests: XCTestCase {
         unit.tap()
         let fixtureUnit = "fixture-" + String(UUID().uuidString.prefix(8)).lowercased()
         unit.typeText(fixtureUnit)
-        let done = app.buttons["done"]
+        let done = app.buttons["hormone.keyboardDone"]
         XCTAssertTrue(done.waitForExistence(timeout: 5)); done.tap()
         let confirmDate = button(app, prefix: "confirm test date")
         for _ in 0..<6 where !confirmDate.isHittable { app.swipeUp() }

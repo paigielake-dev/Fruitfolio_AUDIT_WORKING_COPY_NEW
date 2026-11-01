@@ -131,6 +131,12 @@ final class AudioManager: ObservableObject {
     }
 
     #if DEBUG
+    func playbackObservation(for category: FruitfolioAudioCategory) -> (playerCount: Int, isPlaying: Bool, volumes: [Float], durations: [TimeInterval]) {
+        var players = oneShotPlayers[category] ?? []
+        if let loop = loopPlayers[category] { players.append(loop) }
+        return (players.count, players.contains(where: \.isPlaying), players.map(\.volume), players.map(\.duration))
+    }
+
     var typingPlaybackState: (playerCount: Int, isPlaying: Bool, volume: Float) {
         let players = oneShotPlayers[.typingASMR] ?? []
         return (players.count, players.contains(where: \.isPlaying), players.first?.volume ?? 0)

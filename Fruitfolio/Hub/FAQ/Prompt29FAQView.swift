@@ -4,6 +4,27 @@ struct Prompt29FAQItem: Identifiable, Hashable, Sendable {
     let id: String
     let question: String
     let answer: String
+
+    /// Authored roles belong to a specific approved answer, never to a keyword.
+    var semanticDocument: FruitfolioSemanticDocument {
+        let spans: [FruitfolioSemanticSpan]
+        switch id {
+        case "about-2": spans = [
+            .init(text: "no. Fruitfolio is "), .init(text: "educational", emphasis: .anchorBold),
+            .init(text: " and does not replace a qualified healthcare professional.")]
+        case "ask-1": spans = [
+            .init(text: "Ask is limited to Fruitfolio’s approved Research Library and verified source records. "),
+            .init(text: "unsupported questions stay unsupported", emphasis: .spokenItalic),
+            .init(text: " rather than being filled from model memory.")]
+        case "cycle-1": spans = [
+            .init(text: "no. predictions and fertile-window estimates are "),
+            .init(text: "estimates", emphasis: .anchorBold),
+            .init(text: ", not confirmations or contraceptive guarantees.")]
+        default: spans = [.init(text: answer)]
+        }
+        let document = FruitfolioSemanticDocument(spans: spans)
+        return document.plainText == answer ? document : .init(spans: [.init(text: answer)])
+    }
 }
 
 struct Prompt29FAQSection: Identifiable, Hashable, Sendable {
@@ -127,11 +148,9 @@ struct Prompt29FAQView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                if !dynamicTypeSize.isAccessibilitySize {
-                    Prompt29FAQDecoration().frame(height: 130).padding(.horizontal, 20)
-                }
                 ScrollView {
                 VStack(spacing: 16) {
+                    Prompt29FAQDecoration().frame(height: 130)
                     Prompt12RouteHeader(
                         title: "FAQ",
                         subtitle: "you’ve got questions. we’ve got answers. ♡",
@@ -182,7 +201,9 @@ private struct Prompt29FAQSectionCard: View {
                 let isExpanded = expanded.contains(item.id)
                 Button {
                     audioManager.play(.buttonSoftPop)
-                    if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
+                    withAnimation(.easeOut(duration: motionPreferences.reduceMotionActive ? 0.12 : 0.20)) {
+                        if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
+                    }
                 } label: {
                     HStack(spacing: 10) {
                         Text(item.question)
@@ -194,12 +215,17 @@ private struct Prompt29FAQSectionCard: View {
                             .rotationEffect(.degrees(isExpanded ? 180 : 0))
                             .accessibilityHidden(true)
                     }.frame(minHeight: 44)
-                }.buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                }
+                .accessibilityIdentifier("faq.question." + item.id)
+                .accessibilityValue(isExpanded ? "expanded" : "collapsed")
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 if isExpanded {
-                    Text(item.answer)
-                        .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
+                    FruitfolioSemanticText(document: item.semanticDocument,
+                        baseFont: .custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
+                        .accessibilityIdentifier("faq.answer." + item.id)
+                        .transition(.opacity)
                 }
             }
         }
@@ -245,7 +271,7 @@ private struct Prompt29FAQSectionCard: View {
 private struct Prompt29FAQDecoration: View {
     private let assets: [(FruitfolioAssetID, FruitfolioDecorativeAnchor, ClosedRange<CGFloat>)] = [
         (.decor_fluffy_cloud, .topTrailing, 0.30...0.44),
-        (.decor_grass, .bottomLeading, 0.24...0.30),
+        // No approved tulip was identified in the supplied registry. Do not substitute grass or another flower.
         (.decor_sparkles_1, .bottomTrailing, 0.12...0.16)
     ]
 
