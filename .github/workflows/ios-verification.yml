@@ -15,7 +15,7 @@ permissions:
 jobs:
   ios:
     runs-on: macos-latest
-    timeout-minutes: 120
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
         with:
@@ -163,6 +163,28 @@ jobs:
           name: Fruitfolio_Unit_Build_Evidence
           path: |
             Fruitfolio_Verification_Evidence/Build
+      - name: Execute official model with verified external-network isolation
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: bash Tools/verify_offline_madlad_ci.sh
+      - name: Export actual offline inference attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
+          fi
+      - name: Preserve actual offline isolation and inference evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Offline_MADLAD_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/MADLAD/Offline
+            Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult
+          retention-days: 90
       - name: Build actual iPhone Release configuration
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         timeout-minutes: 15
@@ -536,9 +558,9 @@ jobs:
               --path Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
               --output-path Fruitfolio_Verification_Evidence/Visual
           fi
-      - name: Bounded exploratory visual traversal after functional tests
+      - name: Extended visual traversal after functional tests
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        timeout-minutes: 8
+        timeout-minutes: 45
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
@@ -628,5 +650,197 @@ jobs:
         with:
           name: Fruitfolio_Evidence_Part_08
           path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part08
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 09
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_09
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part09
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 10
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_10
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part10
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 11
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_11
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part11
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 12
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_12
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part12
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 13
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_13
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part13
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 14
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_14
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part14
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 15
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_15
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part15
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 16
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_16
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part16
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 17
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_17
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part17
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 18
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_18
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part18
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 19
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_19
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part19
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 20
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_20
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part20
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 21
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_21
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part21
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 22
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_22
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part22
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 23
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_23
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part23
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 24
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_24
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part24
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 25
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_25
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part25
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 26
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_26
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part26
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 27
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_27
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part27
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 28
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_28
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part28
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 29
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_29
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part29
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 30
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_30
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part30
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 31
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_31
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part31
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 32
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_32
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part32
           if-no-files-found: ignore
           compression-level: 0

@@ -5,7 +5,8 @@ import XCTest
 final class PersonalHealthContextTests: XCTestCase {
     func testExistingContextMigratesWithoutInventingAnyMedicalFields() throws {
         let codec = Prompt27AContextCodec()
-        let original = Prompt27AUserReproductiveContext(trackingGoal: .tryingToConceive, reproductiveStage: .cycling)
+        let original = Prompt27AUserReproductiveContext(trackingGoal: .tryingToConceive, reproductiveStage: .cycling,
+            timestamp: Date(timeIntervalSince1970: 1_700_000_000))
         let encoded = try codec.encode(original)
         var legacy = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded) as? [String: Any])
         legacy.removeValue(forKey: "personalHealthFields")
