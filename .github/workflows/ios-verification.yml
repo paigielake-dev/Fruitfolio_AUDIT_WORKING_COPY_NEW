@@ -80,6 +80,7 @@ jobs:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
       - name: Run unit and native inference tests
+        timeout-minutes: 8
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
@@ -281,3 +282,4 @@ jobs:
           path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part08
           if-no-files-found: ignore
           compression-level: 0
+

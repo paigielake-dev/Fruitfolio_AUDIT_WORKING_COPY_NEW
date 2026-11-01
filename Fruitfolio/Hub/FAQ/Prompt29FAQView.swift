@@ -257,6 +257,9 @@ private struct Prompt29FAQDecoration: View {
                     if let image = try? FruitfolioAssetLoader.uiImage(item.0) {
                         let placement = FruitfolioDecorativeArtLayout.placement(
                             intrinsicSize: image.size,
+                            visibleAlphaBounds: FruitfolioArtworkGeometryStore.geometry(
+                                named: AssetRegistry.record(for: item.0).resourceStem
+                            )?.paintedBounds(in: image.size),
                             roleFraction: item.2,
                             anchor: item.1,
                             container: CGRect(origin: .zero, size: geometry.size),

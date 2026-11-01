@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
+nonisolated enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case plain
     case anchorBold
     case spokenItalic
@@ -10,7 +10,7 @@ enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case absoluteBoldItalicUnderline
 }
 
-struct FruitfolioSemanticSpan: Identifiable, Equatable, Sendable {
+nonisolated struct FruitfolioSemanticSpan: Identifiable, Hashable, Codable, Sendable {
     let id: UUID
     let text: String
     let emphasis: FruitfolioSemanticEmphasis
@@ -23,6 +23,28 @@ struct FruitfolioSemanticSpan: Identifiable, Equatable, Sendable {
         self.id = id
         self.text = text
         self.emphasis = emphasis
+    }
+}
+
+/// Structured meaning survives storage and progressive display without parsing
+/// partial Markdown or applying word-matching rules after rendering.
+nonisolated struct FruitfolioSemanticDocument: Codable, Hashable, Sendable {
+    let spans: [FruitfolioSemanticSpan]
+
+    var plainText: String { spans.map(\.text).joined() }
+
+    func prefix(characters count: Int) -> FruitfolioSemanticDocument {
+        var remaining = max(0, count)
+        var result: [FruitfolioSemanticSpan] = []
+        for span in spans {
+            guard remaining > 0 else { break }
+            let text = String(span.text.prefix(remaining))
+            if !text.isEmpty {
+                result.append(.init(id: span.id, text: text, emphasis: span.emphasis))
+                remaining -= text.count
+            }
+        }
+        return .init(spans: result)
     }
 }
 
@@ -40,6 +62,10 @@ struct FruitfolioSemanticText: View {
         self.spans = spans
         self.baseFont = baseFont
         self.color = color ?? DesignTokens.ColorToken.primaryBurgundy
+    }
+
+    init(document: FruitfolioSemanticDocument, baseFont: Font = .body, color: Color? = nil) {
+        self.init(spans: document.spans, baseFont: baseFont, color: color)
     }
 
     var body: some View {

@@ -26,6 +26,10 @@ Run14 / 05b08bb: application/test targets built; 436 XCTest cases and 25 Swift T
 
 The resumed Cycle destination predicate has been corrected to recognize its actual entry root; onboarding advancement assertions remain. Shared modal backgrounds now hide their accessibility subtree while active. Button pop animation respects system Reduce Motion even at default call sites. Runtime verification remains incomplete.
 
+## Shared-system continuation
+
+Measured all 269 original PNG image sets (native dimensions, actual alpha bounds and source SHA-256) without modifying artwork. Cached geometry is used by the existing FAQ decoration layout. Shared semantic spans now support Codable documents and Unicode-safe progressive prefixes. New geometry and semantic persistence tests are staged; app-wide adoption is still incomplete and is not claimed complete.
+
 ## Founder decision
 
 Explicit clarification resolved the Fruit Basket conflict: zero starpasses plus bad fruit ends the round. See FounderDecisions.json. Game implementation still requires inspection and verification against that decision.
