@@ -215,7 +215,11 @@ private struct Prompt29FAQSectionCard: View {
                             .rotationEffect(.degrees(isExpanded ? 180 : 0))
                             .accessibilityHidden(true)
                     }.frame(minHeight: 44)
+                    .accessibilityHidden(true)
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(item.question)
+                .accessibilityAddTraits(.isButton)
                 .accessibilityIdentifier("faq.question." + item.id)
                 .accessibilityValue(isExpanded ? "expanded" : "collapsed")
                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))

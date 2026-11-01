@@ -95,6 +95,7 @@ struct Prompt11GuideBookTile: View {
                 )
             }
             .frame(maxWidth: .infinity)
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -132,6 +133,7 @@ struct Prompt11NewGuideTile: View {
                     .multilineTextAlignment(.center)
             }
             .frame(maxWidth: .infinity)
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(

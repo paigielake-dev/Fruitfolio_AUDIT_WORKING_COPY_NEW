@@ -68,6 +68,7 @@ struct FruitfolioControlPillButton: View {
                 .frame(maxWidth: 292, minHeight: 82, alignment: .center)
                 .background { FruitfolioControlPillArtwork() }
             .contentShape(Rectangle())
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(

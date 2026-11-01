@@ -178,6 +178,7 @@ nonisolated enum Prompt27AContraceptionContext: String, Codable, CaseIterable, E
 }
 
 nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendable {
+    var personalHealthFields: [Prompt27AHealthField: Prompt27AHealthEntry] = [:]
     var trackingGoal: Prompt27AReportedValue<Prompt27ATrackingGoal>
     var sexualActivityContext: Prompt27AReportedValue<Prompt27ASexualActivityContext>
     var reproductiveStage: Prompt27AReportedValue<Prompt27AReproductiveStage>
@@ -216,6 +217,7 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
     static var unspecified: Self { .init() }
 
     var isCompletelyUnspecified: Bool {
+        !personalHealthFields.values.contains(where: { $0.status == .supplied && !$0.text.isEmpty }) &&
         trackingGoal.value == .unspecified &&
         sexualActivityContext.value == .unspecified &&
         reproductiveStage.value == .unspecified &&
@@ -270,6 +272,7 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
     }
 
     private enum CodingKeys: String, CodingKey {
+        case personalHealthFields
         case trackingGoal
         case sexualActivityContext
         case reproductiveStage
@@ -285,6 +288,7 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
+        personalHealthFields = try container.decodeIfPresent([Prompt27AHealthField: Prompt27AHealthEntry].self, forKey: .personalHealthFields) ?? [:]
         trackingGoal = try container.decode(
             Prompt27AReportedValue<Prompt27ATrackingGoal>.self,
             forKey: .trackingGoal
@@ -342,6 +346,7 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(personalHealthFields, forKey: .personalHealthFields)
         try container.encode(trackingGoal, forKey: .trackingGoal)
         try container.encode(sexualActivityContext, forKey: .sexualActivityContext)
         try container.encode(reproductiveStage, forKey: .reproductiveStage)

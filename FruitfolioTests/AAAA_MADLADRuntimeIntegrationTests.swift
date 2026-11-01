@@ -20,6 +20,21 @@ final class AAAA_MADLADRuntimeIntegrationTests: XCTestCase {
                 _ = try await runtime.translateRawSentence("This is educational information.", target: "zzz", directory: directory)
                 XCTFail("An unknown language tag must be rejected rather than interpreted as ordinary input text")
             } catch FruitfolioMADLADError.inferenceFailed { /* exact tokenizer tag rejection */ }
+            let documentTranslator = FruitfolioMADLADDocumentTranslator(runtime: runtime)
+            let originalFixture = "This is educational information, not medical advice. The result is 2.5 ng/mL [source-1]."
+            let candidate = try await documentTranslator.candidate(source: originalFixture,
+                sourceIdentifiers: ["source-1"], target: "es", immutableTerms: ["ng/mL"], directory: directory)
+            XCTAssertEqual(candidate.textForVerification,
+                "Esta es información educativa, no consejo médico. El resultado es 2.5 ng/mL [source-1].")
+            XCTAssertEqual(candidate.originalText, originalFixture)
+            XCTAssertEqual(candidate.sourceIdentifiers, ["source-1"])
+            XCTAssertEqual(candidate.citationMarkers, ["[source-1]"])
+            XCTAssertFalse(candidate.medicalMeaningVerified, "Preservation fixture success is not general clinical translation approval")
+            let french = try await documentTranslator.candidate(source: "The result is 2.5 ng/mL.",
+                sourceIdentifiers: [], target: "fr", immutableTerms: ["ng/mL"], directory: directory)
+            XCTAssertTrue(french.textForVerification.contains("2.5 ng/mL"))
+            let repaired = XCTAttachment(string: "Actual official local model; original failed combined medical fixture through sentence/citation boundary preservation: \(candidate.textForVerification)\nFrench exact original numeric spelling: \(french.textForVerification)\nClinical/general-language approval remains NOT VERIFIED.")
+            repaired.name = "MADLAD_ActualMedicalFixtureBoundaryRepair"; repaired.lifetime = .keepAlways; add(repaired)
             var usage = rusage(); getrusage(0, &usage)
             let report = "Actual Apple runtime / local official Q4: Spanish warning=\(warning); measurement=\(measurement); French uncertainty=\(uncertainty). Wall seconds=\(Date().timeIntervalSince(start)); process peak RSS bytes on Darwin=\(usage.ru_maxrss); reported host physical bytes=\(ProcessInfo.processInfo.physicalMemory). No inference network API. This is a bounded runtime test, not full language/medical/UI or physical-iPhone acceptance."
             let evidence = XCTAttachment(string: report); evidence.name = "MADLAD_ActualAppleRuntime"; evidence.lifetime = .keepAlways; add(evidence)

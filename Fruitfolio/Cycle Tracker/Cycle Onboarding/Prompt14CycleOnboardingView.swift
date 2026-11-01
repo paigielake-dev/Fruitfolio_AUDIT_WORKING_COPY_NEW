@@ -20,6 +20,7 @@ struct Prompt14CycleEntryView: View {
 struct Prompt14CycleOnboardingView: View {
     @StateObject private var model: Prompt14CycleOnboardingViewModel
     @State private var trackerReady = false
+    @State private var showPersonalHealth = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var contextStore: Prompt27AContextStore
 
@@ -47,6 +48,9 @@ struct Prompt14CycleOnboardingView: View {
             } else {
                 onboardingContent
             }
+        }
+        .fullScreenCover(isPresented: $showPersonalHealth) {
+            Prompt27APersonalHealthView(store: contextStore) { showPersonalHealth = false }
         }
         .accessibilityIdentifier("cycle-tracker-entry")
         .task {
@@ -82,6 +86,9 @@ struct Prompt14CycleOnboardingView: View {
                                 removal: .opacity.combined(with: .move(edge: .leading))
                             )
                         )
+
+                    FruitfolioControlPillButton(label: "personal health context (optional)") { showPersonalHealth = true }
+                        .accessibilityIdentifier("onboarding.openPersonalHealth")
 
                     if let error = model.errorMessage {
                         Text(error)

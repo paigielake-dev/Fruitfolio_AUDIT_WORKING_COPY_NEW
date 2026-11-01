@@ -1,0 +1,9 @@
+# Medical translation fixture repair — verification pending
+
+Both previously examined runtimes executed the official encoder–decoder model but the combined paragraph could omit the educational/not-medical-advice warning, rewrite [source-1] and invent another measurement/citation. The original model bytes and tokenizer remain preserved. Architecture compatibility and actual bounded local inference are established separately from translation quality.
+
+The Swift document adapter now sends sentence-sized prose requests, keeps recognized source identifiers outside generation, restores their markers at the sentence boundary, and rejects unexpected output citations. Numbers still have a strict final lexical-equality invariant. A French/German decimal comma is restored to the original decimal spelling only after exact Decimal equivalence is demonstrated; changed, added, missing, reordered and sign-changed numbers are rejected. Ambiguous source comma/grouping conventions are never guessed. Explicit units and medical literals must retain their exact spelling and occurrence count.
+
+The existing actual Apple integration test now reruns the original combined warning/measurement/citation fixture through this adapter and tests the French numeric case. Additional tests reject number/literal changes. These new tests are NOT VERIFIED until the actual Mac run finishes.
+
+The result type is explicitly a candidate for verification, not a clinically approved translation. Production Ask remains gated. This change does not establish full semantic equivalence for arbitrary clinical text, complete language coverage, Chinese script distinction, physical-iPhone suitability, or app-wide localization. Five required exact tags remain absent from the official tokenizer. No model/cloud substitution and no change to the research-grounding validator.

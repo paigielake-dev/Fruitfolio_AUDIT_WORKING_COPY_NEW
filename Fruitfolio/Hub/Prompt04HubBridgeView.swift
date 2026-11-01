@@ -1297,6 +1297,7 @@ private struct Prompt05PrimaryHubButton:
             .contentShape(
                 Rectangle()
             )
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -1592,6 +1593,7 @@ private struct Prompt05HubUtilityButton:
             .contentShape(
                 Rectangle()
             )
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(

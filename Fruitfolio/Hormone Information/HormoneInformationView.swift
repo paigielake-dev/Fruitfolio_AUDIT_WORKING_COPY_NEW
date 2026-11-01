@@ -51,6 +51,9 @@ struct HormoneInformationView: View {
                         .accessibilityIdentifier("hormone.measurement.\(record.id.uuidString)")
                         Divider()
                     }
+                    DisclosureGroup("recorded measurement graphs") {
+                        HormoneMeasurementHistoryChart(measurements: records)
+                    }
                     Text("these are results you recorded, not a diagnosis. timing, sample type, methods, units, and clinical context matter. Fruitfolio does not classify results or recommend treatment.")
                     Text("hormone rhythm remains a separate educational illustration. these records do not represent a measured curve or confirm ovulation or fertility.")
                 }

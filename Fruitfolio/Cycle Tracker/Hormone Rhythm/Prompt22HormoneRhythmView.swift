@@ -202,6 +202,7 @@ struct Prompt22HormoneRhythmView: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityIdentifier("hormoneRhythm.recorded." + record.id.uuidString)
             }
+            HormoneMeasurementHistoryChart(measurements: measurements.measurements)
             Text("these are results you recorded, not a diagnosis. timing, sample type, methods, units, and clinical context matter. Fruitfolio does not classify results or recommend treatment.")
         }
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))

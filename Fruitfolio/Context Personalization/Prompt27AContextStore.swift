@@ -73,6 +73,14 @@ final class Prompt27AContextStore: ObservableObject {
         persist()
     }
 
+    func setPersonalHealthField(_ field: Prompt27AHealthField, text: String,
+                                status: Prompt27AHealthEntry.Status = .supplied,
+                                clinicianConfirmedByUser: Bool = false) {
+        context.personalHealthFields[field] = .init(text: text, status: status,
+            clinicianConfirmedByUser: clinicianConfirmedByUser)
+        persist()
+    }
+
     func clearContext() {
         context.clear()
         persist()
