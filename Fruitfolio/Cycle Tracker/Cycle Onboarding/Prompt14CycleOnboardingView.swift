@@ -1032,10 +1032,10 @@ private struct Prompt14CalendarDay: View {
                     .font(Prompt14Type.calendarDay)
                     .foregroundStyle(Prompt14Palette.burgundy.opacity(enabled ? 1 : 0.32))
             }
-            .frame(maxWidth: .infinity, minHeight: 42)
+            .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .disabled(!enabled)
         .accessibilityLabel(Prompt14DateFormatting.long(value.local))
         .accessibilityAddTraits(selected ? .isSelected : [])

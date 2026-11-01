@@ -98,7 +98,7 @@ struct Prompt08ControlGallery: View {
                         Rectangle()
                     )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
 
                 VStack(spacing: 14) {
 
@@ -189,7 +189,7 @@ struct Prompt08ControlGallery: View {
                                 Rectangle()
                             )
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(CutePopButtonStyle())
 
                         WatercolorPrimaryButton(
                             label: "done"

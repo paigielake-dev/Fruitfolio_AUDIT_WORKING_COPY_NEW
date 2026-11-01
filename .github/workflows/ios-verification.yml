@@ -138,6 +138,36 @@ jobs:
         with:
           name: Fruitfolio_Smoke_Evidence
           path: Fruitfolio_Verification_Evidence
+      - name: Verify shared controls in actual Contact journeys
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/SharedControlUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+      - name: Export and preserve shared-control evidence
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SharedControls
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/SharedControls
+          fi
+      - name: Preserve focused shared-control evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Shared_Control_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+            Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+            Fruitfolio_Verification_Evidence/Visual/SharedControls
       - name: Verify hormone record lifecycle before broad traversal
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         timeout-minutes: 6
@@ -173,6 +203,7 @@ jobs:
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -only-testing:FruitfolioUITests \
+            -skip-testing:FruitfolioUITests/SharedControlUITests \
             -skip-testing:FruitfolioUITests/HormoneMeasurementUITests \
             -skip-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
             -skip-testing:FruitfolioUITests/FruitfolioUITests/testFruitfolioCompleteDeepAudit \
@@ -282,4 +313,3 @@ jobs:
           path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part08
           if-no-files-found: ignore
           compression-level: 0
-

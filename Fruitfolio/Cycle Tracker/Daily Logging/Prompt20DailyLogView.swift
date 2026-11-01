@@ -218,7 +218,7 @@ public struct Prompt20DailyLogView: View {
                 .font(Prompt20Type.button)
                 .foregroundStyle(Prompt20Palette.coral)
                 .frame(minHeight: 44, alignment: .leading)
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
             }
         }
         .padding(14)
@@ -461,7 +461,7 @@ public struct Prompt20DailyLogView: View {
                 }
                 .font(Prompt20Type.micro)
                 .foregroundStyle(Prompt20Palette.dustyBlue)
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
                 .accessibilityHint("explains cervical fluid categories")
             }
 
@@ -648,7 +648,7 @@ public struct Prompt20DailyLogView: View {
                     }
                     .font(Prompt20Type.button)
                     .foregroundStyle(Prompt20Palette.coral)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
                 }
             }
         }
@@ -687,7 +687,7 @@ public struct Prompt20DailyLogView: View {
             .font(Prompt20Type.button)
             .foregroundStyle(Prompt20Palette.burgundy)
             .frame(minWidth: 80, minHeight: 44)
-            .buttonStyle(.plain)
+            .buttonStyle(CutePopButtonStyle())
 
             Spacer()
         }
@@ -958,7 +958,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.coral)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
                     .accessibilityLabel("remove \(medication.name.isEmpty ? "medication entry" : medication.name)")
             }
 
@@ -1008,7 +1008,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.burgundy)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
 
                     Button("remove") {
                         confirmingRemoval = false
@@ -1017,7 +1017,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.coral)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
                 }
                 .transition(.opacity)
             }

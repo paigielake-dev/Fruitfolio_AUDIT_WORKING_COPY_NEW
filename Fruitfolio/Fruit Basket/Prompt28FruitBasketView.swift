@@ -1539,7 +1539,7 @@ struct Prompt28FruitBasketView: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.75)
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(CutePopButtonStyle())
                                 .accessibilityAddTraits(
                                     selectedLeaderboardCategory == category ? .isSelected : []
                                 )

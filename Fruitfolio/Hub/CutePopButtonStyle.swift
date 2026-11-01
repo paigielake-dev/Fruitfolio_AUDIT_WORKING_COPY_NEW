@@ -4,6 +4,7 @@ import SwiftUI
 /// Gives buttons a visible squish-and-spring response that pairs with the soft bubble-pop SFX.
 struct CutePopButtonStyle: ButtonStyle {
     @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
     let reduceMotion: Bool
 
     init(reduceMotion: Bool = false) {
@@ -11,7 +12,7 @@ struct CutePopButtonStyle: ButtonStyle {
     }
 
     func makeBody(configuration: Configuration) -> some View {
-        let reduceMotion = self.reduceMotion || systemReduceMotion
+        let reduceMotion = self.reduceMotion || systemReduceMotion || appReduceMotion
         return configuration.label
             .scaleEffect(
                 reduceMotion
@@ -45,5 +46,16 @@ struct CutePopButtonStyle: ButtonStyle {
                     ),
                 value: configuration.isPressed
             )
+    }
+}
+
+private struct FruitfolioReduceMotionKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var fruitfolioReduceMotion: Bool {
+        get { self[FruitfolioReduceMotionKey.self] }
+        set { self[FruitfolioReduceMotionKey.self] = newValue }
     }
 }

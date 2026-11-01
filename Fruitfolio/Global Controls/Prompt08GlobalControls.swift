@@ -9,98 +9,14 @@ import SwiftUI
 
 // MARK: - WatercolorPrimaryButton
 
+/// Compatibility entry point: all existing primary-action call sites now use
+/// the original control-pill artwork and the canonical interaction path.
 struct WatercolorPrimaryButton: View {
     let label: String
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 16,
-                        relativeTo: .headline
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 18)
-                .padding(.vertical, 12)
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(
-                                    red: 1.0,
-                                    green: 0.985,
-                                    blue: 0.95
-                                ),
-                                Color(
-                                    red: 0.79,
-                                    green: 0.76,
-                                    blue: 0.70
-                                )
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .shadow(
-                        color: Color.black.opacity(0.16),
-                        radius: 4,
-                        x: 0,
-                        y: 2
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 2
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, action: action)
     }
 }
 
@@ -190,43 +106,16 @@ struct FruitfolioControlPillButton: View {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 292)
-                    .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 15,
-                            relativeTo: .headline
-                        )
-                    )
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.88)
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                    .frame(
-                        maxWidth: 220,
-                        alignment: .center
-                    )
-                    .padding(.horizontal, 20)
-            }
-            .frame(
-                maxWidth: 292,
-                minHeight: 82,
-                alignment: .center
-            )
+            Text(label)
+                .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 30)
+                .padding(.vertical, 20)
+                .frame(maxWidth: 292, minHeight: 82, alignment: .center)
+                .background { FruitfolioControlPillArtwork() }
             .contentShape(Rectangle())
         }
         .buttonStyle(

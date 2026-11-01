@@ -136,7 +136,7 @@ struct Prompt10QuietSearchField: View {
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
                 .frame(
                     minWidth: DesignTokens.Layout.minimumHitTarget,
                     minHeight: DesignTokens.Layout.minimumHitTarget
@@ -241,7 +241,7 @@ struct Prompt10SortPicker: View {
                             )
                             .padding(.horizontal, 12)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(CutePopButtonStyle())
                     }
                 }
                 .padding(.vertical, 6)
