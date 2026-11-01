@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Package real continuation work without claiming final application acceptance."""
-import hashlib,json,shutil,zipfile
+import hashlib,json,shutil,zipfile,re
 from pathlib import Path
 root=Path(__file__).resolve().parents[1]
 out=root.parent/'deliverables';out.mkdir(exist_ok=True)
@@ -10,10 +10,11 @@ files=[]
 for p in sorted(root.rglob('*')):
  rel=p.relative_to(root)
  if any(x in excluded for x in rel.parts) or p.name=='.DS_Store' or p.suffix=='.pyc':continue
+ if re.match(r'^\..*\.(?:gguf|pdf|mp4|png|wav|mp3|docx|zip)\.[A-Za-z0-9]{4,}(?:\..*)?$',p.name):continue
  if p.is_file() and rel.as_posix()!='Delivery/CONTINUATION_ARCHIVE_FILES.json':files.append((p,rel.as_posix()))
 required=['Fruitfolio.xcodeproj/project.pbxproj','FruitfolioAI.gguf','Models/MADLAD/model-q4k.gguf','Models/MADLAD/tokenizer.json','Models/MADLAD/spiece.model','Vendor/llama.xcframework/Info.plist','Fruitfolio/FruitfolioResearchPackage.json','Delivery/ImplementationTracker478.json']
 assert set(required)<={rel for _,rel in files}
-manifest={'deliveryStatus':'INCOMPLETE CONTINUATION — NOT FINAL_COMPLETE','sourceCommit':'0ceb12fd14641a330ad02e429b459d725ea8565a','checkpointSHA256':'4e44c9d57978a2109980d13962d169611eadb1bcd71eed81818fe3683a599ec3','files':[]}
+manifest={'deliveryStatus':'INCOMPLETE CONTINUATION — NOT FINAL_COMPLETE','sourceCommit':'4d480ed949a6e50b70a8c08d3b2a47b65b89652d','checkpointSHA256':'4e44c9d57978a2109980d13962d169611eadb1bcd71eed81818fe3683a599ec3','files':[]}
 for p,rel in files:
  manifest['files'].append({'path':rel,'bytes':p.stat().st_size,'sha256':hashlib.file_digest(p.open('rb'),'sha256').hexdigest()})
 (root/'Delivery/CONTINUATION_ARCHIVE_FILES.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')

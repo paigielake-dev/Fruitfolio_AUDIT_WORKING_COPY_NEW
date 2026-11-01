@@ -6,7 +6,7 @@ This is the existing authoritative checkpoint plus continued corrections. Origin
 
 Start with `Delivery/CONTINUATION_STATUS_478.md`, the lossless 478-item `Delivery/ImplementationTracker478.json`, and `Delivery/FounderDecisions.json`. Original Prompt 1B remains authoritative. Historical reports describe earlier revisions and must not be mistaken for current acceptance.
 
-Native two-request grounding now passes actual macOS tests. Further citation-attribution, popup, geometry and semantic-document corrections have been added with regression tests. Always check their revision-specific Xcode results before calling them verified.
+Native two-request grounding now passes actual macOS tests. Further citation-attribution, popup, geometry and semantic-document corrections have been added with regression tests. Run17 at 4d480ed built successfully and passed 443 XCTest plus 25 Swift Testing cases, including the actual bundled-corpus/native request without fallback. Full UI and application acceptance remain incomplete.
 
 MADLAD remains disabled as a completed production translation feature: the original-model medical paragraph fixture fails. Its presence in Models/MADLAD does not establish iPhone compatibility or safe translation.
 
