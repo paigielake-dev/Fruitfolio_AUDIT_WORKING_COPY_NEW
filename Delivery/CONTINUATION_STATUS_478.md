@@ -41,3 +41,9 @@ Original official Q4 model/tokenizer/configuration and prior runtime diagnostics
 ## Remaining delivery work
 
 Complete item-level assessment and implementation in the ten-part order; correct accessibility failures; verify all visual states, audio, persistence, privacy, account/purchases and localization; stabilize and verify MADLAD locally on supported iPhones; then package all required resources and integrity-check the final ZIP. No FINAL_COMPLETE archive has been produced or claimed.
+
+## Run15 regression and further repair
+
+At 20e2d2e, Xcode built successfully. 440 XCTest cases ran: 439 passed and the new actual bundled-corpus/native case failed. All three new synthetic attribution regressions passed; 25 Swift Testing cases passed. The native draft quoted only the first sentence of a longer source chunk, so the unchanged strict validator rejected it. The original xcresult and decoded actual draft are retained under Continuation/AppleRuns/Run15.
+
+The subsequent native wire format selects distinct shown evidence IDs. Swift restores complete immutable source text and runs the same strict validator. Invalid/unknown/duplicate IDs are rejected. This is still evidence-quotation architecture; it is not free clinical synthesis or independently verified medical truth. Native re-verification is pending. Do not use the earlier two-fixture pass as evidence for this new decoder.

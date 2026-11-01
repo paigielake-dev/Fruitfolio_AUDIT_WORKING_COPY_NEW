@@ -30,6 +30,13 @@ final class GroundingAttributionTests: XCTestCase {
                                      noteChunkIDs: [a.chunkID, b.chunkID], sourceChunkIDs: [])],
             sourceRecords: [], safetyClassification: .init(level: .normal, matchedPatterns: []),
             permittedContext: nil, contentVersion: "test")
+        let selected = try? FruitfolioSelectedEvidenceDraftBuilder.draft(
+            selection: .init(evidenceIDs: [a.chunkID]), evidence: packet)
+        XCTAssertEqual(selected?.claims.first?.text, a.text)
+        XCTAssertThrowsError(try FruitfolioSelectedEvidenceDraftBuilder.draft(
+            selection: .init(evidenceIDs: ["invented"]), evidence: packet))
+        XCTAssertThrowsError(try FruitfolioSelectedEvidenceDraftBuilder.draft(
+            selection: .init(evidenceIDs: [a.chunkID, a.chunkID]), evidence: packet))
         let bad = FruitfolioGeneratedDraft(bridge: nil,
             claims: [.init(text: a.text, evidenceIDs: [a.chunkID, b.chunkID])], limitation: nil)
         XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: bad, evidence: packet))

@@ -18,7 +18,7 @@ for name,question,eid,claim,text in fixtures:
  assert '\\(' not in prompt
  prompt='<|im_start|>system\nYou are the local Fruitfolio synthesis engine. Follow the supplied instructions exactly. Output only the requested JSON object and nothing before or after it.<|im_end|>\n<|im_start|>user\n'+prompt+'<|im_end|>\n<|im_start|>assistant\n'
  pf=out/(name+'.prompt.txt');pf.write_text(prompt)
- gf=out/(name+'.gbnf');gf.write_text(grammar+'\nevidence-id ::= '+json.dumps(json.dumps(eid))+' ws\n')
+ gf=out/(name+'.gbnf');gf.write_text(grammar+'\nevidence-list ::= '+json.dumps(json.dumps(eid))+' ws\n')
  args=[str(a.runtime),'--model',str(root/'FruitfolioAI.gguf'),'--no-conversation','--no-display-prompt','--no-warmup','--temp','0','-t','4','-ngl','0','-c','4096','-n','768','--grammar-file',str(gf),'-f',str(pf)]
  r=subprocess.run(args,capture_output=True,text=True,timeout=180)
  (out/(name+'.stdout.txt')).write_text(r.stdout);(out/(name+'.stderr.txt')).write_text(r.stderr)
@@ -27,11 +27,11 @@ for name,question,eid,claim,text in fixtures:
   stdout=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',r.stdout)
   draft=json.JSONDecoder().raw_decode(stdout[stdout.index('{'):])[0]
   assert r.returncode==0
-  assert draft['bridge'] is None and draft['limitation'] is None
-  assert draft['claims']
-  for c in draft['claims']:
-   assert ' '.join(c['text'].split())==' '.join(text.split()),'claim text differs from complete supplied evidence'
-   assert c['evidenceIDs']==[eid],'evidence ID differs'
+  assert draft['evidenceIDs']==[eid], 'native selection ID differs'
+  # The production decoder restores immutable full excerpts, then the strict
+  # Swift validator independently checks the claim/evidence boundary.
+  draft={'nativeSelection':draft,'materializedClaims':[{'text':text,'evidenceIDs':[eid]}]}
+
  except (AssertionError,ValueError,KeyError) as e:error=str(e) or type(e).__name__
  results.append({'fixture':name,'result':'FAIL' if error else 'PASS','scope':'Linux native GGUF; not iOS or independent clinical validation','return_code':r.returncode,'draft':draft,'error':error})
 (out/'results.json').write_text(json.dumps(results,ensure_ascii=False,indent=2));print(json.dumps(results,ensure_ascii=False,indent=2))

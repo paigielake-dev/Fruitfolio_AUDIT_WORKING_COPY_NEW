@@ -204,6 +204,35 @@ nonisolated struct FruitfolioGeneratedDraft:
     let limitation: String?
 }
 
+/// The model selects references; immutable source text is restored by code.
+/// This prevents generative copying from dropping qualifiers or negations.
+nonisolated struct FruitfolioEvidenceSelection: Codable, Sendable {
+    let evidenceIDs: [String]
+}
+
+nonisolated enum FruitfolioSelectedEvidenceDraftBuilder {
+    static func draft(selection: FruitfolioEvidenceSelection, evidence: FruitfolioEvidencePacket) throws -> FruitfolioGeneratedDraft {
+        let ids = selection.evidenceIDs
+        guard (1...4).contains(ids.count), Set(ids).count == ids.count else {
+            throw FruitfolioResearchIntelligenceError.unsupported
+        }
+        let texts = Dictionary(uniqueKeysWithValues:
+            evidence.researchNoteChunks.prefix(6).map { ($0.chunkID, $0.text) }
+            + evidence.sourceChunks.prefix(4).map { ($0.sourceChunkID, $0.text) })
+        let permitted = Set(evidence.claimEvidenceMap.flatMap { $0.noteChunkIDs + $0.sourceChunkIDs })
+        let claims = try ids.map { id -> FruitfolioGeneratedClaim in
+            guard permitted.contains(id), let text = texts[id] else {
+                throw FruitfolioResearchIntelligenceError.unsupported
+            }
+            return .init(text: text, evidenceIDs: [id])
+        }
+        // The unchanged strict validator still decides whether these complete
+        // quotations are within the requested claim/evidence boundary.
+        return .init(bridge: nil, claims: claims, limitation: nil)
+    }
+}
+
+
 nonisolated enum FruitfolioResearchProgress:
     Sendable
 {
@@ -856,8 +885,8 @@ actor LlamaFruitfolioLanguageModel:
             true
         )
         defer { llama_memory_clear(llama_get_memory(context), true) }
-        let existingIDs = Set(evidence.researchNoteChunks.map(\.chunkID)
-            + evidence.sourceChunks.map(\.sourceChunkID))
+        let existingIDs = Set(evidence.researchNoteChunks.prefix(6).map(\.chunkID)
+            + evidence.sourceChunks.prefix(4).map(\.sourceChunkID))
         let permittedIDs = Set(evidence.claimEvidenceMap.flatMap {
             $0.noteChunkIDs + $0.sourceChunkIDs
         }).intersection(existingIDs).sorted()
@@ -958,15 +987,15 @@ actor LlamaFruitfolioLanguageModel:
         guard
             !cleaned.isEmpty,
             let data = cleaned.data(using: .utf8),
-            let draft = try? JSONDecoder().decode(
-                FruitfolioGeneratedDraft.self,
+            let selection = try? JSONDecoder().decode(
+                FruitfolioEvidenceSelection.self,
                 from: data
             )
         else {
             throw FruitfolioLlamaError.invalidOutput
         }
 
-        return draft
+        return try FruitfolioSelectedEvidenceDraftBuilder.draft(selection: selection, evidence: evidence)
     }
 
     private func loadIfNeeded() throws {
@@ -1050,11 +1079,25 @@ actor LlamaFruitfolioLanguageModel:
         encoder.outputFormatting = [.withoutEscapingSlashes]
         // Encode twice: first as the JSON value to emit, then as a GBNF
         // quoted literal. IDs cannot inject grammar or be silently rewritten.
-        let alternatives = try permittedIDs.map { id in
+        let literals = try permittedIDs.map { id in
             let jsonID = String(decoding: try encoder.encode(id), as: UTF8.self)
             return String(decoding: try encoder.encode(jsonID), as: UTF8.self) + " ws"
-        }.joined(separator: " | ")
-        let grammar = Self.draftGrammar + "\nevidence-id ::= " + alternatives + "\n"
+        }
+        // Ordered choices enforce distinct IDs without generating medical prose.
+        // Any subset of up to four shown extracts remains selectable.
+        var rules: [String] = []
+        for index in literals.indices {
+            for remaining in 1...4 {
+                var body = literals[index]
+                if remaining > 1 && index + 1 < literals.count {
+                    let next = ((index + 1)..<literals.count).map { "choice-\($0)-\(remaining - 1)" }.joined(separator: " | ")
+                    body += " (\",\" ws (" + next + "))?"
+                }
+                rules.append("choice-\(index)-\(remaining) ::= " + body)
+            }
+        }
+        let choices = literals.indices.map { "choice-\($0)-4" }.joined(separator: " | ")
+        let grammar = Self.draftGrammar + "\nevidence-list ::= " + choices + "\n" + rules.joined(separator: "\n") + "\n"
         guard let chain = llama_sampler_chain_init(llama_sampler_chain_default_params()) else {
             throw FruitfolioLlamaError.couldNotCreateContext
         }
@@ -1070,10 +1113,7 @@ actor LlamaFruitfolioLanguageModel:
     /// Syntax is constrained here; evidence/medical validity is still checked
     /// independently by FruitfolioGeneratedDraftValidator before display.
     private static let draftGrammar = #"""
-    root ::= "{" ws "\"bridge\"" ws ":" ws "null" ws "," ws "\"claims\"" ws ":" ws "[" ws claim ("," ws claim){0,3} "]" ws "," ws "\"limitation\"" ws ":" ws "null" ws "}" ws
-    claim ::= "{" ws "\"text\"" ws ":" ws string "," ws "\"evidenceIDs\"" ws ":" ws "[" ws evidence-id ("," ws evidence-id){0,7} "]" ws "}" ws
-    nullable ::= string | "null" ws
-    string ::= "\"" ([^"\\\x7F\x00-\x1F] | "\\" (["\\bfnrt] | "u" [0-9a-fA-F]{4}))* "\"" ws
+    root ::= "{" ws "\"evidenceIDs\"" ws ":" ws "[" ws evidence-list "]" ws "}" ws
     ws ::= [ \t\n\r]{0,8}
     """#
 
@@ -1303,14 +1343,12 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
         // contained prose placeholders that the small model copied as claims.
         // Grounded output remains in English until verified translation runs.
         return """
-        Answer the question using ONLY the approved extracts below. Return JSON.
-        The object has three keys: bridge, claims, limitation.
-        Set bridge and limitation to null.
-        Each claims item has text and evidenceIDs.
-        Select up to four relevant extracts. Copy each selected extract's COMPLETE
-        text exactly into text, including punctuation, qualifiers, numbers and
-        negations. Put that extract's exact ID in evidenceIDs. Do not paraphrase,
-        combine extracts, add facts, or copy these instructions into the answer.
+        Select the approved extracts that directly address the question. Return JSON.
+        The object has one key: evidenceIDs, containing one to four distinct extract IDs.
+        Output only exact IDs shown beside relevant approved extracts below.
+        Do not generate, shorten, paraphrase, or combine medical statements.
+        Fruitfolio restores each selected extract's COMPLETE original text in code,
+        preserving every qualifier, number, uncertainty statement and negation.
         Do not diagnose, prescribe, infer personal biology or create citations.
         Classification and tracker context are metadata, never claim text.
         Evidence remains educational; it cannot establish personal medical results.
@@ -1333,7 +1371,7 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
         METADATA — PERMITTED BOUNDED TRACKER CONTEXT:
         \(trackerContext)
 
-        Copy relevant extract text exactly. Output the JSON object only.
+        Select relevant extract IDs. Output the JSON object only.
         """
     }
 }

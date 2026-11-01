@@ -14,7 +14,7 @@ final class BundledNativeGroundingTests: XCTestCase {
         attachment.name = "ActualBundledResearchNativeDraft"
         attachment.lifetime = .keepAlways
         add(attachment)
-        XCTAssertTrue(result.accepted, "Retrieval fallback cannot satisfy this native integration test")
+        XCTAssertTrue(result.accepted, "Retrieval fallback cannot satisfy this native integration test: \(String(decoding: result.data, as: UTF8.self))")
         XCTAssertFalse(answer.sources.isEmpty)
         XCTAssertTrue(answer.sourceIDs.allSatisfy { $0.hasPrefix("founder_corpus_") || $0.hasPrefix("founder_guide_") })
         XCTAssertFalse(answer.isDevelopmentPreview)
