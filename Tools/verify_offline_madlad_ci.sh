@@ -66,6 +66,8 @@ xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfoli
   -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
   -disableAutomaticPackageResolution \
   -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests \
+  -only-testing:FruitfolioTests/BundledNativeGroundingTests \
+  -only-testing:FruitfolioUITests/AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit \
   -resultBundlePath Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult \
   CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
   2>&1 | tee "$evidence/xcode-offline-madlad-test.log"
@@ -80,4 +82,4 @@ if curl --head --connect-timeout 3 --max-time 5 https://huggingface.co/ > "$evid
   exit 5
 fi
 if [[ "$test_outcome" != 0 ]]; then exit "$test_outcome"; fi
-echo "PASS: actual bundled official MADLAD fixtures executed while new external connections were blocked; loopback remained available to the local simulator. Physical-iPhone airplane-mode and general clinical/language acceptance remain separate."
+echo "PASS: actual bundled official MADLAD and strict native FruitfolioAI grounding fixtures plus the Ask answer/return UI journey executed while new external connections were blocked; loopback remained available to the local simulator. Physical-iPhone airplane-mode and general clinical/language acceptance remain separate."

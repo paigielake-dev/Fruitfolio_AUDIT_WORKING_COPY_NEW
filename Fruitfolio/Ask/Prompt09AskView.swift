@@ -15,6 +15,7 @@ struct Prompt09AskView: View {
     @State private var conversationViewportHeight: CGFloat = 0
     @State private var suggestionRevealCount = 0
     @State private var showingHelp = false
+    @State private var showingLifeBridge = false
     @State private var showingEntryPageTurn = true
 
     // MARK: Prompt 10 Save Integration
@@ -70,6 +71,15 @@ struct Prompt09AskView: View {
                                 .isConversationStarted {
                                 discoveryCard
                                     .transition(.opacity)
+                            }
+
+                            if LifeBridgeInformation.isDiscoveryQuery(viewModel.inputText) ||
+                                LifeBridgeInformation.isDiscoveryQuery(viewModel.messages.last(where: { $0.role == .user })?.text ?? "") {
+                                FruitfolioControlPillButton(label: "LifeBridge information") {
+                                    inputFocused = false
+                                    showingLifeBridge = true
+                                }
+                                .accessibilityIdentifier("ask.lifebridge")
                             }
 
                             openingArtwork
@@ -274,6 +284,9 @@ struct Prompt09AskView: View {
                     .accessibilityAction(.escape) { audioManager.play(.popupClose); showingHelp = false }
                     .zIndex(20)
             }
+        }
+        .sheet(isPresented: $showingLifeBridge) {
+            LifeBridgeInformationView(onBack: { showingLifeBridge = false })
         }
         .task {
             await runEntryTransition()

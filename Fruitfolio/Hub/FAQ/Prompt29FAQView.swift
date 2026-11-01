@@ -140,6 +140,7 @@ struct Prompt29FAQView: View {
     let onBack: () -> Void
 
     @State private var expanded: Set<String> = []
+    @State private var showingLifeBridge = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
@@ -158,6 +159,9 @@ struct Prompt29FAQView: View {
                         onBack: onBack
                     )
 
+                    FruitfolioControlPillButton(label: "LifeBridge information") { showingLifeBridge = true }
+                        .accessibilityIdentifier("faq.lifebridge")
+
                     ForEach(Prompt29FAQCatalog.sections) { section in
                         Prompt29FAQSectionCard(
                             section: section,
@@ -175,6 +179,9 @@ struct Prompt29FAQView: View {
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+        .sheet(isPresented: $showingLifeBridge) {
+            LifeBridgeInformationView(onBack: { showingLifeBridge = false })
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
 }

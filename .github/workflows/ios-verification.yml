@@ -163,7 +163,7 @@ jobs:
           name: Fruitfolio_Unit_Build_Evidence
           path: |
             Fruitfolio_Verification_Evidence/Build
-      - name: Execute official model with verified external-network isolation
+      - name: Execute bundled Ask and MADLAD with verified external-network isolation
         timeout-minutes: 12
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: bash Tools/verify_offline_madlad_ci.sh
