@@ -1066,7 +1066,7 @@ actor LlamaFruitfolioLanguageModel:
     /// Syntax is constrained here; evidence/medical validity is still checked
     /// independently by FruitfolioGeneratedDraftValidator before display.
     private static let draftGrammar = #"""
-    root ::= "{" ws "\"bridge\"" ws ":" ws nullable "," ws "\"claims\"" ws ":" ws "[" ws claim ("," ws claim){0,3} "]" ws "," ws "\"limitation\"" ws ":" ws nullable "}" ws
+    root ::= "{" ws "\"bridge\"" ws ":" ws "null" ws "," ws "\"claims\"" ws ":" ws "[" ws claim ("," ws claim){0,3} "]" ws "," ws "\"limitation\"" ws ":" ws "null" ws "}" ws
     claim ::= "{" ws "\"text\"" ws ":" ws string "," ws "\"evidenceIDs\"" ws ":" ws "[" ws evidence-id ("," ws evidence-id){0,7} "]" ws "}" ws
     nullable ::= string | "null" ws
     string ::= "\"" ([^"\\\x7F\x00-\x1F] | "\\" (["\\bfnrt] | "u" [0-9a-fA-F]{4}))* "\"" ws
@@ -1295,40 +1295,41 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
             trackerContext = "[none supplied]"
         }
 
-        // Grounded generation and translation are separate responsibilities.
-        // Do not silently ask the small research model to substitute for MADLAD.
-        let outputLanguage = "English"
-
+        // Keep instructions separate from evidence. The former sample JSON
+        // contained prose placeholders that the small model copied as claims.
+        // Grounded output remains in English until verified translation runs.
         return """
-        You are Fruitfolio's local synthesis layer. Write all user-facing bridge, claim, and limitation text in \(outputLanguage), while preserving the exact scientific meaning of the approved evidence and leaving evidence IDs unchanged. Use ONLY the supplied approved evidence for substantive health or scientific claims. Do not supplement from pretrained knowledge. Do not invent facts, user biology, diagnoses, citations, authors, dates, URLs, or study details. If evidence supports only part of the question, answer only that part and state the limitation. Keep recorded, calculated, estimated, predicted, educational, and user-reported information distinct. Symptoms are semantically underlined by the renderer; do not replace that rule with italics. Serious health content must be calm and non-playful.
+        Answer the question using ONLY the approved extracts below. Return JSON.
+        The object has three keys: bridge, claims, limitation.
+        Set bridge and limitation to null.
+        Each claims item has text and evidenceIDs.
+        Select up to four relevant extracts. Copy each selected extract's COMPLETE
+        text exactly into text, including punctuation, qualifiers, numbers and
+        negations. Put that extract's exact ID in evidenceIDs. Do not paraphrase,
+        combine extracts, add facts, or copy these instructions into the answer.
+        Do not diagnose, prescribe, infer personal biology or create citations.
+        Classification and tracker context are metadata, never claim text.
+        Evidence remains educational; it cannot establish personal medical results.
 
-        Return ONLY valid JSON matching this exact shape:
-        {"bridge":"optional short human bridge or null","claims":[{"text":"one evidence-bounded claim","evidenceIDs":["NOTE_OR_SOURCE_ID"]}],"limitation":"optional honest limitation or null"}
-
-        Every substantive claim MUST include one or more evidenceIDs copied exactly from the permitted evidence IDs below. Never create an evidence ID. If a requested part is unsupported, omit that claim and put the limitation in limitation. Do not include a Sources section; Fruitfolio renders verified sources deterministically.
-
-        USER QUESTION:
+        QUESTION:
         \(question)
 
-        SAFETY CLASSIFICATION:
-        \(evidence.safetyClassification.level.rawValue)
-
-        PERMITTED BOUNDED TRACKER CONTEXT:
-        \(trackerContext)
-
-        CLAIM / EVIDENCE BOUNDARY:
+        PERMITTED CLAIM / EVIDENCE BOUNDARY:
         \(claimMapText)
 
-        APPROVED RESEARCH NOTES:
+        APPROVED RESEARCH EXTRACTS:
         \(noteText)
 
-        APPROVED SOURCE EXCERPTS:
-        \(sourceText.isEmpty ? "[none supplied]" : sourceText)
+        APPROVED SOURCE EXTRACTS:
+        \(sourceText.isEmpty ? "No additional source extracts." : sourceText)
 
-        Each claim must quote one complete supplied evidence chunk verbatim,
-        preserving every qualifier, numerical value and negation. Do not paraphrase
-        or add medical facts. Use null for bridge and limitation. The app applies
-        Canonical Voice after validation. Return the JSON fields only.
+        METADATA — SAFETY CLASSIFICATION:
+        \(evidence.safetyClassification.level.rawValue)
+
+        METADATA — PERMITTED BOUNDED TRACKER CONTEXT:
+        \(trackerContext)
+
+        Copy relevant extract text exactly. Output the JSON object only.
         """
     }
 }
