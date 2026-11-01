@@ -398,3 +398,44 @@ final class Prompt10SavedLibraryTests: XCTestCase {
     }
 }
 
+
+
+extension Prompt10SavedLibraryTests {
+    func testCorruptMetadataNeverDeletesImportedMediaDuringRecovery() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let id = try media.saveImageData(Data([3,2,1]))
+        defaults.set(Data("unreadable metadata".utf8), forKey: key)
+        let broken = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertNotNil(broken.loadError)
+        broken.recoverMedia(discardAbandonedDrafts: true)
+        XCTAssertEqual(media.data(for: id), Data([3,2,1]))
+        XCTAssertEqual(defaults.data(forKey: key), Data("unreadable metadata".utf8))
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testSharedImportedImageSurvivesOneBookDeletionAndIsRemovedAfterLastReference() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        let first = try library.createEncyclopedia(name: "first", style: .pink)
+        let second = try library.createEncyclopedia(name: "second", style: .sage)
+        let id = try media.stageImageData(Data([2,4,6]))
+        let writing = FruitfolioSemanticDocument(spans: [.init(text: "my image notes")])
+        _ = try library.saveUserPage(pageID: nil, encyclopediaID: first.id,
+            chapterID: first.chapters[0].id, title: "first image", document: writing, imageIDs: [id])
+        _ = try library.saveUserPage(pageID: nil, encyclopediaID: second.id,
+            chapterID: second.chapters[0].id, title: "second image", document: writing, imageIDs: [id])
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertEqual(media.data(for: id), Data([2,4,6]))
+        XCTAssertNil(reopened.mediaRecoveryError)
+        try reopened.deleteEncyclopedia(id: first.id)
+        XCTAssertEqual(media.data(for: id), Data([2,4,6]), "Another saved page still owns these bytes")
+        try reopened.deleteEncyclopedia(id: second.id)
+        XCTAssertNil(media.data(for: id))
+    }
+}

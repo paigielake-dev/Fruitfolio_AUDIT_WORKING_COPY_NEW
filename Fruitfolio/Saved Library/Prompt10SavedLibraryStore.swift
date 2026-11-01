@@ -4,23 +4,28 @@ import Combine
 
 @MainActor
 final class Prompt10SavedLibraryStore: ObservableObject {
-    static let shared = Prompt10SavedLibraryStore()
+    static let shared = Prompt10SavedLibraryStore(mediaStore: .shared)
 
     static let maximumEncyclopedias = 100
 
     @Published private(set) var loadError: String?
+    @Published private(set) var mediaRecoveryError: String?
     @Published private(set) var encyclopedias: [Prompt10Encyclopedia] = []
 
     private let defaults: UserDefaults
     private let persistenceKey: String
+    private let mediaStore: Prompt10LocalMediaStore?
 
     init(
         defaults: UserDefaults = .standard,
-        persistenceKey: String = "fruitfolio.prompt10.savedLibrary.v2"
+        persistenceKey: String = "fruitfolio.prompt10.savedLibrary.v2",
+        mediaStore: Prompt10LocalMediaStore? = nil
     ) {
         self.defaults = defaults
         self.persistenceKey = persistenceKey
+        self.mediaStore = mediaStore
         load()
+        recoverMedia(discardAbandonedDrafts: true)
     }
 
     var count: Int {
@@ -549,7 +554,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         try persist()
     }
 
-    func retryLoad() { load() }
+    func retryLoad() { load(); recoverMedia(discardAbandonedDrafts: true) }
 
     private func load() {
         loadError = nil
@@ -592,10 +597,23 @@ final class Prompt10SavedLibraryStore: ObservableObject {
                 data,
                 forKey: persistenceKey
             )
+            recoverMedia(discardAbandonedDrafts: false)
         } catch {
             load() // Roll back a failed mutation to the last readable persisted state.
             throw Prompt10LibraryError
                 .persistenceFailure
+        }
+    }
+
+    /// Never prune against unreadable metadata or a different store's root.
+    func recoverMedia(discardAbandonedDrafts: Bool = false) {
+        guard loadError == nil, let mediaStore else { return }
+        let ids = Set(encyclopedias.flatMap { $0.chapters.flatMap { $0.pages.flatMap { $0.importedImageIDs ?? [] } } })
+        do {
+            try mediaStore.reconcile(referencedIDs: ids, discardAbandonedDrafts: discardAbandonedDrafts)
+            mediaRecoveryError = nil
+        } catch {
+            mediaRecoveryError = "some saved images could not be recovered or removed. please try again."
         }
     }
 

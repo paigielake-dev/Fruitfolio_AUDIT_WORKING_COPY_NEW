@@ -139,7 +139,7 @@ struct Prompt10UserPageEditor: View {
                 error = "that image could not be imported."; return
             }
             try Task.checkCancellation()
-            let id = try Prompt10LocalMediaStore.shared.saveImageData(data)
+            let id = try Prompt10LocalMediaStore.shared.stageImageData(data)
             importedDuringEdit.insert(id); imageIDs.append(id)
         } catch { self.error = "that image could not be saved." }
     }

@@ -45,3 +45,35 @@ extension Prompt10LocalMediaStoreTests {
         #endif
     }
 }
+
+
+extension Prompt10LocalMediaStoreTests {
+    func testDraftRecoveryPromotesReferencedBytesAndRemovesAbandonedDraftsOnly() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Prompt10LocalMediaStore(root: root)
+        let kept = try store.stageImageData(Data([4,5,6]))
+        let abandoned = try store.stageImageData(Data([7,8]))
+        XCTAssertEqual(store.data(for: kept), Data([4,5,6]))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: root.appendingPathComponent(kept + ".image").path))
+        try store.reconcile(referencedIDs: [kept], discardAbandonedDrafts: false)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: root.appendingPathComponent(kept + ".image").path))
+        XCTAssertNotNil(store.data(for: abandoned), "An active unsaved editor must retain its draft")
+        try store.reconcile(referencedIDs: [kept], discardAbandonedDrafts: true)
+        XCTAssertEqual(store.data(for: kept), Data([4,5,6]))
+        XCTAssertNil(store.data(for: abandoned))
+    }
+
+    func testReconciliationRemovesUnreferencedImportsButPreservesUnknownFiles() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Prompt10LocalMediaStore(root: root)
+        let removed = try store.saveImageData(Data([1]))
+        let unknown = root.appendingPathComponent("unrelated.txt")
+        try Data([9]).write(to: unknown)
+        try store.reconcile(referencedIDs: [], discardAbandonedDrafts: true)
+        XCTAssertNil(store.data(for: removed))
+        XCTAssertEqual(try Data(contentsOf: unknown), Data([9]))
+        XCTAssertThrowsError(try store.reconcile(referencedIDs: ["../outside"], discardAbandonedDrafts: true))
+    }
+}

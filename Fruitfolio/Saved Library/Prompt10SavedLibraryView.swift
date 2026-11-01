@@ -101,6 +101,13 @@ struct Prompt10SavedLibraryView: View {
                     FruitfolioControlPillButton(label: "try opening my library again") { store.retryLoad() }
                 }
 
+                if let error = store.mediaRecoveryError {
+                    Text(error).font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    FruitfolioControlPillButton(label: "try recovering my images again") { store.recoverMedia() }
+                }
+
                 header
 
                 composedLibraryHero
