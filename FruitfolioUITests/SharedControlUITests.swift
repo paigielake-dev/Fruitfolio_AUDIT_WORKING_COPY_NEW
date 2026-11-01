@@ -21,7 +21,9 @@ final class SharedControlUITests: XCTestCase {
 
     private func email(_ app: XCUIApplication) -> XCUIElement {
         let button = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "fruitsoflifexo@gmail.com")).firstMatch
-        for _ in 0..<5 where !button.isHittable { app.swipeUp() }
+        let visible = app.frame.insetBy(dx: 0, dy: 60)
+        for _ in 0..<8 where !button.isHittable || !visible.contains(button.frame) { app.swipeUp() }
+        XCTAssertTrue(visible.contains(button.frame), "Audit and screenshot must include the entire painted control and its actual label")
         XCTAssertTrue(button.isHittable, "Long contact action must remain reachable")
         XCTAssertGreaterThanOrEqual(button.frame.height, 44)
         return button

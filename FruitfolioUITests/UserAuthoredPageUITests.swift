@@ -7,7 +7,9 @@ final class UserAuthoredPageUITests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "label CONTAINS[c] %@", text)).firstMatch
     }
     private func reach(_ app: XCUIApplication, _ target: XCUIElement) {
-        for _ in 0..<10 where !target.isHittable { app.swipeUp() }
+        let visible = app.frame.insetBy(dx: 0, dy: 60)
+        for _ in 0..<10 where !target.isHittable || !visible.contains(target.frame) { app.swipeUp() }
+        XCTAssertTrue(visible.contains(target.frame))
         XCTAssertTrue(target.isHittable)
     }
     private func capture(_ app: XCUIApplication, _ name: String) {
@@ -24,8 +26,10 @@ final class UserAuthoredPageUITests: XCTestCase {
         library(app)
         let name = "My QA " + String(UUID().uuidString.prefix(6))
         let create = button(app, "build my first encyclopedia")
+        let another = button(app, "add another little encyclopedia")
+        XCTAssertTrue(create.waitForExistence(timeout: 10) || another.exists, "Wait for the actual library before choosing its empty/populated flow")
         if create.exists { reach(app, create); create.tap() }
-        else { let another = button(app, "add another little encyclopedia"); reach(app, another); another.tap() }
+        else { reach(app, another); another.tap() }
         let title = app.textFields["encyclopedia name"]
         XCTAssertTrue(title.waitForExistence(timeout: 8)); title.tap(); title.typeText(name + "\n")
         let createBook = button(app, "create encyclopedia"); reach(app, createBook); createBook.tap()
@@ -58,5 +62,13 @@ final class UserAuthoredPageUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))
         XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "unsaved addition")).firstMatch.exists)
         capture(app, "UserPage_DiscardPreservedOriginal")
+        let remove = button(app, "delete saved page"); reach(app, remove); remove.tap()
+        let keep = button(app, "keep page"); XCTAssertTrue(keep.waitForExistence(timeout: 8)); reach(app, keep); keep.tap()
+        XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].exists)
+        reach(app, remove); remove.tap()
+        let delete = app.buttons.matching(NSPredicate(format: "label == %@", "delete page")).firstMatch
+        XCTAssertTrue(delete.waitForExistence(timeout: 8)); reach(app, delete); delete.tap()
+        XCTAssertFalse(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 3))
+        capture(app, "UserPage_Deleted")
     }
 }

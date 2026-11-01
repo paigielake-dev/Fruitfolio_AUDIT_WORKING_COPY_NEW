@@ -389,6 +389,9 @@ struct Prompt10SavedPageView: View {
     @State private var noteDraft = ""
     @State private var editingPage = false
     @State private var showUnsavedNotes = false
+    @State private var showDeletePage = false
+    @State private var editAfterNotes = false
+    @FocusState private var notesFocused: Bool
     @EnvironmentObject private var motion: MotionPreferences
 
     var body: some View {
@@ -399,6 +402,8 @@ struct Prompt10SavedPageView: View {
                     HStack {
                         BackControl {
                             audioManager.play(.buttonSoftPop)
+                            editAfterNotes = false
+                            notesFocused = false
                             if noteDraft != page.notes { showUnsavedNotes = true } else { onBack() }
                         }
 
@@ -444,10 +449,16 @@ struct Prompt10SavedPageView: View {
                     .textSelection(.enabled)
 
                 if page.isUserAuthored == true {
-                    FruitfolioControlPillButton(label: "edit my page") { editingPage = true }
+                    FruitfolioControlPillButton(label: "edit my page") {
+                        editAfterNotes = true; notesFocused = false
+                        if noteDraft != page.notes { showUnsavedNotes = true } else { editingPage = true }
+                    }
                 }
                 notesSection
                 importedImagesSection
+                WatercolorSecondaryButton(label: "delete saved page") {
+                    notesFocused = false; showDeletePage = true
+                }
 
                 if !page.sourceIDs.isEmpty {
                     Divider()
@@ -489,14 +500,27 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
-        .fruitfolioModalBlur(active: showUnsavedNotes, reduceMotion: motion.reduceMotionActive)
+        .fruitfolioModalBlur(active: showUnsavedNotes || showDeletePage, reduceMotion: motion.reduceMotionActive)
+        if showDeletePage {
+            Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete saved page?",
+                message: "this removes this page and its notes from this encyclopedia, including any unsaved notes. other saved copies stay in their own books.",
+                primaryLabel: "keep page", secondaryLabel: nil, destructiveLabel: "delete page",
+                primaryAction: { showDeletePage = false }, secondaryAction: nil, destructiveAction: deletePage)
+        }
         if showUnsavedNotes {
             Prompt12ConfirmationPopup(assetName: "popup_warning", title: "unsaved changes",
                 message: "would you like to save your notes?", primaryLabel: "save notes",
                 secondaryLabel: "keep editing", destructiveLabel: "discard changes",
-                primaryAction: { if saveNotes() { onBack() } },
-                secondaryAction: { showUnsavedNotes = false }, destructiveAction: onBack)
+                primaryAction: { if saveNotes() { continueAfterNotes() } },
+                secondaryAction: { showUnsavedNotes = false }, destructiveAction: {
+                    noteDraft = page.notes; showUnsavedNotes = false; continueAfterNotes()
+                })
         }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                if notesFocused { Spacer(); Button("done") { notesFocused = false } }
+            }
         }
         .sheet(isPresented: $editingPage) {
             Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: page.chapterID,
@@ -511,6 +535,8 @@ struct Prompt10SavedPageView: View {
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
                 .fontWeight(.bold)
             TextEditor(text: $noteDraft)
+                .focused($notesFocused)
+                .accessibilityIdentifier("savedPage.notes")
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .frame(minHeight: 110)
                 .padding(8)
@@ -519,6 +545,24 @@ struct Prompt10SavedPageView: View {
             .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
         .onAppear { noteDraft = page.notes }
+    }
+
+    private func deletePage() {
+        do {
+            try store.deletePage(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id)
+            for id in page.importedImageIDs ?? [] where !store.imageIsReferenced(id) {
+                try? Prompt10LocalMediaStore.shared.delete(id)
+            }
+            showDeletePage = false
+            onBack()
+        } catch {
+            showDeletePage = false
+            mediaMessage = "that page could not be deleted."
+        }
+    }
+
+    private func continueAfterNotes() {
+        if editAfterNotes { editingPage = true } else { onBack() }
     }
 
     @discardableResult
