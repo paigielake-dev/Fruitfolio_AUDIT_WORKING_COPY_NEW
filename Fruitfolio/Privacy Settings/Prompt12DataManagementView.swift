@@ -13,12 +13,24 @@ struct Prompt12DataManagementView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
 
+    @State private var confirmHormoneErase = false
     @State private var message: String?
     @State private var showLocalDeletionNotice = false
 
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .confirmationDialog("delete all hormone measurements?", isPresented: $confirmHormoneErase, titleVisibility: .visible) {
+                Button("delete hormone measurements", role: .destructive) {
+                    do {
+                        try HormoneMeasurementStore.shared.eraseAll()
+                        message = "hormone measurements have been deleted from this device."
+                    } catch { message = error.localizedDescription }
+                }
+                Button("cancel", role: .cancel) { }
+            } message: {
+                Text("this removes hormone results only. cycle logs, saved guides, and account information are unchanged.")
+            }
     }
 
     private var content: some View {
@@ -151,6 +163,9 @@ struct Prompt12DataManagementView: View {
             exportCard
             includedAreasCard
             deletionCard
+            FruitfolioControlPillButton(label: "delete local hormone measurements") {
+                confirmHormoneErase = true
+            }
 
             if let message {
                 Text(message)

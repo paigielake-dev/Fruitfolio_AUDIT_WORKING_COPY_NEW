@@ -5,6 +5,8 @@ import SwiftUI
 struct Prompt27AMyContextView: View {
     @StateObject private var viewModel: Prompt27AContextViewModel
 
+    @State private var showHormoneInformation = false
+
     let onBack: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
@@ -39,6 +41,10 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+
+                        FruitfolioControlPillButton(label: "hormone information") {
+                            showHormoneInformation = true
+                        }
 
                         Prompt27AContextCard {
                             singleChoiceSection(
@@ -149,6 +155,9 @@ struct Prompt27AMyContextView: View {
                 }
                 .scrollIndicators(.hidden)
             }
+        }
+        .fullScreenCover(isPresented: $showHormoneInformation) {
+            HormoneInformationView(store: .shared) { showHormoneInformation = false }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)

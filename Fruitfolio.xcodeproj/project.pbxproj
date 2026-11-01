@@ -46,7 +46,7 @@
 /* Begin PBXFileReference section */
 		2E756F3E307C0BC500D6B9DA /* llama.swiftui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = llama.swiftui.xcodeproj; sourceTree = "<group>"; };
 		2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FruitfolioAI.gguf; sourceTree = "<group>"; };
-		3A1000000000000000000001 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = llama.xcframework; path = "/Users/paigelake/Desktop/llama.xcframework"; sourceTree = "<absolute>"; };
+		3A1000000000000000000001 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = llama.xcframework; path = Vendor/llama.xcframework; sourceTree = SOURCE_ROOT; };
 		A00000000000000000000001 /* Fruitfolio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fruitfolio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000002 /* FruitfolioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FruitfolioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000003 /* FruitfolioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FruitfolioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +57,13 @@
             isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
             membershipExceptions = (
                 "llama.cpp",
+                "Frameworks",
+                ".DS_Store",
+                "Fruit Basket/Prompt28FruitBasketViewModel.swift.before_star_tracking_backup",
+                "Fruit Basket/Prompt28FruitBasketModels.swift.before_stars_backup",
+                "Fruit Basket/Prompt28FruitBasketView.swift.before_leaderboard_categories_backup",
+                "Ask/Prompt09AskView.swift.before_prompt48_20261012_075220",
+                "Core/AppArchitecture/NavigationCoordinator.swift.before_prompt39_20261012_080903",
             );
             target = E00000000000000000000001 /* Fruitfolio */;
         };
@@ -147,7 +154,6 @@
 			buildPhases = (
 				C00000000000000000000004 /* Sources */,
 				C00000000000000000000001 /* Frameworks */,
-				3A1000000000000000000005 /* Embed Frameworks */,
 				C00000000000000000000005 /* Resources */,
 			);
 			buildRules = (
@@ -373,7 +379,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/paigelake/Desktop",
+					"$(PROJECT_DIR)/Vendor",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Fruitfolio;
@@ -381,6 +387,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Fruitfolio lets you choose your own images to add to your saved encyclopedias.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, );
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fruitsoflifexo.Fruitfolio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -404,7 +411,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/paigelake/Desktop",
+					"$(PROJECT_DIR)/Vendor",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Fruitfolio;
@@ -412,6 +419,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Fruitfolio lets you choose your own images to add to your saved encyclopedias.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, );
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fruitsoflifexo.Fruitfolio;
 				PRODUCT_NAME = "$(TARGET_NAME)";

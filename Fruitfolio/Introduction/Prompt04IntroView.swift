@@ -33,6 +33,25 @@ struct Prompt04IntroView: View {
             .frame(width: max(1, proxy.size.width), height: max(1, proxy.size.height))
             .clipped()
         }
+        .overlay(alignment: .bottomLeading) {
+            if machine.stage != .introComplete {
+                Button {
+                    machine.handleBackgrounding(audioManager: audioManager)
+                    completeIntro(wasFirstLaunch: launchMode?.isFirstLaunch ?? false)
+                } label: {
+                    VStack(spacing: 4) {
+                        Image("control_next").resizable().scaledToFit().frame(width: 44, height: 44)
+                            .accessibilityHidden(true)
+                        Text("skip tour")
+                            .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    }
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .padding(16)
+                }
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .accessibilityLabel("skip introduction")
+            }
+        }
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .task {
             guard launchMode == nil else { return }
@@ -56,7 +75,7 @@ struct Prompt04IntroView: View {
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhase(newPhase)
         }
-        .accessibilityElement(children: machine.hubInteractionEnabled ? .contain : .ignore)
+        .accessibilityElement(children: .contain)
     }
 
     @ViewBuilder
@@ -179,7 +198,8 @@ struct Prompt04IntroView: View {
         guard let launchMode else { return }
 
         switch newPhase {
-        case .background:
+        case .background, .inactive:
+            guard !wasInterrupted else { return }
             wasInterrupted = machine.stage != .introComplete
             machine.handleBackgrounding(audioManager: audioManager)
         case .active:
@@ -190,8 +210,6 @@ struct Prompt04IntroView: View {
                 completion: completeIntro(wasFirstLaunch:),
                 wasFirstLaunch: launchMode.isFirstLaunch
             )
-        case .inactive:
-            break
         @unknown default:
             break
         }

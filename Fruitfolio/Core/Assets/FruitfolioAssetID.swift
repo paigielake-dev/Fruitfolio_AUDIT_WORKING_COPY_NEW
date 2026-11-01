@@ -135,6 +135,7 @@ enum FruitfolioAssetID: String, CaseIterable, Codable, Sendable {
     case guide_bookmark_saved
     case decor_sprout
     case decor_orange_slice
+    case decor_fluffy_cloud
     case decor_grass
     case decor_bow
     case decor_sparkle_cluster

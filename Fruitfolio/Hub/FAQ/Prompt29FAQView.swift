@@ -119,49 +119,25 @@ struct Prompt29FAQView: View {
     let onBack: () -> Void
 
     @State private var expanded: Set<String> = []
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         ZStack {
             DesignTokens.ColorToken.backgroundCream
                 .ignoresSafeArea()
 
-            ScrollView {
+            VStack(spacing: 0) {
+                if !dynamicTypeSize.isAccessibilitySize {
+                    Prompt29FAQDecoration().frame(height: 130).padding(.horizontal, 20)
+                }
+                ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
-                        Prompt12RouteHeader(
-                            title: "FAQ",
-                            subtitle: "you’ve got questions. we’ve got answers. ♡",
-                            assetName: nil,
-                            onBack: onBack
-                        )
-
-                        HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_orange)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_pear)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_lemon)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
-                        }
-                        .padding(.top, 2)
-                        .padding(.trailing, 2)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-
-                        FruitfolioImage(id: .decor_sparkles_1)
-                            .frame(width: 54, height: 54)
-                            .rotationEffect(.degrees(-18))
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                            .offset(x: 111, y: 5)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    }
+                    Prompt12RouteHeader(
+                        title: "FAQ",
+                        subtitle: "you’ve got questions. we’ve got answers. ♡",
+                        assetName: nil,
+                        onBack: onBack
+                    )
 
                     ForEach(Prompt29FAQCatalog.sections) { section in
                         Prompt29FAQSectionCard(
@@ -175,7 +151,8 @@ struct Prompt29FAQView: View {
                 .frame(maxWidth: DesignTokens.Layout.compactReadingMaxWidth)
                 .frame(maxWidth: .infinity)
             }
-            .scrollIndicators(.hidden)
+                .scrollIndicators(.hidden)
+            }
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
@@ -186,6 +163,8 @@ struct Prompt29FAQView: View {
 private struct Prompt29FAQSectionCard: View {
     let section: Prompt29FAQSection
     @Binding var expanded: Set<String>
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -202,6 +181,7 @@ private struct Prompt29FAQSectionCard: View {
             ForEach(section.items) { item in
                 let isExpanded = expanded.contains(item.id)
                 Button {
+                    audioManager.play(.buttonSoftPop)
                     if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
                 } label: {
                     HStack(spacing: 10) {
@@ -214,7 +194,7 @@ private struct Prompt29FAQSectionCard: View {
                             .rotationEffect(.degrees(isExpanded ? 180 : 0))
                             .accessibilityHidden(true)
                     }.frame(minHeight: 44)
-                }.buttonStyle(.plain)
+                }.buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 if isExpanded {
                     Text(item.answer)
                         .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
@@ -259,5 +239,40 @@ private struct Prompt29FAQSectionCard: View {
                 }
             }
         )
+    }
+}
+
+private struct Prompt29FAQDecoration: View {
+    private let assets: [(FruitfolioAssetID, FruitfolioDecorativeAnchor, ClosedRange<CGFloat>)] = [
+        (.decor_fluffy_cloud, .topTrailing, 0.30...0.44),
+        (.decor_grass, .bottomLeading, 0.24...0.30),
+        (.decor_sparkles_1, .bottomTrailing, 0.12...0.16)
+    ]
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                ForEach(assets.indices, id: \.self) { index in
+                    let item = assets[index]
+                    if let image = try? FruitfolioAssetLoader.uiImage(item.0) {
+                        let placement = FruitfolioDecorativeArtLayout.placement(
+                            intrinsicSize: image.size,
+                            roleFraction: item.2,
+                            anchor: item.1,
+                            container: CGRect(origin: .zero, size: geometry.size),
+                            safeInsets: EdgeInsets(),
+                            protectedRegions: []
+                        )
+                        if placement.isVisible {
+                            Image(uiImage: image).resizable().scaledToFit()
+                                .frame(width: placement.frame.width, height: placement.frame.height)
+                                .position(x: placement.frame.midX, y: placement.frame.midY)
+                        }
+                    }
+                }
+            }
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }

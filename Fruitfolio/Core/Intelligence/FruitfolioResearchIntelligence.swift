@@ -533,6 +533,7 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             return []
         }
 
+        let eligibleSourceIDs = Set(package.sources.filter(\.isApprovedForDisplay).map(\.sourceID))
         let queryTokens =
             FruitfolioQueryNormalizer.tokens(
                 question
@@ -543,10 +544,8 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             .compactMap {
                 chunk in
 
-                guard
-                    approvedSourceIDs.isEmpty
-                    || approvedSourceIDs
-                        .contains(chunk.sourceID)
+                guard eligibleSourceIDs.contains(chunk.sourceID),
+                    (approvedSourceIDs.isEmpty || approvedSourceIDs.contains(chunk.sourceID))
                 else {
                     return nil
                 }
@@ -842,6 +841,7 @@ actor LlamaFruitfolioLanguageModel:
                 .unavailable(currentAvailability)
         }
 
+        try Task.checkCancellation()
         try loadIfNeeded()
 
         guard
@@ -857,6 +857,7 @@ actor LlamaFruitfolioLanguageModel:
             llama_get_memory(context),
             true
         )
+        defer { llama_memory_clear(llama_get_memory(context), true) }
         llama_sampler_reset(sampler)
 
         let evidencePrompt =
@@ -903,6 +904,7 @@ actor LlamaFruitfolioLanguageModel:
         var pendingUTF8: [CChar] = []
 
         for _ in 0..<maximumGeneratedTokens {
+            try Task.checkCancellation()
             let token = llama_sampler_sample(
                 sampler,
                 context,
@@ -1548,6 +1550,10 @@ final class FruitfolioResearchIntelligenceEngine:
                     approvedSourceIDs:
                         sourceIDs
                 )
+
+            if rankedSources.isEmpty {
+                rankedSources = retriever.searchSources(question: normalized, approvedSourceIDs: [])
+            }
 
             coverage =
                 retriever.coverage(
