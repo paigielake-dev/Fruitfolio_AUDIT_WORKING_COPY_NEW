@@ -6,6 +6,9 @@ on:
       - 'Tools/build_ios_madlad.sh'
       - '.github/workflows/madlad-compatibility.yml'
   workflow_dispatch:
+concurrency:
+  group: fruitfolio-madlad-compat-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:

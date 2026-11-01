@@ -6,6 +6,7 @@ if [ ! -f "$source_root/candle-core/Cargo.toml" ]; then
   git clone https://github.com/huggingface/candle.git "$source_root"
   git -C "$source_root" checkout 2cf0e66dcb2953e2aa7f4000cdd697239e9c16c5
 fi
+python3 Tools/prepare_candle_madlad.py
 rustup target add aarch64-apple-ios aarch64-apple-ios-sim
 for target in aarch64-apple-ios aarch64-apple-ios-sim; do
   if [ "$target" = aarch64-apple-ios ]; then sdk=iphoneos; else sdk=iphonesimulator; fi
@@ -16,8 +17,9 @@ for target in aarch64-apple-ios aarch64-apple-ios-sim; do
 mkdir -p Vendor
 # Static XCFrameworks share Xcode's product include directory. Namespace
 # MADLAD's headers so its module map cannot overwrite llama's module map.
-headers_root="$(mktemp -d)"
-trap 'rm -rf "$headers_root"' EXIT
+staging_root="$(mktemp -d)"
+headers_root="$staging_root/Headers"
+trap 'rm -rf "$staging_root"' EXIT
 mkdir -p "$headers_root/FruitfolioMADLADRuntime"
 cp TranslationInvestigation/madlad-candle-probe/include/FruitfolioMADLAD.h "$headers_root/FruitfolioMADLADRuntime/"
 cp TranslationInvestigation/madlad-candle-probe/include/module.modulemap "$headers_root/FruitfolioMADLADRuntime/"
@@ -26,4 +28,7 @@ xcodebuild -create-xcframework \
  -headers "$headers_root" \
  -library TranslationInvestigation/madlad-candle-probe/target/aarch64-apple-ios-sim/release/libfruitfolio_madlad.a \
  -headers "$headers_root" \
- -output Vendor/FruitfolioMADLAD.xcframework
+ -output "$staging_root/FruitfolioMADLAD.xcframework"
+# Replace the reproducible artifact only after both slices package successfully.
+rm -rf Vendor/FruitfolioMADLAD.xcframework
+mv "$staging_root/FruitfolioMADLAD.xcframework" Vendor/FruitfolioMADLAD.xcframework

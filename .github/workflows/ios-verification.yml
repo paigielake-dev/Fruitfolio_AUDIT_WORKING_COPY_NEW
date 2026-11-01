@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [main]
+concurrency:
+  group: fruitfolio-ios-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -49,7 +52,7 @@ jobs:
         id: madlad-runtime-cache
         with:
           path: Vendor/FruitfolioMADLAD.xcframework
-          key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh') }}
+          key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh', 'Tools/prepare_candle_madlad.py') }}
       - name: Build linked MADLAD Apple runtime
         if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
         run: |

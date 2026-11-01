@@ -17,6 +17,17 @@ fn main() -> Result<()> {
     tokenizer.with_padding(None).with_truncation(None).map_err(|e| anyhow!(e.to_string()))?;
     let device = Device::Cpu;
     let vb = t5::VarBuilder::from_gguf(root.join("model-q4k.gguf"), &device)?;
+    if input_arg == "--compare-embedding" {
+        let weight = vb.get((256000,1024), "decoder.embed_tokens.weight")?;
+        let ids = Tensor::new(&[0u32,1,2,29,128,1024,255999], &device)?;
+        let gathered = weight.embedding(&ids)?.flatten_all()?.to_vec1::<f32>()?;
+        let expanded = weight.dequantize(&device)?.index_select(&ids,0)?.flatten_all()?.to_vec1::<f32>()?;
+        let max_difference = gathered.iter().zip(&expanded).map(|(a,b)|(a-b).abs()).fold(0f32,f32::max);
+        let identical_bits = gathered.iter().zip(&expanded).all(|(a,b)|a.to_bits()==b.to_bits());
+        println!("{}",serde_json::json!({"comparison":"upstream quantized row gather versus full dequantized embedding lookup","float_count":gathered.len(),"max_absolute_difference":max_difference,"identical_float_bits":identical_bits}));
+        if !identical_bits { return Err(anyhow!("embedding row adaptation changed values")) }
+        return Ok(())
+    }
     let mut model = t5::T5ForConditionalGeneration::load(vb, &config)?;
     let load_seconds = started.elapsed().as_secs_f64();
     for prompt in prompts {
