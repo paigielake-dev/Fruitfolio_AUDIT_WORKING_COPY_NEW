@@ -1142,6 +1142,8 @@ struct Prompt28FruitBasketView: View {
                 ),
                 height: 132
             )
+            .rotationEffect(.degrees(motionPreferences.reduceMotionActive || !viewModel.basketIsMeetingPuddleResistance ? 0 : -3))
+            .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
             .position(
                 x: xOffset + width * viewModel.basketX,
                 y: height * 0.89
@@ -1166,6 +1168,7 @@ struct Prompt28FruitBasketView: View {
             .accessibilityLabel(
                 "Basket, \(viewModel.basketCount) of 10"
             )
+            .accessibilityValue(viewModel.basketIsMeetingPuddleResistance ? "moving through a puddle with resistance" : "normal movement")
         }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
@@ -1933,6 +1936,11 @@ private struct Prompt28MovingFruit: View {
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
+                if fruit.classification == .good {
+                    FruitfolioImage(id: .fruitbasket_star)
+                        .frame(width: starSize, height: starSize)
+                        .accessibilityHidden(true)
+                }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }

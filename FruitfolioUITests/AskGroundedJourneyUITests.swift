@@ -65,7 +65,7 @@ final class AskGroundedJourneyUITests: XCTestCase {
         let library = app.buttons["hub.action.My Encyclopedias"]
         XCTAssertTrue(library.waitForExistence(timeout: 15)); library.tap()
         let first = button(app, "build my first encyclopedia")
-        let another = button(app, "add another little encyclopedia")
+        let another = button(app, "+ add another little encyclopedia")
         _ = first.waitForExistence(timeout: 8)
         let create = first.exists ? first : another; reach(app, create); create.tap()
         let name = "Citations QA " + String(UUID().uuidString.prefix(6))

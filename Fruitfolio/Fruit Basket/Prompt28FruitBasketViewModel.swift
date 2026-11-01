@@ -12,6 +12,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var activeFruit: [Prompt28FallingFruit] = []
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
+    @Published private(set) var basketIsMeetingPuddleResistance = false
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
     @Published var isPaused = false
@@ -185,6 +186,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         activeStars.removeAll()
         classificationFruit = nil
         basketX = 0.5
+        basketIsMeetingPuddleResistance = false
         roundResultLocked = false
         spawnPlanner.reset()
         lastSpawnAt = .distantPast
@@ -201,6 +203,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         guard screen == .catchActive, !isPaused else { return }
         let target = min(max(normalizedX, 0.10), 0.90)
         guard activeObstacles.contains(.puddle) else {
+            basketIsMeetingPuddleResistance = false
             basketX = target
             return
         }
@@ -210,6 +213,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let pathMin = min(basketX, target)
         let pathMax = max(basketX, target)
         let crossingPuddle = pathMax >= 0.33 && pathMin <= 0.67
+        basketIsMeetingPuddleResistance = crossingPuddle
         let response = crossingPuddle ? 0.58 : 1.0
         basketX += (target - basketX) * response
         basketX = min(max(basketX, 0.10), 0.90)

@@ -117,6 +117,9 @@ struct Prompt28FruitBasketEngine: Sendable {
             default: return [.branch, .wind]
             }
         default:
+            // Rain creates the puddle. Keep the existing two-obstacle budget
+            // rather than add a third obstacle to the ordinary round plan.
+            if level >= 6, round.isMultiple(of: 3) { return [.puddle, .vines] }
             // Levels 5–8 vary the challenge without stacking every obstacle at once.
             switch round % 4 {
             case 0: return [.vines, .puddle]

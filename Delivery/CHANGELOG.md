@@ -1,3 +1,18 @@
+# Current continuation corrections
+
+- Preserved actual Run46 full logs, Run48 failed-element diagnostics and Run50 native Chinese script evidence. Updated all 478 original tracker entries without promoting unexecuted work.
+- Kept strict native evidence/citation validation; fixed the migration test's unstable timestamp fixture without changing production serialization or equality acceptance.
+- Applied native personal-health button labels, guarded watercolor deletion/unsaved popups, modal focus and Escape behavior.
+- Fixed chart identifier inheritance; restored actual Guide/Hub label text and a Dynamic Type caption; retained unfiltered native accessibility audits.
+- Added local LifeBridge directory discovery from FAQ and explicit Ask queries, source-review metadata, transparent missing-content slots, exact approved URLs and intentional privacy-safe external navigation. Organization snapshots and founder relationship remain unresolved.
+- Extended controlled offline CI to actual native FruitfolioAI grounding and the Ask answer/return UI journey alongside official MADLAD fixtures.
+- Repaired rainy-round puddle consistency, original good-fruit star indicators, visible motion-aware basket resistance and exit behavior; added deterministic tests.
+- Corrected citation-save UI test to the exact existing “+ add another little encyclopedia” action; all citation/restart assertions remain.
+
+New changes require actual Xcode verification. Main is not merged and release completion is not claimed.
+
+---
+
 # Current implementation follow-up — 2026-11-01
 
 Actual Run42 at6b6a24d built the simulator app and unsigned iPhone Release target, passed480 XCTest checks (one physical-device check skipped) and25 Swift Testing checks. Actual hormone record/rhythm-mode, four-volume/global-mute, and generated Ask/source/clear-on-exit journeys passed. Contact accessibility-XXXL contrast and native PhotosUI tap synthesis failed; repairs are retained for rerun.

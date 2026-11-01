@@ -2524,10 +2524,48 @@
   "usernameJourney": "PASS ordinary typing, Account/Fruit Basket synchronization and restart",
   "accessibility": "FAIL strict contrast in Contact/Account/Fruit Basket/Guide/Hub and Ask header clipping; repairs in8841840 require new actual run",
   "scope": "Exact tested source only. No full translation, medical review, physical-device, manual VoiceOver or audible-quality acceptance inferred.",
-  "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
-  "currentSourceVerification": "Run46 actual unit PASS; follow-up working-tree edits remain NOT VERIFIED",
+  "currentSourceCommit": "c662e9b1846a7c5563889ea6d97a7dfb95a5e8b3 plus prepared Fruit Basket/citation-selector repairs",
+  "currentSourceVerification": "NOT VERIFIED: actual CI acceptance pending; no release-readiness claim",
   "focusedCurrentRun": {
     "SharedControls": "FAIL; actual diagnostic retrieval underway",
     "remainingStages": "PENDING"
+  },
+  "trackerCounts": {
+    "PARTIAL": 110,
+    "PASS": 37,
+    "NOT VERIFIED": 321,
+    "BLOCKED": 6,
+    "FAIL": 4
+  },
+  "latestAcceptedFullUnitRun": {
+    "id": 41356081841,
+    "runNumber": 48,
+    "commit": "2b02efa6ee30f0d811298940b1bebb833ad4ec5e",
+    "XCTest": {
+      "executed": 507,
+      "PASS": 506,
+      "SKIP": 1,
+      "FAIL": 0
+    },
+    "SwiftTestingPASS": 25,
+    "overallRun": "NOT PASS: focused Hormone/Username/PersonalHealth and native accessibility failures"
+  },
+  "run50": {
+    "id": 41357420177,
+    "commit": "7ac5a9e7c67ea8797d7371539e3876d7371a6a2c",
+    "status": "in_progress at last retrieval",
+    "appBuild": "PASS",
+    "unsignedGenericIPhoneRelease": "PASS",
+    "XCTest": {
+      "executed": 514,
+      "PASS": 512,
+      "SKIP": 1,
+      "FAIL": 1
+    },
+    "failure": "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields: live-clock sub-millisecond codec round-trip equality; fixed integral fixture timestamp in 06b574e, actual rerun pending",
+    "MADLADChineseScriptFixture": "PASS: zh simplified and exact zh_Hant traditional output; bounded sentence only",
+    "focusedSharedControls": "PASS",
+    "focusedHormone": "FAIL: parent identifier propagated onto chart; repair pending",
+    "remainingStages": "Retrieve actual results; no inference from queued/in-progress states"
   }
 }

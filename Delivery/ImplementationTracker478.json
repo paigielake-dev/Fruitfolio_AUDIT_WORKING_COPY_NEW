@@ -17643,8 +17643,8 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
-      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
         "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
@@ -17669,9 +17669,13 @@
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -17691,6 +17695,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "PARTIAL"
+        },
+        {
+          "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Use the same username for Account and Fruit Basket.",
@@ -17698,16 +17706,18 @@
         "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "IMPLEMENTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [],
+      "missingImplementation": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -17729,10 +17739,12 @@
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-231",
@@ -17758,8 +17770,8 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
-      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
         "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
@@ -17784,9 +17796,13 @@
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -17806,6 +17822,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "PARTIAL"
+        },
+        {
+          "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Synchronize username changes automatically.",
@@ -17813,16 +17833,18 @@
         "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "IMPLEMENTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [],
+      "missingImplementation": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -17844,10 +17866,12 @@
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-232",
@@ -24297,22 +24321,41 @@
       "originalReference": "Part 6 / 6G. LifeBridge information / 1",
       "sourceLine": 743,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "PROMPT 1B ADDITION — LIFEBRIDGE INFORMATION ACCESS WITHIN FRUITFOLIO and FOUNDER CORRECTION — LIFEBRIDGE SOURCE OF TRUTH AND FRUITSOFLIFE.XO (2026-10-16)",
+        "exactCrossReferenceStatus": "Exact binding additions inspected in complete extracted specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval."
+      ],
+      "testsPerformed": [
+        "LifeBridgeInformationTests (three unit tests; execution pending)",
+        "LifeBridgeInformationUITests (two actual UI journeys; execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.",
+        "New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -24326,6 +24369,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Implement the added LifeBridge information-access requirement within Fruitfolio.",
@@ -24333,11 +24380,17 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "missingImplementation": "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.; New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending.",
       "dependencies": {
         "parts": [
           1,
@@ -24355,9 +24408,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-316",
@@ -24368,22 +24423,41 @@
       "originalReference": "Part 6 / 6G. LifeBridge information / 2",
       "sourceLine": 745,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "PROMPT 1B ADDITION — LIFEBRIDGE INFORMATION ACCESS WITHIN FRUITFOLIO and FOUNDER CORRECTION — LIFEBRIDGE SOURCE OF TRUTH AND FRUITSOFLIFE.XO (2026-10-16)",
+        "exactCrossReferenceStatus": "Exact binding additions inspected in complete extracted specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval."
+      ],
+      "testsPerformed": [
+        "LifeBridgeInformationTests (three unit tests; execution pending)",
+        "LifeBridgeInformationUITests (two actual UI journeys; execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.",
+        "New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -24397,6 +24471,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Use the founder-corrected LifeBridge source-of-truth rule.",
@@ -24404,11 +24482,17 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "missingImplementation": "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.; New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending.",
       "dependencies": {
         "parts": [
           1,
@@ -24426,9 +24510,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-317",
@@ -24439,22 +24525,41 @@
       "originalReference": "Part 6 / 6G. LifeBridge information / 3",
       "sourceLine": 747,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "PROMPT 1B ADDITION — LIFEBRIDGE INFORMATION ACCESS WITHIN FRUITFOLIO and FOUNDER CORRECTION — LIFEBRIDGE SOURCE OF TRUTH AND FRUITSOFLIFE.XO (2026-10-16)",
+        "exactCrossReferenceStatus": "Exact binding additions inspected in complete extracted specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval."
+      ],
+      "testsPerformed": [
+        "LifeBridgeInformationTests (three unit tests; execution pending)",
+        "LifeBridgeInformationUITests (two actual UI journeys; execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.",
+        "New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -24468,6 +24573,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Ensure the feature provides the authorized informational access described in Prompt 1B.",
@@ -24475,11 +24584,17 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "missingImplementation": "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.; New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending.",
       "dependencies": {
         "parts": [
           1,
@@ -24497,9 +24612,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-318",
@@ -24510,22 +24627,41 @@
       "originalReference": "Part 6 / 6G. LifeBridge information / 4",
       "sourceLine": 749,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "PROMPT 1B ADDITION — LIFEBRIDGE INFORMATION ACCESS WITHIN FRUITFOLIO and FOUNDER CORRECTION — LIFEBRIDGE SOURCE OF TRUTH AND FRUITSOFLIFE.XO (2026-10-16)",
+        "exactCrossReferenceStatus": "Exact binding additions inspected in complete extracted specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval."
+      ],
+      "testsPerformed": [
+        "LifeBridgeInformationTests (three unit tests; execution pending)",
+        "LifeBridgeInformationUITests (two actual UI journeys; execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.",
+        "New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -24539,6 +24675,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Preserve appropriate privacy, research, and medical-safety boundaries.",
@@ -24546,11 +24686,17 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "missingImplementation": "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.; New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending.",
       "dependencies": {
         "parts": [
           1,
@@ -24568,9 +24714,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-319",
@@ -24581,22 +24729,41 @@
       "originalReference": "Part 6 / 6G. LifeBridge information / 5",
       "sourceLine": 751,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "PROMPT 1B ADDITION — LIFEBRIDGE INFORMATION ACCESS WITHIN FRUITFOLIO and FOUNDER CORRECTION — LIFEBRIDGE SOURCE OF TRUTH AND FRUITSOFLIFE.XO (2026-10-16)",
+        "exactCrossReferenceStatus": "Exact binding additions inspected in complete extracted specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
+      "sourceMappingStatus": "Exact implementation paths inspected",
       "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval."
+      ],
+      "testsPerformed": [
+        "LifeBridgeInformationTests (three unit tests; execution pending)",
+        "LifeBridgeInformationUITests (two actual UI journeys; execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.",
+        "New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -24617,11 +24784,17 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "IMPLEMENTED; VERIFICATION PENDING",
+      "implementationAssessment": "Added FAQ and explicit-query Ask discovery, canonical unavailable content slots, exact founder-named links with intentional external notice, no health-state mutation or data URL parameters; organization directory remains ineligible for medical retrieval.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/LifeBridge/LifeBridgeInformation.swift",
+        "Fruitfolio/LifeBridge/LifeBridgeInformationView.swift",
+        "Fruitfolio/LifeBridgeApprovedSourceDirectory.json",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "missingImplementation": "Approved licensed local snapshots from both named websites and applicable founder/referral/commission review remain unavailable.; New source and tests require actual Xcode execution; app-wide localization and full visual/accessibility acceptance pending.",
       "dependencies": {
         "parts": [
           1,
@@ -24639,7 +24812,9 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
+      "evidenceReferences": [
+        "Delivery/LIFEBRIDGE_CONTENT_BOUNDARY.md"
+      ],
       "finalDisposition": "NOT VERIFIED",
       "afterStatus": "NOT VERIFIED"
     },
@@ -25163,22 +25338,39 @@
       "originalReference": "Part 7 / 7B. Game rules / 2",
       "sourceLine": 781,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19M, 19P, 19S and binding FRUIT BASKET — PUDDLE correction",
+        "exactCrossReferenceStatus": "Exact specification text inspected"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
+      ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
+        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
       ],
       "dependsOnParts": [
         1,
@@ -25193,6 +25385,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make the game distinguish between good fruit, bad fruit, and standalone stars.",
@@ -25200,11 +25396,15 @@
         "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.; Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete.",
       "dependencies": {
         "parts": [
           1,
@@ -25223,9 +25423,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-328",
@@ -26460,22 +26662,39 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 344",
       "sourceLine": 827,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19M, 19P, 19S and binding FRUIT BASKET — PUDDLE correction",
+        "exactCrossReferenceStatus": "Exact specification text inspected"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
+      "sourceMappingStatus": "Exact implementation paths inspected",
       "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
+      ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
+        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
       ],
       "dependsOnParts": [
         1,
@@ -26497,11 +26716,15 @@
         "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "IMPLEMENTED; VERIFICATION PENDING",
+      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.; Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete.",
       "dependencies": {
         "parts": [
           1,
@@ -26520,7 +26743,9 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
+      "evidenceReferences": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "finalDisposition": "NOT VERIFIED",
       "afterStatus": "NOT VERIFIED"
     },
@@ -26825,22 +27050,39 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 349",
       "sourceLine": 837,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19M, 19P, 19S and binding FRUIT BASKET — PUDDLE correction",
+        "exactCrossReferenceStatus": "Exact specification text inspected"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Exact implementation paths inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
+      ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
+        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
       ],
       "dependsOnParts": [
         1,
@@ -26855,6 +27097,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before current LifeBridge/Fruit Basket continuation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Visually communicate the basket’s resistance.",
@@ -26862,11 +27108,15 @@
         "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.; Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete.",
       "dependencies": {
         "parts": [
           1,
@@ -26885,9 +27135,11 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-350",
@@ -26898,22 +27150,39 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 350",
       "sourceLine": 839,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19M, 19P, 19S and binding FRUIT BASKET — PUDDLE correction",
+        "exactCrossReferenceStatus": "Exact specification text inspected"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
+      "sourceMappingStatus": "Exact implementation paths inspected",
       "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "changesMade": [
+        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
+      ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
+        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
       ],
       "dependsOnParts": [
         1,
@@ -26935,11 +27204,15 @@
         "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "IMPLEMENTED; VERIFICATION PENDING",
+      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
+      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.; Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete.",
       "dependencies": {
         "parts": [
           1,
@@ -26958,7 +27231,9 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
+      "evidenceReferences": [
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+      ],
       "finalDisposition": "NOT VERIFIED",
       "afterStatus": "NOT VERIFIED"
     },
@@ -33106,32 +33381,31 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
         "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
       ],
       "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
         "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
       ],
       "testResults": [
         {
-          "result": "PARTIAL",
-          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
-          "tests": [
-            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
-          ],
-          "verifiedSourceCommits": [],
-          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+          "result": "PASS",
+          "scope": "Actual serial actor executes the synchronous native model path off the main UI thread; not general translation acceptance",
+          "verifiedSourceCommits": [
+            "2b02efa6ee30f0d811298940b1bebb833ad4ec5e"
+          ]
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run48/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run48/UnitBuild/UnitAttachments/manifest.json"
       ],
-      "remainingIssues": [
-        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -33151,6 +33425,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Actual Run48 C ABI thread observation",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Keep inference off the main UI thread.",
@@ -33158,16 +33436,14 @@
         "candidateSection": "MADLAD local encoder-decoder inference and verification",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
       ],
-      "missingImplementation": [
-        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -33194,10 +33470,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run48/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run48/UnitBuild/UnitAttachments/manifest.json"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-428",
@@ -36485,8 +36763,8 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
-      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
         "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
@@ -36513,9 +36791,13 @@
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -36540,6 +36822,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "PARTIAL"
+        },
+        {
+          "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Test username synchronization.",
@@ -36547,9 +36833,9 @@
         "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "IMPLEMENTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -36557,7 +36843,9 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [],
+      "missingImplementation": [
+        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -36586,10 +36874,12 @@
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-464",
@@ -37475,19 +37765,23 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "FAIL",
-      "inspectionState": "INCORRECTLY IMPLEMENTED",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual Run45 passed test12BackgroundForegroundForEveryMajorSection and testAppSurvivesBackgroundAndForeground. Old known major-section failure is resolved; new nested editor states remain unverified."
+      ],
       "testsPerformed": [],
       "testResults": [
         "Run13 broad UI suite: 26 cases, 13 failures; Cycle destination detection and accessibility audits failed. Run14 normal-motion launch timed out. New corrections awaiting fresh results."
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/actual-ui-results.json"
       ],
       "remainingIssues": [
-        "Rerun relevant actual UI tests after repairs; full integrated acceptance remains failed/unverified."
+        "New nested editor/language/translation lifecycle states still require their own verification."
       ],
       "dependsOnParts": [
         1,
@@ -37505,6 +37799,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Actual Run45 broad major-section lifecycle passes",
+          "status": "FAIL"
         }
       ],
       "requirementDescription": "Test app backgrounding and foregrounding.",
@@ -37514,12 +37812,12 @@
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml"
       ],
       "missingImplementation": [
-        "Rerun relevant actual UI tests after repairs; full integrated acceptance remains failed/unverified."
+        "New nested editor/language/translation lifecycle states still require their own verification."
       ],
       "dependencies": {
         "parts": [
@@ -37544,10 +37842,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/actual-ui-results.json"
       ],
-      "finalDisposition": "FAIL",
-      "afterStatus": "FAIL"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-474",
@@ -38015,17 +38315,17 @@
   ],
   "implementationStatePolicy": "IMPLEMENTED / PARTIALLY IMPLEMENTED / NOT IMPLEMENTED / BLOCKED. Null explicitly means not assessed; absence of verification is not evidence that a feature is missing.",
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
-  "implementationPassVerificationNote": "Actual Run45 source 8841840: 490 XCTest executed = 489 PASS + 1 physical-device SKIP, zero FAIL; 25 Swift Testing PASS. Simulator and unsigned generic iPhone Release builds PASS. Focused pages/Ask/volumes/username/Guide journeys PASS; SharedControls FAIL; remaining stages separate. Source 0435fa3 new changes are pending actual Run46.",
+  "implementationPassVerificationNote": "Actual Run48 unit/strict Contact/FAQ acceptance retained; Run50 bounded Chinese script fixture passed with one unrelated timestamp fixture failure. New popup/chart/LifeBridge/Fruit Basket/offline-Ask changes await their own actual Xcode results. No skipped or source-only item is PASS.",
   "summary": {
-    "PARTIAL": 101,
-    "PASS": 39,
-    "NOT VERIFIED": 327,
+    "PARTIAL": 110,
+    "PASS": 37,
+    "NOT VERIFIED": 321,
     "BLOCKED": 6,
-    "FAIL": 5
+    "FAIL": 4
   },
   "totalRequirements": 478,
-  "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
-  "latestVerifiedUnitCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
-  "currentSourceVerification": "Run46 actual 502 XCTest: 501 PASS, 1 physical-device SKIP, zero FAIL; 25 Swift Testing PASS. Later follow-up is pending its own run.",
+  "currentSourceCommit": "06b574e3affa1e4f9c21d5b02324543b397e839e",
+  "latestVerifiedUnitCommit": "2b02efa6ee30f0d811298940b1bebb833ad4ec5e",
+  "currentSourceVerification": "Actual Run48: 507 XCTest = 506 PASS, one physical-device SKIP, zero FAIL; 25 Swift Testing PASS; all four Contact/FAQ unfiltered audits PASS. Later source changes pending. Run49 all six saved-citation tests PASS but overall unit FAIL due live-clock fixture; source51 stabilizes fixture without relaxing assertions.",
   "workingTreeFollowup": "Cycle setup section editing/ordered persistence/shared-context removal, actual inference-thread observation, Ask/Guide/footer text fitting, real native pill text layout and chart-state capture — NOT VERIFIED."
 }

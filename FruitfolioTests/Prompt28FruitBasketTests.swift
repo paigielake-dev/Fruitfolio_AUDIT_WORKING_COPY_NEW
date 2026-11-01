@@ -323,6 +323,36 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertLessThanOrEqual(viewModel.basketX, 0.90)
     }
 
+    func testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle() {
+        for level in 1...Prompt28FruitBasketEngine.maxGameLevel {
+            for round in 1...48 where engine.weather(level: level, round: round) == .softRain {
+                let obstacles = engine.activeObstacles(level: level, round: round)
+                XCTAssertTrue(obstacles.contains(.puddle), "Rain must create the visible puddle obstacle")
+                XCTAssertLessThanOrEqual(obstacles.count, 2)
+            }
+        }
+    }
+
+    func testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle() throws {
+        let suite = "Prompt28.PuddleExit.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "fixture"),
+            researchProvider: Prompt28UnavailableResearchProvider(), engine: engine)
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy,
+            startingGameLevel: 5, currentRound: 4)
+        model.screen = .catchActive; model.basketX = 0.5
+        model.moveBasket(to: 0.9)
+        XCTAssertTrue(model.basketIsMeetingPuddleResistance)
+        XCTAssertLessThan(model.basketX, 0.9)
+        for _ in 0..<8 { model.moveBasket(to: 0.9) }
+        XCTAssertEqual(model.basketX, 0.9)
+        XCTAssertFalse(model.basketIsMeetingPuddleResistance)
+        model.moveBasket(to: 0.8)
+        XCTAssertEqual(model.basketX, 0.8, "Normal movement resumes outside the puddle")
+        XCTAssertFalse(model.basketIsMeetingPuddleResistance)
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",
