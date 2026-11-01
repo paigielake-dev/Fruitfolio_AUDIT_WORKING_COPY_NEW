@@ -34,6 +34,11 @@ pub unsafe extern "C" fn fruitfolio_madlad_translate(handle:*mut std::ffi::c_voi
   let runtime=unsafe{&mut *handle.cast::<Runtime>()};
   let prompt=unsafe{string(prompt)}?;
   if prompt.len()>8192{return Err("input exceeds bounded translation size".into())}
+  let (tag, sentence) = prompt.split_once(' ').ok_or("target language tag and sentence required")?;
+  if !tag.starts_with("<2") || !tag.ends_with('>') || runtime.tokenizer.token_to_id(tag).is_none() {
+   return Err("target language has no exact approved tokenizer tag".into())
+  }
+  if sentence.trim().is_empty() { return Err("empty translation input".into()) }
   runtime.model.clear_kv_cache();
   let ids=runtime.tokenizer.encode(prompt,true).map_err(|e|e.to_string())?.get_ids().to_vec();
   if ids.len()>512{return Err("input exceeds model position budget".into())}

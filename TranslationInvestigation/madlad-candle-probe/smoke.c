@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "FruitfolioMADLAD.h"
 int main(int argc,char **argv){
  if(argc!=2)return 2;
@@ -9,5 +10,10 @@ int main(int argc,char **argv){
  puts(result);fruitfolio_madlad_free_string(result);
  result=fruitfolio_madlad_translate(runtime,"<2es> The result is 2.5 ng/mL.");
  if(!result){fruitfolio_madlad_close(runtime);return 4;}
- puts(result);fruitfolio_madlad_free_string(result);fruitfolio_madlad_close(runtime);return 0;
+ puts(result);fruitfolio_madlad_free_string(result);
+ result=fruitfolio_madlad_translate(runtime,"<2zzz> This must not execute as an untagged translation.");
+ if(!result){fruitfolio_madlad_close(runtime);return 5;}
+ puts(result);
+ int rejected=strstr(result,"\"ok\":false")!=0 && strstr(result,"exact approved tokenizer tag")!=0;
+ fruitfolio_madlad_free_string(result);fruitfolio_madlad_close(runtime);return rejected?0:6;
 }

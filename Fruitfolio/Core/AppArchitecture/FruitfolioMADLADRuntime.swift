@@ -51,15 +51,27 @@ actor FruitfolioMADLADLocalRuntime {
     func unload() { handle = nil; verifiedDirectory = nil }
 
     private func verifyModel(_ directory: URL) throws {
-        let model = directory.appendingPathComponent("model-q4k.gguf")
-        guard FileManager.default.fileExists(atPath: model.path) else { throw FruitfolioMADLADError.modelMissing }
-        let file = try FileHandle(forReadingFrom: model)
-        defer { try? file.close() }
-        var sha = SHA256()
-        while let data = try file.read(upToCount: 8*1024*1024), !data.isEmpty { sha.update(data: data) }
-        let actual = sha.finalize().map { String(format: "%02x", $0) }.joined()
-        guard actual == "ea6e5531a3e95213c7f0635988d119e078a655c09306e47851e15d4c0c3f9c37" else {
-            throw FruitfolioMADLADError.modelIntegrity
+        // Verify the exact official tokenizer and architecture configuration as
+        // well as weights; a correct weight hash alone cannot validate decoding.
+        let expected = [
+            ("added_tokens.json", "d914176fd50bd7f565700006a31aa97b79d3ad17cee20c8e5ff2061d5cb74817"),
+            ("generation_config.json", "0849b38987568ccfe4ebefc22bbda1cec4bee01c345e93bfab207d4692b0a1d5"),
+            ("special_tokens_map.json", "7f79f1d5063d56c4b980eec0692f3c7429bdef335071d34e566bd00fd4b5e3e0"),
+            ("config.json", "cad399cab799b99409a6ec2d90d72552257c2bb752861261d2016691e0643e7c"),
+            ("tokenizer_config.json", "641fc660745306dfb935f666a68f8bc10a44c39241cfb357be518fda8c09662d"),
+            ("spiece.model", "ef11ac9a22c7503492f56d48dce53be20e339b63605983e9f27d2cd0e0f3922c"),
+            ("tokenizer.json", "a2799ccc696b752ba00c34f58726bfe253a04921ceb6cfc620400f560474790b"),
+            ("model-q4k.gguf", "ea6e5531a3e95213c7f0635988d119e078a655c09306e47851e15d4c0c3f9c37")
+        ]
+        for (name, digest) in expected {
+            let resource = directory.appendingPathComponent(name)
+            guard FileManager.default.fileExists(atPath: resource.path) else { throw FruitfolioMADLADError.modelMissing }
+            let file = try FileHandle(forReadingFrom: resource)
+            defer { try? file.close() }
+            var sha = SHA256()
+            while let data = try file.read(upToCount: 8*1024*1024), !data.isEmpty { sha.update(data: data) }
+            let actual = sha.finalize().map { String(format: "%02x", $0) }.joined()
+            guard actual == digest else { throw FruitfolioMADLADError.modelIntegrity }
         }
     }
 }
