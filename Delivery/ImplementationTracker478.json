@@ -312,8 +312,12 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
-      "testsPerformed": [],
+      "changesMade": [
+        "Shared CutePopButtonStyle now respects the system Reduce Motion environment even when a call site omits its explicit argument."
+      ],
+      "testsPerformed": [
+        "Actual macOS Run14 compiled shared style and ran the existing unit tests successfully; per-control motion verification remains pending."
+      ],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
@@ -600,12 +604,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -632,12 +639,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -664,12 +674,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -760,12 +773,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -792,12 +808,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -824,12 +843,15 @@
       "sourceMappingStatus": "Shared component inspected; screen-by-screen adoption remains unverified.",
       "implementationStatus": "PARTIAL",
       "inspectionState": "PARTIALLY IMPLEMENTED",
-      "changesMade": [],
+      "changesMade": [
+        "Shared fruit popup keeps short content centered and makes overflow scroll within the painted writing area; action labels wrap at Dynamic Type size without a two-line cap or text shrinking; minimum action target is 44pt."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending."
+        "Existing shared component retained. Complete specification alignment and all applicable screen/state coverage still pending.",
+        "New popup behavior requires actual small-screen/long-copy/Dynamic Type screenshot and interaction verification."
       ],
       "dependsOnParts": []
     },
@@ -15098,9 +15120,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15140,9 +15166,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15182,9 +15212,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15224,9 +15258,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15266,9 +15304,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15308,9 +15350,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15350,9 +15396,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15392,9 +15442,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15434,9 +15488,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15476,9 +15534,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15518,9 +15580,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15560,9 +15626,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15602,9 +15672,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15644,9 +15718,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15686,9 +15764,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15728,9 +15810,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15770,9 +15856,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15812,9 +15902,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15854,9 +15948,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15896,9 +15994,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15938,9 +16040,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -15980,9 +16086,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16022,9 +16132,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16064,9 +16178,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16106,9 +16224,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16148,9 +16270,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16190,9 +16316,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16232,9 +16362,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16274,9 +16408,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16316,9 +16454,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16358,9 +16500,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16400,9 +16546,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16442,9 +16592,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16484,9 +16638,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16526,9 +16684,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,
@@ -16568,9 +16730,13 @@
       "changesMade": [],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
+        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
       ],
       "dependsOnParts": [
         1,

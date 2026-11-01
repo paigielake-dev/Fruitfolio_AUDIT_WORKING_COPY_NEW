@@ -190,6 +190,18 @@ struct FruitPopupView: View {
     }
 
     private var bubbleContent: some View {
+        GeometryReader { geometry in
+            ScrollView(.vertical) {
+                messageAndActions
+                    .frame(minHeight: geometry.size.height, alignment: .center)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+        }
+    }
+
+    // Keep short dialogue optically centered; long and Dynamic Type dialogue
+    // remains inside the painted writing area and is reachable by scrolling.
+    private var messageAndActions: some View {
         VStack(alignment: .center, spacing: 7) {
             invitationSafeMessage
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
@@ -213,7 +225,7 @@ struct FruitPopupView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var invitationSafeMessage: Text {
@@ -237,7 +249,7 @@ struct FruitPopupView: View {
             action.handler()
         } label: {
             Text(action.label)
-                .font(.custom("Chalkboard SE", size: 12.25))
+                .font(.custom("Chalkboard SE", size: 12.25, relativeTo: .body))
                 .fontWeight(isPrimary ? .bold : .regular)
                 .foregroundStyle(
                     isPrimary
@@ -245,12 +257,11 @@ struct FruitPopupView: View {
                         : DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.90)
-                .frame(maxWidth: .infinity, minHeight: 30, alignment: .center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .center)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
     }
 }

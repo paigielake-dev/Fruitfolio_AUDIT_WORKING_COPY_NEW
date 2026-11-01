@@ -100,7 +100,9 @@ jobs:
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: |
           set -o pipefail
-          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
+          # Reboot after native tests before attaching XCTest UI automation.
+          xcrun simctl shutdown "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
+          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID"
           xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
           python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
             --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
@@ -200,15 +202,82 @@ jobs:
       - name: Export exploratory attachments if finalized
         if: always()
         run: |
-          if [ -d Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult ]; then
+          if [ -f Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult/Info.plist ]; then
             mkdir -p Fruitfolio_Verification_Evidence/Visual/Exploratory
             xcrun xcresulttool export attachments \
               --path Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult \
               --output-path Fruitfolio_Verification_Evidence/Visual/Exploratory
           fi
-      - name: Preserve actual evidence, including failures
+      - name: Package all actual evidence into downloadable parts
+        if: always()
+        run: python3 Tools/package_verification_evidence.py
+      - name: Preserve evidence part index
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: Fruitfolio_Verification_Evidence
-          path: Fruitfolio_Verification_Evidence
+          name: Fruitfolio_Evidence_Parts_Index
+          path: VerificationDownloads/EvidenceParts.json
+      - name: Preserve evidence part 01
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_01
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part01
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 02
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_02
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part02
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 03
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_03
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part03
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 04
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_04
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part04
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 05
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_05
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part05
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 06
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_06
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part06
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 07
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_07
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part07
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 08
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_08
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part08
+          if-no-files-found: ignore
+          compression-level: 0

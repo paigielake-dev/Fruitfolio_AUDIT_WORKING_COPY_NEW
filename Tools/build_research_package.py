@@ -37,7 +37,7 @@ def main():
     parser.add_argument('--provenance', required=True, type=Path)
     args = parser.parse_args()
     corpus_hash, guide_hash = sha(args.corpus), sha(args.guide)
-    version = 'founder-import-' + corpus_hash[:12] + '-' + guide_hash[:12]
+    version = 'founder-import-document-attribution-v2-' + corpus_hash[:12] + '-' + guide_hash[:12]
     document = Document(args.corpus)
     paragraphs = [{'index': i, 'style': p.style.name, 'text': p.text} for i, p in enumerate(document.paragraphs)]
     topics, topic = [], None
@@ -49,6 +49,12 @@ def main():
             topic['paragraphs'].append(p)
     if topic: topics.append(topic)
     notes, sources, source_chunks, issues, topic_index = [], {}, [], [], []
+    corpus_id = 'founder_corpus_' + corpus_hash[:20]
+    sources[corpus_id] = json.loads("{\"sourceID\":\"founder_corpus_13d89a17c6a65d0272b9\",\"title\":\"FruitsofLife.xo research corpus\",\"authors\":null,\"organization\":null,\"publicationDate\":null,\"publicationType\":\"Supplied educational research compilation; not an independently verified primary paper\",\"canonicalURL\":null,\"doi\":null,\"apa7Reference\":\"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library.\",\"verificationStatus\":\"founderCorpusAPA7\",\"retrievalEligibility\":true,\"sourceVersion\":\"13d89a17c6a65d0272b95ee4196853c109c4a760642e53e5a54d49d131d1aadd\",\"verifiedAt\":null,\"contentVersion\":\"founder-import-document-attribution-v2-13d89a17c6a6-f0edba71bf43\",\"provenance\":{\"file\":\"FruitsofLife_xo_Research_Corpus_APA7.docx\",\"titleFrom\":\"document cover\",\"author\":\"not identified; python-docx creator metadata is not authorship\",\"sourceScope\":\"actual supplied compilation, not each paper listed in its bibliography\"}}")
+    sources[corpus_id]['contentVersion'] = version
+    sources[corpus_id]['sourceID'] = corpus_id
+    sources[corpus_id]['sourceVersion'] = corpus_hash
+    sources[corpus_id]['provenance']['file'] = args.corpus.name
     for topic in topics:
         if topic['heading'] == 'FruitsofLife.xo Research Corpus': continue
         topic_id = identity('topic_', str(topic['start']) + ':' + topic['heading'])
@@ -76,7 +82,7 @@ def main():
             # Never mark pasted prose or multi-reference fragments as verified APA.
             looks_formal = len(years) == 1 and len(raw) >= 45 and not re.search(r'(?m)^\s*[-•]\s', raw)
             looks_formal = looks_formal and raw.find(years[0]) < 450 if years else False
-            status = 'founderCorpusAPA7' if looks_formal else 'unresolved'
+            status = 'unresolved'
             year = years[0][1:-1] if len(years) == 1 else None
             urls = re.findall(r'https?://[^\s<>]+', raw)
             url = urls[0].rstrip('.,);') if len(urls) == 1 else None
@@ -86,7 +92,8 @@ def main():
                 'authors': None, 'organization': None, 'publicationDate': year,
                 'publicationType': 'Reference transcribed from founder corpus; external source not independently checked',
                 'canonicalURL': url, 'doi': None, 'apa7Reference': raw,
-                'verificationStatus': status, 'retrievalEligibility': bool(looks_formal),
+                'verificationStatus': status, 'retrievalEligibility': False,
+                'bibliographyFormatAssessment': 'founderCorpusAPA7' if looks_formal else 'unresolved',
                 'sourceVersion': corpus_hash, 'verifiedAt': None, 'contentVersion': version,
                 'provenance': {'file': args.corpus.name, 'topic': topic['heading'], 'topicStartParagraph': topic['start'],
                                'association': 'topic bibliography, not independently verified claim entailment'}
@@ -96,9 +103,9 @@ def main():
         for paragraph_index, text in note_parts:
             notes.append({'chunkID': f'{topic_id}_p{paragraph_index}', 'researchTopicID': topic_id,
                           'heading': topic['heading'], 'subheading': f'{args.corpus.name}, paragraph {paragraph_index + 1}',
-                          'text': text, 'sourceIDs': source_ids, 'semanticTags': [], 'domainTags': [],
+                          'text': text, 'sourceIDs': [corpus_id], 'relatedSourceIDs': source_ids, 'semanticTags': [], 'domainTags': [],
                           'provenance': {'file': args.corpus.name, 'paragraphIndex': paragraph_index,
-                                         'sourceAssociation': 'topic bibliography only'}})
+                                         'sourceAssociation': 'quoted from supplied compilation; relatedSourceIDs are bibliography only'}})
         topic_index.append({'id': topic_id, 'heading': topic['heading'], 'noteParagraphs': len(note_parts), 'referenceBlocks': len(refs)})
     # The uploaded authored guide is an approved local source in its own right.
     # No primary-paper excerpts are invented from bibliography entries.
@@ -125,7 +132,7 @@ def main():
                               'provenance': {'file': args.guide.name, 'page': index}})
     package = {'schemaVersion': 1, 'contentVersion': version,
                'generatedFrom': args.corpus.name + ' + ' + args.guide.name,
-               'generationNote': 'Deterministic verbatim import. Corpus references are topic-level associations, not proof of claim entailment or external verification. No primary-paper body text was downloaded. Only actual supplied guide pages populate sourceChunks. Ambiguous references remain unresolved. Clinical accuracy and APA normalization still require review.',
+               'generationNote': 'Deterministic verbatim import. Corpus references are topic-level associations, not proof of claim entailment or external verification. No primary-paper body text was downloaded. Only actual supplied guide pages populate sourceChunks. Note quotations cite the supplied compilation; all bibliography records remain unresolved and ineligible until original evidence is verified. Related bibliography associations are preserved separately. Clinical accuracy and APA normalization still require review.',
                'researchNoteChunks': notes, 'sources': list(sources.values()), 'sourceChunks': source_chunks}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(package, ensure_ascii=False, separators=(',', ':')))

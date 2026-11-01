@@ -18,6 +18,12 @@ final class ResearchPackageBundleTests: XCTestCase {
             XCTAssertFalse(chunk.text.isEmpty)
             XCTAssertNotNil(chunk.locationMetadata)
         }
+        let eligible = package.sources.filter(\.isApprovedForDisplay)
+        XCTAssertEqual(eligible.count, 2, "Only the two actual supplied documents are citation eligible")
+        XCTAssertTrue(eligible.allSatisfy { $0.sourceID.hasPrefix("founder_") })
+        XCTAssertTrue(package.researchNoteChunks.allSatisfy {
+            $0.sourceIDs.count == 1 && $0.sourceIDs[0].hasPrefix("founder_corpus_")
+        })
         XCTAssertTrue(package.sources.contains { $0.verificationStatus == "unresolved" && !$0.retrievalEligibility })
     }
 }

@@ -655,6 +655,10 @@ actor FruitfolioResearchPackageStore {
         FruitfolioResearchPackage?
     private var cachedRetriever: FruitfolioLocalResearchRetriever?
 
+    init(package: FruitfolioResearchPackage? = nil) {
+        self.cached = package
+    }
+
     func retriever() throws -> FruitfolioLocalResearchRetriever {
         if let cachedRetriever { return cachedRetriever }
         let value = FruitfolioLocalResearchRetriever(package: try load())
@@ -1336,11 +1340,23 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
 
 // MARK: - Deterministic generated-claim validation
 
+nonisolated struct FruitfolioValidatedDraft {
+    let text: String
+    let evidenceIDs: Set<String>
+}
+
 nonisolated enum FruitfolioGeneratedDraftValidator {
     static func validatedText(
         draft: FruitfolioGeneratedDraft,
         evidence: FruitfolioEvidencePacket
     ) -> String? {
+        validatedDraft(draft: draft, evidence: evidence)?.text
+    }
+
+    static func validatedDraft(
+        draft: FruitfolioGeneratedDraft,
+        evidence: FruitfolioEvidencePacket
+    ) -> FruitfolioValidatedDraft? {
         let noteByID = Dictionary(
             uniqueKeysWithValues: evidence.researchNoteChunks.map { ($0.chunkID, $0.text) }
         )
@@ -1358,7 +1374,7 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
             (FruitfolioQueryNormalizer.tokens($0.claim.text), allowedByClaim[$0.claim.id] ?? [])
         }
 
-        let surviving = draft.claims.compactMap { generated -> String? in
+        let surviving = draft.claims.compactMap { generated -> FruitfolioValidatedDraft? in
             let generatedTokens = FruitfolioQueryNormalizer.tokens(generated.text)
             guard !generatedTokens.isEmpty else { return nil }
 
@@ -1380,14 +1396,21 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
             // entailment layer exists, accept only complete, verbatim evidence
             // chunks so qualifiers and negations cannot be silently dropped.
             let candidates = cited.compactMap { noteByID[$0] ?? sourceByID[$0] }
-            guard let original = candidates.first(where: {
-                canonicalWhitespace($0) == canonicalWhitespace(generated.text)
-            }) else { return nil }
-            return original.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard candidates.count == cited.count,
+                  candidates.allSatisfy({
+                      canonicalWhitespace($0) == canonicalWhitespace(generated.text)
+                  }), let original = candidates.first else { return nil }
+            return FruitfolioValidatedDraft(
+                text: original.trimmingCharacters(in: .whitespacesAndNewlines),
+                evidenceIDs: cited
+            )
         }
 
         guard !surviving.isEmpty else { return nil }
-        return surviving.map { "☆ \($0)" }.joined(separator: "\n\n")
+        return FruitfolioValidatedDraft(
+            text: surviving.map { "☆ \($0.text)" }.joined(separator: "\n\n"),
+            evidenceIDs: Set(surviving.flatMap { $0.evidenceIDs })
+        )
     }
 
     private static func canonicalWhitespace(_ text: String) -> String {
@@ -1691,6 +1714,7 @@ final class FruitfolioResearchIntelligenceEngine:
             )
 
         let answerText: String
+        var displayedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
 
         do {
             progress?(.synthesizing)
@@ -1703,17 +1727,17 @@ final class FruitfolioResearchIntelligenceEngine:
 
             progress?(.validating)
 
-            answerText =
-                FruitfolioGeneratedDraftValidator.validatedText(
-                    draft: draft,
-                    evidence: packet
+            if let accepted = FruitfolioGeneratedDraftValidator.validatedDraft(
+                draft: draft, evidence: packet
+            ) {
+                answerText = accepted.text
+                displayedEvidenceIDs = accepted.evidenceIDs
+            } else {
+                answerText = retrievalOnlyAnswer(
+                    question: trimmed, coverage: coverage,
+                    notes: packet.researchNoteChunks, safety: safety
                 )
-                ?? retrievalOnlyAnswer(
-                    question: trimmed,
-                    coverage: coverage,
-                    notes: packet.researchNoteChunks,
-                    safety: safety
-                )
+            }
 
         } catch {
             answerText =
@@ -1726,8 +1750,17 @@ final class FruitfolioResearchIntelligenceEngine:
                 )
         }
 
+        // Attribution follows the evidence actually displayed, never the whole
+        // retrieval candidate pool. Rejected claims cannot acquire citations.
+        let displayedNotes = rankedNotes.filter { displayedEvidenceIDs.contains($0.chunk.chunkID) }
+        let displayedSources = rankedSources.filter { displayedEvidenceIDs.contains($0.chunk.sourceChunkID) }
+        coverage = retriever.coverage(claims: claims, notes: displayedNotes, sourceChunks: displayedSources)
+        let displayedSourceIDs = Set(
+            displayedNotes.flatMap { $0.chunk.sourceIDs }
+            + displayedSources.map { $0.chunk.sourceID }
+        )
         let sources =
-            approvedSources.map {
+            approvedSources.filter { displayedSourceIDs.contains($0.sourceID) }.map {
                 source in
 
                 AskSourceRecord(
@@ -1882,30 +1915,9 @@ final class FruitfolioResearchIntelligenceEngine:
                             chunk.text
                         )
 
-                    let offset =
-                        min(
-                            clean.count,
-                            680
-                        )
-
-                    let limit =
-                        clean.index(
-                            clean.startIndex,
-                            offsetBy: offset
-                        )
-
-                    let clipped =
-                        String(
-                            clean[..<limit]
-                        )
-
-                    let suffix =
-                        clean.count > 680
-                        ? "…"
-                        : ""
-
-                    return
-                        "• \(clipped)\(suffix)"
+                    // A trailing qualifier or negation may be clinically material.
+                    // Preserve the complete selected chunk; never clip at 680 chars.
+                    return "• \(clean)"
                 }
 
         var parts: [String] = []
