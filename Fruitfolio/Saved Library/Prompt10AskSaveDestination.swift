@@ -16,6 +16,7 @@ struct Prompt10PendingSavedContent: Equatable {
     let sourceVersions: [String: String]
     let knowledgeBaseVersion: String?
     let generationTimestamp: Date?
+    let semanticDocument: FruitfolioSemanticDocument?
 
     init(
         question: String,
@@ -27,7 +28,8 @@ struct Prompt10PendingSavedContent: Equatable {
         sourceIDs: [String] = [],
         sourceVersions: [String: String] = [:],
         knowledgeBaseVersion: String? = nil,
-        generationTimestamp: Date? = nil
+        generationTimestamp: Date? = nil,
+        semanticDocument: FruitfolioSemanticDocument? = nil
     ) {
         self.question = question
         self.answer = answer
@@ -39,6 +41,7 @@ struct Prompt10PendingSavedContent: Equatable {
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
+        self.semanticDocument = semanticDocument
     }
 }
 
@@ -433,7 +436,8 @@ struct Prompt10AskSaveDestination: View {
                 knowledgeBaseVersion:
                     pending.knowledgeBaseVersion,
                 generationTimestamp:
-                    pending.generationTimestamp
+                    pending.generationTimestamp,
+                semanticDocument: pending.semanticDocument
             )
 
             _ = try store.savePage(

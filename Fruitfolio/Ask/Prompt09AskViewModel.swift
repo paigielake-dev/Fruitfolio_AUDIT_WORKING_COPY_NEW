@@ -32,6 +32,7 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published private(set) var selectedEducationalAssets: [EducationalAssetDescriptor] = []
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
+    @Published var selectedExcerptRange: NSRange?
     @Published private(set) var excerptSaved = false
 
     let conversationID: UUID
@@ -141,6 +142,7 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         inputText = ""
 
@@ -235,6 +237,7 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         phase = .ready
 

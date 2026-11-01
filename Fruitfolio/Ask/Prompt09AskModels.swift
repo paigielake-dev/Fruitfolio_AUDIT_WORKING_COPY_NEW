@@ -88,6 +88,7 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
     let id: UUID
     let originalQuestion: String
     let answerText: String
+    let semanticDocument: FruitfolioSemanticDocument?
     let support: AskKnowledgeSupport
     let supportMap: [AskSupportMapEntry]
     let sourceIDs: [String]
@@ -110,11 +111,13 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
         generationTimestamp: Date = Date(),
         conceptTags: Set<String> = [],
         researchGap: AskResearchGap? = nil,
-        isDevelopmentPreview: Bool = false
+        isDevelopmentPreview: Bool = false,
+        semanticDocument: FruitfolioSemanticDocument? = nil
     ) {
         self.id = id
         self.originalQuestion = originalQuestion
         self.answerText = answerText
+        self.semanticDocument = semanticDocument
         self.support = support
         self.supportMap = supportMap
         self.sourceIDs = sourceIDs
@@ -125,6 +128,13 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
         self.researchGap = researchGap
         self.isDevelopmentPreview = isDevelopmentPreview
     }
+    var resolvedSemanticDocument: FruitfolioSemanticDocument {
+        guard let semanticDocument, semanticDocument.plainText == answerText else {
+            return .init(spans: [.init(text: answerText)])
+        }
+        return semanticDocument
+    }
+
 }
 
 // MARK: - Saved library data model established by Prompt 09

@@ -218,7 +218,8 @@ struct Prompt11SavedPagePaper: View {
                     )
             }
 
-            Text(page.displayBody)
+            FruitfolioSemanticText(document: page.resolvedSemanticDocument,
+                baseFont: .custom("Chalkboard SE", size: 13.5, relativeTo: .body))
                 .font(.custom("Chalkboard SE", size: 13.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy

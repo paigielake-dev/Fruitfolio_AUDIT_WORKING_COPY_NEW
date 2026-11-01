@@ -668,7 +668,8 @@ struct Prompt09AskView: View {
 
     private func archivedAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text(answer.answerText)
+            FruitfolioSemanticText(document: answer.resolvedSemanticDocument,
+                baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
                 .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .textSelection(.enabled)
@@ -763,7 +764,9 @@ struct Prompt09AskView: View {
                                     .displayedAnswerText,
                             selectedText:
                                 $viewModel
-                                    .selectedExcerptText
+                                    .selectedExcerptText,
+                            semanticDocument: viewModel.answer?.resolvedSemanticDocument,
+                            selectedRange: $viewModel.selectedExcerptRange
                         )
                         .frame(
                             maxWidth:
@@ -1026,7 +1029,8 @@ struct Prompt09AskView: View {
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
-                    answer.generationTimestamp
+                    answer.generationTimestamp,
+                semanticDocument: answer.resolvedSemanticDocument
             )
     }
 
@@ -1073,7 +1077,10 @@ struct Prompt09AskView: View {
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
-                    answer.generationTimestamp
+                    answer.generationTimestamp,
+                semanticDocument: viewModel.selectedExcerptRange.flatMap {
+                    answer.resolvedSemanticDocument.slice(utf16Range: $0)
+                }.flatMap { $0.plainText == excerpt ? $0 : nil }
             )
     }
 
@@ -1574,6 +1581,16 @@ private struct FruitfolioPressBounce<
 struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
+    var semanticDocument: FruitfolioSemanticDocument? = nil
+    @Binding var selectedRange: NSRange?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    init(text: String, selectedText: Binding<String?>, semanticDocument: FruitfolioSemanticDocument? = nil, selectedRange: Binding<NSRange?> = .constant(nil)) {
+        self.text = text
+        self._selectedText = selectedText
+        self.semanticDocument = semanticDocument
+        self._selectedRange = selectedRange
+    }
 
     private static let maroon = UIColor(
         red: 128.0 / 255.0,
@@ -1590,7 +1607,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     )
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(selectedText: $selectedText)
+        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange)
     }
 
     func makeUIView(context: Context) -> UITextView {
@@ -1622,8 +1639,13 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     ) {
         textView.tintColor = Self.selectionHighlight
 
-        if textView.text != text {
-            applyTextStyle(to: textView)
+        _ = dynamicTypeSize
+        let styled = attributedContent(traits: textView.traitCollection)
+        if !textView.attributedText.isEqual(to: styled) {
+            let selection = textView.selectedRange
+            textView.attributedText = styled
+            textView.accessibilityLabel = styled.string
+            if NSMaxRange(selection) <= styled.length { textView.selectedRange = selection }
         }
     }
 
@@ -1652,65 +1674,26 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     private func applyTextStyle(
         to textView: UITextView
     ) {
-        textView.attributedText = Self.styledAnswer(text)
+        textView.attributedText = attributedContent(traits: textView.traitCollection)
+        textView.accessibilityLabel = text
+    }
+
+    private func attributedContent(traits: UITraitCollection) -> NSAttributedString {
+        let document: FruitfolioSemanticDocument
+        if let semanticDocument, semanticDocument.plainText.hasPrefix(text) {
+            document = semanticDocument.prefix(characters: text.count)
+        } else {
+            document = .init(spans: [.init(text: text)])
+        }
+        return FruitfolioSemanticAttributedRenderer.render(document, traits: traits)
     }
 
     static func styledAnswer(_ text: String) -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
+        FruitfolioSemanticAttributedRenderer.render(.init(spans: [.init(text: text)]))
+    }
 
-        let baseFont =
-            UIFont(
-                name: "ChalkboardSE-Regular",
-                size: 16
-            )
-            ?? UIFont.systemFont(ofSize: 16)
-
-        let styledText = NSMutableAttributedString(
-            string: text,
-            attributes: [
-                .font: UIFontMetrics(forTextStyle: .body)
-                    .scaledFont(for: baseFont),
-                .foregroundColor: Self.maroon,
-                .paragraphStyle: paragraphStyle
-            ]
-        )
-
-        // Prompt 48: underline recognized symptom phrases.
-        let symptoms = [
-            "cramps", "bloating", "headache", "headaches",
-            "nausea", "fatigue", "breast tenderness",
-            "back pain", "brain fog", "mood changes",
-            "digestive changes"
-        ]
-
-        let nsText = text as NSString
-
-        for symptom in symptoms {
-            let pattern = "(?<![\\p{L}\\p{N}])"
-                + NSRegularExpression.escapedPattern(for: symptom)
-                + "(?![\\p{L}\\p{N}])"
-
-            guard let regex = try? NSRegularExpression(
-                pattern: pattern,
-                options: [.caseInsensitive]
-            ) else {
-                continue
-            }
-
-            for match in regex.matches(
-                in: text,
-                range: NSRange(location: 0, length: nsText.length)
-            ) {
-                styledText.addAttribute(
-                    .underlineStyle,
-                    value: NSUnderlineStyle.single.rawValue,
-                    range: match.range
-                )
-            }
-        }
-
-        return styledText
+    static func styledAnswer(_ document: FruitfolioSemanticDocument) -> NSAttributedString {
+        FruitfolioSemanticAttributedRenderer.render(document)
     }
 
     final class Coordinator:
@@ -1718,11 +1701,13 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         UITextViewDelegate
     {
         @Binding private var selectedText: String?
+        @Binding private var selectedRange: NSRange?
 
         init(
-            selectedText: Binding<String?>
+            selectedText: Binding<String?>, selectedRange: Binding<NSRange?>
         ) {
             _selectedText = selectedText
+            _selectedRange = selectedRange
         }
 
         func textViewDidChangeSelection(
@@ -1740,12 +1725,12 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
                     in: currentText
                 )
             else {
-                if selectedText != nil {
-                    selectedText = nil
-                }
+                if selectedText != nil { selectedText = nil }
+                selectedRange = nil
                 return
             }
 
+            selectedRange = range
             let selection = String(
                 currentText[swiftRange]
             )

@@ -60,6 +60,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var order: Int
     var sourceSavedPageID: UUID?
     var importedImageIDs: [String]?
+    var semanticDocument: FruitfolioSemanticDocument?
 
     init(
         id: UUID = UUID(),
@@ -79,7 +80,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         notes: String = "",
         order: Int = 0,
         sourceSavedPageID: UUID? = nil,
-        importedImageIDs: [String]? = nil
+        importedImageIDs: [String]? = nil,
+        semanticDocument: FruitfolioSemanticDocument? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -99,6 +101,14 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.order = order
         self.sourceSavedPageID = sourceSavedPageID
         self.importedImageIDs = importedImageIDs
+        self.semanticDocument = semanticDocument
+    }
+
+    var resolvedSemanticDocument: FruitfolioSemanticDocument {
+        guard let semanticDocument, semanticDocument.plainText == displayBody else {
+            return .init(spans: [.init(text: displayBody)])
+        }
+        return semanticDocument
     }
 
     var displayBody: String {

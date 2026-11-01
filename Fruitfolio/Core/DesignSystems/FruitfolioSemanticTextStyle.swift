@@ -80,28 +80,10 @@ struct FruitfolioSemanticText: View {
     private func styled(_ span: FruitfolioSemanticSpan) -> Text {
         var text = Text(verbatim: span.text)
 
-        switch span.emphasis {
-        case .plain:
-            break
-
-        case .anchorBold:
-            text = text.bold()
-
-        case .spokenItalic:
-            text = text.italic()
-
-        case .symptomOrPracticalUnderline:
-            text = text.underline()
-
-        case .actionableBoldUnderline:
-            text = text.bold().underline()
-
-        case .rareItalicUnderline:
-            text = text.italic().underline()
-
-        case .absoluteBoldItalicUnderline:
-            text = text.bold().italic().underline()
-        }
+        let roles = span.emphasis.traits
+        if roles.bold { text = text.bold() }
+        if roles.italic { text = text.italic() }
+        if roles.underline { text = text.underline() }
 
         return text
     }
