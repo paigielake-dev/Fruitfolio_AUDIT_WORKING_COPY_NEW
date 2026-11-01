@@ -3,6 +3,13 @@ import XCTest
 final class SettingsVolumeUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
     private let names = ["music", "rain_sounds", "sound_effects", "typing_asmr"]
+    private func scrollSettings(_ app: XCUIApplication, up: Bool) {
+        let scroll = app.scrollViews.firstMatch
+        let container = scroll.exists ? scroll : app
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.82 : 0.25))
+        let end = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.25 : 0.82))
+        start.press(forDuration: 0.05, thenDragTo: end)
+    }
     private func openSettings(_ app: XCUIApplication) {
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
@@ -12,7 +19,7 @@ final class SettingsVolumeUITests: XCTestCase {
     }
     private func reach(_ app: XCUIApplication, _ slider: XCUIElement) {
         let visible = app.frame.insetBy(dx: 0, dy: 60)
-        for _ in 0..<10 where !slider.isHittable || !visible.contains(slider.frame) { app.swipeUp() }
+        for _ in 0..<10 where !slider.isHittable || !visible.contains(slider.frame) { scrollSettings(app, up: true) }
         XCTAssertTrue(slider.isHittable)
     }
     func testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart() {
@@ -27,7 +34,7 @@ final class SettingsVolumeUITests: XCTestCase {
         for (index,name) in names.enumerated() {
             let slider = app.sliders["settings.volume." + name]
             // Return to the top before seeking an earlier category.
-            for _ in 0..<8 where !slider.isHittable { app.swipeDown() }
+            for _ in 0..<8 where !slider.isHittable { scrollSettings(app, up: false) }
             reach(app, slider)
             let original = saved[name] ?? ""
             let target: CGFloat = original.hasPrefix("23") ? 0.71 : 0.23

@@ -3,6 +3,13 @@ import XCTest
 final class HormoneMeasurementUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    private func scrollSettings(_ app: XCUIApplication, up: Bool) {
+        let scroll = app.scrollViews.firstMatch
+        let container = scroll.exists ? scroll : app
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.82 : 0.25))
+        let end = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.25 : 0.82))
+        start.press(forDuration: 0.05, thenDragTo: end)
+    }
     private func capture(_ app: XCUIApplication, _ name: String) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "HormoneInformation_" + name
@@ -21,7 +28,7 @@ final class HormoneMeasurementUITests: XCTestCase {
         XCTAssertTrue(settings.waitForExistence(timeout: 15))
         settings.tap()
         let context = button(app, prefix: "my context")
-        for _ in 0..<5 where !context.isHittable { app.swipeUp() }
+        for _ in 0..<5 where !context.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(context.isHittable)
         context.tap()
         let hormones = button(app, prefix: "hormone information")
@@ -51,11 +58,11 @@ final class HormoneMeasurementUITests: XCTestCase {
         let done = app.buttons["hormone.keyboardDone"]
         XCTAssertTrue(done.waitForExistence(timeout: 5)); done.tap()
         let confirmDate = button(app, prefix: "confirm test date")
-        for _ in 0..<6 where !confirmDate.isHittable { app.swipeUp() }
+        for _ in 0..<6 where !confirmDate.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(confirmDate.isHittable)
         confirmDate.tap()
         let save = button(app, prefix: "save measurement")
-        for _ in 0..<8 where !save.isHittable { app.swipeUp() }
+        for _ in 0..<8 where !save.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(save.isEnabled && save.isHittable)
         save.tap()
         let displayed = "9876.54321 " + fixtureUnit
@@ -70,25 +77,25 @@ final class HormoneMeasurementUITests: XCTestCase {
             .containing(.staticText, identifier: displayed).firstMatch
         XCTAssertTrue(row.exists)
         let edit = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "open / edit measurement")).firstMatch
-        for _ in 0..<5 where !edit.isHittable { app.swipeUp() }
+        for _ in 0..<5 where !edit.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(edit.isHittable)
         edit.tap()
         capture(app, "ReopenedEditor")
         let notesLabel = "notes (optional)"
         let notes = app.textFields[notesLabel].exists ? app.textFields[notesLabel] : app.textViews[notesLabel]
-        for _ in 0..<8 where !notes.isHittable { app.swipeUp() }
+        for _ in 0..<8 where !notes.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(notes.isHittable)
         notes.tap()
         let fixtureNote = "edited " + fixtureUnit
         notes.typeText(fixtureNote)
         XCTAssertTrue(done.waitForExistence(timeout: 5)); done.tap()
         let saveEdit = button(app, prefix: "save measurement")
-        for _ in 0..<8 where !saveEdit.isHittable { app.swipeUp() }
+        for _ in 0..<8 where !saveEdit.isHittable { scrollSettings(app, up: true) }
         saveEdit.tap()
         XCTAssertTrue(app.staticTexts[fixtureNote].waitForExistence(timeout: 8))
         capture(app, "EditedAndSaved")
         let delete = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "delete measurement")).firstMatch
-        for _ in 0..<5 where !delete.isHittable { app.swipeUp() }
+        for _ in 0..<5 where !delete.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(delete.isHittable)
         delete.tap()
         capture(app, "DeleteConfirmation")

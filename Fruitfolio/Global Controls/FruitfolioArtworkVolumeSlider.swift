@@ -23,43 +23,49 @@ private enum FruitfolioSliderArtwork {
     }()
 }
 
-struct FruitfolioArtworkVolumeSlider: View {
+/// A real adjustable UIKit control using the original painted track and knob.
+/// Native touch, VoiceOver adjustment, and XCTest scrubber geometry agree.
+struct FruitfolioArtworkVolumeSlider: UIViewRepresentable {
     let title: String
     @Binding var value: Double
     @Environment(\.layoutDirection) private var direction
-    private let knobWidth: CGFloat = 36
-    private var identifier: String { "settings.volume." + title.replacingOccurrences(of: " ", with: "_") }
 
-    var body: some View {
-        GeometryReader { geometry in
-            let width = max(knobWidth + 1, geometry.size.width)
-            let travel = width - knobWidth
-            let fraction = CGFloat(min(max(value, 0), 1))
-            let visual = direction == .rightToLeft ? 1 - fraction : fraction
-            ZStack {
-                if let track = FruitfolioSliderArtwork.track {
-                    Image(uiImage: track).resizable().scaledToFit()
-                        .frame(width: travel).position(x: width / 2, y: 24)
-                }
-                if let knob = FruitfolioSliderArtwork.knob {
-                    Image(uiImage: knob).resizable().scaledToFit()
-                        .frame(width: knobWidth, height: knobWidth)
-                        .position(x: knobWidth / 2 + visual * travel, y: 24)
-                }
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeUIView(context: Context) -> UISlider {
+        let slider = UISlider(frame: .zero)
+        slider.minimumValue = 0; slider.maximumValue = 1
+        if let track = FruitfolioSliderArtwork.track {
+            let painted = UIGraphicsImageRenderer(size: CGSize(width: 260, height: 14)).image { _ in
+                track.draw(in: CGRect(x: 0, y: 0, width: 260, height: 14))
+            }.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7))
+            slider.setMinimumTrackImage(painted, for: .normal)
+            slider.setMaximumTrackImage(painted, for: .normal)
+        }
+        if let knob = FruitfolioSliderArtwork.knob {
+            let painted = UIGraphicsImageRenderer(size: CGSize(width: 36, height: 36)).image { _ in
+                let scale = min(36 / knob.size.width, 36 / knob.size.height)
+                let size = CGSize(width: knob.size.width * scale, height: knob.size.height * scale)
+                knob.draw(in: CGRect(x: (36-size.width)/2, y: (36-size.height)/2, width: size.width, height: size.height))
             }
-            .frame(width: width, height: 48)
-            .contentShape(Rectangle())
-            .gesture(DragGesture(minimumDistance: 0).onChanged { event in
-                let position = min(max((event.location.x - knobWidth / 2) / travel, 0), 1)
-                value = Double(direction == .rightToLeft ? 1 - position : position)
-            })
+            slider.setThumbImage(painted, for: .normal)
+            slider.setThumbImage(painted, for: .highlighted)
         }
-        .frame(height: 48)
-        .accessibilityRepresentation {
-            Slider(value: $value, in: 0...1, step: 0.01)
-                .accessibilityLabel(Text(title))
-                .accessibilityValue("\(Int((min(max(value, 0), 1) * 100).rounded())) percent")
-                .accessibilityIdentifier(identifier)
-        }
+        slider.addTarget(context.coordinator, action: #selector(Coordinator.changed(_:)), for: .valueChanged)
+        return slider
+    }
+    func updateUIView(_ slider: UISlider, context: Context) {
+        context.coordinator.parent = self
+        slider.value = Float(min(max(value, 0), 1))
+        slider.accessibilityLabel = title
+        slider.accessibilityIdentifier = "settings.volume." + title.replacingOccurrences(of: " ", with: "_")
+        slider.semanticContentAttribute = direction == .rightToLeft ? .forceRightToLeft : .forceLeftToRight
+    }
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UISlider, context: Context) -> CGSize? {
+        CGSize(width: proposal.width ?? 260, height: 48)
+    }
+    final class Coordinator: NSObject {
+        var parent: FruitfolioArtworkVolumeSlider
+        init(_ parent: FruitfolioArtworkVolumeSlider) { self.parent = parent }
+        @objc func changed(_ slider: UISlider) { parent.value = Double(slider.value) }
     }
 }
