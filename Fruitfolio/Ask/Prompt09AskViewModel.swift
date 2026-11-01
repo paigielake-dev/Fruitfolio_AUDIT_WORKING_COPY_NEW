@@ -82,6 +82,11 @@ final class Prompt09AskViewModel: ObservableObject {
             && phase != .searching
     }
 
+    var visibleMessages: [AskMessage] {
+        let answerIDs = Set(sessionAnswers.values.map(\.id))
+        return messages.filter { !answerIDs.contains($0.id) }
+    }
+
     var isConversationStarted: Bool {
         messages.contains {
             $0.role == .user

@@ -193,7 +193,7 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             bridge: "here’s the evidence-bounded version:",
             claims: [
                 FruitfolioGeneratedClaim(
-                    text: "Progesterone is associated with a temperature rise after ovulation.",
+                    text: "Progesterone is associated with a post-ovulatory basal body temperature rise.",
                     evidenceIDs: ["note_1"]
                 )
             ],
@@ -206,5 +206,18 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
         )
         XCTAssertNotNil(text)
         XCTAssertTrue(text?.contains("Progesterone") == true)
+        XCTAssertFalse(text?.contains("here’s the evidence-bounded version") == true)
+        let unsupported = FruitfolioGeneratedDraft(
+            bridge: nil,
+            claims: [FruitfolioGeneratedClaim(text: "Progesterone cures cancer.", evidenceIDs: ["note_1"])],
+            limitation: nil
+        )
+        XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: unsupported, evidence: packet))
+        let changedNegation = FruitfolioGeneratedDraft(
+            bridge: nil,
+            claims: [FruitfolioGeneratedClaim(text: "Progesterone is not associated with a post-ovulatory basal body temperature rise.", evidenceIDs: ["note_1"])],
+            limitation: nil
+        )
+        XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: changedNegation, evidence: packet))
     }
 }

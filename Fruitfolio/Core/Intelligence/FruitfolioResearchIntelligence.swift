@@ -444,6 +444,7 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             .researchNoteChunks
             .compactMap {
                 chunk in
+                guard !Task.isCancelled else { return nil }
 
                 let headingTokens =
                     FruitfolioQueryNormalizer.tokens(
@@ -543,6 +544,7 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             .sourceChunks
             .compactMap {
                 chunk in
+                guard !Task.isCancelled else { return nil }
 
                 guard eligibleSourceIDs.contains(chunk.sourceID),
                     (approvedSourceIDs.isEmpty || approvedSourceIDs.contains(chunk.sourceID))
@@ -1310,7 +1312,10 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
         APPROVED SOURCE EXCERPTS:
         \(sourceText.isEmpty ? "[none supplied]" : sourceText)
 
-        Produce concise Fruitfolio-language content inside the JSON fields only.
+        Each claim must quote one complete supplied evidence chunk verbatim,
+        preserving every qualifier, numerical value and negation. Do not paraphrase
+        or add medical facts. Use null for bridge and limitation. The app applies
+        Canonical Voice after validation. Return the JSON fields only.
         """
     }
 }
@@ -1357,33 +1362,22 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
             }
             guard boundaryMatch else { return nil }
 
-            // Last deterministic sanity check: at least one meaningful generated
-            // term must also occur in the cited evidence text. This is deliberately
-            // conservative; unsupported prose is removed rather than trusted.
-            let citedEvidenceText = cited.compactMap { noteByID[$0] ?? sourceByID[$0] }.joined(separator: " ")
-            let evidenceTokens = FruitfolioQueryNormalizer.tokens(citedEvidenceText)
-            guard !generatedTokens.intersection(evidenceTokens).isEmpty else { return nil }
-
-            return generated.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            // Token overlap is not proof of medical entailment. Until a validated
+            // entailment layer exists, accept only complete, verbatim evidence
+            // chunks so qualifiers and negations cannot be silently dropped.
+            let candidates = cited.compactMap { noteByID[$0] ?? sourceByID[$0] }
+            guard let original = candidates.first(where: {
+                canonicalWhitespace($0) == canonicalWhitespace(generated.text)
+            }) else { return nil }
+            return original.trimmingCharacters(in: .whitespacesAndNewlines)
         }
 
         guard !surviving.isEmpty else { return nil }
-
-        var sections: [String] = []
-        if let bridge = cleaned(draft.bridge) {
-            sections.append(bridge)
-        }
-        sections.append(surviving.map { "• \($0)" }.joined(separator: "\n"))
-        if let limitation = cleaned(draft.limitation) {
-            sections.append(limitation)
-        }
-        return sections.joined(separator: "\n\n")
+        return surviving.map { "☆ \($0)" }.joined(separator: "\n\n")
     }
 
-    private static func cleaned(_ value: String?) -> String? {
-        guard let value else { return nil }
-        let result = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        return result.isEmpty ? nil : result
+    private static func canonicalWhitespace(_ text: String) -> String {
+        text.split(whereSeparator: \.isWhitespace).joined(separator: " ")
     }
 }
 
@@ -1517,10 +1511,15 @@ final class FruitfolioResearchIntelligenceEngine:
                 package: package
             )
 
-        let rankedNotes =
-            retriever.searchNotes(
-                question: normalized
-            )
+        let noteSearch = Task.detached(priority: .userInitiated) {
+            retriever.searchNotes(question: normalized)
+        }
+        let rankedNotes = await withTaskCancellationHandler {
+            await noteSearch.value
+        } onCancel: {
+            noteSearch.cancel()
+        }
+        try Task.checkCancellation()
 
         var coverage =
             retriever.coverage(
@@ -1544,16 +1543,18 @@ final class FruitfolioResearchIntelligenceEngine:
                 }
             )
 
-            rankedSources =
-                retriever.searchSources(
-                    question: normalized,
-                    approvedSourceIDs:
-                        sourceIDs
-                )
-
-            if rankedSources.isEmpty {
-                rankedSources = retriever.searchSources(question: normalized, approvedSourceIDs: [])
+            let sourceSearch = Task.detached(priority: .userInitiated) {
+                let matching = retriever.searchSources(question: normalized, approvedSourceIDs: sourceIDs)
+                return matching.isEmpty
+                    ? retriever.searchSources(question: normalized, approvedSourceIDs: [])
+                    : matching
             }
+            rankedSources = await withTaskCancellationHandler {
+                await sourceSearch.value
+            } onCancel: {
+                sourceSearch.cancel()
+            }
+            try Task.checkCancellation()
 
             coverage =
                 retriever.coverage(

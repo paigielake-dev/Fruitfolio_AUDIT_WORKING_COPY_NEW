@@ -41,9 +41,20 @@ jobs:
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
             CODE_SIGNING_ALLOWED=NO \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-test.log
+      - name: Export actual XCTest screenshot attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual
+          fi
       - name: Preserve actual evidence, including failures
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Fruitfolio_Verification_Evidence
-          path: Fruitfolio_Verification_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence
+            Vendor/llama.xcframework

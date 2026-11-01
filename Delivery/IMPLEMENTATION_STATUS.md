@@ -1,0 +1,74 @@
+# Fruitfolio implementation checkpoint — incomplete
+
+Primary goal remains the completed Prompt 1B application and final ZIP. This
+checkpoint is not named FINAL_COMPLETE and is not release-ready.
+
+## Source changes made
+
+- Added FruitfolioResearchPackage.json: 395 topics, 5,477 note paragraphs,
+  294 source records and 470 actual supplied-guide page excerpts.
+- Preserved original wording and provenance. 183 ambiguous bibliography blocks
+  are retained for review and excluded from approved citation display. A
+  source's presence in the founder corpus is not independent scientific or
+  external bibliographic verification. Topic associations do not establish
+  claim-level entailment. Full raw DOCX paragraphs remain in the provenance.
+- Added local hormone measurement models, required-field/decimal validation,
+  exact unit preservation, history/filter/sort, editing, confirmed deletion,
+  unsaved-change protection, a research-only educational library, and local
+  erase controls. No measurement is passed to Ask or cycle predictions.
+- Added Cycle Tracker -> My Context -> Hormone Information navigation.
+- Measurement storage is local, backup-excluded and file-protected on iOS;
+  corrupt/unreadable storage is preserved and cannot be silently overwritten.
+- Retained prior Ask answers/citations in memory; cleared session/draft on
+  exit; guarded against late completion; added cancellation checks and native
+  inference memory clearing. Earlier answers keep their own save provenance.
+- Reworked the Ask journal's paper and opening-art arrangement in source.
+  Simulator visual behavior remains to be assessed.
+- Moved full-library retrieval off the main actor and restricted source
+  expansion to eligible source records.
+- Replaced the unsafe one-token-overlap generated-claim acceptance rule with
+  complete-evidence-chunk matching. Free paraphrase is currently restricted;
+  unvalidated generated bridges/limitations are not displayed. This is a
+  temporary extractive safety boundary, not a completed semantic entailment
+  verifier. Generated content rejected by this boundary uses the existing
+  research fallback.
+- Added Intro skip and inactive-state interruption handling.
+- Included the exact supplied cloud PNG and its registry entry. Updated FAQ
+  decoration and button pop handling. A distinct canonical tulip asset has
+  not been identified; the full founder art matrix is not verified.
+- Corrected the absolute framework path, excluded legacy native binaries and
+  app backups from synchronized membership, added a shared Xcode scheme,
+  an Apple runtime build recipe, and a macOS CI workflow.
+
+## Work that remains
+
+- Exhaustive, page-grounded requirement extraction and full requirement-to-code
+  review are unfinished. SOURCE_REVIEW_REGISTER.csv preserves 6,354 source
+  blocks, not 6,354 approved/atomized requirements. All remain NOT VERIFIED.
+  The DOC metadata says 320 pages; the request says 308. Text extraction has
+  six replacement characters needing comparison with the original DOC.
+- Full Prompt 1B feature/state, visual, localization, medical, accessibility,
+  privacy, persistence and performance verification is not complete.
+- The research import needs manual resolution of ambiguous references,
+  accurate APA normalization, and claim-specific source validation. The
+  supplied guide is secondary educational content, not independently retrieved
+  primary-paper full text. No fabricated primary-paper excerpts were added.
+- Hormone Rhythm opt-in scientific personalization, complete localization of
+  new hormone screens and canonical popup/semantic rendering are unfinished.
+- Full Personal Health Context categories, bidirectional onboarding/context
+  synchronization and every context-policy boundary require further work.
+- Existing Account sign-in, sync, export and ownership code includes development
+  simulations (including timer-based synced/purchased states). These are not
+  real authentication, remote sync, data exports or verified App Store access.
+  They have NOT been represented as completed production functionality.
+- Full universal artwork/popup/semantic systems and all call sites need review.
+- MADLAD is acquired, not production-integrated. Its original Candle-format
+  Q4 is incompatible with direct llama loading. An experimental lossless
+  repack runs on Linux but failed paragraph-level safety/citation tests.
+  Plausible short-sentence translations do not resolve that failure.
+- Supported iPhone memory tiers, actual model co-residency, distribution size,
+  latency, thermals and offline restart behavior are not established.
+
+The GitHub development branch and draft PR preserve the source changes. The
+Apple CI result and evidence index are authoritative for actual executed tests;
+static checks are never a substitute for Xcode or simulator behavior.

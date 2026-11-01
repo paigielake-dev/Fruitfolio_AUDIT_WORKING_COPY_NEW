@@ -36,7 +36,7 @@ struct HormoneMeasurement: Codable, Equatable, Identifiable, Sendable {
     /// Preserve the original number and unit strings; never convert or interpret them.
     var validationError: String? {
         let number = result.trimmingCharacters(in: .whitespacesAndNewlines)
-        let pattern = #"^[0-9]+(?:[.,][0-9]+)?$"#
+        let pattern = #"^[+-]?[0-9]+(?:[.,][0-9]+)?$"#
         guard number.range(of: pattern, options: .regularExpression) != nil,
               Decimal(string: number.replacingOccurrences(of: ",", with: "."),
                       locale: Locale(identifier: "en_US_POSIX")) != nil else {

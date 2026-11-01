@@ -14,7 +14,7 @@ final class HormoneMeasurementTests: XCTestCase {
         var value = record()
         XCTAssertNil(value.validationError)
         XCTAssertEqual(value.unit, " ng/mL ")
-        for invalid in ["", "NaN", "inf", "-2", "2.5 extra", "1,000.5"] {
+        for invalid in ["", "NaN", "inf", "--2", "2.5 extra", "1,000.5"] {
             value.result = invalid
             XCTAssertNotNil(value.validationError, invalid)
         }

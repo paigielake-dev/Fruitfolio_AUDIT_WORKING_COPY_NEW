@@ -35,10 +35,10 @@ parsed = []
 try:
     import tree_sitter, tree_sitter_swift
     parser = tree_sitter.Parser(tree_sitter.Language(tree_sitter_swift.language()))
-    changed = subprocess.check_output(['git','diff','--name-only'],cwd=root,text=True).splitlines()
+    changed = subprocess.check_output(['git','diff','defa3c9c062230325262e6f36296d0877655ad5e','--name-only'],cwd=root,text=True).splitlines()
     candidates = [root / p for p in changed if p.endswith('.swift')]
     candidates += list((root / 'Fruitfolio/Hormone Information').glob('*.swift'))
-    candidates += [root / 'FruitfolioTests/AskSessionLifetimeTests.swift', root / 'FruitfolioTests/HormoneMeasurementTests.swift']
+    candidates += [root / 'FruitfolioTests/AskSessionLifetimeTests.swift', root / 'FruitfolioTests/HormoneMeasurementTests.swift', root / 'FruitfolioTests/ResearchPackageBundleTests.swift']
     for path in sorted(set(candidates)):
         tree = parser.parse(path.read_bytes())
         errors = []

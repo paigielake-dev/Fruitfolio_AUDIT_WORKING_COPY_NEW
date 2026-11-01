@@ -53,6 +53,7 @@ struct HormoneInformationView: View {
                         }
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("hormone.measurement.\(record.id.uuidString)")
                         Divider()
                     }
                     Text("these are results you recorded, not a diagnosis. timing, sample type, methods, units, and clinical context matter. Fruitfolio does not classify results or recommend treatment.")

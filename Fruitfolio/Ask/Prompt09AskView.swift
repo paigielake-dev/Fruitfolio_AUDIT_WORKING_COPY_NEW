@@ -71,8 +71,10 @@ struct Prompt09AskView: View {
                                     .transition(.opacity)
                             }
 
+                            openingArtwork
+
                             ForEach(
-                                viewModel.messages
+                                viewModel.visibleMessages
                             ) { message in
                                 messageView(message)
                                     .id(message.id)
@@ -105,6 +107,10 @@ struct Prompt09AskView: View {
                                 failureView(message)
                             }
                         }
+                        .padding(.top, 14)
+                        .padding(.bottom, 28)
+                        .frame(minHeight: conversationViewportHeight, alignment: .top)
+                        .background { AskContinuousJournalPaper() }
                         .background {
                             GeometryReader { geometry in
                                 Color.clear.preference(key: AskConversationBottomKey.self,
@@ -113,15 +119,13 @@ struct Prompt09AskView: View {
                         }
                         .frame(maxWidth: 680)
                         .containerRelativeFrame(.horizontal) { length, _ in
-                            min(length, 680)
+                            min(max(1, length - 40), 680)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(
                             .horizontal,
                             20
                         )
-                        .padding(.top, 14)
-                        .padding(.bottom, 28)
                     }
                     .coordinateSpace(name: "askConversationViewport")
                     .background {
@@ -431,273 +435,55 @@ struct Prompt09AskView: View {
     // MARK: - Discovery
 
     private var discoveryCard: some View {
-        ZStack(
-            alignment: .topTrailing
-        ) {
-            FruitfolioImage(
-                id: .ask_answer_paper
-            )
-            .scaledToFill()
-            .accessibilityHidden(true)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_glow"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150)
-                    .offset(
-                        x: 18,
-                        y: 18
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-                }
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                FruitfolioImage(id: .ask_magnifying_glass)
+                    .scaledToFit().frame(width: 52, height: 52).accessibilityHidden(true)
+                Text(Prompt09AskViewModel.greeting)
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .allowsHitTesting(false)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_slice"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 132)
-                    .rotationEffect(
-                        .degrees(29)
-                    )
-                    .offset(
-                        x: -5,
-                        y: 8
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    Spacer()
-                }
-            }
-            .allowsHitTesting(false)
-
-            VStack(spacing: 14) {
-                HStack(
-                    alignment: .top,
-                    spacing: 12
-                ) {
-                    FruitfolioImage(
-                        id:
-                            .ask_magnifying_glass
-                    )
-                    .scaledToFit()
-                    .frame(
-                        width: 52,
-                        height: 52
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    Text(
-                        Prompt09AskViewModel
-                            .greeting
-                    )
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 16,
-                            relativeTo:
-                                .body
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .frame(
-                        maxWidth:
-                            .infinity,
-                        alignment:
-                            .leading
-                    )
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                }
-
-                VStack(spacing: 8) {
-                    ForEach(
-                        Array(
-                            discoverySuggestions
-                                .enumerated()
-                        ),
-                        id: \.offset
-                    ) {
-                        index,
-                        suggestion in
-
-                        if index <
-                            suggestionRevealCount {
-                            Button {
-                                audioManager
-                                    .play(
-                                        .buttonSoftPop
-                                    )
-
-                                viewModel
-                                    .useSuggestion(
-                                        suggestion
-                                    )
-
-                                inputFocused =
-                                    true
-
-                            } label: {
-                                Text(
-                                    suggestion
-                                )
-                                .font(
-                                    .custom(
-                                        "Chalkboard SE",
-                                        size:
-                                            13.5,
-                                        relativeTo:
-                                            .body
-                                    )
-                                )
-                                .foregroundStyle(
-                                    DesignTokens
-                                        .ColorToken
-                                        .primaryBurgundy
-                                )
-                                .multilineTextAlignment(
-                                    .leading
-                                )
-                                .frame(
-                                    maxWidth:
-                                        .infinity,
-                                    alignment:
-                                        .leading
-                                )
-                                .padding(
-                                    .horizontal,
-                                    13
-                                )
-                                .padding(
-                                    .vertical,
-                                    9
-                                )
-                                .background(
-                                    DesignTokens
-                                        .ColorToken
-                                        .backgroundCream
-                                        .opacity(
-                                            0.72
-                                        ),
-                                    in:
-                                        RoundedRectangle(
-                                            cornerRadius:
-                                                16,
-                                            style:
-                                                .continuous
-                                        )
-                                )
-                            }
-                            .buttonStyle(
-                                CutePopButtonStyle(
-                                    reduceMotion:
-                                        motionPreferences
-                                            .reduceMotionActive
-                                )
-                            )
-                            .frame(
-                                minHeight:
-                                    DesignTokens
-                                        .Layout
-                                        .minimumHitTarget
-                            )
-                            .transition(
-                                motionPreferences
-                                    .reduceMotionActive
-                                    ? .opacity
-                                    : .move(
-                                        edge:
-                                            .top
-                                    )
-                                    .combined(
-                                        with:
-                                            .opacity
-                                    )
-                            )
-                        }
+            ForEach(Array(discoverySuggestions.enumerated()), id: \.offset) { index, suggestion in
+                if index < suggestionRevealCount {
+                    Button {
+                        audioManager.play(.buttonSoftPop)
+                        viewModel.useSuggestion(suggestion)
+                        inputFocused = true
+                    } label: {
+                        Text(suggestion)
+                            .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            .padding(.horizontal, 12)
                     }
-                }
-
-                VStack {
-                    Spacer()
-
-                    HStack {
-                        Image(
-                            "decor_pear"
-                        )
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 118)
-                        .offset(
-                            x: -34,
-                            y: 38
-                        )
-                        .allowsHitTesting(
-                            false
-                        )
-                        .accessibilityHidden(
-                            true
-                        )
-
-                        Spacer()
-                    }
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    .transition(.opacity)
                 }
             }
-            .padding(
-                .horizontal,
-                22
-            )
-            .padding(
-                .vertical,
-                24
-            )
         }
-        .frame(maxWidth: .infinity)
-        .frame(minHeight: 300)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 28,
-                style: .continuous
-            )
-        )
-        .accessibilityElement(
-            children: .contain
-        )
+        .padding(22)
+        .accessibilityElement(children: .contain)
+    }
+
+    private var openingArtwork: some View {
+        GeometryReader { geometry in
+            HStack(alignment: .center, spacing: 0) {
+                FruitfolioImage(id: .decor_pear).scaledToFit()
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+                FruitfolioImage(id: .decor_orange_slice).scaledToFit()
+                    .rotationEffect(.degrees(29))
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+                FruitfolioImage(id: .decor_orange_glow).scaledToFit()
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+            }
+        }
+        .frame(height: 120)
+        .padding(.horizontal, 22)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     // MARK: - Messages
@@ -706,9 +492,7 @@ struct Prompt09AskView: View {
     private func messageView(
         _ message: AskMessage
     ) -> some View {
-        if message.role == .fruitfolio && viewModel.sessionAnswers.values.contains(where: { $0.id == message.id }) {
-            EmptyView()
-        } else if message.role == .user {
+        if message.role == .user {
             HStack {
                 Spacer(minLength: 42)
 
@@ -902,14 +686,6 @@ struct Prompt09AskView: View {
     ) -> some View {
         VStack(spacing: 12) {
             ZStack {
-                FruitfolioImage(
-                    id: .ask_answer_paper
-                )
-                .scaledToFill()
-                .accessibilityHidden(
-                    true
-                )
-
                 VStack(
                     alignment: .leading,
                     spacing: 14
@@ -1989,4 +1765,17 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 private struct AskConversationBottomKey: PreferenceKey {
     static var defaultValue: CGFloat = 0
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
+}
+
+private struct AskContinuousJournalPaper: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Image("ask_answer_paper")
+                .resizable(capInsets: EdgeInsets(top: 140, leading: 80, bottom: 140, trailing: 80), resizingMode: .stretch)
+                .frame(width: geometry.size.width, height: geometry.size.height + 200, alignment: .top)
+        }
+        .clipped()
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
 }
