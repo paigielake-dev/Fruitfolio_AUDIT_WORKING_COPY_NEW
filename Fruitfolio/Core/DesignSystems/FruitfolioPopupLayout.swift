@@ -51,6 +51,7 @@ struct FruitfolioPopupArtworkSurface<Content: View>: View {
                         .frame(minHeight: layout.writing.height, alignment: .center)
                 }
                 .scrollBounceBehavior(.basedOnSize)
+                .scrollDismissesKeyboard(.interactively)
                 .frame(width: layout.writing.width, height: layout.writing.height)
                 .position(x: layout.writing.midX, y: layout.writing.midY)
             }

@@ -27,7 +27,7 @@ final class UserAuthoredPageUITests: XCTestCase {
         if create.exists { reach(app, create); create.tap() }
         else { let another = button(app, "add another little encyclopedia"); reach(app, another); another.tap() }
         let title = app.textFields["encyclopedia name"]
-        XCTAssertTrue(title.waitForExistence(timeout: 8)); title.tap(); title.typeText(name)
+        XCTAssertTrue(title.waitForExistence(timeout: 8)); title.tap(); title.typeText(name + "\n")
         let createBook = button(app, "create encyclopedia"); reach(app, createBook); createBook.tap()
         let book = button(app, name); XCTAssertTrue(book.waitForExistence(timeout: 10)); reach(app, book); book.tap()
         let chapter = button(app, "saved pages"); XCTAssertTrue(chapter.waitForExistence(timeout: 10)); chapter.tap()
@@ -42,6 +42,8 @@ final class UserAuthoredPageUITests: XCTestCase {
         capture(app, "UserPage_Saved")
         app.terminate(); app.launch(); library(app)
         let savedBook = button(app, name); reach(app, savedBook); savedBook.tap()
+        let reopenedChapter = button(app, "saved pages")
+        XCTAssertTrue(reopenedChapter.waitForExistence(timeout: 10)); reach(app, reopenedChapter); reopenedChapter.tap()
         let savedPage = button(app, "My independent reminder")
         XCTAssertTrue(savedPage.waitForExistence(timeout: 10)); reach(app, savedPage); savedPage.tap()
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))

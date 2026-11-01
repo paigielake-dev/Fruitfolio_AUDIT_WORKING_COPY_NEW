@@ -49,14 +49,6 @@ struct Prompt11GuideBuilderView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if overlay != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(90)
-            }
 
             overlayLayer
                 .zIndex(100)

@@ -72,14 +72,6 @@ struct Prompt10SavedLibraryView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if popup != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(90)
-            }
 
             bookOpeningOverlay
                 .zIndex(80)

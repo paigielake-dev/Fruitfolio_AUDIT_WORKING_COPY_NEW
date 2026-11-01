@@ -24,7 +24,14 @@ struct Prompt10LocalMediaStore: Sendable {
         flags.isExcludedFromBackup = true
         try directory.setResourceValues(flags)
         let id = UUID().uuidString.lowercased()
-        try data.write(to: validatedURL(for: id), options: [.atomic, .completeFileProtection])
+        let target = try validatedURL(for: id)
+        try data.write(to: target, options: [.atomic, .completeFileProtection])
+        do {
+            try fileManager.setAttributes([.protectionKey: FileProtectionType.complete], ofItemAtPath: target.path)
+        } catch {
+            try? fileManager.removeItem(at: target)
+            throw error
+        }
         return id
     }
 

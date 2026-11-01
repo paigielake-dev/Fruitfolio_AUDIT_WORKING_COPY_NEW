@@ -14,3 +14,14 @@ final class PopupLayoutTests: XCTestCase {
         }
     }
 }
+
+@MainActor
+final class ProtectedDecorationTests: XCTestCase {
+    func testActualAlphaFootprintProtectsTextWithoutBlanketHidingUnrelatedArtwork() {
+        let title = FruitfolioProtectedRegion(rect: CGRect(x: 90, y: 0, width: 220, height: 90))
+        XCTAssertFalse(FruitfolioDecorativeArtLayout.isCollisionFree(paintedFrame: CGRect(x: 80, y: 30, width: 40, height: 40), protectedRegions: [title], minimumGap: 4))
+        XCTAssertTrue(FruitfolioDecorativeArtLayout.isCollisionFree(paintedFrame: CGRect(x: 320, y: 5, width: 50, height: 50), protectedRegions: [title], minimumGap: 4))
+        let expanded = FruitfolioProtectedRegion(rect: CGRect(x: 35, y: 0, width: 330, height: 210))
+        XCTAssertFalse(FruitfolioDecorativeArtLayout.isCollisionFree(paintedFrame: CGRect(x: 320, y: 5, width: 50, height: 50), protectedRegions: [expanded], minimumGap: 4))
+    }
+}

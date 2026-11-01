@@ -30,6 +30,7 @@ extension Prompt10LocalMediaStoreTests {
         XCTAssertEqual(try root.resourceValues(forKeys: [.isExcludedFromBackupKey]).isExcludedFromBackup, true)
         let attributes = try FileManager.default.attributesOfItem(atPath: root.appendingPathComponent(id).appendingPathExtension("image").path)
         XCTAssertTrue((attributes[.protectionKey] as? String) == FileProtectionType.complete.rawValue
-                      || (attributes[.protectionKey] as? FileProtectionType) == .complete)
+                      || (attributes[.protectionKey] as? FileProtectionType) == .complete,
+                      "Imported media must retain complete protection; actual file attributes: \(attributes)")
     }
 }

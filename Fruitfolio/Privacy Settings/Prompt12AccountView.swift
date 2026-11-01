@@ -75,12 +75,6 @@ struct Prompt12AccountView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if activeOverlay {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             overlayLayer
                 .zIndex(100)

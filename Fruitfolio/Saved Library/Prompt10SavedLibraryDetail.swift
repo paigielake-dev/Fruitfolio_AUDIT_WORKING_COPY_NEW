@@ -16,6 +16,7 @@ struct Prompt10EncyclopediaDetailView: View {
     @State private var selectedPage: Prompt10SavedPage?
     @State private var expandedChapterIDs: Set<UUID> = []
     @State private var editingChapterID: UUID?
+    @State private var managingChapters = false
 
     private var encyclopedia: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -84,6 +85,8 @@ struct Prompt10EncyclopediaDetailView: View {
                     }
                 }
 
+                FruitfolioControlPillButton(label: "manage chapters") { managingChapters = true }
+
                 if encyclopedia.chapters.isEmpty {
                     Text("this little book is ready for saved pages ♡")
                         .font(
@@ -133,6 +136,9 @@ struct Prompt10EncyclopediaDetailView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .sheet(isPresented: $managingChapters) {
+            Prompt10ChapterManagementView(store: store, encyclopediaID: encyclopediaID)
+        }
         .sheet(isPresented: Binding(get: { editingChapterID != nil }, set: { if !$0 { editingChapterID = nil } })) {
             if let chapterID = editingChapterID {
                 Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: chapterID,
@@ -382,15 +388,18 @@ struct Prompt10SavedPageView: View {
     @State private var mediaMessage: String?
     @State private var noteDraft = ""
     @State private var editingPage = false
+    @State private var showUnsavedNotes = false
+    @EnvironmentObject private var motion: MotionPreferences
 
     var body: some View {
+        ZStack {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 ZStack {
                     HStack {
                         BackControl {
                             audioManager.play(.buttonSoftPop)
-                            onBack()
+                            if noteDraft != page.notes { showUnsavedNotes = true } else { onBack() }
                         }
 
                         Spacer()
@@ -480,6 +489,15 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .fruitfolioModalBlur(active: showUnsavedNotes, reduceMotion: motion.reduceMotionActive)
+        if showUnsavedNotes {
+            Prompt12ConfirmationPopup(assetName: "popup_warning", title: "unsaved changes",
+                message: "would you like to save your notes?", primaryLabel: "save notes",
+                secondaryLabel: "keep editing", destructiveLabel: "discard changes",
+                primaryAction: { if saveNotes() { onBack() } },
+                secondaryAction: { showUnsavedNotes = false }, destructiveAction: onBack)
+        }
+        }
         .sheet(isPresented: $editingPage) {
             Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: page.chapterID,
                 page: page, onSaved: { updated in onPageChanged(updated); editingPage = false },
@@ -497,20 +515,28 @@ struct Prompt10SavedPageView: View {
                 .frame(minHeight: 110)
                 .padding(8)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.75), in: RoundedRectangle(cornerRadius: 12))
-            Button("save notes") {
-                do {
-                    try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: noteDraft)
-                    var updated = page
-                    updated.notes = noteDraft.trimmingCharacters(in: .whitespacesAndNewlines)
-                    onPageChanged(updated)
-                    mediaMessage = "notes saved!"
-                } catch {
-                    mediaMessage = "those notes could not be saved."
-                }
-            }
+            Button("save notes") { _ = saveNotes() }
             .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
         .onAppear { noteDraft = page.notes }
+    }
+
+    @discardableResult
+    private func saveNotes() -> Bool {
+        do {
+            try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: noteDraft)
+            var updated = page
+            updated.notes = noteDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+            noteDraft = updated.notes
+            onPageChanged(updated)
+            mediaMessage = "notes saved!"
+            showUnsavedNotes = false
+            return true
+        } catch {
+            showUnsavedNotes = false
+            mediaMessage = "those notes could not be saved. your writing is still here."
+            return false
+        }
     }
 
     @ViewBuilder

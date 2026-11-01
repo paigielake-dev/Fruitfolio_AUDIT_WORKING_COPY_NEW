@@ -76,13 +76,6 @@ struct Prompt12SettingsView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if showDataManagement ||
-                showAbout {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             if showDataManagement {
                 Prompt12DataManagementView(

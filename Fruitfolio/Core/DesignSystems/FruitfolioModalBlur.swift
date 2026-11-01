@@ -18,6 +18,13 @@ struct FruitfolioModalBlurModifier: ViewModifier {
         content
             .blur(radius: isActive ? FruitfolioModalBlurSpec.radius : 0)
             .scaleEffect(isActive ? FruitfolioModalBlurSpec.contentScale : 1.0)
+            .overlay {
+                if isActive {
+                    DesignTokens.ColorToken.backgroundCream
+                        .opacity(FruitfolioModalBlurSpec.dimOpacity)
+                        .ignoresSafeArea().allowsHitTesting(false).accessibilityHidden(true)
+                }
+            }
             .allowsHitTesting(!isActive)
             // Blurred modal backgrounds must not remain reachable by VoiceOver.
             .accessibilityHidden(isActive)

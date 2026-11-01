@@ -205,14 +205,6 @@ struct Prompt09AskView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if pendingLibrarySave != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(150)
-            }
 
             // Prompt 09 decides WHAT gets saved.
             // Prompt 10 decides WHERE it goes.

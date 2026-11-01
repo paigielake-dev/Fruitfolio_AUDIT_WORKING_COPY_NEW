@@ -17,23 +17,22 @@ struct Prompt10BookTile: View {
                     .accessibilityHidden(true)
 
                 Text(encyclopedia.name)
-                    .font(.custom("Chalkboard SE", size: 14))
+                    .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .truncationMode(.tail)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 132)
 
                 Text(metadataText)
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                    .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .caption))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(
                 maxWidth: .infinity,
@@ -77,25 +76,7 @@ struct Prompt10LibraryHero: View {
             .frame(maxWidth: 310)
             .accessibilityHidden(true)
 
-            if !isEmpty {
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookStack
-                    )
-                    .frame(width: 72)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .pottedPlant
-                    )
-                    .frame(width: 64)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 12)
-                .offset(y: 48)
-            }
         }
         .frame(
             maxWidth: .infinity,

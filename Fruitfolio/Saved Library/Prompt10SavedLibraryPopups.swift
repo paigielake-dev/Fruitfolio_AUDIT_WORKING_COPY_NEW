@@ -10,6 +10,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var title = ""
+    @FocusState private var titleFocused: Bool
     @State private var selectedStyle: Prompt10BookStyle = .sage
     @State private var errorMessage: String?
 
@@ -80,6 +81,9 @@ struct Prompt10CreateEncyclopediaPopup: View {
             DesignTokens.ColorToken.primaryBurgundy
         )
         .textFieldStyle(.plain)
+        .focused($titleFocused)
+        .submitLabel(.done)
+        .onSubmit { titleFocused = false }
         .padding(.horizontal, 14)
         .frame(minHeight: 46)
         .frame(maxWidth: 300)
