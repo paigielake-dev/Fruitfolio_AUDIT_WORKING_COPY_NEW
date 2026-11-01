@@ -45,6 +45,22 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
             Fruitfolio_Verification_Evidence/Build/xcode-version.txt
             Fruitfolio_Verification_Evidence/Build/swift-version.txt
+      - uses: actions/cache@v4
+        id: madlad-runtime-cache
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh') }}
+      - name: Build linked MADLAD Apple runtime
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/madlad-runtime-build.log
+      - uses: actions/cache@v4
+        with:
+          path: Models/MADLAD
+          key: madlad-official-resources-ea6e5531a3e95213-v1
+      - name: Acquire and verify approved translation resources
+        run: python3 Tools/prepare_madlad_resources.py
       - name: Choose installed iPhone simulator
         run: |
           xcrun simctl list devices available -j > /tmp/fruitfolio-devices.json
@@ -80,7 +96,7 @@ jobs:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
       - name: Run unit and native inference tests
-        timeout-minutes: 8
+        timeout-minutes: 12
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \

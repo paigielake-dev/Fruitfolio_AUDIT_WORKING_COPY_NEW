@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        4B1000000000000000000002 /* MADLAD in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1000000000000000000001; };
+        4B1000000000000000000004 /* MADLAD resources */ = {isa = PBXBuildFile; fileRef = 4B1000000000000000000003; };
 		2EEA86E7306065DB00BCEB7D /* FruitfolioAI.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */; };
 		3A1000000000000000000002 /* llama.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1000000000000000000001 /* llama.xcframework */; };
 		3A1000000000000000000003 /* llama.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1000000000000000000001 /* llama.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -44,6 +46,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+        4B1000000000000000000001 = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FruitfolioMADLAD.xcframework; path = Vendor/FruitfolioMADLAD.xcframework; sourceTree = SOURCE_ROOT; };
+        4B1000000000000000000003 = {isa = PBXFileReference; lastKnownFileType = folder; name = MADLAD; path = Models/MADLAD; sourceTree = SOURCE_ROOT; };
 		2E756F3E307C0BC500D6B9DA /* llama.swiftui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = llama.swiftui.xcodeproj; sourceTree = "<group>"; };
 		2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FruitfolioAI.gguf; sourceTree = "<group>"; };
 		3A1000000000000000000001 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = llama.xcframework; path = Vendor/llama.xcframework; sourceTree = SOURCE_ROOT; };
@@ -96,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1000000000000000000002 /* llama.xcframework in Frameworks */,
+                4B1000000000000000000002 /* MADLAD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +133,8 @@
 			children = (
 				2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */,
 				3A1000000000000000000001 /* llama.xcframework */,
+                4B1000000000000000000001,
+                4B1000000000000000000003,
 				B00000000000000000000001 /* Fruitfolio */,
 				B00000000000000000000002 /* FruitfolioTests */,
 				B00000000000000000000003 /* FruitfolioUITests */,
@@ -272,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EEA86E7306065DB00BCEB7D /* FruitfolioAI.gguf in Resources */,
+                4B1000000000000000000004 /* MADLAD resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,7 +400,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Fruitfolio lets you choose your own images to add to your saved encyclopedias.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, );
+                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, "-framework", Security, );
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fruitsoflifexo.Fruitfolio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -424,7 +432,7 @@
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Fruitfolio lets you choose your own images to add to your saved encyclopedias.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, );
+                OTHER_LDFLAGS = ("$(inherited)", "-lc++", "-framework", Accelerate, "-framework", Metal, "-framework", MetalKit, "-framework", Foundation, "-framework", Security, );
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fruitsoflifexo.Fruitfolio;
 				PRODUCT_NAME = "$(TARGET_NAME)";
