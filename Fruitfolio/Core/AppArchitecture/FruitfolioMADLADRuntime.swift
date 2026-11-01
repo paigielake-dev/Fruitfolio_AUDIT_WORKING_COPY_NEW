@@ -27,7 +27,7 @@ actor FruitfolioMADLADLocalRuntime {
     private(set) var lastInferenceWasOnMainThread: Bool?
 
     func translateRawSentence(_ sentence: String, target: String, directory: URL) throws -> String {
-        guard target.range(of: "^[a-z]{2,3}$", options: .regularExpression) != nil else {
+        guard target.range(of: "^[a-z]{2,3}(?:_[A-Z][a-z]{3})?$", options: .regularExpression) != nil else {
             throw FruitfolioMADLADError.invalidLanguage
         }
         if handle == nil || verifiedDirectory != directory {

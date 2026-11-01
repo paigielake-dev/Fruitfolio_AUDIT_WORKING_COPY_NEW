@@ -1675,7 +1675,12 @@ struct Prompt28FruitBasketView: View {
             .padding(.bottom, 30)
         }
         .onChange(of: usernameStore.username) { _, newValue in
-            if leaderboardUsernameDraft != newValue { leaderboardUsernameDraft = newValue }
+            // The authority publishes valid intermediate edits. Reflecting a
+            // delayed echo while focused can reinsert the last valid prefix
+            // after the user deletes below the minimum length.
+            if !leaderboardUsernameFocused, leaderboardUsernameDraft != newValue {
+                leaderboardUsernameDraft = newValue
+            }
         }
         .onAppear {
             leaderboardUsernameDraft = usernameStore.username

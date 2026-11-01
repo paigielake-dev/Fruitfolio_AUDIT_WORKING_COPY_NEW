@@ -150,7 +150,7 @@ struct Prompt12AccountView: View {
         }
         .onAppear { usernameDraft = usernameStore.username }
         .onChange(of: usernameStore.username) { _, newValue in
-            if usernameDraft != newValue { usernameDraft = newValue }
+            if !usernameFocused, usernameDraft != newValue { usernameDraft = newValue }
         }
     }
 

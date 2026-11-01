@@ -23,6 +23,8 @@ final class UsernameSynchronizationUITests: XCTestCase {
         field.tap()
         let old = field.value as? String ?? ""
         if old != "public username" { field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: old.count)) }
+        let emptied = field.value as? String ?? ""
+        XCTAssertTrue(emptied.isEmpty || emptied == "public username", "Deleting every character must leave the draft empty instead of restoring a previously valid prefix")
         // Individual keystrokes exercise incomplete one- and two-character drafts.
         for character in value { field.typeText(String(character)) }
         XCTAssertEqual(field.value as? String, value)

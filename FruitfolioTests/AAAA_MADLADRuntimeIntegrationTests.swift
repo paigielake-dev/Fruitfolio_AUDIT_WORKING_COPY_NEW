@@ -35,6 +35,13 @@ final class AAAA_MADLADRuntimeIntegrationTests: XCTestCase {
             XCTAssertTrue(french.textForVerification.contains("2.5 ng/mL"))
             let repaired = XCTAttachment(string: "Actual official local model; original failed combined medical fixture through sentence/citation boundary preservation: \(candidate.textForVerification)\nFrench exact original numeric spelling: \(french.textForVerification)\nClinical/general-language approval remains NOT VERIFIED.")
             repaired.name = "MADLAD_ActualMedicalFixtureBoundaryRepair"; repaired.lifetime = .keepAlways; add(repaired)
+            let simplified = try await runtime.translateRawSentence("Please select a language.", target: FruitfolioLanguage.chineseSimplified.madladTargetCode, directory: directory)
+            let traditional = try await runtime.translateRawSentence("Please select a language.", target: FruitfolioLanguage.chineseTraditional.madladTargetCode, directory: directory)
+            XCTAssertTrue(simplified.contains("选") || simplified.contains("语"), "Actual Simplified Chinese fixture must use its requested script")
+            XCTAssertTrue(traditional.contains("選") || traditional.contains("語"), "Actual Traditional Chinese fixture must use the official zh_Hant target")
+            XCTAssertFalse(traditional.contains("选") || traditional.contains("语"), "The Traditional selection must not silently reuse Simplified Chinese")
+            let scriptEvidence = XCTAttachment(string: "Actual official local MADLAD. Source: Please select a language.\nzh: \(simplified)\nzh_Hant: \(traditional)\nBounded script fixture only; general Chinese clinical translation is NOT VERIFIED.")
+            scriptEvidence.name = "MADLAD_ActualChineseScriptSelection"; scriptEvidence.lifetime = .keepAlways; add(scriptEvidence)
             let executedOnMainThread = await runtime.lastInferenceWasOnMainThread
             XCTAssertEqual(executedOnMainThread, false, "Actual C ABI encoder-decoder execution must leave the main UI thread")
             var usage = rusage(); getrusage(0, &usage)

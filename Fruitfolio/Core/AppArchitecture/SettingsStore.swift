@@ -50,6 +50,15 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
 
     var id: String { rawValue }
     var localeIdentifier: String { rawValue }
+    /// Exact official model tokenizer tags. Script selection is not collapsed
+    /// into a generic Chinese target; absent language tags remain unsupported.
+    var madladTargetCode: String {
+        switch self {
+        case .chineseSimplified: return "zh"
+        case .chineseTraditional: return "zh_Hant"
+        default: return rawValue
+        }
+    }
     var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu }
 
     /// Native/autonym labels deliberately remain recognizable even when the current UI language changes.

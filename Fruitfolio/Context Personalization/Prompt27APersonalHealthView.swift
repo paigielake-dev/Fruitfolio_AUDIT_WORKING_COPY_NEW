@@ -30,6 +30,7 @@ struct Prompt27APersonalHealthView: View {
                             .accessibilityHidden(true)
                         }
                         .accessibilityElement(children: .ignore)
+                        .accessibilityAddTraits(.isButton)
                         .accessibilityLabel(LocalizedStringKey(field.title))
                         .accessibilityValue(LocalizedStringKey(status(field)))
                         .accessibilityHint("opens an optional editable field")
