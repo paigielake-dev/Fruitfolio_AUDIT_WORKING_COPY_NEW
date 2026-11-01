@@ -1,6 +1,6 @@
 import Foundation
 
-/// Permanent canonical IDs for the 265 founder-created production PNGs.
+/// Permanent canonical IDs for the 266 founder-created production PNGs.
 /// Do not rename these cases after shipping.
 enum FruitfolioAssetID: String, CaseIterable, Codable, Sendable {
     case popup_pushpin
