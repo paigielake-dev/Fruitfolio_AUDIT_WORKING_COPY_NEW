@@ -20,6 +20,9 @@ final class AudioManager: ObservableObject {
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
     private var audioInterrupted = false
     private var applicationIsActive = true
+    // @Published emits before SettingsStore updates its stored value. Cache the
+    // delivered master state so every playback gate observes the new value.
+    private var allAudioMuted = false
     private var lastTypingTick: TimeInterval = -Double.infinity
     private var notificationObservers: [NSObjectProtocol] = []
 
@@ -40,6 +43,7 @@ final class AudioManager: ObservableObject {
 
     func attach(settings: SettingsStore) {
         self.settings = settings
+        allAudioMuted = settings.allAudioMuted
         observe(settings: settings)
         synchronizePlaybackWithSettings()
     }
@@ -238,10 +242,9 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory
     ) {
         if isContinuousCategory(category) {
-            loopPlayers[category]?.setVolume(
-                0,
-                fadeDuration: 0.12
-            )
+            suspendedLoopCategories.insert(category)
+            loopPlayers[category]?.volume = 0
+            loopPlayers[category]?.pause()
         }
 
         if let players = oneShotPlayers[category] {
@@ -300,6 +303,15 @@ final class AudioManager: ObservableObject {
         settings: SettingsStore
     ) {
         settingsCancellables.removeAll()
+
+        settings.$allAudioMuted
+            .removeDuplicates()
+            .sink { [weak self] muted in
+                guard let self else { return }
+                self.allAudioMuted = muted
+                self.synchronizePlaybackWithSettings()
+            }
+            .store(in: &settingsCancellables)
 
         settings.$musicEnabled
             .removeDuplicates()
@@ -426,10 +438,8 @@ final class AudioManager: ObservableObject {
             return
         }
 
-        player.setVolume(
-            0,
-            fadeDuration: 0.12
-        )
+        player.volume = 0
+        player.pause()
 
         debugLog(
             "muted \(String(describing: category))"
@@ -439,7 +449,7 @@ final class AudioManager: ObservableObject {
     private func resumeContinuousAudio(
         category: FruitfolioAudioCategory
     ) {
-        guard !audioInterrupted, applicationIsActive,
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive,
               !suspendedLoopCategories.contains(category) else {
             return
         }
@@ -546,7 +556,7 @@ final class AudioManager: ObservableObject {
         bundle: Bundle,
         fadeDuration: TimeInterval
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive else { return }
         configureAudioSession()
 
         stopPhysicalLoop(
@@ -619,7 +629,7 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory,
         bundle: Bundle
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive else { return }
         configureAudioSession()
 
         do {
@@ -699,6 +709,7 @@ final class AudioManager: ObservableObject {
     private func isEnabled(
         _ category: FruitfolioAudioCategory
     ) -> Bool {
+        guard !allAudioMuted else { return false }
         guard let settings else {
             return true
         }

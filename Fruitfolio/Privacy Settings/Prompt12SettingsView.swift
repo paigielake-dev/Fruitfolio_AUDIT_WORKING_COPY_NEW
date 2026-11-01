@@ -199,12 +199,16 @@ struct Prompt12SettingsView: View {
                 "experience"
             )
 
+            WatercolorToggle(label: "mute all sounds", isOn: $settings.allAudioMuted)
+                .accessibilityIdentifier("settings.globalMute")
+
             WatercolorToggle(
                 label: "sound effects",
                 isOn:
                     $settings
                         .soundEffectsEnabled
             )
+            .accessibilityIdentifier("settings.enabled.sound_effects")
 
             WatercolorToggle(
                 label: "music",
@@ -212,6 +216,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .musicEnabled
             )
+            .accessibilityIdentifier("settings.enabled.music")
 
             WatercolorToggle(
                 label: "rain ambience",
@@ -219,6 +224,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .rainEnabled
             )
+            .accessibilityIdentifier("settings.enabled.rain_sounds")
 
             WatercolorToggle(
                 label: "typing ASMR",
@@ -226,6 +232,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .typingASMREnabled
             )
+            .accessibilityIdentifier("settings.enabled.typing_asmr")
 
             Prompt12VolumeRow(title: "music", value: $settings.musicVolume)
             Prompt12VolumeRow(title: "rain sounds", value: $settings.rainVolume)

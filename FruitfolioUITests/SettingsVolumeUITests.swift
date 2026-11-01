@@ -54,5 +54,34 @@ final class SettingsVolumeUITests: XCTestCase {
             let slider = app.sliders["settings.volume." + name]; reach(app, slider)
             XCTAssertEqual(slider.value as? String, saved[name], "Selected volume must survive an actual application restart")
         }
+        let master = app.descendants(matching: .any)["settings.globalMute"]
+        for _ in 0..<10 where !master.isHittable { scrollSettings(app, up: false) }
+        XCTAssertTrue(master.isHittable)
+        let originalMaster = master.value as? String ?? ""
+        XCTAssertTrue(["on", "off"].contains(originalMaster), "Master state must be accessible")
+        var channels: [String:String] = [:]
+        for name in names {
+            let toggle = app.descendants(matching: .any)["settings.enabled." + name]
+            let value = toggle.value as? String ?? ""
+            XCTAssertTrue(["on", "off"].contains(value)); channels[name] = value
+        }
+        master.tap()
+        let changedMaster = master.value as? String ?? ""
+        XCTAssertTrue(["on", "off"].contains(changedMaster))
+        XCTAssertNotEqual(changedMaster, originalMaster)
+        for name in names {
+            XCTAssertEqual(app.descendants(matching: .any)["settings.enabled." + name].value as? String,
+                channels[name], "Master mute must preserve each category preference")
+        }
+        let mutedImage = XCTAttachment(screenshot: app.screenshot())
+        mutedImage.name = "Settings_GlobalMute_Toggled"; mutedImage.lifetime = .keepAlways; add(mutedImage)
+        app.terminate(); app.launch(); openSettings(app)
+        XCTAssertEqual(master.value as? String, changedMaster, "Master mute must survive a real application restart")
+        for name in names {
+            XCTAssertEqual(app.descendants(matching: .any)["settings.enabled." + name].value as? String, channels[name])
+        }
+        for _ in 0..<8 where !master.isHittable { scrollSettings(app, up: false) }
+        XCTAssertTrue(master.isHittable); master.tap()
+        XCTAssertEqual(master.value as? String, originalMaster, "Restore only the tested master preference; never reset user data")
     }
 }
