@@ -1313,6 +1313,7 @@ private struct Prompt05PrimaryHubButton:
         .accessibilityLabel(
             accessibilityLabel
         )
+        .accessibilityIdentifier("hub.action." + accessibilityLabel)
         .accessibilityAddTraits(
             .isButton
         )

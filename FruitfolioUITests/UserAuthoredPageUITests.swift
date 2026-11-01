@@ -58,7 +58,10 @@ final class UserAuthoredPageUITests: XCTestCase {
         XCTAssertTrue(content.exists); content.tap(); content.typeText("my own writing stays separate from research.")
         button(app, "done").tap()
         let addImage = button(app, "add image"); reach(app, addImage); addImage.tap()
-        let photo = app.collectionViews.cells.firstMatch
+        // The observed iOS 26 system picker exposes photo tiles as Images,
+        // not collection-view Cells. Keep selection scoped to its real grid.
+        let photo = app.scrollViews["photosView_content_scroll_view"].images
+            .matching(identifier: "PXGGridLayout-Info").firstMatch
         XCTAssertTrue(photo.waitForExistence(timeout: 15), "Select a real photo from the system picker; simulator photo fixture must be installed")
         photo.tap()
         let imported = app.images["my imported image"]

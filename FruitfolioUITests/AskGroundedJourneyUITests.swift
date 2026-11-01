@@ -9,7 +9,7 @@ final class AskGroundedJourneyUITests: XCTestCase {
         let a = XCTAttachment(screenshot: app.screenshot()); a.name = name; a.lifetime = .keepAlways; add(a)
     }
     private func openAsk(_ app: XCUIApplication) {
-        let ask = button(app, "Ask the Encyclopedia")
+        let ask = app.buttons["hub.action.Ask the Encyclopedia"]
         XCTAssertTrue(ask.waitForExistence(timeout: 15)); ask.tap()
         XCTAssertTrue(app.textFields["ask.questionInput"].waitForExistence(timeout: 10))
     }
@@ -34,7 +34,7 @@ final class AskGroundedJourneyUITests: XCTestCase {
         capture(app, "Ask_ActualDocumentSources")
         let record = XCTAttachment(string: "Question: \(question)\nAnswer: \(answer.label)\nActual source: \(source.identifier)\n\(source.label)\nThis UI journey does not independently prove medical entailment or distinguish native generation from bounded research fallback; the strict native integration test verifies those separate gates.")
         record.name = "Ask_ActualUIAnswerAndSource"; record.lifetime = .keepAlways; add(record)
-        let back = button(app, "Back")
+        let back = app.buttons["ask.back"]
         for _ in 0..<20 where !back.isHittable { app.swipeDown() }
         XCTAssertTrue(back.isHittable); back.tap()
         openAsk(app)

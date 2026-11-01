@@ -314,6 +314,7 @@ struct Prompt09AskView: View {
 
                             navigation.back()
                         }
+                        .accessibilityIdentifier("ask.back")
                     }
 
                     Spacer()
@@ -1475,84 +1476,13 @@ struct Prompt09AskView: View {
 
 // MARK: - Bounce Wrapper for Existing Custom Controls
 
-private struct FruitfolioPressBounce<
-    Content: View
->: View {
+/// Existing call sites contain native buttons already using CutePopButtonStyle.
+/// A second zero-distance drag recognizer shrank their hit frames and competed
+/// with taps during navigation. Keep one shared animation and native gesture.
+private struct FruitfolioPressBounce<Content: View>: View {
     let reduceMotion: Bool
-
-    @ViewBuilder
-    let content: () -> Content
-
-    @GestureState
-    private var isPressed = false
-
-    var body: some View {
-        content()
-            .scaleEffect(
-                reduceMotion
-                    ? 1.0
-                    : (
-                        isPressed
-                            ? 0.88
-                            : 1.0
-                    )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        isPressed
-                            ? 5
-                            : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                        ? 0
-                        : (
-                            isPressed
-                                ? -1.2
-                                : 0
-                        )
-                )
-            )
-            .brightness(
-                isPressed
-                    ? -0.04
-                    : 0
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.08
-                    )
-                    : .spring(
-                        response:
-                            0.20,
-                        dampingFraction:
-                            0.38,
-                        blendDuration:
-                            0
-                    ),
-                value: isPressed
-            )
-            .simultaneousGesture(
-                DragGesture(
-                    minimumDistance: 0
-                )
-                .updating(
-                    $isPressed
-                ) {
-                    _,
-                    state,
-                    _ in
-
-                    state = true
-                }
-            )
-    }
+    @ViewBuilder let content: () -> Content
+    var body: some View { content() }
 }
 
 // MARK: - Prompt 09 Maroon Selection Surface

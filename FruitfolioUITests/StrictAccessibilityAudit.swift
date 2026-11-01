@@ -24,6 +24,12 @@ extension XCTestCase {
             attachment.name = "StrictAccessibilityIssue_\(issue.auditType.rawValue)"
             attachment.lifetime = .keepAlways
             self.add(attachment)
+            // Audit may scroll to another element. Capture that actual viewport,
+            // rather than infer its appearance from the pre-audit screenshot.
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "StrictAccessibilityIssueViewport_\(issue.auditType.rawValue)"
+            screenshot.lifetime = .keepAlways
+            self.add(screenshot)
             return false
         }
     }
