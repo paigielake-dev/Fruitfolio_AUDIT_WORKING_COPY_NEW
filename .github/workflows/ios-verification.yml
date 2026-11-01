@@ -282,6 +282,70 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
             Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
             Fruitfolio_Verification_Evidence/Visual/SharedControls
+      - name: Verify shared username through Account and Fruit Basket
+        id: username-journey
+        timeout-minutes: 8
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/UsernameSynchronizationUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
+      - name: Export actual shared-username evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+          fi
+      - name: Preserve focused shared-username evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Username_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+          retention-days: 90
+      - name: Verify optional Personal Health Context lifecycle
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/PersonalHealthContextUITests \
+            -only-testing:FruitfolioUITests/PersonalDataManagementUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
+      - name: Export actual PersonalHealthJourney attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+          fi
+      - name: Preserve focused PersonalHealthJourney evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Personal_Health_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+          retention-days: 90
       - name: Verify hormone record lifecycle before broad traversal
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         timeout-minutes: 6
@@ -405,38 +469,6 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-ask-journey-ui-test.log
             Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
             Fruitfolio_Verification_Evidence/Visual/AskJourney
-      - name: Verify shared username through Account and Fruit Basket
-        id: username-journey
-        timeout-minutes: 8
-        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        run: |
-          set -o pipefail
-          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
-            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
-            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
-            -only-testing:FruitfolioUITests/UsernameSynchronizationUITests \
-            -resultBundlePath Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
-            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
-      - name: Export actual shared-username evidence
-        if: always()
-        run: |
-          if [ -d Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/Visual/UsernameJourney
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/Visual/UsernameJourney
-          fi
-      - name: Preserve focused shared-username evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Fruitfolio_Username_Journey_Evidence
-          path: |
-            Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
-            Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult
-            Fruitfolio_Verification_Evidence/Visual/UsernameJourney
-          retention-days: 90
       - name: Verify Guide creation and cover controls
         timeout-minutes: 8
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
@@ -467,37 +499,6 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-guide-journey-ui-test.log
             Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult
             Fruitfolio_Verification_Evidence/Visual/GuideJourney
-          retention-days: 90
-      - name: Verify optional Personal Health Context lifecycle
-        timeout-minutes: 12
-        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        run: |
-          set -o pipefail
-          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
-            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
-            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
-            -only-testing:FruitfolioUITests/PersonalHealthContextUITests \
-            -resultBundlePath Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
-            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
-      - name: Export actual PersonalHealthJourney attachments
-        if: always()
-        run: |
-          if [ -f Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult/Info.plist ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
-          fi
-      - name: Preserve focused PersonalHealthJourney evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Fruitfolio_Personal_Health_Journey_Evidence
-          path: |
-            Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
-            Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult
-            Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
           retention-days: 90
       - name: Verify native screen accessibility audits
         timeout-minutes: 12
@@ -541,6 +542,7 @@ jobs:
             -skip-testing:FruitfolioUITests/SettingsVolumeUITests \
             -skip-testing:FruitfolioUITests/UsernameSynchronizationUITests \
             -skip-testing:FruitfolioUITests/PersonalHealthContextUITests \
+            -skip-testing:FruitfolioUITests/PersonalDataManagementUITests \
             -skip-testing:FruitfolioUITests/FruitfolioDeepCoverageTests/test03GuideBuilderCoverSelectorAccessible \
             -skip-testing:FruitfolioUITests/RuntimeAccessibilityAuditTests \
             -skip-testing:FruitfolioUITests/AskGroundedJourneyUITests \
