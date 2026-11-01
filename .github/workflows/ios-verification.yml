@@ -8,7 +8,7 @@ permissions:
 jobs:
   ios:
     runs-on: macos-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
         with:
@@ -256,7 +256,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
             Fruitfolio_Verification_Evidence/Visual/AskJourney
       - name: Run actual application UI tests
-        timeout-minutes: 30
+        timeout-minutes: 60
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
         run: |
           set -o pipefail

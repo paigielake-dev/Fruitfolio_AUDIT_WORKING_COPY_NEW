@@ -94,7 +94,15 @@ final class FruitfolioDeepCoverageTests: XCTestCase {
                 }
 
             default:
-                return app.windows.firstMatch.exists
+                let back = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
+                if back.exists {
+                    switch destination {
+                    case "Ask": return app.textFields["ask.questionInput"].exists
+                    case "FAQ": return app.buttons["faq.question.about-1"].exists
+                    case "Settings": return app.staticTexts["experience"].exists
+                    default: return true
+                    }
+                }
             }
 
             RunLoop.current.run(
@@ -111,21 +119,14 @@ private func open(_ app: XCUIApplication, _ name: String) {
             return
         }
         tap(app, item.1, "Hub_\(name)")
-        if name == "Cycle Tracker" || name == "Contact" {
-            let destinationOpened = waitForDestination(app, name)
-            if !destinationOpened {
-                print("FRUITFOLIO_NAVIGATION_FAILURE: " + name)
-                print("FRUITFOLIO_SCREEN_HIERARCHY_BEGIN")
-                print(app.debugDescription)
-                print("FRUITFOLIO_SCREEN_HIERARCHY_END")
-            }
-            XCTAssertTrue(
-                destinationOpened,
-                "\(name) did not open after Hub navigation"
-            )
-        } else {
-            XCTAssertTrue(app.windows.firstMatch.exists)
+        let destinationOpened = waitForDestination(app, name)
+        if !destinationOpened {
+            print("FRUITFOLIO_NAVIGATION_FAILURE: " + name)
+            print("FRUITFOLIO_SCREEN_HIERARCHY_BEGIN")
+            print(app.debugDescription)
+            print("FRUITFOLIO_SCREEN_HIERARCHY_END")
         }
+        XCTAssertTrue(destinationOpened, "\(name) did not open after Hub navigation")
         record(app, "Entered_\(name)")
     }
 
