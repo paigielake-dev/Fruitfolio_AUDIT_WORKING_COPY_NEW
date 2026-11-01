@@ -21,17 +21,21 @@ struct Prompt14CycleOnboardingView: View {
     @StateObject private var model: Prompt14CycleOnboardingViewModel
     @State private var trackerReady = false
     @State private var showPersonalHealth = false
+    @State private var showLeaveAfterSaveFailure = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var contextStore: Prompt27AContextStore
 
     private let onExit: () -> Void
+    private let editingStep: Prompt14OnboardingStep?
 
     init(
         store: Prompt14CycleOnboardingStore = .shared,
+        editingStep: Prompt14OnboardingStep? = nil,
         onExit: @escaping () -> Void
     ) {
         _model = StateObject(wrappedValue: Prompt14CycleOnboardingViewModel(store: store))
         self.onExit = onExit
+        self.editingStep = editingStep
     }
 
     var body: some View {
@@ -42,7 +46,7 @@ struct Prompt14CycleOnboardingView: View {
                 ProgressView()
                     .tint(Prompt14Palette.burgundy)
                     .accessibilityLabel("Loading cycle setup")
-            } else if trackerReady || model.draft.isCompleted {
+            } else if editingStep == nil && (trackerReady || model.draft.isCompleted) {
                 Prompt15CycleTrackerView(onBack: onExit)
                     .transition(.opacity)
             } else {
@@ -52,14 +56,25 @@ struct Prompt14CycleOnboardingView: View {
         .fullScreenCover(isPresented: $showPersonalHealth) {
             Prompt27APersonalHealthView(store: contextStore) { showPersonalHealth = false }
         }
+        .confirmationDialog("leave without saving these changes?", isPresented: $showLeaveAfterSaveFailure, titleVisibility: .visible) {
+            Button("leave without saving", role: .destructive) { onExit() }
+            Button("keep editing", role: .cancel) { }
+        } message: { Text("Fruitfolio couldn’t save the latest changes. previously saved information remains available.") }
         .accessibilityIdentifier("cycle-tracker-entry")
         .task {
             await model.load()
             model.mergeSharedContextIfNeeded(contextStore.context)
             contextStore.syncFromCycleOnboarding(model.draft)
+            if let editingStep { model.beginEditing(editingStep) }
         }
-        .onChange(of: model.draft) { _, newDraft in
-            contextStore.syncFromCycleOnboarding(newDraft)
+        .onChange(of: model.draft) { oldDraft, newDraft in
+            contextStore.syncFromCycleOnboarding(newDraft, previous: oldDraft)
+            if let editingStep, oldDraft.step == editingStep, newDraft.step != editingStep {
+                Task {
+                    await model.waitForPendingSaves()
+                    if model.errorMessage == nil { onExit() }
+                }
+            }
         }
         .animation(
             motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24),
@@ -73,8 +88,13 @@ struct Prompt14CycleOnboardingView: View {
 
             ScrollView {
                 VStack(spacing: 22) {
-                    Prompt14SeedProgress(step: model.draft.step)
-                        .padding(.top, 4)
+                    if editingStep == nil {
+                        Prompt14SeedProgress(step: model.draft.step).padding(.top, 4)
+                    } else {
+                        Text("edit your cycle setup").font(Prompt14Type.title)
+                        Text("changes are saved as you make them. your other answers and daily logs stay in place.")
+                            .font(Prompt14Type.helper).multilineTextAlignment(.center)
+                    }
 
                     stepContent
                         .id(model.draft.step)
@@ -111,7 +131,12 @@ struct Prompt14CycleOnboardingView: View {
     private var topBar: some View {
         HStack {
             BackControl {
-                if !model.goBack() { onExit() }
+                if editingStep != nil {
+                    Task {
+                        await model.waitForPendingSaves()
+                        if model.errorMessage == nil { onExit() } else { showLeaveAfterSaveFailure = true }
+                    }
+                } else if !model.goBack() { onExit() }
             }
             Spacer()
         }

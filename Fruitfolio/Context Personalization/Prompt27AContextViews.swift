@@ -7,6 +7,7 @@ struct Prompt27AMyContextView: View {
 
     @State private var showHormoneInformation = false
     @State private var showPersonalHealth = false
+    @State private var showCycleSetup = false
 
     let onBack: () -> Void
 
@@ -42,6 +43,8 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+                        FruitfolioControlPillButton(label: "edit cycle setup") { showCycleSetup = true }
+                            .accessibilityIdentifier("context.editCycleSetup")
                         FruitfolioControlPillButton(label: "personal health context") { showPersonalHealth = true }
                             .accessibilityIdentifier("context.openPersonalHealth")
 
@@ -158,6 +161,9 @@ struct Prompt27AMyContextView: View {
                 }
                 .scrollIndicators(.hidden)
             }
+        }
+        .fullScreenCover(isPresented: $showCycleSetup) {
+            Prompt14CycleSetupEditor(onBack: { showCycleSetup = false })
         }
         .fullScreenCover(isPresented: $showPersonalHealth) {
             Prompt27APersonalHealthView(store: viewModel.store) { showPersonalHealth = false }

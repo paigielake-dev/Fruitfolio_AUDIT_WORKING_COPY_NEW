@@ -13,6 +13,7 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
 
     private let store: Prompt14CycleOnboardingStore
     private let calendar: Calendar
+    private var pendingSave: Task<Void, Never>?
 
     init(
         store: Prompt14CycleOnboardingStore = .shared,
@@ -81,10 +82,7 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
         guard changed else { return }
         copy.markUpdated()
         draft = copy
-        Task {
-            do { try await store.replaceDraft(copy) }
-            catch { await MainActor.run { self.errorMessage = "your shared context couldn’t be synced right now ♡" } }
-        }
+        enqueueSave(copy, message: "your shared context couldn’t be synced right now ♡")
     }
 
     func getStarted() {
@@ -295,11 +293,14 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
                 draft.latestPeriodState = .skipped
                 draft.latestPeriodStart = nil
                 draft.currentPeriodState = .skipped
+                draft.currentPeriodAnswer = nil
                 draft.periodEndState = .skipped
+                draft.periodEnd = nil
             case .currentPeriod:
                 draft.currentPeriodState = .skipped
                 draft.currentPeriodAnswer = nil
                 draft.periodEndState = .skipped
+                draft.periodEnd = nil
             case .periodEnd:
                 draft.periodEndState = .skipped
                 draft.periodEnd = nil
@@ -362,7 +363,16 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
         return true
     }
 
+    /// Opens one existing question without restarting setup or deleting answers.
+    func beginEditing(_ step: Prompt14OnboardingStep) {
+        guard step != .intro && step != .complete else { return }
+        draft.step = step
+    }
+
+    func waitForPendingSaves() async { await pendingSave?.value }
+
     func finish() async -> Bool {
+        await waitForPendingSaves()
         do {
             draft = try await store.complete(calendar: calendar)
             return true
@@ -409,9 +419,15 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
         transform(&copy)
         copy.markUpdated()
         draft = copy
-        Task {
+        enqueueSave(copy, message: "your answer couldn’t be saved right now ♡")
+    }
+
+    private func enqueueSave(_ copy: Prompt14OnboardingDraft, message: String) {
+        let previous = pendingSave
+        pendingSave = Task {
+            await previous?.value
             do { try await store.replaceDraft(copy) }
-            catch { await MainActor.run { self.errorMessage = "your answer couldn’t be saved right now ♡" } }
+            catch { self.errorMessage = message }
         }
     }
 }

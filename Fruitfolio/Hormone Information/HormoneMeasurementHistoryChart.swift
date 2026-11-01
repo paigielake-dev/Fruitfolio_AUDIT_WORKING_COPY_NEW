@@ -57,6 +57,7 @@ struct HormoneMeasurementHistoryChart: View {
                         .chartYAxisLabel(group.id.unit)
                         .frame(height: typeSize.isAccessibilitySize ? 300 : 220)
                         .accessibilityLabel("recorded measurements; individual points only")
+                        .accessibilityIdentifier("hormone.history.chart." + group.records[0].id.uuidString)
                         // Always retain a readable exact-value alternative;
                         // chart scaling and Double precision never replace it.
                         ForEach(group.records) { record in

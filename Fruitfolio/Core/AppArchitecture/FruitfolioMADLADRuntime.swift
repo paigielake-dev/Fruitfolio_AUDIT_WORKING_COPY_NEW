@@ -24,6 +24,7 @@ private nonisolated final class FruitfolioMADLADHandle: @unchecked Sendable {
 actor FruitfolioMADLADLocalRuntime {
     private var handle: FruitfolioMADLADHandle?
     private var verifiedDirectory: URL?
+    private(set) var lastInferenceWasOnMainThread: Bool?
 
     func translateRawSentence(_ sentence: String, target: String, directory: URL) throws -> String {
         guard target.range(of: "^[a-z]{2,3}$", options: .regularExpression) != nil else {
@@ -36,6 +37,7 @@ actor FruitfolioMADLADLocalRuntime {
         }
         guard let handle else { throw FruitfolioMADLADError.initializationFailed }
         let prompt = "<2\(target)> " + sentence
+        lastInferenceWasOnMainThread = Thread.isMainThread
         guard let result = prompt.withCString({ fruitfolio_madlad_translate(handle.pointer, $0) }) else {
             throw FruitfolioMADLADError.inferenceFailed
         }

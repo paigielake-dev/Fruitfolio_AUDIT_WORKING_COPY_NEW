@@ -17139,8 +17139,8 @@
       "originalReference": "Part 5 / 5A. Settings and audio / 225",
       "sourceLine": 535,
       "prompt1BSection": {
-        "candidateSection": "6A/6B — Settings and actual audio preferences",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6B — Actual audio preference behavior",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/Assets/AudioManager.swift",
@@ -17153,35 +17153,38 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
-        "Persistent master mute and existing category controls affect actual playback; no changes to other category preferences."
+        "Persistent master mute and existing category controls affect actual playback; no changes to other category preferences.",
+        "Actual simulator toggles each category, preserves the other preferences, restarts, and restores; native AVAudioPlayer responds to the music preference."
       ],
       "testsPerformed": [
         "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-        "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+        "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart",
+        "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+        "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory"
       ],
       "testResults": [
         {
-          "result": "PARTIAL",
-          "scope": "Exact criterion only; no broader feature acceptance inferred",
+          "result": "PASS",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
           "tests": [
-            "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-            "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+            "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+            "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory"
           ],
           "verifiedSourceCommits": [
-            "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
-            "2d06a17810125d9c33a719bc60663256372432f7"
-          ]
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
         }
       ],
       "supportingEvidence": [
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ],
-      "remainingIssues": [
-        "Actual master-control simulator interaction and current visible layout are still running in Run42; audible quality remains separately NOT VERIFIED."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17197,24 +17200,26 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Provide a functioning background-music toggle.",
       "sourceSection": {
-        "candidateSection": "6A/6B — Settings and actual audio preferences",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6B — Actual audio preference behavior",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/Assets/AudioManager.swift",
         "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
-      "missingImplementation": [
-        "Actual master-control simulator interaction and current visible layout are still running in Run42; audible quality remains separately NOT VERIFIED."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -17228,17 +17233,19 @@
         {
           "criterion": "Provide a functioning background-music toggle.",
           "testIDs": [
-            "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-            "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+            "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+            "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-226",
@@ -17249,8 +17256,8 @@
       "originalReference": "Part 5 / 5A. Settings and audio / 226",
       "sourceLine": 537,
       "prompt1BSection": {
-        "candidateSection": "6B — Actual category and master audio behavior",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6B — Muted, disabled and zero-volume playback",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/Assets/AudioManager.swift"
@@ -17261,39 +17268,43 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
         "Disabled continuous players actually pause; master mute pauses music/rain and stops/removes effects/typing players, blocks new requests, and does not replay old cues.",
-        "Completed fades now pause their actual loop decoder; pending completion cancels on new play/fade-in to protect rapid navigation."
+        "Completed fades now pause their actual loop decoder; pending completion cancels on new play/fade-in to protect rapid navigation.",
+        "Actual native players stop/pause for master mute, disabled categories, zero volume, and completed fades; obsolete pauses do not stop a new request."
       ],
       "testsPerformed": [
         "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory",
         "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-        "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+        "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart",
+        "AudioLifecycleRuntimeTests/testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops",
+        "AudioLifecycleRuntimeTests/testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately",
+        "AudioLifecycleRuntimeTests/testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest"
       ],
       "testResults": [
         {
           "result": "PASS",
-          "scope": "Exact criterion only; no broader feature acceptance inferred",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
           "tests": [
-            "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory",
             "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-            "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+            "AudioLifecycleRuntimeTests/testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops",
+            "AudioLifecycleRuntimeTests/testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately",
+            "AudioLifecycleRuntimeTests/testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest"
           ],
           "verifiedSourceCommits": [
-            "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
-            "2d06a17810125d9c33a719bc60663256372432f7"
-          ]
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/actual-runtime-attachments-index.json"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/actual-runtime-attachments-index.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log"
       ],
-      "remainingIssues": [
-        "Master/category mute actual player checks PASS in Run42. Newly discovered completed-fade silent-loop path has been repaired; its actual Apple regression tests are pending."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17309,22 +17320,24 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Prevent muted or disabled audio from continuing to play.",
       "sourceSection": {
-        "candidateSection": "6B — Actual category and master audio behavior",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6B — Muted, disabled and zero-volume playback",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/Assets/AudioManager.swift"
       ],
-      "missingImplementation": [
-        "Master/category mute actual player checks PASS in Run42. Newly discovered completed-fade silent-loop path has been repaired; its actual Apple regression tests are pending."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -17338,19 +17351,21 @@
         {
           "criterion": "Prevent muted or disabled audio from continuing to play.",
           "testIDs": [
-            "AudioLifecycleRuntimeTests/testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory",
             "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
-            "AudioLifecycleRuntimeTests/testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart"
+            "AudioLifecycleRuntimeTests/testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops",
+            "AudioLifecycleRuntimeTests/testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately",
+            "AudioLifecycleRuntimeTests/testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/actual-runtime-attachments-index.json"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run42/actual-runtime-attachments-index.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-227",
@@ -17613,8 +17628,8 @@
       "originalReference": "Part 5 / 5B. Account / 230",
       "sourceLine": 547,
       "prompt1BSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -17628,34 +17643,35 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
-        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name."
+        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
       ],
       "testsPerformed": [
-        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
       ],
       "testResults": [
         {
-          "result": "PARTIAL",
-          "scope": "Exact criterion only; no broader feature acceptance inferred",
+          "result": "PASS",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
           "tests": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
           "verifiedSourceCommits": [
-            "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
-            "2d06a17810125d9c33a719bc60663256372432f7"
-          ]
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17671,25 +17687,27 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Use the same username for Account and Fruit Basket.",
       "sourceSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -17703,17 +17721,18 @@
         {
           "criterion": "Use the same username for Account and Fruit Basket.",
           "testIDs": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-231",
@@ -17724,8 +17743,8 @@
       "originalReference": "Part 5 / 5B. Account / 231",
       "sourceLine": 549,
       "prompt1BSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -17739,34 +17758,35 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
-        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name."
+        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
       ],
       "testsPerformed": [
-        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
       ],
       "testResults": [
         {
-          "result": "PARTIAL",
-          "scope": "Exact criterion only; no broader feature acceptance inferred",
+          "result": "PASS",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
           "tests": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
           "verifiedSourceCommits": [
-            "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
-            "2d06a17810125d9c33a719bc60663256372432f7"
-          ]
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17782,25 +17802,27 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Synchronize username changes automatically.",
       "sourceSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -17814,17 +17836,18 @@
         {
           "criterion": "Synchronize username changes automatically.",
           "testIDs": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-232",
@@ -19541,10 +19564,13 @@
       "originalReference": "Part 5 / 5C. Hormone Information — new section / 20",
       "sourceLine": 597,
       "prompt1BSection": {
-        "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4.9.6 / 4.9.8 — Actual measured values remain distinct",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementHistoryChart.swift",
+        "FruitfolioTests/HormoneMeasurementHistoryTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Settings",
         "Fruitfolio/Account",
@@ -19552,13 +19578,31 @@
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
       "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "inspectionState": "IMPLEMENTED BUT NOT VERIFIED",
+      "changesMade": [
+        "New point-only history charts use actual records only, separate exact units and samples, retain original text and introduce no connected or fitted curves."
+      ],
+      "testsPerformed": [
+        "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+        "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+            "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "New chart source awaits actual Run46 compilation, unit execution, simulator visual/accessibility review."
       ],
       "dependsOnParts": [
         1,
@@ -19571,18 +19615,27 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Restrict measurement graphs to actual recorded values.",
       "sourceSection": {
-        "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4.9.6 / 4.9.8 — Actual measured values remain distinct",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
       "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "existingSourceFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementHistoryChart.swift",
+        "FruitfolioTests/HormoneMeasurementHistoryTests.swift"
+      ],
+      "missingImplementation": [
+        "New chart source awaits actual Run46 compilation, unit execution, simulator visual/accessibility review."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -19595,11 +19648,16 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Restrict measurement graphs to actual recorded values.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+            "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
+      "evidenceReferences": [
+        "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md"
+      ],
       "finalDisposition": "NOT VERIFIED",
       "afterStatus": "NOT VERIFIED"
     },
@@ -19612,10 +19670,13 @@
       "originalReference": "Part 5 / 5C. Hormone Information — new section / 21",
       "sourceLine": 599,
       "prompt1BSection": {
-        "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4.9.6 / 4.9.8 — Actual measured values remain distinct",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementHistoryChart.swift",
+        "FruitfolioTests/HormoneMeasurementHistoryTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Settings",
         "Fruitfolio/Account",
@@ -19623,13 +19684,31 @@
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
       "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "inspectionState": "IMPLEMENTED BUT NOT VERIFIED",
+      "changesMade": [
+        "New point-only history charts use actual records only, separate exact units and samples, retain original text and introduce no connected or fitted curves."
+      ],
+      "testsPerformed": [
+        "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+        "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+      ],
+      "testResults": [
+        {
+          "result": "NOT VERIFIED",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+            "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "New chart source awaits actual Run46 compilation, unit execution, simulator visual/accessibility review."
       ],
       "dependsOnParts": [
         1,
@@ -19642,18 +19721,27 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Never invent or interpolate missing laboratory results.",
       "sourceSection": {
-        "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4.9.6 / 4.9.8 — Actual measured values remain distinct",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
       "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "existingSourceFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementHistoryChart.swift",
+        "FruitfolioTests/HormoneMeasurementHistoryTests.swift"
+      ],
+      "missingImplementation": [
+        "New chart source awaits actual Run46 compilation, unit execution, simulator visual/accessibility review."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -19666,11 +19754,16 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Never invent or interpolate missing laboratory results.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "HormoneMeasurementHistoryTests/testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
+            "HormoneMeasurementHistoryTests/testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
+      "evidenceReferences": [
+        "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md"
+      ],
       "finalDisposition": "NOT VERIFIED",
       "afterStatus": "NOT VERIFIED"
     },
@@ -21634,22 +21727,45 @@
       "originalReference": "Part 6 / 6A. My Context personalization / 281",
       "sourceLine": 663,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Existing shared context extended with illustrated optional reported-history fields, explicit provenance, migration, removal without retained text, and onboarding/reopen access."
+      ],
+      "testsPerformed": [
+        "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+        "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
       ],
       "dependsOnParts": [
         1,
@@ -21663,18 +21779,29 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Connect optional My Context information to the relevant Cycle Tracker interpretation systems.",
       "sourceSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
+      "missingImplementation": [
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -21688,13 +21815,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Connect optional My Context information to the relevant Cycle Tracker interpretation systems.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-282",
@@ -21705,22 +21837,45 @@
       "originalReference": "Part 6 / 6A. My Context personalization / 282",
       "sourceLine": 665,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Existing shared context extended with illustrated optional reported-history fields, explicit provenance, migration, removal without retained text, and onboarding/reopen access."
+      ],
+      "testsPerformed": [
+        "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+        "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
       ],
       "dependsOnParts": [
         1,
@@ -21734,18 +21889,29 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make context adaptation evidence-informed.",
       "sourceSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
+      "missingImplementation": [
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -21759,13 +21925,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make context adaptation evidence-informed.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-283",
@@ -21776,22 +21947,45 @@
       "originalReference": "Part 6 / 6A. My Context personalization / 283",
       "sourceLine": 667,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Existing shared context extended with illustrated optional reported-history fields, explicit provenance, migration, removal without retained text, and onboarding/reopen access."
+      ],
+      "testsPerformed": [
+        "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+        "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
       ],
       "dependsOnParts": [
         1,
@@ -21805,18 +21999,29 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Apply relevant context to predictions and educational explanations only where justified.",
       "sourceSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
+      "missingImplementation": [
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -21830,13 +22035,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Apply relevant context to predictions and educational explanations only where justified.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-284",
@@ -22060,22 +22270,45 @@
       "originalReference": "Part 6 / 6A. My Context personalization / 287",
       "sourceLine": 675,
       "prompt1BSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Existing shared context extended with illustrated optional reported-history fields, explicit provenance, migration, removal without retained text, and onboarding/reopen access."
+      ],
+      "testsPerformed": [
+        "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+        "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
       ],
       "dependsOnParts": [
         1,
@@ -22089,18 +22322,29 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Ensure context changes do not corrupt previous logs.",
       "sourceSection": {
-        "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "Binding Personal Health Context and evidence-informed My Context additions",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthFields.swift",
+        "Fruitfolio/Context Personalization/Prompt27APersonalHealthView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift"
+      ],
+      "missingImplementation": [
+        "Actual Run46 compilation/unit/UI tests pending. Relevance-limited approved-evidence retrieval and Ask personalization for these new fields remain unfinished; free text does not change prediction math."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -22114,13 +22358,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Ensure context changes do not corrupt previous logs.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "PersonalHealthContextTests/testExistingContextMigratesWithoutInventingAnyMedicalFields",
+            "PersonalHealthContextTests/testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-288",
@@ -32090,24 +32339,44 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 419",
       "sourceLine": 1015,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
-      "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
+      ],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependsOnParts": [
         1,
@@ -32124,19 +32393,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Implement working local inference.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "BLOCKED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "missingImplementation": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependencies": {
         "parts": [
@@ -32156,13 +32432,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Implement working local inference.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-420",
@@ -32344,7 +32625,10 @@
       },
       "relevantSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
-        "Tools/repack_madlad_for_llama.py"
+        "Tools/repack_madlad_for_llama.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift",
+        "FruitfolioTests/TranslationPreservationTests.swift",
+        "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests.swift"
       ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
@@ -32352,21 +32636,33 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "FAIL",
-      "inspectionState": "INCORRECTLY IMPLEMENTED",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator."
+      ],
       "testsPerformed": [
-        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture"
+        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture",
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt"
       ],
       "testResults": [
-        "FAIL: safety statement omitted, citation identifiers changed, unsupported TSH result introduced."
+        {
+          "result": "PARTIAL",
+          "scope": "Actual original failed combined fixture repaired; broader medical translation acceptance remains incomplete",
+          "verifiedSourceCommits": [
+            "0435fa3679e43057f163929189ec845dffdbaf40"
+          ]
+        }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
       "remainingIssues": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependsOnParts": [
         1,
@@ -32383,6 +32679,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Run46 actual bounded combined-fixture repair review",
+          "status": "FAIL"
         }
       ],
       "requirementDescription": "Preserve citations, scientific meaning, numerical values, and safety warnings.",
@@ -32392,13 +32692,13 @@
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
         "Tools/repack_madlad_for_llama.py"
       ],
       "missingImplementation": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependencies": {
         "parts": [
@@ -32422,10 +32722,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
-      "finalDisposition": "FAIL",
-      "afterStatus": "FAIL"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-423",
@@ -32520,7 +32822,10 @@
       },
       "relevantSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
-        "Tools/repack_madlad_for_llama.py"
+        "Tools/repack_madlad_for_llama.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift",
+        "FruitfolioTests/TranslationPreservationTests.swift",
+        "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests.swift"
       ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
@@ -32528,21 +32833,33 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "FAIL",
-      "inspectionState": "INCORRECTLY IMPLEMENTED",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator."
+      ],
       "testsPerformed": [
-        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture"
+        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture",
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt"
       ],
       "testResults": [
-        "FAIL: safety statement omitted, citation identifiers changed, unsupported TSH result introduced."
+        {
+          "result": "PARTIAL",
+          "scope": "Actual original failed combined fixture repaired; broader medical translation acceptance remains incomplete",
+          "verifiedSourceCommits": [
+            "0435fa3679e43057f163929189ec845dffdbaf40"
+          ]
+        }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
       "remainingIssues": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependsOnParts": [
         1,
@@ -32559,6 +32876,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Run46 actual bounded combined-fixture repair review",
+          "status": "FAIL"
         }
       ],
       "requirementDescription": "Prevent translation from introducing new medical claims.",
@@ -32568,13 +32889,13 @@
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
         "Tools/repack_madlad_for_llama.py"
       ],
       "missingImplementation": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependencies": {
         "parts": [
@@ -32598,10 +32919,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
-      "finalDisposition": "FAIL",
-      "afterStatus": "FAIL"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-425",
@@ -32770,24 +33093,44 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 427",
       "sourceLine": 1031,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
-      "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
+      ],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependsOnParts": [
         1,
@@ -32804,19 +33147,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Keep inference off the main UI thread.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "BLOCKED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "missingImplementation": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependencies": {
         "parts": [
@@ -32836,13 +33186,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Keep inference off the main UI thread.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-428",
@@ -33015,24 +33370,44 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 430",
       "sourceLine": 1037,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
-      "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
+      ],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependsOnParts": [
         1,
@@ -33049,19 +33424,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Ensure translation operates without internet access, cloud APIs, remote inference, or Ollama.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "BLOCKED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "missingImplementation": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependencies": {
         "parts": [
@@ -33081,13 +33463,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Ensure translation operates without internet access, cloud APIs, remote inference, or Ollama.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-431",
@@ -33581,7 +33968,10 @@
       },
       "relevantSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
-        "Tools/repack_madlad_for_llama.py"
+        "Tools/repack_madlad_for_llama.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift",
+        "FruitfolioTests/TranslationPreservationTests.swift",
+        "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests.swift"
       ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
@@ -33589,21 +33979,33 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "FAIL",
-      "inspectionState": "INCORRECTLY IMPLEMENTED",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator."
+      ],
       "testsPerformed": [
-        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture"
+        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture",
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt"
       ],
       "testResults": [
-        "FAIL: safety statement omitted, citation identifiers changed, unsupported TSH result introduced."
+        {
+          "result": "PARTIAL",
+          "scope": "Actual original failed combined fixture repaired; broader medical translation acceptance remains incomplete",
+          "verifiedSourceCommits": [
+            "0435fa3679e43057f163929189ec845dffdbaf40"
+          ]
+        }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
       "remainingIssues": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependsOnParts": [
         1,
@@ -33620,6 +34022,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Run46 actual bounded combined-fixture repair review",
+          "status": "FAIL"
         }
       ],
       "requirementDescription": "Verify clinical meaning and safety-language preservation.",
@@ -33629,13 +34035,13 @@
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
         "Tools/repack_madlad_for_llama.py"
       ],
       "missingImplementation": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependencies": {
         "parts": [
@@ -33659,10 +34065,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
-      "finalDisposition": "FAIL",
-      "afterStatus": "FAIL"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-438",
@@ -33678,7 +34086,10 @@
       },
       "relevantSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
-        "Tools/repack_madlad_for_llama.py"
+        "Tools/repack_madlad_for_llama.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift",
+        "FruitfolioTests/TranslationPreservationTests.swift",
+        "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests.swift"
       ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
@@ -33686,21 +34097,33 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "FAIL",
-      "inspectionState": "INCORRECTLY IMPLEMENTED",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator."
+      ],
       "testsPerformed": [
-        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture"
+        "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture",
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt"
       ],
       "testResults": [
-        "FAIL: safety statement omitted, citation identifiers changed, unsupported TSH result introduced."
+        {
+          "result": "PARTIAL",
+          "scope": "Actual original failed combined fixture repaired; broader medical translation acceptance remains incomplete",
+          "verifiedSourceCommits": [
+            "0435fa3679e43057f163929189ec845dffdbaf40"
+          ]
+        }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
       "remainingIssues": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependsOnParts": [
         1,
@@ -33717,6 +34140,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Run46 actual bounded combined-fixture repair review",
+          "status": "FAIL"
         }
       ],
       "requirementDescription": "Verify citations remain unchanged.",
@@ -33726,13 +34153,13 @@
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
         "Tools/repack_madlad_for_llama.py"
       ],
       "missingImplementation": [
-        "Not safe to integrate; investigate medical semantic fidelity and runtime compatibility after core stabilization."
+        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
       ],
       "dependencies": {
         "parts": [
@@ -33756,10 +34183,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
-        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md"
+        "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
       ],
-      "finalDisposition": "FAIL",
-      "afterStatus": "FAIL"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-439",
@@ -33770,24 +34199,44 @@
       "originalReference": "Part 9 / 9E. Saved content and verification / 439",
       "sourceLine": 1057,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
-      "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
+      ],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependsOnParts": [
         1,
@@ -33804,19 +34253,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Verify offline inference.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "MADLAD local encoder-decoder inference and verification",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "BLOCKED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "missingImplementation": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
       ],
       "dependencies": {
         "parts": [
@@ -33836,13 +34292,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Verify offline inference.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-440",
@@ -35213,11 +35674,12 @@
       "originalReference": "Part 10 / Testing, integration, and final verification / 455",
       "sourceLine": 1099,
       "prompt1BSection": {
-        "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4 — My Encyclopedias / manual user pages",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
-        ".github/workflows/ios-verification.yml"
+        ".github/workflows/ios-verification.yml",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
       ],
       "candidateSourceScopes": [
         "FruitfolioTests",
@@ -35225,18 +35687,32 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Actual book creation, manual page writing, real Photos import, reopen, edit/discard, save/restart and confirmed page deletion PASS."
+      ],
+      "testsPerformed": [
+        "UserAuthoredPageUITests/testCreateReopenEditAndDiscardUserPageThroughActualLibrary"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "UserAuthoredPageUITests/testCreateReopenEditAndDiscardUserPageThroughActualLibrary"
+          ],
+          "verifiedSourceCommits": [],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UserPages/Build/xcode-user-pages-ui-test.log"
       ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
-        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
+        "Full encyclopedia rename/recolour/delete, all alternate file/import and error states, and the new continuous book behavior still need dedicated verification."
       ],
       "dependsOnParts": [
         1,
@@ -35254,20 +35730,27 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Test encyclopedia creation, editing, image import, and deletion.",
       "sourceSection": {
-        "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "4 — My Encyclopedias / manual user pages",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
-        ".github/workflows/ios-verification.yml"
+        ".github/workflows/ios-verification.yml",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
       ],
-      "missingImplementation": null,
+      "missingImplementation": [
+        "Full encyclopedia rename/recolour/delete, all alternate file/import and error states, and the new continuous book behavior still need dedicated verification."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -35285,16 +35768,19 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Test encyclopedia creation, editing, image import, and deletion.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "UserAuthoredPageUITests/testCreateReopenEditAndDiscardUserPageThroughActualLibrary"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UserPages/Build/xcode-user-pages-ui-test.log"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-456",
@@ -35983,8 +36469,8 @@
       "originalReference": "Part 10 / Testing, integration, and final verification / 463",
       "sourceLine": 1115,
       "prompt1BSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
         ".github/workflows/ios-verification.yml",
@@ -35999,36 +36485,37 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
-        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name."
+        "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
       ],
       "testsPerformed": [
-        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+        "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
       ],
       "testResults": [
         {
-          "result": "PARTIAL",
-          "scope": "Exact criterion only; no broader feature acceptance inferred",
+          "result": "PASS",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
           "tests": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
           "verifiedSourceCommits": [
-            "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
-            "2d06a17810125d9c33a719bc60663256372432f7"
-          ]
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -36049,16 +36536,20 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Test username synchronization.",
       "sourceSection": {
-        "candidateSection": "6F and 19X — Shared Account/Fruit Basket username",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "currentImplementationState": "IMPLEMENTED",
       "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -36066,9 +36557,7 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "FruitfolioUITests/UsernameSynchronizationUITests.swift"
       ],
-      "missingImplementation": [
-        "New actual cross-feature ordinary-typing/restart journey has not yet executed. Global authenticated username reservation remains unavailable."
-      ],
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -36087,19 +36576,20 @@
         {
           "criterion": "Test username synchronization.",
           "testIDs": [
-            "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority"
+            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
-        "Delivery/USERNAME_EDITING_REPAIR.md"
+        "Delivery/USERNAME_EDITING_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-464",
@@ -36202,11 +36692,13 @@
       "originalReference": "Part 10 / Testing, integration, and final verification / 465",
       "sourceLine": 1119,
       "prompt1BSection": {
-        "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "6B — Audio preferences and global mute tests",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
       "relevantSourceFiles": [
-        ".github/workflows/ios-verification.yml"
+        ".github/workflows/ios-verification.yml",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioUITests/SettingsVolumeUITests.swift"
       ],
       "candidateSourceScopes": [
         "FruitfolioTests",
@@ -36214,19 +36706,36 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "implementationStatus": "PASS",
+      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
+      "changesMade": [
+        "Actual preference interactions, persistence and player API behavior tested. Audible quality is not asserted."
+      ],
+      "testsPerformed": [
+        "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+        "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops"
+      ],
+      "testResults": [
+        {
+          "result": "PASS",
+          "scope": "Exact criterion only; earlier source runtime evidence does not verify pending new source",
+          "tests": [
+            "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+            "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops"
+          ],
+          "verifiedSourceCommits": [
+            "884184040db65aef0f4fd28a5963509fd9501748"
+          ],
+          "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        }
+      ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
-        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -36243,20 +36752,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Test audio preferences and global mute.",
       "sourceSection": {
-        "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "candidateSection": "6B — Audio preferences and global mute tests",
+        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "ASSESSED",
+      "verificationState": "PASS",
       "existingSourceFiles": [
-        ".github/workflows/ios-verification.yml"
+        ".github/workflows/ios-verification.yml",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioUITests/SettingsVolumeUITests.swift"
       ],
-      "missingImplementation": null,
+      "missingImplementation": [],
       "dependencies": {
         "parts": [
           1,
@@ -36274,16 +36789,21 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Test audio preferences and global mute.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+            "AudioLifecycleRuntimeTests/testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops"
+          ],
+          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-466",
@@ -37495,13 +38015,17 @@
   ],
   "implementationStatePolicy": "IMPLEMENTED / PARTIALLY IMPLEMENTED / NOT IMPLEMENTED / BLOCKED. Null explicitly means not assessed; absence of verification is not evidence that a feature is missing.",
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
-  "implementationPassVerificationNote": "Run42 exact source 6b6a24d: 481 XCTest executed, 480 PASS, one physical-device SKIP, zero FAIL; 25 Swift Testing PASS. Unsigned generic iPhone Release build PASS. Focused simulator results remain separate; no pending result is PASS. Later working-tree repairs are NOT VERIFIED.",
+  "implementationPassVerificationNote": "Actual Run45 source 8841840: 490 XCTest executed = 489 PASS + 1 physical-device SKIP, zero FAIL; 25 Swift Testing PASS. Simulator and unsigned generic iPhone Release builds PASS. Focused pages/Ask/volumes/username/Guide journeys PASS; SharedControls FAIL; remaining stages separate. Source 0435fa3 new changes are pending actual Run46.",
   "summary": {
-    "PARTIAL": 93,
-    "PASS": 33,
-    "NOT VERIFIED": 333,
-    "BLOCKED": 10,
-    "FAIL": 9
+    "PARTIAL": 101,
+    "PASS": 39,
+    "NOT VERIFIED": 327,
+    "BLOCKED": 6,
+    "FAIL": 5
   },
-  "totalRequirements": 478
+  "totalRequirements": 478,
+  "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
+  "latestVerifiedUnitCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
+  "currentSourceVerification": "Run46 actual 502 XCTest: 501 PASS, 1 physical-device SKIP, zero FAIL; 25 Swift Testing PASS. Later follow-up is pending its own run.",
+  "workingTreeFollowup": "Cycle setup section editing/ordered persistence/shared-context removal, actual inference-thread observation, Ask/Guide/footer text fitting, real native pill text layout and chart-state capture — NOT VERIFIED."
 }

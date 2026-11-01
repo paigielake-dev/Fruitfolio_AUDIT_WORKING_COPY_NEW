@@ -35,8 +35,10 @@ final class AAAA_MADLADRuntimeIntegrationTests: XCTestCase {
             XCTAssertTrue(french.textForVerification.contains("2.5 ng/mL"))
             let repaired = XCTAttachment(string: "Actual official local model; original failed combined medical fixture through sentence/citation boundary preservation: \(candidate.textForVerification)\nFrench exact original numeric spelling: \(french.textForVerification)\nClinical/general-language approval remains NOT VERIFIED.")
             repaired.name = "MADLAD_ActualMedicalFixtureBoundaryRepair"; repaired.lifetime = .keepAlways; add(repaired)
+            let executedOnMainThread = await runtime.lastInferenceWasOnMainThread
+            XCTAssertEqual(executedOnMainThread, false, "Actual C ABI encoder-decoder execution must leave the main UI thread")
             var usage = rusage(); getrusage(0, &usage)
-            let report = "Actual Apple runtime / local official Q4: Spanish warning=\(warning); measurement=\(measurement); French uncertainty=\(uncertainty). Wall seconds=\(Date().timeIntervalSince(start)); process peak RSS bytes on Darwin=\(usage.ru_maxrss); reported host physical bytes=\(ProcessInfo.processInfo.physicalMemory). No inference network API. This is a bounded runtime test, not full language/medical/UI or physical-iPhone acceptance."
+            let report = "Actual Apple runtime / local official Q4: Spanish warning=\(warning); measurement=\(measurement); French uncertainty=\(uncertainty). Wall seconds=\(Date().timeIntervalSince(start)); process peak RSS bytes on Darwin=\(usage.ru_maxrss); reported host physical bytes=\(ProcessInfo.processInfo.physicalMemory). Actual inference used main thread=\(String(describing: executedOnMainThread)). No inference network API. This is a bounded runtime test, not full language/medical/UI or physical-iPhone acceptance."
             let evidence = XCTAttachment(string: report); evidence.name = "MADLAD_ActualAppleRuntime"; evidence.lifetime = .keepAlways; add(evidence)
             await runtime.unload()
         } catch {

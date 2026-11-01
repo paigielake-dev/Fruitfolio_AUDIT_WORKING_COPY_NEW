@@ -1,6 +1,6 @@
 {
-  "scope": "Reference integrity only; existence never establishes acceptance. Historical absent references are separate.",
-  "sourceCommit": "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
+  "scope": "Reference integrity only; file presence does not establish acceptance.",
+  "sourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40",
   "requirements": [
     {
       "requirementID": "FF1B-001",
@@ -1463,17 +1463,25 @@
     },
     {
       "requirementID": "FF1B-225",
-      "status": "PARTIAL",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
           "exists": true
         }
       ]
     },
     {
       "requirementID": "FF1B-226",
-      "status": "PARTIAL",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
@@ -1481,6 +1489,10 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run42/actual-runtime-attachments-index.json",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
           "exists": true
         }
       ]
@@ -1511,7 +1523,7 @@
     },
     {
       "requirementID": "FF1B-230",
-      "status": "PARTIAL",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
@@ -1519,13 +1531,17 @@
         },
         {
           "path": "Delivery/USERNAME_EDITING_REPAIR.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
           "exists": true
         }
       ]
     },
     {
       "requirementID": "FF1B-231",
-      "status": "PARTIAL",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
@@ -1533,6 +1549,10 @@
         },
         {
           "path": "Delivery/USERNAME_EDITING_REPAIR.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
           "exists": true
         }
       ]
@@ -1718,12 +1738,22 @@
     {
       "requirementID": "FF1B-254",
       "status": "NOT VERIFIED",
-      "evidence": []
+      "evidence": [
+        {
+          "path": "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-255",
       "status": "NOT VERIFIED",
-      "evidence": []
+      "evidence": [
+        {
+          "path": "Delivery/HORMONE_MEASUREMENT_DISPLAY_DECISION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-256",
@@ -1926,18 +1956,33 @@
     },
     {
       "requirementID": "FF1B-281",
-      "status": "NOT VERIFIED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-282",
-      "status": "NOT VERIFIED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-283",
-      "status": "NOT VERIFIED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-284",
@@ -1956,8 +2001,13 @@
     },
     {
       "requirementID": "FF1B-287",
-      "status": "NOT VERIFIED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Delivery/PERSONAL_HEALTH_CONTEXT_IMPLEMENTATION.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-288",
@@ -2686,8 +2736,17 @@
     },
     {
       "requirementID": "FF1B-419",
-      "status": "BLOCKED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-420",
@@ -2701,7 +2760,7 @@
     },
     {
       "requirementID": "FF1B-422",
-      "status": "FAIL",
+      "status": "PARTIAL",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
@@ -2709,6 +2768,14 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
           "exists": true
         }
       ]
@@ -2720,7 +2787,7 @@
     },
     {
       "requirementID": "FF1B-424",
-      "status": "FAIL",
+      "status": "PARTIAL",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
@@ -2728,6 +2795,14 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
           "exists": true
         }
       ]
@@ -2744,8 +2819,17 @@
     },
     {
       "requirementID": "FF1B-427",
-      "status": "BLOCKED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-428",
@@ -2759,8 +2843,17 @@
     },
     {
       "requirementID": "FF1B-430",
-      "status": "BLOCKED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-431",
@@ -2794,7 +2887,7 @@
     },
     {
       "requirementID": "FF1B-437",
-      "status": "FAIL",
+      "status": "PARTIAL",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
@@ -2802,13 +2895,21 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
           "exists": true
         }
       ]
     },
     {
       "requirementID": "FF1B-438",
-      "status": "FAIL",
+      "status": "PARTIAL",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
@@ -2817,13 +2918,30 @@
         {
           "path": "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
           "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+          "exists": true
         }
       ]
     },
     {
       "requirementID": "FF1B-439",
-      "status": "BLOCKED",
-      "evidence": []
+      "status": "PARTIAL",
+      "evidence": [
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+          "exists": true
+        }
+      ]
     },
     {
       "requirementID": "FF1B-440",
@@ -3023,7 +3141,7 @@
     },
     {
       "requirementID": "FF1B-455",
-      "status": "NOT VERIFIED",
+      "status": "PARTIAL",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
@@ -3031,6 +3149,10 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UserPages/Build/xcode-user-pages-ui-test.log",
           "exists": true
         }
       ]
@@ -3143,7 +3265,7 @@
     },
     {
       "requirementID": "FF1B-463",
-      "status": "PARTIAL",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
@@ -3159,6 +3281,10 @@
         },
         {
           "path": "Delivery/USERNAME_EDITING_REPAIR.md",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
           "exists": true
         }
       ]
@@ -3179,7 +3305,7 @@
     },
     {
       "requirementID": "FF1B-465",
-      "status": "NOT VERIFIED",
+      "status": "PASS",
       "evidence": [
         {
           "path": "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
@@ -3187,6 +3313,14 @@
         },
         {
           "path": "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
+          "exists": true
+        },
+        {
+          "path": "Fruitfolio_Verification_Evidence/AppleRuns/Run45/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
           "exists": true
         }
       ]
@@ -3369,5 +3503,6 @@
         }
       ]
     }
-  ]
+  ],
+  "missingActiveEvidence": []
 }

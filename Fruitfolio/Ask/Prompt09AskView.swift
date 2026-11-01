@@ -408,6 +408,8 @@ struct Prompt09AskView: View {
             .multilineTextAlignment(
                 .center
             )
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.vertical, 2)
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)

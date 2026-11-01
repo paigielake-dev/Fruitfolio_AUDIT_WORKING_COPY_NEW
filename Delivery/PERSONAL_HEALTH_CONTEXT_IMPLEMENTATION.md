@@ -10,4 +10,4 @@ Declining/removing a field destroys its medical text. Only a blank status/timest
 
 The shared model is available to existing systems immediately. Free text does not autonomously alter prediction mathematics, increase confidence, confirm ovulation, infer genotype, or supply a medical claim. Evidence-grounded retrieval and relevance-limited Ask personalization for these new fields remain unfinished; this work does not claim those requirements complete. No free-text history is silently treated as approved evidence.
 
-Actual Xcode compilation, migration/deletion unit tests, and the new simulator persistence journey are required. Until executed, the new implementation is NOT VERIFIED.
+Actual Run46 compiled the new model/views and passed all four migration, persistence/deletion, asset and prediction-safety unit tests. The actual simulator persistence journey is still pending. The requirement remains PARTIAL until its UI and evidence-retrieval acceptance is established.

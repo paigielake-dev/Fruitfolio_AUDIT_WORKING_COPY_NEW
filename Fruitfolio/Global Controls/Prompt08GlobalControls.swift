@@ -52,23 +52,24 @@ struct FruitfolioControlPillButton: View {
             if playsSound { audioManager.play(.buttonSoftPop) }
             action()
         } label: {
-            // The label's accessibility bounds belong to its actual text.
-            // Put shell padding/background on a layout container so painted
-            // borders are not part of the StaticText's contrast sampling area.
-            VStack(spacing: 0) {
+            // A real multi-child layout keeps the text's intrinsic bounds
+            // separate from the painted shell. Unary wrappers can be flattened
+            // into a full-shell StaticText by SwiftUI accessibility.
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
                 Text(label)
                     .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             }
-                .padding(.horizontal, 46)
-                .padding(.vertical, 20)
-                .frame(maxWidth: 292, minHeight: 82, alignment: .center)
-                .background { FruitfolioControlPillArtwork() }
+            .padding(.horizontal, 46)
+            .padding(.vertical, 20)
+            .frame(maxWidth: 292, minHeight: 82, alignment: .center)
+            .background { FruitfolioControlPillArtwork() }
             .contentShape(Rectangle())
-            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -76,9 +77,6 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
-        .accessibilityElement(children: .ignore)
-        .accessibilityAddTraits(.isButton)
-        .accessibilityLabel(label)
     }
 }
 

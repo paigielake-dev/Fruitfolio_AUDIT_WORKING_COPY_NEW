@@ -90,9 +90,31 @@ final class Prompt27AContextStore: ObservableObject {
     /// My Context. Ambiguous answers (for example “recent pregnancy” or
     /// “recently stopped hormonal birth control”) are deliberately not inferred
     /// into a different present-tense health state.
-    func syncFromCycleOnboarding(_ draft: Prompt14OnboardingDraft) {
+    func syncFromCycleOnboarding(_ draft: Prompt14OnboardingDraft, previous: Prompt14OnboardingDraft? = nil) {
         var updated = context
         let now = Date()
+        // An explicitly removed onboarding answer must stop influencing the
+        // shared context. Initial loading alone never erases independent edits.
+        if let previous {
+            if previous.cycleAffectingContexts.contains(.hormonalBirthControl),
+               !draft.cycleAffectingContexts.contains(.hormonalBirthControl),
+               updated.contraceptionContext.value == .hormonalContraception {
+                updated.setContraceptionContext(.unspecified, at: now)
+            }
+            if previous.cycleAffectingContexts.contains(.fertilityMedication),
+               !draft.cycleAffectingContexts.contains(.fertilityMedication),
+               updated.fertilityTreatmentContext.value == .currentlyUndergoing {
+                updated.setFertilityTreatmentContext(.unspecified, at: now)
+            }
+            if previous.recentContexts.contains(.postpartum), !draft.recentContexts.contains(.postpartum),
+               updated.reproductiveStage.value == .postpartum {
+                updated.setReproductiveStage(.unspecified, at: now)
+            }
+            if previous.recentContexts.contains(.breastfeeding), !draft.recentContexts.contains(.breastfeeding),
+               updated.lactationContext.value == .breastfeedingOrLactating {
+                updated.setLactationContext(.unspecified, at: now)
+            }
+        }
 
         if draft.cycleContextState == .supplied {
             let choices = draft.cycleAffectingContexts

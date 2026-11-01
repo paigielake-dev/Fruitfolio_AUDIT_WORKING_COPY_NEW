@@ -1560,11 +1560,8 @@ private struct Prompt05HubUtilityButton:
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size:
-                                dynamicTypeSize
-                                    .isAccessibilitySize
-                                ? 12
-                                : 11
+                            size: 11,
+                            relativeTo: .caption
                         )
                     )
                     .fontWeight(
@@ -1575,10 +1572,8 @@ private struct Prompt05HubUtilityButton:
                             .ColorToken
                             .primaryBurgundy
                     )
-                    .lineLimit(1)
-                    .minimumScaleFactor(
-                        0.82
-                    )
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(
                 width:

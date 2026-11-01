@@ -112,6 +112,13 @@ final class HormoneMeasurementUITests: XCTestCase {
         XCTAssertTrue(reference.label.contains(displayed), "Reference mode must expose the actual entered value and unit")
         XCTAssertTrue(reference.label.contains(fixtureNote), "The actual user note must remain separate from educational curves")
         capture(app, "Rhythm_ActualMeasurementReferences")
+        let chart = rhythm.descendants(matching: .any).matching(identifier: "hormone.history.chart." + measurementID).firstMatch
+        XCTAssertTrue(chart.waitForExistence(timeout: 8), "The actual recorded measurement must also appear in its exact-unit point-only series")
+        for _ in 0..<8 where !chart.isHittable { scrollSettings(app, up: true) }
+        capture(app, "Rhythm_ActualRecordedPointsGraph")
+        let chartTree = XCTAttachment(string: chart.debugDescription)
+        chartTree.name = "HormoneInformation_ActualRecordedChartAccessibility"; chartTree.lifetime = .keepAlways; add(chartTree)
+        for _ in 0..<8 where !mode.isHittable { scrollSettings(app, up: false) }
         mode.tap()
         app.buttons.matching(NSPredicate(format: "label == %@", "adjusted rhythm")).firstMatch.tap()
         let insufficient = rhythm.staticTexts["hormoneRhythm.insufficientInformation"]

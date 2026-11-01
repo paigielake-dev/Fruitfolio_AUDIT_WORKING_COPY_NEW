@@ -19,4 +19,4 @@ This investigation is engineering documentation, not a new approved in-app evide
 
 ## Remaining verification/dependency
 
-The new chart code and unit tests require actual Xcode execution and simulator review. Dynamic Type, VoiceOver reading order, multiple series, repeated same-day results, and graph visual states must be verified before these requirements can be marked PASS. Full Adjusted Rhythm remains dependent on a scientifically defensible, approved mapping with explicit sufficient-context criteria; it is not claimed complete.
+The new chart code compiled in actual Run46 and all three series-data unit tests passed. Dedicated point-graph simulator visual/accessibility review remains pending. Dynamic Type, VoiceOver reading order, multiple series, repeated same-day results, and graph visual states must be verified before these requirements can be marked PASS. Full Adjusted Rhythm remains dependent on a scientifically defensible, approved mapping with explicit sufficient-context criteria; it is not claimed complete.
