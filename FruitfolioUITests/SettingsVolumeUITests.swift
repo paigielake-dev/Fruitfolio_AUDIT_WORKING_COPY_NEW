@@ -4,7 +4,7 @@ final class SettingsVolumeUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
     private let names = ["music", "rain_sounds", "sound_effects", "typing_asmr"]
     private func scrollSettings(_ app: XCUIApplication, up: Bool) {
-        let scroll = app.scrollViews.firstMatch
+        let scroll = app.scrollViews["settings.mainScroll"]
         let container = scroll.exists ? scroll : app
         let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.82 : 0.25))
         let end = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.25 : 0.82))

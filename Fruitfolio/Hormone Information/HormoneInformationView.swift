@@ -4,6 +4,7 @@ struct HormoneInformationView: View {
     @ObservedObject var store: HormoneMeasurementStore
     let onBack: () -> Void
     @State private var showLibrary = false
+    @State private var showRhythm = false
     @State private var filter: RecordedHormone?
     @State private var newestFirst = true
     @State private var editing: HormoneMeasurement?
@@ -30,6 +31,8 @@ struct HormoneInformationView: View {
                     FruitfolioControlPillButton(label: "add measurement") { editing = HormoneMeasurement() }
                         .disabled(store.loadError != nil)
                     FruitfolioControlPillButton(label: "hormone library") { showLibrary = true }
+                    FruitfolioControlPillButton(label: "hormone rhythm") { showRhythm = true }
+                        .accessibilityIdentifier("hormone.openRhythm")
                     Picker("filter by hormone", selection: $filter) {
                         Text("all hormones").tag(Optional<RecordedHormone>.none)
                         ForEach(RecordedHormone.allCases) { hormone in
@@ -39,15 +42,7 @@ struct HormoneInformationView: View {
                     Toggle("newest results first", isOn: $newestFirst)
                     ForEach(records) { record in
                         VStack(alignment: .leading, spacing: 8) {
-                            Text(record.displayName).bold()
-                            Text(record.result + " " + record.unit).textSelection(.enabled)
-                            Text(record.testDate, style: .date)
-                            if !record.sampleType.isEmpty { Text(record.sampleType) }
-                            if !record.cycleDay.isEmpty { Text("cycle day: \(record.cycleDay)") }
-                            if !record.laboratoryReferenceRange.isEmpty {
-                                Text("laboratory-provided reference range: \(record.laboratoryReferenceRange)")
-                            }
-                            if !record.notes.isEmpty { Text(record.notes).textSelection(.enabled) }
+                            HormoneMeasurementSummaryView(record: record)
                             FruitfolioControlPillButton(label: "open / edit measurement") { editing = record }
                             FruitfolioControlPillButton(label: "delete measurement") { pendingDeletion = record }
                         }
@@ -62,12 +57,24 @@ struct HormoneInformationView: View {
                 .frame(maxWidth: 620, alignment: .leading)
                 .frame(maxWidth: .infinity)
             }
+            .accessibilityIdentifier("hormone.measurementsScroll")
         }
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .padding(20)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .sheet(isPresented: $showLibrary) { HormoneResearchLibraryView() }
+        .sheet(isPresented: $showRhythm) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    BackControl { showRhythm = false }
+                    Prompt22HormoneRhythmView(measurements: store)
+                }
+                .padding(20)
+            }
+            .accessibilityIdentifier("hormoneRhythm.sheetScroll")
+            .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        }
         .sheet(item: $editing) { record in
             HormoneMeasurementEditor(store: store, measurement: record)
         }
@@ -139,6 +146,7 @@ private struct HormoneMeasurementEditor: View {
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .accessibilityIdentifier("hormone.entryScroll")
         .scrollDismissesKeyboard(.interactively)
         .safeAreaInset(edge: .bottom) {
             if fieldFocused {

@@ -4,8 +4,10 @@ final class HormoneMeasurementUITests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
     private func scrollSettings(_ app: XCUIApplication, up: Bool) {
-        let scroll = app.scrollViews.firstMatch
-        let container = scroll.exists ? scroll : app
+        let identifiers = ["hormoneRhythm.sheetScroll", "hormone.entryScroll", "hormone.measurementsScroll", "prompt27a.myContext", "settings.mainScroll"]
+        let identified = identifiers.map { app.scrollViews[$0] }.first { $0.exists && $0.isHittable }
+        let visible = app.scrollViews.allElementsBoundByIndex.last { $0.isHittable }
+        let container = identified ?? visible ?? app
         let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.82 : 0.25))
         let end = container.coordinate(withNormalizedOffset: CGVector(dx: 0.97, dy: up ? 0.25 : 0.82))
         start.press(forDuration: 0.05, thenDragTo: end)
@@ -76,6 +78,7 @@ final class HormoneMeasurementUITests: XCTestCase {
         let row = app.otherElements.matching(NSPredicate(format: "identifier BEGINSWITH %@", "hormone.measurement."))
             .containing(.staticText, identifier: displayed).firstMatch
         XCTAssertTrue(row.exists)
+        let measurementID = row.identifier.replacingOccurrences(of: "hormone.measurement.", with: "")
         let edit = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "open / edit measurement")).firstMatch
         for _ in 0..<5 where !edit.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(edit.isHittable)
@@ -94,6 +97,35 @@ final class HormoneMeasurementUITests: XCTestCase {
         saveEdit.tap()
         XCTAssertTrue(app.staticTexts[fixtureNote].waitForExistence(timeout: 8))
         capture(app, "EditedAndSaved")
+        let openRhythm = app.buttons["hormone.openRhythm"]
+        for _ in 0..<8 where !openRhythm.isHittable { scrollSettings(app, up: false) }
+        XCTAssertTrue(openRhythm.isHittable); openRhythm.tap()
+        let rhythm = app.scrollViews["hormoneRhythm.sheetScroll"]
+        XCTAssertTrue(rhythm.waitForExistence(timeout: 8))
+        let mode = app.buttons["hormoneRhythm.mode"]
+        XCTAssertTrue(mode.waitForExistence(timeout: 15)); mode.tap()
+        app.buttons.matching(NSPredicate(format: "label == %@", "my measurements")).firstMatch.tap()
+        let reference = rhythm.descendants(matching: .any)["hormoneRhythm.recorded." + measurementID]
+        XCTAssertTrue(reference.waitForExistence(timeout: 8))
+        XCTAssertTrue(reference.label.contains(displayed), "Reference mode must expose the actual entered value and unit")
+        XCTAssertTrue(reference.label.contains(fixtureNote), "The actual user note must remain separate from educational curves")
+        capture(app, "Rhythm_ActualMeasurementReferences")
+        mode.tap()
+        app.buttons.matching(NSPredicate(format: "label == %@", "adjusted rhythm")).firstMatch.tap()
+        let insufficient = rhythm.staticTexts["hormoneRhythm.insufficientInformation"]
+        XCTAssertTrue(insufficient.waitForExistence(timeout: 8))
+        XCTAssertEqual(insufficient.label, "your measurement has been saved, but there isn’t enough information to adjust this illustration reliably. you can still explore the typical hormone rhythm and view your actual result in my measurements.")
+        capture(app, "Rhythm_UnsupportedAdjustmentRetainsOriginal")
+        let restore = rhythm.buttons["hormoneRhythm.restoreOriginal"]
+        for _ in 0..<6 where !restore.isHittable { scrollSettings(app, up: true) }
+        XCTAssertTrue(restore.isHittable); restore.tap()
+        XCTAssertFalse(insufficient.exists)
+        capture(app, "Rhythm_OriginalRestored")
+        let rhythmBack = rhythm.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
+        for _ in 0..<6 where !rhythmBack.isHittable { scrollSettings(app, up: false) }
+        XCTAssertTrue(rhythmBack.isHittable); rhythmBack.tap()
+        XCTAssertTrue(app.staticTexts[displayed].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts[fixtureNote].exists, "Opting in and restoring must leave the measurement unchanged")
         let delete = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "delete measurement")).firstMatch
         for _ in 0..<5 where !delete.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(delete.isHittable)

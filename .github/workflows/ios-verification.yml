@@ -58,6 +58,13 @@ jobs:
         run: |
           set -o pipefail
           bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/madlad-runtime-build.log
+      - name: Preserve compiled translation runtime before app tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_MADLAD_Apple_Runtime
+          path: Vendor/FruitfolioMADLAD.xcframework
+          if-no-files-found: warn
       - uses: actions/cache@v4
         with:
           path: Models/MADLAD
@@ -108,6 +115,15 @@ jobs:
             -resultBundlePath Fruitfolio_Verification_Evidence/Build/Unit.xcresult \
             CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-unit-test.log
+      - name: Export actual unit runtime attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Unit.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Build/UnitAttachments
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Unit.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Build/UnitAttachments
+          fi
       - name: Preserve unit and build results before UI tests
         if: always()
         uses: actions/upload-artifact@v4
@@ -216,9 +232,12 @@ jobs:
           path: Fruitfolio_Verification_Evidence
       - name: Verify user-authored page lifecycle before broad traversal
         if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
-        timeout-minutes: 6
+        timeout-minutes: 10
         run: |
           set -o pipefail
+          # A real system photo-picker fixture, never app-state injection.
+          xcrun simctl addmedia "$FRUITFOLIO_SIMULATOR_ID" \
+            Fruitfolio/Assets.xcassets/Art/Decor/decor_fluffy_cloud.imageset/decor_fluffy_cloud.png
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
             -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \

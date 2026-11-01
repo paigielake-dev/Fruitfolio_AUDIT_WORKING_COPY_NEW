@@ -1,5 +1,5 @@
 {
-  "timestampUTC": "2026-11-01T17:09:56.921340+00:00",
+  "timestampUTC": "2026-11-01T18:57:27.220527+00:00",
   "sourceCommit": "0bd03b45f778ff25e3ca1d301d2d90d28d036f20",
   "developmentBranch": "fruitfolio/prompt-1b-alignment",
   "execution": "ACTIVE: implementation and verification continuing; no final delivery claimed",
@@ -14,7 +14,7 @@
     "hormoneJourney": "PASS actual create/restart/edit/delete",
     "askJourney": "PASS actual generated answer, sources and clear-on-exit",
     "userPageJourney": "FAIL after successful save/restart/reopen/edit: discard control scroll reach",
-    "broadUI": "Still running at last observation; no overall PASS"
+    "broadUI": "FAIL: Guide creation control inaccessible; Account/Cycle/FruitBasket/Hub contrast audits and Ask clipped-text audit failed. Exploratory traversal hit its actual 8-minute timeout."
   },
   "run32": {
     "id": 41327054143,
@@ -31,7 +31,7 @@
   },
   "MADLAD": {
     "AppleBothArchitecturesCompile": "PASS separate actual compatibility job",
-    "actualAppleAppInference": "NOT VERIFIED: app linkage repair under test",
+    "actualAppleAppInference": "PASS bounded actual app-linked local official Q4 in Run35 and Run39; required-language, whole-app, clinical and physical-device acceptance pending",
     "extendedLinuxInference": "18/18 reached EOS; strict lexical number preservation FAIL for French/German 2.5 to 2,5; production gate remains closed",
     "missingExactLanguageTags": [
       "tpi",
@@ -41,19 +41,46 @@
       "gil"
     ],
     "physicalIPhoneMemory": "NOT VERIFIED; Linux CPU peak approximately 4.58 GiB",
-    "memoryAdaptation": "Exact quantized-row lookup: 7168 float values bit-identical, all 18 sentence outputs/EOS unchanged, Linux peak RSS 4805216 to 3922792 KiB. Apple rebuild and physical-device compatibility pending."
+    "memoryAdaptation": "Linux peak memory decreased with identical 18 sentence outputs and bit-identical sampled embedding values. Apple Run39 measured 1,843,855,360-byte process peak versus 1,611,202,560 in Run35; no Apple memory reduction is claimed from these uncontrolled host runs."
   },
   "trackerCounts": {
-    "PARTIAL": 70,
-    "PASS": 26,
-    "NOT VERIFIED": 361,
-    "BLOCKED": 11,
+    "PARTIAL": 84,
+    "PASS": 27,
+    "NOT VERIFIED": 347,
+    "BLOCKED": 10,
     "FAIL": 10
   },
   "run35": {
     "id": 41329189130,
     "commit": "cf0436987db316ae82ebe5432b4faed88b512441",
     "appBuild": "PASS actual app and test build with both static runtimes linked; no duplicate module map",
-    "unitTests": "RUNNING: actual official MADLAD Apple inference result pending"
-  }
+    "unitTests": "PASS 465 XCTest executed: 464 PASS, 1 physical-iPhone protection SKIP, 0 FAIL; 25 Swift Testing PASS",
+    "MADLAD": "PASS actual app-linked local official model: three exact sentence assertions; actual attachment retained",
+    "ui": "FAIL: Contact accessibility contrast, hormone navigation past interactive sliders, user-page bottom scroll criterion, old custom volume slider scrubber attributes, and broad UI failures. New native-slider and clear-margin navigation source is in Run39; editor insertion-order/bottom-padding and Guide keyboard fixes prepared in 9b8d616."
+  },
+  "run39": {
+    "id": 41335406908,
+    "commit": "ddc9203f8148db289d82a179b31aecc03b522e46",
+    "appBuild": "PASS actual Xcode build with memory-adapted Apple runtime",
+    "unitTests": "470 XCTest executed: 469 PASS, 1 physical-iPhone file-protection SKIP, 0 FAIL; 25 Swift Testing PASS",
+    "MADLAD": "PASS actual local official model, exact Spanish warning/measurement and French uncertainty; corrupt tokenizer and unknown target tag rejected. Attachment wall 74.1801 seconds; Darwin process peak RSS 1843855360 bytes, host physical bytes 7516192768. Results are not a controlled physical-device benchmark.",
+    "mediaRecovery": "PASS draft promotion/abandonment, unknown-file preservation, corrupt metadata preservation, shared import survives first deletion and is removed after last reference",
+    "focusedUI": {
+      "sharedControls": "FAIL; strict contrast audits retained",
+      "hormoneJourney": "FAIL at final delete reach; creation/restart/edit/save succeeded. Wrong underlying scroll view identified; source repair pending.",
+      "userPageJourney": "FAIL old bottom visibility criterion and editor state-echo typing; prepared source repairs not in this run",
+      "volumeJourney": "PASS four actual controls independent and restart-persistent, 85.009 seconds",
+      "askJourney": "Completed focused stage; actual detailed result retrieval pending",
+      "broadUI": "Running; may be superseded by repaired source, no overall PASS"
+    }
+  },
+  "environmentRecovery": "Scratch environment reset cleared local working files; restored complete baseline from 8 integrity-checked persistent parts and GitHub ddc9203 source. Both model SHA256 values reverified. No completed committed source was discarded.",
+  "pendingSource": [
+    "Editor insertion-order fix, safe bottom spacing, real photo-picker/restart/save/discard/delete verification",
+    "Guide keyboard dismissal and readable popup scaling",
+    "Explicit owning-scroll IDs for hormone lifecycle",
+    "Typical/adjusted/reference modes with exact insufficient-information boundary; no fabricated calibration",
+    "Strict accessibility diagnostics returning false for every issue",
+    "Continuous original painted slider track under native adjustable thumb"
+  ]
 }

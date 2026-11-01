@@ -25,8 +25,8 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
         image.name = "Accessibility_" + (destination ?? "Hub")
         image.lifetime = .keepAlways
         add(image)
-        // Real XCTest audit. No issue handler suppresses failures.
-        try app.performAccessibilityAudit()
+        // Real XCTest audit. The diagnostic handler returns false for every issue.
+        try fruitfolioStrictAccessibilityAudit(app)
     }
 
     func testHubAccessibility() throws { try audit(destination: nil) }

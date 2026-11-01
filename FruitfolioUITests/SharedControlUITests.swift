@@ -40,7 +40,7 @@ final class SharedControlUITests: XCTestCase {
         let app = contact(accessibilitySize: false)
         _ = email(app)
         capture(app, "SharedPill_Contact_Default")
-        try app.performAccessibilityAudit()
+        try fruitfolioStrictAccessibilityAudit(app)
         let back = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
         for _ in 0..<5 where !back.isHittable { app.swipeDown() }
         XCTAssertTrue(back.isHittable)
@@ -57,7 +57,7 @@ final class SharedControlUITests: XCTestCase {
         XCTAssertGreaterThan(large.frame.height, normalHeight,
                              "Dynamic Type must enlarge and wrap the actual control label")
         capture(app, "SharedPill_Contact_AccessibilityXXXL")
-        try app.performAccessibilityAudit()
+        try fruitfolioStrictAccessibilityAudit(app)
     }
 }
 
@@ -87,7 +87,7 @@ extension SharedControlUITests {
         for _ in 0..<8 where !visible.contains(answer.frame) { app.swipeUp() }
         XCTAssertTrue(visible.contains(answer.frame))
         capture(app, accessibilitySize ? "FAQ_Expanded_AccessibilityXXXL" : "FAQ_Expanded_Default")
-        try app.performAccessibilityAudit()
+        try fruitfolioStrictAccessibilityAudit(app)
         for _ in 0..<8 where !question.isHittable { app.swipeDown() }
         question.tap()
         XCTAssertFalse(answer.exists)

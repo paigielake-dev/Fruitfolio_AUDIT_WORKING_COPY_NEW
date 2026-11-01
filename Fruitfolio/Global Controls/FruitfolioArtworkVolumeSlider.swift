@@ -23,6 +23,36 @@ private enum FruitfolioSliderArtwork {
     }()
 }
 
+/// Draw the original full painted line once. Supplying it independently as
+/// UIKit's minimum and maximum images introduces a visible seam at the thumb.
+@MainActor
+private final class FruitfolioPaintedSlider: UISlider {
+    private let paintedTrack = UIImageView(image: FruitfolioSliderArtwork.track)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        paintedTrack.contentMode = .scaleAspectFit
+        paintedTrack.isUserInteractionEnabled = false
+        paintedTrack.isAccessibilityElement = false
+        paintedTrack.accessibilityElementsHidden = true
+        addSubview(paintedTrack)
+        let clear = UIGraphicsImageRenderer(size: CGSize(width: 2, height: 2)).image { _ in }
+        setMinimumTrackImage(clear, for: .normal)
+        setMaximumTrackImage(clear, for: .normal)
+    }
+    required init?(coder: NSCoder) { return nil }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        sendSubviewToBack(paintedTrack)
+        let track = trackRect(forBounds: bounds)
+        let a = thumbRect(forBounds: bounds, trackRect: track, value: minimumValue).midX
+        let b = thumbRect(forBounds: bounds, trackRect: track, value: maximumValue).midX
+        let width = abs(b-a)
+        let size = paintedTrack.image?.size ?? CGSize(width: 1307, height: 69)
+        let height = width * size.height / max(size.width, 1)
+        paintedTrack.frame = CGRect(x: min(a,b), y: track.midY-height/2, width: width, height: height)
+    }
+}
+
 /// A real adjustable UIKit control using the original painted track and knob.
 /// Native touch, VoiceOver adjustment, and XCTest scrubber geometry agree.
 struct FruitfolioArtworkVolumeSlider: UIViewRepresentable {
@@ -32,15 +62,8 @@ struct FruitfolioArtworkVolumeSlider: UIViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIView(context: Context) -> UISlider {
-        let slider = UISlider(frame: .zero)
+        let slider = FruitfolioPaintedSlider(frame: .zero)
         slider.minimumValue = 0; slider.maximumValue = 1
-        if let track = FruitfolioSliderArtwork.track {
-            let painted = UIGraphicsImageRenderer(size: CGSize(width: 260, height: 14)).image { _ in
-                track.draw(in: CGRect(x: 0, y: 0, width: 260, height: 14))
-            }.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 7, bottom: 0, right: 7))
-            slider.setMinimumTrackImage(painted, for: .normal)
-            slider.setMaximumTrackImage(painted, for: .normal)
-        }
         if let knob = FruitfolioSliderArtwork.knob {
             let painted = UIGraphicsImageRenderer(size: CGSize(width: 36, height: 36)).image { _ in
                 let scale = min(36 / knob.size.width, 36 / knob.size.height)

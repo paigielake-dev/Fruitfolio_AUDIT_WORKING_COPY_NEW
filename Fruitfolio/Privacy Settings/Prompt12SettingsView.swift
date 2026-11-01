@@ -69,6 +69,7 @@ struct Prompt12SettingsView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("settings.mainScroll")
             .fruitfolioModalBlur(
                 active:
                     showDataManagement ||

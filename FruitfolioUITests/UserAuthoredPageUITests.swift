@@ -8,7 +8,8 @@ final class UserAuthoredPageUITests: XCTestCase {
     }
     private func reach(_ app: XCUIApplication, _ target: XCUIElement) {
         XCTAssertTrue(target.waitForExistence(timeout: 8))
-        let scroll = app.scrollViews.containing(.button, identifier: target.label).firstMatch
+        let identifier = target.identifier.isEmpty ? target.label : target.identifier
+        let scroll = app.scrollViews.containing(target.elementType, identifier: identifier).firstMatch
         let container = scroll.exists ? scroll : app
         let visible = app.frame.insetBy(dx: 0, dy: 60).intersection(container.frame)
         for _ in 0..<14 where !target.isHittable || !visible.contains(target.frame) {
@@ -56,6 +57,13 @@ final class UserAuthoredPageUITests: XCTestCase {
         let content = app.textViews["userPage.content"]
         XCTAssertTrue(content.exists); content.tap(); content.typeText("my own writing stays separate from research.")
         button(app, "done").tap()
+        let addImage = button(app, "add image"); reach(app, addImage); addImage.tap()
+        let photo = app.collectionViews.cells.firstMatch
+        XCTAssertTrue(photo.waitForExistence(timeout: 15), "Select a real photo from the system picker; simulator photo fixture must be installed")
+        photo.tap()
+        let imported = app.images["my imported image"]
+        XCTAssertTrue(imported.waitForExistence(timeout: 15), "Actual photo import must finish before saving")
+        reach(app, imported); capture(app, "UserPage_ActualPhotoImported")
         let save = button(app, "save changes"); reach(app, save); save.tap()
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))
         capture(app, "UserPage_Saved")
@@ -67,6 +75,9 @@ final class UserAuthoredPageUITests: XCTestCase {
         let savedPage = button(app, "My independent reminder")
         XCTAssertTrue(savedPage.waitForExistence(timeout: 10)); reach(app, savedPage); savedPage.tap()
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))
+        let persistedImage = app.images["user imported image"]
+        XCTAssertTrue(persistedImage.waitForExistence(timeout: 8), "Imported image bytes must survive the actual application restart")
+        reach(app, persistedImage)
         capture(app, "UserPage_AfterRelaunch")
         let edit = button(app, "edit my page"); reach(app, edit); edit.tap()
         let editor = app.textViews["userPage.content"]
@@ -80,13 +91,33 @@ final class UserAuthoredPageUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))
         XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "unsaved addition")).firstMatch.exists)
         capture(app, "UserPage_DiscardPreservedOriginal")
+        let editAgain = button(app, "edit my page"); reach(app, editAgain); editAgain.tap()
+        let savedEditor = app.textViews["userPage.content"]
+        XCTAssertTrue(savedEditor.waitForExistence(timeout: 8)); savedEditor.tap()
+        savedEditor.typeText(" saved addition")
+        let editedText = savedEditor.value as? String ?? ""
+        XCTAssertTrue(editedText.contains(" saved addition"))
+        XCTAssertEqual(editedText.replacingOccurrences(of: " saved addition", with: ""),
+            "my own writing stays separate from research.", "Typing must preserve all existing writing")
+        button(app, "done").tap()
+        let saveEdit = button(app, "save changes"); reach(app, saveEdit); saveEdit.tap()
+        XCTAssertTrue(app.staticTexts[editedText].waitForExistence(timeout: 8))
+        capture(app, "UserPage_EditedAndSaved")
+        app.terminate(); app.launch(); library(app)
+        let updatedBook = button(app, name); reach(app, updatedBook); updatedBook.tap()
+        let updatedChapter = button(app, "saved pages"); reach(app, updatedChapter)
+        if (updatedChapter.value as? String) != "expanded" { updatedChapter.tap() }
+        let updatedPage = button(app, "My independent reminder"); reach(app, updatedPage); updatedPage.tap()
+        XCTAssertTrue(app.staticTexts[editedText].waitForExistence(timeout: 8), "Saved edits must survive another actual restart")
+        XCTAssertTrue(app.images["user imported image"].exists, "Editing text must retain the independently stored imported image")
+        capture(app, "UserPage_EditedAfterRestart")
         let remove = button(app, "delete saved page"); reach(app, remove); remove.tap()
         let keep = button(app, "keep page"); XCTAssertTrue(keep.waitForExistence(timeout: 8)); reach(app, keep); keep.tap()
-        XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].exists)
+        XCTAssertTrue(app.staticTexts[editedText].exists)
         reach(app, remove); remove.tap()
         let delete = app.buttons.matching(NSPredicate(format: "label == %@", "delete page")).firstMatch
         XCTAssertTrue(delete.waitForExistence(timeout: 8)); reach(app, delete); delete.tap()
-        XCTAssertFalse(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts[editedText].waitForExistence(timeout: 3))
         capture(app, "UserPage_Deleted")
     }
 }
