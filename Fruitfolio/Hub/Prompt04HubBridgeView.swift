@@ -1288,7 +1288,6 @@ private struct Prompt05PrimaryHubButton:
         .accessibilityHidden(
             !interactive
         )
-        .accessibilityElement(children: .contain)
         .accessibilityLabel(
             accessibilityLabel
         )

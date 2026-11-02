@@ -75,7 +75,7 @@ struct Prompt28FruitBasketView: View {
         _viewModel = StateObject(
             wrappedValue: Prompt28FruitBasketViewModel(
                 store: store,
-                researchProvider: researchProvider ?? Prompt28UnavailableResearchProvider()
+                researchProvider: researchProvider ?? Prompt28CanonicalResearchProvider()
             )
         )
     }
@@ -327,6 +327,8 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var home: some View {
+        GeometryReader { proxy in
+        ScrollView {
         VStack(spacing: 10) {
             topBar
 
@@ -404,6 +406,9 @@ struct Prompt28FruitBasketView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
+        .frame(minHeight: proxy.size.height)
+        }
+        }
     }
 
     private var howItWorks: some View {
@@ -1510,6 +1515,10 @@ struct Prompt28FruitBasketView: View {
 
                             Text(question.explanation)
                                 .prompt28Text(.body)
+                            ForEach(question.sourceTitles, id: \.self) { reference in
+                                Text(reference).prompt28Text(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
 
                             Text(
                                 "sources · \(question.sourceIDs.count)"

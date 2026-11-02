@@ -365,14 +365,20 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     func savePendingContent() -> Prompt10PendingSavedContent? {
         guard let question = currentQuestion else { return nil }
-        let revealBody = "basket reveal . ݁₊ ⊹ . ݁˖ . ݁\n\n ☆ \(question.explanation)"
+        let references = question.sourceTitles.joined(separator: "\n")
+        let revealBody = "basket reveal\n\n\(question.explanation)\n\n\(references)"
         return Prompt10PendingSavedContent(
             question: "basket reveal . ݁₊ ⊹ . ݁˖ . ݁",
             answer: revealBody,
             saveType: .fullAnswer,
             originalAnswerID: "fruitbasket:\(question.id)",
             sourceIDs: question.sourceIDs,
-            sourceVersions: Dictionary(uniqueKeysWithValues: question.sourceIDs.map { ($0, question.contentVersion) }),
+            sourceVersions: Dictionary(uniqueKeysWithValues: (question.evidenceSnapshot?.sources ?? []).map { ($0.sourceID, $0.contentVersion) }),
+            sourceSnapshots: question.evidenceSnapshot?.sources.map { source in
+                AskSourceRecord(id: source.sourceID, title: source.apa7Reference ?? source.title,
+                    sourceText: source.apa7Reference, urlString: source.canonicalURL, doi: source.doi,
+                    publicationData: source.publicationDate, contentVersion: source.contentVersion)
+            },
             knowledgeBaseVersion: question.contentVersion,
             generationTimestamp: question.createdAt
         )

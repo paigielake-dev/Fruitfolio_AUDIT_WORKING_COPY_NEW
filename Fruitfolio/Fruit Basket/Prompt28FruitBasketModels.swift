@@ -81,6 +81,13 @@ struct Prompt28AnswerOption: Identifiable, Hashable, Codable, Sendable {
     let text: String
 }
 
+struct Prompt28QuestionEvidence: Hashable, Codable, Sendable {
+    let evidenceID: String
+    let originalPassage: String
+    let packageVersion: String
+    let sources: [FruitfolioResearchSource]
+}
+
 struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let id: String
     let topicQuery: String
@@ -100,6 +107,7 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let contentVersion: String
     let reviewStatus: String
     let createdAt: Date
+    var evidenceSnapshot: Prompt28QuestionEvidence? = nil
 
     var isPlayable: Bool {
         answerOptions.count >= 2
