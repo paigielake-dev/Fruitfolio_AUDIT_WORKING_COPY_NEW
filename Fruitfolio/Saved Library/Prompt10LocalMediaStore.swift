@@ -77,7 +77,10 @@ nonisolated struct Prompt10LocalMediaStore: Sendable {
         guard let url = try? validatedURL(for: id) else { return nil }
         if let committed = try? Data(contentsOf: url) { return committed }
         let staged = root.appendingPathComponent("Pending", isDirectory: true).appendingPathComponent(url.lastPathComponent)
-        return try? Data(contentsOf: staged)
+        if let draft = try? Data(contentsOf: staged) { return draft }
+        // A worker preview can straddle the atomic Pending → committed move.
+        // Retry the committed location, without changing either original file.
+        return try? Data(contentsOf: url)
     }
 
     /// A display-only, bounded decode. Original image bytes are never

@@ -1938,9 +1938,9 @@ struct Prompt28FruitBasketView: View {
                     )
                     .accessibilityLabel("Strawberry")
 
-                    Text("\(tourStep + 1) of 10")
-                        .prompt28Text(.metadata)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                    FruitfolioNativeActionLabel(text: "\(tourStep + 1) of 10",
+                        fontName: "ChalkboardSE-Regular", pointSize: 11, textStyle: .caption)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text(tourTitle)
                         .accessibilityAddTraits(.isHeader)
@@ -2463,7 +2463,7 @@ private struct Prompt28CodedLargeCardBackground: View {
     }
 }
 
-private struct Prompt28CompactRuleCard: View {
+struct Prompt28CompactRuleCard: View {
     let title: String
     let artID: FruitfolioAssetID?
     let ruleBody: String
@@ -2499,20 +2499,8 @@ private struct Prompt28CompactRuleCard: View {
                 }
                 .multilineTextAlignment(.center)
 
-                Text(ruleBody)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 13,
-                            relativeTo: .body
-                        )
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                            .opacity(0.78)
-                    )
+                FruitfolioNativeActionLabel(text: ruleBody,
+                    fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .body)
                     .multilineTextAlignment(.center)
                     .fixedSize(
                         horizontal: false,

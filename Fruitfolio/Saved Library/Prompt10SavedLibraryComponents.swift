@@ -14,6 +14,7 @@ struct Prompt10BookTile: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 116, height: 142)
+                    .prompt10BookFrame("shelf:" + encyclopedia.id.uuidString)
                     .accessibilityHidden(true)
 
                 Text(encyclopedia.name)
@@ -25,6 +26,15 @@ struct Prompt10BookTile: View {
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 132)
+
+                if let description = encyclopedia.subtitle, !description.isEmpty {
+                    Text(description)
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: 132)
+                }
 
                 Text(metadataText)
                     .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .caption))
@@ -49,6 +59,7 @@ struct Prompt10BookTile: View {
         .accessibilityLabel(
             "\(encyclopedia.name), \(metadataText)"
         )
+        .accessibilityValue(encyclopedia.subtitle ?? "")
         .accessibilityHint(
             "Opens this encyclopedia"
         )

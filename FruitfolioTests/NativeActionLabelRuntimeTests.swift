@@ -139,4 +139,32 @@ final class NativeActionLabelRuntimeTests: XCTestCase {
         XCTAssertEqual(FruitfolioSemanticAttributedRenderer.document(from: editor.attributedText).plainText, original)
     }
 
+    func testActualGameRuleBodyUsesFullContrastNativeInkAndDoesNotTruncateAtLargestType() throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow)
+        let wording = "catch the GOOD fruit that fits the rule. standalone stars are bonus passes and do not fill the basket."
+        for category in [DynamicTypeSize.large, .accessibility5] {
+            let host = UIHostingController(rootView: Prompt28CompactRuleCard(title: "3. catch", body: wording)
+                .environment(\.dynamicTypeSize, category).frame(width: 330))
+            let window = UIWindow(windowScene: scene)
+            window.frame = CGRect(x: 0, y: 0, width: 375, height: 1000)
+            window.rootViewController = host; window.makeKeyAndVisible()
+            defer { window.isHidden = true; previous?.makeKey() }
+            host.view.setNeedsLayout(); host.view.layoutIfNeeded()
+            func labels(_ view: UIView) -> [UILabel] {
+                (view as? UILabel).map { [$0] } ?? view.subviews.flatMap { labels($0) }
+            }
+            let actual = try XCTUnwrap(labels(host.view).first { $0.text == wording })
+            XCTAssertEqual(actual.textColor, UIColor(DesignTokens.ColorToken.primaryBurgundy))
+            XCTAssertTrue(actual.isAccessibilityElement)
+            XCTAssertEqual(actual.numberOfLines, 0)
+            let needed = actual.sizeThatFits(CGSize(width: actual.bounds.width, height: 4000))
+            XCTAssertLessThanOrEqual(needed.height, actual.bounds.height + 1)
+            let frame = UIGraphicsImageRenderer(bounds: host.view.bounds).image { host.view.layer.render(in: $0.cgContext) }
+            let evidence = XCTAttachment(image: frame)
+            evidence.name = "FruitBasket_ActualRuleBody_FullInk_\(category)"
+            evidence.lifetime = .keepAlways; add(evidence)
+        }
+    }
+
 }

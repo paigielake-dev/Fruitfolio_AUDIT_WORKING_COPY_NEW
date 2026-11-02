@@ -39,7 +39,13 @@ final class UserAuthoredPageUITests: XCTestCase {
         XCTAssertTrue(title.waitForExistence(timeout: 8)); title.tap(); title.typeText(name + "\n")
         let createBook = button(app, "create encyclopedia"); reach(app, createBook); createBook.tap()
         let book = button(app, name); XCTAssertTrue(book.waitForExistence(timeout: 10)); reach(app, book); book.tap()
-        let chapter = button(app, "saved pages"); XCTAssertTrue(chapter.waitForExistence(timeout: 10)); chapter.tap()
+        let chapter = button(app, "saved pages"); XCTAssertTrue(chapter.waitForExistence(timeout: 10))
+        let insideTitle = app.staticTexts["library.openBookTitle"]
+        XCTAssertTrue(insideTitle.exists)
+        XCTAssertEqual(insideTitle.label, name)
+        XCTAssertEqual(insideTitle.frame.midX, app.frame.midX, accuracy: 3)
+        capture(app, "Library_CodedBookSettled_SelectedTitle_largest_\(largest)")
+        chapter.tap()
         capture(app, "Library_InsideBook_ChapterExpanded")
         let add = button(app, "add my own page"); reach(app, add); add.tap()
         let pageTitle = app.textFields["userPage.title"]

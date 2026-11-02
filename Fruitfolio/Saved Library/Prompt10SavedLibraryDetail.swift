@@ -56,11 +56,11 @@ struct Prompt10EncyclopediaDetailView: View {
                 )
 
                 ZStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .openBook
-                    )
-                    .frame(maxWidth: 350)
-                    .accessibilityHidden(true)
+                    Color.clear
+                        .aspectRatio(1856.0 / 1337.0, contentMode: .fit)
+                        .frame(maxWidth: 350)
+                        .prompt10BookFrame("inside:" + encyclopedia.id.uuidString)
+                        .accessibilityHidden(true)
 
                     if !dynamicTypeSize.isAccessibilitySize { encyclopediaTitle(encyclopedia) }
                 }
@@ -294,12 +294,6 @@ struct Prompt10EncyclopediaDetailView: View {
                             selectedPage = page
                         } label: {
                             HStack(alignment: .top, spacing: 10) {
-                                Image("library_bookmark")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 22)
-                                    .accessibilityHidden(true)
-
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(
                                         page.question.isEmpty

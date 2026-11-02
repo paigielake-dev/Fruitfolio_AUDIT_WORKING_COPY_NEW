@@ -27,4 +27,26 @@ final class LibraryBookshelfRenderingTests: XCTestCase {
         }
     }
 
+    func testCodedBookHasDistinctContinuousIntermediateFramesAndPreservesEverySelectedCover() throws {
+        var finalFrames = Set<Data>()
+        for style in Prompt10BookStyle.allCases {
+            var stages = Set<Data>()
+            for openness in [CGFloat(0), 0.25, 0.5, 0.75, 1] {
+                let renderer = ImageRenderer(content: Prompt10CodedBookArtwork(style: style, openness: openness)
+                    .frame(width: 350, height: 252))
+                let image = try XCTUnwrap(renderer.uiImage)
+                let png = try XCTUnwrap(image.pngData())
+                XCTAssertGreaterThan(png.count, 1000, "A blank image is not a book frame")
+                stages.insert(png)
+                if openness == 1 { finalFrames.insert(png) }
+                let evidence = XCTAttachment(image: image)
+                evidence.name = "CodedBook_\(style.rawValue)_Open_\(openness)"
+                evidence.lifetime = .keepAlways; add(evidence)
+            }
+            XCTAssertEqual(stages.count, 5, "The coded intermediate pages must actually deform instead of showing one fixed image")
+        }
+        XCTAssertEqual(finalFrames.count, Prompt10BookStyle.allCases.count,
+                       "The final open book must retain the selected cover instead of resetting to a default")
+    }
+
 }
