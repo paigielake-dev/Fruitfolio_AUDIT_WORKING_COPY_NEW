@@ -1575,7 +1575,118 @@ struct Prompt28FruitBasketView: View {
 
                             if !viewModel.revealFacts.isEmpty {
                                 ForEach(Array(viewModel.revealFacts.enumerated()), id: \.element.id) { index, fact in
-                                    VStack(alignment…1343 tokens truncated…                   .accessibilityAddTraits(
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        if viewModel.revealFacts.count > 1 {
+                                            Text("\(index + 1) of \(viewModel.revealFacts.count)")
+                                                .prompt28Text(.metadata)
+                                        }
+                                        FruitfolioSemanticText(document: .init(spans: [.init(text: fact.text)]),
+                                            baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                    .accessibilityElement(children: .contain)
+                                    .accessibilityIdentifier("fruitBasket.fact." + fact.id)
+                                }
+                            } else {
+                                Text(question.explanation).prompt28Text(.body)
+                                Text("the original evidence snapshot for these notes could not be verified.")
+                                    .prompt28Text(.secondary)
+                            }
+                            ForEach(question.sourceTitles, id: \.self) { reference in
+                                Text(reference).prompt28Text(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+
+                            Text(
+                                "sources · \(question.sourceIDs.count)"
+                            )
+                            .prompt28Text(.metadata)
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                        }
+
+                        Prompt28WatercolorButton(
+                            title: "save to my encyclopedia",
+                            accent: .sage
+                        ) {
+                            showingSaveDestination = true
+                        }
+
+                        Prompt28WatercolorButton(
+                            title: "keep playing",
+                            accent: .paleYellow
+                        ) {
+                            Task {
+                                await viewModel.continueAfterReveal()
+                            }
+                        }
+
+                        Prompt28WatercolorButton(
+                            title: "change topic",
+                            accent: .mint
+                        ) {
+                            viewModel.changeTopic()
+                        }
+
+                        Prompt28WatercolorButton(
+                            title: "change difficulty",
+                            accent: .lavender
+                        ) {
+                            viewModel.screen = .learningSetup
+                        }
+
+                        Prompt28WatercolorButton(
+                            title: "start catching easy again",
+                            accent: .peach
+                        ) {
+                            viewModel.screen =
+                                .resetConfirmation
+                        }
+                    }
+                }
+            }
+            .padding(.bottom, 30)
+        }
+        .onAppear {
+            audioManager.play(.gentleCheer)
+        }
+    }
+
+    private var leaderboard: some View {
+        ScrollView {
+            VStack(spacing: 14) {
+                topBar
+
+                ZStack {
+                    FruitfolioImage(id: .fruitbasket_chalkboard)
+                        .frame(maxWidth: 340)
+                        .accessibilityHidden(true)
+                        .onAppear {
+                            Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_chalkboard)
+                        }
+
+                    VStack(spacing: 8) {
+                        Text("top 3 players")
+                            .font(.custom("Chalkboard SE", size: 20, relativeTo: .title2))
+                            .fontWeight(.bold)
+
+                        VStack(spacing: 6) {
+                            ForEach(Prompt28LeaderboardCategory.allCases, id: \.self) { category in
+                                Button {
+                                    selectedLeaderboardCategory = category
+                                } label: {
+                                    Text(category.rawValue)
+                                        .font(.custom("Chalkboard SE", size: 12, relativeTo: .caption))
+                                        .fontWeight(selectedLeaderboardCategory == category ? .bold : .regular)
+                                        .foregroundStyle(
+                                            selectedLeaderboardCategory == category
+                                            ? Color.white
+                                            : DesignTokens.ColorToken.backgroundCream.opacity(0.72)
+                                        )
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.75)
+                                }
+                                .buttonStyle(CutePopButtonStyle())
+                                .accessibilityAddTraits(
                                     selectedLeaderboardCategory == category ? .isSelected : []
                                 )
                             }

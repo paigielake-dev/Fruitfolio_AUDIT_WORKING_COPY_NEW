@@ -56,6 +56,34 @@ final class FruitBasketQuestionLifecycleTests: XCTestCase {
         XCTAssertTrue(store.questionHistory.isEmpty)
     }
 
+    func testDifficultyChangeCancelsOldQuestionAndFreshRequestUsesTheNewDifficulty() async throws {
+        let suite = "GameQuestionDifficulty-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let provider = ControlledGameQuestionProvider()
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: provider)
+        let easy = try await question("nutrition")
+        let medium = try await question("nutrition", difficulty: .medium)
+        model.rawTopic = "nutrition"
+        let old = Task { await model.startTopic() }
+        await provider.waitForRequest("nutrition")
+        model.updateDifficulty(.medium)
+        XCTAssertEqual(model.screen, .learningSetup)
+        await provider.resolve("nutrition", result: .success(easy))
+        await old.value
+        XCTAssertNil(model.currentQuestion)
+        XCTAssertTrue(store.questionHistory.isEmpty)
+        let fresh = Task { await model.startTopic() }
+        await provider.waitForRequest("nutrition")
+        await provider.resolve("nutrition", result: .success(medium))
+        await fresh.value
+        XCTAssertEqual(model.screen, .question)
+        XCTAssertEqual(model.currentQuestion?.educationalDifficulty, .medium)
+        XCTAssertEqual(store.questionHistory["nutrition"], Set([medium.id]))
+        model.viewWillDisappear()
+    }
+
     func testProviderCannotAttachAValidQuestionToTheWrongRequestedTopic() async throws {
         let suite = "GameQuestionAssociation-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
@@ -78,18 +106,16 @@ final class FruitBasketQuestionLifecycleTests: XCTestCase {
 /// Deliberately noncooperative cancellation reproduces late provider callbacks.
 private actor ControlledGameQuestionProvider: Prompt28ResearchProviding {
     private var requests: [String: CheckedContinuation<Prompt28Question, Error>] = [:]
-    private var started: Set<String> = []
     private var waiters: [String: CheckedContinuation<Void, Never>] = [:]
     func question(topic: String, normalizedTopic: String, difficulty: Prompt28EducationalDifficulty,
                   excludingQuestionIDs: Set<String>) async throws -> Prompt28Question {
         try await withCheckedThrowingContinuation { continuation in
             requests[normalizedTopic] = continuation
-            started.insert(normalizedTopic)
             waiters.removeValue(forKey: normalizedTopic)?.resume()
         }
     }
     func waitForRequest(_ topic: String) async {
-        if started.contains(topic) { return }
+        if requests[topic] != nil { return }
         await withCheckedContinuation { waiters[topic] = $0 }
     }
     func resolve(_ topic: String, result: Result<Prompt28Question, Error>) {
