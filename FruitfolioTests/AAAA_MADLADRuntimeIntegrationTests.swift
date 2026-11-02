@@ -73,7 +73,14 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 XCTAssertTrue(candidate.textForVerification.contains("\n\n"), "Paragraph structure must survive actual generation")
                 XCTAssertTrue(candidate.textForVerification.contains("2.5 ng/mL"))
                 XCTAssertFalse(candidate.medicalMeaningVerified)
+                if target == "hi" {
+                    XCTAssertFalse(candidate.textForVerification.contains("घनत्व"),
+                        "The actual prior Hindi density hallucination must not pass the corrected medical fixture")
+                    XCTAssertFalse(candidate.textForVerification.contains("ग्राम/सेमी"),
+                        "The original ng/mL result must not become grams per cubic centimetre")
+                }
                 reports.append(["target": target, "output": candidate.textForVerification,
+                    "actualSentenceEvidence": String(decoding: try JSONEncoder().encode(candidate.sentenceEvidence), as: UTF8.self),
                     "preservation": "PASS", "semanticReview": "NOT VERIFIED — requires review of this actual output"])
             } catch {
                 var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
@@ -98,6 +105,46 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                                      uniformTypeIdentifier: "public.json")
         evidence.name = "MADLAD_ActualMultilingualMedicalCandidates"
         evidence.lifetime = .keepAlways; add(evidence)
+        await runtime.unload()
+    }
+
+    func testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings() async throws {
+        let directory = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
+        let runtime = FruitfolioMADLADLocalRuntime()
+        let translator = FruitfolioMADLADDocumentTranslator(runtime: runtime)
+        let original = "These are recorded values, not medical advice: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1]."
+        let originalNumbers = FruitfolioTranslationPreservation.numbers(original)
+        let quantities = ["-2.50–-1.00 ng/mL", "12.5%", "37.0 °C", "4.20e-3 mol/L", "1.2 ×10⁻³ kg·m⁻²", "١٢٫٥٪"]
+        var reports: [[String: String]] = []
+        for target in ["es", "fr", "de", "pt", "it", "zh", "zh_Hant", "ja", "ko", "ar", "hi"] {
+            do {
+                let candidate = try await translator.candidate(source: original, sourceIdentifiers: ["source-1"],
+                    target: target, immutableTerms: [], directory: directory)
+                XCTAssertEqual(candidate.originalText, original)
+                XCTAssertEqual(candidate.citationMarkers, ["[source-1]"])
+                XCTAssertEqual(FruitfolioTranslationPreservation.numbers(candidate.textForVerification), originalNumbers)
+                for quantity in quantities { XCTAssertTrue(candidate.textForVerification.contains(quantity)) }
+                XCTAssertFalse(candidate.medicalMeaningVerified, "Exact values alone do not validate translated medical meaning")
+                reports.append(["target": target, "output": candidate.textForVerification,
+                    "actualSentenceEvidence": String(decoding: try JSONEncoder().encode(candidate.sentenceEvidence), as: UTF8.self),
+                    "preservation": "PASS", "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording"])
+            } catch {
+                var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
+                if let rejected = error as? FruitfolioTranslationRejectedCandidate {
+                    report["rejectedSourceSentence"] = rejected.sourceSentence
+                    report["actualModelInput"] = rejected.actualModelInput
+                    report["actualRejectedRawOutput"] = rejected.rawOutput
+                    report["strictReason"] = String(describing: rejected.reason)
+                }
+                reports.append(report)
+                XCTFail("Official local edge fixture failed strict preservation for \(target): \(error)")
+            }
+            let bytes = try JSONSerialization.data(withJSONObject: reports.last!, options: [.sortedKeys])
+            print("MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT " + String(decoding: bytes, as: UTF8.self))
+        }
+        let evidence = XCTAttachment(data: try JSONSerialization.data(withJSONObject: reports, options: [.prettyPrinted, .sortedKeys]),
+            uniformTypeIdentifier: "public.json")
+        evidence.name = "MADLAD_ActualMultilingualEdgeQuantities"; evidence.lifetime = .keepAlways; add(evidence)
         await runtime.unload()
     }
 

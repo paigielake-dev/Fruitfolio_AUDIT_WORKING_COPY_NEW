@@ -46,6 +46,35 @@ final class TranslationPreservationTests: XCTestCase {
         XCTAssertEqual(FruitfolioProtectedMeasurements.canonicalASCIIWidth("２．５ｎｇ／ｍＬと漢字"), "2.5ng/mLと漢字")
     }
 
+    func testProtectedQuantitiesPreserveSignsRangesPercentTemperaturePowersAndCompoundUnits() throws {
+        let source = "Recorded: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪; ≤5 mL/min/1.73m²; 3 observations on 2026-11-02."
+        let spans = ["-2.50–-1.00 ng/mL", "12.5%", "37.0 °C", "4.20e-3 mol/L", "1.2 ×10⁻³ kg·m⁻²", "١٢٫٥٪", "≤5 mL/min/1.73m²", "3", "2026-11-02"]
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: [])
+        XCTAssertEqual(plan.originalSpans, spans)
+        XCTAssertEqual(try plan.restoring(in: plan.modelInput), source)
+        XCTAssertEqual(plan.markers.count, spans.count)
+        XCTAssertFalse(plan.modelInput.contains("ng/mL"))
+        XCTAssertFalse(plan.modelInput.contains("١٢٫٥"))
+        for marker in plan.markers {
+            XCTAssertThrowsError(try plan.restoring(in: plan.modelInput.replacingOccurrences(of: marker, with: "")))
+        }
+    }
+
+    func testBareNumbersUnicodeSignsAndUnitBoundariesArePreservedWithoutInventingUnits() throws {
+        let source = "3 months, −4 observations, ２．５ ｎｇ／ｍＬ, 10⁻³, 10^-3, and 5 ± 0.2 mg/dL."
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: ["ｎｇ／ｍＬ"])
+        XCTAssertEqual(plan.originalSpans, ["3", "−4", "２．５ ｎｇ／ｍＬ", "10⁻³", "10^-3", "5 ± 0.2 mg/dL"])
+        XCTAssertTrue(plan.modelInput.contains("months"), "The unit m must not consume the start of months")
+        XCTAssertEqual(try plan.restoring(in: plan.modelInput), source)
+    }
+
+    func testDecimalLocaleExceptionCannotIgnoreExponentOrUnicodeChanges() throws {
+        for pair in [("2.5e-3", "2,5e3"), ("1.2 ×10⁻³", "1,2 ×10³"), ("2.5", "２,５"), ("10^-3", "10^3")] {
+            XCTAssertThrowsError(try FruitfolioTranslationPreservation.preserveNumbers(
+                source: pair.0, translated: pair.1, target: "fr"))
+        }
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

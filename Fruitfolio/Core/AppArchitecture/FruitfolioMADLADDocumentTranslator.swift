@@ -26,10 +26,22 @@ nonisolated struct FruitfolioTranslationCandidate: Sendable {
     let citationMarkers: [String]
     let target: String
     let medicalMeaningVerified = false
+    /// Ephemeral inference provenance. Only synthetic integration fixtures
+    /// serialize this; the application does not log or persist user content.
+    let sentenceEvidence: [FruitfolioTranslationSentenceEvidence]
+}
+
+nonisolated struct FruitfolioTranslationSentenceEvidence: Sendable, Codable {
+    let sourceSentence: String
+    let actualModelInput: String
+    let rawOutput: String
+    let restoredOutput: String
 }
 
 nonisolated enum FruitfolioTranslationPreservation {
-    static let numericPattern = #"[+−-]?\d+(?:[.,]\d+)?(?:[eE][+−-]?\d+)?"#
+    // Lexical recognition only: never parse, round, convert units, or infer a
+    // measurement's clinical meaning. Unicode digits and exponents stay exact.
+    static let numericPattern = #"[+−﹣－-]?(?:\p{Nd}+(?:[.,٫．]\p{Nd}+)?|[.．]\p{Nd}+)(?:(?:[eEｅＥ][+−﹣－-]?\p{Nd}+)|(?:[\p{Zs}\t]*[×x·][\p{Zs}\t]*10(?:\^?[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+))|\^[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+)?"#
     private static let numeric = try! NSRegularExpression(pattern: numericPattern)
     static func numbers(_ text: String) -> [String] {
         numeric.matches(in: text, range: NSRange(text.startIndex..., in: text)).compactMap {
@@ -51,6 +63,11 @@ nonisolated enum FruitfolioTranslationPreservation {
             if sourceNumber == proposed { continue }
             guard ["fr", "de"].contains(target), sourceNumber.contains("."), !sourceNumber.contains(","),
                   proposed.contains(","), !proposed.contains("."),
+                  // Decimal(string:) accepts numeric prefixes. Restrict this
+                  // legacy locale exception to whole simple ASCII decimals;
+                  // an exponent, sign, or Unicode change must never slip through.
+                  sourceNumber.range(of: #"^[+-]?[0-9]+\.[0-9]+$"#, options: .regularExpression) != nil,
+                  proposed.range(of: #"^[+-]?[0-9]+,[0-9]+$"#, options: .regularExpression) != nil,
                   let first = Decimal(string: sourceNumber, locale: Locale(identifier: "en_US_POSIX")),
                   let second = Decimal(string: proposed.replacingOccurrences(of: ",", with: "."), locale: Locale(identifier: "en_US_POSIX")),
                   first == second else { throw FruitfolioTranslationPreservationError.changedNumber }
@@ -70,7 +87,7 @@ nonisolated enum FruitfolioTranslationPreservation {
     }
 }
 
-/// Numeric results and their explicitly supplied immutable unit are opaque
+/// Numeric values, ranges, recognized unit spans and explicit immutable units are opaque
 /// source metadata, like citations. The model may translate surrounding words
 /// but cannot convert a result, translate its unit, or choose another quantity.
 nonisolated struct FruitfolioProtectedMeasurements {
@@ -81,10 +98,35 @@ nonisolated struct FruitfolioProtectedMeasurements {
 
     init(source: String, immutableTerms: [String]) throws {
         let full = NSRange(source.startIndex..., in: source)
-        var ranges: [NSRange] = []
+        let horizontal = #"[\p{Zs}\t]*"#
+        let number = FruitfolioTranslationPreservation.numericPattern
+        let quantity = #"(?:[≤≥<>≈~]"# + horizontal + #")?(?:"# + number
+            + #")(?:(?:"# + horizontal + #"(?:[–—−-]|±|to)"# + horizontal + #")(?:"# + number + #"))?"#
+        // These spellings identify source spans, not permissible conversions.
+        // Longest first plus a letter boundary avoids consuming 'm' in months.
+        let prefixes = ["", "f", "p", "n", "u", "µ", "μ", "m", "c", "d", "k", "M"]
+        let bases = ["g", "L", "l", "mol", "IU", "U", "Eq", "m", "Pa", "Hz", "J", "W", "cal"]
+        let conventional = ["%", "٪", "％", "°C", "°F", "℃", "℉", "K", "mmHg", "bpm", "min", "h", "s", "d"]
+        let unitNames = Set(prefixes.flatMap { prefix in bases.map { prefix + $0 } } + conventional)
+        let unit = unitNames.sorted { $0.count == $1.count ? $0 < $1 : $0.count > $1.count }
+            .map(NSRegularExpression.escapedPattern(for:)).joined(separator: "|")
+        let power = #"(?:\^[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+|[−-]\p{Nd}+)?"#
+        let atom = #"(?:"# + unit + #")"# + power + #"(?![\p{L}])"#
+        let denominator = #"(?:"# + number + #")?"# + atom
+        let compound = atom + #"(?:"# + horizontal + #"[/／·⋅*]"# + horizontal + denominator + #")*"#
+        var patterns = [
+            // ISO dates are immutable data too; protect the complete date so
+            // its separators and order cannot be rewritten by translation.
+            #"(?<![\p{L}\p{N}_])\d{4}-\d{2}-\d{2}(?![\p{L}\p{N}_])"#,
+            #"(?<![\p{L}\p{N}_])"# + quantity + horizontal + compound,
+            #"(?<![\p{L}\p{N}_])"# + quantity
+        ]
         for term in Set(immutableTerms) where !term.isEmpty {
-            let pattern = FruitfolioTranslationPreservation.numericPattern
-                + #"[\p{Zs}\t]*"# + NSRegularExpression.escapedPattern(for: term)
+            patterns.append(#"(?<![\p{L}\p{N}_])"# + quantity + horizontal
+                + NSRegularExpression.escapedPattern(for: term))
+        }
+        var ranges: [NSRange] = []
+        for pattern in patterns {
             let regex = try NSRegularExpression(pattern: pattern)
             ranges.append(contentsOf: regex.matches(in: source, range: full).map(\.range))
         }
@@ -195,6 +237,7 @@ actor FruitfolioMADLADDocumentTranslator {
         let citation = try NSRegularExpression(pattern: #"\[([A-Za-z0-9_.:-]+)\]"#)
         var translated: [String] = []
         var markers: [String] = []
+        var sentenceEvidence: [FruitfolioTranslationSentenceEvidence] = []
         for segment in FruitfolioTranslationLayout.segments(source) {
             try Task.checkCancellation()
             guard case .sentence(let sentence) = segment else {
@@ -244,10 +287,12 @@ actor FruitfolioMADLADDocumentTranslator {
                 output = output.trimmingCharacters(in: .whitespaces)
                 output += " " + localMarkers.joined(separator: " ") + terminal
             }
+            sentenceEvidence.append(.init(sourceSentence: modelInput,
+                actualModelInput: measurements.modelInput, rawOutput: rawOutput, restoredOutput: output))
             markers.append(contentsOf: localMarkers)
             translated.append(output)
         }
         return .init(originalText: source, textForVerification: translated.joined(),
-                     sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target)
+                     sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target, sentenceEvidence: sentenceEvidence)
     }
 }

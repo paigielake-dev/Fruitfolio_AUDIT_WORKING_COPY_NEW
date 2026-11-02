@@ -7,7 +7,38 @@ if [[ "${GITHUB_ACTIONS:-}" != "true" || "${RUNNER_OS:-}" != "macOS" || "${RUNNE
   exit 2
 fi
 : "${FRUITFOLIO_SIMULATOR_ID:?Actual booted simulator is required}"
-evidence="Fruitfolio_Verification_Evidence/MADLAD/Offline"
+# Separate finite isolation windows keep slow simulator startup/inference from
+# turning one long watchdog expiry into false offline acceptance. Every required
+# fixture still executes. A failed phase does not suppress later diagnostics.
+if [[ $# == 0 ]]; then
+  mkdir -p Fruitfolio_Verification_Evidence/MADLAD/Offline
+  overall=0
+  : > Fruitfolio_Verification_Evidence/MADLAD/Offline/phase-results.tsv
+  for phase in core multilingual edge-quantities; do
+    set +e
+    bash "$0" "$phase"
+    phase_outcome=$?
+    set -e
+    printf '%s\t%s\n' "$phase" "$phase_outcome" >> Fruitfolio_Verification_Evidence/MADLAD/Offline/phase-results.tsv
+    if [[ "$phase_outcome" != 0 ]]; then overall=1; fi
+  done
+  exit "$overall"
+fi
+phase="$1"
+selectors=()
+case "$phase" in
+  core)
+    selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime")
+    selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testCorruptTokenizerIsRejectedBeforeAnyModelInference")
+    selectors+=("-only-testing:FruitfolioTests/BundledNativeGroundingTests")
+    selectors+=("-only-testing:FruitfolioUITests/AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit") ;;
+  multilingual)
+    selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout") ;;
+  edge-quantities)
+    selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings") ;;
+  *) echo "Unknown offline phase"; exit 2 ;;
+esac
+evidence="Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase"
 mkdir -p "$evidence"
 # pfctl may return nonzero when filtering is disabled. Inspect the actual
 # status text; that is the required safe baseline, not a failure to restore.
@@ -71,10 +102,8 @@ xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfoli
   -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
   -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
   -disableAutomaticPackageResolution \
-  -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests \
-  -only-testing:FruitfolioTests/BundledNativeGroundingTests \
-  -only-testing:FruitfolioUITests/AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit \
-  -resultBundlePath Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult \
+  "${selectors[@]}" \
+  -resultBundlePath "Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult" \
   CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
   2>&1 | tee "$evidence/xcode-offline-madlad-test.log"
 test_outcome=$?
@@ -88,4 +117,4 @@ if curl --head --connect-timeout 3 --max-time 5 https://huggingface.co/ > "$evid
   exit 5
 fi
 if [[ "$test_outcome" != 0 ]]; then exit "$test_outcome"; fi
-echo "PASS: actual bundled official MADLAD and strict native FruitfolioAI grounding fixtures plus the Ask answer/return UI journey executed while new external connections were blocked; loopback remained available to the local simulator. Physical-iPhone airplane-mode and general clinical/language acceptance remain separate."
+echo "PASS: selected actual offline phase $phase executed while new external connections were blocked; loopback remained available to the local simulator. Physical-iPhone airplane-mode and general clinical/language acceptance remain separate."

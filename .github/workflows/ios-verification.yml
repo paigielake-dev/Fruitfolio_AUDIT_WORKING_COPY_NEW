@@ -162,7 +162,7 @@ jobs:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
       - name: Run unit and native inference tests
-        timeout-minutes: 25
+        timeout-minutes: 35
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
@@ -188,18 +188,20 @@ jobs:
           path: |
             Fruitfolio_Verification_Evidence/Build
       - name: Execute bundled Ask and MADLAD with verified external-network isolation
-        timeout-minutes: 20
+        timeout-minutes: 60
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: bash Tools/verify_offline_madlad_ci.sh
       - name: Export actual offline inference attachments
         if: always()
         run: |
-          if [ -f Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult/Info.plist ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
-          fi
+          for phase in core multilingual edge-quantities; do
+            result="Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult"
+            if [ -f "$result/Info.plist" ]; then
+              mkdir -p "Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase/Attachments"
+              xcrun xcresulttool export attachments --path "$result" \
+                --output-path "Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase/Attachments"
+            fi
+          done
       - name: Preserve actual offline isolation and inference evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -207,7 +209,7 @@ jobs:
           name: Fruitfolio_Offline_MADLAD_Evidence
           path: |
             Fruitfolio_Verification_Evidence/MADLAD/Offline
-            Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult
+            Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-*.xcresult
           retention-days: 90
       - name: Build actual iPhone Release configuration
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
