@@ -153,6 +153,7 @@ private struct HormoneMeasurementEditor: View {
             .frame(maxWidth: .infinity)
             .padding(20)
         }
+        .accessibilityIdentifier("hormoneLibrary.content")
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
@@ -217,13 +218,27 @@ private struct HormoneResearchLibraryView: View {
                 Text("these explanations use the approved research library. your recorded results are not included.")
                 if loading { ProgressView("looking through the library…") }
                 if let answer {
-                    Text(answer.answerText).textSelection(.enabled).fixedSize(horizontal: false, vertical: true)
+                    FruitfolioSemanticText(document: answer.resolvedSemanticDocument,
+                        baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
+                        .textSelection(.enabled)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .accessibilityIdentifier("hormoneLibrary.answer")
                     ForEach(answer.sources) { source in
                         VStack(alignment: .leading, spacing: 4) {
                             Text(source.title).bold()
                             if let publication = source.publicationData { Text(publication) }
-                            if let text = source.sourceText { Text(text) }
-                        }.textSelection(.enabled)
+                            if let text = source.sourceText, text != source.title { Text(text) }
+                            if let version = source.contentVersion {
+                                Text("source version: \(version)")
+                                    .font(.custom("Chalkboard SE", size: 12, relativeTo: .footnote))
+                            }
+                            Text("source identifier: \(source.id)")
+                                .font(.custom("Chalkboard SE", size: 12, relativeTo: .footnote))
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .textSelection(.enabled)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .accessibilityIdentifier("hormoneLibrary.source." + source.id)
                     }
                 }
                 if let error { Text(error) }
@@ -233,6 +248,7 @@ private struct HormoneResearchLibraryView: View {
             .frame(maxWidth: .infinity)
             .padding(20)
         }
+        .accessibilityIdentifier("hormoneLibrary.content")
         .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())

@@ -1,0 +1,3 @@
+# Hormone Library canonical semantic and source-version presentation
+
+The actual generated Hormone Library answer now renders its existing validated semantic document through the shared semantic renderer instead of discarding it into plain Text. Scientific wording and source metadata stay in their original writing direction. Source cards retain full original citation wording, omit only an identical duplicate, and display the pinned identifier/content version without silently resolving a newer source. Original measurement privacy and the research request remain unchanged. Existing hormone and research regression tests apply; actual Apple execution pending. This display repair does not establish clinical completeness or new Adjusted Rhythm calibration.
