@@ -439,3 +439,32 @@ extension Prompt10SavedLibraryTests {
         XCTAssertNil(media.data(for: id))
     }
 }
+
+
+extension Prompt10SavedLibraryTests {
+    func testReplacingAUserImageCommitsNewBytesAndRemovesOnlyTheUnreferencedOriginal() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        let book = try library.createEncyclopedia(name: "image replacement", style: .sage)
+        let first = try media.stageImageData(Data([1, 3, 5]))
+        let replacement = try media.stageImageData(Data([2, 4, 6]))
+        let abandoned = try media.stageImageData(Data([9, 9, 9]))
+        let document = FruitfolioSemanticDocument(spans: [.init(text: "original writing")])
+        let page = try library.saveUserPage(pageID: nil, encyclopediaID: book.id,
+            chapterID: book.chapters[0].id, title: "my page", document: document, imageIDs: [first])
+        let edited = try library.saveUserPage(pageID: page.id, encyclopediaID: book.id,
+            chapterID: book.chapters[0].id, title: "my page", document: document, imageIDs: [replacement])
+        XCTAssertEqual(edited.id, page.id)
+        XCTAssertEqual(edited.resolvedSemanticDocument, document)
+        XCTAssertNil(media.data(for: first))
+        XCTAssertEqual(media.data(for: replacement), Data([2, 4, 6]))
+        // The persistence operation must not erase an unrelated live draft.
+        XCTAssertEqual(media.data(for: abandoned), Data([9, 9, 9]))
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertEqual(reopened.encyclopedias[0].chapters[0].pages[0].importedImageIDs, [replacement])
+        XCTAssertEqual(media.data(for: replacement), Data([2, 4, 6]))
+        XCTAssertNil(media.data(for: abandoned), "Abandoned drafts are removed only during explicit restart recovery")
+    }
+}

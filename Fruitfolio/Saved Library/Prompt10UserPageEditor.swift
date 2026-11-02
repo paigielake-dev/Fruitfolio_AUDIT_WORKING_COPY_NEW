@@ -98,7 +98,12 @@ struct Prompt10UserPageEditor: View {
                     destructiveAction: cancel)
             }
         }
-        .interactiveDismissDisabled(dirty)
+        .interactiveDismissDisabled(dirty || photoTask != nil)
+        .onDisappear {
+            photoTask?.cancel()
+            photoTask = nil
+            if !saved { discardDraftImages() }
+        }
         .onChange(of: photo) { _, value in
             guard let value else { return }
             photoTask?.cancel()
@@ -108,8 +113,17 @@ struct Prompt10UserPageEditor: View {
 
     private func cancel() {
         photoTask?.cancel()
-        for id in importedDuringEdit { try? Prompt10LocalMediaStore.shared.delete(id) }
+        discardDraftImages()
         onCancel()
+    }
+
+    private func discardDraftImages() {
+        // An unrelated navigation/dismissal can end an editor as well as its
+        // explicit Cancel button. Only this editor's uncommitted bytes belong
+        // to its cleanup; never delete an image referenced by a saved page.
+        for id in importedDuringEdit where !store.imageIsReferenced(id) {
+            try? Prompt10LocalMediaStore.shared.delete(id)
+        }
     }
 
     private func formatButton(_ label: String, _ emphasis: FruitfolioSemanticEmphasis) -> some View {
@@ -141,6 +155,9 @@ struct Prompt10UserPageEditor: View {
             try Task.checkCancellation()
             let id = try Prompt10LocalMediaStore.shared.stageImageData(data)
             importedDuringEdit.insert(id); imageIDs.append(id)
+        } catch is CancellationError {
+            // Dismissal is intentional, and must not surface a stale import
+            // error or commit image bytes after the editor has gone away.
         } catch { self.error = "that image could not be saved." }
     }
 }
