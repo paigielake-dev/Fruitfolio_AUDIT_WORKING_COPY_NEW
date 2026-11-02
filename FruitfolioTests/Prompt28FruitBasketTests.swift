@@ -319,6 +319,99 @@ final class Prompt28FruitBasketTests: XCTestCase {
             "The historical point threshold was visibly above the painted basket")
     }
 
+    func testFrameRegisteredStarsBeyondVisualWindowRemainInTheActualRoundRecord() throws {
+        let suite = "Prompt28.FullStarRecord.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: .init(defaults: defaults),
+                                                 researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        model.screen = .catchActive
+        model.updateGameplayFieldSize(width: 402, height: 874)
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: 402, fieldHeight: 874)
+        let entry = (geometry.mouthY + Prompt28BasketCatchGeometry.starDiameter(fieldWidth: 402) / 2) / 874
+        var lastStarID: UUID?
+        for index in 0..<12 {
+            let star = Prompt28FallingStar(x: 0.5, y: entry - 0.002, fallSpeed: 0.1,
+                                           horizontalDrift: 0, rotationDegrees: 0)
+            model.activeStars = [star]
+            model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 100 + Double(index)))
+            let presentation = UUID()
+            model.handleCatchPresentation(id: star.id, event: .appeared(presentation))
+            model.handleCatchPresentation(id: star.id, event: .settled(presentation))
+            model.tick(delta: 0.2, now: Date(timeIntervalSince1970: 100.2 + Double(index)))
+            XCTAssertEqual(model.availableStarPasses, index + 1)
+            XCTAssertEqual(model.settledCatches.filter { $0.isStar && $0.collected }.count, index + 1)
+            lastStarID = star.id
+        }
+        XCTAssertEqual(model.roundCollection.standaloneStarsCaught, 12)
+        XCTAssertEqual(model.basketCount, 0)
+        let display = Prompt28BasketArtworkProjection(catches: model.settledCatches)
+        XCTAssertEqual(display.registeredStars, 12)
+        XCTAssertEqual(display.visibleCatches.filter(\.isStar).count, 8)
+        XCTAssertEqual(display.additionalCollectedStars, 4)
+        if let id = lastStarID {
+            model.handleCatchPresentation(id: id, event: .settled(UUID()))
+            XCTAssertEqual(model.availableStarPasses, 12, "Repeated completion cannot register another star")
+        }
+        model.viewWillDisappear()
+    }
+
+    func testClassificationBasketRecordsActualAcceptedGoodAndProtectedBadFruitIdentities() throws {
+        let suite = "Prompt28.ClassifiedIdentity.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        store.controlMode = .classification
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.currentQuestion = fixtureQuestion()
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture",
+                                         educationalDifficulty: .easy, startingGameLevel: 1, availableStarPasses: 1)
+        model.screen = .catchActive
+        model.classificationFruit = .init(fruitID: .apple, classification: .good, x: 0.5,
+                                           fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        let beforeBadScore = model.session?.score
+        model.classificationFruit = .init(fruitID: .lemon, classification: .bad, x: 0.5,
+                                           fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        XCTAssertEqual(model.settledCatches.map(\.assetID), [Prompt28FruitID.apple.assetID, Prompt28FruitID.lemon.assetID])
+        XCTAssertEqual(model.roundCollection.goodFruit, [.apple])
+        XCTAssertEqual(model.roundCollection.badFruit, [.lemon])
+        XCTAssertEqual(model.roundCollection.starPassesConsumed, 1)
+        XCTAssertEqual(model.availableStarPasses, 0)
+        XCTAssertEqual(model.session?.score, beforeBadScore)
+        XCTAssertEqual(model.screen, .catchActive)
+        model.viewWillDisappear()
+    }
+
+    func testPausedClassificationCannotRegisterFruitOrSpendAStarPass() throws {
+        let suite = "Prompt28.PausedClassification.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        store.controlMode = .classification
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.currentQuestion = fixtureQuestion()
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture",
+                                         educationalDifficulty: .easy, startingGameLevel: 1, availableStarPasses: 1)
+        model.screen = .catchActive
+        model.isPaused = true
+        let fruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: 0.5,
+                                          fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationFruit = fruit
+        model.classificationDecision(accept: true)
+        XCTAssertEqual(model.classificationFruit?.id, fruit.id)
+        XCTAssertEqual(model.availableStarPasses, 1)
+        XCTAssertTrue(model.roundCollection.badFruit.isEmpty)
+        XCTAssertTrue(model.settledCatches.isEmpty)
+        model.isPaused = false
+        model.classificationDecision(accept: true)
+        XCTAssertEqual(model.availableStarPasses, 0)
+        XCTAssertEqual(model.roundCollection.badFruit, [.lemon])
+        model.viewWillDisappear()
+    }
+
     func testActualStarFrameDoesNotBankUntilFullEntryAndKeepsSettledArtwork() throws {
         let suite = "Prompt28.FullEntry.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }

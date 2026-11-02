@@ -14,6 +14,74 @@
       "verification": "Three lifecycle tests with deliberately late/noncooperative provider callbacks and actual bundled grounded questions were added. Not executed on Mac. Existing bad-fruit/no-pass termination, exactly-one pass consumption and uncapped star-pass accumulation already exist and were not rewritten.",
       "evidence": "FruitfolioTests/FruitBasketQuestionLifecycleTests.swift",
       "remainingIssues": "Run new lifecycle tests and complete actual game UI sequence on founder Mac. These source changes do not establish full gameplay acceptance."
+    },
+    {
+      "requirementID": "SUP-GAME-QUESTION-INTEGRITY-001",
+      "originalBreakdownItem": "Playable questions must have unambiguous choices and pinned, approved original evidence; requested topic/difficulty association must be correct.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "Malformed duplicate/blank option and citation identities, duplicate choice text, empty questions/explanations/version locks are rejected. A shared snapshot check requires the original passage/package, unique source records, approved-source display eligibility and nonempty original source versions. The adapter and actual question-loading boundary both require this snapshot; source IDs alone do not approve a scientific question.",
+      "verification": "Three integrity XCTest cases with multiple malformed decoded-JSON subcases added; lifecycle coverage extended to difficulty changes (four lifecycle cases). Not executed on Mac.",
+      "evidence": [
+        "FruitfolioTests/FruitBasketQuestionIntegrityTests.swift",
+        "FruitfolioTests/FruitBasketQuestionLifecycleTests.swift"
+      ],
+      "remainingIssues": "Run canonical provider/menu/topic/difficulty regressions and full actual game journeys. Structural approval metadata is not independent clinical review."
+    },
+    {
+      "requirementID": "FF1B-331",
+      "originalBreakdownItem": "Allow star passes to accumulate without a fixed maximum.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28BasketArtworkProjection.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "Basket artwork no longer fabricates catches from the allowed fruit pool. Classification and reveal use actual registered artwork; accepted classification bad fruit now records its real identity without duplicating frame-driven catches. All registered stars remain in the model. A bounded drawing projection shows eight already-collected star icons plus an exact additional-stars count, while always showing pending artwork needed for real settling acknowledgement. This is not a pass or catch-record cap. Paused classification cannot consume passes or register fruit.",
+      "verification": "Five new cases: 12 actual frame/settling acknowledgements retain 12 stars/passes; actual classified good/bad identities and one-pass use; paused classification safety; empty and bounded artwork projections. Not executed on Mac. Existing collision/settling/scoring assertions remain unchanged.",
+      "evidence": [
+        "FruitfolioTests/Prompt28FruitBasketTests.swift",
+        "FruitfolioTests/BasketArtworkProjectionTests.swift"
+      ],
+      "remainingIssues": "Run full normal/largest game UI journeys, reveal screenshots, strict accessibility, restart/source snapshots and animation recordings."
+    },
+    {
+      "requirementID": "FF1B-334",
+      "originalBreakdownItem": "Do not count standalone stars toward the good-fruit basket target.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28BasketArtworkProjection.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "Basket artwork no longer fabricates catches from the allowed fruit pool. Classification and reveal use actual registered artwork; accepted classification bad fruit now records its real identity without duplicating frame-driven catches. All registered stars remain in the model. A bounded drawing projection shows eight already-collected star icons plus an exact additional-stars count, while always showing pending artwork needed for real settling acknowledgement. This is not a pass or catch-record cap. Paused classification cannot consume passes or register fruit.",
+      "verification": "Five new cases: 12 actual frame/settling acknowledgements retain 12 stars/passes; actual classified good/bad identities and one-pass use; paused classification safety; empty and bounded artwork projections. Not executed on Mac. Existing collision/settling/scoring assertions remain unchanged.",
+      "evidence": [
+        "FruitfolioTests/Prompt28FruitBasketTests.swift",
+        "FruitfolioTests/BasketArtworkProjectionTests.swift"
+      ],
+      "remainingIssues": "Run full normal/largest game UI journeys, reveal screenshots, strict accessibility, restart/source snapshots and animation recordings."
+    },
+    {
+      "requirementID": "FF1B-366",
+      "originalBreakdownItem": "Trigger basket reveal after the actual round finishes.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28BasketArtworkProjection.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "Basket artwork no longer fabricates catches from the allowed fruit pool. Classification and reveal use actual registered artwork; accepted classification bad fruit now records its real identity without duplicating frame-driven catches. All registered stars remain in the model. A bounded drawing projection shows eight already-collected star icons plus an exact additional-stars count, while always showing pending artwork needed for real settling acknowledgement. This is not a pass or catch-record cap. Paused classification cannot consume passes or register fruit.",
+      "verification": "Five new cases: 12 actual frame/settling acknowledgements retain 12 stars/passes; actual classified good/bad identities and one-pass use; paused classification safety; empty and bounded artwork projections. Not executed on Mac. Existing collision/settling/scoring assertions remain unchanged.",
+      "evidence": [
+        "FruitfolioTests/Prompt28FruitBasketTests.swift",
+        "FruitfolioTests/BasketArtworkProjectionTests.swift"
+      ],
+      "remainingIssues": "Run full normal/largest game UI journeys, reveal screenshots, strict accessibility, restart/source snapshots and animation recordings."
     }
   ]
 }
