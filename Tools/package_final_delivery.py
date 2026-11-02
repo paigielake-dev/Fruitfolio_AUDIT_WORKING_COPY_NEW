@@ -42,6 +42,24 @@ def included(path):
     return path.is_file()
 
 
+def verify_strict_validator(intelligence):
+    start = intelligence.index('nonisolated enum FruitfolioGeneratedDraftValidator')
+    end = intelligence.index('// MARK: - Research intelligence engine', start)
+    validator = intelligence[start:end]
+    identity_guard = '        guard evidence.hasUnambiguousEvidenceIdentity else { return nil }\n'
+    if validator.count(identity_guard) != 1 or validator.index(identity_guard) > validator.index('let noteByID = Dictionary('):
+        raise RuntimeError('Strict grounding identity preflight is missing or moved after unsafe indexing')
+    # The only authorized change to the original validator is this stricter
+    # duplicate/blank-identity preflight. Removing exactly that added line must
+    # reproduce the complete authoritative 6ed804a validator, byte for byte.
+    original = validator.replace(identity_guard, '', 1)
+    if hashlib.sha256(original.encode()).hexdigest() != '18354af8a8f3349a21648a77778702d59a9c42539d77c64d5577afc355182b60':
+        raise RuntimeError('Strict grounding validation differs beyond the authorized identity preflight')
+    return {'originalValidatorSHA256': hashlib.sha256(original.encode()).hexdigest(),
+            'currentValidatorSHA256': hashlib.sha256(validator.encode()).hexdigest(),
+            'authorizedAddition': 'duplicate/blank evidence identity preflight before Dictionary indexing'}
+
+
 def verify_inputs():
     for rel in REQUIRED:
         if not (ROOT / rel).is_file(): raise RuntimeError('Missing required build/delivery resource: ' + rel)
@@ -83,11 +101,7 @@ def verify_inputs():
         if match:
             rel = (match.group(1) or match.group(2)).strip()
             if not (ROOT / rel).is_dir(): raise RuntimeError('Missing synchronized source root: ' + rel)
-    intelligence = (ROOT / 'Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift').read_text()
-    start = intelligence.index('nonisolated enum FruitfolioGeneratedDraftValidator')
-    end = intelligence.index('// MARK: - Research intelligence engine', start)
-    if hashlib.sha256(intelligence[start:end].encode()).hexdigest() != '18354af8a8f3349a21648a77778702d59a9c42539d77c64d5577afc355182b60':
-        raise RuntimeError('Strict grounding validator differs from authoritative 6ed804a baseline')
+    verify_strict_validator((ROOT / 'Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift').read_text())
     tracker = json.loads((ROOT / 'Delivery/ImplementationTracker478.json').read_text())
     items = tracker['requirements']
     if len(items) != 478 or len({x['requirementID'] for x in items}) != 478: raise RuntimeError('Tracker must retain all 478 unique original requirements')
