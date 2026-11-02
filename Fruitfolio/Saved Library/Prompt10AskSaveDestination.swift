@@ -313,7 +313,7 @@ struct Prompt10AskSaveDestination: View {
                     .frame(maxWidth: .infinity)
 
                     WatercolorSecondaryButton(
-                        label: "create encyclopedia"
+                        label: "create encyclopedia", localizationKey: "create encyclopedia"
                     ) {
                         createAndSelectEncyclopedia()
                     }
@@ -334,7 +334,7 @@ struct Prompt10AskSaveDestination: View {
                 }
 
                 WatercolorPrimaryButton(
-                    label: "save here"
+                    label: "save here", localizationKey: "save here"
                 ) {
                     savePendingContent()
                 }
@@ -344,7 +344,7 @@ struct Prompt10AskSaveDestination: View {
                 )
 
                 WatercolorSecondaryButton(
-                    label: "cancel"
+                    label: "cancel", localizationKey: "cancel"
                 ) {
                     audioManager.play(.popupClose)
                     onCancel()

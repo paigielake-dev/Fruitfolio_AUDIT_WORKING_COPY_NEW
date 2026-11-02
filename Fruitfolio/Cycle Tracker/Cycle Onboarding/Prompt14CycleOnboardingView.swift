@@ -187,7 +187,7 @@ struct Prompt14CycleOnboardingView: View {
             )
             .padding(.top, 4)
 
-            WatercolorPrimaryButton(label: "get started") {
+            WatercolorPrimaryButton(label: "get started", localizationKey: "get started") {
                 model.getStarted()
             }
             .frame(maxWidth: 300)
@@ -219,7 +219,7 @@ struct Prompt14CycleOnboardingView: View {
                     model.latestPeriodUnknown()
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.latestPeriodState == .unanswered)
                     .opacity(model.draft.latestPeriodState == .unanswered ? 0.82 : 1)
             }
@@ -235,7 +235,7 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.currentPeriodAnswer == value
                     ) { model.selectCurrentPeriod(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.currentPeriodState == .unanswered)
                     .opacity(model.draft.currentPeriodState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -262,7 +262,7 @@ struct Prompt14CycleOnboardingView: View {
                     label: "i’m not sure",
                     selected: model.draft.periodEndState == .unknown
                 ) { model.periodEndUnknown() }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.periodEndState == .unanswered)
                     .opacity(model.draft.periodEndState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -316,7 +316,7 @@ struct Prompt14CycleOnboardingView: View {
                     }
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.previousHistoryState == .unanswered)
                     .opacity(model.draft.previousHistoryState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -333,7 +333,7 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.subjectiveRegularity == value
                     ) { model.chooseRegularity(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.regularityState == .unanswered)
                     .opacity(model.draft.regularityState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -353,7 +353,7 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.cycleAffectingContexts.contains(value)
                     ) { model.toggleCycleContext(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.cycleContextState == .unanswered)
                     .opacity(model.draft.cycleContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -373,7 +373,7 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.recentContexts.contains(value)
                     ) { model.toggleRecentContext(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.recentContextState == .unanswered)
                     .opacity(model.draft.recentContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -396,7 +396,7 @@ struct Prompt14CycleOnboardingView: View {
                         ) { model.toggleTrackingPreference(value) }
                     }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.trackingPreferencesState == .unanswered)
                     .opacity(model.draft.trackingPreferencesState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -422,7 +422,7 @@ struct Prompt14CycleOnboardingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 2)
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.fertilityPreference == nil)
                     .opacity(model.draft.fertilityPreference == nil ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -496,7 +496,7 @@ struct Prompt14CycleOnboardingView: View {
                     Prompt14BBTInfo()
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(!bbtCanContinue)
                     .opacity(bbtCanContinue ? 1 : 0.82)
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -524,7 +524,7 @@ struct Prompt14CycleOnboardingView: View {
                     .foregroundStyle(Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
 
-                WatercolorPrimaryButton(label: "got it ♡") {
+                WatercolorPrimaryButton(label: "got it ♡", localizationKey: "got it ♡") {
                     model.acknowledgeCervicalFluid()
                 }
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -540,7 +540,7 @@ struct Prompt14CycleOnboardingView: View {
                 text: "all set! Fruitfolio will start with what you know and adjust as you log more. ♡"
             )
 
-            WatercolorPrimaryButton(label: "open my cycle tracker") {
+            WatercolorPrimaryButton(label: "open my cycle tracker", localizationKey: "open my cycle tracker") {
                 Task {
                     if await model.finish() {
                         withAnimation(motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24)) {

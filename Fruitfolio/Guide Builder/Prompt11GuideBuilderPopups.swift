@@ -147,7 +147,7 @@ struct Prompt11CreateGuidePopup: View {
                 }
 
                 WatercolorSecondaryButton(
-                    label: "not yet"
+                    label: "not yet", localizationKey: "not yet"
                 ) {
                     audioManager.play(.popupClose)
                     onDismiss()
@@ -274,7 +274,7 @@ struct Prompt11RenameGuidePopup: View {
                     }
                 }
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -369,7 +369,7 @@ struct Prompt11DescriptionPopup: View {
                     }
                 }
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -489,7 +489,7 @@ struct Prompt11ChangeCoverPopup: View {
                     }
                 }
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -554,7 +554,7 @@ struct Prompt11DeleteGuidePopup: View {
                     onDismiss()
                 }
 
-                WatercolorSecondaryButton(label: "delete guide") {
+                WatercolorSecondaryButton(label: "delete guide", localizationKey: "delete guide") {
                     do {
                         try store.deleteEncyclopedia(id: encyclopediaID)
                         audioManager.play(.bookClose)
@@ -662,7 +662,7 @@ struct Prompt11SectionPopup: View {
                     }
                 }
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -765,7 +765,7 @@ struct Prompt11NotePopup: View {
                     }
                 }
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -863,7 +863,7 @@ struct Prompt11MovePagePopup: View {
                     )
                 )
 
-                WatercolorSecondaryButton(label: "cancel") {
+                WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
@@ -938,7 +938,7 @@ struct Prompt11RemovePagePopup: View {
                     onDismiss()
                 }
 
-                WatercolorSecondaryButton(label: "remove page") {
+                WatercolorSecondaryButton(label: "remove page", localizationKey: "remove page") {
                     do {
                         try store.deletePage(
                             encyclopediaID: encyclopediaID,
@@ -997,7 +997,7 @@ struct Prompt11OriginalAnswerPopup: View {
                         .frame(maxWidth: .infinity)
                 }
 
-                WatercolorSecondaryButton(label: "close") {
+                WatercolorSecondaryButton(label: "close", localizationKey: "close") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }

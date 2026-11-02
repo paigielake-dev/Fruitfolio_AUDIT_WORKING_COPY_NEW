@@ -183,7 +183,7 @@ struct Prompt22HormoneRhythmView: View {
                 }
             }
             if mode != .typical {
-                WatercolorSecondaryButton(label: "restore original hormone rhythm") { mode = .typical }
+                WatercolorSecondaryButton(label: "restore original hormone rhythm", localizationKey: "restore original hormone rhythm") { mode = .typical }
                     .accessibilityIdentifier("hormoneRhythm.restoreOriginal")
             }
         }

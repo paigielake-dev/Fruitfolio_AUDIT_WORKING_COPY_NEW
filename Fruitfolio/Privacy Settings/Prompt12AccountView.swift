@@ -137,7 +137,7 @@ struct Prompt12AccountView: View {
                     .multilineTextAlignment(.center)
             }
 
-            WatercolorSecondaryButton(label: "save username") {
+            WatercolorSecondaryButton(label: "save username", localizationKey: "save username") {
                 usernameFocused = false
                 audioManager.play(.buttonSoftPop)
                 if let error = usernameStore.setUsername(usernameDraft) {
@@ -229,7 +229,7 @@ struct Prompt12AccountView: View {
             )
 
             if store.pendingLocalChanges {
-                WatercolorSecondaryButton(label: "sync now") {
+                WatercolorSecondaryButton(label: "sync now", localizationKey: "sync now") {
                     audioManager.play(.buttonSoftPop)
                     store.syncNow()
                 }

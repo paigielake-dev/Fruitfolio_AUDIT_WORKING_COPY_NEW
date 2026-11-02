@@ -228,7 +228,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
 
     private var cancelButton: some View {
         WatercolorSecondaryButton(
-            label: "cancel"
+            label: "cancel", localizationKey: "cancel"
         ) {
             audioManager.play(
                 .popupClose
@@ -352,7 +352,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
 
                 WatercolorPrimaryButton(
-                    label: "save name"
+                    label: "save name", localizationKey: "save name"
                 ) {
                     do {
                         try store.renameEncyclopedia(
@@ -373,7 +373,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
 
                 WatercolorSecondaryButton(
-                    label: "cancel"
+                    label: "cancel", localizationKey: "cancel"
                 ) {
                     audioManager.play(
                         .popupClose
@@ -472,7 +472,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
 
                 WatercolorPrimaryButton(
-                    label: "keep my encyclopedia"
+                    label: "keep my encyclopedia", localizationKey: "keep my encyclopedia"
                 ) {
                     audioManager.play(
                         .popupClose
@@ -482,7 +482,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
 
                 WatercolorSecondaryButton(
-                    label: "delete encyclopedia"
+                    label: "delete encyclopedia", localizationKey: "delete encyclopedia"
                 ) {
                     do {
                         try store.deleteEncyclopedia(
@@ -559,7 +559,7 @@ struct Prompt10FullLibraryPopup: View {
                 .multilineTextAlignment(.center)
 
                 WatercolorPrimaryButton(
-                    label: "back to my library"
+                    label: "back to my library", localizationKey: "back to my library"
                 ) {
                     audioManager.play(
                         .popupClose

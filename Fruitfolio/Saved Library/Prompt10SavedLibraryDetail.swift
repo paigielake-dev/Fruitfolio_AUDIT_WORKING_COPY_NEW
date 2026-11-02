@@ -437,7 +437,7 @@ struct Prompt10SavedPageView: View {
                 }
                 notesSection
                 importedImagesSection
-                WatercolorSecondaryButton(label: "delete saved page") {
+                WatercolorSecondaryButton(label: "delete saved page", localizationKey: "delete saved page") {
                     notesFocused = false; showDeletePage = true
                 }
 

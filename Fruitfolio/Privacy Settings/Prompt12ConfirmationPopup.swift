@@ -39,13 +39,13 @@ struct Prompt12ConfirmationPopup: View {
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 275)
 
-                WatercolorPrimaryButton(label: primaryLabel) {
+                WatercolorPrimaryButton(label: primaryLabel, localizationKey: primaryLabel) {
                     primaryAction()
                 }
 
                 if let secondaryLabel,
                    let secondaryAction {
-                    WatercolorSecondaryButton(label: secondaryLabel) {
+                    WatercolorSecondaryButton(label: secondaryLabel, localizationKey: secondaryLabel) {
                         audioManager.play(.popupClose)
                         secondaryAction()
                     }
@@ -53,7 +53,7 @@ struct Prompt12ConfirmationPopup: View {
 
                 if let destructiveLabel,
                    let destructiveAction {
-                    FruitfolioControlPillButton(label: destructiveLabel, playsSound: false) {
+                    FruitfolioControlPillButton(label: destructiveLabel, localizationKey: destructiveLabel, playsSound: false) {
                         audioManager.play(.buttonSoftPop)
                         destructiveAction()
                     }

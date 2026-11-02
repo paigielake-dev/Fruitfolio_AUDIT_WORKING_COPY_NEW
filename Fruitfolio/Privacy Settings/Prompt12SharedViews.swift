@@ -53,8 +53,9 @@ struct Prompt12RouteHeader: View {
                     Spacer()
                 }
 
-                Text(title)
-                    .font(.custom("Chalkboard SE", size: 25))
+                Text(LocalizedStringKey(title))
+                    .font(.custom("Chalkboard SE", size: 25, relativeTo: .title2))
+                    .accessibilityAddTraits(.isHeader)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -73,8 +74,8 @@ struct Prompt12RouteHeader: View {
                     .accessibilityHidden(true)
             }
 
-            Text(subtitle)
-                .font(.custom("Chalkboard SE", size: 12.5))
+            Text(LocalizedStringKey(subtitle))
+                .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .footnote))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )

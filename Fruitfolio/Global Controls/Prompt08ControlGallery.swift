@@ -36,11 +36,11 @@ struct Prompt08ControlGallery: View {
                     )
 
                 WatercolorPrimaryButton(
-                    label: "continue"
+                    label: "continue", localizationKey: "continue"
                 ) {}
 
                 WatercolorSecondaryButton(
-                    label: "maybe later"
+                    label: "maybe later", localizationKey: "maybe later"
                 ) {}
 
                 HStack(spacing: 20) {
@@ -192,7 +192,7 @@ struct Prompt08ControlGallery: View {
                         .buttonStyle(CutePopButtonStyle())
 
                         WatercolorPrimaryButton(
-                            label: "done"
+                            label: "done", localizationKey: "done"
                         ) {}
                     }
                 }

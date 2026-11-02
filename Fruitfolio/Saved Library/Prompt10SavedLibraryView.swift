@@ -335,7 +335,7 @@ struct Prompt10SavedLibraryView: View {
                     .multilineTextAlignment(.center)
 
                     WatercolorSecondaryButton(
-                        label: "clear search"
+                        label: "clear search", localizationKey: "clear search"
                     ) {
                         searchText = ""
                     }

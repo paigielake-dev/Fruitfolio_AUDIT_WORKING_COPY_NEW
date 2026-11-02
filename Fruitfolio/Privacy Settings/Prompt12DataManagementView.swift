@@ -235,7 +235,7 @@ struct Prompt12DataManagementView: View {
 
             if mode == .popup {
                 WatercolorSecondaryButton(
-                    label: "close"
+                    label: "close", localizationKey: "close"
                 ) {
                     audioManager.play(
                         .popupClose

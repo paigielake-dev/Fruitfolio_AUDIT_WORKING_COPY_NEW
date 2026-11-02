@@ -81,7 +81,7 @@ struct Prompt10UserPageEditor: View {
                     if let error { Text(error).accessibilityIdentifier("userPage.error") }
                     FruitfolioControlPillButton(label: "save changes", localizationKey: "save changes", action: save)
                         .disabled(photoTask != nil)
-                    WatercolorSecondaryButton(label: "discard changes") {
+                    WatercolorSecondaryButton(label: "discard changes", localizationKey: "discard changes") {
                         if dirty || photoTask != nil { showUnsaved = true } else { cancel() }
                     }
                 }

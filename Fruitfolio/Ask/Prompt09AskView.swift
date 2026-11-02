@@ -1257,7 +1257,7 @@ struct Prompt09AskView: View {
             ) {
                 WatercolorSecondaryButton(
                     label:
-                        "ask something else"
+                        "ask something else", localizationKey: "ask something else"
                 ) {
                     viewModel
                         .resetConversation()

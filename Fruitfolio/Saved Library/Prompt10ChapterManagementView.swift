@@ -70,7 +70,7 @@ struct Prompt10ChapterManagementView: View {
                             .accessibilityIdentifier("chapters.name")
                         if let error { Text(error) }
                         FruitfolioControlPillButton(label: "save chapter", localizationKey: "save chapter", action: save)
-                        WatercolorSecondaryButton(label: "cancel") { showingEditor = false }
+                        WatercolorSecondaryButton(label: "cancel", localizationKey: "cancel") { showingEditor = false }
                     }
                     .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)

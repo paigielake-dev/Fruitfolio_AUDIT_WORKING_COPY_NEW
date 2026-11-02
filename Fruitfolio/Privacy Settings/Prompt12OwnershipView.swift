@@ -62,7 +62,7 @@ struct Prompt12OwnershipView: View {
                             "storefront ownership restoration and Fruitfolio data restoration are separate ideas. signing in may restore supported data; it is not another purchase."
                         )
 
-                        WatercolorSecondaryButton(label: "check ownership") {
+                        WatercolorSecondaryButton(label: "check ownership", localizationKey: "check ownership") {
                             audioManager.play(.buttonSoftPop)
                             store.beginQuietOwnershipValidation()
                         }

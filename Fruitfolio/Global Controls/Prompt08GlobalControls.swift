@@ -14,10 +14,11 @@ import UIKit
 /// the original control-pill artwork and the canonical interaction path.
 struct WatercolorPrimaryButton: View {
     let label: String
+    var localizationKey: String? = nil
     let action: () -> Void
 
     var body: some View {
-        FruitfolioControlPillButton(label: label, action: action)
+        FruitfolioControlPillButton(label: label, localizationKey: localizationKey, action: action)
     }
 }
 
@@ -25,10 +26,11 @@ struct WatercolorPrimaryButton: View {
 
 struct WatercolorSecondaryButton: View {
     let label: String
+    var localizationKey: String? = nil
     let action: () -> Void
 
     var body: some View {
-        FruitfolioControlPillButton(label: label, action: action)
+        FruitfolioControlPillButton(label: label, localizationKey: localizationKey, action: action)
     }
 }
 
