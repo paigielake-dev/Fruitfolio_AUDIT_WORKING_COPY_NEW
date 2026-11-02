@@ -1,0 +1,110 @@
+{
+  "phase": 6,
+  "recordedAtUTC": "2026-11-02T17:57:28.226198+00:00",
+  "completionClaim": false,
+  "MADLADInference": "EXCLUDED \u2014 FOUNDER-HANDLED FUTURE SPRINT",
+  "requirements": [
+    {
+      "requirementID": "FF1B-393",
+      "originalBreakdownItem": "Synchronize that language across all screens.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-397",
+      "originalBreakdownItem": "Remove hard-coded English strings that bypass the selected language.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-399",
+      "originalBreakdownItem": "Ensure users can always understand and access the language selector.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-401",
+      "originalBreakdownItem": "Support the specified major Asian languages.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-408",
+      "originalBreakdownItem": "Build an extensible language architecture.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-434",
+      "originalBreakdownItem": "Do not silently overwrite user-authored content with translations.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
+      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
+      "evidence": [
+        "FruitfolioTests/UILocalizationResolutionTests.swift",
+        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
+      ],
+      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    }
+  ]
+}
