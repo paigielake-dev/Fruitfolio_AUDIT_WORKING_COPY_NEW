@@ -18,7 +18,8 @@ struct Prompt12DataManagementView: View {
     @EnvironmentObject private var motion: MotionPreferences
     @State private var exportDocument: FruitfolioPersonalDataDocument?
     @State private var showingExportDestination = false
-    @State private var preparingExport = false
+    @StateObject private var exportPreparation = FruitfolioExportPreparation()
+    private var preparingExport: Bool { exportPreparation.isPreparing }
 
     @State private var confirmHormoneErase = false
     @State private var message: String?
@@ -27,6 +28,11 @@ struct Prompt12DataManagementView: View {
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .onDisappear {
+                // Presenting Files may cover this view; that is not leaving
+                // the feature. Preserve the user-requested destination flow.
+                if !showingExportDestination { exportPreparation.cancel() }
+            }
             .fruitfolioModalBlur(active: confirmHormoneErase, reduceMotion: motion.reduceMotionActive)
             .overlay {
                 if confirmHormoneErase {
@@ -166,7 +172,7 @@ struct Prompt12DataManagementView: View {
                     assetName:
                         "ask_source_pages",
                     onBack:
-                        onBack
+                        leaveDataManagement
                 )
             } else {
                 Text("data")
@@ -240,7 +246,7 @@ struct Prompt12DataManagementView: View {
                     audioManager.play(
                         .popupClose
                     )
-                    onBack()
+                    leaveDataManagement()
                 }
             }
         }
@@ -469,6 +475,13 @@ struct Prompt12DataManagementView: View {
             )
     }
 
+    private func leaveDataManagement() {
+        exportPreparation.cancel()
+        exportDocument = nil
+        showingExportDestination = false
+        onBack()
+    }
+
     private func prepareExport() {
         guard !preparingExport else { return }
         guard store.loadError == nil else {
@@ -477,21 +490,21 @@ struct Prompt12DataManagementView: View {
             message = Prompt12AccountPrivacyError.unreadableStoredData.localizedDescription
             return
         }
-        preparingExport = true
         message = nil
-        Task { @MainActor in
-            defer { preparingExport = false }
-            do {
-                let data = try await FruitfolioPersonalDataExport.capture(account: store.account,
-                    username: FruitfolioUsernameStore.shared.username, settings: settings,
-                    library: .shared, context: contextStore, hormones: .shared)
+        exportPreparation.start(operation: {
+            try await FruitfolioPersonalDataExport.capture(account: store.account,
+                username: FruitfolioUsernameStore.shared.username, settings: settings,
+                library: .shared, context: contextStore, hormones: .shared)
+        }, completion: { result in
+            switch result {
+            case .success(let data):
                 exportDocument = FruitfolioPersonalDataDocument(data: data)
                 showingExportDestination = true
                 message = "your readable JSON is prepared. choose where to save it; nothing is sent automatically."
-            } catch {
+            case .failure(let error):
                 exportDocument = nil
                 message = error.localizedDescription
             }
-        }
+        })
     }
 }

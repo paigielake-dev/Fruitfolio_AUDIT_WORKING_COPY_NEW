@@ -57,16 +57,26 @@ struct FruitfolioPersonalDataExport: Codable {
         guard fruitBasket.loadError == nil else { throw Prompt12AccountPrivacyError.exportFailed }
         // Read the actual domain stores. No raw defaults dump, credentials,
         // purchase receipts, model binaries or unrelated files are exported.
+        // Freeze all MainActor-owned values before the first suspension.
+        // A slow cycle-file load must not mix later health/game edits into an
+        // export whose preferences and library were already captured.
+        let preferences = Preferences(settings)
+        let books = library.encyclopedias
+        let reportedContext = context.context
+        let measurements = hormones.measurements
+        let progress = fruitBasket.topicProgress
+        let questionHistory = fruitBasket.questionHistory.mapValues { $0.sorted() }
+        let completedRounds = fruitBasket.completedRounds
         async let archive = cycle.snapshot()
         async let setup = onboarding.snapshot()
         let export = try await FruitfolioPersonalDataExport(schemaVersion: 2,
             dateRepresentation: "seconds since 2001-01-01T00:00:00Z; exact stored Foundation Date value", createdAt: now,
-            account: account, publicUsername: username, settings: Preferences(settings),
-            encyclopediasAndGuides: library.encyclopedias,
-            cycleArchive: archive, cycleSetup: setup, reportedContext: context.context,
-            hormoneMeasurements: hormones.measurements, fruitBasketProgress: fruitBasket.topicProgress,
-            fruitBasketQuestionHistory: fruitBasket.questionHistory.mapValues { $0.sorted() },
-            fruitBasketCompletedRounds: fruitBasket.completedRounds,
+            account: account, publicUsername: username, settings: preferences,
+            encyclopediasAndGuides: books,
+            cycleArchive: archive, cycleSetup: setup, reportedContext: reportedContext,
+            hormoneMeasurements: measurements, fruitBasketProgress: progress,
+            fruitBasketQuestionHistory: questionHistory,
+            fruitBasketCompletedRounds: completedRounds,
             limitations: ["Readable JSON includes sensitive health and personal data. Store and share it carefully.",
                           "User-imported image file contents are not included; saved page attachment metadata is retained. This is not a complete media backup.",
                           "Ask conversations are session-only and are not exported. Saved answers and their original source snapshots remain in encyclopedias and guides.",
