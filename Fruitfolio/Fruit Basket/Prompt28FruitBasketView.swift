@@ -141,12 +141,14 @@ struct Prompt28FruitBasketView: View {
         }
         .onDisappear {
             viewModel.viewWillDisappear()
+            audioManager.stopBasketObstacleAudio()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
                 viewModel.sceneBecameInactive()
+                audioManager.stopBasketObstacleAudio()
             }
         }
         .sheet(isPresented: $showingSaveDestination) {
@@ -1048,6 +1050,15 @@ struct Prompt28FruitBasketView: View {
                 audioManager.play(.fruitCatch)
             }
         }
+        .onChange(of: viewModel.puddleContactActive) { _, contact in
+            audioManager.setBasketPuddleInteraction(overlapping: contact, moving: viewModel.puddleMovementActive)
+        }
+        .onChange(of: viewModel.puddleMovementActive) { _, moving in
+            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: moving)
+        }
+        .onChange(of: viewModel.branchContactCount) { oldValue, newValue in
+            for _ in 0..<max(0, newValue - oldValue) { audioManager.playBasketBranchImpact() }
+        }
         .onChange(of: viewModel.vineContactCount) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.vineRustle) }
         }
@@ -1228,6 +1239,7 @@ struct Prompt28FruitBasketView: View {
                         to: normalized
                     )
                 }
+                .onEnded { _ in viewModel.basketMovementEnded() }
             )
             .zIndex(30)
             .accessibilityLabel(

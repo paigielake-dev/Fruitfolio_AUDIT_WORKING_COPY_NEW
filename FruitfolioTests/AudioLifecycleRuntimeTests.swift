@@ -229,3 +229,26 @@ extension AudioLifecycleRuntimeTests {
         evidence.name = "AudioZeroVolume_ActualPlayerObservation"; evidence.lifetime = .keepAlways; add(evidence)
     }
 }
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testMissingApprovedObstacleAssetsAreExplicitAndDoNotBorrowOtherSoundEffects() throws {
+        let suite = "AudioObstacleMissing-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true; settings.soundEffectsVolume = 0.2
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        // This deliberately resource-free bundle verifies fail-closed resource handling.
+        let empty = Bundle(for: AudioLifecycleRuntimeTests.self)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, bundle: empty)
+        manager.playBasketBranchImpact(bundle: empty)
+        XCTAssertEqual(manager.missingBasketObstacleAssets, ["audio_puddle_entry", "audio_puddle_movement", "audio_branch_impact"])
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        manager.setBasketPuddleInteraction(overlapping: false, moving: false, bundle: empty)
+        manager.stopBasketObstacleAudio()
+        let evidence = XCTAttachment(string: "Missing named obstacle assets were explicitly reported; no unrelated rain, vine, pop or fruit-catch asset was substituted. This is not proof of audible collision SFX acceptance.")
+        evidence.name = "ObstacleAudio_MissingApprovedAssets"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}

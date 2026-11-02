@@ -18,6 +18,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var session: Prompt28Session?
     @Published var activeFruit: [Prompt28FallingFruit] = []
     @Published private(set) var vineContactCount = 0
+    @Published private(set) var branchContactCount = 0
+    @Published private(set) var puddleMovementActive = false
+    @Published private(set) var puddleContactActive = false
     private var branchDeflections: [UUID: Prompt28BranchDeflection] = [:]
     private var previousVineContacts: Set<UUID> = []
     private var gameplayFieldSize = CGSize.zero
@@ -266,9 +269,13 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     func moveBasket(to normalizedX: Double) {
         guard screen == .catchActive, !isPaused else { return }
+        guard normalizedX.isFinite else { return }
         let target = min(max(normalizedX, 0.10), 0.90)
+        let previousX = basketX
         guard activeObstacles.contains(.puddle) else {
             basketIsMeetingPuddleResistance = false
+            puddleMovementActive = false
+            puddleContactActive = false
             basketX = target
             return
         }
@@ -282,7 +289,12 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let response = crossingPuddle ? 0.58 : 1.0
         basketX += (target - basketX) * response
         basketX = min(max(basketX, 0.10), 0.90)
+        // Audio follows real displacement inside the physical puddle, not a timer.
+        puddleContactActive = basketX >= 0.33 && basketX <= 0.67
+        puddleMovementActive = abs(basketX - previousX) > 0.000001 && puddleContactActive
     }
+
+    func basketMovementEnded() { puddleMovementActive = false }
 
     func classificationDecision(accept: Bool) {
         guard
@@ -444,6 +456,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                                                               fieldHeight: gameplayFieldSize.height)
                 let radius = min(max(gameplayFieldSize.width * 0.13, 46), 66) * 0.44
                 if geometry.contains(x: fruit.x, y: fruit.y + fruit.fallSpeed * delta, radius: radius) {
+                    branchContactCount += 1
                     branchDeflections[fruit.id] = Prompt28BranchDeflection(horizontalVelocity: -max(abs(fruit.horizontalDrift), 0.08))
                 }
             }
@@ -737,6 +750,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     private func stopGameplay() {
+        puddleMovementActive = false
+        puddleContactActive = false
         gameplayTask?.cancel(); gameplayTask = nil
         roundCompletionTask?.cancel(); roundCompletionTask = nil
     }

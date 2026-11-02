@@ -1,0 +1,450 @@
+FRUITFOLIO — CONTINUE DEVELOPMENT, REPAIR, AND COMPLETE PROMPT 1B VERIFICATION
+
+RESUME IMMEDIATELY FROM THE LATEST VERIFIED CHECKPOINT. DO NOT RESTART THE PROJECT, REBUILD COMPLETED FEATURES, OR MERGE INTO MAIN.
+
+You are continuing the existing Fruitfolio iOS development project.
+
+Your objective is to complete all outstanding implementation, corrections, testing, accessibility verification, localization verification, and final packaging required by the authoritative 308-page Fruitfolio Prompt 1B specification containing 478 requirements.
+
+Use the existing development branch, latest GitHub commits, recovered artifacts, authoritative specification, and verified test evidence.
+
+Continue autonomously. Do not stop after one repair or successful build.
+
+⸻
+
+PHASE 1 — RESTORE AND VERIFY THE DEVELOPMENT CHECKPOINT
+
+The previous temporary workspace was lost.
+
+The following recovery evidence is available:
+
+* Eight continuation archive parts passed their original SHA-256 checks.
+* The reconstructed ZIP passed integrity verification.
+* GitHub contains newer committed source code.
+* Run 93’s original accessibility evidence was recovered with verified checksums.
+* Run 92’s original logs and translation outputs were preserved.
+* Run 94 passed 83 focused tests.
+* The latest corrected build passed.
+
+Restore only missing resources from the verified archive.
+
+Never overwrite newer GitHub source with older backup files.
+
+Verify:
+
+1. Current development branch and commit SHA.
+2. Source integrity and working-tree status.
+3. Required Xcode project files.
+4. Offline AI and MADLAD resources.
+5. Research Library and citation data.
+6. Localization resources.
+7. Artwork and audio assets.
+8. Existing test suites.
+9. Prompt 1B specification and requirement tracker.
+10. Preserved evidence and logs.
+
+Record the restored commit SHA and resource inventory.
+
+If files remain missing, report their exact paths and impact rather than substituting invented content.
+
+⸻
+
+PHASE 2 — INVESTIGATE THE LATEST LANGUAGE-RESTART FAILURE
+
+The most recent build passed, but the language-restart UI journey failed.
+
+Retrieve and inspect the actual failure evidence before changing code.
+
+Determine whether the failure results from:
+
+* Language preference not persisting.
+* Incorrect language restoration after restart.
+* A localization or routing defect.
+* A missing or inaccessible control.
+* A UI-test navigation assumption.
+* A timing or synchronization problem.
+* Another evidence-supported cause.
+
+Repair the actual cause.
+
+Do not weaken assertions, skip the journey, or classify the failure as a test problem without evidence.
+
+Rerun the language-restart journey and preserve screenshots and logs.
+
+Verify that the selected language survives termination and relaunch.
+
+⸻
+
+PHASE 3 — COMPLETE STRICT ACCESSIBILITY REPAIRS
+
+The recovered Run 93 evidence established:
+
+* The deletion-guard Cancel visibility assertion passed.
+* Cancellation preserved the entered measurement after restart.
+* The deletion-guard body-text contrast repair passed.
+* The Fruit Basket first-use tour retained a separate contrast failure on Skip Tour.
+* The Skip Tour label has now been repaired using the existing native-label renderer.
+* The largest-text game journey previously encountered a navigation-helper issue.
+
+Complete verification of these repairs.
+
+Required checks
+
+* Normal-text contrast.
+* Largest supported Dynamic Type.
+* Full button visibility.
+* VoiceOver labels and focus order.
+* Scroll reachability.
+* Correct first-use navigation.
+* Modal accessibility.
+* Reduce Motion.
+* Proper destructive-action confirmation.
+* Cancellation preserving stored data.
+
+Preserve all original strict assertions and thresholds.
+
+Do not lower contrast requirements.
+
+Do not reduce font sizes to hide layout problems.
+
+Do not remove explanatory text.
+
+Do not mark accessibility PASS until the actual audits pass.
+
+⸻
+
+PHASE 4 — VERIFY EXPORT TIMESTAMP FIDELITY
+
+A precision issue was identified in the export system.
+
+Converting stored dates to Unix milliseconds can lose fractional-second precision.
+
+A repair using an explicit lossless date format has been prepared.
+
+Complete and verify this repair.
+
+Requirements:
+
+1. Preserve original stored timestamp precision.
+2. Maintain backward compatibility with existing exported files.
+3. Verify full-record round trips.
+4. Verify populated Health Context records.
+5. Verify hormone measurements.
+6. Verify Fruit Basket progress and question history.
+7. Verify saved citation snapshots.
+8. Verify record identity and source metadata.
+9. Verify JSON save and actual file readback.
+10. Verify cancellation does not report success or mutate stored data.
+11. Verify corrupted stored data fails explicitly without being overwritten.
+
+Use exact value comparisons wherever appropriate.
+
+Do not accept JSON parsing alone as proof of fidelity.
+
+Run tests using both the new and legacy date formats.
+
+⸻
+
+PHASE 5 — VERIFY FRUIT BASKET GAME LIFECYCLE
+
+Run 94 passed the real abandoned-game-owner lifetime test.
+
+Preserve this result.
+
+A new simulator journey is being added to test:
+
+Active game → Home/background → Resume
+
+Complete this journey and verify:
+
+* Correct timer behavior.
+* Correct pause/resume behavior.
+* No retained abandoned-game timer.
+* No unintended scoring.
+* No duplicated catches.
+* No premature round completion.
+* Correct obstacle state.
+* Correct star-pass state.
+* Correct navigation and re-entry.
+* Proper behavior when the app becomes inactive.
+
+Preserve existing scoring rules.
+
+Test actual simulator lifecycle transitions, not only mocked state changes.
+
+⸻
+
+PHASE 6 — COMPLETE BASKET REVEAL, INCLUDING EDUCATIONAL FACTS
+
+IMPORTANT: THE AUTHORITATIVE PROMPT 1B EXPLICITLY REQUIRES BITE-SIZED EDUCATIONAL FACTS IN BASKET REVEAL.
+
+Do not omit this requirement.
+
+The new frame-based Basket Reveal test passed in the earlier repair batch.
+
+Verify that the production implementation presents both:
+
+A. Actual gameplay results
+
+* Registered fruit catches.
+* Actual fruit identities.
+* Stars collected.
+* Star passes consumed.
+* Round score.
+* Rewards and applicable consequences.
+* Personal-best celebration when appropriate.
+
+Do not reconstruct catches from the question’s allowed fruit pool.
+
+B. Bite-sized educational facts
+
+* Facts associated with the questions encountered during the completed round.
+* Research-Library-grounded explanations.
+* Original source and citation associations.
+* Preserved source versions and citation snapshots.
+* Concise parenthetical citations where appropriate.
+* Scientifically accurate uncertainty and terminology.
+* No invented or unrelated facts.
+* No kaomojis.
+
+The facts must remain readable at large text sizes.
+
+Allow scrolling without truncating evidence.
+
+Verify that the reveal occurs after the actual round ends.
+
+Add explicit assertions for the educational facts and their source associations.
+
+Do not mark Basket Reveal fully compliant merely because its frame-based gameplay-results test passed.
+
+⸻
+
+PHASE 7 — COMPLETE MULTILINGUAL VERIFICATION
+
+The expanded language fixture tested all 60 selector choices.
+
+Results:
+
+* 55 produced output.
+* Five rejected missing official target tags.
+* Kurmanji returned Arabic-script output identical to the Sorani fixture.
+* Quechua returned output identical to the Spanish fixture.
+* Japanese preservation fixtures improved, but mixed-language output remains.
+
+These findings must remain accurately recorded.
+
+Output generation does not establish language correctness.
+
+Investigate:
+
+1. The five unsupported target tags.
+2. Kurmanji language routing and script identity.
+3. Quechua language routing and Spanish substitution.
+4. Japanese mixed-language output.
+5. Language preference persistence.
+6. Actual offline inference.
+7. Measurement and unit preservation.
+8. Negation preservation.
+9. Uncertainty and estimate qualifiers.
+10. Scientific terminology.
+11. Citation preservation.
+12. Right-to-left interface behavior where applicable.
+
+Do not silently substitute Sorani for Kurmanji or Spanish for Quechua.
+
+Do not invent tokenizer tags.
+
+Do not label unsupported or incorrect translations as successful.
+
+Preserve the clinical translation acceptance gate.
+
+Distinguish:
+
+* Selector availability.
+* Tokenizer support.
+* Runtime output.
+* Correct language identity.
+* Semantic preservation.
+* Clinical translation acceptance.
+
+Each must be verified separately.
+
+⸻
+
+PHASE 8 — COMPLETE REDUCE MOTION VERIFICATION
+
+A repair is being prepared to remove the modal scale effect when Reduce Motion is enabled.
+
+Complete the implementation and verify it on the simulator.
+
+Check:
+
+* Modal presentation.
+* Modal dismissal.
+* Implicit SwiftUI animations.
+* Fruit Basket transitions.
+* Educational popups.
+* Accessibility focus.
+* Interaction responsiveness.
+
+Reduce Motion must not disable required functionality.
+
+Do not mark PASS based solely on source inspection.
+
+⸻
+
+PHASE 9 — RUN COMPLETE GAME AND ACCESSIBILITY JOURNEYS
+
+Run 92’s normal-text Fruit Basket journey passed:
+
+Question answering → Catching → Pause → Exit → Fresh re-entry.
+
+Preserve that evidence.
+
+Now execute the equivalent largest-text journey.
+
+Also verify:
+
+* First-use tour.
+* Skip Tour.
+* Rules.
+* Game home.
+* Topic selection.
+* Difficulty selection.
+* Question answering.
+* Long research-source text.
+* Scrollable answer choices.
+* Catching gameplay.
+* Star passes.
+* Bad-fruit consequences.
+* Pause/resume.
+* Basket Reveal.
+* Educational facts.
+* Saving educational content.
+* Exit and re-entry.
+
+Capture screenshots for important states.
+
+Preserve the original strict accessibility checks.
+
+⸻
+
+PHASE 10 — COMPLETE THE 478-REQUIREMENT PROMPT 1B AUDIT
+
+Audit the complete app against the authoritative specification.
+
+Maintain a requirement-by-requirement tracker containing:
+
+* Requirement ID.
+* Exact specification wording.
+* Implementation location.
+* Verification method.
+* Test result.
+* Evidence location.
+* Outstanding discrepancy.
+* Final status.
+
+Use only:
+
+PASS / PARTIAL / NOT VERIFIED / BLOCKED / FAIL
+
+Do not mark a requirement PASS based on unrelated tests.
+
+Do not infer acceptance from a successful build.
+
+Verify all remaining app areas, not only Fruit Basket.
+
+Include Ask, research citations, offline AI, encyclopedias, guide building, Cycle Tracker, Hormone Rhythm, My Measurements, Health Context, localization, accessibility, privacy, persistence, exports, and required information destinations.
+
+⸻
+
+PHASE 11 — RUN FULL REGRESSION VERIFICATION
+
+After applying the latest repairs:
+
+1. Build the complete Xcode project.
+2. Run the complete XCTest suite.
+3. Run Swift Testing.
+4. Run focused repair tests.
+5. Run controlled-offline tests.
+6. Run export and persistence tests.
+7. Run language-restart tests.
+8. Run multilingual preservation fixtures.
+9. Run strict accessibility audits.
+10. Run normal- and largest-text UI journeys.
+11. Run real simulator background/resume tests.
+12. Run Basket Reveal educational-fact and scoring tests.
+
+Record exact test totals.
+
+Separate passed, failed, skipped, and blocked executions.
+
+Do not combine overlapping test runs into inflated totals.
+
+Preserve complete logs, screenshots, and failure evidence.
+
+Repair failures and rerun affected tests.
+
+⸻
+
+PHASE 12 — FINAL PROJECT PACKAGING
+
+When all feasible implementation and verification work is complete, prepare a downloadable ZIP containing:
+
+* Complete Xcode project.
+* Source files.
+* Required model resources and runtimes.
+* Research Library resources.
+* Localization resources.
+* Artwork and audio assets.
+* Complete test suites.
+* Updated 478-requirement tracker.
+* Build and test logs.
+* Accessibility evidence.
+* Multilingual verification results.
+* Export fidelity evidence.
+* Fruit Basket gameplay evidence.
+* Basket Reveal educational-fact evidence.
+* Corrections log.
+* Known limitations and blockers.
+* Build and restoration instructions.
+
+Verify archive integrity and SHA-256 checksums.
+
+If the archive exceeds the available download limit, split it into numbered parts with checksums and exact reconstruction instructions.
+
+Preserve the newest GitHub source and existing development branch.
+
+DO NOT MERGE INTO MAIN WITHOUT MY EXPLICIT PERMISSION.
+
+⸻
+
+EXECUTION DIRECTIVES
+
+Continue working autonomously from the latest checkpoint.
+
+Do not ask me to approve ordinary implementation steps.
+
+Do not stop after a successful build.
+
+Do not stop after a passing focused test.
+
+Do not repeat completed work unnecessarily.
+
+Do not weaken strict tests.
+
+Do not fabricate verification results.
+
+Do not silently replace missing resources.
+
+Do not claim complete localization when known language failures remain.
+
+Do not omit the educational facts from Basket Reveal.
+
+Use the authoritative Prompt 1B specification whenever implementation details are uncertain.
+
+Provide concise progress updates at meaningful checkpoints, but continue the actual work.
+
+Your final objective is a complete, verified Fruitfolio project with all 478 Prompt 1B requirements accounted for, transparent evidence for every acceptance claim, and a fully reconstructable downloadable project archive.
+
+RESUME NOW FROM THE CURRENT DEVELOPMENT BRANCH, INVESTIGATE THE LANGUAGE-RESTART FAILURE FIRST, AND CONTINUE THROUGH THE REMAINING REPAIRS, VERIFICATION, AND PACKAGING.

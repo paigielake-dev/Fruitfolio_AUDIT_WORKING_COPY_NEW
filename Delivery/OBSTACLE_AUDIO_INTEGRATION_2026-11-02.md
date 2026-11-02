@@ -1,0 +1,9 @@
+# Collision audio integration — pending Apple verification and approved assets
+
+The existing branch-deflection code is active. A monotonically increasing contact counter is incremented only when its existing geometry registers the first deflection for a fruit. Remaining frames do not emit repeated contacts. The SwiftUI gameplay presentation consumes the contact delta; classifications and scores are unchanged.
+
+Puddle movement has separate physical-contact and actual-displacement signals. A drag ending stops movement without inventing an exit; resuming movement during the same contact does not replay entry. Gameplay stop, pause, disappearance and background paths clear movement/contact. Audio uses the existing AudioManager, ambient AVAudioSession, sound-effects preferences and master mute. It does not replace music or rain. Settings changes stop or adjust dedicated obstacle players. Old effects are not automatically replayed on foregrounding.
+
+The approved catalog contains no dedicated water-entry, water-movement or branch-impact asset. The integration requests `audio_puddle_entry`, `audio_puddle_movement`, and `audio_branch_impact` only. Missing assets are recorded explicitly and no unrelated sound is substituted. These names describe required future approved resources; they are not claims that assets exist. Natural release/fade and audible realism cannot be accepted without appropriate resources and playback verification. Current movement release stops the dedicated loop immediately; a validated natural tail remains unfinished.
+
+New/extended XCTest cases inspect actual game contact events, drag-end and disappearance cleanup, and resource-free bundle failure handling. Their Apple execution is pending. Existing strict scientific validation and gameplay scoring were not modified. Local whitespace checks are not iOS build or sound verification.

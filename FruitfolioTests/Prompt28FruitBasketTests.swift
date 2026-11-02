@@ -495,6 +495,7 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.screen = .catchActive; model.basketX = 0.5
         model.moveBasket(to: 0.9)
         XCTAssertTrue(model.basketIsMeetingPuddleResistance)
+        XCTAssertFalse(model.puddleMovementActive, "The moved basket has already left the puddle; no lingering water loop")
         XCTAssertLessThan(model.basketX, 0.9)
         for _ in 0..<8 { model.moveBasket(to: 0.9) }
         XCTAssertEqual(model.basketX, 0.9)
@@ -502,6 +503,28 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.moveBasket(to: 0.8)
         XCTAssertEqual(model.basketX, 0.8, "Normal movement resumes outside the puddle")
         XCTAssertFalse(model.basketIsMeetingPuddleResistance)
+    }
+
+    func testPuddleAudioSignalsFollowActualMovementAndStopOnDragEndAndGameExit() throws {
+        let suite = "Prompt28.PuddleAudio.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: .init(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 5, currentRound: 4)
+        model.screen = .catchActive; model.basketX = 0.2
+        model.moveBasket(to: 0.5)
+        XCTAssertTrue(model.puddleContactActive)
+        XCTAssertTrue(model.puddleMovementActive)
+        model.basketMovementEnded()
+        XCTAssertTrue(model.puddleContactActive)
+        XCTAssertFalse(model.puddleMovementActive, "Stationary contact is silent")
+        model.moveBasket(to: 0.55)
+        XCTAssertTrue(model.puddleMovementActive)
+        model.viewWillDisappear()
+        XCTAssertFalse(model.puddleMovementActive)
+        XCTAssertFalse(model.puddleContactActive)
+        model.moveBasket(to: 0.6)
+        XCTAssertFalse(model.puddleMovementActive, "Paused or departed play cannot emit movement")
     }
 
     func testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound() throws {
@@ -616,10 +639,12 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.activeFruit = [fruit]
         model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
         let deflected = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertEqual(model.branchContactCount, 1, "One physical contact produces one audio event")
         XCTAssertLessThan(deflected.x, fruit.x); XCTAssertLessThan(deflected.y, fruit.y)
         XCTAssertEqual(deflected.fallSpeed, fruit.fallSpeed)
         for index in 1...8 { model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1 + Double(index) * 0.05)) }
         let falling = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertEqual(model.branchContactCount, 1, "Continuous contact must not retrigger impact audio")
         XCTAssertGreaterThan(falling.y, deflected.y)
         XCTAssertLessThan(falling.x, deflected.x)
         XCTAssertEqual(falling.fallSpeed, fruit.fallSpeed)

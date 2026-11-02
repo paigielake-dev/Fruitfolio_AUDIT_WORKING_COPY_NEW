@@ -1,0 +1,367 @@
+FRUITFOLIO — ADDITIONAL MANDATORY REQUIREMENTS
+
+Continue the existing Prompt 1B alignment work from the latest verified development checkpoint.
+
+Add the following requirements to the current implementation and verification plan.
+
+These requirements supplement the existing continuation instructions. Do not discard previous requirements, overwrite newer source files, restart the project, or merge into main.
+
+1. FRUIT BASKET — REALISTIC PUDDLE SOUND EFFECTS
+
+Implement soft, realistic puddle sound effects using Fruitfolio’s existing audio architecture.
+
+The puddle is an obstacle that creates temporary basket inertia.
+
+The sound must correspond to actual physical interaction.
+
+Required behavior
+
+* When the basket enters a puddle, play a subtle water-entry sound.
+* While the basket moves through the puddle, use appropriate gentle splashing or water-movement audio.
+* When the basket exits, end the movement sound naturally.
+* Do not play puddle audio when the basket is not interacting with a puddle.
+* Do not continuously restart or stack identical sounds.
+* Avoid loud, harsh, or exaggerated splash effects.
+* Respect the existing sound-effects volume slider.
+* Respect mute and relevant system audio settings.
+* Stop or pause effects appropriately when gameplay pauses, exits, or backgrounds.
+* Prevent retained audio playback after the game owner is destroyed.
+
+Physics synchronization
+
+The existing puddle mechanics must remain intact.
+
+Basket inertia applies only while the basket physically overlaps the puddle.
+
+Normal movement resumes after exiting.
+
+Synchronize sound playback with actual collision and movement states rather than arbitrary timers.
+
+Use existing approved audio assets where available. If no suitable sound exists, implement the integration and identify the missing asset explicitly rather than silently substituting an unrelated sound.
+
+Verification
+
+Test puddle entry, movement, exit, pause, resume, re-entry, and overlapping interactions.
+
+Verify that sound does not continue after the interaction ends.
+
+Preserve existing physics and scoring rules.
+
+⸻
+
+2. FRUIT BASKET — BRANCH IMPACT SOUND AND COLLISION
+
+Verify whether the branch obstacle is implemented and active in the current Fruit Basket gameplay.
+
+Prompt 1B specifies that branches grow from the side of the screen and deflect falling fruit when struck.
+
+If the branch is implemented, ensure its impact behavior includes appropriate audio feedback.
+
+Required behavior
+
+* The branch must appear attached to the side of the playfield rather than floating.
+* When falling fruit physically contacts the branch, its trajectory should visibly change.
+* The collision must use the existing intended branch-deflection mechanics.
+* Play a subtle, realistic branch-impact sound at the moment of contact.
+* The sound should resemble a soft wooden tap, rustle, or appropriate fruit-on-branch contact.
+* Avoid harsh or excessively loud effects.
+* Do not play impact audio without a registered collision.
+* Prevent repeated audio triggering from a single continuous collision.
+* Respect the sound-effects volume slider.
+* Respect pause, backgrounding, and game exit.
+
+Collision verification
+
+Test:
+
+* Fruit approaching the branch.
+* Actual collision detection.
+* Visible deflection.
+* Resulting fruit trajectory.
+* Sound synchronization.
+* Multiple fruit interactions.
+* Pause/resume behavior.
+* Gameplay cleanup.
+
+Do not change the existing fruit classification or scoring rules.
+
+If the branch obstacle is not yet active, preserve its intended architecture and document the missing implementation rather than claiming its sound effect is complete.
+
+⸻
+
+3. BASKET REVEAL — EDUCATIONAL FACTS ARE REQUIRED
+
+The authoritative October 16 Prompt 1B explicitly requires Basket Reveal to present bite-sized educational facts behind the questions.
+
+This requirement is mandatory.
+
+The passing frame-based Basket Reveal test must not be treated as complete acceptance unless it verifies the educational content as well.
+
+Required result presentation
+
+Basket Reveal must show:
+
+* Actual registered fruit catches.
+* Actual stars collected.
+* Star passes used.
+* Final round score.
+* Applicable rewards and consequences.
+* Personal-best celebration where appropriate.
+* Bite-sized educational facts associated with the round’s questions.
+* Supporting research citations where appropriate.
+
+Educational fact behavior
+
+Facts must be generated or selected through the approved Research Library grounding architecture.
+
+They must:
+
+1. Correspond to questions actually encountered during the completed round.
+2. Preserve the original scientific meaning.
+3. Preserve uncertainty and qualifying language.
+4. Remain associated with their supporting research sources.
+5. Preserve source versions and citation snapshots.
+6. Remain available through approved deterministic fallback when AI inference is unavailable.
+7. Never be invented merely to fill the screen.
+8. Never contain kaomojis.
+9. Remain readable at the largest supported text sizes.
+10. Support appropriate accessibility navigation.
+
+Do not regenerate historical facts using newly updated research in a way that silently changes the original completed-round record.
+
+Verification
+
+Add explicit tests confirming:
+
+* Actual registered catches match the displayed fruit.
+* Stars and passes match recorded gameplay.
+* Final score matches the existing scoring rules.
+* Facts correspond to the actual questions.
+* Facts have valid research associations.
+* Saved facts and citations survive restart.
+* Updated research does not silently rewrite historical snapshots.
+* Long facts and citations remain scrollable and accessible.
+
+⸻
+
+4. RESEARCH LIBRARY — SAFE, FOUNDER-MAINTAINABLE UPDATE ARCHITECTURE
+
+Design and implement a maintainable research-update system so the founder can add, correct, replace, or retire research content without modifying Fruit Basket gameplay code.
+
+The architecture must preserve the existing Research Library-first evidence rules and offline-first functionality.
+
+Primary objective
+
+I should be able to update Fruitfolio’s scientific research over time without breaking:
+
+* Fruit Basket questions.
+* Question difficulty settings.
+* Existing gameplay mechanics.
+* Basket Reveal facts.
+* Saved citations.
+* Existing encyclopedia entries.
+* Previously completed rounds.
+* Ask retrieval.
+* Cycle Tracker educational explanations.
+* Existing user data.
+
+A. Separate research content from gameplay logic
+
+Maintain a clear separation between:
+
+Research content
+
+* Research notes.
+* Scientific claims.
+* Supporting sources.
+* Citation metadata.
+* Topic classifications.
+* Approved educational explanations.
+* Content revisions.
+
+Gameplay logic
+
+* Fruit spawning.
+* Fruit classification.
+* Catch detection.
+* Scoring.
+* Difficulty mechanics.
+* Obstacles.
+* Star passes.
+* Round completion.
+* Game-state transitions.
+
+Scientific content updates must not alter gameplay mechanics.
+
+B. Use stable identifiers and versioned research records
+
+Each research entry should have:
+
+* Stable research ID.
+* Content version.
+* Topic classification.
+* Approved scientific content.
+* Supporting source identifiers.
+* Citation metadata.
+* Source publication details.
+* Revision metadata.
+* Validation status.
+* Retirement or supersession status where appropriate.
+
+Never use array positions or mutable display titles as permanent research identifiers.
+
+Preserve historical source versions needed by saved records.
+
+C. Provide a practical founder update workflow
+
+Implement or document an easy-to-use update workflow.
+
+Prefer a structured research format compatible with the existing architecture.
+
+The founder should be able to:
+
+1. Add a research entry.
+2. Correct an existing entry.
+3. Update a citation.
+4. Add an approved source.
+5. Retire outdated information.
+6. Validate the proposed changes.
+7. Preview the affected educational content.
+8. Publish an approved research update.
+9. Roll back a problematic update.
+
+Avoid requiring manual edits across numerous Swift files.
+
+If an editor is appropriate, provide a simple local editing or import workflow.
+
+Do not introduce a public-facing research editor or unrestricted external content ingestion unless explicitly authorized.
+
+D. Validate research before publication
+
+Add automated checks for:
+
+* Schema validity.
+* Unique stable identifiers.
+* Required source metadata.
+* Citation integrity.
+* Broken source references.
+* Duplicate records.
+* Unsupported topic mappings.
+* Missing educational explanations.
+* Invalid content versions.
+* Unsafe or unsupported factual claims.
+* Compatibility with existing saved records.
+
+Automated checks must not be represented as independent medical or clinical approval.
+
+Content requiring expert review must remain gated.
+
+E. Preserve existing saved content
+
+When research is updated:
+
+* Existing saved citation snapshots must remain intact.
+* Previously completed Basket Reveal facts must remain associated with their original evidence.
+* Existing game history must remain readable.
+* New questions may use the newly approved research version.
+* Historical records must not be silently rewritten.
+* Retired research must not break saved references.
+
+Use explicit migration rules where needed.
+
+F. Maintain offline-first functionality
+
+Fruitfolio must remain usable offline.
+
+Research updates must not require live network access during gameplay.
+
+Use a validated local research snapshot for active sessions.
+
+If optional update distribution is implemented, it must use an approved source and a safe installation process.
+
+Do not add unrestricted web retrieval or automatic publication of unverified medical content.
+
+G. Use atomic updates and rollback protection
+
+Research updates should be validated before becoming active.
+
+A failed update must not corrupt the existing Research Library.
+
+Use an atomic replacement or equivalent safe activation mechanism.
+
+Preserve the last known-good research version.
+
+Provide a rollback path.
+
+Do not overwrite active research with malformed or incomplete content.
+
+H. Preserve question and round consistency
+
+A Fruit Basket round should use a consistent research snapshot.
+
+If research is updated during an active round:
+
+* Do not change the current question unexpectedly.
+* Do not replace its answer choices.
+* Do not alter the answer key.
+* Do not change its educational fact.
+* Do not change its saved citation association.
+* Do not modify gameplay mechanics.
+
+Apply newly approved content to future eligible questions or sessions.
+
+I. Provide documentation and tests
+
+Deliver:
+
+* Research schema documentation.
+* Founder-friendly update instructions.
+* Example research entry.
+* Validation procedure.
+* Preview procedure.
+* Publication procedure.
+* Rollback procedure.
+* Versioning rules.
+* Migration rules.
+* Automated regression tests.
+
+Test that a valid research update becomes available to new questions.
+
+Test that an invalid update is rejected.
+
+Test that old saved questions and facts remain readable.
+
+Test that gameplay behavior remains unchanged.
+
+Test that offline fallback continues to work.
+
+⸻
+
+5. FINAL VERIFICATION REQUIREMENTS
+
+Include these four workstreams in the existing 478-requirement audit, clearly distinguishing original Prompt 1B requirements from newly requested implementation additions.
+
+Do not falsely attribute new details to the original specification.
+
+After implementation:
+
+1. Build the project.
+2. Run focused audio and collision tests.
+3. Run Fruit Basket gameplay journeys.
+4. Run Basket Reveal educational-fact tests.
+5. Run research-update compatibility tests.
+6. Run persistence and restart tests.
+7. Run strict accessibility tests.
+8. Run complete regression testing.
+
+Preserve all previously passing behavior.
+
+Record implementation locations, test evidence, and unresolved blockers.
+
+Do not mark any new requirement PASS until it has appropriate verification evidence.
+
+Continue the existing development and verification process autonomously.
+
+DO NOT MERGE INTO MAIN WITHOUT EXPLICIT AUTHORIZATION.
+
+FINAL GOAL: FRUITFOLIO MUST SUPPORT COZY, PHYSICALLY SYNCHRONIZED GAMEPLAY AUDIO, ACCURATE BASKET REVEAL EDUCATION, AND SAFE LONG-TERM RESEARCH MAINTENANCE WITHOUT COMPROMISING GAMEPLAY OR SCIENTIFIC EVIDENCE.
