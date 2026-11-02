@@ -1575,118 +1575,7 @@ struct Prompt28FruitBasketView: View {
 
                             if !viewModel.revealFacts.isEmpty {
                                 ForEach(Array(viewModel.revealFacts.enumerated()), id: \.element.id) { index, fact in
-                                    VStack(alignment: .leading, spacing: 5) {
-                                        if viewModel.revealFacts.count > 1 {
-                                            Text("\(index + 1) of \(viewModel.revealFacts.count)")
-                                                .prompt28Text(.metadata)
-                                        }
-                                        FruitfolioSemanticText(document: .init(spans: [.init(text: fact.text)]),
-                                            baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body))
-                                            .fixedSize(horizontal: false, vertical: true)
-                                    }
-                                    .accessibilityElement(children: .contain)
-                                    .accessibilityIdentifier("fruitBasket.fact." + fact.id)
-                                }
-                            } else {
-                                Text(question.explanation).prompt28Text(.body)
-                                Text("the original evidence snapshot for these notes could not be verified.")
-                                    .prompt28Text(.secondary)
-                            }
-                            ForEach(question.sourceTitles, id: \.self) { reference in
-                                Text(reference).prompt28Text(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
-
-                            Text(
-                                "sources · \(question.sourceIDs.count)"
-                            )
-                            .prompt28Text(.metadata)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                        }
-
-                        Prompt28WatercolorButton(
-                            title: "save to my encyclopedia",
-                            accent: .sage
-                        ) {
-                            showingSaveDestination = true
-                        }
-
-                        Prompt28WatercolorButton(
-                            title: "keep playing",
-                            accent: .paleYellow
-                        ) {
-                            Task {
-                                await viewModel.continueAfterReveal()
-                            }
-                        }
-
-                        Prompt28WatercolorButton(
-                            title: "change topic",
-                            accent: .mint
-                        ) {
-                            viewModel.changeTopic()
-                        }
-
-                        Prompt28WatercolorButton(
-                            title: "change difficulty",
-                            accent: .lavender
-                        ) {
-                            viewModel.screen = .learningSetup
-                        }
-
-                        Prompt28WatercolorButton(
-                            title: "start catching easy again",
-                            accent: .peach
-                        ) {
-                            viewModel.screen =
-                                .resetConfirmation
-                        }
-                    }
-                }
-            }
-            .padding(.bottom, 30)
-        }
-        .onAppear {
-            audioManager.play(.gentleCheer)
-        }
-    }
-
-    private var leaderboard: some View {
-        ScrollView {
-            VStack(spacing: 14) {
-                topBar
-
-                ZStack {
-                    FruitfolioImage(id: .fruitbasket_chalkboard)
-                        .frame(maxWidth: 340)
-                        .accessibilityHidden(true)
-                        .onAppear {
-                            Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_chalkboard)
-                        }
-
-                    VStack(spacing: 8) {
-                        Text("top 3 players")
-                            .font(.custom("Chalkboard SE", size: 20, relativeTo: .title2))
-                            .fontWeight(.bold)
-
-                        VStack(spacing: 6) {
-                            ForEach(Prompt28LeaderboardCategory.allCases, id: \.self) { category in
-                                Button {
-                                    selectedLeaderboardCategory = category
-                                } label: {
-                                    Text(category.rawValue)
-                                        .font(.custom("Chalkboard SE", size: 12, relativeTo: .caption))
-                                        .fontWeight(selectedLeaderboardCategory == category ? .bold : .regular)
-                                        .foregroundStyle(
-                                            selectedLeaderboardCategory == category
-                                            ? Color.white
-                                            : DesignTokens.ColorToken.backgroundCream.opacity(0.72)
-                                        )
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.75)
-                                }
-                                .buttonStyle(CutePopButtonStyle())
-                                .accessibilityAddTraits(
+                                    VStack(alignment…1343 tokens truncated…                   .accessibilityAddTraits(
                                     selectedLeaderboardCategory == category ? .isSelected : []
                                 )
                             }
@@ -2103,387 +1992,616 @@ private struct Prompt28MovingFruit: View {
     }
 }
 
-private enum Prompt28Basket…9755 tokens truncated…ection.startingScore)"
-        let revealBody = "basket reveal\n\n\(question.explanation)\n\n\(references)\n\n\(outcome)"
-        return Prompt10PendingSavedContent(
-            question: "basket reveal",
-            answer: revealBody,
-            saveType: .fullAnswer,
-            originalAnswerID: "fruitbasket:\(question.id)",
-            sourceIDs: question.sourceIDs,
-            sourceVersions: Dictionary(uniqueKeysWithValues: (question.evidenceSnapshot?.sources ?? []).map { ($0.sourceID, $0.contentVersion) }),
-            sourceSnapshots: question.evidenceSnapshot?.sources.map { source in
-                AskSourceRecord(id: source.sourceID, title: source.apa7Reference ?? source.title,
-                    sourceText: source.apa7Reference, urlString: source.canonicalURL, doi: source.doi,
-                    publicationData: source.publicationDate, contentVersion: source.contentVersion)
-            },
-            knowledgeBaseVersion: question.contentVersion,
-            generationTimestamp: question.createdAt
-        )
+private enum Prompt28BasketArtworkLayer { case complete, back, front }
+
+struct Prompt28SettledCatchArtwork: View {
+    let caught: Prompt28SettledCatch
+    let reduceMotion: Bool
+    var onPresentation: (Prompt28CatchPresentationEvent) -> Void = { _ in }
+    @State private var settled = false
+    @State private var presentationID = UUID()
+
+    init(caught: Prompt28SettledCatch, reduceMotion: Bool,
+         onPresentation: @escaping (Prompt28CatchPresentationEvent) -> Void = { _ in }) {
+        self.caught = caught
+        self.reduceMotion = reduceMotion
+        self.onPresentation = onPresentation
     }
 
-    private func startGameplayLoop() {
-        gameplayTask?.cancel()
-        gameplayTask = Task { [weak self] in
-            var previous = Date()
-            while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 33_000_000)
-                // Hold the model only during this synchronous frame. Keeping
-                // a strong self before the loop retains it across every sleep
-                // and prevents deinit's cancellation if a host drops the view
-                // without delivering its ordinary disappearance callback.
-                guard !Task.isCancelled, let self else { break }
-                let now = Date()
-                let delta = min(max(now.timeIntervalSince(previous), 0.001), 0.08)
-                previous = now
-                self.tick(delta: delta, now: now)
-            }
-        }
-    }
-
-    func updateGameplayFieldSize(width: Double, height: Double) {
-        guard width.isFinite, height.isFinite, width > 0, height > 0 else { return }
-        gameplayFieldSize = CGSize(width: width, height: height)
-    }
-
-    func isMeetingVines(x: Double, y: Double, classification: Prompt28FruitClassification = .good) -> Bool {
-        guard classification == .good, activeObstacles.contains(.vines) else { return false }
-        return Prompt28VineContactGeometry(fieldWidth: gameplayFieldSize.width,
-                                          fieldHeight: gameplayFieldSize.height,
-                                          level: gameLevel).contains(x: x, y: y)
-    }
-
-    // Internal frame entry point is also exercised by deterministic physics tests.
-    func tick(delta: TimeInterval, now: Date) {
-        guard screen == .catchActive, !isPaused, !roundResultLocked, delta.isFinite, delta >= 0 else { return }
-        catchClock += delta
-        var remaining: [Prompt28FallingFruit] = []
-        var currentVineContacts: Set<UUID> = []
-
-        let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-        for var fruit in activeFruit {
-            let previousY = fruit.y
-            let meetingVines = isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification)
-            if meetingVines { currentVineContacts.insert(fruit.id) }
-            let vineMultiplier = meetingVines ? 0.56 : 1.0
-            if activeObstacles.contains(.branch), branchDeflections[fruit.id] == nil {
-                let geometry = Prompt28BranchContactGeometry(fieldWidth: gameplayFieldSize.width,
-                                                              fieldHeight: gameplayFieldSize.height)
-                let radius = min(max(gameplayFieldSize.width * 0.13, 46), 66) * 0.44
-                if geometry.contains(x: fruit.x, y: fruit.y + fruit.fallSpeed * delta, radius: radius) {
-                    branchContactCount += 1
-                    branchDeflections[fruit.id] = Prompt28BranchDeflection(horizontalVelocity: -max(abs(fruit.horizontalDrift), 0.08))
+    var body: some View {
+        FruitfolioImage(id: caught.assetID)
+            .scaleEffect(x: settled ? 1.08 : 1, y: settled ? 0.55 : 1, anchor: .bottom)
+            .offset(y: settled ? 0 : -5)
+            .onAppear {
+                guard !caught.collected else { settled = true; return }
+                onPresentation(.appeared(presentationID))
+                if reduceMotion { settled = true; onPresentation(.settled(presentationID)) }
+                else {
+                    withAnimation(.easeOut(duration: Prompt28BasketCatchGeometry.settlingDuration),
+                                  completionCriteria: .logicallyComplete) {
+                        settled = true
+                    } completion: {
+                        onPresentation(.settled(presentationID))
+                    }
                 }
             }
-            let bounce = branchDeflections[fruit.id]
-            fruit.y += fruit.fallSpeed * vineMultiplier * (bounce?.verticalMultiplier ?? 1) * delta
-            var horizontalVelocity = bounce?.horizontalVelocity ?? fruit.horizontalDrift
-            if var bounce {
-                bounce.elapsed += delta
-                branchDeflections[fruit.id] = bounce
+            .onChange(of: reduceMotion) { _, enabled in
+                guard enabled, !caught.collected else { return }
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { settled = true }
+                onPresentation(.settled(presentationID))
             }
-            if activeObstacles.contains(.wind) {
-                horizontalVelocity += windDirection * (weather == .softRain ? 0.030 : 0.021)
+            .transaction { transaction in
+                if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
             }
+            .onDisappear { onPresentation(.disappeared(presentationID)) }
+    }
+}
 
-            fruit.x = min(max(fruit.x + horizontalVelocity * delta, laneBounds.lowerBound), laneBounds.upperBound)
+private struct Prompt28BasketProgressView: View {
+    let count: Int
+    let settledCatches: [Prompt28SettledCatch]
+    let layer: Prompt28BasketArtworkLayer
+    let onPresentation: (UUID, Prompt28CatchPresentationEvent) -> Void
 
-            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX,
-                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
-                                itemDiameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width),
-                                previousY: previousY) {
-                beginLanding(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification),
-                             previousY: previousY, currentY: fruit.y,
-                             diameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
-                continue
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
+    @State private var basketBounce = false
+
+    init(
+        count: Int,
+        settledCatches: [Prompt28SettledCatch] = [],
+        layer: Prompt28BasketArtworkLayer = .complete,
+        onPresentation: @escaping (UUID, Prompt28CatchPresentationEvent) -> Void = { _, _ in }
+    ) {
+        self.settledCatches = settledCatches
+        self.layer = layer
+        self.onPresentation = onPresentation
+        self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
+    }
+
+    var body: some View {
+        let projection = Prompt28BasketArtworkProjection(catches: settledCatches)
+        GeometryReader { proxy in
+            let width = max(proxy.size.width, 1)
+            let height = max(proxy.size.height, 1)
+            let imageWidth = width * Prompt28BasketCatchGeometry.imageWidthFraction
+            let imageHeight = imageWidth * 380 / 398
+            let imageTop = height - imageHeight
+            let fruitSize = min(max(width * 0.19, 22), 38)
+            let visibleCatches = projection.visibleCatches
+
+            ZStack(alignment: .bottom) {
+                if layer != .back {
+                    ForEach(Array(visibleCatches.enumerated()), id: \.element.id) { index, caught in
+                        Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive,
+                            onPresentation: { onPresentation(caught.id, $0) })
+                            .frame(width: fruitSize, height: fruitSize)
+                            .position(x: width * (0.30 + Double(index % 5) * 0.10),
+                                      y: imageTop + imageHeight * (0.60 - Double(index / 5) * 0.055))
+                            .accessibilityHidden(true)
+                    }
+                }
+
+                FruitfolioImage(id: .fruitbasket_basket)
+                    .frame(width: imageWidth, height: imageHeight)
+                    .mask(alignment: .top) {
+                        switch layer {
+                        case .complete, .front:
+                            VStack(spacing: 0) {
+                                Color.clear.frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                                Rectangle()
+                            }
+                        case .back:
+                            Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                        }
+                    }
+                    .scaleEffect(motionPreferences.reduceMotionActive ? 1 : (basketBounce ? 0.975 : 1.0), anchor: .bottom)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket) }
+
+                if layer == .complete {
+                    // Non-gameplay progress cards still retain the entire
+                    // original handle and back rim behind their collected fruit.
+                    FruitfolioImage(id: .fruitbasket_basket)
+                        .frame(width: imageWidth, height: imageHeight)
+                        .mask(alignment: .top) { Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction) }
+                        .zIndex(-1)
+                }
+
+                if layer != .back {
+                VStack(spacing: 2) {
+                    Text("\(count) / 10")
+                    if projection.additionalCollectedStars > 0 {
+                        Text("+\(projection.additionalCollectedStars) more caught stars")
+                            .font(.custom("Chalkboard SE", size: 10, relativeTo: .caption2))
+                    }
+                }
+                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption))
+                    .fontWeight(.bold)
+                    .monospacedDigit()
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(
+                        DesignTokens.ColorToken.backgroundCream.opacity(0.90),
+                        in: Capsule()
+                    )
+                    .offset(y: -2)
+                }
             }
-
-            if fruit.y > 1.06 {
-                if fruit.classification == .good { handleGoodMiss() }
-                else { handleBadMiss() }
-                continue
-            }
-
-            remaining.append(fruit)
+            .frame(width: width, height: height)
         }
-
-        activeFruit = roundResultLocked ? [] : remaining
-        let remainingIDs = Set(activeFruit.map(\.id))
-        branchDeflections = branchDeflections.filter { remainingIDs.contains($0.key) }
-        guard !roundResultLocked else { return }
-
-        var remainingStars: [Prompt28FallingStar] = []
-        for var star in activeStars {
-            let previousY = star.y
-            let meetingVines = isMeetingVines(x: star.x, y: star.y)
-            if meetingVines { currentVineContacts.insert(star.id) }
-            let vineMultiplier = meetingVines ? 0.56 : 1.0
-            star.y += star.fallSpeed * vineMultiplier * delta
-            star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
-            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX,
-                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
-                                itemDiameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width),
-                                previousY: previousY) {
-                beginLanding(id: star.id, kind: .star, previousY: previousY, currentY: star.y,
-                             diameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
-                continue
+        .onChange(of: count) { oldValue, newValue in
+            guard newValue > oldValue, !motionPreferences.reduceMotionActive else { return }
+            basketBounce = true
+            withAnimation(.easeOut(duration: 0.18)) {
+                basketBounce = false
             }
-            if star.y <= 1.06 { remainingStars.append(star) }
         }
-        activeStars = remainingStars
-        collectReadyLandings()
-        guard !roundResultLocked else { return }
-        if !currentVineContacts.subtracting(previousVineContacts).isEmpty { vineContactCount += 1 }
-        previousVineContacts = currentVineContacts
+        .onChange(of: motionPreferences.reduceMotionActive) { _, enabled in
+            if enabled {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { basketBounce = false }
+            }
+        }
+        .transaction { transaction in
+            if motionPreferences.reduceMotionActive { transaction.animation = nil; transaction.disablesAnimations = true }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Basket \(count) of 10; registered stars: \(projection.registeredStars)")
+    }
+}
 
-        let interval = random(in: levelConfig.spawnIntervalRange)
-        if activeFruit.count < levelConfig.maxConcurrentItems,
-           now.timeIntervalSince(lastSpawnAt) >= interval {
-            spawnFruit()
-            lastSpawnAt = now
+private enum Prompt28LeaderboardCategory: String, CaseIterable {
+    case fruit = "🍓 fruit collected"
+    case stars = "⭐ stars earned"
+    case baskets = "🧺 basket reveals"
+    case level = "🎮 highest level"
+
+    var localTotal: (Prompt28LeaderboardTotals) -> Int {
+        switch self {
+        case .fruit: return { $0.fruitCollected }
+        case .stars: return { $0.starsEarned }
+        case .baskets: return { $0.basketReveals }
+        case .level: return { $0.highestLevel }
         }
     }
 
-    private func spawnFruit() {
-        guard let question = currentQuestion else { return }
-        if Double.random(in: 0...1) < 0.06 {
-            let duration = random(in: levelConfig.fallDurationRange)
-            let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-            activeStars.append(Prompt28FallingStar(
-                x: Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound)),
-                fallSpeed: 1.18 / max(duration, 0.5),
-                horizontalDrift: random(in: levelConfig.driftRange),
-                rotationDegrees: Double.random(in: -6...6)
-            ))
-            return
+    var accessibilityUnit: String {
+        switch self {
+        case .fruit: return "fruit collected"
+        case .stars: return "stars earned"
+        case .baskets: return "basket reveals"
+        case .level: return "highest level"
         }
-        let classification = spawnPlanner.nextClassification(
-            goodProbability: levelConfig.goodProbability,
-            randomUnit: Double.random(in: 0...1)
+    }
+}
+
+private struct Prompt28LeaderboardRow: View {
+    let rank: Int
+    let username: String
+    let scoreText: String
+    let unit: String
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Text("\(rank).")
+                .frame(width: 24, alignment: .trailing)
+
+            Text(username)
+                .lineLimit(1)
+                .minimumScaleFactor(0.76)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .layoutPriority(1)
+
+            Text(scoreText)
+                .monospacedDigit()
+                .lineLimit(1)
+                .frame(minWidth: 44, alignment: .trailing)
+        }
+        .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+        .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            scoreText == "—"
+            ? "\(rank) place, awaiting player"
+            : "\(rank) place. \(username). \(scoreText) \(unit)."
         )
-        let pool = classification == .good ? question.goodFruitIDs : question.badFruitIDs
-        guard let fruitID = pool.randomElement() else { return }
-        let duration = random(in: levelConfig.fallDurationRange)
-        let speed = 1.18 / max(duration, 0.5)
-        let drift = random(in: levelConfig.driftRange)
-        let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-        let x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
-        let rotation = Double.random(in: -6...6)
-        activeFruit.append(
-            Prompt28FallingFruit(
-                fruitID: fruitID,
+    }
+}
+
+private struct Prompt28TourFruit: View {
+    let fruit: Prompt28FruitID
+    let classification: Prompt28FruitClassification
+
+    var body: some View {
+        Prompt28MovingFruit(
+            fruit: Prompt28FallingFruit(
+                fruitID: fruit,
                 classification: classification,
-                x: x,
-                fallSpeed: speed,
-                horizontalDrift: drift,
-                rotationDegrees: rotation
+                x: 0.5,
+                y: 0.5,
+                fallSpeed: 0,
+                horizontalDrift: 0,
+                rotationDegrees: 0
+            ),
+            reduceMotion: true
+        )
+        .frame(
+            width: 80,
+            height: 80
+        )
+    }
+}
+
+private struct Prompt28PaperPanel<Content: View>: View {
+    let content: Content
+
+    init(
+        @ViewBuilder content: () -> Content
+    ) {
+        self.content = content()
+    }
+
+    var body: some View {
+        content
+            .padding(.horizontal, 24)
+            .padding(.vertical, 22)
+            .frame(maxWidth: 330)
+            .background {
+                Prompt28CodedLargeCardBackground(cornerRadius: 30)
+            }
+            .frame(maxWidth: .infinity)
+            .accessibilityElement(
+                children: .contain
             )
-        )
+    }
+}
+
+private struct Prompt28CompactPopupCard<Content: View>: View {
+    let content: Content
+    let maximumHeight: CGFloat?
+
+    init(maximumHeight: CGFloat? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.content = content()
+        self.maximumHeight = maximumHeight
     }
 
-    private func spawnClassificationFruit() {
-        guard let question = currentQuestion else { return }
-        let classification = spawnPlanner.nextClassification(
-            goodProbability: levelConfig.goodProbability,
-            randomUnit: Double.random(in: 0...1)
-        )
-        let pool = classification == .good ? question.goodFruitIDs : question.badFruitIDs
-        guard let fruitID = pool.randomElement() else { return }
-        classificationFruit = Prompt28FallingFruit(
-            fruitID: fruitID,
-            classification: classification,
-            x: 0.5,
-            y: 0.38,
-            fallSpeed: 0,
-            horizontalDrift: 0,
-            rotationDegrees: 0
-        )
-    }
-
-    private func beginLanding(id: UUID, kind: LandingKind, previousY: Double, currentY: Double,
-                              diameter: Double, delta: TimeInterval) {
-        guard !pendingLandings.contains(where: { $0.id == id }) else { return }
-        let geometry = Prompt28BasketCatchGeometry(fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height)
-        let threshold = (geometry.mouthY + diameter / 2) / gameplayFieldSize.height
-        let fraction = currentY > previousY ? min(max((threshold - previousY) / (currentY - previousY), 0), 1) : 0
-        let asset: FruitfolioAssetID
-        let isStar: Bool
-        switch kind {
-        case .fruit(let fruit, _): asset = fruit.assetID; isStar = false
-        case .star: asset = .fruitbasket_star; isStar = true
-        }
-        settledCatches.append(.init(id: id, assetID: asset, isStar: isStar))
-        pendingLandings.append(.init(id: id, kind: kind,
-            readyAt: catchClock - delta + fraction * delta + Prompt28BasketCatchGeometry.settlingDuration,
-            order: landingOrder))
-        landingOrder += 1
-    }
-
-    /// A real presentation completion, not a timer-only guess. Repeated/stale
-    /// callbacks cannot collect twice. Paused games retain the acknowledgement
-    /// but never advance scoring until active play resumes.
-    func handleCatchPresentation(id: UUID, event: Prompt28CatchPresentationEvent) {
-        guard let index = pendingLandings.firstIndex(where: { $0.id == id }) else { return }
-        switch event {
-        case .appeared(let token):
-            pendingLandings[index].presentationID = token
-            pendingLandings[index].artworkSettled = false
-        case .settled(let token):
-            guard pendingLandings[index].presentationID == token else { return }
-            pendingLandings[index].artworkSettled = true
-        case .disappeared(let token):
-            guard pendingLandings[index].presentationID == token else { return }
-            pendingLandings[index].presentationID = nil
-            pendingLandings[index].artworkSettled = false
-        }
-        collectReadyLandings()
-    }
-
-    private func collectReadyLandings() {
-        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
-        let ready = pendingLandings.filter { $0.presentationID != nil && $0.artworkSettled && $0.readyAt <= catchClock }
-            .sorted { $0.readyAt == $1.readyAt ? $0.order < $1.order : $0.readyAt < $1.readyAt }
-        let readyIDs = Set(ready.map(\.id))
-        pendingLandings.removeAll { readyIDs.contains($0.id) }
-        var collectedIDs: Set<UUID> = []
-        for landing in ready {
-            guard !roundResultLocked else { break }
-            collectedIDs.insert(landing.id)
-            if let index = settledCatches.firstIndex(where: { $0.id == landing.id }) {
-                settledCatches[index].collected = true
-            }
-            switch landing.kind {
-            case .fruit(let fruit, .good): handleGoodCatch(fruit, existingArtworkID: landing.id)
-            case .fruit(let fruit, .bad): handleBadCatch(fruit, existingArtworkID: landing.id)
-            case .star: handleStarCatch(existingArtworkID: landing.id)
+    var body: some View {
+        Group {
+            if let maximumHeight {
+                ScrollView {
+                    content.padding(.horizontal, 22).padding(.vertical, 20)
+                }
+                .frame(maxHeight: maximumHeight)
+                .accessibilityIdentifier("fruitBasket.tourWritingArea")
+            } else {
+                content.padding(.horizontal, 22).padding(.vertical, 20)
             }
         }
-        if roundResultLocked {
-            let uncollected = readyIDs.subtracting(collectedIDs).union(pendingLandings.map(\.id))
-            settledCatches.removeAll { uncollected.contains($0.id) }
-            pendingLandings.removeAll()
+            .frame(maxWidth: 292)
+            .background {
+                Prompt28CodedLargeCardBackground(cornerRadius: 28)
+            }
+            .accessibilityElement(
+                children: .contain
+            )
+    }
+}
+
+private struct Prompt28CodedLargeCardBackground: View {
+    let cornerRadius: CGFloat
+
+    private let paperCream = Color(
+        red: 0.992,
+        green: 0.968,
+        blue: 0.918
+    )
+
+    private let borderBurgundy = Color(
+        red: 0.48,
+        green: 0.035,
+        blue: 0.045
+    )
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(
+                cornerRadius: cornerRadius,
+                style: .continuous
+            )
+            .fill(paperCream)
+
+            RoundedRectangle(
+                cornerRadius: cornerRadius,
+                style: .continuous
+            )
+            .fill(
+                LinearGradient(
+                    colors: [
+                        Color.white.opacity(0.28),
+                        Color.clear,
+                        Color(
+                            red: 0.90,
+                            green: 0.79,
+                            blue: 0.63
+                        )
+                        .opacity(0.10)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .blendMode(.softLight)
+
+            RoundedRectangle(
+                cornerRadius: cornerRadius,
+                style: .continuous
+            )
+            .stroke(
+                borderBurgundy.opacity(0.88),
+                lineWidth: 2.7
+            )
+
+            RoundedRectangle(
+                cornerRadius: max(cornerRadius - 0.8, 0),
+                style: .continuous
+            )
+            .stroke(
+                borderBurgundy.opacity(0.34),
+                lineWidth: 1.15
+            )
+            .offset(x: 0.75, y: 0.35)
+
+            RoundedRectangle(
+                cornerRadius: cornerRadius + 0.8,
+                style: .continuous
+            )
+            .stroke(
+                borderBurgundy.opacity(0.22),
+                lineWidth: 0.9
+            )
+            .offset(x: -0.65, y: -0.45)
         }
+        .shadow(
+            color: borderBurgundy.opacity(0.05),
+            radius: 1.5,
+            x: 0,
+            y: 1
+        )
+        .accessibilityHidden(true)
+    }
+}
+
+struct Prompt28CompactRuleCard: View {
+    let title: String
+    let artID: FruitfolioAssetID?
+    let ruleBody: String
+
+    init(
+        title: String,
+        artID: FruitfolioAssetID? = nil,
+        body: String
+    ) {
+        self.title = title
+        self.artID = artID
+        self.ruleBody = body
     }
 
-    private func handleGoodCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
-        guard !roundResultLocked, var session else { return }
-        if existingArtworkID == nil {
-            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
+    var body: some View {
+        Prompt28CompactPopupCard {
+            VStack(spacing: 5) {
+                HStack(spacing: 5) {
+                    Text(title)
+                        .font(
+                            .custom(
+                                "Chalkboard SE",
+                                size: 15,
+                                relativeTo: .headline
+                            )
+                        )
+                        .fontWeight(.semibold)
+
+                    if let artID {
+                        Prompt28InlineArtGlyph(assetID: artID)
+                            .frame(minWidth: 18, minHeight: 18)
+                    }
+                }
+                .multilineTextAlignment(.center)
+
+                FruitfolioNativeActionLabel(text: ruleBody,
+                    fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .body)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(
+                        horizontal: false,
+                        vertical: true
+                    )
+            }
         }
-        let outcome = engine.registerGoodCatch(session: &session)
-        roundCollection.goodFruit.append(fruit)
-        self.session = session
-        if outcome == .success {
-            roundResultLocked = true
-            stopGameplay()
-            roundCompletionTask?.cancel()
-            roundCompletionTask = Task { [weak self] in
-                try? await Task.sleep(nanoseconds: 650_000_000)
-                guard !Task.isCancelled, let self else { return }
-                self.finishSuccessfulRound()
+        .frame(maxWidth: 292)
+    }
+}
+
+private enum Prompt28Accent {
+    case paleYellow
+    case mint
+    case lavender
+    case sage
+    case peach
+}
+
+private struct Prompt28WatercolorButton: View {
+    let title: String
+    let accent: Prompt28Accent
+    let action: () -> Void
+
+    var body: some View {
+        FruitfolioControlPillButton(
+            label: title, localizationKey: title,
+            action: action
+        )
+        .frame(maxWidth: 292)
+    }
+}
+
+private struct Prompt28MiniControlPill: View {
+    let title: String
+    let isSelected: Bool
+    var width: CGFloat? = 88
+    var minimumHeight: CGFloat = 52
+    var pointSize: CGFloat = 12
+    var textStyle: UIFont.TextStyle = .subheadline
+    var artworkOpacity: Double? = nil
+    let action: () -> Void
+
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        Button {
+            audioManager.play(.buttonSoftPop)
+            action()
+        } label: {
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
+                FruitfolioNativeActionLabel(text: title, pointSize: pointSize, textStyle: textStyle)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
+            }
+            .accessibilityElement(children: .contain)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .frame(width: dynamicTypeSize.isAccessibilitySize ? nil : width)
+            .frame(maxWidth: dynamicTypeSize.isAccessibilitySize || width == nil ? .infinity : nil,
+                   minHeight: minimumHeight)
+            .background {
+                if dynamicTypeSize.isAccessibilitySize {
+                    // The existing canonical painted control geometry grows
+                    // with its label; do not stretch the original PNG or shrink
+                    // accessibility text into a fixed52pt shell.
+                    FruitfolioControlPillArtwork()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                } else {
+                    Image("control_pill_outline").resizable().scaledToFit()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                }
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityLabel(Text(title))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
+    }
+}
+
+private struct Prompt28ChipWrap: View {
+    let titles: [String]
+    let onSelect: (String) -> Void
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    var body: some View {
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6),
+                                count: dynamicTypeSize.isAccessibilitySize ? 1 : 2), spacing: 6) {
+            ForEach(titles, id: \.self) { title in
+                Prompt28MiniControlPill(title: title, isSelected: false,
+                    width: nil, minimumHeight: 48, pointSize: 11, textStyle: .caption1, artworkOpacity: 0.72) {
+                    onSelect(title)
+                }
             }
         }
     }
+}
 
-    private func handleGoodMiss() {
-        guard !roundResultLocked, var session else { return }
-        _ = engine.registerGoodMiss(session: &session)
-        self.session = session
-    }
+private struct Prompt28WindGust: View {
+    let reduceMotion: Bool
+    let direction: Double
+    @State private var drift = false
 
-    private func handleBadMiss() {
-        guard !roundResultLocked, var session else { return }
-        _ = engine.registerBadMiss(session: &session)
-        self.session = session
-    }
-
-    private func handleStarCatch(existingArtworkID: UUID? = nil) {
-        guard !roundResultLocked, var session else { return }
-        if existingArtworkID == nil {
-            settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true, collected: true))
+    var body: some View {
+        GeometryReader { proxy in
+            FruitfolioImage(id: .fruitbasket_wind)
+                .frame(width: min(proxy.size.width * 0.48, 178))
+                .scaleEffect(x: direction < 0 ? -1 : 1, y: 1)
+                .position(
+                    x: proxy.size.width * (direction < 0 ? 0.72 : 0.28),
+                    y: max(118, proxy.size.height * 0.18)
+                )
+                .offset(x: reduceMotion ? 0 : (drift ? CGFloat(direction * 10) : CGFloat(direction * -8)))
+                .opacity(reduceMotion ? 0.56 : (drift ? 0.66 : 0.48))
+                .animation(
+                    reduceMotion ? nil : .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
+                    value: drift
+                )
         }
-        _ = engine.registerStarCatch(session: &session)
-        roundCollection.standaloneStarsCaught += 1
-        self.session = session
-
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalStarsEarned += 1
-        store.updateProgress(progress)
-    }
-
-    private func handleBadCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
-        guard !roundResultLocked, var session else { return }
-        if existingArtworkID == nil {
-            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
+        .ignoresSafeArea()
+        .allowsHitTesting(false)
+        .onAppear { drift = !reduceMotion }
+        .onChange(of: reduceMotion) { _, enabled in drift = !enabled }
+        .transaction { transaction in
+            if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
         }
-        let outcome = engine.registerBadCatch(fruit, session: &session)
-        roundCollection.badFruit.append(fruit)
-        if case .badFruitBlockedByStar = outcome { roundCollection.starPassesConsumed += 1 }
-        self.session = session
-        lastBadFruit = fruit
-        if case .badFruitBlockedByStar = outcome { return }
-        roundResultLocked = true
-        stopGameplay()
-        activeFruit.removeAll(); activeStars.removeAll(); classificationFruit = nil
-        roundCompletionTask?.cancel()
-        roundCompletionTask = Task { [weak self] in
-            try? await Task.sleep(nanoseconds: 280_000_000)
-            guard !Task.isCancelled, let self else { return }
-            self.finishUnsuccessfulRound()
+        .accessibilityHidden(true)
+    }
+}
+
+private struct Prompt28WatercolorConfettiBurst: View {
+    let reduceMotion: Bool
+    @State private var burst = false
+
+    private let pieces: [(Double, Double, Double, Double)] = [
+        (-88,-58,-18,0.0), (-62,-82,24,0.03), (-35,-66,-32,0.06),
+        (-12,-92,18,0.09), (18,-78,-22,0.12), (44,-90,30,0.15),
+        (70,-62,-16,0.18), (92,-42,26,0.21), (-76,-26,34,0.24),
+        (-46,-40,-26,0.27), (42,-36,20,0.30), (78,-18,-30,0.33)
+    ]
+
+    var body: some View {
+        ZStack {
+            ForEach(Array(pieces.enumerated()), id: \.offset) { index, piece in
+                RoundedRectangle(cornerRadius: index.isMultiple(of: 2) ? 3 : 5)
+                    .fill(confettiColor(index).opacity(0.72))
+                    .frame(width: index.isMultiple(of: 3) ? 7 : 5, height: index.isMultiple(of: 2) ? 11 : 7)
+                    .rotationEffect(.degrees(burst && !reduceMotion ? piece.2 : 0))
+                    .offset(
+                        x: burst && !reduceMotion ? piece.0 : 0,
+                        y: burst && !reduceMotion ? piece.1 : 0
+                    )
+                    .opacity(burst ? (reduceMotion ? 0.48 : 0.0) : 0.72)
+                    .animation(
+                        reduceMotion ? nil : .easeOut(duration: 0.9).delay(piece.3),
+                        value: burst
+                    )
+            }
+        }
+        .transaction { transaction in
+            if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
+        }
+        .onAppear { burst = true }
+        .allowsHitTesting(false)
+    }
+
+    private func confettiColor(_ index: Int) -> Color {
+        switch index % 5 {
+        case 0: return DesignTokens.ColorToken.coral
+        case 1: return DesignTokens.ColorToken.sage
+        case 2: return DesignTokens.ColorToken.paleYellow
+        case 3: return DesignTokens.ColorToken.lavender
+        default: return DesignTokens.ColorToken.mint
         }
     }
+}
 
-    private func finishSuccessfulRound() {
-        guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.totalSuccessfulRounds += 1
-        progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
-        let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
-        progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
-        progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
-        didSetPersonalBestThisRound = session.score > progress.bestScore
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        recordCompletedRound(successful: true)
-        screen = .basketReveal
-    }
+private struct Prompt28VineResistanceVisual: ViewModifier {
+    let active: Bool
+    let reduceMotion: Bool
+    let phase: Double
 
-    private func finishUnsuccessfulRound() {
-        guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        recordCompletedRound(successful: false)
-        screen = .catchUnsuccessful
-    }
-
-    private func recordCompletedRound(successful: Bool) {
-        guard let session, let question = currentQuestion else { return }
-        store.recordCompletedRound(.init(id: attemptID, sessionID: session.id,
-            round: session.currentRound, completedAt: Date(), successful: successful,
-            question: question, collection: roundCollection, finalScore: session.score,
-            remainingStarPasses: session.availableStarPasses,
-            personalBest: successful && didSetPersonalBestThisRound,
-            educationalFacts: question.verifiedEducationalFacts))
-    }
-
-    private func stopGameplay() {
-        gameplayCleanup?()
-        puddleMovementActive = false
-        puddleContactActive = false
-        gameplayTask?.cancel(); gameplayTask = nil
-        roundCompletionTask?.cancel(); roundCompletionTask = nil
-    }
-
-    private func random(in range: ClosedRange<Double>) -> Double {
-        Double.random(in: range)
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(active && !reduceMotion ? sin(phase * 70) * 6 : 0))
+            .offset(x: active && !reduceMotion ? sin(phase * 70) * 3 : 0)
+            .scaleEffect(x: active && !reduceMotion ? 1.03 : 1, y: active && !reduceMotion ? 0.97 : 1)
     }
 }

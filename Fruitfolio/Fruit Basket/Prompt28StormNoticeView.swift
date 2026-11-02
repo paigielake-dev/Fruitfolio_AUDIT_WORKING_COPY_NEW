@@ -48,6 +48,9 @@ struct Prompt28PuddleArtwork: View {
                 .scaleEffect(x: reduceMotion ? 1 : 1 + 0.012 * sin(phase * 1.7),
                              y: reduceMotion ? 1 : 1 + 0.008 * cos(phase * 1.5), anchor: .center)
         }
+        .transaction { transaction in
+            if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
+        }
         .accessibilityHidden(true)
         .allowsHitTesting(false)
     }

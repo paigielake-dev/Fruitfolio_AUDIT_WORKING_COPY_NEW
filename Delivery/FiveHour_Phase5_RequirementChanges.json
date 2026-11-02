@@ -82,6 +82,19 @@
         "FruitfolioTests/BasketArtworkProjectionTests.swift"
       ],
       "remainingIssues": "Run full normal/largest game UI journeys, reveal screenshots, strict accessibility, restart/source snapshots and animation recordings."
+    },
+    {
+      "requirementID": "FF1B-336",
+      "originalBreakdownItem": "Apply the same convincing flattened/settled catch treatment to stars and fruit.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28StormNoticeView.swift"
+      ],
+      "changes": "Live Reduce Motion switches settling artwork to its final pose with the same presentation identity. Basket bounce, repeating wind, confetti and puddle rendering suppress inherited/implicit animations when reduced motion is active; the existing puddle timeline remains paused. The physical settling-time and single-registration guards remain unchanged.",
+      "verification": "Added a real UIWindow/UIHostingController reduced-motion settling test with actual presentation callbacks, frame registration and a screenshot attachment. Test source is not executed here. Live preference changes and visual cancellation still need simulator/device recordings.",
+      "evidence": "FruitfolioTests/BasketSettlingPresentationRuntimeTests.swift",
+      "remainingIssues": "Run native hosted test, full normal/largest/reduced-motion game journeys and actual animation capture on founder Mac."
     }
   ]
 }
