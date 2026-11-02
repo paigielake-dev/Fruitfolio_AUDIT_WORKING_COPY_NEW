@@ -17,7 +17,7 @@ struct FruitfolioModalBlurModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .blur(radius: isActive ? FruitfolioModalBlurSpec.radius : 0)
-            .scaleEffect(isActive ? FruitfolioModalBlurSpec.contentScale : 1.0)
+            .scaleEffect(isActive && !reduceMotion ? FruitfolioModalBlurSpec.contentScale : 1.0)
             .overlay {
                 if isActive {
                     DesignTokens.ColorToken.backgroundCream

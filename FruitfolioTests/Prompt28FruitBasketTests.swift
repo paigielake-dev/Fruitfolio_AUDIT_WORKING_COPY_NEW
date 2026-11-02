@@ -175,6 +175,60 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(engine.levelAfterSuccessfulRounds(200), 8)
     }
 
+    func testActualProductionSpawnsRespectTheBoundedGradualLevelScheduleAndNeverRetrofitAnExistingFallSpeed() throws {
+        let suite = "Prompt28.ActualSpawnSchedule.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var observed: [[String: Double]] = []
+        var previousMinimumDuration = Double.greatestFiniteMagnitude
+        var previousMaximumDuration = Double.greatestFiniteMagnitude
+        for level in 1...Prompt28FruitBasketEngine.maxGameLevel {
+            let store = Prompt28FruitBasketStore(defaults: defaults)
+            let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+            model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: level)
+            model.currentQuestion = fixtureQuestion(); model.beginCatch()
+            if model.showingStormNotice { model.dismissStormNotice() }
+            let config = model.levelConfig
+            XCTAssertLessThanOrEqual(config.fallDurationRange.lowerBound, previousMinimumDuration)
+            XCTAssertLessThanOrEqual(config.fallDurationRange.upperBound, previousMaximumDuration)
+            if level > 1 {
+                XCTAssertLessThanOrEqual(previousMinimumDuration - config.fallDurationRange.lowerBound, 0.21,
+                    "Avoid a new abrupt jump in the preserved gradual schedule")
+                XCTAssertLessThanOrEqual(previousMaximumDuration - config.fallDurationRange.upperBound, 0.21)
+            }
+            previousMinimumDuration = config.fallDurationRange.lowerBound
+            previousMaximumDuration = config.fallDurationRange.upperBound
+            for index in 0..<24 {
+                model.activeFruit = []; model.activeStars = []
+                model.tick(delta: 0, now: Date().addingTimeInterval(Double(index + 1) * 10))
+                let speeds = model.activeFruit.map(\.fallSpeed) + model.activeStars.map(\.fallSpeed)
+                XCTAssertEqual(speeds.count, 1, "Observe a real production spawn rather than a synthetic assigned speed")
+                for speed in speeds {
+                    XCTAssertGreaterThanOrEqual(speed, 1.18 / config.fallDurationRange.upperBound - 0.000001)
+                    XCTAssertLessThanOrEqual(speed, 1.18 / config.fallDurationRange.lowerBound + 0.000001)
+                    observed.append(["level": Double(level), "actualSpawnFallSpeed": speed])
+                }
+                let fruit = model.activeFruit.map { ($0.id, $0.fallSpeed) }
+                let stars = model.activeStars.map { ($0.id, $0.fallSpeed) }
+                model.tick(delta: 0.001, now: Date().addingTimeInterval(Double(index + 1) * 10 + 0.001))
+                for (id, originalSpeed) in fruit {
+                    XCTAssertEqual(model.activeFruit.first { $0.id == id }?.fallSpeed, originalSpeed)
+                }
+                for (id, originalSpeed) in stars {
+                    XCTAssertEqual(model.activeStars.first { $0.id == id }?.fallSpeed, originalSpeed)
+                }
+            }
+            model.pause()
+        }
+        XCTAssertEqual(engine.config(for: Int.max), engine.config(for: 8), "Physics must plateau at the tested maximum")
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: observed, options: [.prettyPrinted, .sortedKeys]),
+            uniformTypeIdentifier: "public.json")
+        attachment.name = "FruitBasket_ActualProductionSpawnSpeedSamples_AllEightLevels"
+        attachment.lifetime = .keepAlways; add(attachment)
+        // This verifies actual spawned parameters and frame invariants, not
+        // subjective comfort, visual obstacle motion, or physical-device feel.
+    }
+
     func testSpawnPlannerNeverCreatesMoreThanTwoBadInARow() {
         var planner = Prompt28SpawnPlanner()
         let results = (0..<12).map { _ in planner.nextClassification(goodProbability: 0, randomUnit: 1) }

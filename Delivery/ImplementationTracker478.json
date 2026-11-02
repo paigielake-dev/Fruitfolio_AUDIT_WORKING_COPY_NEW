@@ -6385,23 +6385,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 71",
       "sourceLine": 171,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6415,12 +6432,15 @@
       ],
       "requirementDescription": "Make the entire introduction transition smooth and continuous.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6437,7 +6457,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6449,23 +6469,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 72",
       "sourceLine": 173,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6479,12 +6516,15 @@
       ],
       "requirementDescription": "Target an overall duration of approximately 6–8 seconds.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6501,7 +6541,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6513,23 +6553,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 73",
       "sourceLine": 175,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6543,12 +6600,15 @@
       ],
       "requirementDescription": "Give each important visual stage enough time to register.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6565,7 +6625,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6577,23 +6637,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 74",
       "sourceLine": 177,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6607,12 +6684,15 @@
       ],
       "requirementDescription": "Add a watercolor ripple/puddle-style logo reveal.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6629,7 +6709,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6641,23 +6721,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 75",
       "sourceLine": 179,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6671,12 +6768,15 @@
       ],
       "requirementDescription": "Center that reveal precisely on the book’s existing logo position.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6693,7 +6793,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6705,23 +6805,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 76",
       "sourceLine": 181,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6735,12 +6852,15 @@
       ],
       "requirementDescription": "Make the logo appear gradually rather than abruptly swapping between states.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 518,
+        "exactText": "1D — Logo revealing. The code transitions from the blank-book presentation toward the branded closed-book presentation. This is the logo-reveal portion of the sequence. - This is good, but I would like this to go into more detail. You know how puddles have a ripple effect when you jump in them? I want the logo to gradually fade in in this same ripple effect on the cover of the book (right where it is in the artwork; right smack in the middle). It should be seamless & a perfect transition into the closed book with logo. Add that in.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6757,7 +6877,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6769,23 +6889,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 77",
       "sourceLine": 183,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6799,12 +6936,15 @@
       ],
       "requirementDescription": "Smooth the transition from the blank book to the branded book.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6821,7 +6961,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6833,23 +6973,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 78",
       "sourceLine": 185,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6863,12 +7020,15 @@
       ],
       "requirementDescription": "Smooth the slightly-open and fully-open book transitions.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6885,7 +7045,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6897,23 +7057,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 79",
       "sourceLine": 187,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6927,12 +7104,15 @@
       ],
       "requirementDescription": "Smooth the right-page zoom and transition into the Hub.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -6949,7 +7129,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -6961,23 +7141,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 80",
       "sourceLine": 189,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -6991,12 +7188,15 @@
       ],
       "requirementDescription": "Eliminate visible jumps, rushed stages, and avoidable lag.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7013,7 +7213,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7025,23 +7225,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 81",
       "sourceLine": 191,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 514,
+        "exactText": "ADD OPTION IN BOTTOM LEFT CORNER TO SKIP THE INTRO!! - use the control_next button AND text underneath that says “skip tour”",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7055,12 +7272,15 @@
       ],
       "requirementDescription": "Add a bottom-left skip control using the existing control_next artwork.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 514,
+        "exactText": "ADD OPTION IN BOTTOM LEFT CORNER TO SKIP THE INTRO!! - use the control_next button AND text underneath that says “skip tour”",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7077,7 +7297,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7089,23 +7309,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 82",
       "sourceLine": 193,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 514,
+        "exactText": "ADD OPTION IN BOTTOM LEFT CORNER TO SKIP THE INTRO!! - use the control_next button AND text underneath that says “skip tour”",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7119,12 +7356,15 @@
       ],
       "requirementDescription": "Place the text “skip tour” underneath that control, as specified.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 514,
+        "exactText": "ADD OPTION IN BOTTOM LEFT CORNER TO SKIP THE INTRO!! - use the control_next button AND text underneath that says “skip tour”",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7141,7 +7381,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7153,23 +7393,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 83",
       "sourceLine": 195,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7183,12 +7440,15 @@
       ],
       "requirementDescription": "Make the reduced-motion introduction smooth without simply accelerating the sequence.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 513,
+        "exactText": "1. Launch / Intro - This is great! But add something in the code that ensures this is a smooth transition. Step by step by step. No lag. Also the entire transition should not be rushed. The complete Fruitfolio intro should last approximately 6–8 seconds, long enough for every stage to feel intentional without becoming slow: the closed blank book appears and settles, the watercolor logo gradually seeps onto it (with the ripple puddle effect), the branded book pauses briefly, the book opens slightly, then fully, and finally the view smoothly zooms into the right page before transitioning into the Hub. No stage should immediately snap into the next; each important visual should have a brief moment to register, with the logo reveal and book-opening sequence receiving the most time. Reduce Motion should preserve the same visual sequence with simplified transitions rather than simply rushing through it.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7205,7 +7465,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7217,23 +7477,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 84",
       "sourceLine": 197,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7247,12 +7524,15 @@
       ],
       "requirementDescription": "Pause the introduction when the app becomes inactive.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7269,7 +7549,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7281,23 +7561,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 85",
       "sourceLine": 199,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7311,12 +7608,15 @@
       ],
       "requirementDescription": "Resume from the current logical stage rather than restarting.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7333,7 +7633,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7345,23 +7645,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 86",
       "sourceLine": 201,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7375,12 +7692,15 @@
       ],
       "requirementDescription": "Prevent timers and animations from progressing invisibly in the background.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7397,7 +7717,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -7409,23 +7729,40 @@
       "originalReference": "Part 2 / 2A. Introduction / 87",
       "sourceLine": 203,
       "prompt1BSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "FruitfolioTests/IntroInterruptionRuntimeTests.swift",
+        "FruitfolioUITests/SimulatorSmokeEvidenceTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Introduction",
         "Fruitfolio/Hub"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
+      "sourceMappingStatus": "Actual intro state clock, rendered view wiring, original ripple-mask composition, scene-phase handler, skip artwork/text and runtime tests inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [],
       "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual production intro clock normal/reduced6–8s, stage sequence, cancellation held past deadline and logical resume PASS in retainedRun92/93unitlogs. Source101 adds realOS background journey pending actual execution.",
+          "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run93/RepairBatch/Build/xcode-repair-batch-test.log"
+        }
+      ],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Inspect complete actual intro recordings/frames on supported phones and verify the new actual Home/background/reactivation journey. No full visual smoothness or audible acceptance inferred from unit timing."
       ],
       "dependsOnParts": [
         1
@@ -7439,12 +7776,15 @@
       ],
       "requirementDescription": "Restore a completed stage cleanly when exact animation-frame restoration is unsafe.",
       "sourceSection": {
-        "candidateSection": "Launch/Introduction and Hub (1216–1347)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "Launch/Intro binding corrections",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 527,
+        "exactText": "1M — Interrupted/backgrounded intro. Scene-phase handling records interruption and controls what happens when the app becomes active again. - If Fruitfolio becomes inactive during the Intro, pause the sequence. When the app becomes active again, recover cleanly from the current logical Intro stage and continue forward. Do not restart the Intro from the beginning. Do not allow timers or animations to progress invisibly while the app is backgrounded. If resuming the exact animation frame is unsafe or visually awkward, restore the completed visual state of the current stage and continue with the next transition.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected; complete187-piece extraction retained"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — actual normal/reduced6–8s state-clock and logical pause/resume tests pass; complete visual/OS lifecycle acceptance still pending",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -7461,7 +7801,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -41282,9 +41622,9 @@
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
   "implementationPassVerificationNote": "PASS is scoped to recorded actual evidence and source, not whole-app/final-source acceptance. Actual Run61 full job FAILED with 26 failed executions; volume journey passed. Its exploratory test execution passed but reported 14 unavailable paths, so traversal coverage is NOT VERIFIED.",
   "summary": {
-    "PARTIAL": 176,
+    "PARTIAL": 193,
     "PASS": 49,
-    "NOT VERIFIED": 247,
+    "NOT VERIFIED": 230,
     "BLOCKED": 2,
     "FAIL": 4
   },
@@ -41294,9 +41634,9 @@
   "currentSourceVerification": "Run92 exactsource498b189 verified full unit stage568PASS1SKIP,26SwiftTestingPASS,82focusedPASS(overlapping cases), normal gameUI PASS; guard/a11yFAIL. Current source repair pending Apple verification.",
   "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures.",
   "statusCounts": {
-    "PARTIAL": 176,
+    "PARTIAL": 193,
     "PASS": 49,
-    "NOT VERIFIED": 247,
+    "NOT VERIFIED": 230,
     "BLOCKED": 2,
     "FAIL": 4
   }

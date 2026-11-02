@@ -31,6 +31,33 @@ final class SimulatorSmokeEvidenceTests: XCTestCase {
         result.name = "Intro_ActualSkippedToLiveHub"; result.lifetime = .keepAlways; add(result)
     }
 
+    @MainActor
+    func testActualBackgroundLongerThanTheIntroFreezesItUntilForegroundResume() async throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1", "-FruitfolioIntroMode", "first"]
+        app.launch()
+        let skip = app.buttons["skip introduction"]
+        XCTAssertTrue(skip.waitForExistence(timeout: 2), "Begin while the actual introduction is still present")
+        let before = XCTAttachment(screenshot: app.screenshot())
+        before.name = "Intro_ActualBeforeHomeInterruption"; before.lifetime = .keepAlways; add(before)
+        XCUIDevice.shared.press(.home)
+        XCTAssertTrue(app.wait(for: .runningBackground, timeout: 1)
+            || app.wait(for: .runningBackgroundSuspended, timeout: 2), "The actual app must leave the foreground")
+        // Longer than the entire6–8s signature. This is a real OS lifecycle
+        // transition, not a direct call to the view model's pause handler.
+        try await Task.sleep(for: .seconds(9))
+        app.activate()
+        XCTAssertTrue(skip.waitForExistence(timeout: 2),
+            "An unfinished introduction must not finish invisibly while the app is backgrounded")
+        let resumed = XCTAttachment(screenshot: app.screenshot())
+        resumed.name = "Intro_ActualLogicalResumeAfterNineSecondsInBackground"
+        resumed.lifetime = .keepAlways; add(resumed)
+        XCTAssertTrue(skip.isHittable); skip.tap()
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 2) { explore.tap() }
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label ==[c] %@", "settings")).firstMatch.waitForExistence(timeout: 10))
+    }
+
     private func verifyIntro(mode: String) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1", "-FruitfolioIntroMode", mode]

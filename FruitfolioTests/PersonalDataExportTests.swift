@@ -16,9 +16,9 @@ final class PersonalDataExportTests: XCTestCase {
         let suite = "Fruitfolio.Export.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
         defaults.set("must never be exported", forKey: "unrelated.credential.fixture")
-        // Fixed stored fixture timestamps retain the full-object equality
-        // assertion without a live-clock sub-millisecond format artifact.
-        let fixed = Date(timeIntervalSince1970: 1_700_000_000)
+        // A deterministic fractional-reference timestamp exercises real
+        // record fidelity rather than hiding precision loss with whole seconds.
+        let fixed = Date(timeIntervalSinceReferenceDate: 799_999_999.1234568)
         let bookID = UUID(); let chapterID = UUID()
         let reference = AskSourceRecord(id: "synthetic-reference", title: "Synthetic fixture", sourceText: "Exact synthetic APA reference.", contentVersion: "v1")
         let page = Prompt10SavedPage(chapterID: chapterID, question: "My saved question", answer: "Original quoted words, 2.500 ng/mL [synthetic-reference].", saveType: .fullAnswer,
@@ -69,8 +69,9 @@ final class PersonalDataExportTests: XCTestCase {
         let savedBytes = try Data(contentsOf: destination)
         XCTAssertEqual(savedBytes, bytes, "Actual written file must retain all prepared bytes")
         XCTAssertNoThrow(try JSONSerialization.jsonObject(with: savedBytes))
-        let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .millisecondsSince1970
-        let exported = try decoder.decode(FruitfolioPersonalDataExport.self, from: savedBytes)
+        let exported = try FruitfolioPersonalDataExport.decodeDocument(savedBytes)
+        XCTAssertEqual(exported.schemaVersion, 2)
+        XCTAssertTrue(try XCTUnwrap(exported.dateRepresentation).contains("2001-01-01"))
         let evidence = XCTAttachment(data: savedBytes, uniformTypeIdentifier: "public.json")
         evidence.name = "ActualReopenedPersonalDataExport_SyntheticFixture"
         evidence.lifetime = .keepAlways; add(evidence)
@@ -81,6 +82,23 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(exported.hormoneMeasurements.first?.result, "2.500")
         XCTAssertEqual(exported.hormoneMeasurements.first?.unit, "ng/mL")
         XCTAssertEqual(exported.hormoneMeasurements.first?.notes, "my exact original note")
+        XCTAssertEqual(exported.hormoneMeasurements, originalHormones, "Reopened exports must preserve whole original records, including dates and timestamps")
+        XCTAssertEqual(exported.reportedContext, originalContext)
+        XCTAssertEqual(exported.fruitBasketProgress, originalGame)
+        // Existing schema1 files remain readable. Their already converted date
+        // values cannot recover old discarded bits; do not claim otherwise.
+        let legacyEncoder = JSONEncoder(); legacyEncoder.dateEncodingStrategy = .millisecondsSince1970
+        var legacyObject = try XCTUnwrap(JSONSerialization.jsonObject(with: legacyEncoder.encode(exported)) as? [String: Any])
+        legacyObject["schemaVersion"] = 1; legacyObject.removeValue(forKey: "dateRepresentation")
+        let legacyBytes = try JSONSerialization.data(withJSONObject: legacyObject)
+        let legacy = try FruitfolioPersonalDataExport.decodeDocument(legacyBytes)
+        XCTAssertEqual(legacy.schemaVersion, 1)
+        XCTAssertNil(legacy.dateRepresentation)
+        XCTAssertEqual(legacy.publicUsername, exported.publicUsername)
+        XCTAssertEqual(legacy.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots,
+                       exported.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots)
+        var unknownObject = legacyObject; unknownObject["schemaVersion"] = 999
+        XCTAssertThrowsError(try FruitfolioPersonalDataExport.decodeDocument(JSONSerialization.data(withJSONObject: unknownObject)))
         XCTAssertEqual(exported.settings.musicVolume, 0.23)
         XCTAssertEqual(exported.publicUsername, "peach_qa")
         let exportedGame = try XCTUnwrap(exported.fruitBasketProgress["nutrition"])

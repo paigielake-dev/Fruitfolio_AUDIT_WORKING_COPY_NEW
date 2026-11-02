@@ -17,13 +17,22 @@ final class PersonalDataManagementUITests: XCTestCase {
         }
         XCTAssertTrue(target.isHittable)
     }
-    private func openData(accessibilitySize: Bool = false) -> XCUIApplication {
+    private func openData(accessibilitySize: Bool = false, reducedMotion: Bool = false) -> XCUIApplication {
         let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]
+        // Foundation's real argument-domain preference is process-local; it
+        // exercises the existing production setting without persisting test
+        // state or adding an alternate application path.
+        if reducedMotion { app.launchArguments += ["-fruitfolio.settings.reduceAnimationOverride", "YES"] }
         if accessibilitySize { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
         app.launch()
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
         let settings = button(app, "settings"); XCTAssertTrue(settings.waitForExistence(timeout: 15)); settings.tap()
+        if reducedMotion {
+            let control = button(app, "reduced motion")
+            fruitfolioReachControl(app, control)
+            XCTAssertEqual(control.value as? String, "on", "Observe the real production preference in Settings before auditing its popup")
+        }
         let data = button(app, "data"); reach(app, data); data.tap()
         XCTAssertTrue(app.buttons["data.prepareExport"].waitForExistence(timeout: 10))
         return app
@@ -37,8 +46,11 @@ final class PersonalDataManagementUITests: XCTestCase {
     func testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable() throws {
         try verifyBulkHormoneGuard(accessibilitySize: true)
     }
-    private func verifyBulkHormoneGuard(accessibilitySize: Bool) throws {
-        let app = openData(accessibilitySize: accessibilitySize); let erase = app.buttons["data.deleteHormones"]
+    func testReducedMotionBulkDeletionGuardRetainsReadableNamedActionsAndSafeCancellation() throws {
+        try verifyBulkHormoneGuard(accessibilitySize: false, reducedMotion: true)
+    }
+    private func verifyBulkHormoneGuard(accessibilitySize: Bool, reducedMotion: Bool = false) throws {
+        let app = openData(accessibilitySize: accessibilitySize, reducedMotion: reducedMotion); let erase = app.buttons["data.deleteHormones"]
         reach(app, erase); erase.tap()
         XCTAssertTrue(app.staticTexts["delete all hormone measurements?"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["data.prepareExport"].exists, "Blurred background controls must not remain exposed to accessibility while confirming deletion")

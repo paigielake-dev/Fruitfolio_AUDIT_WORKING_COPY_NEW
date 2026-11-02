@@ -6,6 +6,7 @@ import UniformTypeIdentifiers
 /// Binary image originals are explicitly excluded; their saved metadata remains.
 struct FruitfolioPersonalDataExport: Codable {
     let schemaVersion: Int
+    let dateRepresentation: String?
     let createdAt: Date
     let account: Prompt12AccountIdentity?
     let publicUsername: String
@@ -57,7 +58,8 @@ struct FruitfolioPersonalDataExport: Codable {
         // purchase receipts, model binaries or unrelated files are exported.
         async let archive = cycle.snapshot()
         async let setup = onboarding.snapshot()
-        let export = try await FruitfolioPersonalDataExport(schemaVersion: 1, createdAt: now,
+        let export = try await FruitfolioPersonalDataExport(schemaVersion: 2,
+            dateRepresentation: "seconds since 2001-01-01T00:00:00Z; exact stored Foundation Date value", createdAt: now,
             account: account, publicUsername: username, settings: Preferences(settings),
             encyclopediasAndGuides: library.encyclopedias,
             cycleArchive: archive, cycleSetup: setup, reportedContext: context.context,
@@ -68,8 +70,24 @@ struct FruitfolioPersonalDataExport: Codable {
                           "Ask conversations are session-only and are not exported. Saved answers and their original source snapshots remain in encyclopedias and guides.",
                           "No remote account data, production purchase receipt, credentials, or research/model binaries are included."])
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
-        encoder.dateEncodingStrategy = .millisecondsSince1970
+        // Epoch conversion adds978307200 and multiplies1000. At contemporary
+        // timestamps this can lose the least significant bit of a stored Date.
+        // Keep its original reference-seconds Double; schema/metadata make the
+        // coordinate system explicit to readers. Clinical values are unchanged.
+        encoder.dateEncodingStrategy = .deferredToDate
         return try encoder.encode(export)
+    }
+
+    static func decodeDocument(_ data: Data) throws -> FruitfolioPersonalDataExport {
+        struct Version: Decodable { let schemaVersion: Int }
+        let version = try JSONDecoder().decode(Version.self, from: data).schemaVersion
+        let decoder = JSONDecoder()
+        switch version {
+        case 1: decoder.dateDecodingStrategy = .millisecondsSince1970
+        case 2: decoder.dateDecodingStrategy = .deferredToDate
+        default: throw CocoaError(.fileReadCorruptFile)
+        }
+        return try decoder.decode(FruitfolioPersonalDataExport.self, from: data)
     }
 }
 
