@@ -19426,20 +19426,32 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
+      "implementationStatus": "NOT VERIFIED",
       "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [],
       "testsPerformed": [
-        "Actual macOS Run13: testValidationAndExactUnitPreservation; testSaveEditRestartAndDeletePreserveRecords; testCreateRestartEditAndDeleteMeasurement"
+        "Actual macOS Run13: testValidationAndExactUnitPreservation; testSaveEditRestartAndDeletePreserveRecords; testCreateRestartEditAndDeleteMeasurement",
+        "HormoneMeasurementUITests/testCreateRestartEditAndDeleteMeasurement (current UI result pending)"
       ],
       "testResults": [
-        "PASS for this individual record workflow/validation behavior. Does not imply medical-content, graph, visual, or accessibility acceptance."
+        "PASS for this individual record workflow/validation behavior. Does not imply medical-content, graph, visual, or accessibility acceptance.",
+        {
+          "result": "PARTIAL",
+          "scope": "Historical complete measurement lifecycle evidence is retained. The new canonical deletion popup and strict modal audit require their own current-source UI result; unit success does not prove that journey.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/Artifacts/Visual/HormoneInformation/manifest.json"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/Artifacts/Visual/HormoneInformation/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Retrieve actual current-source deletion guard and complete lifecycle UI results; do not infer them from older native-dialog acceptance."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -19451,6 +19463,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "PASS"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Confirm deletion.",
@@ -19458,9 +19474,9 @@
         "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Historical complete measurement lifecycle evidence is retained. The new canonical deletion popup and strict modal audit require their own current-source UI result; unit success does not prove that journey.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "FruitfolioTests/HormoneMeasurementTests.swift",
@@ -19485,10 +19501,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/Artifacts/Visual/HormoneInformation/manifest.json"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/Artifacts/Visual/HormoneInformation/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS"
+      "finalDisposition": "NOT VERIFIED",
+      "afterStatus": "NOT VERIFIED"
     },
     {
       "requirementID": "FF1B-253",
@@ -23628,19 +23646,35 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24SymptomChartData.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual unified chart/toggle UI, dense data, Dynamic Type, graph/table VoiceOver and no-data states need current-source verification."
       ],
       "dependsOnParts": [
         1,
@@ -23654,6 +23688,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Replace separate symptom-specific trend presentations with the requested unified symptom-pattern graph.",
@@ -23661,9 +23699,9 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -23683,9 +23721,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-306",
@@ -23699,19 +23740,35 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24SymptomChartData.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual unified chart/toggle UI, dense data, Dynamic Type, graph/table VoiceOver and no-data states need current-source verification."
       ],
       "dependsOnParts": [
         1,
@@ -23725,6 +23782,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Ensure the graph presents recorded symptom information accurately.",
@@ -23732,9 +23793,9 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -23754,9 +23815,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-307",
@@ -23770,19 +23834,35 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24SymptomChartData.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual unified chart/toggle UI, dense data, Dynamic Type, graph/table VoiceOver and no-data states need current-source verification."
       ],
       "dependsOnParts": [
         1,
@@ -23796,6 +23876,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Preserve distinctions between actual observations and interpretations.",
@@ -23803,9 +23887,9 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -23825,9 +23909,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-308",
@@ -23841,19 +23928,35 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24SymptomChartData.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual unified chart/toggle UI, dense data, Dynamic Type, graph/table VoiceOver and no-data states need current-source verification."
       ],
       "dependsOnParts": [
         1,
@@ -23867,6 +23970,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Do not manufacture trends when insufficient data exists.",
@@ -23874,9 +23981,9 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -23896,9 +24003,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-309",
@@ -23912,19 +24022,35 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24SymptomChartData.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual unified chart/toggle UI, dense data, Dynamic Type, graph/table VoiceOver and no-data states need current-source verification."
       ],
       "dependsOnParts": [
         1,
@@ -23938,6 +24064,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make the graph responsive and accessible.",
@@ -23945,9 +24075,9 @@
         "candidateSection": "Cycle Tracker and LifeBridge (2196–2707)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The existing unified graph is preserved and repaired: initial selection includes only/all logged symptoms, actual dated records with unknown cycle day remain visible, and exact accessible record details are available. Three new data-policy tests pass; visual and interactive acceptance remains pending.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -23967,9 +24097,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/UNIFIED_SYMPTOM_TIMELINE_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-310",
@@ -27176,28 +27309,34 @@
         "Fruitfolio/Fruit Basket"
       ],
       "sourceMappingStatus": "Exact implementation paths inspected",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PASS",
       "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
       "changesMade": [
         "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
       ],
       "testsPerformed": [
         "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
-        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)",
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle"
       ],
       "testResults": [
         {
           "result": "NOT VERIFIED",
           "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
+        },
+        {
+          "result": "PASS",
+          "scope": "Actual app-hosted view-model test proves the same puddle movement API restores direct normal response once the basket leaves the puddle; no persistent inertia remains. Qualitative animation acceptance is tracked separately.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
         }
       ],
       "supportingEvidence": [
-        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log"
       ],
-      "remainingIssues": [
-        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
-        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -27211,6 +27350,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Restore normal movement after leaving the puddle.",
@@ -27218,9 +27361,9 @@
         "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "IMPLEMENTED; VERIFICATION PENDING",
-      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
-      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual app-hosted view-model test proves the same puddle movement API restores direct normal response once the basket leaves the puddle; no persistent inertia remains. Qualitative animation acceptance is tracked separately.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
@@ -27246,10 +27389,11 @@
         }
       ],
       "evidenceReferences": [
-        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-351",
@@ -32753,14 +32897,28 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The official encoder-decoder runtime and original combined medical fixture now execute successfully, including controlled offline inference. The previous failed-runtime blocker is obsolete. Production post-grounding Ask translation remains gated pending broader quality/language acceptance and integration.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Complete production language-aware post-grounding translation with sufficient safety/quality verification; do not substitute cloud or another model."
       ],
       "dependsOnParts": [
         1,
@@ -32777,6 +32935,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Connect the selected language to the Ask translation pipeline.",
@@ -32784,9 +32946,9 @@
         "candidateSection": "7.9 Localization/MADLAD (252–410)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "BLOCKED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The official encoder-decoder runtime and original combined medical fixture now execute successfully, including controlled offline inference. The previous failed-runtime blocker is obsolete. Production post-grounding Ask translation remains gated pending broader quality/language acceptance and integration.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": [
         "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
@@ -32813,9 +32975,13 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-421",
@@ -32836,14 +33002,28 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "The official encoder-decoder runtime and original combined medical fixture now execute successfully, including controlled offline inference. The previous failed-runtime blocker is obsolete. Production post-grounding Ask translation remains gated pending broader quality/language acceptance and integration.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Complete production language-aware post-grounding translation with sufficient safety/quality verification; do not substitute cloud or another model."
       ],
       "dependsOnParts": [
         1,
@@ -32860,6 +33040,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Translate grounded answers after research and evidence validation.",
@@ -32867,9 +33051,9 @@
         "candidateSection": "7.9 Localization/MADLAD (252–410)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "BLOCKED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "The official encoder-decoder runtime and original combined medical fixture now execute successfully, including controlled offline inference. The previous failed-runtime blocker is obsolete. Production post-grounding Ask translation remains gated pending broader quality/language acceptance and integration.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": [
         "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
@@ -32896,9 +33080,13 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-422",
@@ -33510,14 +33698,27 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual native process memory measurements and a quantized row-embedding runtime exist; the former incompatible-runtime explanation is obsolete. Uncontrolled Simulator host measurements do not verify supported physical-iPhone memory/performance.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Physical-iPhone memory, representative long inputs, runtime coexistence and device/distribution constraints remain NOT VERIFIED."
       ],
       "dependsOnParts": [
         1,
@@ -33534,6 +33735,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Avoid excessive memory consumption.",
@@ -33541,9 +33746,9 @@
         "candidateSection": "7.9 Localization/MADLAD (252–410)",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "BLOCKED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Actual native process memory measurements and a quantized row-embedding runtime exist; the former incompatible-runtime explanation is obsolete. Uncontrolled Simulator host measurements do not verify supported physical-iPhone memory/performance.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [],
       "missingImplementation": [
         "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
@@ -33570,9 +33775,12 @@
           "assessment": "Item-specific test mapping still required"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-429",
@@ -33675,7 +33883,7 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
+      "implementationStatus": "PASS",
       "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [
         "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
@@ -33692,15 +33900,22 @@
           ],
           "verifiedSourceCommits": [],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        },
+        {
+          "result": "PASS",
+          "scope": "Actual official MADLAD and guarded document fixtures executed on the real iPhone Simulator with new external connections blocked, positive/negative network probes, no watchdog expiry and restored filtering. Scope is offline inference, not general language/medical or physical-device acceptance.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/xcode-offline-madlad-test.log"
       ],
-      "remainingIssues": [
-        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -33720,6 +33935,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Ensure translation operates without internet access, cloud APIs, remote inference, or Ollama.",
@@ -33727,9 +33946,9 @@
         "candidateSection": "MADLAD local encoder-decoder inference and verification",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual official MADLAD and guarded document fixtures executed on the real iPhone Simulator with new external connections blocked, positive/negative network probes, no watchdog expiry and restored filtering. Scope is offline inference, not general language/medical or physical-device acceptance.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
@@ -33763,10 +33982,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/xcode-offline-madlad-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-431",
@@ -34189,7 +34410,7 @@
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Exact official tokenizer targets tpi, ty, rar, niu and gil are absent. No substitute model, alias or cloud fallback is approved or silently introduced. Other required languages also need full Ask integration and appropriate quality/layout verification."
       ],
       "dependsOnParts": [
         1,
@@ -34504,7 +34725,7 @@
         "TranslationInvestigation"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
+      "implementationStatus": "PASS",
       "inspectionState": "PARTIALLY IMPLEMENTED",
       "changesMade": [
         "Official local Q4 executes through the linked Apple encoder-decoder runtime; original runtime blocker is resolved for bounded sentences. New document-preservation fixture is pending Run46; no cloud/model substitute."
@@ -34521,15 +34742,22 @@
           ],
           "verifiedSourceCommits": [],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
+        },
+        {
+          "result": "PASS",
+          "scope": "Actual official MADLAD and guarded document fixtures executed on the real iPhone Simulator with new external connections blocked, positive/negative network probes, no watchdog expiry and restored filtering. Scope is offline inference, not general language/medical or physical-device acceptance.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/xcode-offline-madlad-test.log"
       ],
-      "remainingIssues": [
-        "Production Ask remains gated pending semantic/language/device acceptance. New adapter, explicit execution-thread evidence and disabled-network device tests remain unverified."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -34549,6 +34777,10 @@
         {
           "baseline": "actual Run45 exact source 884184040db65aef0f4fd28a5963509fd9501748",
           "status": "BLOCKED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Verify offline inference.",
@@ -34556,9 +34788,9 @@
         "candidateSection": "MADLAD local encoder-decoder inference and verification",
         "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual official MADLAD and guarded document fixtures executed on the real iPhone Simulator with new external connections blocked, positive/negative network probes, no watchdog expiry and restored filtering. Scope is offline inference, not general language/medical or physical-device acceptance.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
@@ -34592,10 +34824,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/xcode-offline-madlad-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-440",
@@ -34959,19 +35193,31 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PASS",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "testsPerformed": [
+        "PersonalDataExportTests",
+        "CycleEraseFailureSafetyTests",
+        "LifeBridgeInformationTests",
+        "UnifiedSymptomTimelineTests"
+      ],
+      "testResults": [
+        {
+          "result": "PASS",
+          "scope": "Actual Xcode compiles and executes the repository test targets, including new source-level export, erase-failure, LifeBridge and symptom timeline tests. This criterion does not claim exhaustive coverage of all 478 requirements.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
-        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -34988,6 +35234,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Add tests to the project’s source rather than relying only on an external checklist.",
@@ -34995,9 +35245,9 @@
         "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Xcode compiles and executes the repository test targets, including new source-level export, erase-failure, LifeBridge and symptom timeline tests. This criterion does not claim exhaustive coverage of all 478 requirements.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml"
       ],
@@ -35025,10 +35275,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-445",
@@ -36281,14 +36533,15 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PASS",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [
         "Fixed scroll-owner selection; actual UI creates, saves, restarts, reopens, edits, saves, and confirms deletion of its own uniquely identified record."
       ],
       "testsPerformed": [
         "Run13: unit save/edit/store reopen/delete plus actual UI create/relaunch/edit/delete",
-        "HormoneMeasurementUITests/testCreateRestartEditAndDeleteMeasurement"
+        "HormoneMeasurementUITests/testCreateRestartEditAndDeleteMeasurement",
+        "HormoneMeasurementUITests/testCreateRestartEditAndDeleteMeasurement (current UI result pending)"
       ],
       "testResults": [
         {
@@ -36301,15 +36554,26 @@
             "6b6a24d0faaf6d39ddd2ea52605040b3a199a30a",
             "2d06a17810125d9c33a719bc60663256372432f7"
           ]
+        },
+        {
+          "result": "PARTIAL",
+          "scope": "Historical complete measurement lifecycle evidence is retained. The new canonical deletion popup and strict modal audit require their own current-source UI result; unit success does not prove that journey.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
         }
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Build/xcode-hormone-ui-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Visual/HormoneInformation/manifest.json"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Visual/HormoneInformation/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "remainingIssues": [],
+      "remainingIssues": [
+        "Retrieve actual current-source deletion guard and complete lifecycle UI results; do not infer them from older native-dialog acceptance."
+      ],
       "dependsOnParts": [
         1,
         2,
@@ -36330,6 +36594,10 @@
         {
           "baseline": "Run42 review of exact tested source 6b6a24d; UI Run41 exact source 2d06a17",
           "status": "FAIL"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "PASS"
         }
       ],
       "requirementDescription": "Test Hormone Information creation, editing, deletion, and persistence.",
@@ -36337,9 +36605,9 @@
         "candidateSection": "4.9.1/4.9.5/4.9.6 — Actual hormone record lifecycle",
         "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
       },
-      "currentImplementationState": "IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "PASS",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Historical complete measurement lifecycle evidence is retained. The new canonical deletion popup and strict modal audit require their own current-source UI result; unit success does not prove that journey.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [
         "FruitfolioTests/HormoneMeasurementTests.swift",
         "FruitfolioUITests/HormoneMeasurementUITests.swift",
@@ -36373,10 +36641,12 @@
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Build/xcode-hormone-ui-test.log",
-        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Visual/HormoneInformation/manifest.json"
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run41/Visual/HormoneInformation/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
-      "finalDisposition": "PASS",
-      "afterStatus": "PASS",
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL",
       "historicalEvidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run32/HormoneInformation/Build/xcode-hormone-ui-test.log"
       ]
@@ -37144,18 +37414,29 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "testsPerformed": [
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Controlled offline MADLAD and strict native Ask execution passed; complete localization and supported-language acceptance are unfinished.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json"
       ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
-        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
+        "Complete and verify app-wide localization and required-language integration."
       ],
       "dependsOnParts": [
         1,
@@ -37173,6 +37454,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Test localization and offline MADLAD integration when that phase is implemented.",
@@ -37180,9 +37465,9 @@
         "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Controlled offline MADLAD and strict native Ask execution passed; complete localization and supported-language acceptance are unfinished.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml"
       ],
@@ -37210,10 +37495,12 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-467",
@@ -37240,13 +37527,23 @@
       "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
       "changesMade": [],
       "testsPerformed": [
-        "Run17: full FruitfolioTests target on actual macOS/Xcode/iPhone Simulator"
+        "Run17: full FruitfolioTests target on actual macOS/Xcode/iPhone Simulator",
+        "Actual complete FruitfolioTests target in iPhone Simulator"
       ],
       "testResults": [
-        "PASS: 443 XCTest + 25 Swift Testing cases; zero failures. This is unit/integration scope, not full UI acceptance."
+        "PASS: 443 XCTest + 25 Swift Testing cases; zero failures. This is unit/integration scope, not full UI acceptance.",
+        {
+          "result": "PASS",
+          "scope": "Actual Run61 executed 528 XCTest cases: 527 PASS, one physical-device-only SKIP, zero FAIL; all 25 Swift Testing tests passed. This verifies running relevant unit/integration tests, not full UI acceptance.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
       ],
       "supportingEvidence": [
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run17/Unit/xcode-unit-test.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run17/Unit/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
       "remainingIssues": [],
       "dependsOnParts": [
@@ -37273,7 +37570,7 @@
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
       "currentImplementationState": "IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
+      "implementationAssessment": "Actual Run61 executed 528 XCTest cases: 527 PASS, one physical-device-only SKIP, zero FAIL; all 25 Swift Testing tests passed. This verifies running relevant unit/integration tests, not full UI acceptance.",
       "verificationState": "PASS",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml"
@@ -37301,7 +37598,9 @@
         }
       ],
       "evidenceReferences": [
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run17/Unit/xcode-unit-test.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run17/Unit/xcode-unit-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/RUN61_VERIFICATION.md"
       ],
       "finalDisposition": "PASS",
       "afterStatus": "PASS"
@@ -37898,18 +38197,31 @@
         ".github/workflows/ios-verification.yml"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "testsPerformed": [
+        "PersonalDataExportTests",
+        "CycleEraseFailureSafetyTests"
+      ],
+      "testResults": [
+        {
+          "result": "PARTIAL",
+          "scope": "Actual unit tests verify readable personal-data snapshots, exact saved source references, no unrelated-secret export or mutation, corrupt-domain refusal, and cycle/setup erase-failure behavior. Whole-app interactive export/deletion and all persistence journeys are not fully accepted.",
+          "verifiedSourceCommits": [
+            "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
+          ]
+        }
+      ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/PERSONAL_DATA_EXPORT_IMPLEMENTATION.md",
+        "Delivery/CYCLE_ERASE_FAILURE_SAFETY.md"
       ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending.",
-        "Run13: 26 broad UI tests, 13 failures. Run14: normal-motion launch timed out, focused functional tests skipped. Neither run is an overall pass."
+        "Actual system export/save/cancel UI, full cross-domain deletion coordinators and exhaustive restart/privacy/device verification remain unfinished."
       ],
       "dependsOnParts": [
         1,
@@ -37927,6 +38239,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Before actual Run61 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Test persistence and data deletion.",
@@ -37934,9 +38250,9 @@
         "candidateSection": "Acceptance criteria throughout complete Prompt 1B",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Actual unit tests verify readable personal-data snapshots, exact saved source references, no unrelated-secret export or mutation, corrupt-domain refusal, and cycle/setup erase-failure behavior. Whole-app interactive export/deletion and all persistence journeys are not fully accepted.",
+      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml"
       ],
@@ -37964,10 +38280,13 @@
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
-        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log"
+        "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run14/complete-job.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
+        "Delivery/PERSONAL_DATA_EXPORT_IMPLEMENTATION.md",
+        "Delivery/CYCLE_ERASE_FAILURE_SAFETY.md"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-475",
@@ -38343,12 +38662,12 @@
   ],
   "implementationStatePolicy": "IMPLEMENTED / PARTIALLY IMPLEMENTED / NOT IMPLEMENTED / BLOCKED. Null explicitly means not assessed; absence of verification is not evidence that a feature is missing.",
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
-  "implementationPassVerificationNote": "Actual Run48 unit/strict Contact/FAQ acceptance retained; Run50 bounded Chinese script fixture passed with one unrelated timestamp fixture failure. New popup/chart/LifeBridge/Fruit Basket/offline-Ask changes await their own actual Xcode results. No skipped or source-only item is PASS.",
+  "implementationPassVerificationNote": "Actual Run61: 528 XCTest executions, 527 PASS/1 physical SKIP/0 FAIL; 25 Swift Testing PASS; controlled offline strict native Ask, official MADLAD and Ask return UI PASS. Newer focused UI and all 478-item acceptance remain incomplete; obsolete incompatible-runtime blockers removed.",
   "summary": {
-    "PARTIAL": 112,
-    "PASS": 35,
-    "NOT VERIFIED": 321,
-    "BLOCKED": 6,
+    "PARTIAL": 121,
+    "PASS": 37,
+    "NOT VERIFIED": 313,
+    "BLOCKED": 3,
     "FAIL": 4
   },
   "totalRequirements": 478,
