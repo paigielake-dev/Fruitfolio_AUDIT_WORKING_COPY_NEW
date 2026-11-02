@@ -16,7 +16,8 @@ REPOSITORY = "paigielake-dev/Fruitfolio_AUDIT_WORKING_COPY_NEW"
 BRANCH = "fruitfolio/prompt-1b-alignment"
 WORKFLOW = 403220650
 PRESERVE = {41357420177, 41358742740}
-OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60, 64}
+OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60}
+OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4"}
 OUT = Path("verification-queue-state.json")
 
 
@@ -33,7 +34,7 @@ def api(path, method="GET"):
 def safe(run):
     return (run["id"] not in PRESERVE and str(run["id"]) != os.environ["GITHUB_RUN_ID"]
             and run["head_branch"] == BRANCH and run["workflow_id"] == WORKFLOW
-            and run["run_number"] in OBSOLETE_NUMBERS
+            and (run["run_number"] in OBSOLETE_NUMBERS or run["head_sha"] in OBSOLETE_COMMITS)
             and run["head_sha"] != os.environ["FRUITFOLIO_HEAD_SHA"])
 
 

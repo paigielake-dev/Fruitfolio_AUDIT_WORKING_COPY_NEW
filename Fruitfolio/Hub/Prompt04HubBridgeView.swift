@@ -335,15 +335,18 @@ struct Prompt04HubPaperControls: View {
                 metrics: metrics
             )
 
-            Prompt05HubPaperControls(
-                metrics: metrics,
-                interactive:
-                    interactive,
-                onBrandingAnimationCompleted:
-                    onBrandingAnimationCompleted,
-                navigate:
-                    navigate
-            )
+            ScrollView(.vertical) {
+                Prompt05HubPaperControls(
+                    metrics: metrics,
+                    interactive:
+                        interactive,
+                    onBrandingAnimationCompleted:
+                        onBrandingAnimationCompleted,
+                    navigate:
+                        navigate
+                )
+            }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .frame(
             width:
@@ -750,11 +753,8 @@ private struct Prompt05HubPaperControls:
                 .font(
                     .custom(
                         "Snell Roundhand",
-                        size:
-                            dynamicTypeSize
-                                .isAccessibilitySize
-                            ? 58
-                            : 68
+                        size: 68,
+                        relativeTo: .largeTitle
                     )
                 )
                 .foregroundStyle(
@@ -765,10 +765,7 @@ private struct Prompt05HubPaperControls:
                 .multilineTextAlignment(
                     .center
                 )
-                .minimumScaleFactor(
-                    0.78
-                )
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(
                     width:
                         metrics
@@ -811,11 +808,8 @@ private struct Prompt05HubPaperControls:
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size:
-                            dynamicTypeSize
-                                .isAccessibilitySize
-                            ? 18
-                            : 20
+                        size: 20,
+                        relativeTo: .title3
                     )
                 )
                 .fontWeight(
@@ -829,10 +823,7 @@ private struct Prompt05HubPaperControls:
                 .multilineTextAlignment(
                     .center
                 )
-                .minimumScaleFactor(
-                    0.80
-                )
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(
                     width:
                         metrics
@@ -979,9 +970,10 @@ private struct Prompt05HubPaperControls:
         )
         .frame(
             width:
-                metrics.viewportWidth,
-            height:
-                metrics.viewportHeight
+                metrics.viewportWidth
+        )
+        .frame(
+            minHeight: metrics.viewportHeight
         )
         .accessibilityElement(
             children: .contain

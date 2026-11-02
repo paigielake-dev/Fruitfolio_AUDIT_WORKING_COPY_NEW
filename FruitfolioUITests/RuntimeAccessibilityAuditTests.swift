@@ -29,6 +29,37 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
         try fruitfolioStrictAccessibilityAudit(app)
     }
 
+    func testHubLargestDynamicTypeKeepsAllDestinationsReachable() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1",
+                                "-UIPreferredContentSizeCategoryName",
+                                "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 12) { explore.tap() }
+        XCTAssertTrue(app.staticTexts["Fruitfolio"].waitForExistence(timeout: 20))
+        for label in ["ask the encyclopedia", "my encyclopedias", "build your own guide",
+                      "cycle tracker", "fruit basket", "faq", "settings", "contact"] {
+            let button = app.buttons.matching(NSPredicate(format: "label ==[c] %@", label)).firstMatch
+            for _ in 0..<8 {
+                if button.exists && button.isHittable { break }
+                app.swipeUp()
+            }
+            XCTAssertTrue(button.exists && button.isHittable,
+                          "Largest Dynamic Type must keep the Hub destination reachable: \(label)")
+        }
+        let image = XCTAttachment(screenshot: app.screenshot())
+        image.name = "Hub_LargestDynamicType_ScrolledUtilities"
+        image.lifetime = .keepAlways
+        add(image)
+        app.swipeDown(); app.swipeDown(); app.swipeDown()
+        let header = XCTAttachment(screenshot: app.screenshot())
+        header.name = "Hub_LargestDynamicType_Branding"
+        header.lifetime = .keepAlways
+        add(header)
+        try fruitfolioStrictAccessibilityAudit(app)
+    }
+
     func testHubAccessibility() throws { try audit(destination: nil) }
     func testAskOpeningAccessibility() throws { try audit(destination: "ask the encyclopedia") }
     func testLibraryOpeningAccessibility() throws { try audit(destination: "my encyclopedias") }
