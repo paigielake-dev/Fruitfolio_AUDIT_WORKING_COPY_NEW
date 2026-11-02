@@ -59,87 +59,19 @@ def main():
     root = args.root
     catalog_path = root / 'Fruitfolio/Localizable.xcstrings'
     data = catalog_path.read_bytes()
-    declaration = …2110 tokens truncated…solutionTests.swift",
-        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
-      ],
-      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
-    },
-    {
-      "requirementID": "FF1B-401",
-      "originalBreakdownItem": "Support the specified major Asian languages.",
-      "status": "PARTIAL",
-      "implementationFiles": [
-        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
-        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
-      ],
-      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
-      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
-      "evidence": [
-        "FruitfolioTests/UILocalizationResolutionTests.swift",
-        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
-      ],
-      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
-    },
-    {
-      "requirementID": "FF1B-408",
-      "originalBreakdownItem": "Build an extensible language architecture.",
-      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
-      "implementationFiles": [
-        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
-        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
-      ],
-      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
-      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
-      "evidence": [
-        "FruitfolioTests/UILocalizationResolutionTests.swift",
-        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
-      ],
-      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
-    },
-    {
-      "requirementID": "FF1B-434",
-      "originalBreakdownItem": "Do not silently overwrite user-authored content with translations.",
-      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
-      "implementationFiles": [
-        "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
-        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
-      ],
-      "changes": "Locale resolution retains exact script identity; explicit Traditional/Simplified Chinese choices cannot fall through to an ambiguous generic Chinese bundle. Valid translations identical to their keys are recognized using a missing-resource sentinel. Source-language fallback can resolve authored English resource values while preserving explicit caller wording. Resolution exposes actual resource language for native speech hints. User-authored/unkeyed text remains unlocalized. Settings explicitly disclose incomplete interface coverage separately from research/answer readiness.",
-      "verification": "Five Bundle-resource resolution tests and three real hosted UILabel tests were added, including script isolation, fallback, key-equal translations, speech metadata and unkeyed user text. Not executed on Mac. No inference or translation model was run.",
-      "evidence": [
-        "FruitfolioTests/UILocalizationResolutionTests.swift",
-        "FruitfolioTests/NativeLocalizationSpeechTests.swift"
-      ],
-      "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
-    },
-    {
-      "requirementID": "FF1B-398",
-      "originalBreakdownItem": "Persist the language preference across restarts and navigation.",
-      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
-      "implementationFiles": [
-        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
-      ],
-      "changes": "Unknown or unreadable saved language preferences are preserved and explicitly disclosed while English is used as a temporary fallback. Only an intentional new selection replaces the original value and clears the notice. Existing underscore Chinese-script spelling is recognized without changing its stored bytes or substituting the other script. Shared language decoding is used by Settings and non-SwiftUI preference reads.",
-      "verification": "Four XCTest cases added: unknown value across restarts/replacement, wrong stored type preservation, Traditional underscore-script retention, and all60 existing identities loading without warning. Not executed on Mac.",
-      "evidence": "FruitfolioTests/LanguagePreferenceRecoveryTests.swift",
-      "remainingIssues": "Run actual Settings recovery notices, language restart/RTL journeys and existing preferences/audio regression on founder Mac."
-    },
-    {
-      "requirementID": "FF1B-429",
-      "originalBreakdownItem": "Do not silently reset the selected language.",
-      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
-      "implementationFiles": [
-        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
-      ],
-      "changes": "Unknown or unreadable saved language preferences are preserved and explicitly disclosed while English is used as a temporary fallback. Only an intentional new selection replaces the original value and clears the notice. Existing underscore Chinese-script spelling is recognized without changing its stored bytes or substituting the other script. Shared language decoding is used by Settings and non-SwiftUI preference reads.",
-      "verification": "Four XCTest cases added: unknown value across restarts/replacement, wrong stored type preservation, Traditional underscore-script retention, and all60 existing identities loading without warning. Not executed on Mac.",
-      "evidence": "FruitfolioTests/LanguagePreferenceRecoveryTests.swift",
-      "remainingIssues": "Run actual Settings recovery notices, language restart/RTL journeys and existing preferences/audio regression on founder Mac."
-    }
-  ]
-}
+    declaration = (root / 'Fruitfolio/Core/AppArchitecture/SettingsStore.swift').read_text().split('    var id:', 1)[0]
+    languages = re.findall(r'^\s*case\s+\w+\s*=\s*"([^"]+)"', declaration, re.MULTILINE)
+    if not languages or len(languages) != len(set(languages)):
+        raise SystemExit('Language declaration is missing or ambiguous; no coverage report produced.')
+    result = summarize(json.loads(data), languages)
+    result.update({'recordedAtUTC': datetime.now(timezone.utc).isoformat(),
+                   'catalogSHA256': hashlib.sha256(data).hexdigest(),
+                   'scope': 'Declared resource coverage only. Every language remains NOT VERIFIED until actual UI/native-language acceptance.'})
+    output = args.output or root / 'Fruitfolio_Verification_Evidence/FiveHourSprint/Phase6Localization/CatalogCoverage.json'
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+    print(f'{result["keyCount"]} UI keys; {result["languageCount"]} individually declared language choices. Resource counts saved; no language promoted to PASS.')
+
+
+if __name__ == '__main__':
+    main()

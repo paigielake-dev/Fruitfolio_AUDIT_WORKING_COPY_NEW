@@ -99,7 +99,514 @@
       "requirement": "Add realistic offline puddle splash obeying SFX slider and mute after core stability.",
       "acceptanceStatus": "PARTIAL",
       "supportingEvidence": [],
-      "actua…7867 tokens truncated…asketGroundedResearchTests.swift"
+      "actualResult": "Not added; correctly deferred until core game/guard/journey repairs are stable and verified."
+    },
+    {
+      "requirementID": "SUP-GAME-SFX-002",
+      "requirement": "Add soft offline branch impact obeying SFX slider and mute after core stability.",
+      "acceptanceStatus": "PARTIAL",
+      "supportingEvidence": [],
+      "actualResult": "Not added; correctly deferred until core game/guard/journey repairs are stable and verified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-001",
+      "requirement": "When the basket enters a puddle, play a subtle water-entry sound.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:19",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-002",
+      "requirement": "While the basket moves through the puddle, use appropriate gentle splashing or water-movement audio.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:20",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-003",
+      "requirement": "When the basket exits, end the movement sound naturally.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:21",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-004",
+      "requirement": "Do not play puddle audio when the basket is not interacting with a puddle.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:22",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-005",
+      "requirement": "Do not continuously restart or stack identical sounds.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:23",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-006",
+      "requirement": "Avoid loud, harsh, or exaggerated splash effects.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:24",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-007",
+      "requirement": "Respect the existing sound-effects volume slider.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:25",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-008",
+      "requirement": "Respect mute and relevant system audio settings.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:26",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-009",
+      "requirement": "Stop or pause effects appropriately when gameplay pauses, exits, or backgrounds.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:27",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-01-010",
+      "requirement": "Prevent retained audio playback after the game owner is destroyed.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:28",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-001",
+      "requirement": "The branch must appear attached to the side of the playfield rather than floating.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:62",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-002",
+      "requirement": "When falling fruit physically contacts the branch, its trajectory should visibly change.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:63",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-003",
+      "requirement": "The collision must use the existing intended branch-deflection mechanics.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:64",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-004",
+      "requirement": "Play a subtle, realistic branch-impact sound at the moment of contact.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:65",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-005",
+      "requirement": "The sound should resemble a soft wooden tap, rustle, or appropriate fruit-on-branch contact.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:66",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-006",
+      "requirement": "Avoid harsh or excessively loud effects.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:67",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-007",
+      "requirement": "Do not play impact audio without a registered collision.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:68",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-008",
+      "requirement": "Prevent repeated audio triggering from a single continuous collision.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:69",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-009",
+      "requirement": "Respect the sound-effects volume slider.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:70",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-010",
+      "requirement": "Respect pause, backgrounding, and game exit.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:71",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-011",
+      "requirement": "Fruit approaching the branch.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:77",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-012",
+      "requirement": "Actual collision detection.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:78",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-013",
+      "requirement": "Visible deflection.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:79",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-014",
+      "requirement": "Resulting fruit trajectory.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:80",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-015",
+      "requirement": "Sound synchronization.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:81",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-016",
+      "requirement": "Multiple fruit interactions.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:82",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-017",
+      "requirement": "Pause/resume behavior.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:83",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-02-018",
+      "requirement": "Gameplay cleanup.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:84",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-001",
+      "requirement": "Actual registered fruit catches.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:104",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-002",
+      "requirement": "Actual stars collected.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:105",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-003",
+      "requirement": "Star passes used.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:106",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-004",
+      "requirement": "Final round score.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:107",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-005",
+      "requirement": "Applicable rewards and consequences.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:108",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-006",
+      "requirement": "Personal-best celebration where appropriate.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:109",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      ],
+      "testsPerformed": [],
+      "supportingEvidence": [],
+      "actualResult": "Actual existing collections and original explanation/source snapshots are now persisted per completed attempt. New frame/restart/research-replacement tests await Apple execution. Bite-sized fact, full visual, scientific-meaning and complete end-to-end acceptance remain unverified."
+    },
+    {
+      "requirementID": "SUP-20261102-03-007",
+      "requirement": "Bite-sized educational facts associated with the round\u2019s questions.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:110",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
       ],
       "testsPerformed": [],
       "supportingEvidence": [],

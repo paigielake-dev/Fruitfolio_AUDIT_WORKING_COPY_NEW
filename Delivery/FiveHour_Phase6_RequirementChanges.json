@@ -105,6 +105,32 @@
         "FruitfolioTests/NativeLocalizationSpeechTests.swift"
       ],
       "remainingIssues": "Catalog coverage and native-language review remain incomplete. Run existing persistence/RTL/Chinese selector journeys and these native tests on founder Mac; do not infer full multilingual clinical acceptance."
+    },
+    {
+      "requirementID": "FF1B-398",
+      "originalBreakdownItem": "Persist the language preference across restarts and navigation.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Unknown or unreadable saved language preferences are preserved and explicitly disclosed while English is used as a temporary fallback. Only an intentional new selection replaces the original value and clears the notice. Existing underscore Chinese-script spelling is recognized without changing its stored bytes or substituting the other script. Shared language decoding is used by Settings and non-SwiftUI preference reads.",
+      "verification": "Four XCTest cases added: unknown value across restarts/replacement, wrong stored type preservation, Traditional underscore-script retention, and all60 existing identities loading without warning. Not executed on Mac.",
+      "evidence": "FruitfolioTests/LanguagePreferenceRecoveryTests.swift",
+      "remainingIssues": "Run actual Settings recovery notices, language restart/RTL journeys and existing preferences/audio regression on founder Mac."
+    },
+    {
+      "requirementID": "FF1B-429",
+      "originalBreakdownItem": "Do not silently reset the selected language.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "changes": "Unknown or unreadable saved language preferences are preserved and explicitly disclosed while English is used as a temporary fallback. Only an intentional new selection replaces the original value and clears the notice. Existing underscore Chinese-script spelling is recognized without changing its stored bytes or substituting the other script. Shared language decoding is used by Settings and non-SwiftUI preference reads.",
+      "verification": "Four XCTest cases added: unknown value across restarts/replacement, wrong stored type preservation, Traditional underscore-script retention, and all60 existing identities loading without warning. Not executed on Mac.",
+      "evidence": "FruitfolioTests/LanguagePreferenceRecoveryTests.swift",
+      "remainingIssues": "Run actual Settings recovery notices, language restart/RTL journeys and existing preferences/audio regression on founder Mac."
     }
   ]
 }

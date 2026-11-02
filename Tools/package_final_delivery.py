@@ -133,10 +133,16 @@ def package(args):
     if args.verify_only:
         print(json.dumps({'inputIntegrity': 'PASS', 'releaseAcceptance': 'NOT CLAIMED', 'files': len(files), 'tracker': tracker['summary']}, indent=2)); return
     out = args.output_directory.resolve(); out.mkdir(parents=True, exist_ok=True)
-    name = 'Fruitfolio_Prompt_1B_FINAL_COMPLETE.zip' if args.kind == 'final' else 'Fruitfolio_Prompt_1B_SNAPSHOT_' + args.source_commit[:12] + '.zip'
+    name = ('Fruitfolio_Prompt_1B_FINAL_COMPLETE.zip' if args.kind == 'final' else
+            'Fruitfolio_Prompt_1B_INTEGRATED_SOURCE.zip' if args.kind == 'integrated' else
+            'Fruitfolio_Prompt_1B_SNAPSHOT_' + args.source_commit[:12] + '.zip')
     archive = out / name
     if archive.exists(): raise FileExistsError('Refusing to overwrite an existing archive: ' + str(archive))
-    manifest = {'sourceCommit': args.source_commit, 'deliveryStatus': 'FINAL COMPLETE' if args.kind == 'final' else 'INCOMPLETE INTERNAL SNAPSHOT — NOT FINAL ACCEPTANCE', 'files': []}
+    status = ('FINAL COMPLETE' if args.kind == 'final' else
+              'INTEGRATED SOURCE HANDOFF — INCOMPLETE RELEASE ACCEPTANCE' if args.kind == 'integrated' else
+              'INCOMPLETE INTERNAL SNAPSHOT — NOT FINAL ACCEPTANCE')
+    manifest = {'sourceCommit': args.source_commit, 'sourceTree': args.source_tree,
+                'developmentBranch': args.branch, 'deliveryStatus': status, 'files': []}
     for path, rel in files:
         manifest['files'].append({'path': rel, 'bytes': path.stat().st_size, 'sha256': digest(path)})
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6, allowZip64=True) as z:
@@ -170,6 +176,7 @@ def package(args):
                     dest.write(chunk); size += len(chunk)
             parts.append({'name': path.name, 'bytes': size, 'sha256': digest(path)})
     index = {'archive': name, 'status': manifest['deliveryStatus'], 'sourceCommit': args.source_commit,
+             'sourceTree': args.source_tree, 'developmentBranch': args.branch,
              'bytes': archive.stat().st_size, 'sha256': digest(archive), 'files': len(files)+1, 'parts': parts}
     reconstructed = hashlib.sha256()
     for item in parts:
@@ -185,11 +192,15 @@ def package(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-commit', required=True)
-    parser.add_argument('--kind', choices=['snapshot', 'final'], default='snapshot')
+    parser.add_argument('--kind', choices=['snapshot', 'integrated', 'final'], default='snapshot')
+    parser.add_argument('--source-tree', help='Verified GitHub tree SHA; required for integrated/final delivery')
+    parser.add_argument('--branch', default='fruitfolio/prompt-1b-alignment')
     parser.add_argument('--verify-only', action='store_true')
     parser.add_argument('--output-directory', type=Path, default=ROOT.parent / 'deliverables')
     parser.add_argument('--part-size-mib', type=int, default=400)
     options = parser.parse_args()
     if not re.fullmatch('[a-f0-9]{40}', options.source_commit) or not 1 <= options.part_size_mib <= 400:
         parser.error('A real 40-character source commit and 1–400 MiB part size are required')
+    if options.kind in {'integrated', 'final'} and not re.fullmatch('[a-f0-9]{40}', options.source_tree or ''):
+        parser.error('Integrated/final delivery requires the actual verified remote source tree SHA')
     package(options)
