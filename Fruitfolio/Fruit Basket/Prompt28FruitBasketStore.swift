@@ -85,6 +85,31 @@ final class Prompt28FruitBasketStore: ObservableObject {
         persist()
     }
 
+    /// Commit progress and its immutable evidence/catch record as one snapshot.
+    /// Staging before publication avoids a saved score without its original
+    /// round attribution if encoding fails or the process stops between writes.
+    @discardableResult
+    func commitCompletedRound(_ record: Prompt28CompletedRound,
+                              updating progress: Prompt28TopicProgress) -> Bool {
+        guard loadError == nil else { return false }
+        if let existing = completedRounds.first(where: { $0.id == record.id }) {
+            return existing == record
+        }
+        var clean = progress
+        clean.currentGameLevel = min(max(clean.currentGameLevel, 1), Prompt28FruitBasketEngine.maxGameLevel)
+        clean.highestGameLevelReached = min(Prompt28FruitBasketEngine.maxGameLevel,
+                                            max(clean.highestGameLevelReached, clean.currentGameLevel))
+        clean.lastPlayedAt = record.completedAt
+        var state = persistenceSnapshot()
+        state.topicProgress[clean.normalizedTopicID] = clean
+        state.completedRounds = completedRounds + [record]
+        guard let data = try? JSONEncoder().encode(state) else { return false }
+        defaults.set(data, forKey: persistenceKey)
+        topicProgress = state.topicProgress
+        completedRounds = state.completedRounds ?? []
+        return true
+    }
+
     func completeTour() {
         tourState.hasCompletedTour = true
         tourState.currentStep = 0
@@ -133,7 +158,13 @@ final class Prompt28FruitBasketStore: ObservableObject {
     private func persist() {
         // Never overwrite unreadable saved records with an empty/default state.
         guard loadError == nil else { return }
-        let state = PersistedState(
+        let state = persistenceSnapshot()
+        guard let data = try? JSONEncoder().encode(state) else { return }
+        defaults.set(data, forKey: persistenceKey)
+    }
+
+    private func persistenceSnapshot() -> PersistedState {
+        PersistedState(
             topicProgress: topicProgress,
             questionHistory: questionHistory.mapValues { Array($0).sorted() },
             completedRounds: completedRounds,
@@ -143,7 +174,5 @@ final class Prompt28FruitBasketStore: ObservableObject {
             controlMode: controlMode,
             preferredDifficulty: preferredDifficulty
         )
-        guard let data = try? JSONEncoder().encode(state) else { return }
-        defaults.set(data, forKey: persistenceKey)
     }
 }

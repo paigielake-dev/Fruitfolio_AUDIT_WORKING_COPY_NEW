@@ -107,6 +107,33 @@ final class RoundCompletionPersistenceTests: XCTestCase {
         game.viewWillDisappear()
     }
 
+    func testRejectedRoundSnapshotDoesNotPublishProgressOrReplaceSavedBytes() async throws {
+        let suite = "RoundSnapshotRejection-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let game = try await model(defaults: defaults)
+        try finishGoodBasket(game)
+        let record = try XCTUnwrap(game.store.completedRounds.first)
+        let before = try XCTUnwrap(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"))
+        let originalProgress = game.store.topicProgress
+        var next = try XCTUnwrap(game.store.progress(for: "nutrition"))
+        next.totalRoundsCompleted += 1
+        let invalid = Prompt28CompletedRound(id: UUID(), sessionID: record.sessionID, round: 2,
+            completedAt: Date(timeIntervalSinceReferenceDate: .infinity), successful: true,
+            question: record.question, collection: record.collection, finalScore: record.finalScore,
+            remainingStarPasses: record.remainingStarPasses, personalBest: false,
+            educationalFacts: record.educationalFacts)
+        XCTAssertFalse(game.store.commitCompletedRound(invalid, updating: next))
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), before)
+        XCTAssertEqual(game.store.topicProgress, originalProgress)
+        XCTAssertEqual(game.store.completedRounds, [record])
+        // A second commit of an already stored record cannot increment progress.
+        XCTAssertTrue(game.store.commitCompletedRound(record, updating: next))
+        XCTAssertEqual(game.store.topicProgress, originalProgress)
+        XCTAssertEqual(Prompt28FruitBasketStore(defaults: defaults).completedRounds, [record])
+        game.viewWillDisappear()
+    }
+
     func testOrdinaryDelayedRevealPresentsAlreadyCommittedResultWithoutCountingItAgain() async throws {
         let suite = "RoundNormalCommit-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

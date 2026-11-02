@@ -808,8 +808,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func finishSuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
         if !roundResultCommitted {
-            roundResultCommitted = true
-            var progress = store.ensureProgress(for: session.normalizedTopicID)
+            var progress = store.progress(for: session.normalizedTopicID)
+                ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
             progress.totalRoundsCompleted += 1
             progress.totalSuccessfulRounds += 1
             progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
@@ -819,8 +819,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             didSetPersonalBestThisRound = session.score > progress.bestScore
             progress.bestScore = max(progress.bestScore, session.score)
             progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-            store.updateProgress(progress)
-            recordCompletedRound(successful: true)
+            roundResultCommitted = recordCompletedRound(successful: true, updating: progress)
         }
         if presentResult {
             pendingRoundSuccess = nil
@@ -836,13 +835,12 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func finishUnsuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
         if !roundResultCommitted {
-            roundResultCommitted = true
-            var progress = store.ensureProgress(for: session.normalizedTopicID)
+            var progress = store.progress(for: session.normalizedTopicID)
+                ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
             progress.totalRoundsCompleted += 1
             progress.bestScore = max(progress.bestScore, session.score)
             progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-            store.updateProgress(progress)
-            recordCompletedRound(successful: false)
+            roundResultCommitted = recordCompletedRound(successful: false, updating: progress)
         }
         if presentResult {
             pendingRoundSuccess = nil
@@ -863,14 +861,18 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         else { finishUnsuccessfulRound() }
     }
 
-    private func recordCompletedRound(successful: Bool) {
-        guard let session, let question = currentQuestion else { return }
-        store.recordCompletedRound(.init(id: attemptID, sessionID: session.id,
+    private func recordCompletedRound(successful: Bool, updating progress: Prompt28TopicProgress) -> Bool {
+        guard let session, let question = currentQuestion else { return false }
+        let committed = store.commitCompletedRound(.init(id: attemptID, sessionID: session.id,
             round: session.currentRound, completedAt: Date(), successful: successful,
             question: question, collection: roundCollection, finalScore: session.score,
             remainingStarPasses: session.availableStarPasses,
             personalBest: successful && didSetPersonalBestThisRound,
-            educationalFacts: question.verifiedEducationalFacts))
+            educationalFacts: question.verifiedEducationalFacts), updating: progress)
+        if !committed {
+            message = "your round couldn’t be saved. your previous stored records have been preserved."
+        }
+        return committed
     }
 
     private func stopGameplay() {
