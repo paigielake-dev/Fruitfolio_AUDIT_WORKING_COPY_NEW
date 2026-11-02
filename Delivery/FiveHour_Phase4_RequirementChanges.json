@@ -131,6 +131,18 @@
       "verification": "Two asynchronous layout-fixture tests added in AskReducedMotionLifecycleTests; not executed. Full app Reduce Motion acceptance is not established by these source changes.",
       "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
       "remainingIssues": "Actual live system changes, UI recordings and audio stop on founder Mac/device; other screens require independent verification."
+    },
+    {
+      "requirementID": "FF1B-165",
+      "originalBreakdownItem": "Do not use unsupported-topic fallbacks before the available research architecture has been appropriately searched.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "changes": "Supported two-character hormone identifiers LH and E2 are retained as retrieval tokens instead of being discarded by the ordinary three-character minimum. Short exact-query matching uses whole-word boundaries so unrelated codes do not gain an exact-match bonus. English corpus normalization uses an explicit POSIX locale for stable indexing across device locales. No claim-coverage/source-approval thresholds or answer wording changed.",
+      "verification": "Three XCTest cases added, including actual bundled-note/source retrieval without inference/network and unrelated-code rejection. Not executed on Mac. Actual JSON contains 30 LH notes/6 source extracts and 4 E2 notes/0 source extracts; zero E2 source extracts is not treated as new source evidence.",
+      "evidence": "FruitfolioTests/ResearchAbbreviationRetrievalTests.swift",
+      "remainingIssues": "Run the new and full grounding suites on founder Mac; verify actual grounded questions, citations and fallback behavior. UI localization does not establish translated research support."
     }
   ]
 }

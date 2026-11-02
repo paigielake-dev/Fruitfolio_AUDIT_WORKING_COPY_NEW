@@ -349,7 +349,7 @@ nonisolated enum FruitfolioQueryNormalizer {
                 .caseInsensitive,
                 .diacriticInsensitive
             ],
-            locale: .current
+            locale: Locale(identifier: "en_US_POSIX")
         )
         .lowercased()
 
@@ -419,12 +419,15 @@ nonisolated enum FruitfolioQueryNormalizer {
             "you"
         ]
 
+        // Supported hormone identifiers are meaningful research terms even
+        // when shorter than the ordinary prose-token minimum.
+        let shortScientificTokens: Set<String> = ["lh", "e2"]
         return Set(
             normalize(text)
                 .split(separator: " ")
                 .map(String.init)
                 .filter {
-                    $0.count > 2
+                    ($0.count > 2 || shortScientificTokens.contains($0))
                         && !stop.contains($0)
                 }
         )
@@ -503,6 +506,15 @@ nonisolated struct FruitfolioLocalResearchRetriever:
         }
 
         let normalizedQuestion = FruitfolioQueryNormalizer.normalize(question)
+        // Short supported identifiers need whole-word matching: E2 must not
+        // receive an exact-phrase bonus from the middle of an unrelated code.
+        let shortTermPattern: NSRegularExpression?
+        if normalizedQuestion.count <= 2 {
+            shortTermPattern = try? NSRegularExpression(
+                pattern: "\\b" + NSRegularExpression.escapedPattern(for: normalizedQuestion) + "\\b", options: .caseInsensitive)
+        } else {
+            shortTermPattern = nil
+        }
         return indexedNotes
             .compactMap {
                 entry in
@@ -528,14 +540,14 @@ nonisolated struct FruitfolioLocalResearchRetriever:
                         .count
                 )
 
-                let exactBonus =
-                    chunk.text
-                        .lowercased()
-                        .contains(
-                            normalizedQuestion
-                        )
-                    ? 3.0
-                    : 0.0
+                let exactMatch: Bool
+                if let shortTermPattern {
+                    exactMatch = shortTermPattern.firstMatch(in: chunk.text,
+                        range: NSRange(location: 0, length: chunk.text.utf16.count)) != nil
+                } else {
+                    exactMatch = chunk.text.lowercased().contains(normalizedQuestion)
+                }
+                let exactBonus = exactMatch ? 3.0 : 0.0
 
                 let score =
                     (headingHits * 3.0)
