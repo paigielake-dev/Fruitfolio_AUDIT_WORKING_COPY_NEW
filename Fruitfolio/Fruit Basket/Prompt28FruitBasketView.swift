@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 private enum Prompt28TextRole {
     case screenTitle
@@ -984,7 +985,6 @@ struct Prompt28FruitBasketView: View {
                         .accessibilityValue((viewModel.session?.availableStarPasses ?? 0) > 0
                             ? "one pass will be used if you catch a bad fruit; the round will continue"
                             : "with no star pass, a bad-fruit catch ends this round")
-                        .accessibilityLiveRegion(.polite)
                 }
                 .frame(width: width)
                 .offset(
@@ -1032,6 +1032,10 @@ struct Prompt28FruitBasketView: View {
         .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.starChime) }
             else if newValue < oldValue { audioManager.play(.notificationSoftSparkle) }
+            if UIAccessibility.isVoiceOverRunning {
+                let change = newValue > oldValue ? "star pass banked" : "one star pass used"
+                UIAccessibility.post(notification: .announcement, argument: "\(change). star passes: \(newValue).")
+            }
         }
     }
 

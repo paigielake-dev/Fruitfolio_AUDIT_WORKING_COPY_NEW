@@ -16,7 +16,7 @@ REPOSITORY = "paigielake-dev/Fruitfolio_AUDIT_WORKING_COPY_NEW"
 BRANCH = "fruitfolio/prompt-1b-alignment"
 WORKFLOW = 403220650
 PRESERVE = {41357420177, 41358742740}
-OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60}
+OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60, 64}
 OUT = Path("verification-queue-state.json")
 
 
