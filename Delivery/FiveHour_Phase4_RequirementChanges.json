@@ -158,6 +158,54 @@
         "FruitfolioTests/GroundingAttributionTests.swift"
       ],
       "remainingIssues": "Run actual native/fallback regression and independently review any source-corpus formatting corrections before publication."
+    },
+    {
+      "requirementID": "FF1B-142",
+      "originalBreakdownItem": "Default to no educational illustration.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-143",
+      "originalBreakdownItem": "Display scientific artwork only when it materially improves understanding.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-144",
+      "originalBreakdownItem": "Do not select artwork merely because an asset matches a keyword.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-145",
+      "originalBreakdownItem": "Generally limit an ordinary answer to one major educational illustration when genuinely appropriate.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
     }
   ]
 }
