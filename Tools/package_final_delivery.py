@@ -32,6 +32,8 @@ def included(path):
     rel = path.relative_to(ROOT)
     if any(part in SKIP_PARTS or part.endswith('.xcresult') for part in rel.parts): return False
     if rel.parts[0] in {'Leaderboard_Preparation_Backup', 'FruitBasket_Leaderboard_Backup_20261012_061959'}: return False  # inactive historical copies, absent from project roots/references
+    if rel.parts[:2] in [('Vendor', 'ios-arm64'), ('Vendor', 'ios-arm64-simulator'), ('Vendor', 'LegacyMacOS')]: return False  # inactive/identical duplicate distributions; actual XCFrameworks remain required
+    if rel.as_posix() == 'Vendor/Info.plist': return False  # duplicate MADLAD XCFramework manifest, not a project dependency
     if rel.as_posix() == 'Delivery/CONTINUATION_ARCHIVE_FILES.json': return False
     if rel.parts.count('AppleRuns') > 1: return False  # duplicate embedded historical artifact trees
     if path.name == '.DS_Store' or path.suffix == '.pyc': return False

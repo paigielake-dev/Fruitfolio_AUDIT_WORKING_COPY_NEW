@@ -67,6 +67,18 @@ class ResearchUpdatesTests(unittest.TestCase):
                 raw, manifest, _ = proposal(package)
                 with self.assertRaises(u.Rejected): u.validate(raw, manifest, base)
 
+    def test_source_revision_also_changes_the_legacy_citation_content_version_lock(self):
+        original = fixture()
+        revision = fixture('test-v2')
+        revision['sources'][0]['sourceVersion'] = 'source-v2'
+        revision['sources'][0]['apa7Reference'] = 'Corrected synthetic citation.'
+        raw, manifest, _ = proposal(revision)
+        with self.assertRaisesRegex(u.Rejected, 'legacy saved citation locks'):
+            u.validate(raw, manifest, original)
+        revision['sources'][0]['contentVersion'] = 'test-v2'
+        raw, manifest, _ = proposal(revision)
+        self.assertEqual(u.validate(raw, manifest, original)['sources'][0]['contentVersion'], 'test-v2')
+
     def test_corrupt_archived_snapshot_fails_without_activating_another_version(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); state = u.publish(root, *proposal(fixture()))

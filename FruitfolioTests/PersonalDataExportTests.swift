@@ -52,6 +52,17 @@ final class PersonalDataExportTests: XCTestCase {
         progress.totalRoundsCompleted = 3; progress.currentGameLevel = 2
         game.updateProgress(progress)
         game.recordQuestion("exact-original-evidence-question", topic: "nutrition")
+        let groundedQuestion = try await Prompt28CanonicalResearchProvider().question(
+            topic: "nutrition", normalizedTopic: "nutrition", difficulty: .easy, excludingQuestionIDs: [])
+        // Stored-data fixture, not a substitute for the frame-driven gameplay test.
+        let completed = Prompt28CompletedRound(id: UUID(), sessionID: UUID(), round: 3,
+            completedAt: fixed, successful: false, question: groundedQuestion,
+            collection: .init(goodFruit: [.apple, .pear], badFruit: [.lemon, .lemon],
+                              standaloneStarsCaught: 0, starPassesConsumed: 1,
+                              startingStarPasses: 1, startingScore: 40),
+            finalScore: 60, remainingStarPasses: 0, personalBest: false)
+        game.recordCompletedRound(completed)
+        let originalRounds = game.completedRounds
         let originalGameBytes = defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1")
         let originalGame = game.topicProgress
         let originalHistory = game.questionHistory
@@ -85,15 +96,21 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(exported.hormoneMeasurements, originalHormones, "Reopened exports must preserve whole original records, including dates and timestamps")
         XCTAssertEqual(exported.reportedContext, originalContext)
         XCTAssertEqual(exported.fruitBasketProgress, originalGame)
+        XCTAssertEqual(exported.fruitBasketCompletedRounds, originalRounds,
+                       "Actual reopened JSON must preserve complete original round records, dates, explanations and source versions")
+        XCTAssertEqual(exported.fruitBasketCompletedRounds?.first?.question.evidenceSnapshot,
+                       groundedQuestion.evidenceSnapshot)
         // Existing schema1 files remain readable. Their already converted date
         // values cannot recover old discarded bits; do not claim otherwise.
         let legacyEncoder = JSONEncoder(); legacyEncoder.dateEncodingStrategy = .millisecondsSince1970
         var legacyObject = try XCTUnwrap(JSONSerialization.jsonObject(with: legacyEncoder.encode(exported)) as? [String: Any])
         legacyObject["schemaVersion"] = 1; legacyObject.removeValue(forKey: "dateRepresentation")
+        legacyObject.removeValue(forKey: "fruitBasketCompletedRounds")
         let legacyBytes = try JSONSerialization.data(withJSONObject: legacyObject)
         let legacy = try FruitfolioPersonalDataExport.decodeDocument(legacyBytes)
         XCTAssertEqual(legacy.schemaVersion, 1)
         XCTAssertNil(legacy.dateRepresentation)
+        XCTAssertNil(legacy.fruitBasketCompletedRounds, "True legacy exports may lack completed-round history")
         XCTAssertEqual(legacy.publicUsername, exported.publicUsername)
         XCTAssertEqual(legacy.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots,
                        exported.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots)
@@ -111,6 +128,7 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(exported.fruitBasketQuestionHistory["nutrition"], ["exact-original-evidence-question"])
         XCTAssertEqual(game.topicProgress, originalGame)
         XCTAssertEqual(game.questionHistory, originalHistory)
+        XCTAssertEqual(game.completedRounds, originalRounds)
         XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), originalGameBytes)
         XCTAssertTrue(exported.limitations.contains { $0.contains("not a complete media backup") })
         XCTAssertFalse(String(decoding: bytes, as: UTF8.self).contains("must never be exported"))

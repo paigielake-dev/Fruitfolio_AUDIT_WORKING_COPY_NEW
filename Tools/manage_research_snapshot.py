@@ -107,6 +107,7 @@ def validate(raw, manifest, baseline=None):
                 for ident in set(old) & set(new):
                     if old[ident] != new[ident]:
                         require(old[ident]['sourceVersion'] != new[ident]['sourceVersion'], f'{ident}: changed source needs a new sourceVersion')
+                        require(old[ident]['contentVersion'] != new[ident]['contentVersion'], f'{ident}: changed source needs a new contentVersion for legacy saved citation locks')
     return package
 
 

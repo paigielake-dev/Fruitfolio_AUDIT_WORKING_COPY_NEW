@@ -1,0 +1,9 @@
+# Bounded decoding investigation, separate from production
+
+`ay_decode_profiles.rs` reproduces the two synthetic Aymara inputs used by the failing expanded medical fixture, with Spanish/French regression controls. It compares greedy decoding against three explicitly labeled repetition-penalty experiments using the same original official Q4 weights, tokenizer, config and pinned Candle encoder–decoder. The existing application ABI, production decoding profile and model resources are unchanged.
+
+The diagnostic records actual raw outputs, EOS termination, bounded token counts, unique-token counts, longest identical-token run, exact prompt/input IDs and elapsed time. Non-EOS partial text is diagnostic evidence only, never an accepted translation. Even an EOS-terminated candidate has `medicalMeaningVerified: false`. The experiment cannot approve Aymara medical meaning or justify excluding that target from the fifteen-language application fixture.
+
+The GitHub workflow builds a separate Linux CLI after downloading/verifying the already approved official resources. It does not require a manual model upload. It does not link into SwiftUI, replace FruitfolioAI, change the RAG validator or silently select a new model. `HF_HUB_OFFLINE=1` is set during inference; this job is not the Mac firewall-isolation verification and must not be described as such. Linux memory/time observations are not iPhone acceptance.
+
+The operation uses the existing upstream `candle_transformers::utils::apply_repeat_penalty` implementation for diagnostic profiles only. Do not promote a profile to the app merely because repetition or termination improves. Compare actual meanings, uncertainty, warnings, terminology, all required languages, protected markers, citations and numerical fidelity, and rerun Apple/offline/regression/device checks first.

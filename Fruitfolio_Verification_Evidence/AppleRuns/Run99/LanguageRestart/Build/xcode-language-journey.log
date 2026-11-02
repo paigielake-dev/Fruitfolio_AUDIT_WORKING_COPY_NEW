@@ -1,0 +1,362 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/LanguageSelectionJourneyUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 11:53:59.982642+0000 FruitfolioUITests-Runner[40925:117593] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 11:54:04.316.
+2026-11-02 11:54:06.452 xcodebuild[39492:114112] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 11:54:06.452 xcodebuild[39492:114112] [MT] IDELaunchParametersSnapshot: no debugger version
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 11:54:04.318.
+Test Suite 'LanguageSelectionJourneyUITests' started at 2026-11-02 11:54:04.319.
+Test Case '-[FruitfolioUITests.LanguageSelectionJourneyUITests testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance]' started.
+    t =     0.00s Start Test at 2026-11-02 11:54:04.320
+    t =     0.11s Set Up
+    t =     0.12s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.12s     Launch com.fruitsoflifexo.Fruitfolio
+objc[40925]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10b690310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10b34c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     5.28s         Setting up automation session
+    t =     7.47s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    11.29s Waiting 12.0s for "I'll explore" Button to exist
+    t =    12.35s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.35s         Checking existence of `"I'll explore" Button`
+    t =    12.52s         Capturing element debug description
+    t =    13.36s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.36s         Checking existence of `"I'll explore" Button`
+    t =    13.43s         Capturing element debug description
+    t =    14.38s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.38s         Checking existence of `"I'll explore" Button`
+    t =    14.43s         Capturing element debug description
+    t =    15.37s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.37s         Checking existence of `"I'll explore" Button`
+    t =    15.42s         Capturing element debug description
+    t =    16.37s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.37s         Checking existence of `"I'll explore" Button`
+    t =    16.51s         Capturing element debug description
+    t =    17.36s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.36s         Checking existence of `"I'll explore" Button`
+    t =    17.43s         Capturing element debug description
+    t =    18.30s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.30s         Checking existence of `"I'll explore" Button`
+    t =    18.36s         Capturing element debug description
+    t =    19.30s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.30s         Checking existence of `"I'll explore" Button`
+    t =    19.34s         Capturing element debug description
+    t =    20.29s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.30s         Checking existence of `"I'll explore" Button`
+    t =    20.34s         Capturing element debug description
+    t =    21.37s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.37s         Checking existence of `"I'll explore" Button`
+    t =    21.42s         Capturing element debug description
+    t =    22.35s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.36s         Checking existence of `"I'll explore" Button`
+    t =    22.40s         Capturing element debug description
+    t =    23.30s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.30s         Checking existence of `"I'll explore" Button`
+    t =    23.34s         Capturing element debug description
+    t =    23.34s     Checking existence of `"I'll explore" Button`
+    t =    23.38s Collecting debug information to assist test failure triage
+    t =    23.38s     Requesting snapshot of accessibility hierarchy for app with pid 41045
+    t =    23.46s Waiting 15.0s for Button (First Match) to exist
+    t =    24.49s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    24.49s         Checking existence of `Button (First Match)`
+    t =    24.61s Waiting 2.0s for Button (First Match) to exist
+    t =    25.69s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    25.69s         Checking existence of `Button (First Match)`
+    t =    25.74s Waiting 10.0s for Button (First Match) to exist
+    t =    26.78s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    26.79s         Checking existence of `Button (First Match)`
+    t =    26.84s Find the Button (First Match)
+    t =    26.89s Find the "settings" Button
+    t =    26.94s Checking existence of `"popup.writingArea" Any`
+    t =    27.09s Find the "settings" Button
+    t =    27.12s Checking existence of `ScrollView (First Match)`
+    t =    27.18s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    27.19s Find the ScrollView (First Match)
+    t =    27.39s Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    27.45s Find the ScrollView
+    t =    27.58s Find the "settings" Button
+    t =    27.68s Find the "settings" Button
+    t =    27.78s Find the "settings" Button
+REACH_CONTROL attempt=0 identifier=settings target=(140.0, 761.6666666666666, 122.0, 58.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    27.86s Find the "settings" Button
+    t =    27.92s Find the "settings" Button
+    t =    27.98s Find the "settings" Button
+    t =    28.03s Find the "settings" Button
+    t =    28.08s Find the "settings" Button
+    t =    28.16s Tap "settings" Button
+    t =    28.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.16s     Find the "settings" Button
+    t =    28.21s     Check for interrupting elements affecting "settings" Button
+    t =    28.26s     Synthesize event
+    t =    28.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    29.01s Waiting 10.0s for "language" Button to exist
+    t =    30.09s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    30.09s         Checking existence of `"language" Button`
+    t =    30.47s Checking existence of `"settings.volume.music" Slider`
+    t =    30.55s Find the "settings.volume.music" Slider
+    t =    30.62s Checking existence of `"settings.volume.rain_sounds" Slider`
+    t =    30.72s Find the "settings.volume.rain_sounds" Slider
+    t =    30.83s Checking existence of `"settings.volume.sound_effects" Slider`
+    t =    30.92s Find the "settings.volume.sound_effects" Slider
+    t =    31.01s Checking existence of `"settings.volume.typing_asmr" Slider`
+    t =    31.07s Find the "settings.volume.typing_asmr" Slider
+    t =    31.13s Waiting 2.0s for "language" Button to exist
+    t =    32.19s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    32.19s         Checking existence of `"language" Button`
+    t =    32.24s Waiting 10.0s for "language" Button to exist
+    t =    33.28s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    33.28s         Checking existence of `"language" Button`
+    t =    33.33s Find the "language" Button
+    t =    33.41s Find the "language" Button
+    t =    33.47s Checking existence of `"popup.writingArea" Any`
+    t =    33.73s Find the "language" Button
+    t =    33.81s Checking existence of `ScrollView (First Match)`
+    t =    33.93s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    33.98s Find the ScrollView (First Match)
+    t =    34.06s Find the "settings.mainScroll" ScrollView
+    t =    34.15s Find the "settings.mainScroll" ScrollView
+    t =    34.21s Find the "language" Button
+    t =    34.29s Find the "language" Button
+    t =    34.37s Find the "language" Button
+REACH_CONTROL attempt=0 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    34.45s Find the "language" Button
+    t =    34.56s Find the "settings.mainScroll" ScrollView
+    t =    34.64s Press "settings.mainScroll" ScrollView[0.04, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.04, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    34.65s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.65s     Find the "settings.mainScroll" ScrollView
+    t =    34.74s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    34.80s     Synthesize event
+    t =    34.80s         Find the "settings.mainScroll" ScrollView
+    t =    34.88s         Find the "settings.mainScroll" ScrollView
+    t =    34.94s         Find the "settings.mainScroll" ScrollView
+    t =    35.00s         Find the "settings.mainScroll" ScrollView
+    t =    35.08s         Find the "settings.mainScroll" ScrollView
+    t =    37.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.41s Find the "language" Button
+    t =    37.47s Find the "language" Button
+REACH_CONTROL attempt=1 identifier=language target=(36.0, 519.0, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    37.57s Find the "language" Button
+    t =    37.64s Find the "language" Button
+    t =    37.71s Find the "language" Button
+    t =    37.79s Find the "language" Button
+    t =    37.85s Find the "language" Button
+    t =    37.93s Tap "language" Button
+    t =    37.93s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.94s     Find the "language" Button
+    t =    38.05s     Check for interrupting elements affecting "language" Button
+    t =    38.10s     Synthesize event
+    t =    38.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    39.07s Waiting 5.0s for "Español" Button to exist
+    t =    40.14s     Checking `Expect predicate `existsNoRetry == 1` for object "Español" Button`
+    t =    40.14s         Checking existence of `"Español" Button`
+    t =    40.55s Tap "Español" Button
+    t =    40.55s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.55s     Find the "Español" Button
+    t =    40.65s     Check for interrupting elements affecting "Español" Button
+    t =    40.73s     Synthesize event
+    t =    41.05s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.55s Find the "language" Button
+    t =    42.70s Checking existence of `"settings.volume.music" Slider`
+    t =    42.79s Find the "settings.volume.music" Slider
+    t =    42.87s Checking existence of `"settings.volume.rain_sounds" Slider`
+    t =    42.95s Find the "settings.volume.rain_sounds" Slider
+    t =    43.01s Checking existence of `"settings.volume.sound_effects" Slider`
+    t =    43.07s Find the "settings.volume.sound_effects" Slider
+    t =    43.13s Checking existence of `"settings.volume.typing_asmr" Slider`
+    t =    43.17s Find the "settings.volume.typing_asmr" Slider
+    t =    43.23s Waiting 5.0s for "settings.translationAvailability" StaticText to exist
+    t =    44.29s     Checking `Expect predicate `existsNoRetry == 1` for object "settings.translationAvailability" StaticText`
+    t =    44.29s         Checking existence of `"settings.translationAvailability" StaticText`
+    t =    44.34s Find the "settings.translationAvailability" StaticText
+    t =    44.41s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    44.59s Added attachment named 'Language_ActualSelectedSpanishAndUnverifiedDisplayNotice'
+    t =    44.59s Terminate com.fruitsoflifexo.Fruitfolio:41045
+    t =    45.65s Open com.fruitsoflifexo.Fruitfolio
+    t =    45.66s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 11:54:49.982 xcodebuild[39492:114112] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 11:54:49.982 xcodebuild[39492:114112] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    46.38s         Setting up automation session
+    t =    48.08s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.20s Waiting 12.0s for "I'll explore" Button to exist
+    t =    51.26s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    51.26s         Checking existence of `"I'll explore" Button`
+    t =    51.33s         Capturing element debug description
+    t =    52.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    52.27s         Checking existence of `"I'll explore" Button`
+    t =    52.31s         Capturing element debug description
+    t =    53.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    53.24s         Checking existence of `"I'll explore" Button`
+    t =    53.27s         Capturing element debug description
+    t =    54.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    54.22s         Checking existence of `"I'll explore" Button`
+    t =    54.26s         Capturing element debug description
+    t =    55.20s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    55.20s         Checking existence of `"I'll explore" Button`
+    t =    55.24s         Capturing element debug description
+    t =    56.29s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    56.29s         Checking existence of `"I'll explore" Button`
+    t =    56.33s         Capturing element debug description
+    t =    57.26s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    57.26s         Checking existence of `"I'll explore" Button`
+    t =    57.29s         Capturing element debug description
+    t =    58.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    58.21s         Checking existence of `"I'll explore" Button`
+    t =    58.24s         Capturing element debug description
+    t =    59.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    59.27s         Checking existence of `"I'll explore" Button`
+    t =    59.30s         Capturing element debug description
+    t =    60.25s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    60.25s         Checking existence of `"I'll explore" Button`
+    t =    60.28s         Capturing element debug description
+    t =    61.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    61.22s         Checking existence of `"I'll explore" Button`
+    t =    61.26s         Capturing element debug description
+    t =    62.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    62.21s         Checking existence of `"I'll explore" Button`
+    t =    62.24s         Capturing element debug description
+    t =    62.24s     Checking existence of `"I'll explore" Button`
+    t =    62.28s Collecting debug information to assist test failure triage
+    t =    62.28s     Requesting snapshot of accessibility hierarchy for app with pid 42948
+    t =    62.33s Waiting 15.0s for Button (First Match) to exist
+    t =    63.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    63.37s         Checking existence of `Button (First Match)`
+    t =    63.42s Waiting 2.0s for Button (First Match) to exist
+    t =    64.44s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    64.44s         Checking existence of `Button (First Match)`
+    t =    64.50s Waiting 10.0s for Button (First Match) to exist
+    t =    65.52s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    65.52s         Checking existence of `Button (First Match)`
+    t =    65.56s Find the Button (First Match)
+    t =    65.63s Find the "settings" Button
+    t =    65.66s Checking existence of `"popup.writingArea" Any`
+    t =    65.82s Find the "settings" Button
+    t =    65.85s Checking existence of `ScrollView (First Match)`
+    t =    65.90s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    65.92s Find the ScrollView (First Match)
+    t =    65.97s Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    66.04s Find the ScrollView
+    t =    66.10s Find the "settings" Button
+    t =    66.18s Find the "settings" Button
+    t =    66.25s Find the "settings" Button
+REACH_CONTROL attempt=0 identifier=settings target=(140.0, 761.6666666666666, 122.0, 58.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    66.31s Find the "settings" Button
+    t =    66.37s Find the "settings" Button
+    t =    66.43s Find the "settings" Button
+    t =    66.48s Find the "settings" Button
+    t =    66.53s Find the "settings" Button
+    t =    66.60s Tap "settings" Button
+    t =    66.60s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    66.60s     Find the "settings" Button
+    t =    66.65s     Check for interrupting elements affecting "settings" Button
+    t =    66.69s     Synthesize event
+    t =    66.99s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    67.59s Waiting 10.0s for "language" Button to exist
+    t =    68.63s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    68.63s         Checking existence of `"language" Button`
+    t =    69.48s Waiting 2.0s for "language" Button to exist
+    t =    70.53s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    70.53s         Checking existence of `"language" Button`
+    t =    70.58s Waiting 10.0s for "language" Button to exist
+    t =    71.60s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    71.60s         Checking existence of `"language" Button`
+    t =    71.66s Find the "language" Button
+    t =    71.72s Find the "language" Button
+    t =    71.77s Checking existence of `"popup.writingArea" Any`
+    t =    71.96s Find the "language" Button
+    t =    72.01s Checking existence of `ScrollView (First Match)`
+    t =    72.04s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    72.08s Find the ScrollView (First Match)
+    t =    72.15s Find the "settings.mainScroll" ScrollView
+    t =    72.19s Find the "settings.mainScroll" ScrollView
+    t =    72.25s Find the "language" Button
+    t =    72.32s Find the "language" Button
+    t =    72.38s Find the "language" Button
+REACH_CONTROL attempt=0 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    72.45s Find the "language" Button
+    t =    72.53s Find the "settings.mainScroll" ScrollView
+    t =    72.59s Press "settings.mainScroll" ScrollView[0.04, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.04, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    72.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    72.60s     Find the "settings.mainScroll" ScrollView
+    t =    72.65s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    72.70s     Synthesize event
+    t =    72.70s         Find the "settings.mainScroll" ScrollView
+    t =    72.76s         Find the "settings.mainScroll" ScrollView
+    t =    72.81s         Find the "settings.mainScroll" ScrollView
+    t =    72.87s         Find the "settings.mainScroll" ScrollView
+    t =    72.92s         Find the "settings.mainScroll" ScrollView
+    t =    75.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    75.22s Find the "language" Button
+    t =    75.36s Find the "language" Button
+REACH_CONTROL attempt=1 identifier=language target=(36.0, 519.0, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    75.48s Find the "language" Button
+    t =    75.62s Find the "language" Button
+    t =    75.73s Find the "language" Button
+    t =    75.81s Find the "language" Button
+    t =    75.92s Find the "language" Button
+    t =    76.04s Find the "language" Button
+    t =    76.12s Checking existence of `"settings.volume.music" Slider`
+    t =    76.21s Find the "settings.volume.music" Slider
+    t =    76.28s Checking existence of `"settings.volume.rain_sounds" Slider`
+    t =    76.37s Find the "settings.volume.rain_sounds" Slider
+    t =    76.46s Checking existence of `"settings.volume.sound_effects" Slider`
+    t =    76.53s Find the "settings.volume.sound_effects" Slider
+    t =    76.61s Checking existence of `"settings.volume.typing_asmr" Slider`
+    t =    76.70s Find the "settings.volume.typing_asmr" Slider
+    t =    76.77s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    77.00s Added attachment named 'Language_ActualPersistedSelectionAfterRestart'
+    t =    77.01s Tap "language" Button
+    t =    77.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    77.01s     Find the "language" Button
+    t =    77.10s     Check for interrupting elements affecting "language" Button
+    t =    77.17s     Synthesize event
+    t =    77.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    78.38s Waiting 5.0s for "English" Button to exist
+    t =    79.44s     Checking `Expect predicate `existsNoRetry == 1` for object "English" Button`
+    t =    79.44s         Checking existence of `"English" Button`
+    t =    79.70s Tap "English" Button
+    t =    79.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    79.70s     Find the "English" Button
+    t =    79.86s     Check for interrupting elements affecting "English" Button
+    t =    79.96s     Synthesize event
+    t =    80.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    81.82s Find the "language" Button
+    t =    81.98s Checking existence of `"settings.volume.music" Slider`
+    t =    82.10s Find the "settings.volume.music" Slider
+    t =    82.21s Checking existence of `"settings.volume.rain_sounds" Slider`
+    t =    82.37s Find the "settings.volume.rain_sounds" Slider
+    t =    82.52s Checking existence of `"settings.volume.sound_effects" Slider`
+    t =    82.65s Find the "settings.volume.sound_effects" Slider
+    t =    82.75s Checking existence of `"settings.volume.typing_asmr" Slider`
+    t =    82.83s Find the "settings.volume.typing_asmr" Slider
+    t =    82.89s Checking existence of `"settings.translationAvailability" StaticText`
+    t =    82.95s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    83.15s Added attachment named 'Language_ActualReturnToOriginalEnglish'
+    t =    83.17s Tear Down
+Test Case '-[FruitfolioUITests.LanguageSelectionJourneyUITests testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance]' passed (83.754 seconds).
+Test Suite 'LanguageSelectionJourneyUITests' passed at 2026-11-02 11:55:28.074.
+	 Executed 1 test, with 0 failures (0 unexpected) in 83.754 (83.756) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-02 11:55:28.076.
+	 Executed 1 test, with 0 failures (0 unexpected) in 83.754 (83.757) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 11:55:28.078.
+	 Executed 1 test, with 0 failures (0 unexpected) in 83.754 (83.762) seconds
+2026-11-02 11:55:29.226 xcodebuild[39492:114112] [MT] IDETestOperationsObserverDebug: 101.502 elapsed -- Testing started completed.
+2026-11-02 11:55:29.227 xcodebuild[39492:114112] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 11:55:29.227 xcodebuild[39492:114112] [MT] IDETestOperationsObserverDebug: 101.502 sec, +101.502 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -1,0 +1,62 @@
+name: MADLAD bounded decoding diagnostics (not clinical acceptance)
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'TranslationInvestigation/Experiments/ay_decode_profiles.rs'
+      - '.github/workflows/madlad-decoding-diagnostics.yml'
+permissions:
+  contents: read
+concurrency:
+  group: fruitfolio-madlad-decoding-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
+jobs:
+  official-q4-diagnostics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/cache@v4
+        with:
+          path: Models/MADLAD
+          key: madlad-official-resources-ea6e5531a3e95213-v1
+      - name: Retrieve and integrity-check only approved official resources
+        run: python3 Tools/prepare_madlad_resources.py
+      - name: Prepare exact pinned encoder-decoder source and separate diagnostic binary
+        run: |
+          git init TranslationInvestigation/candle-runtime-investigation
+          git -C TranslationInvestigation/candle-runtime-investigation remote add origin https://github.com/huggingface/candle.git
+          git -C TranslationInvestigation/candle-runtime-investigation fetch --depth 1 origin 2cf0e66dcb2953e2aa7f4000cdd697239e9c16c5
+          git -C TranslationInvestigation/candle-runtime-investigation checkout --detach FETCH_HEAD
+          python3 Tools/prepare_candle_madlad.py
+          mkdir -p TranslationInvestigation/madlad-candle-probe/src/bin
+          cp TranslationInvestigation/Experiments/ay_decode_profiles.rs TranslationInvestigation/madlad-candle-probe/src/bin/ay_decode_profiles.rs
+          mkdir -p Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics
+          rustc --version > Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics/rust-version.txt
+          uname -a > Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics/host.txt
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-decoding-linux-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
+      - name: Compile diagnostic CLI without changing the application runtime
+        run: |
+          set -o pipefail
+          cargo build --locked --release --bin ay_decode_profiles -j 1 --manifest-path TranslationInvestigation/madlad-candle-probe/Cargo.toml 2>&1 | tee Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics/build.log
+      - name: Compare bounded deterministic generation profiles on synthetic fixtures
+        env:
+          RAYON_NUM_THREADS: '4'
+          HF_HUB_OFFLINE: '1'
+        run: |
+          set -o pipefail
+          TranslationInvestigation/madlad-candle-probe/target/release/ay_decode_profiles Models/MADLAD | tee Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics/actual-outputs.jsonl
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_MADLAD_Decoding_Diagnostics
+          path: Fruitfolio_Verification_Evidence/MADLAD/DecodingDiagnostics
+          retention-days: 90
