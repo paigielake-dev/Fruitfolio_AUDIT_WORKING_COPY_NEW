@@ -28766,22 +28766,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 358",
       "sourceLine": 857,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -28800,12 +28811,15 @@
       ],
       "requirementDescription": "Increase falling speed gradually as game levels advance.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -28827,7 +28841,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -28839,22 +28853,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 359",
       "sourceLine": 859,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -28873,12 +28898,15 @@
       ],
       "requirementDescription": "Base progression primarily on successfully completed rounds.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -28900,7 +28928,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -28912,22 +28940,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 360",
       "sourceLine": 861,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -28946,12 +28985,15 @@
       ],
       "requirementDescription": "Keep early levels slow and forgiving.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -28973,7 +29015,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -28985,22 +29027,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 361",
       "sourceLine": 863,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29019,12 +29072,15 @@
       ],
       "requirementDescription": "Introduce bounded difficulty increases at later levels.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29046,7 +29102,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -29058,22 +29114,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 362",
       "sourceLine": 865,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29092,12 +29159,15 @@
       ],
       "requirementDescription": "Do not increase difficulty after an unsuccessful round.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29119,7 +29189,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -29131,22 +29201,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 363",
       "sourceLine": 867,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29165,12 +29246,15 @@
       ],
       "requirementDescription": "Stop increasing difficulty after the tested maximum level.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29192,7 +29276,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -29204,22 +29288,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 364",
       "sourceLine": 869,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29238,12 +29333,15 @@
       ],
       "requirementDescription": "Never change an object’s velocity while it is already falling.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29265,7 +29363,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -29277,22 +29375,33 @@
       "originalReference": "Part 7 / 7D. Difficulty progression / 365",
       "sourceLine": 871,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29311,12 +29420,15 @@
       ],
       "requirementDescription": "Keep gameplay challenging but not excessively demanding.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19T — Paused / progression correction",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 735,
+        "exactText": "19T — Paused. Active play is frozen/covered by the little game menu rather than continuing timers normally. The menu title is little game menu. ; Fruit fall speed may gradually increase as the player advances through game levels, not automatically after every round. Progression should be based primarily on successfully completed rounds, with early levels remaining slow and forgiving and later levels introducing slightly shorter fall times alongside other carefully bounded difficulty changes. An unsuccessful round must not automatically increase the game level or make the physics harder. Speed increases must remain gradual, fair, readable, and “challenging but cozy,” never twitch-reflex difficult. Once the tested maximum game level is reached, fall speed and other physics difficulty must stop increasing even if play continues. Never change an object’s velocity while it is already falling.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29338,7 +29450,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -29350,22 +29462,33 @@
       "originalReference": "Part 7 / 7E. Results and leaderboard / 366",
       "sourceLine": 875,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19V — Basket reveal",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 737,
+        "exactText": "19V — Basket reveal. Collected progress is presented as the basket/result reveal. - Clarify that Basket Reveal occurs after the actual round is completed, not when bad fruit is caught, and reflects the fruit/stars/rewards and applicable consequences accumulated during the round.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "sourceMappingStatus": "Actual engine/loop/progression/reveal source inspected, rather than candidate filename mapping",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "changesMade": [
+        "Source97 audit: bounded level1–8 fall/spawn configs, successful-round thresholds, no missed-fruit penalty and outcome-driven progression exist; actual catch records precede reveal. Existing physics is preserved."
+      ],
       "testsPerformed": [],
       "testResults": [],
-      "supportingEvidence": [],
+      "supportingEvidence": [
+        "Delivery/RUN92_VERIFICATION_AND_REPAIRS.json"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Complete rendered progression/comfort and relevant actual gameplay acceptance remains unverified. Bounded unit cases do not prove every interaction."
       ],
       "dependsOnParts": [
         1,
@@ -29384,12 +29507,15 @@
       ],
       "requirementDescription": "Trigger basket reveal after the actual round finishes.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "section": "19V — Basket reveal",
+        "source": "Specification/Prompt1B_Extracted_Text.txt",
+        "line": 737,
+        "exactText": "19V — Basket reveal. Collected progress is presented as the basket/result reveal. - Clarify that Basket Reveal occurs after the actual round is completed, not when bad fruit is caught, and reflects the fruit/stars/rewards and applicable consequences accumulated during the round.",
+        "exactCrossReferenceStatus": "Exact source paragraph inspected from all187 original CLX pieces"
       },
-      "currentImplementationState": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "PARTIAL — source inspected with retained actual engine/frame test logs; full criterion acceptance not established",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -29411,7 +29537,7 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
+      "finalDisposition": "PARTIAL",
       "afterStatus": "NOT VERIFIED"
     },
     {
@@ -41156,9 +41282,9 @@
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
   "implementationPassVerificationNote": "PASS is scoped to recorded actual evidence and source, not whole-app/final-source acceptance. Actual Run61 full job FAILED with 26 failed executions; volume journey passed. Its exploratory test execution passed but reported 14 unavailable paths, so traversal coverage is NOT VERIFIED.",
   "summary": {
-    "PARTIAL": 167,
+    "PARTIAL": 176,
     "PASS": 49,
-    "NOT VERIFIED": 256,
+    "NOT VERIFIED": 247,
     "BLOCKED": 2,
     "FAIL": 4
   },
@@ -41168,9 +41294,9 @@
   "currentSourceVerification": "Run92 exactsource498b189 verified full unit stage568PASS1SKIP,26SwiftTestingPASS,82focusedPASS(overlapping cases), normal gameUI PASS; guard/a11yFAIL. Current source repair pending Apple verification.",
   "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures.",
   "statusCounts": {
-    "PARTIAL": 167,
+    "PARTIAL": 176,
     "PASS": 49,
-    "NOT VERIFIED": 256,
+    "NOT VERIFIED": 247,
     "BLOCKED": 2,
     "FAIL": 4
   }

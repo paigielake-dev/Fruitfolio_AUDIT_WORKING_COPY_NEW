@@ -492,6 +492,24 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertNil(observed, "A hidden game must not be retained by a still-running 30 Hz loop")
     }
 
+    func testAnActiveGameLoopDoesNotRetainItsOwnerAcrossSuspendedFramesEvenWithoutTheViewCallback() async throws {
+        let suite = "Prompt28.OwnerLifetime.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var model: Prompt28FruitBasketViewModel? = Prompt28FruitBasketViewModel(
+            store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        weak var observed = model
+        model?.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 1)
+        model?.currentQuestion = fixtureQuestion()
+        model?.beginCatch()
+        await Task.yield()
+        // Deliberately omit the ordinary callback; actual Task ownership must
+        // not depend on it to break a permanent self/task retention cycle.
+        model = nil
+        try await Task.sleep(nanoseconds: 80_000_000)
+        XCTAssertNil(observed, "An abandoned host must release its actual active game loop owner")
+    }
+
     func testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand() {
         let geometry = Prompt28VineContactGeometry(fieldWidth: 344, fieldHeight: 896, level: 3)
         XCTAssertEqual(geometry.normalizedArtworkBounds.height, 0.15, accuracy: 0.00001)

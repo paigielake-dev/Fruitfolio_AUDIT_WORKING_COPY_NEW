@@ -1,0 +1,637 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/UsernameSynchronizationUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 01:02:10.692098+0000 FruitfolioUITests-Runner[53447:153752] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 01:02:12.793.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 01:02:12.794.
+Test Suite 'UsernameSynchronizationUITests' started at 2026-11-02 01:02:12.794.
+Test Case '-[FruitfolioUITests.UsernameSynchronizationUITests testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart]' started.
+    t =     0.00s Start Test at 2026-11-02 01:02:12.795
+    t =     0.15s Set Up
+    t =     0.16s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.16s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 01:02:15.374 xcodebuild[52435:151217] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 01:02:15.374 xcodebuild[52435:151217] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[53447]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x108368310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x108948398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     7.33s         Setting up automation session
+    t =     9.89s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    13.06s Waiting 12.0s for "I'll explore" Button to exist
+    t =    14.11s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.11s         Checking existence of `"I'll explore" Button`
+    t =    14.24s         Capturing element debug description
+    t =    15.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.09s         Checking existence of `"I'll explore" Button`
+    t =    15.17s         Capturing element debug description
+    t =    16.13s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.13s         Checking existence of `"I'll explore" Button`
+    t =    16.17s         Capturing element debug description
+    t =    17.10s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.10s         Checking existence of `"I'll explore" Button`
+    t =    17.16s         Capturing element debug description
+    t =    18.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.09s         Checking existence of `"I'll explore" Button`
+    t =    18.13s         Capturing element debug description
+    t =    19.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.08s         Checking existence of `"I'll explore" Button`
+    t =    19.13s         Capturing element debug description
+    t =    20.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.08s         Checking existence of `"I'll explore" Button`
+    t =    20.12s         Capturing element debug description
+    t =    21.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.08s         Checking existence of `"I'll explore" Button`
+    t =    21.13s         Capturing element debug description
+    t =    22.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.08s         Checking existence of `"I'll explore" Button`
+    t =    22.13s         Capturing element debug description
+    t =    23.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.08s         Checking existence of `"I'll explore" Button`
+    t =    23.31s         Capturing element debug description
+    t =    24.15s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    24.15s         Checking existence of `"I'll explore" Button`
+    t =    24.20s         Capturing element debug description
+    t =    25.08s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    25.08s         Checking existence of `"I'll explore" Button`
+    t =    25.11s         Capturing element debug description
+    t =    25.11s     Checking existence of `"I'll explore" Button`
+    t =    25.15s Collecting debug information to assist test failure triage
+    t =    25.15s     Requesting snapshot of accessibility hierarchy for app with pid 53878
+    t =    25.26s Waiting 12.0s for Button (First Match) to exist
+    t =    26.30s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    26.30s         Checking existence of `Button (First Match)`
+    t =    26.38s Tap Button (First Match)
+    t =    26.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    26.38s     Find the Button (First Match)
+    t =    26.43s     Check for interrupting elements affecting "sign in" Button
+    t =    26.52s     Synthesize event
+    t =    26.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.37s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =    28.40s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =    28.40s         Checking existence of `"account.publicUsername" TextField`
+    t =    28.61s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =    29.68s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =    29.68s         Checking existence of `"account.publicUsername" TextField`
+    t =    29.77s Find the "account.publicUsername" TextField
+    t =    29.86s Find the "account.publicUsername" TextField
+    t =    29.96s Checking existence of `ScrollView (First Match)`
+    t =    30.03s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    30.18s Find the ScrollView (First Match)
+    t =    30.49s Find the "account.publicUsername" TextField
+    t =    30.89s Find the "account.publicUsername" TextField
+    t =    31.00s Find the "account.publicUsername" TextField
+    t =    31.15s Find the "account.publicUsername" TextField
+    t =    31.29s Find the "account.publicUsername" TextField
+    t =    31.57s Find the "account.publicUsername" TextField
+    t =    31.68s Find the "account.publicUsername" TextField
+    t =    31.94s Find the "account.publicUsername" TextField
+    t =    32.04s Find the "account.publicUsername" TextField
+    t =    32.16s Find the "account.publicUsername" TextField
+    t =    32.30s Find the "account.publicUsername" TextField
+    t =    32.37s Find the "account.publicUsername" TextField
+    t =    32.43s Find the "account.publicUsername" TextField
+    t =    32.52s Find the "account.publicUsername" TextField
+    t =    32.57s Find the "account.publicUsername" TextField
+    t =    32.65s Find the "account.publicUsername" TextField
+    t =    32.72s Find the "account.publicUsername" TextField
+    t =    32.77s Find the "account.publicUsername" TextField
+    t =    32.82s Find the "account.publicUsername" TextField
+    t =    32.90s Find the "account.publicUsername" TextField
+    t =    32.95s Find the "account.publicUsername" TextField
+    t =    33.01s Find the "account.publicUsername" TextField
+    t =    33.04s Find the "account.publicUsername" TextField
+    t =    33.11s Find the "account.publicUsername" TextField
+    t =    33.17s Find the "account.publicUsername" TextField
+    t =    33.26s Find the "account.publicUsername" TextField
+    t =    33.29s Tap "account.publicUsername" TextField
+    t =    33.29s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.30s     Find the "account.publicUsername" TextField
+    t =    33.35s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    33.38s     Synthesize event
+    t =    33.71s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.82s Find the "account.publicUsername" TextField
+    t =    40.02s Find the "account.publicUsername" TextField
+    t =    40.26s Type 'b' into "account.publicUsername" TextField
+    t =    40.26s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.27s     Find the "account.publicUsername" TextField
+    t =    40.38s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    40.51s     Synthesize event
+    t =    41.10s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.20s Type 'e' into "account.publicUsername" TextField
+    t =    41.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.21s     Find the "account.publicUsername" TextField
+    t =    42.12s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    42.29s     Synthesize event
+    t =    42.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.59s Type 'r' into "account.publicUsername" TextField
+    t =    42.60s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.60s     Find the "account.publicUsername" TextField
+    t =    42.88s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    43.15s     Synthesize event
+    t =    43.48s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.49s Type 'r' into "account.publicUsername" TextField
+    t =    43.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.50s     Find the "account.publicUsername" TextField
+    t =    44.00s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    44.29s     Synthesize event
+    t =    44.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.59s Type 'y' into "account.publicUsername" TextField
+    t =    44.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.59s     Find the "account.publicUsername" TextField
+    t =    45.07s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    45.55s     Synthesize event
+    t =    45.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.92s Type '_' into "account.publicUsername" TextField
+    t =    45.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.93s     Find the "account.publicUsername" TextField
+    t =    46.20s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    46.44s     Synthesize event
+    t =    46.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.71s Type 'q' into "account.publicUsername" TextField
+    t =    46.71s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.72s     Find the "account.publicUsername" TextField
+    t =    46.99s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    47.45s     Synthesize event
+    t =    48.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.02s Type 'a' into "account.publicUsername" TextField
+    t =    48.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.07s     Find the "account.publicUsername" TextField
+    t =    48.46s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    48.95s     Synthesize event
+    t =    49.24s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    49.24s Type '1' into "account.publicUsername" TextField
+    t =    49.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    49.27s     Find the "account.publicUsername" TextField
+    t =    49.33s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    49.51s     Synthesize event
+    t =    49.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    49.80s Type '2' into "account.publicUsername" TextField
+    t =    49.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    49.81s     Find the "account.publicUsername" TextField
+    t =    50.15s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    50.46s     Synthesize event
+    t =    50.84s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.85s Find the "account.publicUsername" TextField
+    t =    51.38s Type '
+' into "account.publicUsername" TextField
+    t =    51.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    51.39s     Find the "account.publicUsername" TextField
+    t =    51.69s     Check for interrupting elements affecting "account.publicUsername" TextField
+    t =    51.87s     Synthesize event
+    t =    52.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.73s Waiting 10.0s for Button (First Match) to exist
+    t =    53.74s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    53.74s         Checking existence of `Button (First Match)`
+    t =    58.22s Find the Button (First Match)
+    t =    60.08s Find the "save username" Button
+    t =    63.86s Checking existence of `ScrollView (First Match)`
+    t =    67.00s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    67.04s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    67.07s Find the "save username" Button
+    t =    67.19s Find the "save username" Button
+    t =    67.31s Find the "save username" Button
+    t =    67.41s Find the "save username" Button
+    t =    67.50s Find the "save username" Button
+    t =    67.62s Find the "save username" Button
+    t =    67.71s Find the "save username" Button
+    t =    67.81s Find the "save username" Button
+    t =    67.90s Find the "save username" Button
+    t =    67.98s Find the "save username" Button
+    t =    68.07s Find the "save username" Button
+    t =    68.14s Find the "save username" Button
+    t =    68.19s Find the "save username" Button
+    t =    68.27s Find the "save username" Button
+    t =    68.37s Find the "save username" Button
+    t =    68.49s Find the "save username" Button
+    t =    68.55s Find the "save username" Button
+    t =    68.63s Find the "save username" Button
+    t =    68.73s Find the "save username" Button
+    t =    68.82s Find the "save username" Button
+    t =    68.87s Find the "save username" Button
+    t =    68.96s Find the "save username" Button
+    t =    69.03s Find the "save username" Button
+    t =    69.14s Find the "save username" Button
+    t =    69.25s Find the "save username" Button
+    t =    69.38s Find the "save username" Button
+    t =    69.46s Tap "save username" Button
+    t =    69.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    69.47s     Find the "save username" Button
+    t =    69.54s     Check for interrupting elements affecting "save username" Button
+    t =    69.58s     Synthesize event
+    t =    69.89s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    69.90s Waiting 5.0s for "saved!" StaticText to exist
+    t =    70.93s     Checking `Expect predicate `existsNoRetry == 1` for object "saved!" StaticText`
+    t =    70.93s         Checking existence of `"saved!" StaticText`
+    t =    71.00s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    71.29s Added attachment named 'Username_AccountSaved'
+    t =    71.29s Waiting 10.0s for Button (First Match) to exist
+    t =    72.33s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    72.33s         Checking existence of `Button (First Match)`
+    t =    72.38s Find the Button (First Match)
+    t =    72.41s Find the "Back" Button
+    t =    72.97s Checking existence of `ScrollView (First Match)`
+    t =    73.82s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    73.86s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    73.89s Find the "Back" Button
+    t =    74.12s Find the "Back" Button
+    t =    74.33s Find the "Back" Button
+    t =    74.90s Find the "Back" Button
+    t =    75.35s Find the "Back" Button
+    t =    76.61s Find the "Back" Button
+    t =    77.02s Find the "Back" Button
+    t =    77.12s Find the "Back" Button
+    t =    77.17s Find the "Back" Button
+    t =    77.24s Find the "Back" Button
+    t =    77.32s Find the "Back" Button
+    t =    77.39s Find the "Back" Button
+    t =    77.47s Find the "Back" Button
+    t =    77.54s Find the "Back" Button
+    t =    77.58s Find the "Back" Button
+    t =    77.63s Find the "Back" Button
+    t =    77.69s Find the "Back" Button
+    t =    77.77s Find the "Back" Button
+    t =    77.82s Find the "Back" Button
+    t =    77.90s Find the "Back" Button
+    t =    78.01s Find the "Back" Button
+    t =    78.07s Find the "Back" Button
+    t =    78.14s Find the "Back" Button
+    t =    78.21s Find the "Back" Button
+    t =    78.29s Find the "Back" Button
+    t =    78.40s Find the "Back" Button
+    t =    78.46s Tap "Back" Button
+    t =    78.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    78.46s     Find the "Back" Button
+    t =    78.50s     Check for interrupting elements affecting "Back" Button
+    t =    78.56s     Synthesize event
+    t =    78.89s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    79.33s Waiting 10.0s for "hub.action.Fruit Basket" Button to exist
+    t =    80.35s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Fruit Basket" Button`
+    t =    80.35s         Checking existence of `"hub.action.Fruit Basket" Button`
+    t =    80.40s Tap "hub.action.Fruit Basket" Button
+    t =    80.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    80.40s     Find the "hub.action.Fruit Basket" Button
+    t =    80.45s     Check for interrupting elements affecting "hub.action.Fruit Basket" Button
+    t =    80.49s     Synthesize event
+    t =    80.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    80.90s Waiting 5.0s for Button (First Match) to exist
+    t =    81.93s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    81.93s         Checking existence of `Button (First Match)`
+    t =    82.16s Tap Button (First Match)
+    t =    82.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    82.17s     Find the Button (First Match)
+    t =    82.27s     Check for interrupting elements affecting "skip tour" Button
+    t =    82.33s     Synthesize event
+    t =    82.65s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    82.66s Waiting 8.0s for Button (First Match) to exist
+    t =    83.68s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    83.68s         Checking existence of `Button (First Match)`
+    t =    83.72s Tap Button (First Match)
+    t =    83.72s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    83.73s     Find the Button (First Match)
+    t =    83.79s     Check for interrupting elements affecting "fruit basket" Button
+    t =    83.84s     Synthesize event
+    t =    84.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    84.15s Waiting 10.0s for Button (First Match) to exist
+    t =    85.22s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    85.22s         Checking existence of `Button (First Match)`
+    t =    85.35s Find the Button (First Match)
+    t =    85.42s Find the "leaderboard" Button
+    t =    85.48s Checking existence of `ScrollView (First Match)`
+    t =    85.65s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    85.69s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    85.77s Find the "leaderboard" Button
+    t =    85.88s Find the "leaderboard" Button
+    t =    85.96s Find the "leaderboard" Button
+    t =    86.08s Find the "leaderboard" Button
+    t =    86.18s Find the "leaderboard" Button
+    t =    86.30s Find the "leaderboard" Button
+    t =    86.38s Find the "leaderboard" Button
+    t =    86.45s Find the "leaderboard" Button
+    t =    86.51s Find the "leaderboard" Button
+    t =    86.58s Find the "leaderboard" Button
+    t =    86.63s Find the "leaderboard" Button
+    t =    86.71s Find the "leaderboard" Button
+    t =    86.77s Find the "leaderboard" Button
+    t =    86.84s Find the "leaderboard" Button
+    t =    86.89s Find the "leaderboard" Button
+    t =    86.96s Find the "leaderboard" Button
+    t =    87.03s Find the "leaderboard" Button
+    t =    87.11s Find the "leaderboard" Button
+    t =    87.19s Find the "leaderboard" Button
+    t =    87.28s Find the "leaderboard" Button
+    t =    87.33s Find the "leaderboard" Button
+    t =    87.41s Find the "leaderboard" Button
+    t =    87.46s Find the "leaderboard" Button
+    t =    87.54s Find the "leaderboard" Button
+    t =    87.63s Find the "leaderboard" Button
+    t =    87.74s Find the "leaderboard" Button
+    t =    87.81s Tap "leaderboard" Button
+    t =    87.81s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    87.81s     Find the "leaderboard" Button
+    t =    87.88s     Check for interrupting elements affecting "leaderboard" Button
+    t =    87.91s     Synthesize event
+    t =    88.22s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    88.23s Waiting 10.0s for "fruitBasket.publicUsername" TextField to exist
+    t =    89.26s     Checking `Expect predicate `existsNoRetry == 1` for object "fruitBasket.publicUsername" TextField`
+    t =    89.27s         Checking existence of `"fruitBasket.publicUsername" TextField`
+    t =    89.37s Find the "fruitBasket.publicUsername" TextField
+    t =    89.43s Find the "fruitBasket.publicUsername" TextField
+    t =    89.53s Checking existence of `ScrollView (First Match)`
+    t =    89.62s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    89.65s Find the ScrollView (First Match)
+    t =    89.73s Find the "fruitBasket.publicUsername" TextField
+    t =    89.82s Find the "fruitBasket.publicUsername" TextField
+    t =    89.91s Find the "fruitBasket.publicUsername" TextField
+    t =    90.00s Find the "fruitBasket.publicUsername" TextField
+    t =    90.11s Find the "fruitBasket.publicUsername" TextField
+    t =    90.22s Find the "fruitBasket.publicUsername" TextField
+    t =    90.30s Find the "fruitBasket.publicUsername" TextField
+    t =    90.39s Find the "fruitBasket.publicUsername" TextField
+    t =    90.46s Find the "fruitBasket.publicUsername" TextField
+    t =    90.52s Find the "fruitBasket.publicUsername" TextField
+    t =    90.58s Find the "fruitBasket.publicUsername" TextField
+    t =    90.65s Find the "fruitBasket.publicUsername" TextField
+    t =    90.72s Find the "fruitBasket.publicUsername" TextField
+    t =    90.82s Find the "fruitBasket.publicUsername" TextField
+    t =    90.87s Find the "fruitBasket.publicUsername" TextField
+    t =    90.95s Find the "fruitBasket.publicUsername" TextField
+    t =    91.02s Find the "fruitBasket.publicUsername" TextField
+    t =    91.11s Find the "fruitBasket.publicUsername" TextField
+    t =    91.18s Find the "fruitBasket.publicUsername" TextField
+    t =    91.26s Find the "fruitBasket.publicUsername" TextField
+    t =    91.33s Find the "fruitBasket.publicUsername" TextField
+    t =    91.44s Find the "fruitBasket.publicUsername" TextField
+    t =    91.55s Find the "fruitBasket.publicUsername" TextField
+    t =    91.64s Find the "fruitBasket.publicUsername" TextField
+    t =    91.70s Find the "fruitBasket.publicUsername" TextField
+    t =    91.77s Find the "fruitBasket.publicUsername" TextField
+    t =    91.82s Find the "fruitBasket.publicUsername" TextField
+    t =    91.88s Tap "fruitBasket.publicUsername" TextField
+    t =    91.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    91.88s     Find the "fruitBasket.publicUsername" TextField
+    t =    91.94s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    92.00s     Synthesize event
+    t =    92.34s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    92.86s Find the "fruitBasket.publicUsername" TextField
+    t =    93.26s Type '' into "fruitBasket.publicUsername" TextField
+    t =    93.26s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    93.28s     Find the "fruitBasket.publicUsername" TextField
+    t =    93.42s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    93.51s     Synthesize event
+    t =    93.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    94.36s Find the "fruitBasket.publicUsername" TextField
+    t =    94.57s Type 'p' into "fruitBasket.publicUsername" TextField
+    t =    94.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    94.61s     Find the "fruitBasket.publicUsername" TextField
+    t =    94.74s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    94.84s     Synthesize event
+    t =    95.09s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.10s Type 'e' into "fruitBasket.publicUsername" TextField
+    t =    95.10s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.11s     Find the "fruitBasket.publicUsername" TextField
+    t =    95.27s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    95.34s     Synthesize event
+    t =    95.58s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.59s Type 'a' into "fruitBasket.publicUsername" TextField
+    t =    95.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.59s     Find the "fruitBasket.publicUsername" TextField
+    t =    95.70s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    95.78s     Synthesize event
+    t =    96.00s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.01s Type 'c' into "fruitBasket.publicUsername" TextField
+    t =    96.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.02s     Find the "fruitBasket.publicUsername" TextField
+    t =    96.14s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    96.22s     Synthesize event
+    t =    96.45s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.45s Type 'h' into "fruitBasket.publicUsername" TextField
+    t =    96.45s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.45s     Find the "fruitBasket.publicUsername" TextField
+    t =    96.54s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    96.64s     Synthesize event
+    t =    96.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.88s Type '_' into "fruitBasket.publicUsername" TextField
+    t =    96.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.88s     Find the "fruitBasket.publicUsername" TextField
+    t =    96.99s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    97.08s     Synthesize event
+    t =    97.32s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.33s Type 'q' into "fruitBasket.publicUsername" TextField
+    t =    97.33s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.33s     Find the "fruitBasket.publicUsername" TextField
+    t =    97.43s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    97.54s     Synthesize event
+    t =    97.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.78s Type 'a' into "fruitBasket.publicUsername" TextField
+    t =    97.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.79s     Find the "fruitBasket.publicUsername" TextField
+    t =    97.89s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    97.97s     Synthesize event
+    t =    98.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    98.20s Type '3' into "fruitBasket.publicUsername" TextField
+    t =    98.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    98.21s     Find the "fruitBasket.publicUsername" TextField
+    t =    98.31s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    98.40s     Synthesize event
+    t =    98.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    98.62s Type '4' into "fruitBasket.publicUsername" TextField
+    t =    98.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    98.63s     Find the "fruitBasket.publicUsername" TextField
+    t =    98.74s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    98.82s     Synthesize event
+    t =    99.05s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    99.07s Find the "fruitBasket.publicUsername" TextField
+    t =    99.26s Type '
+' into "fruitBasket.publicUsername" TextField
+    t =    99.26s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    99.27s     Find the "fruitBasket.publicUsername" TextField
+    t =    99.46s     Check for interrupting elements affecting "fruitBasket.publicUsername" TextField
+    t =    99.64s     Synthesize event
+    t =    99.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   100.18s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   100.51s Added attachment named 'Username_FruitBasketActualTyping'
+    t =   100.52s Waiting 10.0s for "Back" Button to exist
+    t =   101.55s     Checking `Expect predicate `existsNoRetry == 1` for object "Back" Button`
+    t =   101.56s         Checking existence of `"Back" Button`
+    t =   101.64s Find the "Back" Button
+    t =   101.71s Find the "Back" Button
+    t =   101.74s Checking existence of `ScrollView (First Match)`
+    t =   101.90s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   101.93s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   101.97s Find the "Back" Button
+    t =   102.05s Find the "Back" Button
+    t =   102.11s Find the "Back" Button
+    t =   102.15s Press Target Application 'com.fruitsoflifexo.Fruitfolio'[0.96, 0.25] for 0.1 seconds, then drag to Target Application 'com.fruitsoflifexo.Fruitfolio'[0.96, 0.82] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =   102.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   102.16s     Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.22s     Check for interrupting elements affecting "Fruitfolio" Application
+    t =   102.27s     Synthesize event
+    t =   102.27s         Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.31s         Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.37s         Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.45s         Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.50s         Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   103.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   104.35s Find the "Back" Button
+    t =   104.42s Find the "Back" Button
+    t =   104.48s Find the "Back" Button
+    t =   104.55s Find the "Back" Button
+    t =   104.61s Find the "Back" Button
+    t =   104.69s Find the "Back" Button
+    t =   104.74s Find the "Back" Button
+    t =   104.80s Find the "Back" Button
+    t =   104.85s Find the "Back" Button
+    t =   104.93s Find the "Back" Button
+    t =   104.99s Find the "Back" Button
+    t =   105.04s Find the "Back" Button
+    t =   105.10s Find the "Back" Button
+    t =   105.16s Find the "Back" Button
+    t =   105.22s Find the "Back" Button
+    t =   105.30s Find the "Back" Button
+    t =   105.40s Find the "Back" Button
+    t =   105.53s Find the "Back" Button
+    t =   105.61s Find the "Back" Button
+    t =   105.67s Find the "Back" Button
+    t =   105.75s Find the "Back" Button
+    t =   105.84s Find the "Back" Button
+    t =   105.90s Find the "Back" Button
+    t =   105.99s Find the "Back" Button
+    t =   106.06s Tap "Back" Button
+    t =   106.06s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   106.07s     Find the "Back" Button
+    t =   106.10s     Check for interrupting elements affecting "Back" Button
+    t =   106.19s     Synthesize event
+    t =   106.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   106.92s Waiting 12.0s for Button (First Match) to exist
+    t =   107.93s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   107.93s         Checking existence of `Button (First Match)`
+    t =   108.09s Tap Button (First Match)
+    t =   108.09s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   108.10s     Find the Button (First Match)
+    t =   108.18s     Check for interrupting elements affecting "sign in" Button
+    t =   108.23s     Synthesize event
+    t =   108.55s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   109.00s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =   110.03s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =   110.03s         Checking existence of `"account.publicUsername" TextField`
+    t =   110.13s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =   111.16s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =   111.16s         Checking existence of `"account.publicUsername" TextField`
+    t =   111.20s Find the "account.publicUsername" TextField
+    t =   111.23s Find the "account.publicUsername" TextField
+    t =   111.26s Checking existence of `ScrollView (First Match)`
+    t =   111.33s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   111.35s Find the ScrollView (First Match)
+    t =   111.45s Find the "account.publicUsername" TextField
+    t =   111.53s Find the "account.publicUsername" TextField
+    t =   111.60s Find the "account.publicUsername" TextField
+    t =   111.67s Find the "account.publicUsername" TextField
+    t =   111.74s Find the "account.publicUsername" TextField
+    t =   111.81s Find the "account.publicUsername" TextField
+    t =   111.87s Find the "account.publicUsername" TextField
+    t =   111.95s Find the "account.publicUsername" TextField
+    t =   112.00s Find the "account.publicUsername" TextField
+    t =   112.06s Find the "account.publicUsername" TextField
+    t =   112.14s Find the "account.publicUsername" TextField
+    t =   112.21s Find the "account.publicUsername" TextField
+    t =   112.28s Find the "account.publicUsername" TextField
+    t =   112.33s Find the "account.publicUsername" TextField
+    t =   113.18s Find the "account.publicUsername" TextField
+    t =   113.43s Find the "account.publicUsername" TextField
+    t =   114.55s Find the "account.publicUsername" TextField
+    t =   114.65s Find the "account.publicUsername" TextField
+    t =   114.69s Find the "account.publicUsername" TextField
+    t =   114.77s Find the "account.publicUsername" TextField
+    t =   114.82s Find the "account.publicUsername" TextField
+    t =   114.89s Find the "account.publicUsername" TextField
+    t =   114.96s Find the "account.publicUsername" TextField
+    t =   115.06s Find the "account.publicUsername" TextField
+    t =   115.10s Find the "account.publicUsername" TextField
+    t =   115.19s Find the "account.publicUsername" TextField
+    t =   115.25s Find the "account.publicUsername" TextField
+    t =   115.32s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   115.52s Added attachment named 'Username_AccountSynchronized'
+    t =   115.53s Terminate com.fruitsoflifexo.Fruitfolio:53878
+    t =   116.62s Open com.fruitsoflifexo.Fruitfolio
+    t =   116.62s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 01:04:09.467 xcodebuild[52435:151217] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 01:04:09.467 xcodebuild[52435:151217] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   118.09s         Setting up automation session
+    t =   119.99s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   122.69s Waiting 12.0s for Button (First Match) to exist
+    t =   123.73s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   123.73s         Checking existence of `Button (First Match)`
+    t =   123.92s Tap Button (First Match)
+    t =   123.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   123.93s     Find the Button (First Match)
+    t =   124.11s     Check for interrupting elements affecting "sign in" Button
+    t =   124.17s     Synthesize event
+    t =   124.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   124.69s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =   125.70s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =   125.70s         Checking existence of `"account.publicUsername" TextField`
+    t =   125.80s Waiting 10.0s for "account.publicUsername" TextField to exist
+    t =   126.83s     Checking `Expect predicate `existsNoRetry == 1` for object "account.publicUsername" TextField`
+    t =   126.83s         Checking existence of `"account.publicUsername" TextField`
+    t =   126.87s Find the "account.publicUsername" TextField
+    t =   126.89s Find the "account.publicUsername" TextField
+    t =   126.93s Checking existence of `ScrollView (First Match)`
+    t =   126.96s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   126.99s Find the ScrollView (First Match)
+    t =   127.03s Find the "account.publicUsername" TextField
+    t =   127.12s Find the "account.publicUsername" TextField
+    t =   127.18s Find the "account.publicUsername" TextField
+    t =   127.27s Find the "account.publicUsername" TextField
+    t =   127.31s Find the "account.publicUsername" TextField
+    t =   127.36s Find the "account.publicUsername" TextField
+    t =   127.41s Find the "account.publicUsername" TextField
+    t =   127.45s Find the "account.publicUsername" TextField
+    t =   127.49s Find the "account.publicUsername" TextField
+    t =   127.55s Find the "account.publicUsername" TextField
+    t =   127.60s Find the "account.publicUsername" TextField
+    t =   127.65s Find the "account.publicUsername" TextField
+    t =   127.69s Find the "account.publicUsername" TextField
+    t =   127.75s Find the "account.publicUsername" TextField
+    t =   127.80s Find the "account.publicUsername" TextField
+    t =   127.88s Find the "account.publicUsername" TextField
+    t =   127.95s Find the "account.publicUsername" TextField
+    t =   128.01s Find the "account.publicUsername" TextField
+    t =   128.05s Find the "account.publicUsername" TextField
+    t =   128.10s Find the "account.publicUsername" TextField
+    t =   128.14s Find the "account.publicUsername" TextField
+    t =   128.20s Find the "account.publicUsername" TextField
+    t =   128.25s Find the "account.publicUsername" TextField
+    t =   128.32s Find the "account.publicUsername" TextField
+    t =   128.36s Find the "account.publicUsername" TextField
+    t =   128.42s Find the "account.publicUsername" TextField
+    t =   128.45s Find the "account.publicUsername" TextField
+    t =   128.49s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   128.67s Added attachment named 'Username_PersistedAcrossRestart'
+    t =   128.77s Tear Down
+Test Case '-[FruitfolioUITests.UsernameSynchronizationUITests testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart]' passed (129.608 seconds).
+Test Suite 'UsernameSynchronizationUITests' passed at 2026-11-02 01:04:22.404.
+	 Executed 1 test, with 0 failures (0 unexpected) in 129.608 (129.610) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-02 01:04:22.405.
+	 Executed 1 test, with 0 failures (0 unexpected) in 129.608 (129.611) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 01:04:22.405.
+	 Executed 1 test, with 0 failures (0 unexpected) in 129.608 (129.612) seconds
+2026-11-02 01:04:23.649 xcodebuild[52435:151217] [MT] IDETestOperationsObserverDebug: 138.647 elapsed -- Testing started completed.
+2026-11-02 01:04:23.650 xcodebuild[52435:151217] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 01:04:23.650 xcodebuild[52435:151217] [MT] IDETestOperationsObserverDebug: 138.647 sec, +138.647 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

@@ -54,6 +54,28 @@ final class HormoneMeasurementTests: XCTestCase {
         XCTAssertTrue(HormoneMeasurementStore(fileURL: file).measurements.isEmpty)
     }
 
+    func testExplicitBulkEraseRemovesOnlyTheIntendedHealthFileAndPreservesSiblingAndPreferenceBytes() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let suite = "Fruitfolio.HormoneEraseIsolation.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = HormoneMeasurementStore(fileURL: directory.appendingPathComponent("hormone-measurements-v1.json"))
+        try store.save(record())
+        let sibling = directory.appendingPathComponent("independent-cycle-records.json")
+        let original = Data("{\"original-cycle-record\":\"2026-10-01\"}".utf8)
+        try original.write(to: sibling)
+        for key in ["account", "saved-guides", "game-progress", "health-context"] {
+            defaults.set(Data((key + ":original-fixture-bytes").utf8), forKey: key)
+        }
+        let before = try XCTUnwrap(defaults.persistentDomain(forName: suite)) as NSDictionary
+        try store.eraseAll()
+        XCTAssertTrue(store.measurements.isEmpty)
+        XCTAssertTrue(HormoneMeasurementStore(fileURL: directory.appendingPathComponent("hormone-measurements-v1.json")).measurements.isEmpty)
+        XCTAssertEqual(try Data(contentsOf: sibling), original)
+        XCTAssertEqual(try XCTUnwrap(defaults.persistentDomain(forName: suite)) as NSDictionary, before)
+    }
+
     func testUnreadableStorageCannotBeSilentlyOverwritten() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

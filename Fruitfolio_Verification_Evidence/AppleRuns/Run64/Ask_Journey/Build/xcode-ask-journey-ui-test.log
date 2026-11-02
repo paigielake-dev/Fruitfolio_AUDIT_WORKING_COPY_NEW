@@ -1,0 +1,1416 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/AskGroundedJourneyUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 01:26:37.899192+0000 FruitfolioUITests-Runner[18329:311996] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 01:26:39.682.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 01:26:39.683.
+Test Suite 'AskGroundedJourneyUITests' started at 2026-11-02 01:26:39.683.
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualAnswerSaveRestartAndReopenRetainTheSameOriginalSourceReference]' started.
+    t =     0.00s Start Test at 2026-11-02 01:26:39.684
+2026-11-02 01:26:40.997 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 01:26:40.997 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.07s Set Up
+    t =     0.07s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.08s     Launch com.fruitsoflifexo.Fruitfolio
+objc[18329]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a4d8310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10aa54398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     4.03s         Setting up automation session
+    t =     5.84s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     8.18s Waiting 12.0s for "I'll explore" Button to exist
+    t =     9.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.24s         Checking existence of `"I'll explore" Button`
+    t =     9.35s         Capturing element debug description
+    t =    10.19s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.19s         Checking existence of `"I'll explore" Button`
+    t =    10.23s         Capturing element debug description
+    t =    11.19s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.19s         Checking existence of `"I'll explore" Button`
+    t =    11.23s         Capturing element debug description
+    t =    12.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.27s         Checking existence of `"I'll explore" Button`
+    t =    12.30s         Capturing element debug description
+    t =    13.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.24s         Checking existence of `"I'll explore" Button`
+    t =    13.27s         Capturing element debug description
+    t =    14.20s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.20s         Checking existence of `"I'll explore" Button`
+    t =    14.23s         Capturing element debug description
+    t =    15.26s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.26s         Checking existence of `"I'll explore" Button`
+    t =    15.29s         Capturing element debug description
+    t =    16.25s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.25s         Checking existence of `"I'll explore" Button`
+    t =    16.28s         Capturing element debug description
+    t =    17.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.22s         Checking existence of `"I'll explore" Button`
+    t =    17.25s         Capturing element debug description
+    t =    18.20s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.20s         Checking existence of `"I'll explore" Button`
+    t =    18.24s         Capturing element debug description
+    t =    19.19s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.19s         Checking existence of `"I'll explore" Button`
+    t =    19.22s         Capturing element debug description
+    t =    20.18s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.18s         Checking existence of `"I'll explore" Button`
+    t =    20.25s         Capturing element debug description
+    t =    20.25s     Checking existence of `"I'll explore" Button`
+    t =    20.27s Collecting debug information to assist test failure triage
+    t =    20.27s     Requesting snapshot of accessibility hierarchy for app with pid 18965
+    t =    20.37s Waiting 15.0s for "hub.action.My Encyclopedias" Button to exist
+    t =    21.42s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.My Encyclopedias" Button`
+    t =    21.42s         Checking existence of `"hub.action.My Encyclopedias" Button`
+    t =    21.46s Tap "hub.action.My Encyclopedias" Button
+    t =    21.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.47s     Find the "hub.action.My Encyclopedias" Button
+    t =    21.49s     Check for interrupting elements affecting "hub.action.My Encyclopedias" Button
+    t =    21.52s     Synthesize event
+    t =    21.85s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.36s Waiting 8.0s for Button (First Match) to exist
+    t =    23.39s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    23.39s         Checking existence of `Button (First Match)`
+    t =    23.47s         Capturing element debug description
+    t =    24.40s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    24.40s         Checking existence of `Button (First Match)`
+    t =    24.45s         Capturing element debug description
+    t =    25.38s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    25.38s         Checking existence of `Button (First Match)`
+    t =    25.42s         Capturing element debug description
+    t =    26.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    26.37s         Checking existence of `Button (First Match)`
+    t =    26.42s         Capturing element debug description
+    t =    27.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    27.37s         Checking existence of `Button (First Match)`
+    t =    27.41s         Capturing element debug description
+    t =    28.44s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    28.44s         Checking existence of `Button (First Match)`
+    t =    28.48s         Capturing element debug description
+    t =    29.44s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    29.44s         Checking existence of `Button (First Match)`
+    t =    29.48s         Capturing element debug description
+    t =    30.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    30.38s         Checking existence of `Button (First Match)`
+    t =    30.43s         Capturing element debug description
+    t =    30.43s     Checking existence of `Button (First Match)`
+    t =    30.46s Collecting debug information to assist test failure triage
+    t =    30.46s     Requesting snapshot of accessibility hierarchy for app with pid 18965
+    t =    30.50s Checking existence of `Button (First Match)`
+    t =    30.53s Checking existence of `Button (First Match)`
+    t =    30.55s Checking existence of `Button (First Match)`
+    t =    30.56s Checking existence of `Button (First Match)`
+    t =    30.58s Checking existence of `Button (First Match)`
+    t =    30.61s Checking existence of `Button (First Match)`
+    t =    30.63s Checking existence of `Button (First Match)`
+    t =    30.64s Checking existence of `Button (First Match)`
+    t =    30.66s Checking existence of `Button (First Match)`
+    t =    30.69s Checking existence of `Button (First Match)`
+    t =    30.71s Checking existence of `Button (First Match)`
+    t =    30.72s Checking existence of `Button (First Match)`
+    t =    30.74s Checking existence of `Button (First Match)`
+    t =    30.76s Checking existence of `Button (First Match)`
+    t =    30.79s Checking existence of `Button (First Match)`
+    t =    30.80s Checking existence of `Button (First Match)`
+    t =    30.82s Checking existence of `Button (First Match)`
+    t =    30.84s Checking existence of `Button (First Match)`
+    t =    30.86s Checking existence of `Button (First Match)`
+    t =    30.88s Checking existence of `Button (First Match)`
+    t =    30.90s Checking existence of `Button (First Match)`
+    t =    30.92s Checking existence of `Button (First Match)`
+    t =    30.94s Find the Button (First Match)
+    t =    30.98s Find the "+ add another little encyclopedia" Button
+    t =    31.01s Find the "+ add another little encyclopedia" Button
+    t =    31.03s Checking existence of `ScrollView (First Match)`
+    t =    31.08s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    31.10s Find the ScrollView (First Match)
+    t =    31.14s Find the "+ add another little encyclopedia" Button
+    t =    31.20s Find the "+ add another little encyclopedia" Button
+    t =    31.23s Find the "+ add another little encyclopedia" Button
+    t =    31.29s Find the "+ add another little encyclopedia" Button
+    t =    31.32s Find the "+ add another little encyclopedia" Button
+    t =    31.36s Find the "+ add another little encyclopedia" Button
+    t =    31.39s Find the "+ add another little encyclopedia" Button
+    t =    31.42s Find the "+ add another little encyclopedia" Button
+    t =    31.46s Find the "+ add another little encyclopedia" Button
+    t =    31.49s Find the "+ add another little encyclopedia" Button
+    t =    31.52s Find the "+ add another little encyclopedia" Button
+    t =    31.56s Find the "+ add another little encyclopedia" Button
+    t =    31.59s Find the "+ add another little encyclopedia" Button
+    t =    31.63s Find the "+ add another little encyclopedia" Button
+    t =    31.66s Find the "+ add another little encyclopedia" Button
+    t =    31.69s Find the "+ add another little encyclopedia" Button
+    t =    31.72s Find the "+ add another little encyclopedia" Button
+    t =    31.76s Find the "+ add another little encyclopedia" Button
+    t =    31.79s Find the "+ add another little encyclopedia" Button
+    t =    31.83s Find the "+ add another little encyclopedia" Button
+    t =    31.85s Find the "+ add another little encyclopedia" Button
+    t =    31.89s Find the "+ add another little encyclopedia" Button
+    t =    31.93s Find the "+ add another little encyclopedia" Button
+    t =    31.97s Find the "+ add another little encyclopedia" Button
+    t =    32.00s Find the "+ add another little encyclopedia" Button
+    t =    32.04s Find the "+ add another little encyclopedia" Button
+    t =    32.07s Find the "+ add another little encyclopedia" Button
+    t =    32.11s Find the "+ add another little encyclopedia" Button
+    t =    32.13s Find the "+ add another little encyclopedia" Button
+    t =    32.17s Tap "+ add another little encyclopedia" Button
+    t =    32.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.17s     Find the "+ add another little encyclopedia" Button
+    t =    32.20s     Check for interrupting elements affecting "+ add another little encyclopedia" Button
+    t =    32.22s     Synthesize event
+    t =    32.53s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.54s Waiting 8.0s for "encyclopedia name" TextField to exist
+    t =    33.59s     Checking `Expect predicate `existsNoRetry == 1` for object "encyclopedia name" TextField`
+    t =    33.59s         Checking existence of `"encyclopedia name" TextField`
+    t =    33.64s Tap "encyclopedia name" TextField
+    t =    33.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.64s     Find the "encyclopedia name" TextField
+    t =    33.67s     Check for interrupting elements affecting "encyclopedia name" TextField
+    t =    33.70s     Synthesize event
+    t =    34.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.86s Type 'Citations QA 9DC0C...' into "encyclopedia name" TextField
+    t =    34.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.14s     Find the "encyclopedia name" TextField
+    t =    35.29s     Check for interrupting elements affecting "encyclopedia name" TextField
+    t =    35.37s     Synthesize event
+    t =    35.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.37s Checking existence of `Button (First Match)`
+    t =    36.41s Checking existence of `Button (First Match)`
+    t =    36.45s Checking existence of `Button (First Match)`
+    t =    36.48s Checking existence of `Button (First Match)`
+    t =    36.51s Checking existence of `Button (First Match)`
+    t =    36.55s Checking existence of `Button (First Match)`
+    t =    36.57s Checking existence of `Button (First Match)`
+    t =    36.60s Checking existence of `Button (First Match)`
+    t =    36.64s Checking existence of `Button (First Match)`
+    t =    36.67s Checking existence of `Button (First Match)`
+    t =    36.69s Checking existence of `Button (First Match)`
+    t =    36.73s Checking existence of `Button (First Match)`
+    t =    36.76s Checking existence of `Button (First Match)`
+    t =    36.79s Checking existence of `Button (First Match)`
+    t =    36.83s Checking existence of `Button (First Match)`
+    t =    36.86s Checking existence of `Button (First Match)`
+    t =    36.88s Checking existence of `Button (First Match)`
+    t =    36.93s Checking existence of `Button (First Match)`
+    t =    36.95s Checking existence of `Button (First Match)`
+    t =    36.98s Checking existence of `Button (First Match)`
+    t =    37.02s Checking existence of `Button (First Match)`
+    t =    37.04s Find the Button (First Match)
+    t =    37.07s Find the "create encyclopedia" Button
+    t =    37.12s Find the "create encyclopedia" Button
+    t =    37.14s Checking existence of `ScrollView (First Match)`
+    t =    37.17s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    37.20s Find the ScrollView (First Match)
+    t =    37.24s Find the "create encyclopedia" Button
+    t =    37.31s Find the "create encyclopedia" Button
+    t =    37.35s Press ScrollView at {{104.7, 341.3}, {240.7, 231.7}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{104.7, 341.3}, {240.7, 231.7}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    37.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.35s     Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    37.40s     Check for interrupting elements affecting ScrollView
+    t =    37.44s     Synthesize event
+    t =    37.44s         Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    37.50s         Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    37.54s         Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    37.60s         Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    37.64s         Find the ScrollView at {{104.7, 341.3}, {240.7, 231.7}}
+    t =    38.24s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.83s Find the "create encyclopedia" Button
+    t =    38.89s Find the "create encyclopedia" Button
+    t =    38.92s Find the "create encyclopedia" Button
+    t =    38.98s Find the "create encyclopedia" Button
+    t =    39.01s Find the "create encyclopedia" Button
+    t =    39.07s Find the "create encyclopedia" Button
+    t =    39.10s Find the "create encyclopedia" Button
+    t =    39.16s Find the "create encyclopedia" Button
+    t =    39.19s Find the "create encyclopedia" Button
+    t =    39.25s Find the "create encyclopedia" Button
+    t =    39.28s Find the "create encyclopedia" Button
+    t =    39.34s Find the "create encyclopedia" Button
+    t =    39.38s Find the "create encyclopedia" Button
+    t =    39.44s Find the "create encyclopedia" Button
+    t =    39.48s Find the "create encyclopedia" Button
+    t =    39.53s Find the "create encyclopedia" Button
+    t =    39.56s Find the "create encyclopedia" Button
+    t =    39.62s Find the "create encyclopedia" Button
+    t =    39.66s Find the "create encyclopedia" Button
+    t =    39.72s Find the "create encyclopedia" Button
+    t =    39.75s Find the "create encyclopedia" Button
+    t =    39.80s Find the "create encyclopedia" Button
+    t =    39.85s Find the "create encyclopedia" Button
+    t =    39.94s Find the "create encyclopedia" Button
+    t =    39.98s Find the "create encyclopedia" Button
+    t =    40.05s Find the "create encyclopedia" Button
+    t =    40.09s Find the "create encyclopedia" Button
+    t =    40.14s Tap "create encyclopedia" Button
+    t =    40.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.15s     Find the "create encyclopedia" Button
+    t =    40.18s     Check for interrupting elements affecting "create encyclopedia" Button
+    t =    40.23s     Synthesize event
+    t =    40.53s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.54s Checking existence of `Button (First Match)`
+    t =    40.60s Checking existence of `Button (First Match)`
+    t =    40.64s Checking existence of `Button (First Match)`
+    t =    40.69s Checking existence of `Button (First Match)`
+    t =    40.71s Checking existence of `Button (First Match)`
+    t =    40.74s Checking existence of `Button (First Match)`
+    t =    40.76s Checking existence of `Button (First Match)`
+    t =    40.78s Checking existence of `Button (First Match)`
+    t =    40.80s Checking existence of `Button (First Match)`
+    t =    40.84s Checking existence of `Button (First Match)`
+    t =    40.86s Checking existence of `Button (First Match)`
+    t =    40.88s Checking existence of `Button (First Match)`
+    t =    40.90s Checking existence of `Button (First Match)`
+    t =    40.93s Checking existence of `Button (First Match)`
+    t =    40.96s Checking existence of `Button (First Match)`
+    t =    40.98s Checking existence of `Button (First Match)`
+    t =    41.00s Checking existence of `Button (First Match)`
+    t =    41.03s Checking existence of `Button (First Match)`
+    t =    41.05s Checking existence of `Button (First Match)`
+    t =    41.07s Checking existence of `Button (First Match)`
+    t =    41.11s Checking existence of `Button (First Match)`
+    t =    41.13s Find the Button (First Match)
+    t =    41.15s Find the "Back" Button
+    t =    41.18s Find the "Back" Button
+    t =    41.21s Checking existence of `ScrollView (First Match)`
+    t =    41.23s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    41.25s Find the ScrollView (First Match)
+    t =    41.28s Find the "Back" Button
+    t =    41.34s Find the "Back" Button
+    t =    41.42s Find the "Back" Button
+    t =    41.47s Find the "Back" Button
+    t =    41.52s Find the "Back" Button
+    t =    41.59s Find the "Back" Button
+    t =    41.63s Find the "Back" Button
+    t =    41.66s Find the "Back" Button
+    t =    41.70s Find the "Back" Button
+    t =    41.73s Find the "Back" Button
+    t =    41.76s Find the "Back" Button
+    t =    41.81s Find the "Back" Button
+    t =    41.84s Find the "Back" Button
+    t =    41.89s Find the "Back" Button
+    t =    41.92s Find the "Back" Button
+    t =    41.97s Find the "Back" Button
+    t =    42.00s Find the "Back" Button
+    t =    42.06s Find the "Back" Button
+    t =    42.09s Find the "Back" Button
+    t =    42.12s Find the "Back" Button
+    t =    42.16s Find the "Back" Button
+    t =    42.20s Find the "Back" Button
+    t =    42.23s Find the "Back" Button
+    t =    42.28s Find the "Back" Button
+    t =    42.30s Find the "Back" Button
+    t =    42.35s Find the "Back" Button
+    t =    42.37s Find the "Back" Button
+    t =    42.41s Find the "Back" Button
+    t =    42.45s Find the "Back" Button
+    t =    42.48s Tap "Back" Button
+    t =    42.48s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.48s     Find the "Back" Button
+    t =    42.51s     Check for interrupting elements affecting "Back" Button
+    t =    42.54s     Synthesize event
+    t =    42.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.19s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    44.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    44.24s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    44.28s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    44.28s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.28s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    44.31s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    44.33s     Synthesize event
+    t =    44.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.72s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    45.74s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    45.74s         Checking existence of `"ask.questionInput" TextField`
+    t =    45.77s Tap "ask.questionInput" TextField
+    t =    45.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.78s     Find the "ask.questionInput" TextField
+    t =    45.81s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    45.83s     Synthesize event
+    t =    46.14s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.46s Type 'How does morning s...' into "ask.questionInput" TextField
+    t =    46.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.47s     Find the "ask.questionInput" TextField
+    t =    46.55s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    46.60s     Synthesize event
+    t =    47.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    47.62s Tap Button (First Match)
+    t =    47.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    47.62s     Find the Button (First Match)
+    t =    47.76s     Check for interrupting elements affecting "Send question" Button
+    t =    47.83s     Synthesize event
+    t =    48.28s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.43s Waiting 180.0s for "ask.completedAnswer" TextView to exist
+    t =    49.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    49.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    49.52s         Capturing element debug description
+    t =    50.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    50.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    50.52s         Capturing element debug description
+    t =    51.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    51.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    51.54s         Capturing element debug description
+    t =    52.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    52.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    52.56s         Capturing element debug description
+    t =    53.52s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    53.52s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    53.58s         Capturing element debug description
+    t =    54.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    54.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    54.53s         Capturing element debug description
+    t =    55.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    55.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    55.50s         Capturing element debug description
+    t =    56.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    56.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    56.49s         Capturing element debug description
+    t =    57.43s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    57.43s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    57.45s         Capturing element debug description
+    t =    58.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    58.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    58.53s         Capturing element debug description
+    t =    59.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    59.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    59.51s         Capturing element debug description
+    t =    60.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    60.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    60.46s         Capturing element debug description
+    t =    61.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    61.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    61.49s         Capturing element debug description
+    t =    62.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    62.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    62.53s         Capturing element debug description
+    t =    63.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    63.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    63.49s         Capturing element debug description
+    t =    64.52s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    64.52s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    64.55s         Capturing element debug description
+    t =    65.48s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    65.49s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    65.52s         Capturing element debug description
+    t =    66.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    66.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    66.61s         Capturing element debug description
+    t =    67.43s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    67.43s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    67.49s         Capturing element debug description
+    t =    68.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    68.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    68.59s         Capturing element debug description
+    t =    69.50s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    69.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    69.60s         Capturing element debug description
+    t =    70.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    70.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    70.58s         Capturing element debug description
+    t =    71.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    71.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    71.52s         Capturing element debug description
+    t =    72.52s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    72.52s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    72.59s         Capturing element debug description
+    t =    73.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    73.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    73.55s         Capturing element debug description
+    t =    74.49s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    74.49s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    74.56s         Capturing element debug description
+    t =    75.50s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    75.50s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    75.58s         Capturing element debug description
+    t =    76.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    76.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    76.52s         Capturing element debug description
+    t =    77.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    77.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    77.58s         Capturing element debug description
+    t =    78.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    78.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    78.59s         Capturing element debug description
+    t =    79.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    79.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    79.47s         Capturing element debug description
+    t =    80.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    80.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    80.64s         Capturing element debug description
+    t =    81.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    81.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    81.54s         Capturing element debug description
+    t =    82.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    82.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    82.59s         Capturing element debug description
+    t =    83.52s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    83.52s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    83.57s         Capturing element debug description
+    t =    84.50s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    84.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    84.55s         Capturing element debug description
+    t =    85.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    85.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    85.54s         Capturing element debug description
+    t =    86.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    86.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    86.53s         Capturing element debug description
+    t =    87.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    87.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    87.54s         Capturing element debug description
+    t =    88.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    88.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    88.53s         Capturing element debug description
+    t =    89.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    89.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    89.51s         Capturing element debug description
+    t =    90.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    90.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    90.50s         Capturing element debug description
+    t =    91.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    91.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    91.49s         Capturing element debug description
+    t =    92.53s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    92.53s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    92.60s         Capturing element debug description
+    t =    93.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    93.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    93.51s         Capturing element debug description
+    t =    94.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    94.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    94.48s         Capturing element debug description
+    t =    95.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    95.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    95.57s         Capturing element debug description
+    t =    96.49s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    96.49s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    96.57s         Capturing element debug description
+    t =    97.48s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    97.48s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    97.55s         Capturing element debug description
+    t =    98.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    98.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    98.53s         Capturing element debug description
+    t =    99.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    99.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    99.51s         Capturing element debug description
+    t =   100.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   100.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   100.49s         Capturing element debug description
+    t =   101.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   101.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   101.56s         Capturing element debug description
+    t =   102.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   102.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   102.60s         Capturing element debug description
+    t =   103.53s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   103.53s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   103.62s         Capturing element debug description
+    t =   104.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   104.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   104.48s         Capturing element debug description
+    t =   105.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   105.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   105.55s         Capturing element debug description
+    t =   106.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   106.48s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   106.57s         Capturing element debug description
+    t =   107.48s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   107.49s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   107.59s         Capturing element debug description
+    t =   108.43s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   108.43s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   108.51s         Capturing element debug description
+    t =   109.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   109.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   109.48s         Capturing element debug description
+    t =   110.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   110.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   110.63s         Capturing element debug description
+    t =   111.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   111.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   111.57s         Capturing element debug description
+    t =   112.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   112.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   112.63s         Capturing element debug description
+    t =   113.46s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   113.46s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   113.54s         Capturing element debug description
+    t =   114.48s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   114.48s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   114.51s         Capturing element debug description
+    t =   115.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   115.47s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   115.54s         Capturing element debug description
+    t =   116.48s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   116.48s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   116.57s         Capturing element debug description
+    t =   117.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   117.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   117.62s         Capturing element debug description
+    t =   118.44s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   118.44s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   118.48s         Capturing element debug description
+    t =   119.43s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   119.43s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   119.50s         Capturing element debug description
+    t =   120.43s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   120.43s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   120.51s         Capturing element debug description
+    t =   121.51s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =   121.51s         Checking existence of `"ask.completedAnswer" TextView`
+    t =   121.60s Checking existence of `Any (First Match)`
+    t =   121.69s Checking existence of `Any (First Match)`
+    t =   121.75s Checking existence of `Any (First Match)`
+    t =   121.82s Checking existence of `Any (First Match)`
+    t =   121.92s Checking existence of `Any (First Match)`
+    t =   122.00s Checking existence of `Any (First Match)`
+    t =   122.09s Checking existence of `Any (First Match)`
+    t =   122.14s Checking existence of `Any (First Match)`
+    t =   122.21s Checking existence of `Any (First Match)`
+    t =   122.26s Checking existence of `Any (First Match)`
+    t =   122.32s Checking existence of `Any (First Match)`
+    t =   122.39s Checking existence of `Any (First Match)`
+    t =   122.43s Checking existence of `Any (First Match)`
+    t =   122.48s Checking existence of `Any (First Match)`
+    t =   122.52s Checking existence of `Any (First Match)`
+    t =   122.57s Checking existence of `Any (First Match)`
+    t =   122.61s Checking existence of `Any (First Match)`
+    t =   122.66s Checking existence of `Any (First Match)`
+    t =   122.70s Checking existence of `Any (First Match)`
+    t =   122.74s Checking existence of `Any (First Match)`
+    t =   122.79s Checking existence of `Any (First Match)`
+    t =   122.82s Find the Any (First Match)
+    t =   122.88s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =   122.92s Checking existence of `Button (First Match)`
+    t =   122.97s Checking existence of `Button (First Match)`
+    t =   123.02s Checking existence of `Button (First Match)`
+    t =   123.07s Checking existence of `Button (First Match)`
+    t =   123.13s Checking existence of `Button (First Match)`
+    t =   123.17s Checking existence of `Button (First Match)`
+    t =   123.22s Checking existence of `Button (First Match)`
+    t =   123.26s Checking existence of `Button (First Match)`
+    t =   123.30s Checking existence of `Button (First Match)`
+    t =   123.35s Checking existence of `Button (First Match)`
+    t =   123.38s Checking existence of `Button (First Match)`
+    t =   123.44s Checking existence of `Button (First Match)`
+    t =   123.52s Checking existence of `Button (First Match)`
+    t =   123.64s Checking existence of `Button (First Match)`
+    t =   123.75s Checking existence of `Button (First Match)`
+    t =   123.83s Checking existence of `Button (First Match)`
+    t =   123.93s Checking existence of `Button (First Match)`
+    t =   123.99s Checking existence of `Button (First Match)`
+    t =   124.07s Checking existence of `Button (First Match)`
+    t =   124.14s Checking existence of `Button (First Match)`
+    t =   124.19s Checking existence of `Button (First Match)`
+    t =   124.28s Find the Button (First Match)
+    t =   124.41s Find the "Add bookmark" Button
+    t =   124.47s Find the "Add bookmark" Button
+    t =   124.69s Checking existence of `ScrollView (First Match)`
+    t =   124.92s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   124.95s Find the ScrollView (First Match)
+    t =   125.03s Find the "Add bookmark" Button
+    t =   125.12s Find the "Add bookmark" Button
+    t =   125.19s Find the "Add bookmark" Button
+    t =   125.34s Find the "Add bookmark" Button
+    t =   125.48s Find the "Add bookmark" Button
+    t =   125.88s Find the "Add bookmark" Button
+    t =   125.99s Find the "Add bookmark" Button
+    t =   126.09s Find the "Add bookmark" Button
+    t =   126.15s Find the "Add bookmark" Button
+    t =   126.20s Find the "Add bookmark" Button
+    t =   126.27s Find the "Add bookmark" Button
+    t =   126.33s Find the "Add bookmark" Button
+    t =   126.39s Find the "Add bookmark" Button
+    t =   126.46s Find the "Add bookmark" Button
+    t =   126.52s Find the "Add bookmark" Button
+    t =   126.58s Find the "Add bookmark" Button
+    t =   126.66s Find the "Add bookmark" Button
+    t =   126.76s Find the "Add bookmark" Button
+    t =   126.82s Find the "Add bookmark" Button
+    t =   126.89s Find the "Add bookmark" Button
+    t =   126.94s Find the "Add bookmark" Button
+    t =   127.01s Find the "Add bookmark" Button
+    t =   127.06s Find the "Add bookmark" Button
+    t =   127.12s Find the "Add bookmark" Button
+    t =   127.19s Find the "Add bookmark" Button
+    t =   127.25s Find the "Add bookmark" Button
+    t =   127.31s Find the "Add bookmark" Button
+    t =   127.38s Find the "Add bookmark" Button
+    t =   127.43s Find the "Add bookmark" Button
+    t =   127.49s Tap "Add bookmark" Button
+    t =   127.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   127.50s     Find the "Add bookmark" Button
+    t =   127.55s     Check for interrupting elements affecting "Add bookmark" Button
+    t =   127.65s     Synthesize event
+    t =   127.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   128.02s Waiting 8.0s for Button (First Match) to exist
+    t =   129.07s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   129.07s         Checking existence of `Button (First Match)`
+    t =   129.18s Checking existence of `Button (First Match)`
+    t =   129.25s Checking existence of `Button (First Match)`
+    t =   129.34s Checking existence of `Button (First Match)`
+    t =   129.42s Checking existence of `Button (First Match)`
+    t =   129.50s Checking existence of `Button (First Match)`
+    t =   129.60s Checking existence of `Button (First Match)`
+    t =   129.70s Checking existence of `Button (First Match)`
+    t =   129.79s Checking existence of `Button (First Match)`
+    t =   129.89s Checking existence of `Button (First Match)`
+    t =   129.98s Checking existence of `Button (First Match)`
+    t =   130.08s Checking existence of `Button (First Match)`
+    t =   130.17s Checking existence of `Button (First Match)`
+    t =   130.26s Checking existence of `Button (First Match)`
+    t =   130.35s Checking existence of `Button (First Match)`
+    t =   130.44s Checking existence of `Button (First Match)`
+    t =   130.54s Checking existence of `Button (First Match)`
+    t =   130.62s Checking existence of `Button (First Match)`
+    t =   130.72s Checking existence of `Button (First Match)`
+    t =   130.81s Checking existence of `Button (First Match)`
+    t =   130.89s Checking existence of `Button (First Match)`
+    t =   130.98s Checking existence of `Button (First Match)`
+    t =   131.08s Find the Button (First Match)
+    t =   131.18s Find the "Citations QA 9DC0CF" Button
+    t =   131.28s Find the "Citations QA 9DC0CF" Button
+    t =   131.38s Checking existence of `ScrollView (First Match)`
+    t =   131.45s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   131.48s Find the ScrollView (First Match)
+    t =   131.56s Find the "Citations QA 9DC0CF" Button
+    t =   131.67s Find the "Citations QA 9DC0CF" Button
+    t =   131.76s Find the "Citations QA 9DC0CF" Button
+    t =   131.86s Find the "Citations QA 9DC0CF" Button
+    t =   131.96s Find the "Citations QA 9DC0CF" Button
+    t =   132.06s Find the "Citations QA 9DC0CF" Button
+    t =   132.17s Find the "Citations QA 9DC0CF" Button
+    t =   132.29s Find the "Citations QA 9DC0CF" Button
+    t =   132.39s Find the "Citations QA 9DC0CF" Button
+    t =   132.50s Find the "Citations QA 9DC0CF" Button
+    t =   132.60s Find the "Citations QA 9DC0CF" Button
+    t =   132.70s Find the "Citations QA 9DC0CF" Button
+    t =   132.82s Find the "Citations QA 9DC0CF" Button
+    t =   132.94s Find the "Citations QA 9DC0CF" Button
+    t =   133.03s Find the "Citations QA 9DC0CF" Button
+    t =   133.15s Find the "Citations QA 9DC0CF" Button
+    t =   133.25s Find the "Citations QA 9DC0CF" Button
+    t =   133.36s Find the "Citations QA 9DC0CF" Button
+    t =   133.47s Find the "Citations QA 9DC0CF" Button
+    t =   133.60s Find the "Citations QA 9DC0CF" Button
+    t =   133.70s Find the "Citations QA 9DC0CF" Button
+    t =   133.82s Find the "Citations QA 9DC0CF" Button
+    t =   133.92s Find the "Citations QA 9DC0CF" Button
+    t =   134.03s Find the "Citations QA 9DC0CF" Button
+    t =   134.13s Find the "Citations QA 9DC0CF" Button
+    t =   134.26s Find the "Citations QA 9DC0CF" Button
+    t =   134.36s Find the "Citations QA 9DC0CF" Button
+    t =   134.47s Find the "Citations QA 9DC0CF" Button
+    t =   134.57s Find the "Citations QA 9DC0CF" Button
+    t =   134.67s Tap "Citations QA 9DC0CF" Button
+    t =   134.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   134.68s     Find the "Citations QA 9DC0CF" Button
+    t =   134.77s     Check for interrupting elements affecting "Citations QA 9DC0CF" Button
+    t =   134.83s     Synthesize event
+    t =   135.12s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   135.13s Checking existence of `Button (First Match)`
+    t =   135.20s Checking existence of `Button (First Match)`
+    t =   135.25s Checking existence of `Button (First Match)`
+    t =   135.31s Checking existence of `Button (First Match)`
+    t =   135.36s Checking existence of `Button (First Match)`
+    t =   135.43s Checking existence of `Button (First Match)`
+    t =   135.49s Checking existence of `Button (First Match)`
+    t =   135.54s Checking existence of `Button (First Match)`
+    t =   135.61s Checking existence of `Button (First Match)`
+    t =   135.68s Checking existence of `Button (First Match)`
+    t =   135.74s Checking existence of `Button (First Match)`
+    t =   135.81s Checking existence of `Button (First Match)`
+    t =   135.88s Checking existence of `Button (First Match)`
+    t =   135.94s Checking existence of `Button (First Match)`
+    t =   136.01s Checking existence of `Button (First Match)`
+    t =   136.08s Checking existence of `Button (First Match)`
+    t =   136.14s Checking existence of `Button (First Match)`
+    t =   136.20s Checking existence of `Button (First Match)`
+    t =   136.28s Checking existence of `Button (First Match)`
+    t =   136.35s Checking existence of `Button (First Match)`
+    t =   136.41s Checking existence of `Button (First Match)`
+    t =   136.48s Find the Button (First Match)
+    t =   136.56s Find the "save here" Button
+    t =   136.63s Find the "save here" Button
+    t =   136.71s Checking existence of `ScrollView (First Match)`
+    t =   136.76s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   136.79s Find the ScrollView (First Match)
+    t =   136.86s Find the "save here" Button
+    t =   136.95s Find the "save here" Button
+    t =   137.02s Press ScrollView at {{104.7, 305.3}, {240.7, 231.7}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{104.7, 305.3}, {240.7, 231.7}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =   137.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   137.02s     Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   137.07s     Check for interrupting elements affecting ScrollView
+    t =   137.13s     Synthesize event
+    t =   137.13s         Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   137.21s         Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   137.26s         Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   137.35s         Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   137.42s         Find the ScrollView at {{104.7, 305.3}, {240.7, 231.7}}
+    t =   138.04s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   138.70s Find the "save here" Button
+    t =   138.77s Find the "save here" Button
+    t =   138.84s Find the "save here" Button
+    t =   138.94s Find the "save here" Button
+    t =   139.02s Find the "save here" Button
+    t =   139.11s Find the "save here" Button
+    t =   139.18s Find the "save here" Button
+    t =   139.26s Find the "save here" Button
+    t =   139.32s Find the "save here" Button
+    t =   139.40s Find the "save here" Button
+    t =   139.45s Find the "save here" Button
+    t =   139.53s Find the "save here" Button
+    t =   139.59s Find the "save here" Button
+    t =   139.68s Find the "save here" Button
+    t =   139.78s Find the "save here" Button
+    t =   139.90s Find the "save here" Button
+    t =   140.00s Find the "save here" Button
+    t =   140.13s Find the "save here" Button
+    t =   140.37s Find the "save here" Button
+    t =   140.52s Find the "save here" Button
+    t =   140.62s Find the "save here" Button
+    t =   140.75s Find the "save here" Button
+    t =   140.85s Find the "save here" Button
+    t =   140.96s Find the "save here" Button
+    t =   141.07s Find the "save here" Button
+    t =   141.26s Find the "save here" Button
+    t =   141.36s Find the "save here" Button
+    t =   141.46s Find the "save here" Button
+    t =   141.54s Tap "save here" Button
+    t =   141.54s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   141.54s     Find the "save here" Button
+    t =   141.60s     Check for interrupting elements affecting "save here" Button
+    t =   141.66s     Synthesize event
+    t =   141.98s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   143.03s Waiting 10.0s for "saved to my encyclopedia" StaticText to exist
+    t =   144.06s     Checking `Expect predicate `existsNoRetry == 1` for object "saved to my encyclopedia" StaticText`
+    t =   144.06s         Checking existence of `"saved to my encyclopedia" StaticText`
+    t =   144.11s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   144.34s Added attachment named 'Citations_ActualAnswerSaved'
+    t =   144.34s Terminate com.fruitsoflifexo.Fruitfolio:18965
+    t =   145.39s Open com.fruitsoflifexo.Fruitfolio
+    t =   145.39s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 01:29:05.167 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 01:29:05.168 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   146.67s         Setting up automation session
+    t =   148.91s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   151.26s Waiting 15.0s for "hub.action.My Encyclopedias" Button to exist
+    t =   152.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.My Encyclopedias" Button`
+    t =   152.29s         Checking existence of `"hub.action.My Encyclopedias" Button`
+    t =   152.35s Tap "hub.action.My Encyclopedias" Button
+    t =   152.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   152.36s     Find the "hub.action.My Encyclopedias" Button
+    t =   152.39s     Check for interrupting elements affecting "hub.action.My Encyclopedias" Button
+    t =   152.42s     Synthesize event
+    t =   152.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   152.78s Checking existence of `Button (First Match)`
+    t =   152.94s Checking existence of `Button (First Match)`
+    t =   153.08s Checking existence of `Button (First Match)`
+    t =   153.26s Checking existence of `Button (First Match)`
+    t =   153.32s Checking existence of `Button (First Match)`
+    t =   153.35s Checking existence of `Button (First Match)`
+    t =   153.37s Checking existence of `Button (First Match)`
+    t =   153.41s Checking existence of `Button (First Match)`
+    t =   153.44s Checking existence of `Button (First Match)`
+    t =   153.46s Checking existence of `Button (First Match)`
+    t =   153.50s Checking existence of `Button (First Match)`
+    t =   153.52s Checking existence of `Button (First Match)`
+    t =   153.55s Checking existence of `Button (First Match)`
+    t =   153.58s Checking existence of `Button (First Match)`
+    t =   153.61s Checking existence of `Button (First Match)`
+    t =   153.64s Checking existence of `Button (First Match)`
+    t =   153.66s Checking existence of `Button (First Match)`
+    t =   153.70s Checking existence of `Button (First Match)`
+    t =   153.72s Checking existence of `Button (First Match)`
+    t =   153.74s Checking existence of `Button (First Match)`
+    t =   153.77s Checking existence of `Button (First Match)`
+    t =   153.80s Find the Button (First Match)
+    t =   153.83s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   153.87s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   153.89s Checking existence of `ScrollView (First Match)`
+    t =   153.93s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   153.94s Find the ScrollView (First Match)
+    t =   153.99s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.03s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.08s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.12s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.17s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.21s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.25s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.29s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.34s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.38s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.43s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.47s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.52s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.56s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.59s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.64s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.67s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.72s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.76s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.81s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.84s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.89s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.92s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   154.98s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.01s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.05s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.09s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.13s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.18s Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.22s Tap "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.22s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   155.22s     Find the "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.26s     Check for interrupting elements affecting "Citations QA 9DC0CF, 1 chapter · 1 page" Button
+    t =   155.28s     Synthesize event
+    t =   155.58s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   155.59s Checking existence of `Button (First Match)`
+    t =   155.67s Swipe up Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   155.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   155.67s     Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   155.73s     Check for interrupting elements affecting "Fruitfolio" Application
+    t =   155.76s     Synthesize event
+    t =   156.19s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   156.20s Checking existence of `Button (First Match)`
+    t =   156.27s Checking existence of `Button (First Match)`
+    t =   156.33s Checking existence of `Button (First Match)`
+    t =   156.39s Checking existence of `Button (First Match)`
+    t =   156.46s Checking existence of `Button (First Match)`
+    t =   156.53s Checking existence of `Button (First Match)`
+    t =   156.56s Checking existence of `Button (First Match)`
+    t =   156.59s Checking existence of `Button (First Match)`
+    t =   156.64s Checking existence of `Button (First Match)`
+    t =   156.66s Checking existence of `Button (First Match)`
+    t =   156.69s Checking existence of `Button (First Match)`
+    t =   156.73s Checking existence of `Button (First Match)`
+    t =   156.76s Checking existence of `Button (First Match)`
+    t =   156.78s Checking existence of `Button (First Match)`
+    t =   156.83s Checking existence of `Button (First Match)`
+    t =   156.86s Checking existence of `Button (First Match)`
+    t =   156.88s Checking existence of `Button (First Match)`
+    t =   156.92s Checking existence of `Button (First Match)`
+    t =   156.95s Checking existence of `Button (First Match)`
+    t =   156.98s Checking existence of `Button (First Match)`
+    t =   157.02s Find the Button (First Match)
+    t =   157.06s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.10s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.13s Checking existence of `ScrollView (First Match)`
+    t =   157.17s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   157.19s Find the ScrollView (First Match)
+    t =   157.24s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.29s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.33s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.38s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.42s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.48s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.51s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.57s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.60s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.65s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.69s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.73s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.78s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.82s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.88s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.92s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   157.97s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.02s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.07s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.12s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.17s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.25s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.28s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.33s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.37s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.42s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.46s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.53s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.57s Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.63s Tap "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   158.63s     Find the "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.66s     Check for interrupting elements affecting "How does morning sunlight affect the body clock?, complete saved answer" Button
+    t =   158.68s     Synthesize event
+    t =   158.98s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   158.99s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.08s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.11s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.13s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.16s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.18s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.21s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.23s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.25s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.28s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.30s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.33s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.35s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.37s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.40s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.42s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.45s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.47s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.50s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.52s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.54s Checking existence of `"FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText`
+    t =   159.57s Find the "FruitsofLife.xo research corpus. (n.d.). Fruitfolio Research Library." StaticText
+    t =   159.61s Find the "savedPage.reference.0" StaticText
+    t =   159.64s Find the "savedPage.reference.0" StaticText
+    t =   159.67s Checking existence of `ScrollView (First Match)`
+    t =   159.74s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   159.76s Find the ScrollView (First Match)
+    t =   159.84s Find the "savedPage.reference.0" StaticText
+    t =   159.89s Find the "savedPage.reference.0" StaticText
+    t =   159.93s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =   159.93s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   159.93s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   159.99s     Check for interrupting elements affecting ScrollView
+    t =   160.01s     Synthesize event
+    t =   160.02s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   160.08s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   160.13s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   160.19s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   160.25s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   161.58s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   163.08s Find the "savedPage.reference.0" StaticText
+    t =   163.13s Find the "savedPage.reference.0" StaticText
+    t =   163.16s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =   163.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   163.16s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   163.22s     Check for interrupting elements affecting ScrollView
+    t =   163.24s     Synthesize event
+    t =   163.24s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   163.30s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   163.35s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   163.41s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   163.46s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =   164.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   165.30s Find the "savedPage.reference.0" StaticText
+    t =   165.35s Find the "savedPage.reference.0" StaticText
+    t =   165.38s Find the "savedPage.reference.0" StaticText
+    t =   165.42s Find the "savedPage.reference.0" StaticText
+    t =   165.45s Find the "savedPage.reference.0" StaticText
+    t =   165.49s Find the "savedPage.reference.0" StaticText
+    t =   165.53s Find the "savedPage.reference.0" StaticText
+    t =   165.57s Find the "savedPage.reference.0" StaticText
+    t =   165.60s Find the "savedPage.reference.0" StaticText
+    t =   165.64s Find the "savedPage.reference.0" StaticText
+    t =   165.67s Find the "savedPage.reference.0" StaticText
+    t =   165.72s Find the "savedPage.reference.0" StaticText
+    t =   165.75s Find the "savedPage.reference.0" StaticText
+    t =   165.79s Find the "savedPage.reference.0" StaticText
+    t =   165.83s Find the "savedPage.reference.0" StaticText
+    t =   165.87s Find the "savedPage.reference.0" StaticText
+    t =   165.90s Find the "savedPage.reference.0" StaticText
+    t =   165.94s Find the "savedPage.reference.0" StaticText
+    t =   165.97s Find the "savedPage.reference.0" StaticText
+    t =   166.01s Find the "savedPage.reference.0" StaticText
+    t =   166.04s Find the "savedPage.reference.0" StaticText
+    t =   166.09s Find the "savedPage.reference.0" StaticText
+    t =   166.13s Find the "savedPage.reference.0" StaticText
+    t =   166.17s Find the "savedPage.reference.0" StaticText
+    t =   166.22s Find the "savedPage.reference.0" StaticText
+    t =   166.26s Find the "savedPage.reference.0" StaticText
+    t =   166.28s Checking existence of `"savedPage.unavailableReference.0" StaticText`
+    t =   166.31s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   166.44s Added attachment named 'Citations_ExactOriginalReferenceAfterRestart'
+    t =   166.48s Tear Down
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualAnswerSaveRestartAndReopenRetainTheSameOriginalSourceReference]' passed (167.146 seconds).
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' started.
+    t =     0.00s Start Test at 2026-11-02 01:29:26.833
+    t =     0.07s Set Up
+    t =     0.07s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.07s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.07s         Terminate com.fruitsoflifexo.Fruitfolio:26272
+2026-11-02 01:29:27.928 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 01:29:27.928 xcodebuild[17887:310631] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.55s         Setting up automation session
+    t =     3.22s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     5.16s Waiting 12.0s for "I'll explore" Button to exist
+    t =     6.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.21s         Checking existence of `"I'll explore" Button`
+    t =     6.25s         Capturing element debug description
+    t =     7.20s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.20s         Checking existence of `"I'll explore" Button`
+    t =     7.22s         Capturing element debug description
+    t =     8.16s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.16s         Checking existence of `"I'll explore" Button`
+    t =     8.19s         Capturing element debug description
+    t =     9.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.24s         Checking existence of `"I'll explore" Button`
+    t =     9.28s         Capturing element debug description
+    t =    10.20s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.20s         Checking existence of `"I'll explore" Button`
+    t =    10.22s         Capturing element debug description
+    t =    11.16s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.16s         Checking existence of `"I'll explore" Button`
+    t =    11.19s         Capturing element debug description
+    t =    12.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.24s         Checking existence of `"I'll explore" Button`
+    t =    12.29s         Capturing element debug description
+    t =    13.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.24s         Checking existence of `"I'll explore" Button`
+    t =    13.28s         Capturing element debug description
+    t =    14.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.25s         Checking existence of `"I'll explore" Button`
+    t =    14.28s         Capturing element debug description
+    t =    15.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.23s         Checking existence of `"I'll explore" Button`
+    t =    15.26s         Capturing element debug description
+    t =    16.17s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.18s         Checking existence of `"I'll explore" Button`
+    t =    16.22s         Capturing element debug description
+    t =    17.16s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.16s         Checking existence of `"I'll explore" Button`
+    t =    17.18s         Capturing element debug description
+    t =    17.18s     Checking existence of `"I'll explore" Button`
+    t =    17.20s Collecting debug information to assist test failure triage
+    t =    17.21s     Requesting snapshot of accessibility hierarchy for app with pid 26944
+    t =    17.24s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    18.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    18.24s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    18.27s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    18.27s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.27s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    18.30s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    18.32s     Synthesize event
+    t =    18.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.74s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    19.76s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    19.76s         Checking existence of `"ask.questionInput" TextField`
+    t =    19.82s Tap "ask.questionInput" TextField
+    t =    19.82s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.82s     Find the "ask.questionInput" TextField
+    t =    19.84s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    19.87s     Synthesize event
+    t =    20.18s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.62s Type 'How does morning s...' into "ask.questionInput" TextField
+    t =    20.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.98s     Find the "ask.questionInput" TextField
+    t =    21.06s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    21.11s     Synthesize event
+    t =    22.12s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.13s Find the Button (First Match)
+    t =    22.21s Find the "Send question" Button
+    t =    22.30s Tap "Send question" Button
+    t =    22.30s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.30s     Find the "Send question" Button
+    t =    22.38s     Check for interrupting elements affecting "Send question" Button
+    t =    22.42s     Synthesize event
+    t =    22.75s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.02s Waiting 180.0s for "ask.completedAnswer" TextView to exist
+    t =    24.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    24.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    24.09s         Capturing element debug description
+    t =    25.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    25.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    25.16s         Capturing element debug description
+    t =    26.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    26.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    26.15s         Capturing element debug description
+    t =    27.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    27.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    27.12s         Capturing element debug description
+    t =    28.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    28.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    28.08s         Capturing element debug description
+    t =    29.10s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    29.10s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    29.14s         Capturing element debug description
+    t =    30.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    30.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    30.14s         Capturing element debug description
+    t =    31.05s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    31.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    31.09s         Capturing element debug description
+    t =    32.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    32.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    32.13s         Capturing element debug description
+    t =    33.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    33.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    33.07s         Capturing element debug description
+    t =    34.08s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    34.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    34.17s         Capturing element debug description
+    t =    35.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    35.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    35.12s         Capturing element debug description
+    t =    36.05s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    36.05s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    36.08s         Capturing element debug description
+    t =    37.03s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    37.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    37.05s         Capturing element debug description
+    t =    38.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    38.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    38.12s         Capturing element debug description
+    t =    39.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    39.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    39.08s         Capturing element debug description
+    t =    40.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    40.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    40.12s         Capturing element debug description
+    t =    41.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    41.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    41.18s         Capturing element debug description
+    t =    42.12s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    42.12s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    42.16s         Capturing element debug description
+    t =    43.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    43.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    43.14s         Capturing element debug description
+    t =    44.08s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    44.08s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    44.16s         Capturing element debug description
+    t =    45.08s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    45.08s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    45.12s         Capturing element debug description
+    t =    46.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    46.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    46.11s         Capturing element debug description
+    t =    47.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    47.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    47.08s         Capturing element debug description
+    t =    48.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    48.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    48.08s         Capturing element debug description
+    t =    49.11s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    49.11s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    49.17s         Capturing element debug description
+    t =    50.12s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    50.12s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    50.17s         Capturing element debug description
+    t =    51.11s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    51.11s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    51.20s         Capturing element debug description
+    t =    52.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    52.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    52.11s         Capturing element debug description
+    t =    53.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    53.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    53.11s         Capturing element debug description
+    t =    54.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    54.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    54.08s         Capturing element debug description
+    t =    55.03s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    55.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    55.10s         Capturing element debug description
+    t =    56.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    56.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    56.11s         Capturing element debug description
+    t =    57.03s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    57.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    57.07s         Capturing element debug description
+    t =    58.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    58.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    58.11s         Capturing element debug description
+    t =    59.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    59.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    59.08s         Capturing element debug description
+    t =    60.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    60.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    60.16s         Capturing element debug description
+    t =    61.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    61.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    61.14s         Capturing element debug description
+    t =    62.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    62.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    62.12s         Capturing element debug description
+    t =    63.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    63.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    63.09s         Capturing element debug description
+    t =    64.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    64.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    64.07s         Capturing element debug description
+    t =    65.12s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    65.12s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    65.24s         Capturing element debug description
+    t =    66.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    66.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    66.11s         Capturing element debug description
+    t =    67.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    67.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    67.10s         Capturing element debug description
+    t =    68.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    68.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    68.09s         Capturing element debug description
+    t =    69.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    69.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    69.09s         Capturing element debug description
+    t =    70.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    70.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    70.08s         Capturing element debug description
+    t =    71.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    71.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    71.07s         Capturing element debug description
+    t =    72.11s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    72.11s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    72.18s         Capturing element debug description
+    t =    73.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    73.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    73.09s         Capturing element debug description
+    t =    74.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    74.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    74.07s         Capturing element debug description
+    t =    75.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    75.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    75.13s         Capturing element debug description
+    t =    76.07s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    76.07s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    76.13s         Capturing element debug description
+    t =    77.08s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    77.08s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    77.12s         Capturing element debug description
+    t =    78.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    78.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    78.12s         Capturing element debug description
+    t =    79.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    79.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    79.11s         Capturing element debug description
+    t =    80.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    80.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    80.12s         Capturing element debug description
+    t =    81.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    81.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    81.13s         Capturing element debug description
+    t =    82.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    82.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    82.12s         Capturing element debug description
+    t =    83.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    83.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    83.10s         Capturing element debug description
+    t =    84.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    84.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    84.12s         Capturing element debug description
+    t =    85.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    85.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    85.13s         Capturing element debug description
+    t =    86.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    86.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    86.13s         Capturing element debug description
+    t =    87.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    87.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    87.18s         Capturing element debug description
+    t =    88.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    88.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    88.13s         Capturing element debug description
+    t =    89.09s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    89.09s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    89.14s         Capturing element debug description
+    t =    90.06s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    90.06s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    90.10s         Capturing element debug description
+    t =    91.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    91.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    91.09s         Capturing element debug description
+    t =    92.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    92.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    92.09s         Capturing element debug description
+    t =    93.04s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    93.04s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    93.13s         Capturing element debug description
+    t =    94.10s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    94.10s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    94.17s Find the "ask.completedAnswer" TextView
+    t =    94.20s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    94.38s Added attachment named 'Ask_ActualCompletedAnswer'
+    t =    94.38s Checking existence of `Any (First Match)`
+    t =    94.42s Checking existence of `Any (First Match)`
+    t =    94.46s Checking existence of `Any (First Match)`
+    t =    94.49s Checking existence of `Any (First Match)`
+    t =    94.53s Checking existence of `Any (First Match)`
+    t =    94.57s Checking existence of `Any (First Match)`
+    t =    94.60s Checking existence of `Any (First Match)`
+    t =    94.63s Checking existence of `Any (First Match)`
+    t =    94.67s Checking existence of `Any (First Match)`
+    t =    94.71s Checking existence of `Any (First Match)`
+    t =    94.74s Checking existence of `Any (First Match)`
+    t =    94.78s Checking existence of `Any (First Match)`
+    t =    94.81s Checking existence of `Any (First Match)`
+    t =    94.84s Checking existence of `Any (First Match)`
+    t =    94.88s Checking existence of `Any (First Match)`
+    t =    94.92s Checking existence of `Any (First Match)`
+    t =    94.95s Checking existence of `Any (First Match)`
+    t =    94.99s Checking existence of `Any (First Match)`
+    t =    95.03s Checking existence of `Any (First Match)`
+    t =    95.06s Checking existence of `Any (First Match)`
+    t =    95.11s Checking existence of `Any (First Match)`
+    t =    95.14s Find the Any (First Match)
+    t =    95.17s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    95.33s Added attachment named 'Ask_ActualDocumentSources'
+    t =    95.34s Find the "ask.completedAnswer" TextView
+    t =    95.37s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    95.41s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    95.45s Added attachment named 'Ask_ActualUIAnswerAndSource'
+    t =    95.45s Find the "ask.back" Button
+    t =    95.53s Find the "ask.back" Button
+    t =    95.57s Find the "ask.back" Button
+    t =    95.62s Find the "ask.back" Button
+    t =    95.66s Find the "ask.back" Button
+    t =    95.71s Find the "ask.back" Button
+    t =    95.76s Find the "ask.back" Button
+    t =    95.80s Find the "ask.back" Button
+    t =    95.85s Find the "ask.back" Button
+    t =    95.89s Find the "ask.back" Button
+    t =    95.94s Find the "ask.back" Button
+    t =    95.99s Find the "ask.back" Button
+    t =    96.06s Find the "ask.back" Button
+    t =    96.11s Find the "ask.back" Button
+    t =    96.16s Find the "ask.back" Button
+    t =    96.21s Find the "ask.back" Button
+    t =    96.28s Find the "ask.back" Button
+    t =    96.32s Find the "ask.back" Button
+    t =    96.38s Find the "ask.back" Button
+    t =    96.43s Find the "ask.back" Button
+    t =    96.49s Find the "ask.back" Button
+    t =    96.53s Tap "ask.back" Button
+    t =    96.53s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.54s     Find the "ask.back" Button
+    t =    96.58s     Check for interrupting elements affecting "ask.back" Button
+    t =    96.64s     Synthesize event
+    t =    96.98s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.37s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    98.41s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    98.41s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    98.46s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    98.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    98.47s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    98.51s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    98.55s     Synthesize event
+    t =    98.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    99.31s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =   100.36s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =   100.36s         Checking existence of `"ask.questionInput" TextField`
+    t =   100.40s Checking existence of `"ask.completedAnswer" TextView`
+    t =   100.44s Checking existence of `"How does morning sunlight affect the body clock?" StaticText`
+    t =   100.46s Find the "ask.questionInput" TextField
+    t =   100.49s Find the "ask.questionInput" TextField
+    t =   100.52s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   100.70s Added attachment named 'Ask_ClearedAfterReturning'
+    t =   100.71s Tear Down
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' passed (101.201 seconds).
+Test Suite 'AskGroundedJourneyUITests' passed at 2026-11-02 01:31:08.035.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 268.347 (268.352) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-02 01:31:08.042.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 268.347 (268.359) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 01:31:08.043.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 268.347 (268.361) seconds
+2026-11-02 01:31:25.554 xcodebuild[17887:310631] [MT] IDETestOperationsObserverDebug: 292.239 elapsed -- Testing started completed.
+2026-11-02 01:31:25.554 xcodebuild[17887:310631] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 01:31:25.554 xcodebuild[17887:310631] [MT] IDETestOperationsObserverDebug: 292.239 sec, +292.239 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

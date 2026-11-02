@@ -462,7 +462,7 @@ jobs:
       - name: Export actual offline inference attachments
         if: always()
         run: |
-          for phase in core multilingual edge-quantities requested-languages; do
+          for phase in core multilingual edge-quantities requested-languages expanded-medical; do
             result="Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult"
             if [ -f "$result/Info.plist" ]; then
               mkdir -p "Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase/Attachments"

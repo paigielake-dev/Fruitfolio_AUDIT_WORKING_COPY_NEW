@@ -106,8 +106,24 @@ final class PersonalDataManagementUITests: XCTestCase {
         XCTAssertTrue(preserved.waitForExistence(timeout: 10), "A real record created through the actual entry UI must survive cancellation and process restart")
         fruitfolioReachControl(app, preserved)
         capture(app, "ActualMeasurementPreservedAfterBulkCancellationAndRestart")
-        // This uniquely named synthetic fixture remains only in the owned CI
-        // simulator as evidence. No production user's records are accessed.
+        // Now confirm the separate destructive action through its real modal.
+        // This is the disposable owned CI simulator, never a user's records.
+        app.terminate()
+        let deletionApp = openData()
+        let guardedErase = deletionApp.buttons["data.deleteHormones"]
+        fruitfolioReachControl(deletionApp, guardedErase); guardedErase.tap()
+        XCTAssertTrue(deletionApp.staticTexts["delete all hormone measurements?"].waitForExistence(timeout: 10))
+        let destructive = button(deletionApp, "delete hormone measurements")
+        let writing = deletionApp.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
+        fruitfolioReachControl(deletionApp, destructive, container: writing)
+        capture(deletionApp, "ActualExplicitDestructiveActionBeforeConfirmation")
+        destructive.tap()
+        XCTAssertTrue(deletionApp.staticTexts["hormone measurements have been deleted from this device."].waitForExistence(timeout: 10))
+        deletionApp.terminate()
+        app.launch(); openHormoneHistoryFromTheActualHub(app)
+        XCTAssertFalse(app.staticTexts[displayed].exists,
+            "Only the explicit confirmed operation may remove the previously preserved real measurement")
+        capture(app, "ActualConfirmedHormoneDeletionAfterRestart")
     }
 
     func testActualReadableExportOpensSystemDestinationAndCancellingDoesNotClaimAFileWasExported() {

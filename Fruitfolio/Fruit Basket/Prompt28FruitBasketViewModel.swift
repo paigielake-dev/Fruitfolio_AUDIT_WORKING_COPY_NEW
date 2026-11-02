@@ -398,11 +398,14 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func startGameplayLoop() {
         gameplayTask?.cancel()
         gameplayTask = Task { [weak self] in
-            guard let self else { return }
             var previous = Date()
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 33_000_000)
-                guard !Task.isCancelled else { break }
+                // Hold the model only during this synchronous frame. Keeping
+                // a strong self before the loop retains it across every sleep
+                // and prevents deinit's cancellation if a host drops the view
+                // without delivering its ordinary disappearance callback.
+                guard !Task.isCancelled, let self else { break }
                 let now = Date()
                 let delta = min(max(now.timeIntervalSince(previous), 0.001), 0.08)
                 previous = now

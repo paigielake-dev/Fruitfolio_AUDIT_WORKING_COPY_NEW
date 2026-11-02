@@ -163,6 +163,52 @@ extension AAAA_MADLADRuntimeIntegrationTests {
         await runtime.unload()
     }
 
+    func testFifteenExpandedTargetsExecuteMedicalWarningPreservationWithoutClaimingMeaningApproval() async throws {
+        let directory = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
+        let runtime = FruitfolioMADLADLocalRuntime()
+        let translator = FruitfolioMADLADDocumentTranslator(runtime: runtime)
+        let source = "Do not stop taking prescribed medication.\n\nThese recorded values do not confirm a diagnosis: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L [source-1]."
+        let targets = ["th", "mn", "id", "ru", "pl", "nl", "sv", "uk", "tr", "ku", "ckb", "he", "qu", "gn", "ay"]
+        var reports: [[String: String]] = []
+        for target in targets {
+            do {
+                let candidate = try await translator.candidate(source: source, sourceIdentifiers: ["source-1"],
+                    target: target, immutableTerms: [], directory: directory)
+                XCTAssertEqual(candidate.originalText, source)
+                XCTAssertEqual(candidate.sourceIdentifiers, ["source-1"])
+                XCTAssertEqual(candidate.citationMarkers, ["[source-1]"])
+                XCTAssertEqual(FruitfolioTranslationPreservation.numbers(candidate.textForVerification),
+                               FruitfolioTranslationPreservation.numbers(source))
+                for quantity in ["-2.50–-1.00 ng/mL", "12.5%", "37.0 °C", "4.20e-3 mol/L"] {
+                    XCTAssertTrue(candidate.textForVerification.contains(quantity))
+                }
+                XCTAssertTrue(candidate.textForVerification.contains("\n\n"))
+                XCTAssertFalse(candidate.medicalMeaningVerified,
+                    "Preservation cannot approve the medication warning, diagnosis negation, language identity, or clinical terminology")
+                reports.append(["target": target, "source": source, "output": candidate.textForVerification,
+                    "actualSentenceEvidence": String(decoding: try JSONEncoder().encode(candidate.sentenceEvidence), as: UTF8.self),
+                    "preservation": "PASS", "medicalMeaning": "NOT VERIFIED — actual warning, negation, terminology and language require review"])
+            } catch {
+                var report = ["target": target, "source": source, "preservation": "FAIL", "error": String(describing: error)]
+                if let rejected = error as? FruitfolioTranslationRejectedCandidate {
+                    report["actualModelInput"] = rejected.actualModelInput
+                    report["actualRejectedRawOutput"] = rejected.rawOutput
+                    report["strictReason"] = String(describing: rejected.reason)
+                }
+                reports.append(report)
+                XCTFail("Expanded official target failed strict preservation for \(target): \(error)")
+            }
+            print("MADLAD_SYNTHETIC_EXPANDED_MEDICAL_RESULT " + String(decoding:
+                try JSONSerialization.data(withJSONObject: reports.last!, options: [.sortedKeys]), as: UTF8.self))
+        }
+        XCTAssertEqual(reports.count, 15, "No expanded target may be excluded")
+        let evidence = XCTAttachment(data: try JSONSerialization.data(withJSONObject: reports, options: [.prettyPrinted, .sortedKeys]),
+            uniformTypeIdentifier: "public.json")
+        evidence.name = "MADLAD_ActualFifteenExpandedMedicalPreservation"
+        evidence.lifetime = .keepAlways; add(evidence)
+        await runtime.unload()
+    }
+
     func testCorruptTokenizerIsRejectedBeforeAnyModelInference() async throws {
         let bundled = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
