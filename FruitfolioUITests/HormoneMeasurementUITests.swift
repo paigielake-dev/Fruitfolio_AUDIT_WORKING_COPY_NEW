@@ -141,8 +141,15 @@ final class HormoneMeasurementUITests: XCTestCase {
         delete.tap()
         capture(app, "DeleteConfirmation")
         XCTAssertTrue(app.staticTexts["delete this measurement?"].waitForExistence(timeout: 8), "Actual destructive confirmation must be shown before deleting")
+        capture(app, "Hormone_DeletionConfirmationInitial")
+        let modalPane = app.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
+        let cancelDeletion = app.buttons.matching(NSPredicate(format: "label == %@", "cancel")).firstMatch
+        XCTAssertTrue(modalPane.waitForExistence(timeout: 10))
+        fruitfolioReachControl(app, cancelDeletion, container: modalPane)
+        capture(app, "Hormone_DeletionConfirmationVisibleActions")
         try fruitfolioStrictAccessibilityAudit(app)
         let confirmDelete = app.buttons.matching(NSPredicate(format: "label == %@", "delete")).firstMatch
+        fruitfolioReachControl(app, confirmDelete, container: modalPane)
         XCTAssertTrue(confirmDelete.waitForExistence(timeout: 8))
         for _ in 0..<8 where !confirmDelete.isHittable { scrollSettings(app, up: true) }
         XCTAssertTrue(confirmDelete.isHittable); confirmDelete.tap()

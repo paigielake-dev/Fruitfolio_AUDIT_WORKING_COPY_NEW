@@ -38,11 +38,7 @@ final class PersonalDataManagementUITests: XCTestCase {
         let cancel = button(app, "cancel")
         let pane = app.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
         XCTAssertTrue(pane.waitForExistence(timeout: 10))
-        for _ in 0..<8 {
-            if cancel.exists && pane.frame.contains(cancel.frame) { break }
-            pane.swipeUp()
-        }
-        XCTAssertTrue(cancel.isHittable && pane.frame.contains(cancel.frame), "The real cancel control must be visible inside the modal writing area")
+        fruitfolioReachControl(app, cancel, container: pane)
         capture(app, "BulkHormoneDeletionVisibleActions")
         try fruitfolioStrictAccessibilityAudit(app)
         cancel.tap()
