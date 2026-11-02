@@ -14,6 +14,9 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
     private let store: Prompt14CycleOnboardingStore
     private let calendar: Calendar
     private var pendingSave: Task<Void, Never>?
+    private var latestSaveFailed = false
+    private(set) var persistedDraft: Prompt14OnboardingDraft?
+    var onPersistedDraftChange: ((Prompt14OnboardingDraft, Prompt14OnboardingDraft?) -> Void)?
 
     init(
         store: Prompt14CycleOnboardingStore = .shared,
@@ -25,7 +28,10 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
 
     func load() async {
         do {
-            draft = try await store.snapshot()
+            let saved = try await store.snapshot()
+            draft = saved
+            publishPersistedDraft(saved)
+            latestSaveFailed = false
             isLoading = false
         } catch {
             errorMessage = "your cycle setup couldn’t be opened right now ♡"
@@ -373,8 +379,11 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
 
     func finish() async -> Bool {
         await waitForPendingSaves()
+        guard !latestSaveFailed else { return false }
         do {
-            draft = try await store.complete(calendar: calendar)
+            let saved = try await store.complete(calendar: calendar)
+            draft = saved
+            publishPersistedDraft(saved)
             return true
         } catch {
             errorMessage = "your setup is safe, but Fruitfolio couldn’t finish saving it yet ♡"
@@ -422,12 +431,26 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
         enqueueSave(copy, message: "your answer couldn’t be saved right now ♡")
     }
 
+    private func publishPersistedDraft(_ saved: Prompt14OnboardingDraft) {
+        let previous = persistedDraft
+        persistedDraft = saved
+        onPersistedDraftChange?(saved, previous)
+    }
+
     private func enqueueSave(_ copy: Prompt14OnboardingDraft, message: String) {
         let previous = pendingSave
         pendingSave = Task {
             await previous?.value
-            do { try await store.replaceDraft(copy) }
-            catch { self.errorMessage = message }
+            do {
+                try await store.replaceDraft(copy)
+                let saved = try await store.snapshot()
+                publishPersistedDraft(saved)
+                latestSaveFailed = false
+                errorMessage = nil
+            } catch {
+                latestSaveFailed = true
+                errorMessage = message
+            }
         }
     }
 }

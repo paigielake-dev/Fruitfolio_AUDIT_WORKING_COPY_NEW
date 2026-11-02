@@ -67,13 +67,16 @@ struct Prompt14CycleOnboardingView: View {
         }
         .accessibilityIdentifier("cycle-tracker-entry")
         .task {
+            // Shared health context reflects confirmed local persistence, not
+            // an optimistic draft whose write might subsequently fail.
+            model.onPersistedDraftChange = { [contextStore] saved, previous in
+                contextStore.syncFromCycleOnboarding(saved, previous: previous)
+            }
             await model.load()
             model.mergeSharedContextIfNeeded(contextStore.context)
-            contextStore.syncFromCycleOnboarding(model.draft)
             if let editingStep { model.beginEditing(editingStep) }
         }
         .onChange(of: model.draft) { oldDraft, newDraft in
-            contextStore.syncFromCycleOnboarding(newDraft, previous: oldDraft)
             if let editingStep, oldDraft.step == editingStep, newDraft.step != editingStep {
                 Task {
                     await model.waitForPendingSaves()
@@ -479,649 +482,576 @@ struct Prompt14CycleOnboardingView: View {
                             "usual BBT measurement time",
                             selection: Binding(
                                 get: { model.selectedBBTTime },
-                                set: { model.setBBTTime($0) }
-                            ),
-                            displayedComponents: .hourAndMinute
-                        )
-                        .labelsHidden()
-                        .tint(Prompt14Palette.burgundy)
-
-                        Button("skip") { model.setBBTTime(nil) }
-                            .font(Prompt14Type.interface)
-                            .foregroundStyle(Prompt14Palette.burgundy)
-                            .frame(minHeight: 44)
-                    }
-                    .padding(.top, 4)
-
-                    Prompt14BBTInfo()
-                }
-
-                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
-                    .disabled(!bbtCanContinue)
-                    .opacity(bbtCanContinue ? 1 : 0.82)
-                Prompt14SkipButton { model.skipCurrentStep() }
-            }
-        }
+         …20935 tokens truncated…lied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-010",
+      "requirement": "Existing user data.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:166",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-011",
+      "requirement": "Research notes.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:174",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-012",
+      "requirement": "Scientific claims.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:175",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-013",
+      "requirement": "Supporting sources.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:176",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-014",
+      "requirement": "Citation metadata.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:177",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-015",
+      "requirement": "Topic classifications.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:178",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-016",
+      "requirement": "Approved educational explanations.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:179",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-017",
+      "requirement": "Content revisions.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:180",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-018",
+      "requirement": "Fruit spawning.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:184",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-019",
+      "requirement": "Fruit classification.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:185",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-020",
+      "requirement": "Catch detection.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:186",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-021",
+      "requirement": "Scoring.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:187",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-022",
+      "requirement": "Difficulty mechanics.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:188",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-023",
+      "requirement": "Obstacles.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:189",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-024",
+      "requirement": "Star passes.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:190",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-025",
+      "requirement": "Round completion.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:191",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-026",
+      "requirement": "Game-state transitions.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:192",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-027",
+      "requirement": "Stable research ID.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:200",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-028",
+      "requirement": "Content version.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:201",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-029",
+      "requirement": "Topic classification.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:202",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-030",
+      "requirement": "Approved scientific content.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:203",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-031",
+      "requirement": "Supporting source identifiers.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:204",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-032",
+      "requirement": "Citation metadata.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:205",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-033",
+      "requirement": "Source publication details.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:206",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-034",
+      "requirement": "Revision metadata.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:207",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-035",
+      "requirement": "Validation status.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:208",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-20261102-04-036",
+      "requirement": "Retirement or supersession status where appropriate.",
+      "origin": "New explicit founder addition; supplements original478 without renumbering",
+      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:209",
+      "acceptanceStatus": "PARTIAL",
+      "implementationLocations": [
+        "Tools/manage_research_snapshot.py",
+        "Delivery/RESEARCH_UPDATE_WORKFLOW.md",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "testsPerformed": [
+        "Six offline Python tooling tests; original unchanged5477-note package structural validation."
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log"
+      ],
+      "actualResult": "Local build-time publication/archive/rollback tooling implemented and tested; exact requirement-specific iOS update, saved-fact, research-quality and retrieval acceptance remains unverified. No runtime distribution or clinical approval implied."
+    },
+    {
+      "requirementID": "SUP-EDUCATION-STRUCTURE-001",
+      "requirement": "Pregnancy and contextual science educational payloads must remain associated with the requested topic and usable source identifiers; malformed or cross-topic payloads must fail closed.",
+      "acceptanceStatus": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyResearchBridge.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ResearchBridge.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViewModel.swift"
+      ],
+      "supportingEvidence": [
+        "FruitfolioTests/EducationalContentBoundaryTests.swift"
+      ],
+      "actualResult": "Five XCTest cases added, not executed. Closures and view models reject mismatched content, blank titles/bodies/source identifiers, duplicate source identifiers and invalid section associations. Structural preflight does not verify source approval or scientific accuracy. Default unavailable providers and unconnected action callbacks remain a separate PARTIAL production-integration gap; no clinical content was invented."
+    },
+    {
+      "requirementID": "SUP-CYCLE-SETUP-WRITE-001",
+      "requirement": "Cycle setup answers must not report failed writes as saved, expose uncommitted snapshots, or lose later edits through actor reentrancy.",
+      "acceptanceStatus": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "relevantSourceFiles": [
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingStore.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+      ],
+      "supportingEvidence": [
+        "FruitfolioTests/CycleSetupPersistenceSafetyTests.swift"
+      ],
+      "actualResult": "Added serialized, cancellation-aware access and rollback of the in-memory draft on failed writes. Five tests exercise write failure, blocked persistence/concurrent edits/snapshots, cancellation, and actual shared-context synchronization only after a successful save. Failed optimistic answers cannot alter shared health context; dismissing an error cannot allow completion of an older draft. Not executed in Xcode. Cross-file reconciliation with Prompt13 remains non-atomic if one persistence layer fails after the other has saved; this change does not claim a two-file transaction."
+    },
+    {
+      "requirementID": "SUP-EXPORT-LIFECYCLE-001",
+      "requirement": "Export preparation must not open a destination after navigation away, publish a cancelled/stale document, or mix later MainActor health/game edits into an already captured snapshot.",
+      "acceptanceStatus": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "relevantSourceFiles": [
+        "Fruitfolio/Privacy Settings/FruitfolioExportPreparation.swift",
+        "Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift",
+        "Fruitfolio/Privacy Settings/FruitfolioPersonalDataExport.swift"
+      ],
+      "supportingEvidence": [
+        "FruitfolioTests/ExportPreparationLifecycleTests.swift",
+        "FruitfolioTests/ExportSnapshotConsistencyTests.swift"
+      ],
+      "actualResult": "Added cancellable request-owned preparation; Back/real disappearance cancels preparation, while native Files presentation remains intact. Late cancelled results cannot replace the active document. MainActor domain values are copied before awaiting cycle/setup snapshots. Four new tests cover cancellation, replacement, error and a deliberately blocked cycle-file read with later health/game edits. Not executed on Mac. Existing saved-file byte verification and Cancel/no-success behavior are unchanged.",
+      "limitations": "This freezes MainActor data at request time; separately actor-owned cycle/setup snapshots are still individually read and are not a cross-file database transaction."
     }
-
-    private var bbtCanContinue: Bool {
-        guard let choice = model.draft.bbtTrackingChoice else { return false }
-        if choice == .notRightNow || choice == .skipped { return true }
-        return model.draft.bbtUnit != nil
-    }
-
-    private var cervicalFluidSetup: some View {
-        Prompt14QuestionCard(title: "you can optionally log cervical-fluid observations too ✿") {
-            VStack(spacing: 16) {
-                Image("symptom_cervical_fluid")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 78, height: 78)
-                    .accessibilityHidden(true)
-
-                Text("Fruitfolio records what you observe so you can look back at how it changes over time.")
-                    .font(Prompt14Type.body)
-                    .foregroundStyle(Prompt14Palette.burgundy)
-                    .multilineTextAlignment(.center)
-
-                WatercolorPrimaryButton(label: "got it ♡", localizationKey: "got it ♡") {
-                    model.acknowledgeCervicalFluid()
-                }
-                Prompt14SkipButton { model.skipCurrentStep() }
-            }
-        }
-    }
-
-    private var completion: some View {
-        VStack(spacing: 18) {
-            Prompt14SproutCompletionArt()
-
-            Prompt14PeachMessage(
-                text: "all set! Fruitfolio will start with what you know and adjust as you log more. ♡"
-            )
-
-            WatercolorPrimaryButton(label: "open my cycle tracker", localizationKey: "open my cycle tracker") {
-                Task {
-                    if await model.finish() {
-                        withAnimation(motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24)) {
-                            trackerReady = true
-                        }
-                    }
-                }
-            }
-            .frame(maxWidth: 320)
-        }
-        .padding(.top, 22)
-    }
-}
-
-private struct Prompt14ReadyState: View {
-    let onBack: () -> Void
-
-    var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                BackControl(action: onBack)
-                Spacer()
-            }
-
-            Spacer(minLength: 32)
-
-            Image("decor_sprout")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 86, height: 86)
-                .accessibilityHidden(true)
-
-            Text("your cycle picture is ready ♡")
-                .font(Prompt14Type.title)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .multilineTextAlignment(.center)
-                .accessibilityAddTraits(.isHeader)
-
-            Prompt14PeachMessage(
-                text: "start wherever you are! :-) your little cycle picture will fill in as you log."
-            )
-
-            Text("your setup is saved locally. the tracker can build from what you actually supplied without filling in missing pieces.")
-                .font(Prompt14Type.body)
-                .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 18)
-
-            Spacer()
-        }
-        .frame(maxWidth: 560)
-        .padding(.horizontal, 22)
-        .padding(.top, 8)
-        .padding(.bottom, 28)
-        .frame(maxWidth: .infinity)
-    }
-}
-
-private struct Prompt14QuestionCard<Content: View>: View {
-    let title: String
-    var helper: String? = nil
-    var eyebrow: String? = nil
-    @ViewBuilder let content: Content
-
-    init(
-        title: String,
-        helper: String? = nil,
-        eyebrow: String? = nil,
-        @ViewBuilder content: () -> Content
-    ) {
-        self.title = title
-        self.helper = helper
-        self.eyebrow = eyebrow
-        self.content = content()
-    }
-
-    var body: some View {
-        VStack(spacing: 16) {
-            if let eyebrow {
-                Text(eyebrow)
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.72))
-            }
-
-            Text(title)
-                .font(Prompt14Type.question)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .multilineTextAlignment(.center)
-                .accessibilityAddTraits(.isHeader)
-
-            if let helper {
-                Text(helper)
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.76))
-                    .multilineTextAlignment(.center)
-            }
-
-            content
-        }
-        .padding(.top, 4)
-    }
-}
-
-private struct Prompt14SelectionButton: View {
-    let label: String
-    let selected: Bool
-    var compact: Bool = false
-    let action: () -> Void
-
-    @EnvironmentObject private var motionPreferences: MotionPreferences
-    @EnvironmentObject private var audioManager: AudioManager
-
-    var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            HStack(spacing: 9) {
-                Text(label)
-                    .font(Prompt14Type.interface)
-                    .foregroundStyle(Prompt14Palette.burgundy)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-
-                if selected {
-                    Image("control_check")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 18, height: 18)
-                        .accessibilityHidden(true)
-                }
-            }
-            .padding(.horizontal, compact ? 10 : 16)
-            .padding(.vertical, compact ? 10 : 12)
-            .frame(maxWidth: .infinity, minHeight: 48)
-            .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(selected ? Prompt14Palette.peachWash : Prompt14Palette.creamWash)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(Prompt14Palette.burgundy.opacity(selected ? 0.72 : 0.24), lineWidth: selected ? 1.5 : 1)
-            )
-            .contentShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        }
-        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-        .accessibilityLabel(label)
-        .accessibilityValue(selected ? "selected" : "not selected")
-        .accessibilityAddTraits(selected ? .isSelected : [])
-    }
-}
-
-private struct Prompt14SkipButton: View {
-    let action: () -> Void
-
-    var body: some View {
-        Button("skip") { action() }
-            .font(Prompt14Type.interface)
-            .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
-            .frame(minWidth: 88, minHeight: 44)
-            .accessibilityHint("Leaves this answer unknown")
-    }
-}
-
-private struct Prompt14PeachMessage: View {
-    let text: String
-
-    var body: some View {
-        HStack(alignment: .center, spacing: 12) {
-            Image("fruit_peach_soft")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 68, height: 68)
-                .accessibilityLabel("Peach")
-
-            Text(text)
-                .font(Prompt14Type.body)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .multilineTextAlignment(.leading)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Prompt14Palette.creamWash.opacity(0.92))
-                )
-        }
-        .frame(maxWidth: 420)
-        .accessibilityElement(children: .combine)
-    }
-}
-
-private struct Prompt14SeedProgress: View {
-    let step: Prompt14OnboardingStep
-
-    private var progress: Double {
-        let ordered: [Prompt14OnboardingStep] = [
-            .intro, .latestPeriod, .currentPeriod, .periodEnd, .previousHistory,
-            .subjectiveRegularity, .cycleAffectingContext, .recentContext,
-            .trackingPreferences, .fertilityEstimates, .bbtSetup,
-            .cervicalFluidSetup, .complete
-        ]
-        guard let index = ordered.firstIndex(of: step) else { return 0 }
-        return Double(index) / Double(max(ordered.count - 1, 1))
-    }
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            Image("decor_seed")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 34, height: 34)
-                .opacity(step == .complete ? 0 : 1)
-                .scaleEffect(0.9 + progress * 0.12)
-
-            if progress > 0.44 && step != .complete {
-                Capsule()
-                    .fill(Prompt14Palette.sage.opacity(0.55))
-                    .frame(width: 3, height: 7 + (progress * 8))
-                    .offset(y: -22)
-                    .accessibilityHidden(true)
-            }
-
-            if step == .complete {
-                Image("decor_sprout")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 46, height: 46)
-            }
-        }
-        .frame(height: 50)
-        .accessibilityHidden(true)
-    }
-}
-
-private struct Prompt14SproutCompletionArt: View {
-    @EnvironmentObject private var motionPreferences: MotionPreferences
-    @State private var revealed = false
-
-    var body: some View {
-        ZStack {
-            Image("decor_seed")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 52, height: 52)
-                .opacity(revealed ? 0 : 1)
-
-            Image("decor_sprout")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 92, height: 92)
-                .opacity(revealed ? 1 : 0)
-                .scaleEffect(revealed ? 1 : 0.74)
-
-            if revealed {
-                Text("✦")
-                    .font(.system(size: 16, weight: .regular))
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.7))
-                    .offset(x: 45, y: -38)
-                    .accessibilityHidden(true)
-            }
-        }
-        .frame(height: 104)
-        .accessibilityLabel("Watercolor seed growing into a sprout")
-        .onAppear {
-            if motionPreferences.reduceMotionActive {
-                withAnimation(.easeOut(duration: 0.18)) { revealed = true }
-            } else {
-                withAnimation(.spring(response: 1.2, dampingFraction: 0.78)) { revealed = true }
-            }
-        }
-    }
-}
-
-private struct Prompt14SpottingInfo: View {
-    @State private var expanded = false
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Button {
-                expanded.toggle()
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "info.circle")
-                        .accessibilityHidden(true)
-                    Text("spotting info")
-                }
-                .font(Prompt14Type.helper)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .frame(minHeight: 44)
-            }
-            .accessibilityLabel("Spotting information")
-
-            if expanded {
-                Text("spotting is lighter bleeding that can happen outside your full menstrual flow. for cycle tracking, choose the first day your full menstrual bleeding began — not light spotting.")
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy)
-                    .multilineTextAlignment(.center)
-                    .padding(14)
-                    .background(
-                        RoundedRectangle(cornerRadius: 16, style: .continuous)
-                            .fill(Prompt14Palette.creamWash)
-                    )
-                    .transition(.opacity)
-            }
-        }
-    }
-}
-
-private struct Prompt14BBTInfo: View {
-    @State private var expanded = false
-
-    var body: some View {
-        VStack(spacing: 6) {
-            Button("BBT info") { expanded.toggle() }
-                .font(Prompt14Type.helper)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .frame(minHeight: 44)
-                .accessibilityLabel("Basal body temperature information")
-            if expanded {
-                Text("BBT is usually measured after your longest stretch of sleep and before getting up or becoming active.")
-                    .font(Prompt14Type.helper)
-                    .foregroundStyle(Prompt14Palette.burgundy)
-                    .multilineTextAlignment(.center)
-                    .padding(12)
-                    .background(RoundedRectangle(cornerRadius: 16).fill(Prompt14Palette.creamWash))
-            }
-        }
-    }
-}
-
-private struct Prompt14HistoryRow: View {
-    let date: Prompt13LocalDate
-    let onEdit: () -> Void
-    let onRemove: () -> Void
-
-    var body: some View {
-        HStack(spacing: 8) {
-            Text(Prompt14DateFormatting.long(date))
-                .font(Prompt14Type.interface)
-                .foregroundStyle(Prompt14Palette.burgundy)
-            Spacer()
-            Button("edit", action: onEdit)
-                .font(Prompt14Type.helper)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .frame(minWidth: 44, minHeight: 44)
-            Button("remove", action: onRemove)
-                .font(Prompt14Type.helper)
-                .foregroundStyle(Prompt14Palette.burgundy)
-                .frame(minWidth: 56, minHeight: 44)
-        }
-        .padding(.horizontal, 12)
-        .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Prompt14Palette.creamWash.opacity(0.75))
-        )
-    }
-}
-
-struct Prompt14Calendar: View {
-    @Binding var displayedMonth: Date
-    let selected: Prompt13LocalDate?
-    let minimum: Prompt13LocalDate?
-    let maximum: Prompt13LocalDate?
-    let isDateEnabled: (Prompt13LocalDate) -> Bool
-    let onSelect: (Date) -> Void
-
-    private let calendar = Calendar.autoupdatingCurrent
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 2), count: 7)
-
-    init(
-        displayedMonth: Binding<Date>,
-        selected: Prompt13LocalDate?,
-        minimum: Prompt13LocalDate?,
-        maximum: Prompt13LocalDate?,
-        isDateEnabled: @escaping (Prompt13LocalDate) -> Bool,
-        onSelect: @escaping (Date) -> Void
-    ) {
-        _displayedMonth = displayedMonth
-        self.selected = selected
-        self.minimum = minimum
-        self.maximum = maximum
-        self.isDateEnabled = isDateEnabled
-        self.onSelect = onSelect
-    }
-
-    var body: some View {
-        VStack(spacing: 10) {
-            HStack {
-                Button { changeMonth(-1) } label: {
-                    Image("control_previous")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                }
-                .frame(width: 44, height: 44)
-                .accessibilityLabel("Previous month")
-
-                Spacer()
-
-                Text(monthTitle)
-                    .font(Prompt14Type.interface)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(0.82))
-
-                Spacer()
-
-                Button { changeMonth(1) } label: {
-                    Image("control_next")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 28)
-                }
-                .frame(width: 44, height: 44)
-                .accessibilityLabel("Next month")
-                .disabled(!canMoveForward)
-                .opacity(canMoveForward ? 1 : 0.34)
-            }
-
-            LazyVGrid(columns: columns, spacing: 5) {
-                ForEach(weekdaySymbols, id: \.self) { symbol in
-                    Text(symbol)
-                        .font(Prompt14Type.calendarWeekday)
-                        .foregroundStyle(Prompt14Palette.burgundy.opacity(0.62))
-                        .frame(maxWidth: .infinity)
-                }
-
-                ForEach(Array(monthCells.enumerated()), id: \.offset) { _, value in
-                    if let value {
-                        Prompt14CalendarDay(
-                            value: value,
-                            selected: selected == value.local,
-                            enabled: isEnabled(value.local)
-                        ) {
-                            onSelect(value.date)
-                        }
-                    } else {
-                        Color.clear.frame(height: 42)
-                    }
-                }
-            }
-        }
-        .padding(14)
-        .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(Prompt14Palette.calendarPaper)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(Prompt14Palette.burgundy.opacity(0.13), lineWidth: 1)
-                )
-        )
-    }
-
-    private var monthTitle: String {
-        let formatter = DateFormatter()
-        formatter.locale = .autoupdatingCurrent
-        formatter.calendar = calendar
-        formatter.dateFormat = "LLLL yyyy"
-        return formatter.string(from: displayedMonth).lowercased()
-    }
-
-    private var weekdaySymbols: [String] {
-        let symbols = calendar.veryShortStandaloneWeekdaySymbols
-        let first = max(0, calendar.firstWeekday - 1)
-        return (Array(symbols[first...]) + Array(symbols[..<first])).map { $0.lowercased() }
-    }
-
-    fileprivate struct CellValue {
-        let date: Date
-        let local: Prompt13LocalDate
-        let day: Int
-    }
-
-    private var monthCells: [CellValue?] {
-        guard let monthInterval = calendar.dateInterval(of: .month, for: displayedMonth),
-              let dayRange = calendar.range(of: .day, in: .month, for: displayedMonth) else { return [] }
-        let first = monthInterval.start
-        let weekday = calendar.component(.weekday, from: first)
-        let offset = (weekday - calendar.firstWeekday + 7) % 7
-        var cells: [CellValue?] = Array(repeating: nil, count: offset)
-        for day in dayRange {
-            guard let date = calendar.date(byAdding: .day, value: day - 1, to: first),
-                  let local = try? Prompt13LocalDate(date, calendar: calendar) else { continue }
-            cells.append(CellValue(date: date, local: local, day: day))
-        }
-        return cells
-    }
-
-    private func isEnabled(_ local: Prompt13LocalDate) -> Bool {
-        if let minimum, local < minimum { return false }
-        if let maximum, local > maximum { return false }
-        return isDateEnabled(local)
-    }
-
-    private var canMoveForward: Bool {
-        guard let next = calendar.date(byAdding: .month, value: 1, to: displayedMonth) else { return false }
-        let currentMonth = calendar.dateComponents([.year, .month], from: Date())
-        let nextMonth = calendar.dateComponents([.year, .month], from: next)
-        guard let cy = currentMonth.year, let cm = currentMonth.month,
-              let ny = nextMonth.year, let nm = nextMonth.month else { return true }
-        return (ny, nm) <= (cy, cm)
-    }
-
-    private func changeMonth(_ delta: Int) {
-        if let value = calendar.date(byAdding: .month, value: delta, to: displayedMonth) {
-            displayedMonth = value
-        }
-    }
-}
-
-private struct Prompt14CalendarDay: View {
-    let value: Prompt14Calendar.CellValue
-    let selected: Bool
-    let enabled: Bool
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            ZStack {
-                if selected {
-                    Image("cycle_day_circle")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 38, height: 38)
-                        .accessibilityHidden(true)
-                }
-                Text("\(value.day)")
-                    .font(Prompt14Type.calendarDay)
-                    .foregroundStyle(Prompt14Palette.burgundy.opacity(enabled ? 1 : 0.32))
-            }
-            .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(CutePopButtonStyle())
-        .disabled(!enabled)
-        .accessibilityLabel(Prompt14DateFormatting.long(value.local))
-        .accessibilityAddTraits(selected ? .isSelected : [])
-    }
-}
-
-private enum Prompt14DateFormatting {
-    static func long(_ date: Prompt13LocalDate) -> String {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = calendar.timeZone
-        components.year = date.year
-        components.month = date.month
-        components.day = date.day
-        components.hour = 12
-        guard let value = calendar.date(from: components) else { return date.description }
-        let formatter = DateFormatter()
-        formatter.calendar = calendar
-        formatter.timeZone = calendar.timeZone
-        formatter.locale = .autoupdatingCurrent
-        formatter.dateStyle = .long
-        return formatter.string(from: value).lowercased()
-    }
-}
-
-private extension Prompt13LocalDate {
-    var isFutureRelativeToToday: Bool {
-        guard let today = try? Prompt13LocalDate(Date(), calendar: .autoupdatingCurrent) else { return false }
-        return self > today
-    }
-}
-
-private enum Prompt14Palette {
-    static let burgundy = DesignTokens.ColorToken.primaryBurgundy
-    static let paper = Color(red: 0.986, green: 0.956, blue: 0.887)
-    static let calendarPaper = Color(red: 0.995, green: 0.975, blue: 0.925)
-    static let creamWash = Color(red: 0.995, green: 0.968, blue: 0.900)
-    static let peachWash = Color(red: 0.965, green: 0.793, blue: 0.718).opacity(0.52)
-    static let sage = Color(red: 0.51, green: 0.60, blue: 0.43)
-}
-
-private enum Prompt14Type {
-    static let title = Font.custom("Chalkboard SE", size: 30, relativeTo: .largeTitle).weight(.semibold)
-    static let question = Font.custom("Chalkboard SE", size: 22, relativeTo: .title2).weight(.semibold)
-    static let body = Font.custom("Chalkboard SE", size: 16, relativeTo: .body)
-    static let helper = Font.custom("Chalkboard SE", size: 13, relativeTo: .footnote)
-    static let interface = Font.custom("Chalkboard SE", size: 15, relativeTo: .body).weight(.medium)
-    static let calendarDay = Font.custom("Chalkboard SE", size: 14, relativeTo: .body)
-    static let calendarWeekday = Font.custom("Chalkboard SE", size: 11, relativeTo: .caption)
+  ],
+  "additional20261102": {
+    "source": "Specification/Founder_Additional_Requirements_2026-11-02.txt",
+    "uniqueChecklistItemsAdded": 72,
+    "countsByWorkstream": {
+      "1": 10,
+      "2": 18,
+      "3": 8,
+      "4": 36
+    },
+    "pendingNarrativeRequirementsAlsoBinding": true
+  }
 }
