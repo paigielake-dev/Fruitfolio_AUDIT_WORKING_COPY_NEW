@@ -218,6 +218,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                                            topic: normalized, difficulty: requestedDifficulty) else { return }
             guard q.isPlayable, q.normalizedTopic == normalized,
                   q.educationalDifficulty == requestedDifficulty else { throw Prompt28ResearchError.invalidQuestion }
+            guard q.hasVerifiedEvidenceSnapshot else { throw Prompt28ResearchError.sourceValidationFailed }
             currentQuestion = q
             selectedAnswerID = nil
             store.recordQuestion(q.id, topic: normalized)

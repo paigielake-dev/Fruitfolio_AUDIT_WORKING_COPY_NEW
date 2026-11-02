@@ -120,13 +120,27 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let createdAt: Date
     var evidenceSnapshot: Prompt28QuestionEvidence? = nil
 
-    var verifiedEducationalFacts: [Prompt28EducationalFactSnapshot]? {
+    var hasVerifiedEvidenceSnapshot: Bool {
         guard let evidence = evidenceSnapshot,
+              !evidence.evidenceID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              !contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              Set(sourceIDs).count == sourceIDs.count,
+              sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }),
               evidence.originalPassage == explanation,
               evidence.packageVersion == contentVersion,
               !evidence.sources.isEmpty,
+              Set(evidence.sources.map(\.sourceID)).count == evidence.sources.count,
               Set(evidence.sources.map(\.sourceID)) == Set(sourceIDs),
-              evidence.sources.allSatisfy(\.isApprovedForDisplay),
+              evidence.sources.allSatisfy({ source in
+                  source.isApprovedForDisplay
+                      && !source.sourceVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                      && !source.contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+              }) else { return false }
+        return true
+    }
+
+    var verifiedEducationalFacts: [Prompt28EducationalFactSnapshot]? {
+        guard hasVerifiedEvidenceSnapshot, let evidence = evidenceSnapshot,
               !FruitfolioEmotionalBeat.allCases.flatMap({ FruitfolioKaomojiSystem.approvedForms(for: $0) }).contains(where: explanation.contains)
         else { return nil }
         return explanation.components(separatedBy: "\n\n").enumerated().map { index, paragraph in
@@ -137,8 +151,19 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
 
     var isPlayable: Bool {
         answerOptions.count >= 2
+            && Set(answerOptions.map(\.id)).count == answerOptions.count
+            && Set(answerOptions.map(\.text)).count == answerOptions.count
+            && answerOptions.allSatisfy({
+                !$0.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            })
             && answerOptions.contains(where: { $0.id == correctAnswerID })
+            && !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !explanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !sourceIDs.isEmpty
+            && Set(sourceIDs).count == sourceIDs.count
+            && sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !goodFruitIDs.isEmpty
             && !badFruitIDs.isEmpty
