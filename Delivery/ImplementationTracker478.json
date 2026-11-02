@@ -16820,28 +16820,31 @@
       "originalReference": "Part 5 / 5A. Settings and audio / 222",
       "sourceLine": 529,
       "prompt1BSection": {
-        "candidateSection": "6B — Individual audio preference changes",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "exactSection": "6B — Individual audio preference changes; four independent original-art volume controls",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Fruitfolio/Global Controls/FruitfolioArtworkVolumeSlider.swift"
+        "FruitfolioUITests/SettingsVolumeUITests.swift"
       ],
       "candidateSourceScopes": [
         "Fruitfolio/Settings",
         "Fruitfolio/Account",
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "ALREADY IMPLEMENTED AND VERIFIED",
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PASS",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
       "changesMade": [
         "Original painted track and knob now rendered by a real native UISlider, replacing a custom accessibility representation whose scrubber coordinates were zero. Actual audio volume observer uses newly delivered preference value.",
-        "Preserved original painted artwork in four independently adjustable native UISliders; continuous original track underlay avoids split-track seams."
+        "Preserved original painted artwork in four independently adjustable native UISliders; continuous original track underlay avoids split-track seams.",
+        "Existing original-art four-category controls retained; UI helper reaches each entire slider without dragging unrelated controls. Actual Run61 changed independently, verified restart and global mute. Actual audio-player isolation/mute tests also passed Run66."
       ],
       "testsPerformed": [
         "Run39 SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart actual four native painted controls; real AudioManager tests in the same verified source commit",
-        "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart"
+        "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart",
+        "Run61 SettingsVolumeUITests.testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart PASS",
+        "Run66 AudioLifecycleRuntimeTests category independence/master mute/zero-volume tests PASS"
       ],
       "testResults": [
         {
@@ -16858,7 +16861,9 @@
         {
           "result": "FAIL",
           "scope": "Actual Run50 SettingsVolumeUITests first slider adjustment, source 7ac5a9e; no claim that later journey steps ran"
-        }
+        },
+        "Run61 SettingsVolumeUITests.testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart PASS",
+        "Run66 AudioLifecycleRuntimeTests category independence/master mute/zero-volume tests PASS"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run39/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
@@ -16866,11 +16871,12 @@
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
-        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Volumes/Visual/SettingsVolumes/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json"
       ],
-      "remainingIssues": [
-        "Actual Run50 native music-slider value remained unchanged after synthesized drag. Bidirectional complete-viewport test-helper correction requires actual rerun; later category/master/restart steps were not reached."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -16890,21 +16896,25 @@
         {
           "baseline": "Before actual Run50 native music-slider adjustment failure",
           "status": "PASS"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Add or verify separately adjustable volume controls for music, rain, sound effects, and typing.",
       "sourceSection": {
-        "candidateSection": "6B — Individual audio preference changes",
-        "exactCrossReferenceStatus": "Reviewed corresponding authoritative Prompt1B text; retained original numbered breakdown reference"
+        "exactSection": "6B — Individual audio preference changes; four independent original-art volume controls",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "currentImplementationState": "IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "FAIL in latest retrieved UI execution; prior functional/audio unit acceptance retained",
+      "implementationAssessment": "Existing original-art four-category controls retained; UI helper reaches each entire slider without dragging unrelated controls. Actual Run61 changed independently, verified restart and global mute. Actual audio-player isolation/mute tests also passed Run66.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-        "Fruitfolio/Global Controls/FruitfolioArtworkVolumeSlider.swift"
+        "FruitfolioUITests/SettingsVolumeUITests.swift"
       ],
-      "missingImplementation": [],
+      "missingImplementation": null,
       "dependencies": {
         "parts": [
           1,
@@ -16918,9 +16928,10 @@
         {
           "criterion": "Add or verify separately adjustable volume controls for music, rain, sound effects, and typing.",
           "testIDs": [
-            "SettingsVolumeUITests/testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart"
+            "Run61 SettingsVolumeUITests.testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart PASS",
+            "Run66 AudioLifecycleRuntimeTests category independence/master mute/zero-volume tests PASS"
           ],
-          "assessment": "Actual named runtime tests and separate evidence review; pending work explicitly retained"
+          "assessment": "Actual bounded acceptance at recorded source"
         }
       ],
       "evidenceReferences": [
@@ -16929,10 +16940,13 @@
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run41/SettingsVolumes/visual-review.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run50/Volumes/Build/xcode-settings-volumes-ui-test.log",
-        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md"
+        "Delivery/RUN50_VOLUME_NAVIGATION_DIAGNOSTIC.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Volumes/Build/xcode-settings-volumes-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Volumes/Visual/SettingsVolumes/manifest.json",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL",
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS",
       "historicalEvidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run32/SettingsVolumes/Build/xcode-settings-volumes-ui-test.log"
       ]
@@ -26809,8 +26823,8 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 344",
       "sourceLine": 827,
       "prompt1BSection": {
-        "section": "19M, 19P, 19S and binding FRUIT BASKET — PUDDLE correction",
-        "exactCrossReferenceStatus": "Exact specification text inspected"
+        "exactSection": "19P — Active catch, soft rain",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
@@ -26820,29 +26834,30 @@
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Exact implementation paths inspected",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "ITEM-LEVEL SOURCE AND SPECIFICATION INSPECTED",
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PASS",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
       "changesMade": [
-        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed."
+        "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
+        "Every rainy round includes a puddle while preserving the existing two-obstacle maximum. Actual Run64/66 test exhausts levels 1–8 and rounds 1–48."
       ],
       "testsPerformed": [
         "Prompt28FruitBasketTests/testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle (execution pending)",
-        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)"
+        "Prompt28FruitBasketTests/testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle (execution pending)",
+        "Prompt28FruitBasketTests.testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle PASS"
       ],
       "testResults": [
         {
           "result": "NOT VERIFIED",
           "scope": "Prepared source and tests; syntax parse is not compilation or runtime evidence"
-        }
+        },
+        "Prompt28FruitBasketTests.testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle PASS"
       ],
       "supportingEvidence": [
-        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json"
       ],
-      "remainingIssues": [
-        "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.",
-        "Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -26856,22 +26871,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make rain produce puddle obstacles.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P — Active catch, soft rain",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": "IMPLEMENTED; VERIFICATION PENDING",
-      "implementationAssessment": "Rendered original star indicator on good falling fruit; associated all existing rainy rounds with puddles without exceeding two obstacles; exposed actual puddle crossing resistance with motion-aware visual feedback; retained existing scoring and per-object base fall speed.",
-      "verificationState": "NOT VERIFIED: actual Xcode acceptance pending",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Every rainy round includes a puddle while preserving the existing two-obstacle maximum. Actual Run64/66 test exhausts levels 1–8 and rounds 1–48.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
-      "missingImplementation": "Actual Xcode unit execution, gameplay/screenshot/motion and accessibility acceptance pending.; Remaining Fruit Basket obstacle, storm, catch-settling and full-round requirements are not claimed complete.",
+      "missingImplementation": null,
       "dependencies": {
         "parts": [
           1,
@@ -26886,15 +26905,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make rain produce puddle obstacles.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Prompt28FruitBasketTests.testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle PASS"
+          ],
+          "assessment": "Actual bounded acceptance at recorded source"
         }
       ],
       "evidenceReferences": [
-        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md"
+        "Delivery/FRUIT_BASKET_RAIN_AND_MARKER_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json"
       ],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-345",
@@ -26905,22 +26927,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 345",
       "sourceLine": 829,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Original puddle art has subtle motion with a static Reduced Motion path; actual visual acceptance remains pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -26935,18 +26970,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Animate puddles subtly while preserving the original artwork.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Original puddle art has subtle motion with a static Reduced Motion path; actual visual acceptance remains pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -26961,13 +27006,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Animate puddles subtly while preserving the original artwork.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-346",
@@ -26978,22 +27028,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 346",
       "sourceLine": 831,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Canonical large original contact-card surface and Strawberry render the guarded storm notice; actual screenshot/focus acceptance pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27008,18 +27071,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Display Strawberry’s specified storm popup using the existing large contact-card artwork.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Canonical large original contact-card surface and Strawberry render the guarded storm notice; actual screenshot/focus acceptance pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27034,13 +27107,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Display Strawberry’s specified storm popup using the existing large contact-card artwork.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-347",
@@ -27051,22 +27129,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 347",
       "sourceLine": 833,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Exact founder storm dialogue is used by the real popup and asserted by actual Run64/66 unit execution; displayed visual state remains pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27081,18 +27172,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Include the specified storm dialogue.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Exact founder storm dialogue is used by the real popup and asserted by actual Run64/66 unit execution; displayed visual state remains pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27107,13 +27208,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Include the specified storm dialogue.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/FRUIT_BASKET_STORM_AND_LIFECYCLE.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-348",
@@ -27404,22 +27510,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 351",
       "sourceLine": 841,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Original mirrored branch painted trunk now anchors at the right screen edge; actual visual acceptance pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/BRANCH_CONTACT_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27434,18 +27553,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Position branch obstacles as though growing from the screen edge.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Original mirrored branch painted trunk now anchors at the right screen edge; actual visual acceptance pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27460,13 +27589,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Position branch obstacles as though growing from the screen edge.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/BRANCH_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-352",
@@ -27477,22 +27611,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 352",
       "sourceLine": 843,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Painted centerline contact now produces bounded upward/leftward bounce and normal resumed descent. New real-frame tests pending actual execution."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/BRANCH_CONTACT_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27507,18 +27654,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make fruit bounce off branches and change trajectory.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Painted centerline contact now produces bounded upward/leftward bounce and normal resumed descent. New real-frame tests pending actual execution.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27533,13 +27690,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make fruit bounce off branches and change trajectory.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/BRANCH_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-353",
@@ -27550,23 +27712,36 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 353",
       "sourceLine": 845,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PASS",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357."
       ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "testResults": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -27580,17 +27755,25 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make vines slow good fruit passing through them.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -27606,13 +27789,19 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make vines slow good fruit passing through them.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+            "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+          ],
+          "assessment": "Actual bounded acceptance at recorded source"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-354",
@@ -27623,23 +27812,36 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 354",
       "sourceLine": 847,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PASS",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357."
       ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "testResults": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -27653,17 +27855,25 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make vines slow standalone stars.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -27679,13 +27889,19 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make vines slow standalone stars.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+            "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+          ],
+          "assessment": "Actual bounded acceptance at recorded source"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-355",
@@ -27696,23 +27912,36 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 355",
       "sourceLine": 849,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PASS",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357."
       ],
+      "testsPerformed": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "testResults": [
+        "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+        "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -27726,17 +27955,25 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Prevent bad fruit from using the vine-slowing interaction.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19Q and binding FRUIT BASKET — VINES correction",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Vine resistance now follows the actual rendered image envelope and current field aspect ratio. Actual game-frame test proves good fruit/stars slow only in contact, bad/outside fruit stay at normal speed and immutable base fall speed is preserved. Visual struggle and audible rustle acceptance remain tracked separately as items 356–357.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -27752,13 +27989,19 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Prevent bad fruit from using the vine-slowing interaction.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Prompt28FruitBasketTests.testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent PASS",
+            "Prompt28FruitBasketTests.testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand PASS"
+          ],
+          "assessment": "Actual bounded acceptance at recorded source"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-356",
@@ -27769,22 +28012,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 356",
       "sourceLine": 851,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Real contact-entry events request existing vineRustle once per entry; event behavior passed Run66, actual gameplay audio verification pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27799,18 +28055,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Play rustling audio when appropriate objects contact vines.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Real contact-entry events request existing vineRustle once per entry; event behavior passed Run66, actual gameplay audio verification pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27825,13 +28091,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Play rustling audio when appropriate objects contact vines.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-357",
@@ -27842,22 +28113,35 @@
       "originalReference": "Part 7 / 7C. Weather and obstacles / 357",
       "sourceLine": 853,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Original-art small struggle/rotation/compression accompanies real resistance and is disabled by Reduced Motion. Actual recording pending."
+      ],
+      "testsPerformed": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "testResults": [
+        "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
       ],
       "dependsOnParts": [
         1,
@@ -27872,18 +28156,28 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Make vine resistance visibly believable rather than merely changing an invisible velocity value.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "19P–19S weather and obstacles; latest binding Fruit Basket corrections",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Original-art small struggle/rotation/compression accompanies real resistance and is disabled by Reduced Motion. Actual recording pending.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "missingImplementation": [
+        "Actual required visual/audio/accessibility and current-source acceptance pending."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -27898,13 +28192,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Make vine resistance visibly believable rather than merely changing an invisible velocity value.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64/66 existing game model tests PASS; new source70 branch tests and current visual/audio states NOT VERIFIED"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/VINE_CONTACT_REPAIR.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-358",
@@ -32887,21 +33186,26 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 420",
       "sourceLine": 1017,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
       "implementationStatus": "PARTIAL",
-      "inspectionState": "BLOCKED BY TECHNICAL DEPENDENCY",
-      "changesMade": [],
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished."
+      ],
       "testsPerformed": [
-        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime"
+        "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
       ],
       "testResults": [
         {
@@ -32910,15 +33214,18 @@
           "verifiedSourceCommits": [
             "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a"
           ]
-        }
+        },
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
-        "Delivery/RUN61_VERIFICATION.md"
+        "Delivery/RUN61_VERIFICATION.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
       ],
       "remainingIssues": [
-        "Complete production language-aware post-grounding translation with sufficient safety/quality verification; do not substitute cloud or another model."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependsOnParts": [
         1,
@@ -32943,15 +33250,17 @@
       ],
       "requirementDescription": "Connect the selected language to the Ask translation pipeline.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "The official encoder-decoder runtime and original combined medical fixture now execute successfully, including controlled offline inference. The previous failed-runtime blocker is obsolete. Production post-grounding Ask translation remains gated pending broader quality/language acceptance and integration.",
-      "verificationState": "PARTIAL: scoped actual evidence; remaining acceptance explicitly listed",
-      "existingSourceFiles": [],
+      "implementationAssessment": "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "missingImplementation": [
-        "Core systems are not yet stable, the required medical paragraph fixture fails, and an iPhone-compatible encoder-decoder runtime is not demonstrated. Original official files and diagnostics are preserved."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependencies": {
         "parts": [
@@ -32971,14 +33280,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Connect the selected language to the Ask translation pipeline.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run61/UnitBuild/xcode-unit-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run61/Offline/MADLAD/Offline/actual-offline-verification.json",
-        "Delivery/RUN61_VERIFICATION.md"
+        "Delivery/RUN61_VERIFICATION.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
       ],
       "finalDisposition": "PARTIAL",
       "afterStatus": "PARTIAL"
@@ -33294,8 +33607,8 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 424",
       "sourceLine": 1025,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "relevantSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
@@ -33309,16 +33622,18 @@
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
       "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
       "changesMade": [
-        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator."
+        "Actual official local model passed the original combined warning/measurement/source-1 fixture through sentence/citation boundary preservation and exact French decimal restoration in Run46. Unknown and nonterminal citation relocation and numeric/literal changes are rejected; no weakening of the research validator.",
+        "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished."
       ],
       "testsPerformed": [
         "Checkpoint: actual original Q4/Candle and experimental llama encoder-decoder medical-paragraph fixture",
         "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
-        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt"
+        "TranslationPreservationTests/testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt",
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
       ],
       "testResults": [
         {
@@ -33327,16 +33642,19 @@
           "verifiedSourceCommits": [
             "0435fa3679e43057f163929189ec845dffdbaf40"
           ]
-        }
+        },
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
         "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
       ],
       "remainingIssues": [
-        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependsOnParts": [
         1,
@@ -33361,18 +33679,21 @@
       ],
       "requirementDescription": "Prevent translation from introducing new medical claims.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
       "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
+      "implementationAssessment": "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished.",
       "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [
         "TranslationInvestigation/madlad-candle-probe/src/main.rs",
-        "Tools/repack_madlad_for_llama.py"
+        "Tools/repack_madlad_for_llama.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift",
+        "FruitfolioTests/TranslationPreservationTests.swift",
+        "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests.swift"
       ],
       "missingImplementation": [
-        "Bounded fixture PASS does not verify general clinical entailment, all required languages, arbitrary safety statements, script distinction or device acceptance. Production Ask translation remains gated."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependencies": {
         "parts": [
@@ -33390,15 +33711,19 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Prevent translation from introducing new medical claims.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
       "evidenceReferences": [
         "Fruitfolio_Verification_Evidence/MADLAD/candle-original-paragraph.stdout.json",
         "Fruitfolio_Verification_Evidence/MADLAD/RESULT.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UnitBuild/xcode-unit-test.log",
-        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md"
+        "Delivery/MADLAD_MEDICAL_FIXTURE_REPAIR.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
       ],
       "finalDisposition": "PARTIAL",
       "afterStatus": "PARTIAL"
@@ -33491,24 +33816,35 @@
       "originalReference": "Part 9 / 9D. MADLAD integration / 426",
       "sourceLine": 1029,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished."
+      ],
+      "testsPerformed": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "testResults": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependsOnParts": [
         1,
@@ -33525,18 +33861,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Prevent incomplete translations from appearing complete.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
+      "missingImplementation": [
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -33553,13 +33897,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Prevent incomplete translations from appearing complete.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-427",
@@ -34156,24 +34505,35 @@
       "originalReference": "Part 9 / 9E. Saved content and verification / 433",
       "sourceLine": 1045,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished."
+      ],
+      "testsPerformed": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "testResults": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependsOnParts": [
         1,
@@ -34190,18 +34550,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Preserve citations and metadata.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
+      "missingImplementation": [
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -34218,13 +34586,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Preserve citations and metadata.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-434",
@@ -34235,24 +34608,35 @@
       "originalReference": "Part 9 / 9E. Saved content and verification / 434",
       "sourceLine": 1047,
       "prompt1BSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Core/Localization",
         "Models/MADLAD",
         "TranslationInvestigation"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
+      "sourceMappingStatus": "Relevant implementation and actual evidence inspected",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; implementation retained/corrected",
+      "changesMade": [
+        "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished."
+      ],
+      "testsPerformed": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "testResults": [
+        "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
       ],
       "dependsOnParts": [
         1,
@@ -34269,18 +34653,26 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "November 2 actual Run50/61/62/64/66 reconciliation",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Do not silently overwrite user-authored content with translations.",
       "sourceSection": {
-        "candidateSection": "7.9 Localization/MADLAD (252–410)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSection": "7.9.3–7.9.12 local MADLAD, Ask and saved presentation",
+        "exactCrossReferenceStatus": "Confirmed against authoritative full extracted DOC"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
-      "missingImplementation": null,
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
+      "implementationAssessment": "Preserved literal paragraph/list/header layout outside generation and added eleven-target actual-runtime measurement/citation candidates. Strict validators unchanged. Production Ask medical translation remains gated; semantic review and full app localization are unfinished.",
+      "verificationState": "INCONCLUSIVE",
+      "existingSourceFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioMADLADDocumentTranslator.swift"
+      ],
+      "missingImplementation": [
+        "Actual new fixture outputs, clinical distinctions/uncertainty/safety preservation and app-wide display synchronization not yet accepted."
+      ],
       "dependencies": {
         "parts": [
           1,
@@ -34297,13 +34689,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Do not silently overwrite user-authored content with translations.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Original es/fr/zh/zh_Hant runtime fixtures PASS Run64/66; new eleven-target/layout fixtures pending"
+          ],
+          "assessment": "Recorded partial proof; remaining acceptance not established"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run66/UnitBuild/actual-test-executions.json",
+        "Delivery/TRANSLATION_LAYOUT_AND_MULTILINGUAL_VERIFICATION.md"
+      ],
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-435",
@@ -38662,17 +39059,17 @@
   ],
   "implementationStatePolicy": "IMPLEMENTED / PARTIALLY IMPLEMENTED / NOT IMPLEMENTED / BLOCKED. Null explicitly means not assessed; absence of verification is not evidence that a feature is missing.",
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
-  "implementationPassVerificationNote": "Actual Run61: 528 XCTest executions, 527 PASS/1 physical SKIP/0 FAIL; 25 Swift Testing PASS; controlled offline strict native Ask, official MADLAD and Ask return UI PASS. Newer focused UI and all 478-item acceptance remain incomplete; obsolete incompatible-runtime blockers removed.",
+  "implementationPassVerificationNote": "PASS is scoped to recorded actual evidence and source, not whole-app/final-source acceptance. Actual Run61 full job FAILED with 26 failed executions; volume journey passed. Its exploratory test execution passed but reported 14 unavailable paths, so traversal coverage is NOT VERIFIED.",
   "summary": {
-    "PARTIAL": 121,
-    "PASS": 37,
-    "NOT VERIFIED": 313,
+    "PARTIAL": 130,
+    "PASS": 42,
+    "NOT VERIFIED": 299,
     "BLOCKED": 3,
     "FAIL": 4
   },
   "totalRequirements": 478,
-  "currentSourceCommit": "06b574e3affa1e4f9c21d5b02324543b397e839e",
-  "latestVerifiedUnitCommit": "2b02efa6ee30f0d811298940b1bebb833ad4ec5e",
-  "currentSourceVerification": "Actual Run48: 507 XCTest = 506 PASS, one physical-device SKIP, zero FAIL; 25 Swift Testing PASS; all four Contact/FAQ unfiltered audits PASS. Later source changes pending. Run49 all six saved-citation tests PASS but overall unit FAIL due live-clock fixture; source51 stabilizes fixture without relaxing assertions.",
-  "workingTreeFollowup": "Cycle setup section editing/ordered persistence/shared-context removal, actual inference-thread observation, Ask/Guide/footer text fitting, real native pill text layout and chart-state capture — NOT VERIFIED."
+  "currentSourceCommit": "3f67f201abde93e9b8d41c86a747e9ac79bb9484",
+  "latestVerifiedUnitCommit": "d3d4a81f265620eb4b6952b3ddcf9148e158c026",
+  "currentSourceVerification": "Current source70: branch bounce, account service integrity and translation layout/multilingual additions await exact-source acceptance. Latest retrieved actual unit stage Run66: 533 executions, 532 PASS, one physical SKIP, zero FAIL; 25 Swift Testing PASS. Run64 actual simulator build, controlled offline stage and unsigned generic iPhone Release passed; focused UI underway.",
+  "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures."
 }

@@ -1,3 +1,15 @@
+## November 2 continued implementation (source c0e6020; acceptance pending where stated)
+
+- Restored truthful native painted Button labels while retaining real text bounds; current shared-control rerun diagnostics still under investigation.
+- Made Hub branding use relative Dynamic Type and scrollable minimum-height content; added largest-text reachability/screenshot/audit test.
+- Added exact canonical storm notice, motion-aware puddle and loop-release repair; actual model/lifecycle tests passed Run64.
+- Replaced invisible full-width vine slowdown with original-art field geometry, visible resistance and one-entry rustle events; actual frame tests passed Run66.
+- Anchored original branch artwork at the edge and added contact bounce with unchanged base fall speed; actual acceptance pending.
+- Prevented fake email-only authentication, delay-only sync and local-only remote-delete success. Actual account backend still unavailable; preservation tests queued.
+- Preserved translation paragraph/list/header layout and added eleven-target actual model fixtures; semantic/current-source acceptance pending.
+- Recovered actual full Run50/61 logs and all six Run61 evidence parts; verified SHA/CRC; reconciled tracker to 42 PASS/130 PARTIAL/299 NOT VERIFIED/3 BLOCKED/4 FAIL.
+- Installed actual verified Run61 device/Simulator libraries for both AI runtimes; original model/art/audio/research resources unchanged.
+
 # Current continuation corrections
 
 - Preserved actual Run46 full logs, Run48 failed-element diagnostics and Run50 native Chinese script evidence. Updated all 478 original tracker entries without promoting unexecuted work.

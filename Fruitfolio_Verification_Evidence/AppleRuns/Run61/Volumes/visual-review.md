@@ -1,0 +1,3 @@
+# Actual Run61 volume control review
+
+Reviewed actual iPhone17Pro XCTest screenshot 3630AA27-E05B-4C3C-802A-B382B7E047C5.png and manifest. All four original watercolor line/knob controls are individually visible in the scrolled content, with lowercase labels and unclipped knobs. The actual test changed each independently, verified other values unchanged, restarted, checked persistence, and verified global mute. This is acceptance of item222; audible quality, all iPhone sizes and complete audio acceptance remain separate. The screenshot is a scrolled viewport, not a full-page composition proof.
