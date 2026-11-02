@@ -1,0 +1,19 @@
+{
+  "phase": 5,
+  "recordedAtUTC": "2026-11-02T17:21:40.763342+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-326",
+      "originalBreakdownItem": "Preserve the required order: answer the question \u2192 catch fruit \u2192 reveal basket.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "Question retrieval has a cancellable generation/session/topic/difficulty identity. Leaving or replacing loading, changing topic/difficulty and starting a new request cancel the previous request. Late successes/failures cannot change the new screen or write the wrong topic\u2019s question history. Valid question metadata must match the requested topic/difficulty. Leaving loading returns to usable setup.",
+      "verification": "Three lifecycle tests with deliberately late/noncooperative provider callbacks and actual bundled grounded questions were added. Not executed on Mac. Existing bad-fruit/no-pass termination, exactly-one pass consumption and uncapped star-pass accumulation already exist and were not rewritten.",
+      "evidence": "FruitfolioTests/FruitBasketQuestionLifecycleTests.swift",
+      "remainingIssues": "Run new lifecycle tests and complete actual game UI sequence on founder Mac. These source changes do not establish full gameplay acceptance."
+    }
+  ]
+}

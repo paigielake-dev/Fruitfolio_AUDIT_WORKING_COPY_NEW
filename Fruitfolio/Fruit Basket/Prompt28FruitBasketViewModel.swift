@@ -6,12 +6,19 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var screen: Prompt28ScreenState = .home {
         didSet {
             if oldValue == .catchActive, screen != .catchActive { stopGameplay() }
+            if oldValue == .loading, screen != .loading { cancelQuestionRequest() }
             if screen != .catchActive, screen != .paused { showingStormNotice = false }
         }
     }
     @Published private(set) var showingStormNotice = false
-    @Published var rawTopic = ""
-    @Published var difficulty: Prompt28EducationalDifficulty
+    @Published var rawTopic = "" {
+        didSet {
+            if screen == .loading, engine.normalizeTopic(oldValue) != normalizedTopic { screen = .learningSetup }
+        }
+    }
+    @Published var difficulty: Prompt28EducationalDifficulty {
+        didSet { if oldValue != difficulty, screen == .loading { screen = .learningSetup } }
+    }
     @Published private(set) var roundCollection = Prompt28RoundCollection()
     @Published var currentQuestion: Prompt28Question?
     @Published var selectedAnswerID: String?
@@ -55,6 +62,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     private let researchProvider: any Prompt28ResearchProviding
     private var gameplayTask: Task<Void, Never>?
+    private var questionTask: Task<Prompt28Question, Error>?
+    private var questionRequestID = UUID()
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
@@ -76,6 +85,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let cleanup = gameplayCleanup
         Task { @MainActor in cleanup?() }
         gameplayTask?.cancel()
+        questionTask?.cancel()
         roundCompletionTask?.cancel()
     }
 
@@ -174,39 +184,71 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func loadQuestion() async {
+        cancelQuestionRequest()
         guard store.loadError == nil else {
             message = store.loadError; screen = .error; return
         }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
+        let generation = questionRequestID
+        let expectedSession = session?.id
+        let requestedDifficulty = difficulty
+        let requestedTopic = rawTopic
+        let history = store.questionHistory[normalized] ?? []
+        let provider = researchProvider
         screen = .loading
         message = nil
+        currentQuestion = nil
+        selectedAnswerID = nil
+        let request = Task {
+            try await provider.question(topic: requestedTopic, normalizedTopic: normalized,
+                                        difficulty: requestedDifficulty, excludingQuestionIDs: history)
+        }
+        questionTask = request
+        defer {
+            if questionRequestID == generation {
+                questionTask = nil
+                if Task.isCancelled, screen == .loading { screen = .learningSetup }
+            }
+        }
         do {
-            let q = try await researchProvider.question(
-                topic: rawTopic,
-                normalizedTopic: normalized,
-                difficulty: difficulty,
-                excludingQuestionIDs: store.questionHistory[normalized] ?? []
-            )
-            guard q.isPlayable else { throw Prompt28ResearchError.invalidQuestion }
+            let q = try await withTaskCancellationHandler(operation: { try await request.value },
+                                                         onCancel: { request.cancel() })
+            guard isCurrentQuestionRequest(generation, sessionID: expectedSession,
+                                           topic: normalized, difficulty: requestedDifficulty) else { return }
+            guard q.isPlayable, q.normalizedTopic == normalized,
+                  q.educationalDifficulty == requestedDifficulty else { throw Prompt28ResearchError.invalidQuestion }
             currentQuestion = q
             selectedAnswerID = nil
             store.recordQuestion(q.id, topic: normalized)
             screen = .question
-        } catch let error as Prompt28ResearchError {
-            switch error {
-            case .topicExhausted:
-                screen = .topicExhausted
-            case .unsupportedTopic, .providerUnavailable:
-                screen = .topicUnsupported
-            default:
-                screen = .error
-            }
-            message = error.localizedDescription
         } catch {
-            screen = .error
-            message = "Fruit Basket couldn’t prepare a sourced question right now."
+            guard isCurrentQuestionRequest(generation, sessionID: expectedSession,
+                                           topic: normalized, difficulty: requestedDifficulty) else { return }
+            if let error = error as? Prompt28ResearchError {
+                switch error {
+                case .topicExhausted: screen = .topicExhausted
+                case .unsupportedTopic, .providerUnavailable: screen = .topicUnsupported
+                default: screen = .error
+                }
+                message = error.localizedDescription
+            } else {
+                screen = .error
+                message = "Fruit Basket couldn’t prepare a sourced question right now."
+            }
         }
+    }
+
+    private func cancelQuestionRequest() {
+        questionRequestID = UUID()
+        questionTask?.cancel()
+        questionTask = nil
+    }
+
+    private func isCurrentQuestionRequest(_ id: UUID, sessionID: UUID?, topic: String,
+                                         difficulty requestedDifficulty: Prompt28EducationalDifficulty) -> Bool {
+        !Task.isCancelled && questionRequestID == id && screen == .loading
+            && session?.id == sessionID && normalizedTopic == topic && difficulty == requestedDifficulty
     }
 
     func answer(_ answerID: String) {
@@ -278,6 +320,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func viewWillDisappear() {
+        cancelQuestionRequest()
+        if screen == .loading { screen = .learningSetup }
         stopGameplay()
         if screen == .catchActive { isPaused = true; screen = .paused }
     }
