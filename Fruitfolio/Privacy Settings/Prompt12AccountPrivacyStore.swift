@@ -170,26 +170,10 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func prepareDataExport() throws -> Prompt12DataExportRecord {
-        let scopes: [Prompt12DataScope] = [
-            .account,
-            .savedLibrary,
-            .guideBuilder,
-            .settings,
-            .cycleTracker,
-            .askCache
-        ]
-
-        let summary =
-            "Fruitfolio data export prepared from supported local/account domains."
-
-        let export = Prompt12DataExportRecord(
-            scopes: scopes,
-            summary: summary
-        )
-
-        lastExport = export
-        saveSnapshot()
-        return export
+        // Compatibility preview only. Preparing/exporting data is read-only:
+        // it must not rewrite account snapshots or create a success record.
+        Prompt12DataExportRecord(scopes: Prompt12DataScope.exportedScopes,
+            summary: "Readable JSON scope preview. A completed file requires the explicit system destination and successful readback.")
     }
 
     func deleteAccountAndAssociatedRemoteData() throws {

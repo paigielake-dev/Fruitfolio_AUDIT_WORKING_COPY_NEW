@@ -91,6 +91,7 @@ final class PersonalDataManagementUITests: XCTestCase {
         let success = app.staticTexts["your personal data JSON was exported. keep it somewhere private."]
         XCTAssertTrue(success.waitForExistence(timeout: 30),
             "Success is emitted only after reading the returned real file and checking exact JSON bytes")
+        fruitfolioReachControl(app, success)
         capture(app, "ActualSavedJSONReadBackVerified")
         XCTAssertTrue(app.buttons["data.prepareExport"].exists)
     }

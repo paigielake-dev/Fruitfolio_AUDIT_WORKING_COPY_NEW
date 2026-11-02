@@ -49,13 +49,22 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         )
     }
 
-    func testExportCreatesReadableExportRecord() throws {
-        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+    func testPreparingExportPreviewKeepsStoredAccountRecordsAndDefaultsUnchanged() throws {
+        let suite = "Fruitfolio.ExportPreview.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
         let store = Prompt12AccountPrivacyStore(defaults: defaults)
-
-        let export = try store.prepareDataExport()
-
-        XCTAssertFalse(export.scopes.isEmpty)
-        XCTAssertNotNil(store.lastExport)
+        let before = defaults.persistentDomain(forName: suite) ?? [:]
+        let originalAccount = store.account
+        let originalExport = store.lastExport
+        let preview = try store.prepareDataExport()
+        XCTAssertEqual(preview.scopes, Prompt12DataScope.exportedScopes)
+        XCTAssertFalse(preview.scopes.contains(.askCache))
+        XCTAssertTrue(preview.scopes.contains(.reportedContext))
+        XCTAssertTrue(preview.scopes.contains(.hormoneMeasurements))
+        XCTAssertTrue(preview.scopes.contains(.fruitBasket))
+        XCTAssertEqual(store.account, originalAccount)
+        XCTAssertEqual(store.lastExport, originalExport)
+        XCTAssertTrue(NSDictionary(dictionary: before).isEqual(to: defaults.persistentDomain(forName: suite) ?? [:]))
     }
 }

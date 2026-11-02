@@ -285,8 +285,7 @@ struct Prompt12DataManagementView: View {
                 spacing: 13
             ) {
                 ForEach(
-                    Prompt12DataScope
-                        .allCases
+                    Prompt12DataScope.exportedScopes
                 ) { scope in
                     VStack(
                         alignment: .center,
@@ -480,7 +479,6 @@ struct Prompt12DataManagementView: View {
                 let data = try await FruitfolioPersonalDataExport.capture(account: store.account,
                     username: FruitfolioUsernameStore.shared.username, settings: settings,
                     library: .shared, context: contextStore, hormones: .shared)
-                _ = try store.prepareDataExport()
                 exportDocument = FruitfolioPersonalDataDocument(data: data)
                 showingExportDestination = true
                 message = "your readable JSON is prepared. choose where to save it; nothing is sent automatically."

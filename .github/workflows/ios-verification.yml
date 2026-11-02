@@ -37,6 +37,26 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           FRUITFOLIO_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: python3 Tools/prune_superseded_verification.py cancel
+  recover-original-run80-accessibility:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fruitfolio/prompt-1b-alignment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify and select original immutable Run80 attachments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/recover_run80_accessibility_exports.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Run80_Accessibility_Exports_Recovery
+          path: recovered-run80-accessibility
+          retention-days: 90
   ios:
     runs-on: macos-latest
     timeout-minutes: 240
@@ -265,6 +285,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
           retention-days: 90
       - name: Run unit and native inference tests
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         timeout-minutes: 35
         run: |
           set -o pipefail
