@@ -1,0 +1,5 @@
+# Preserve actual evidence before superseding duplicate attempts
+
+Actual downloaded unit artifacts: Run67 534 executed, 533 PASS/one physical SKIP/zero FAIL; Run68 536 executed, 534 PASS/one SKIP/one failed case containing seven strict preservation assertions; Run69 538 executed, 536 PASS/one SKIP/the same failed case. Both new actual branch-contact/bounce tests passed Run69. No multilingual PASS is inferred; raw rejected-output diagnostics are added in source74.
+
+The queue policy inventories run/job/step/artifact metadata before cancellation and never deletes commits or artifacts. It now supersedes those older duplicate full traversals plus the queued pre-diagnostic export attempt. Their source changes are retained in source74, which reruns the complete suite. Run64's repaired-label health/username evidence and the current source are preserved. Requested Run50/51 remain protected. Cancellation means pending stages are NOT VERIFIED, never PASS. This frees actual macOS capacity for the current modal/export and strict translation diagnoses.
