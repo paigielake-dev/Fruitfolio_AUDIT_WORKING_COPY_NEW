@@ -74,5 +74,7 @@ struct Prompt12OwnershipView: View {
             .scrollIndicators(.hidden)
         }
         .toolbar(.hidden, for: .navigationBar)
+        .task { await store.validateOwnership() }
+        .onDisappear { store.cancelOwnershipValidation() }
     }
 }

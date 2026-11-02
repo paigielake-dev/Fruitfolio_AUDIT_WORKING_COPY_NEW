@@ -323,6 +323,140 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertLessThanOrEqual(viewModel.basketX, 0.90)
     }
 
+    func testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle() {
+        for level in 1...Prompt28FruitBasketEngine.maxGameLevel {
+            for round in 1...48 where engine.weather(level: level, round: round) == .softRain {
+                let obstacles = engine.activeObstacles(level: level, round: round)
+                XCTAssertTrue(obstacles.contains(.puddle), "Rain must create the visible puddle obstacle")
+                XCTAssertLessThanOrEqual(obstacles.count, 2)
+            }
+        }
+    }
+
+    func testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle() throws {
+        let suite = "Prompt28.PuddleExit.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "fixture"),
+            researchProvider: Prompt28UnavailableResearchProvider(), engine: engine)
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy,
+            startingGameLevel: 5, currentRound: 4)
+        model.screen = .catchActive; model.basketX = 0.5
+        model.moveBasket(to: 0.9)
+        XCTAssertTrue(model.basketIsMeetingPuddleResistance)
+        XCTAssertLessThan(model.basketX, 0.9)
+        for _ in 0..<8 { model.moveBasket(to: 0.9) }
+        XCTAssertEqual(model.basketX, 0.9)
+        XCTAssertFalse(model.basketIsMeetingPuddleResistance)
+        model.moveBasket(to: 0.8)
+        XCTAssertEqual(model.basketX, 0.8, "Normal movement resumes outside the puddle")
+        XCTAssertFalse(model.basketIsMeetingPuddleResistance)
+    }
+
+    func testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound() throws {
+        XCTAssertEqual(Prompt28WeatherCopy.stormNotice, "uh oh! a little storm is passing. o__o")
+        let suite = "Prompt28.Storm.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 6, currentRound: 3)
+        model.currentQuestion = fixtureQuestion(); model.beginCatch()
+        XCTAssertTrue(model.showingStormNotice); XCTAssertTrue(model.isPaused)
+        model.moveBasket(to: 0.9); XCTAssertEqual(model.basketX, 0.5, "Storm notice blocks gameplay, not just its visible controls")
+        model.dismissStormNotice(); XCTAssertFalse(model.showingStormNotice); XCTAssertFalse(model.isPaused)
+        model.pause(); model.beginCatch()
+        XCTAssertFalse(model.showingStormNotice, "Retrying the same rainy round must not repeat its notice")
+        XCTAssertFalse(model.isPaused, "A new catch attempt must not inherit a previous pause flag")
+        model.pause()
+    }
+
+    func testDismissingStormAfterBackgroundPauseDoesNotAutomaticallyResumeGameplay() throws {
+        let suite = "Prompt28.StormBackground.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 6, currentRound: 3)
+        model.currentQuestion = fixtureQuestion(); model.beginCatch(); model.sceneBecameInactive()
+        model.dismissStormNotice()
+        XCTAssertEqual(model.screen, .paused); XCTAssertTrue(model.isPaused)
+        XCTAssertFalse(model.showingStormNotice)
+    }
+
+    func testLeavingAnActiveGameCancelsItsLoopAndReleasesTheViewModel() async throws {
+        let suite = "Prompt28.Leave.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        var model: Prompt28FruitBasketViewModel? = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        weak var observed = model
+        model?.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 1)
+        model?.currentQuestion = fixtureQuestion(); model?.beginCatch()
+        await Task.yield() // Let the real loop enter its first suspended tick.
+        model?.viewWillDisappear()
+        XCTAssertEqual(model?.screen, .paused)
+        model = nil
+        try await Task.sleep(nanoseconds: 60_000_000)
+        XCTAssertNil(observed, "A hidden game must not be retained by a still-running 30 Hz loop")
+    }
+
+    func testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand() {
+        let geometry = Prompt28VineContactGeometry(fieldWidth: 344, fieldHeight: 896, level: 3)
+        XCTAssertEqual(geometry.normalizedArtworkBounds.height, 0.15, accuracy: 0.00001)
+        XCTAssertTrue(geometry.contains(x: 0.11, y: 0.54))
+        XCTAssertFalse(geometry.contains(x: 0.70, y: 0.54), "Fruit outside the artwork must fall normally")
+        XCTAssertFalse(geometry.contains(x: 0.11, y: 0.25))
+        XCTAssertFalse(Prompt28VineContactGeometry(fieldWidth: 0, fieldHeight: 0, level: 3).contains(x: 0, y: 0))
+    }
+
+    func testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent() throws {
+        let suite = "Prompt28.Vines.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 2)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 344, height: 896)
+        let good = Prompt28FallingFruit(fruitID: .apple, classification: .good, x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let bad = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let outside = Prompt28FallingFruit(fruitID: .pear, classification: .good, x: 0.7, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let star = Prompt28FallingStar(x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeFruit = [good, bad, outside]; model.activeStars = [star]
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == good.id })).y, 0.5484, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == bad.id })).y, 0.555, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == outside.id })).y, 0.555, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeStars.first).y, 0.5484, accuracy: 0.00001)
+        XCTAssertEqual(model.vineContactCount, 1)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first).fallSpeed, 0.3, "Contact does not rewrite an object's base velocity")
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1.05))
+        XCTAssertEqual(model.vineContactCount, 1, "Rustle must not restart on every 30 Hz frame")
+        model.viewWillDisappear()
+    }
+
+    func testBranchPaintedTrunkMeetsScreenEdgeAndContactDoesNotUseTheWholeImageBox() {
+        let geometry = Prompt28BranchContactGeometry(fieldWidth: 344, fieldHeight: 896)
+        XCTAssertEqual(geometry.point(originalX: 78, originalY: 410).x, 344, accuracy: 0.00001)
+        let contact = geometry.point(originalX: 249, originalY: 257)
+        XCTAssertTrue(geometry.contains(x: contact.x / 344, y: contact.y / 896, radius: 0))
+        XCTAssertFalse(geometry.contains(x: 0.5, y: 0.4, radius: 20))
+        XCTAssertFalse(Prompt28BranchContactGeometry(fieldWidth: 0, fieldHeight: 0).contains(x: 0, y: 0, radius: 20))
+    }
+
+    func testActualBranchContactBouncesFruitUpAndLeftThenResumesItsUnchangedBaseFallSpeed() throws {
+        let suite = "Prompt28.Branch.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 3)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 344, height: 896)
+        let point = Prompt28BranchContactGeometry(fieldWidth: 344, fieldHeight: 896).point(originalX: 249, originalY: 257)
+        let fruit = Prompt28FallingFruit(fruitID: .apple, classification: .good, x: point.x / 344, y: point.y / 896, fallSpeed: 0.3, horizontalDrift: 0.02, rotationDegrees: 0)
+        model.activeFruit = [fruit]
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
+        let deflected = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertLessThan(deflected.x, fruit.x); XCTAssertLessThan(deflected.y, fruit.y)
+        XCTAssertEqual(deflected.fallSpeed, fruit.fallSpeed)
+        for index in 1...8 { model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1 + Double(index) * 0.05)) }
+        let falling = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertGreaterThan(falling.y, deflected.y)
+        XCTAssertLessThan(falling.x, deflected.x)
+        XCTAssertEqual(falling.fallSpeed, fruit.fallSpeed)
+        model.viewWillDisappear()
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",

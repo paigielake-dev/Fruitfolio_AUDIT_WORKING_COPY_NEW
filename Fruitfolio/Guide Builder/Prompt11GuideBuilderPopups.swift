@@ -9,6 +9,8 @@ struct Prompt11CreateGuidePopup: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
+    private enum Field: Hashable { case name, description }
+    @FocusState private var focusedField: Field?
     @State private var name = ""
     @State private var guideDescription = ""
     @State private var style: Prompt10BookStyle = .sage
@@ -18,7 +20,7 @@ struct Prompt11CreateGuidePopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
                 Text("let’s make your guide ♡")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -31,7 +33,7 @@ struct Prompt11CreateGuidePopup: View {
                     .accessibilityHidden(true)
 
                 Text("guide name")
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                    .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -39,7 +41,10 @@ struct Prompt11CreateGuidePopup: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 TextField("ex. my hormone guide", text: $name)
-                    .font(.custom("Chalkboard SE", size: 12.5))
+                    .focused($focusedField, equals: .name)
+                    .submitLabel(.done)
+                    .onSubmit { focusedField = nil }
+                    .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
@@ -55,7 +60,7 @@ struct Prompt11CreateGuidePopup: View {
                     )
 
                 Text("little description")
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                    .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -67,7 +72,10 @@ struct Prompt11CreateGuidePopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
-                .font(.custom("Chalkboard SE", size: 12))
+                .focused($focusedField, equals: .description)
+                .submitLabel(.done)
+                .onSubmit { focusedField = nil }
+                .font(.custom("Chalkboard SE", size: 12, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
@@ -124,7 +132,7 @@ struct Prompt11CreateGuidePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -147,6 +155,18 @@ struct Prompt11CreateGuidePopup: View {
             }
             .padding(.top, 26)
             .padding(.bottom, 18)
+        }
+        .safeAreaInset(edge: .bottom) {
+            if focusedField != nil {
+                HStack {
+                    Spacer()
+                    Button("done") { focusedField = nil }
+                        .frame(minWidth: 44, minHeight: 44)
+                        .accessibilityIdentifier("guide.keyboardDone")
+                }
+                .padding(.horizontal, 20)
+                .background(DesignTokens.ColorToken.backgroundCream)
+            }
         }
         .onAppear {
             audioManager.play(.popupOpen)
@@ -208,14 +228,14 @@ struct Prompt11RenameGuidePopup: View {
                     .accessibilityHidden(true)
 
                 Text("rename guide")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
                 TextField("guide name", text: $name)
-                    .font(.custom("Chalkboard SE", size: 12.5))
+                    .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
@@ -232,7 +252,7 @@ struct Prompt11RenameGuidePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -299,7 +319,7 @@ struct Prompt11DescriptionPopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Text("edit little description")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -310,7 +330,7 @@ struct Prompt11DescriptionPopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
-                .font(.custom("Chalkboard SE", size: 12.5))
+                .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
@@ -327,7 +347,7 @@ struct Prompt11DescriptionPopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -394,7 +414,7 @@ struct Prompt11ChangeCoverPopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Text("choose a cover")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -447,7 +467,7 @@ struct Prompt11ChangeCoverPopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -503,7 +523,7 @@ struct Prompt11DeleteGuidePopup: View {
                     .accessibilityHidden(true)
 
                 Text("delete this guide?")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -512,7 +532,7 @@ struct Prompt11DeleteGuidePopup: View {
                 Text(
                     "the guide will disappear, but the things you saved from Ask will stay in your saved library."
                 )
-                .font(.custom("Chalkboard SE", size: 11.5))
+                .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
@@ -520,7 +540,7 @@ struct Prompt11DeleteGuidePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -587,14 +607,14 @@ struct Prompt11SectionPopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Text(chapterID == nil ? "name this section" : "rename section")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
                 TextField("ex. hormones", text: $name)
-                    .font(.custom("Chalkboard SE", size: 12.5))
+                    .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
@@ -611,7 +631,7 @@ struct Prompt11SectionPopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -693,7 +713,7 @@ struct Prompt11NotePopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Text("my note")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -704,7 +724,7 @@ struct Prompt11NotePopup: View {
                     text: $note,
                     axis: .vertical
                 )
-                .font(.custom("Chalkboard SE", size: 12.5))
+                .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
@@ -721,7 +741,7 @@ struct Prompt11NotePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -780,7 +800,7 @@ struct Prompt11MovePagePopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
                 Text("move this page to…")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -795,13 +815,13 @@ struct Prompt11MovePagePopup: View {
                         } label: {
                             HStack {
                                 Text(chapter.name)
-                                    .font(.custom("Chalkboard SE", size: 11.5))
+                                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
 
                                 Spacer()
 
                                 if chapter.id == fromChapterID {
                                     Text("current")
-                                        .font(.custom("Chalkboard SE", size: 9.5))
+                                        .font(.custom("Chalkboard SE", size: 9.5, relativeTo: .body))
                                 }
                             }
                             .foregroundStyle(
@@ -822,7 +842,7 @@ struct Prompt11MovePagePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -831,7 +851,7 @@ struct Prompt11MovePagePopup: View {
                 Button("+ new section") {
                     onNewSection()
                 }
-                .font(.custom("Chalkboard SE", size: 11.5))
+                .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -888,7 +908,7 @@ struct Prompt11RemovePagePopup: View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
                 Text("remove this page from your guide?")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -896,7 +916,7 @@ struct Prompt11RemovePagePopup: View {
                     .multilineTextAlignment(.center)
 
                 Text("it’ll stay safely in your saved library.")
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
@@ -904,7 +924,7 @@ struct Prompt11RemovePagePopup: View {
 
                 if let errorMessage {
                     Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                        .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -949,7 +969,7 @@ struct Prompt11OriginalAnswerPopup: View {
         Prompt10WatercolorPopup {
             VStack(alignment: .leading, spacing: 10) {
                 Text("original answer")
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -959,7 +979,7 @@ struct Prompt11OriginalAnswerPopup: View {
                 if let sourcePage {
                     ScrollView {
                         Text(sourcePage.answer)
-                            .font(.custom("Chalkboard SE", size: 12))
+                            .font(.custom("Chalkboard SE", size: 12, relativeTo: .body))
                             .foregroundStyle(
                                 DesignTokens.ColorToken.primaryBurgundy
                             )
@@ -969,7 +989,7 @@ struct Prompt11OriginalAnswerPopup: View {
                     .frame(maxHeight: 330)
                 } else {
                     Text("this saved page is no longer in your library")
-                        .font(.custom("Chalkboard SE", size: 12))
+                        .font(.custom("Chalkboard SE", size: 12, relativeTo: .body))
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )

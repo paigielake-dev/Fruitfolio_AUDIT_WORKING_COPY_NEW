@@ -3,15 +3,26 @@ import Foundation
 
 @MainActor
 final class Prompt28FruitBasketViewModel: ObservableObject {
-    @Published var screen: Prompt28ScreenState = .home
+    @Published var screen: Prompt28ScreenState = .home {
+        didSet {
+            if oldValue == .catchActive, screen != .catchActive { stopGameplay() }
+            if screen != .catchActive, screen != .paused { showingStormNotice = false }
+        }
+    }
+    @Published private(set) var showingStormNotice = false
     @Published var rawTopic = ""
     @Published var difficulty: Prompt28EducationalDifficulty
     @Published var currentQuestion: Prompt28Question?
     @Published var selectedAnswerID: String?
     @Published var session: Prompt28Session?
     @Published var activeFruit: [Prompt28FallingFruit] = []
+    @Published private(set) var vineContactCount = 0
+    private var branchDeflections: [UUID: Prompt28BranchDeflection] = [:]
+    private var previousVineContacts: Set<UUID> = []
+    private var gameplayFieldSize = CGSize.zero
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
+    @Published private(set) var basketIsMeetingPuddleResistance = false
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
     @Published var isPaused = false
@@ -27,6 +38,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
+    private var lastStormNoticeKey: String?
 
     init(
         store: Prompt28FruitBasketStore,
@@ -185,22 +197,51 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         activeStars.removeAll()
         classificationFruit = nil
         basketX = 0.5
+        basketIsMeetingPuddleResistance = false
+        isPaused = false
+        showingStormNotice = false
         roundResultLocked = false
         spawnPlanner.reset()
+        previousVineContacts = []
+        branchDeflections = [:]
         lastSpawnAt = .distantPast
         screen = .catchActive
 
-        if store.controlMode == .classification {
-            spawnClassificationFruit()
+        let noticeKey = "\(session.id.uuidString):\(session.currentRound)"
+        if weather == .softRain, lastStormNoticeKey != noticeKey {
+            lastStormNoticeKey = noticeKey
+            showingStormNotice = true
+            isPaused = true
         } else {
-            startGameplayLoop()
+            startCatchInteraction()
         }
+    }
+
+    func dismissStormNotice() {
+        guard showingStormNotice else { return }
+        showingStormNotice = false
+        // Backgrounding already moves active play to the paused menu. Closing
+        // its notice must not silently resume a background-paused round.
+        guard screen == .catchActive else { return }
+        isPaused = false
+        startCatchInteraction()
+    }
+
+    private func startCatchInteraction() {
+        if store.controlMode == .classification { spawnClassificationFruit() }
+        else { startGameplayLoop() }
+    }
+
+    func viewWillDisappear() {
+        stopGameplay()
+        if screen == .catchActive { isPaused = true; screen = .paused }
     }
 
     func moveBasket(to normalizedX: Double) {
         guard screen == .catchActive, !isPaused else { return }
         let target = min(max(normalizedX, 0.10), 0.90)
         guard activeObstacles.contains(.puddle) else {
+            basketIsMeetingPuddleResistance = false
             basketX = target
             return
         }
@@ -210,6 +251,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let pathMin = min(basketX, target)
         let pathMax = max(basketX, target)
         let crossingPuddle = pathMax >= 0.33 && pathMin <= 0.67
+        basketIsMeetingPuddleResistance = crossingPuddle
         let response = crossingPuddle ? 0.58 : 1.0
         basketX += (target - basketX) * response
         basketX = min(max(basketX, 0.10), 0.90)
@@ -334,26 +376,46 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
     }
 
-    private func tick(delta: TimeInterval, now: Date) {
+    func updateGameplayFieldSize(width: Double, height: Double) {
+        guard width.isFinite, height.isFinite, width > 0, height > 0 else { return }
+        gameplayFieldSize = CGSize(width: width, height: height)
+    }
+
+    func isMeetingVines(x: Double, y: Double, classification: Prompt28FruitClassification = .good) -> Bool {
+        guard classification == .good, activeObstacles.contains(.vines) else { return false }
+        return Prompt28VineContactGeometry(fieldWidth: gameplayFieldSize.width,
+                                          fieldHeight: gameplayFieldSize.height,
+                                          level: gameLevel).contains(x: x, y: y)
+    }
+
+    // Internal frame entry point is also exercised by deterministic physics tests.
+    func tick(delta: TimeInterval, now: Date) {
         guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
         var remaining: [Prompt28FallingFruit] = []
+        var currentVineContacts: Set<UUID> = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
-            let vineMultiplier = activeObstacles.contains(.vines) && fruit.classification == .good && (0.22...0.58).contains(fruit.y) ? 0.56 : 1.0
-            fruit.y += fruit.fallSpeed * vineMultiplier * delta
-
-            var horizontalVelocity = fruit.horizontalDrift
+            let meetingVines = isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification)
+            if meetingVines { currentVineContacts.insert(fruit.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
+            if activeObstacles.contains(.branch), branchDeflections[fruit.id] == nil {
+                let geometry = Prompt28BranchContactGeometry(fieldWidth: gameplayFieldSize.width,
+                                                              fieldHeight: gameplayFieldSize.height)
+                let radius = min(max(gameplayFieldSize.width * 0.13, 46), 66) * 0.44
+                if geometry.contains(x: fruit.x, y: fruit.y + fruit.fallSpeed * delta, radius: radius) {
+                    branchDeflections[fruit.id] = Prompt28BranchDeflection(horizontalVelocity: -max(abs(fruit.horizontalDrift), 0.08))
+                }
+            }
+            let bounce = branchDeflections[fruit.id]
+            fruit.y += fruit.fallSpeed * vineMultiplier * (bounce?.verticalMultiplier ?? 1) * delta
+            var horizontalVelocity = bounce?.horizontalVelocity ?? fruit.horizontalDrift
+            if var bounce {
+                bounce.elapsed += delta
+                branchDeflections[fruit.id] = bounce
+            }
             if activeObstacles.contains(.wind) {
                 horizontalVelocity += windDirection * (weather == .softRain ? 0.030 : 0.021)
-            }
-
-            // The right-side branch gently redirects fruit before it reaches the basket.
-            // This creates a readable obstacle without turning it into an unavoidable trap.
-            if activeObstacles.contains(.branch),
-               (0.27...0.55).contains(fruit.y),
-               fruit.x > 0.66 {
-                horizontalVelocity -= 0.095
             }
 
             fruit.x = min(max(fruit.x + horizontalVelocity * delta, laneBounds.lowerBound), laneBounds.upperBound)
@@ -375,11 +437,15 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
 
         activeFruit = roundResultLocked ? [] : remaining
+        let remainingIDs = Set(activeFruit.map(\.id))
+        branchDeflections = branchDeflections.filter { remainingIDs.contains($0.key) }
         guard !roundResultLocked else { return }
 
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
-            let vineMultiplier = activeObstacles.contains(.vines) && (0.22...0.58).contains(star.y) ? 0.56 : 1.0
+            let meetingVines = isMeetingVines(x: star.x, y: star.y)
+            if meetingVines { currentVineContacts.insert(star.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
             star.y += star.fallSpeed * vineMultiplier * delta
             star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
             if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX) {
@@ -389,6 +455,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             if star.y <= 1.06 { remainingStars.append(star) }
         }
         activeStars = remainingStars
+        if !currentVineContacts.subtracting(previousVineContacts).isEmpty { vineContactCount += 1 }
+        previousVineContacts = currentVineContacts
 
         let interval = random(in: levelConfig.spawnIntervalRange)
         if activeFruit.count < levelConfig.maxConcurrentItems,
@@ -421,10 +489,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let speed = 1.18 / max(duration, 0.5)
         let drift = random(in: levelConfig.driftRange)
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-        var x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
-        if activeObstacles.contains(.branch), x > 0.72 {
-            x = Double.random(in: max(0.12, laneBounds.lowerBound)...0.70)
-        }
+        let x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
         let rotation = Double.random(in: -6...6)
         activeFruit.append(
             Prompt28FallingFruit(

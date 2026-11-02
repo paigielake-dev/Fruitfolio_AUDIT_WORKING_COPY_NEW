@@ -5,6 +5,10 @@ import SwiftUI
 struct Prompt27AMyContextView: View {
     @StateObject private var viewModel: Prompt27AContextViewModel
 
+    @State private var showHormoneInformation = false
+    @State private var showPersonalHealth = false
+    @State private var showCycleSetup = false
+
     let onBack: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
@@ -39,6 +43,14 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+                        FruitfolioControlPillButton(label: "edit cycle setup") { showCycleSetup = true }
+                            .accessibilityIdentifier("context.editCycleSetup")
+                        FruitfolioControlPillButton(label: "personal health context") { showPersonalHealth = true }
+                            .accessibilityIdentifier("context.openPersonalHealth")
+
+                        FruitfolioControlPillButton(label: "hormone information") {
+                            showHormoneInformation = true
+                        }
 
                         Prompt27AContextCard {
                             singleChoiceSection(
@@ -149,6 +161,15 @@ struct Prompt27AMyContextView: View {
                 }
                 .scrollIndicators(.hidden)
             }
+        }
+        .fullScreenCover(isPresented: $showCycleSetup) {
+            Prompt14CycleSetupEditor(onBack: { showCycleSetup = false })
+        }
+        .fullScreenCover(isPresented: $showPersonalHealth) {
+            Prompt27APersonalHealthView(store: viewModel.store) { showPersonalHealth = false }
+        }
+        .fullScreenCover(isPresented: $showHormoneInformation) {
+            HormoneInformationView(store: .shared) { showHormoneInformation = false }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)

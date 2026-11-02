@@ -72,14 +72,6 @@ struct Prompt10SavedLibraryView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if popup != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(90)
-            }
 
             bookOpeningOverlay
                 .zIndex(80)
@@ -102,6 +94,20 @@ struct Prompt10SavedLibraryView: View {
     private var libraryCollection: some View {
         ScrollView {
             VStack(spacing: 18) {
+                if let error = store.loadError {
+                    Text(error).font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    FruitfolioControlPillButton(label: "try opening my library again") { store.retryLoad() }
+                }
+
+                if let error = store.mediaRecoveryError {
+                    Text(error).font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    FruitfolioControlPillButton(label: "try recovering my images again") { store.recoverMedia() }
+                }
+
                 header
 
                 composedLibraryHero
@@ -799,68 +805,14 @@ private extension Prompt10BookStyle {
 
 // MARK: - Prompt 10 Pill Art Button
 
+/// Legacy entry point retained; sizing, artwork and pop are canonical.
 struct Prompt10PillArtButton: View {
     let label: String
     let reduceMotion: Bool
     let action: () -> Void
 
     var body: some View {
-        Button(
-            action: action
-        ) {
-            ZStack {
-                Image(
-                    "control_pill_outline"
-                )
-                .resizable()
-                .frame(
-                    maxWidth: .infinity
-                )
-                .frame(height: 62)
-                .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 14
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.78)
-                    .padding(
-                        .horizontal,
-                        30
-                    )
-            }
-            .frame(
-                maxWidth: .infinity
-            )
-            .frame(height: 62)
-            .contentShape(
-                RoundedRectangle(
-                    cornerRadius: 31,
-                    style: .continuous
-                )
-            )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    reduceMotion
-            )
-        )
-        .frame(
-            minHeight:
-                DesignTokens.Layout.minimumHitTarget
-        )
-        .accessibilityLabel(
-            label
-        )
+        FruitfolioControlPillButton(label: label, playsSound: false, action: action)
+            .environment(\.fruitfolioReduceMotion, reduceMotion)
     }
 }

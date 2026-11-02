@@ -1,0 +1,59 @@
+> Historical baseline report retained for provenance. Current results are in CURRENT_REQUIREMENT_VERIFICATION.md, LatestAppleTestResults.json and ImplementationTracker478.json.
+
+# Fruitfolio continuation — incomplete, not final delivery
+
+The authoritative checkpoint is preserved. Main has not been overwritten or merged.
+The founder breakdown is imported losslessly as 478 uniquely identified requirements.
+Initial candidate source scopes and Prompt sections are explicitly provisional; pending intake statuses make no claim that an item is implemented.
+
+## Confirmed native-grounding repair
+
+The two original native checks failed because the model copied literal example-schema prose instead of evidence. Removing those misleading examples and enforcing exact-copy instructions fixed the two direct native fixtures without relaxing validation. macOS Runs 13 and 14 passed both real model requests, including the changed evidence ID and negation fixture.
+
+## Additional citation corrections staged for fresh Xcode verification
+
+- All 5,477 note chunks quote the supplied compilation and cite that actual document.
+- All 293 original bibliography records and their topic associations remain preserved; they do not qualify as independently verified paper evidence.
+- All 470 supplied guide-page excerpts remain unchanged.
+- Citation display follows accepted/displayed evidence rather than unused retrieval candidates.
+- A matching quote cannot carry unrelated evidence IDs.
+- Retrieval fallback retains complete evidence chunks instead of removing trailing qualifiers at 680 characters.
+- New synthetic attribution tests are distinct from a new actual bundled-corpus/native integration test. The new changes are NOT yet reported as passing Xcode tests.
+
+## Actual Apple verification
+
+Run13 / ca4287c: application/test targets built; 436 XCTest cases and 25 Swift Testing cases passed. Normal/Reduced Motion smoke and hormone create/relaunch/edit/delete passed. Broad UI: 26 tests, 13 failures (three resumed Cycle destination checks, ten accessibility audits). Exploratory traversal timed out; its unfinished result bundle is not valid evidence.
+
+Run14 / 05b08bb: application/test targets built; 436 XCTest cases and 25 Swift Testing cases passed. Normal-motion smoke failed to launch within Xcode's timeout; Reduced Motion smoke passed. Focused hormone and broad UI cases were skipped. Exploratory traversal timed out. This is not an overall passing run.
+
+The resumed Cycle destination predicate has been corrected to recognize its actual entry root; onboarding advancement assertions remain. Shared modal backgrounds now hide their accessibility subtree while active. Button pop animation respects system Reduce Motion even at default call sites. Runtime verification remains incomplete.
+
+## Shared-system continuation
+
+Measured all 269 original PNG image sets (native dimensions, actual alpha bounds and source SHA-256) without modifying artwork. Cached geometry is used by the existing FAQ decoration layout. Shared semantic spans now support Codable documents and Unicode-safe progressive prefixes. New geometry and semantic persistence tests are staged; app-wide adoption is still incomplete and is not claimed complete.
+
+## Founder decision
+
+Explicit clarification resolved the Fruit Basket conflict: zero starpasses plus bad fruit ends the round. See FounderDecisions.json. Game implementation still requires inspection and verification against that decision.
+
+## MADLAD
+
+Original official Q4 model/tokenizer/configuration and prior runtime diagnostics remain in the checkpoint. Offline paragraph translation is still failing its medical safety fixture. It is not enabled as a completed application feature. Additional continuation experiments before an execution-environment reset observed loss of warnings, altered citation IDs, and invented statements with Q4 and comparison Q2/Q3; their new raw files did not survive that reset and are not represented as preserved verification artifacts. The original checkpoint diagnostics remain authoritative evidence. Do not substitute another model/cloud service or claim iPhone execution from desktop probes.
+
+## Remaining delivery work
+
+Complete item-level assessment and implementation in the ten-part order; correct accessibility failures; verify all visual states, audio, persistence, privacy, account/purchases and localization; stabilize and verify MADLAD locally on supported iPhones; then package all required resources and integrity-check the final ZIP. No FINAL_COMPLETE archive has been produced or claimed.
+
+## Run15 regression and further repair
+
+At 20e2d2e, Xcode built successfully. 440 XCTest cases ran: 439 passed and the new actual bundled-corpus/native case failed. All three new synthetic attribution regressions passed; 25 Swift Testing cases passed. The native draft quoted only the first sentence of a longer source chunk, so the unchanged strict validator rejected it. The original xcresult and decoded actual draft are retained under Continuation/AppleRuns/Run15.
+
+The subsequent native wire format selects distinct shown evidence IDs. Swift restores complete immutable source text and runs the same strict validator. Invalid/unknown/duplicate IDs are rejected. This is still evidence-quotation architecture; it is not free clinical synthesis or independently verified medical truth. Native re-verification is pending. Do not use the earlier two-fixture pass as evidence for this new decoder.
+
+Run16 / 0ceb12f: Xcode built successfully; measured artwork geometry and semantic-document Unicode/persistence tests passed. 443 XCTest cases ran with the same one bundled-native failure; 25 Swift Testing cases passed. The subsequent reference-selection decoder repair is committed at 4d480ed and is under macOS Run17 verification. No Run17 result is claimed here before completion.
+
+## Run17 — reference-selection repair verified
+
+At application source commit 4d480ed949a6e50b70a8c08d3b2a47b65b89652d, Xcode built the app/test targets and passed all 443 XCTest cases plus 25 Swift Testing cases, zero failures. The real bundled-corpus/native test passed in 71.831 seconds without retrieval fallback. Both small native requests also passed. Attribution/qualifier regressions, measured artwork geometry, semantic-document persistence and Unicode progressive rendering passed. Original unit artifact SHA-256: fcd08098dbdf00902afdb22610d2ffa94ac98feafdd54bce615f75f6612a1b11. The actual downloaded xcresult and logs are included under Continuation/AppleRuns/Run17/Unit.
+
+UI/simulator acceptance is separate and still running at this report snapshot. Runs15/16 normal/Reduced Motion smoke and hormone lifecycle steps succeeded, while their known unit failure was the pre-repair native case. Full UI and accessibility remain unresolved. Do not reinterpret an all-unit pass as full application completion, clinical verification, or MADLAD acceptance.

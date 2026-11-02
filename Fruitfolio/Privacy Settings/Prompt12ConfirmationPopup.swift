@@ -12,6 +12,7 @@ struct Prompt12ConfirmationPopup: View {
     let destructiveAction: (() -> Void)?
 
     @EnvironmentObject private var audioManager: AudioManager
+    @AccessibilityFocusState private var titleFocused: Bool
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -25,16 +26,18 @@ struct Prompt12ConfirmationPopup: View {
                 }
 
                 Text(title)
-                    .font(.custom("Chalkboard SE", size: 16))
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityFocused($titleFocused)
 
                 Text(message)
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
@@ -43,7 +46,6 @@ struct Prompt12ConfirmationPopup: View {
                     .frame(maxWidth: 275)
 
                 WatercolorPrimaryButton(label: primaryLabel) {
-                    audioManager.play(.buttonSoftPop)
                     primaryAction()
                 }
 
@@ -57,17 +59,10 @@ struct Prompt12ConfirmationPopup: View {
 
                 if let destructiveLabel,
                    let destructiveAction {
-                    Button(destructiveLabel) {
+                    FruitfolioControlPillButton(label: destructiveLabel, playsSound: false) {
                         audioManager.play(.buttonSoftPop)
                         destructiveAction()
                     }
-                    .font(.custom("Chalkboard SE", size: 11.5))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
-                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal, 18)
@@ -75,6 +70,10 @@ struct Prompt12ConfirmationPopup: View {
             .padding(.bottom, 28)
         }
         .frame(maxWidth: 350)
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .accessibilityAction(.escape) { (secondaryAction ?? primaryAction)() }
+        .task { await Task.yield(); guard !Task.isCancelled else { return }; titleFocused = true }
         .onAppear {
             audioManager.play(.popupOpen)
         }

@@ -1,0 +1,875 @@
+name: Fruitfolio iOS verification
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - 'Delivery/**'
+      - 'Fruitfolio_Verification_Evidence/**'
+      - 'Specification/**' 
+concurrency:
+  group: fruitfolio-ios-${{ github.event.pull_request.number || github.ref }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  preserve-superseded-diagnostics:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fruitfolio/prompt-1b-alignment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inventory superseded diagnostics without deleting evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FRUITFOLIO_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 Tools/prune_superseded_verification.py inventory
+      - name: Preserve run, job, step and artifact inventory before superseding
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Superseded_Verification_State
+          path: verification-queue-state.json
+      - name: Free obsolete macOS attempts while preserving requested Run50 and Run51
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FRUITFOLIO_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python3 Tools/prune_superseded_verification.py cancel
+  ios:
+    runs-on: macos-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Capture Apple tool versions
+        id: apple-tools
+        run: |
+          mkdir -p Fruitfolio_Verification_Evidence/Build
+          xcodebuild -version | tee Fruitfolio_Verification_Evidence/Build/xcode-version.txt
+          swift --version | tee Fruitfolio_Verification_Evidence/Build/swift-version.txt
+          xcrun simctl list devices available > Fruitfolio_Verification_Evidence/Build/simulators.txt
+          echo "xcode=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v4
+        id: runtime-cache
+        with:
+          path: Vendor/llama.xcframework
+          key: llama-ios-v1-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('llama.cpp/**', 'Tools/build_ios_llama.sh') }}
+      - name: Build vendored iOS runtime
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_llama.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/llama.xcframework
+          key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Preserve built Apple runtime before app tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Apple_Runtime
+          path: |
+            Vendor/llama.xcframework
+            Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+            Fruitfolio_Verification_Evidence/Build/xcode-version.txt
+            Fruitfolio_Verification_Evidence/Build/swift-version.txt
+      - uses: actions/cache/restore@v4
+        id: madlad-runtime-cache
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh', 'Tools/prepare_candle_madlad.py') }}
+      - uses: actions/cache/restore@v4
+        id: madlad-cargo-cache
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-apple-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
+      - name: Build linked MADLAD Apple runtime
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/madlad-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: ${{ steps.madlad-runtime-cache.outputs.cache-primary-key }}
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true' && steps.madlad-cargo-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: ${{ steps.madlad-cargo-cache.outputs.cache-primary-key }}
+      - name: Preserve compiled translation runtime before app tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_MADLAD_Apple_Runtime
+          path: Vendor/FruitfolioMADLAD.xcframework
+          if-no-files-found: warn
+      - uses: actions/cache/restore@v4
+        id: madlad-model-cache
+        with:
+          path: Models/MADLAD
+          key: madlad-official-resources-ea6e5531a3e95213-v1
+      - name: Acquire and verify approved translation resources
+        run: python3 Tools/prepare_madlad_resources.py
+      - uses: actions/cache/save@v4
+        if: steps.madlad-model-cache.outputs.cache-hit != 'true'
+        with:
+          path: Models/MADLAD
+          key: ${{ steps.madlad-model-cache.outputs.cache-primary-key }}
+      - name: Choose installed iPhone simulator
+        run: |
+          xcrun simctl list devices available -j > /tmp/fruitfolio-devices.json
+          python3 - <<'PY'
+          import json,os
+          devices=json.load(open('/tmp/fruitfolio-devices.json'))['devices']
+          iphones=[d for key, group in devices.items() if 'iOS' in key for d in group if d.get('isAvailable') and 'iPhone' in d['name']]
+          if not iphones: raise SystemExit('No available iPhone simulator')
+          with open(os.environ['GITHUB_ENV'],'a') as f: f.write('FRUITFOLIO_SIMULATOR_ID='+iphones[0]['udid']+'\n')
+          PY
+      - name: Build application and test targets
+        id: app-build
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Build.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-build.log
+      - name: Reject obsolete dynamic runtime autolink
+        run: |
+          app=.ciDerivedData/Build/Products/Debug-iphonesimulator/Fruitfolio.app
+          for binary in "$app/Fruitfolio" "$app/Fruitfolio.debug.dylib"; do
+            if [ -f "$binary" ]; then
+              otool -L "$binary" >> Fruitfolio_Verification_Evidence/Build/linked-libraries.txt
+            fi
+          done
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          text=Path('Fruitfolio_Verification_Evidence/Build/linked-libraries.txt').read_text()
+          if '@rpath/llama.framework/llama' in text:
+              raise SystemExit('Obsolete dynamic llama framework is still autolinked')
+          PYCODE
+      - name: Run unit and native inference tests
+        timeout-minutes: 12
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -only-testing:FruitfolioTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Unit.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-unit-test.log
+      - name: Export actual unit runtime attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Unit.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Build/UnitAttachments
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Unit.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Build/UnitAttachments
+          fi
+      - name: Preserve unit and build results before UI tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Unit_Build_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build
+      - name: Execute bundled Ask and MADLAD with verified external-network isolation
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: bash Tools/verify_offline_madlad_ci.sh
+      - name: Export actual offline inference attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/MADLAD/Offline/Attachments
+          fi
+      - name: Preserve actual offline isolation and inference evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Offline_MADLAD_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/MADLAD/Offline
+            Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult
+          retention-days: 90
+      - name: Build actual iPhone Release configuration
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        timeout-minutes: 15
+        run: |
+          set -o pipefail
+          trap 'rm -rf .ciReleaseData' EXIT
+          xcodebuild build -project Fruitfolio.xcodeproj -scheme Fruitfolio -configuration Release \
+            -destination 'generic/platform=iOS' -derivedDataPath .ciReleaseData \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Release.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-device-release-build.log
+          du -sk .ciReleaseData/Build/Products/Release-iphoneos/Fruitfolio.app \
+            > Fruitfolio_Verification_Evidence/Build/device-release-bundle-size.txt
+          otool -L .ciReleaseData/Build/Products/Release-iphoneos/Fruitfolio.app/Fruitfolio \
+            > Fruitfolio_Verification_Evidence/Build/device-release-linked-libraries.txt
+      - name: Preserve actual device Release build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Device_Release_Build_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-device-release-build.log
+            Fruitfolio_Verification_Evidence/Build/Release.xcresult
+            Fruitfolio_Verification_Evidence/Build/device-release-bundle-size.txt
+            Fruitfolio_Verification_Evidence/Build/device-release-linked-libraries.txt
+      - name: Simulator smoke test and representative recording
+        id: smoke
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          # Reboot after native tests before attaching XCTest UI automation.
+          xcrun simctl shutdown "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
+          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID"
+          xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
+          python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
+            --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
+            > Fruitfolio_Verification_Evidence/Build/simulator-recording.log 2>&1 &
+          recorder=$!
+          set +e
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -only-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-smoke-test.log
+          test_status=${PIPESTATUS[0]}
+          wait "$recorder"
+          record_status=$?
+          set -e
+          if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
+          exit "$record_status"
+      - name: Export smoke screenshot attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Smoke.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/Smoke
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/Smoke
+          fi
+      - name: Preserve early simulator evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Smoke_Evidence
+          path: Fruitfolio_Verification_Evidence
+      - name: Verify shared controls in actual Contact journeys
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/SharedControlUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+      - name: Export and preserve shared-control evidence
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SharedControls
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/SharedControls
+          fi
+      - name: Preserve focused shared-control evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Shared_Control_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+            Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+            Fruitfolio_Verification_Evidence/Visual/SharedControls
+      - name: Verify shared username through Account and Fruit Basket
+        id: username-journey
+        timeout-minutes: 8
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/UsernameSynchronizationUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
+      - name: Export actual shared-username evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+          fi
+      - name: Preserve focused shared-username evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Username_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-username-journey-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/UsernameJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/UsernameJourney
+          retention-days: 90
+      - name: Verify optional Personal Health Context lifecycle
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/PersonalHealthContextUITests \
+            -only-testing:FruitfolioUITests/PersonalDataManagementUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
+      - name: Export actual PersonalHealthJourney attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+          fi
+      - name: Preserve focused PersonalHealthJourney evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Personal_Health_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-personal-health-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/PersonalHealthJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
+          retention-days: 90
+      - name: Verify hormone record lifecycle before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/HormoneMeasurementUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Hormone.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-hormone-ui-test.log
+      - name: Export and preserve hormone lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Hormone.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/HormoneInformation
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Hormone.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/HormoneInformation
+          fi
+      - name: Preserve focused functional evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Hormone_Functional_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/Hormone.xcresult
+            Fruitfolio_Verification_Evidence/Build/xcode-hormone-ui-test.log
+            Fruitfolio_Verification_Evidence/Visual/HormoneInformation
+      - name: Verify user-authored page lifecycle before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 10
+        run: |
+          set -o pipefail
+          # A real system photo-picker fixture, never app-state injection.
+          xcrun simctl addmedia "$FRUITFOLIO_SIMULATOR_ID" \
+            Fruitfolio/Assets.xcassets/Art/Decor/decor_fluffy_cloud.imageset/decor_fluffy_cloud.png
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/UserAuthoredPageUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/UserPages.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
+      - name: Export and preserve user-page lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/UserPages.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/UserPages
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/UserPages.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/UserPages
+          fi
+      - name: Preserve focused user-page evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_User_Page_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-user-pages-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/UserPages.xcresult
+            Fruitfolio_Verification_Evidence/Visual/UserPages
+      - name: Verify artwork volume settings and restart persistence before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/SettingsVolumeUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-settings-volumes-ui-test.log
+      - name: Export and preserve volume lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
+          fi
+      - name: Preserve focused volume evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Settings_Volume_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-settings-volumes-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult
+            Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
+      - name: Verify grounded Ask answer and clear-on-exit lifecycle before broad traversal
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 8
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/AskGroundedJourneyUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-ask-journey-ui-test.log
+      - name: Export and preserve Ask lifecycle evidence
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/AskJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/AskJourney
+          fi
+      - name: Preserve focused Ask evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Ask_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-ask-journey-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/AskJourney
+      - name: Verify Guide creation and cover controls
+        timeout-minutes: 8
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/FruitfolioDeepCoverageTests/test03GuideBuilderCoverSelectorAccessible \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-guide-journey-ui-test.log
+      - name: Export actual GuideJourney attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/GuideJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/GuideJourney
+          fi
+      - name: Preserve focused GuideJourney evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Guide_Journey_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-guide-journey-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/GuideJourney
+          retention-days: 90
+      - name: Verify native screen accessibility audits
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/RuntimeAccessibilityAuditTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
+      - name: Export actual AccessibilityAudit attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+          fi
+      - name: Preserve focused AccessibilityAudit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Accessibility_Audit_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult
+            Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+          retention-days: 90
+      - name: Run actual application UI tests
+        timeout-minutes: 60
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -only-testing:FruitfolioUITests \
+            -skip-testing:FruitfolioUITests/SettingsVolumeUITests \
+            -skip-testing:FruitfolioUITests/UsernameSynchronizationUITests \
+            -skip-testing:FruitfolioUITests/PersonalHealthContextUITests \
+            -skip-testing:FruitfolioUITests/PersonalDataManagementUITests \
+            -skip-testing:FruitfolioUITests/FruitfolioDeepCoverageTests/test03GuideBuilderCoverSelectorAccessible \
+            -skip-testing:FruitfolioUITests/RuntimeAccessibilityAuditTests \
+            -skip-testing:FruitfolioUITests/AskGroundedJourneyUITests \
+            -skip-testing:FruitfolioUITests/UserAuthoredPageUITests \
+            -skip-testing:FruitfolioUITests/SharedControlUITests \
+            -skip-testing:FruitfolioUITests/HormoneMeasurementUITests \
+            -skip-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
+            -skip-testing:FruitfolioUITests/FruitfolioUITests/testFruitfolioCompleteDeepAudit \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-ui-test.log
+      - name: Export actual XCTest screenshot attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Fruitfolio.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual
+          fi
+      - name: Extended visual traversal after functional tests
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        timeout-minutes: 45
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/FruitfolioUITests/testFruitfolioCompleteDeepAudit \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-exploratory-test.log
+      - name: Export exploratory attachments if finalized
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/Exploratory
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Exploratory.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/Exploratory
+          fi
+      - name: Package all actual evidence into downloadable parts
+        if: always()
+        run: python3 Tools/package_verification_evidence.py
+      - name: Preserve evidence part index
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Parts_Index
+          path: VerificationDownloads/EvidenceParts.json
+      - name: Preserve evidence part 01
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_01
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part01
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 02
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_02
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part02
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 03
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_03
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part03
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 04
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_04
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part04
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 05
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_05
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part05
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 06
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_06
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part06
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 07
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_07
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part07
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 08
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_08
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part08
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 09
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_09
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part09
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 10
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_10
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part10
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 11
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_11
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part11
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 12
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_12
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part12
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 13
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_13
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part13
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 14
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_14
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part14
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 15
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_15
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part15
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 16
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_16
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part16
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 17
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_17
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part17
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 18
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_18
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part18
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 19
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_19
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part19
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 20
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_20
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part20
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 21
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_21
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part21
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 22
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_22
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part22
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 23
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_23
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part23
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 24
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_24
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part24
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 25
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_25
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part25
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 26
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_26
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part26
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 27
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_27
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part27
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 28
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_28
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part28
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 29
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_29
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part29
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 30
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_30
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part30
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 31
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_31
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part31
+          if-no-files-found: ignore
+          compression-level: 0
+      - name: Preserve evidence part 32
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Evidence_Part_32
+          path: VerificationDownloads/Fruitfolio_Verification_Evidence.zip.part32
+          if-no-files-found: ignore
+          compression-level: 0

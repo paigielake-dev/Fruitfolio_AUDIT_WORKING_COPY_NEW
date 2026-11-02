@@ -52,31 +52,12 @@ struct FruitPopupBubbleShell<Content: View>: View {
     let content: () -> Content
 
     var body: some View {
-        ZStack {
-            FruitfolioImage(id: .popup_speech_bubble)
-                .scaledToFit()
-                .frame(width: width, height: width)
-                .scaleEffect(
-                    x: characterSide == .right ? -1 : 1,
-                    y: 1,
-                    anchor: .center
-                )
-                .accessibilityHidden(true)
-
-            content()
-                // Keep live text inside the painted body, not the bubble tail.
-                // Mirroring moves the tail, so mirror the small optical inset too.
-                .frame(
-                    width: width * 0.76,
-                    height: width * 0.68,
-                    alignment: .center
-                )
-                .offset(
-                    x: (characterSide == .left ? 1 : -1) * width * 0.030,
-                    y: -width * 0.040
-                )
-        }
-        .frame(width: width, height: width)
+        FruitfolioPopupArtworkSurface(assetName: "popup_speech_bubble",
+            normalizedWriting: CGRect(x: characterSide == .left ? 0.15 : 0.09,
+                                      y: 0.12, width: 0.76, height: 0.68),
+            maximumWidth: width, mirrorsArtwork: characterSide == .right, edgeClearance: 0,
+            content: content)
+            .frame(width: width, height: width * 499 / 497)
     }
 }
 
@@ -189,7 +170,11 @@ struct FruitPopupView: View {
         .zIndex(1)
     }
 
-    private var bubbleContent: some View {
+    private var bubbleContent: some View { messageAndActions }
+
+    // Keep short dialogue optically centered; long and Dynamic Type dialogue
+    // remains inside the painted writing area and is reachable by scrolling.
+    private var messageAndActions: some View {
         VStack(alignment: .center, spacing: 7) {
             invitationSafeMessage
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
@@ -213,7 +198,7 @@ struct FruitPopupView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var invitationSafeMessage: Text {
@@ -237,7 +222,7 @@ struct FruitPopupView: View {
             action.handler()
         } label: {
             Text(action.label)
-                .font(.custom("Chalkboard SE", size: 12.25))
+                .font(.custom("Chalkboard SE", size: 12.25, relativeTo: .body))
                 .fontWeight(isPrimary ? .bold : .regular)
                 .foregroundStyle(
                     isPrimary
@@ -245,12 +230,11 @@ struct FruitPopupView: View {
                         : DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.90)
-                .frame(maxWidth: .infinity, minHeight: 30, alignment: .center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .center)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
     }
 }

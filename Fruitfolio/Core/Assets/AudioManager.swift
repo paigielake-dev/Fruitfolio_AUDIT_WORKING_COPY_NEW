@@ -18,8 +18,14 @@ final class AudioManager: ObservableObject {
     private var loopPlayers: [FruitfolioAudioCategory: AVAudioPlayer] = [:]
     private var desiredLoops: [FruitfolioAudioCategory: LoopRequest] = [:]
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
+    private var fadeOutTasks: [FruitfolioAudioCategory: Task<Void, Never>] = [:]
     private var audioInterrupted = false
     private var applicationIsActive = true
+    // @Published emits before SettingsStore updates its stored value. Cache the
+    // delivered master state so every playback gate observes the new value.
+    private var allAudioMuted = false
+    private var categoryVolumes: [FruitfolioAudioCategory: Float] = [:]
+    private var lastTypingTick: TimeInterval = -Double.infinity
     private var notificationObservers: [NSObjectProtocol] = []
 
     init(settings: SettingsStore? = nil) {
@@ -39,6 +45,8 @@ final class AudioManager: ObservableObject {
 
     func attach(settings: SettingsStore) {
         self.settings = settings
+        categoryVolumes.removeAll()
+        allAudioMuted = settings.allAudioMuted
         observe(settings: settings)
         synchronizePlaybackWithSettings()
     }
@@ -51,6 +59,7 @@ final class AudioManager: ObservableObject {
         let category = category(for: id)
 
         if loop || isContinuousCategory(category) {
+            cancelPendingFadeOut(category)
             suspendedLoopCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
@@ -114,6 +123,34 @@ final class AudioManager: ObservableObject {
         )
     }
 
+    /// Reuses one player and throttles dense character updates to avoid audio piles.
+    func playTypingTick(bundle: Bundle = .main) {
+        guard !audioInterrupted, applicationIsActive, isEnabled(.typingASMR) else { return }
+        let now = ProcessInfo.processInfo.systemUptime
+        guard now - lastTypingTick >= 0.08 else { return }
+        lastTypingTick = now
+        if let player = oneShotPlayers[.typingASMR]?.first {
+            player.volume = volume(for: .typingASMR)
+            player.currentTime = 0
+            _ = player.play()
+        } else {
+            playOneShot(.typingSoft, category: .typingASMR, bundle: bundle)
+        }
+    }
+
+    #if DEBUG
+    func playbackObservation(for category: FruitfolioAudioCategory) -> (playerCount: Int, isPlaying: Bool, volumes: [Float], durations: [TimeInterval]) {
+        var players = oneShotPlayers[category] ?? []
+        if let loop = loopPlayers[category] { players.append(loop) }
+        return (players.count, players.contains(where: \.isPlaying), players.map(\.volume), players.map(\.duration))
+    }
+
+    var typingPlaybackState: (playerCount: Int, isPlaying: Bool, volume: Float) {
+        let players = oneShotPlayers[.typingASMR] ?? []
+        return (players.count, players.contains(where: \.isPlaying), players.first?.volume ?? 0)
+    }
+    #endif
+
     func fadeIn(
         _ id: FruitfolioAudioID,
         duration: TimeInterval,
@@ -122,6 +159,7 @@ final class AudioManager: ObservableObject {
         let category = category(for: id)
 
         if isContinuousCategory(category) {
+            cancelPendingFadeOut(category)
             suspendedLoopCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
@@ -194,25 +232,40 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory,
         duration: TimeInterval
     ) {
+        cancelPendingFadeOut(category)
         suspendedLoopCategories.insert(category)
-        guard let player = loopPlayers[category] else {
+        guard let player = loopPlayers[category] else { return }
+        let duration = duration.isFinite ? max(duration, 0) : 0
+        guard duration > 0 else {
+            player.volume = 0
+            player.pause()
             return
         }
+        player.setVolume(0, fadeDuration: duration)
+        fadeOutTasks[category] = Task { [weak self, weak player] in
+            do { try await Task.sleep(for: .seconds(duration)) }
+            catch { return }
+            guard !Task.isCancelled, let self, let player,
+                  self.suspendedLoopCategories.contains(category),
+                  self.loopPlayers[category] === player else { return }
+            player.volume = 0
+            player.pause()
+            self.fadeOutTasks[category] = nil
+        }
+    }
 
-        player.setVolume(
-            0,
-            fadeDuration: max(duration, 0)
-        )
+    private func cancelPendingFadeOut(_ category: FruitfolioAudioCategory) {
+        fadeOutTasks.removeValue(forKey: category)?.cancel()
     }
 
     func pause(
         category: FruitfolioAudioCategory
     ) {
         if isContinuousCategory(category) {
-            loopPlayers[category]?.setVolume(
-                0,
-                fadeDuration: 0.12
-            )
+            cancelPendingFadeOut(category)
+            suspendedLoopCategories.insert(category)
+            loopPlayers[category]?.volume = 0
+            loopPlayers[category]?.pause()
         }
 
         if let players = oneShotPlayers[category] {
@@ -271,6 +324,15 @@ final class AudioManager: ObservableObject {
         settings: SettingsStore
     ) {
         settingsCancellables.removeAll()
+
+        settings.$allAudioMuted
+            .removeDuplicates()
+            .sink { [weak self] muted in
+                guard let self else { return }
+                self.allAudioMuted = muted
+                self.synchronizePlaybackWithSettings()
+            }
+            .store(in: &settingsCancellables)
 
         settings.$musicEnabled
             .removeDuplicates()
@@ -332,9 +394,9 @@ final class AudioManager: ObservableObject {
 
         settings.$musicVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .music
+                    to: .music, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -343,9 +405,9 @@ final class AudioManager: ObservableObject {
 
         settings.$rainVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .rainAmbience
+                    to: .rainAmbience, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -354,9 +416,9 @@ final class AudioManager: ObservableObject {
 
         settings.$soundEffectsVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .soundEffects
+                    to: .soundEffects, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -365,9 +427,9 @@ final class AudioManager: ObservableObject {
 
         settings.$typingVolume
             .removeDuplicates()
-            .sink { [weak self] _ in
+            .sink { [weak self] updatedVolume in
                 self?.applyCurrentVolume(
-                    to: .typingASMR
+                    to: .typingASMR, explicitValue: updatedVolume
                 )
             }
             .store(
@@ -393,14 +455,13 @@ final class AudioManager: ObservableObject {
     private func muteContinuousAudio(
         category: FruitfolioAudioCategory
     ) {
+        cancelPendingFadeOut(category)
         guard let player = loopPlayers[category] else {
             return
         }
 
-        player.setVolume(
-            0,
-            fadeDuration: 0.12
-        )
+        player.volume = 0
+        player.pause()
 
         debugLog(
             "muted \(String(describing: category))"
@@ -410,7 +471,8 @@ final class AudioManager: ObservableObject {
     private func resumeContinuousAudio(
         category: FruitfolioAudioCategory
     ) {
-        guard !audioInterrupted, applicationIsActive,
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive,
+              volume(for: category) > 0,
               !suspendedLoopCategories.contains(category) else {
             return
         }
@@ -517,7 +579,7 @@ final class AudioManager: ObservableObject {
         bundle: Bundle,
         fadeDuration: TimeInterval
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive else { return }
         configureAudioSession()
 
         stopPhysicalLoop(
@@ -573,6 +635,7 @@ final class AudioManager: ObservableObject {
     private func stopPhysicalLoop(
         category: FruitfolioAudioCategory
     ) {
+        cancelPendingFadeOut(category)
         guard let player = loopPlayers[category] else {
             return
         }
@@ -590,7 +653,7 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory,
         bundle: Bundle
     ) {
-        guard !audioInterrupted, applicationIsActive else { return }
+        guard !allAudioMuted, !audioInterrupted, applicationIsActive else { return }
         configureAudioSession()
 
         do {
@@ -670,6 +733,7 @@ final class AudioManager: ObservableObject {
     private func isEnabled(
         _ category: FruitfolioAudioCategory
     ) -> Bool {
+        guard !allAudioMuted, volume(for: category) > 0 else { return false }
         guard let settings else {
             return true
         }
@@ -693,6 +757,7 @@ final class AudioManager: ObservableObject {
     private func volume(
         for category: FruitfolioAudioCategory
     ) -> Float {
+        if let delivered = categoryVolumes[category] { return delivered }
         guard let settings else {
             switch category {
 
@@ -736,21 +801,30 @@ final class AudioManager: ObservableObject {
     }
 
     private func applyCurrentVolume(
-        to category: FruitfolioAudioCategory
+        to category: FruitfolioAudioCategory,
+        explicitValue: Double? = nil
     ) {
-        let currentVolume =
-            isEnabled(category)
-            ? volume(for: category)
-            : 0
-
-        loopPlayers[category]?.volume =
-            currentVolume
-
-        if let players = oneShotPlayers[category] {
-            for player in players {
-                player.volume =
-                    currentVolume
+        // @Published sends before its stored value changes. Keep the delivered
+        // category value so zero-volume mute/resume uses the current preference.
+        if let explicitValue {
+            categoryVolumes[category] = Float(min(max(explicitValue, 0), 1))
+        }
+        let currentVolume = isEnabled(category) ? volume(for: category) : 0
+        if isContinuousCategory(category) {
+            if currentVolume == 0 {
+                muteContinuousAudio(category: category)
+            } else if loopPlayers[category]?.isPlaying != true,
+                      !suspendedLoopCategories.contains(category) {
+                resumeContinuousAudio(category: category)
             }
+        } else if currentVolume == 0 {
+            // A later slider change must not replay old effects/typing cues.
+            stopOneShots(category: category)
+        }
+        loopPlayers[category]?.volume =
+            suspendedLoopCategories.contains(category) ? 0 : currentVolume
+        if let players = oneShotPlayers[category] {
+            for player in players { player.volume = currentVolume }
         }
     }
 

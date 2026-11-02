@@ -25,12 +25,14 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published var inputText = ""
     @Published private(set) var messages: [AskMessage]
     @Published private(set) var answer: AskAnswer?
+    @Published private(set) var sessionAnswers: [UUID: AskAnswer] = [:]
     @Published private(set) var phase: Phase = .ready
     @Published private(set) var searchStatusText = "looking through the FruitsofLife.xo library…"
     @Published private(set) var displayedAnswerText = ""
     @Published private(set) var selectedEducationalAssets: [EducationalAssetDescriptor] = []
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
+    @Published var selectedExcerptRange: NSRange?
     @Published private(set) var excerptSaved = false
 
     let conversationID: UUID
@@ -81,6 +83,11 @@ final class Prompt09AskViewModel: ObservableObject {
             && phase != .searching
     }
 
+    var visibleMessages: [AskMessage] {
+        let answerIDs = Set(sessionAnswers.values.map(\.id))
+        return messages.filter { !answerIDs.contains($0.id) }
+    }
+
     var isConversationStarted: Bool {
         messages.contains {
             $0.role == .user
@@ -96,12 +103,13 @@ final class Prompt09AskViewModel: ObservableObject {
     func submitCurrentQuestion(
         reduceMotion: Bool
     ) async {
+        guard canSend else { return }
         requestTask?.cancel()
         let generation = UUID()
         requestGeneration = generation
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion)
+            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation)
         }
         requestTask = task
         await task.value
@@ -111,7 +119,8 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     private func performSubmitCurrentQuestion(
-        reduceMotion: Bool
+        reduceMotion: Bool,
+        generation: UUID
     ) async {
         let question = inputText
             .trimmingCharacters(
@@ -125,7 +134,7 @@ final class Prompt09AskViewModel: ObservableObject {
             return
         }
 
-        try? Task.checkCancellation()
+        guard !Task.isCancelled, requestGeneration == generation else { return }
         typingTask?.cancel()
 
         answer = nil
@@ -133,15 +142,12 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         inputText = ""
 
-        messages.append(
-            AskMessage(
-                role: .user,
-                text: question
-            )
-        )
+        let questionMessage = AskMessage(role: .user, text: question)
+        messages.append(questionMessage)
 
         phase = .searching
         searchStatusText = "looking through the FruitsofLife.xo library…"
@@ -155,7 +161,7 @@ final class Prompt09AskViewModel: ObservableObject {
                     conversation: messages,
                     trackerContext: nil
                 ) { [weak self] progress in
-                    guard let self else { return }
+                    guard let self, self.requestGeneration == generation, !Task.isCancelled else { return }
                     switch progress {
                     case .lookingThroughLibrary:
                         self.searchStatusText = "looking through the FruitsofLife.xo library…"
@@ -175,7 +181,10 @@ final class Prompt09AskViewModel: ObservableObject {
             }
 
             try Task.checkCancellation()
+            guard requestGeneration == generation else { return }
+            sessionAnswers[questionMessage.id] = response
             answer = response
+            messages.append(AskMessage(id: response.id, role: .fruitfolio, text: response.answerText))
 
             selectedEducationalAssets =
                 router.assets(
@@ -196,6 +205,7 @@ final class Prompt09AskViewModel: ObservableObject {
                 )
             }
         } catch {
+            guard !Task.isCancelled, requestGeneration == generation else { return }
             phase = .failed(
                 error.localizedDescription
             )
@@ -218,7 +228,8 @@ final class Prompt09AskViewModel: ObservableObject {
 
 
     func resetConversation() {
-        typingTask?.cancel()
+        cancelOutstandingWork()
+        sessionAnswers.removeAll()
 
         inputText = ""
         answer = nil
@@ -226,6 +237,7 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         phase = .ready
 

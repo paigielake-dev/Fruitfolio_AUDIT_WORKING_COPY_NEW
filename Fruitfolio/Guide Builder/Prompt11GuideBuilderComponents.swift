@@ -95,12 +95,15 @@ struct Prompt11GuideBookTile: View {
                 )
             }
             .frame(maxWidth: .infinity)
+            .accessibilityHidden(true)
         }
         .buttonStyle(
             CutePopButtonStyle(
                 reduceMotion: reduceMotion
             )
         )
+        .accessibilityElement(children: .ignore)
+        .accessibilityAddTraits(.isButton)
         .accessibilityLabel(
             "\(encyclopedia.name). \(encyclopedia.savedPageCount) saved pages."
         )
@@ -120,9 +123,9 @@ struct Prompt11NewGuideTile: View {
                     .scaledToFit()
                     .frame(width: 104, height: 122)
                     .accessibilityHidden(true)
-
+        
                 Text("make a new guide")
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .caption))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -136,7 +139,7 @@ struct Prompt11NewGuideTile: View {
                 reduceMotion: reduceMotion
             )
         )
-        .accessibilityLabel("Make a new guide")
+        .accessibilityAddTraits(.isButton)
     }
 }
 
@@ -218,7 +221,8 @@ struct Prompt11SavedPagePaper: View {
                     )
             }
 
-            Text(page.displayBody)
+            FruitfolioSemanticText(document: page.resolvedSemanticDocument,
+                baseFont: .custom("Chalkboard SE", size: 13.5, relativeTo: .body))
                 .font(.custom("Chalkboard SE", size: 13.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -226,24 +230,7 @@ struct Prompt11SavedPagePaper: View {
                 .lineSpacing(3)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
-            if !page.sourceIDs.isEmpty {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("sources")
-                        .font(.custom("Chalkboard SE", size: 11))
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
-
-                    ForEach(page.sourceIDs, id: \.self) { sourceID in
-                        Text(sourceID)
-                            .font(.custom("Chalkboard SE", size: 10))
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.secondaryBurgundy
-                            )
-                    }
-                }
-            }
+            Prompt10SavedCitationsView(page: page)
 
             if !page.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 VStack(alignment: .leading, spacing: 5) {

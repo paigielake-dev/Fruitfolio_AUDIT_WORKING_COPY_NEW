@@ -3,6 +3,8 @@ import SwiftUI
 struct Prompt15CycleTrackerView: View {
     let onBack: () -> Void
 
+    @State private var showMyContext = false
+    @State private var contextRevision = UUID()
     @State private var selectedSection: Prompt15CycleSection = .today
     @State private var predictionLearningInfo:
         Prompt16PredictionLearningInfo?
@@ -27,6 +29,8 @@ struct Prompt15CycleTrackerView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         header
+                        FruitfolioControlPillButton(label: "my context") { showMyContext = true }
+                            .padding(.top, 12)
 
                         Prompt15CycleNavigation(
                             selectedSection: selectedSection,
@@ -50,6 +54,7 @@ struct Prompt15CycleTrackerView: View {
                         .padding(.top, 2)
 
                         contentRegion
+                            .id(contextRevision)
                             .padding(.top, 4)
                     }
                     .frame(maxWidth: 560, alignment: .leading)
@@ -108,6 +113,13 @@ struct Prompt15CycleTrackerView: View {
             Prompt15Palette.paper
                 .ignoresSafeArea()
         )
+        .fullScreenCover(isPresented: $showMyContext) {
+            Prompt27AMyContextView(store: contextStore) {
+                showMyContext = false
+                contextRevision = UUID()
+                calendarRefreshID = UUID()
+            }
+        }
         .navigationBarBackButtonHidden(true)
     }
 

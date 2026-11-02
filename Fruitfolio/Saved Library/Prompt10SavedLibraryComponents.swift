@@ -17,23 +17,22 @@ struct Prompt10BookTile: View {
                     .accessibilityHidden(true)
 
                 Text(encyclopedia.name)
-                    .font(.custom("Chalkboard SE", size: 14))
+                    .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .truncationMode(.tail)
+                    .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 132)
 
                 Text(metadataText)
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                    .font(.custom("Chalkboard SE", size: 10.5, relativeTo: .caption))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
                     .multilineTextAlignment(.center)
-                    .lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .frame(
                 maxWidth: .infinity,
@@ -77,25 +76,7 @@ struct Prompt10LibraryHero: View {
             .frame(maxWidth: 310)
             .accessibilityHidden(true)
 
-            if !isEmpty {
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookStack
-                    )
-                    .frame(width: 72)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .pottedPlant
-                    )
-                    .frame(width: 64)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 12)
-                .offset(y: 48)
-            }
         }
         .frame(
             maxWidth: .infinity,
@@ -136,7 +117,7 @@ struct Prompt10QuietSearchField: View {
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
                 .frame(
                     minWidth: DesignTokens.Layout.minimumHitTarget,
                     minHeight: DesignTokens.Layout.minimumHitTarget
@@ -241,7 +222,7 @@ struct Prompt10SortPicker: View {
                             )
                             .padding(.horizontal, 12)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(CutePopButtonStyle())
                     }
                 }
                 .padding(.vertical, 6)
@@ -274,30 +255,10 @@ struct Prompt10WatercolorPopup<Content: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        GeometryReader { proxy in
-            let paperWidth = min(max(proxy.size.width - 32, 280), 340)
-            let safeBodyWidth = paperWidth * 0.80
-
-            ZStack {
-                DesignTokens.ColorToken.primaryBurgundy
-                    .opacity(0.10)
-                    .ignoresSafeArea()
-
-                ZStack(alignment: .center) {
-                    Image("popup_notebook_paper")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: paperWidth)
-                        .accessibilityHidden(true)
-
-                    content()
-                        .frame(width: safeBodyWidth, alignment: .center)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 30)
-                }
-                .frame(width: paperWidth, alignment: .center)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        FruitfolioPopupArtworkSurface(assetName: "popup_notebook_paper",
+            normalizedWriting: CGRect(x: 0.24, y: 0.14, width: 0.65, height: 0.76),
+            maximumWidth: 420) {
+                content().multilineTextAlignment(.center)
             }
-        }
     }
 }

@@ -50,6 +50,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
 
     var sourceIDs: [String]
     var sourceVersions: [String: String]
+    var sourceSnapshots: [AskSourceRecord]?
     var knowledgeBaseVersion: String?
     var generationTimestamp: Date?
 
@@ -60,6 +61,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var order: Int
     var sourceSavedPageID: UUID?
     var importedImageIDs: [String]?
+    var semanticDocument: FruitfolioSemanticDocument?
+    var isUserAuthored: Bool?
 
     init(
         id: UUID = UUID(),
@@ -72,6 +75,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         originalConversationID: String? = nil,
         sourceIDs: [String] = [],
         sourceVersions: [String: String] = [:],
+        sourceSnapshots: [AskSourceRecord]? = nil,
         knowledgeBaseVersion: String? = nil,
         generationTimestamp: Date? = nil,
         savedAt: Date = Date(),
@@ -79,7 +83,9 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         notes: String = "",
         order: Int = 0,
         sourceSavedPageID: UUID? = nil,
-        importedImageIDs: [String]? = nil
+        importedImageIDs: [String]? = nil,
+        semanticDocument: FruitfolioSemanticDocument? = nil,
+        isUserAuthored: Bool? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -91,6 +97,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
         self.sourceVersions = sourceVersions
+        self.sourceSnapshots = sourceSnapshots
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
         self.savedAt = savedAt
@@ -99,6 +106,15 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.order = order
         self.sourceSavedPageID = sourceSavedPageID
         self.importedImageIDs = importedImageIDs
+        self.semanticDocument = semanticDocument
+        self.isUserAuthored = isUserAuthored
+    }
+
+    var resolvedSemanticDocument: FruitfolioSemanticDocument {
+        guard let semanticDocument, semanticDocument.plainText == displayBody else {
+            return .init(spans: [.init(text: displayBody)])
+        }
+        return semanticDocument
     }
 
     var displayBody: String {

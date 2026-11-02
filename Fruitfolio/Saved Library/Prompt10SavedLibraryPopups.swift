@@ -10,44 +10,13 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var title = ""
+    @FocusState private var titleFocused: Bool
     @State private var selectedStyle: Prompt10BookStyle = .sage
     @State private var errorMessage: String?
 
     var body: some View {
-        GeometryReader { proxy in
-            popupLayout(in: proxy)
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
-        }
-    }
-
-    private func popupLayout(
-        in proxy: GeometryProxy
-    ) -> some View {
-        let paperWidth = min(
-            max(proxy.size.width - 28, 280),
-            365
-        )
-
-        return ZStack {
-            Color.clear
-
-            Prompt10WatercolorPopup {
-                popupContent
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 30)
-                    .padding(.bottom, 30)
-            }
-            .frame(width: paperWidth)
-            .frame(minHeight: 520)
-        }
-        .frame(
-            width: proxy.size.width,
-            height: proxy.size.height,
-            alignment: .center
-        )
+        Prompt10WatercolorPopup { popupContent }
+            .onAppear { audioManager.play(.popupOpen) }
     }
 
     private var popupContent: some View {
@@ -112,6 +81,9 @@ struct Prompt10CreateEncyclopediaPopup: View {
             DesignTokens.ColorToken.primaryBurgundy
         )
         .textFieldStyle(.plain)
+        .focused($titleFocused)
+        .submitLabel(.done)
+        .onSubmit { titleFocused = false }
         .padding(.horizontal, 14)
         .frame(minHeight: 46)
         .frame(maxWidth: 300)
@@ -129,7 +101,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var coverPicker: some View {
-        HStack(spacing: 12) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 54, maximum: 64), spacing: 12)], spacing: 12) {
             ForEach(
                 Prompt10BookStyle.allCases,
                 id: \.self

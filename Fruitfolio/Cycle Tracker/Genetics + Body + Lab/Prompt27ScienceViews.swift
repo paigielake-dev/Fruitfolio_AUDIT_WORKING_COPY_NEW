@@ -60,7 +60,7 @@ struct Prompt27ScientificHotspotOverlay: View {
                                 .frame(width: 18, height: 18)
                         )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
                 .accessibilityLabel(Text(hotspot.label))
                 .accessibilityHint(Text("Opens educational detail"))
                 .position(
@@ -162,7 +162,7 @@ struct Prompt27ContextualScienceSectionView: View {
                     .frame(minHeight: 44)
                     .accessibilityHint(Text("Saves this educational content"))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
             }
             .frame(maxWidth: 680, alignment: .leading)
             .padding(.horizontal, 24)

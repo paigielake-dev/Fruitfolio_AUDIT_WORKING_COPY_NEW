@@ -394,7 +394,9 @@ struct Prompt16TodayView: View {
                     .padding(.horizontal, 10)
                     .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
+                .accessibilityElement(children: .ignore)
+                .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(
                     "Why is my cycle wheel blank?"
                 )
@@ -1361,7 +1363,7 @@ private struct Prompt16ButterflyFlightDecoration: View {
                     .contentShape(Rectangle())
                     .accessibilityHidden(true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(CutePopButtonStyle())
             .frame(minWidth: 74, minHeight: 74)
             .contentShape(Rectangle())
             .offset(flightOffset)

@@ -1,0 +1,13 @@
+# Open and verify the current Fruitfolio project
+
+Open `Fruitfolio.xcodeproj` in Xcode, select the shared `Fruitfolio` scheme, choose an installed iPhone Simulator, then use Product → Run. The deployment target is iOS 17.0. Simulator builds do not require a development team. For a physical iPhone, select your own Apple signing team and provision the bundle identifier before running.
+
+The original artwork, audio, research package, FruitfolioAI GGUF and official MADLAD Q4 resources are retained. Run `python3 Tools/prepare_madlad_resources.py` to verify all eight official translation files. It retrieves an absent file from the approved official source and rejects a mismatching file.
+
+The two local runtimes are separate: llama executes FruitfolioAI's grounded answer generation; the Rust/Candle T5 encoder–decoder adapter executes MADLAD translation. MADLAD never replaces retrieval or grounded generation. When rebuilding the MADLAD XCFramework, install Rust and run `bash Tools/build_ios_madlad.sh` on the Mac with Xcode selected. It builds actual device and Simulator ARM slices, namespaces headers, applies the documented exact-row embedding adaptation to pinned Candle source, and replaces the reproducible framework only after packaging succeeds. The original model bytes and quantization are unchanged.
+
+GitHub Actions workflow `.github/workflows/ios-verification.yml` builds the actual app/test targets, runs unit/native inference tests, focused actual UI journeys and broad UI/a11y coverage. Evidence is uploaded before later tests can fail. Review `Delivery/CURRENT_EXECUTION_STATE.json` for exact commit/run applicability; an older passing build does not verify later source edits.
+
+Run35 proved that the app-linked MADLAD runtime actually executes the bundled official model in the Simulator. This is a bounded runtime result. Production translation remains gated: the original raw paragraph failed safety/citation preservation, two extended language fixtures changed decimal punctuation, five required exact tokenizer tags are absent, Chinese script differentiation is unverified, and full app-wide localization and physical-device acceptance remain unfinished. No alternate model or cloud translator is substituted.
+
+The physical-iPhone file-protection test intentionally skips on Simulator because that environment omits the relevant file-protection attribute. A Simulator skip is not privacy verification. Account synchronization/provider configuration and production storefront verification also require their actual external configuration and acceptance; development state transitions must not be presented as a working remote service.

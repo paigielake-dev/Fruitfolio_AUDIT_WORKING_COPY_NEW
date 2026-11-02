@@ -416,7 +416,7 @@ final class Prompt03ArchitectureTests: XCTestCase {
     func testPrompt01RegistryStillHasAllProductionAssets() {
         XCTAssertEqual(
             AssetConstants.productionAssetCount,
-            265
+            266
         )
 
         XCTAssertEqual(

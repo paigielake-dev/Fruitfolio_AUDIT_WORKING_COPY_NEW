@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 enum Prompt12DataManagementMode: Equatable {
     case fullPage
@@ -12,13 +13,44 @@ struct Prompt12DataManagementView: View {
     let onBack: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var contextStore: Prompt27AContextStore
+    @EnvironmentObject private var motion: MotionPreferences
+    @State private var exportDocument: FruitfolioPersonalDataDocument?
+    @State private var showingExportDestination = false
+    @State private var preparingExport = false
 
+    @State private var confirmHormoneErase = false
     @State private var message: String?
     @State private var showLocalDeletionNotice = false
 
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .fruitfolioModalBlur(active: confirmHormoneErase, reduceMotion: motion.reduceMotionActive)
+            .overlay {
+                if confirmHormoneErase {
+                    Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete all hormone measurements?",
+                        message: "this removes hormone results only. cycle logs, saved guides, and account information are unchanged.",
+                        primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "delete hormone measurements",
+                        primaryAction: { confirmHormoneErase = false }, secondaryAction: nil,
+                        destructiveAction: {
+                            do {
+                                try HormoneMeasurementStore.shared.eraseAll()
+                                message = "hormone measurements have been deleted from this device."
+                            } catch { message = error.localizedDescription }
+                            confirmHormoneErase = false
+                        })
+                }
+            }
+            .fileExporter(isPresented: $showingExportDestination, document: exportDocument,
+                          contentType: .json, defaultFilename: "Fruitfolio-Personal-Data") { result in
+                switch result {
+                case .success: message = "your personal data JSON was exported. keep it somewhere private."
+                case .failure(let error): message = error.localizedDescription
+                }
+                exportDocument = nil
+            }
     }
 
     private var content: some View {
@@ -151,6 +183,10 @@ struct Prompt12DataManagementView: View {
             exportCard
             includedAreasCard
             deletionCard
+            FruitfolioControlPillButton(label: "delete local hormone measurements") {
+                confirmHormoneErase = true
+            }
+            .accessibilityIdentifier("data.deleteHormones")
 
             if let message {
                 Text(message)
@@ -206,14 +242,16 @@ struct Prompt12DataManagementView: View {
             )
 
             centeredInfoText(
-                "prepare a readable record of supported personal Fruitfolio data. this is separate from exporting a pretty encyclopedia as a PDF."
+                "export readable JSON of your account, saved encyclopedia and guide text, source references, settings, cycle records, reported context, hormone results, and Fruit Basket progress. this file contains sensitive health data. choose a private destination. original imported image files and session-only Ask conversations are not included; this is not a complete media backup."
             )
 
             FruitfolioControlPillButton(
-                label: "prepare export"
+                label: preparingExport ? "preparing your export…" : "prepare export"
             ) {
                 prepareExport()
             }
+            .disabled(preparingExport)
+            .accessibilityIdentifier("data.prepareExport")
             .frame(
                 maxWidth: 260,
                 alignment: .center
@@ -418,17 +456,23 @@ struct Prompt12DataManagementView: View {
     }
 
     private func prepareExport() {
-        do {
-            let export =
-                try store.prepareDataExport()
-
-            message =
-                "your data is ready ♡ · \(export.scopes.count) areas included"
-        } catch {
-            message =
-                error.localizedDescription
+        guard !preparingExport else { return }
+        preparingExport = true
+        message = nil
+        Task { @MainActor in
+            defer { preparingExport = false }
+            do {
+                let data = try await FruitfolioPersonalDataExport.capture(account: store.account,
+                    username: FruitfolioUsernameStore.shared.username, settings: settings,
+                    library: .shared, context: contextStore, hormones: .shared)
+                _ = try store.prepareDataExport()
+                exportDocument = FruitfolioPersonalDataDocument(data: data)
+                showingExportDestination = true
+                message = "your readable JSON is prepared. choose where to save it; nothing is sent automatically."
+            } catch {
+                exportDocument = nil
+                message = error.localizedDescription
+            }
         }
     }
 }
-
-

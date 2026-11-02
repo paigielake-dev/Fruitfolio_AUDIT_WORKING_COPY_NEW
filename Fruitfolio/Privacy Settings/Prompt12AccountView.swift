@@ -17,6 +17,7 @@ struct Prompt12AccountView: View {
     @State private var showDataExport = false
     @State private var usernameDraft = ""
     @State private var usernameMessage: String?
+    @FocusState private var usernameFocused: Bool
 
     var body: some View {
         ZStack {
@@ -75,12 +76,6 @@ struct Prompt12AccountView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if activeOverlay {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             overlayLayer
                 .zIndex(100)
@@ -124,6 +119,10 @@ struct Prompt12AccountView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             TextField("public username", text: $usernameDraft)
+                .focused($usernameFocused)
+                .submitLabel(.done)
+                .onSubmit { usernameFocused = false }
+                .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
@@ -139,6 +138,7 @@ struct Prompt12AccountView: View {
             }
 
             WatercolorSecondaryButton(label: "save username") {
+                usernameFocused = false
                 audioManager.play(.buttonSoftPop)
                 if let error = usernameStore.setUsername(usernameDraft) {
                     usernameMessage = error
@@ -150,7 +150,7 @@ struct Prompt12AccountView: View {
         }
         .onAppear { usernameDraft = usernameStore.username }
         .onChange(of: usernameStore.username) { _, newValue in
-            if usernameDraft != newValue { usernameDraft = newValue }
+            if !usernameFocused, usernameDraft != newValue { usernameDraft = newValue }
         }
     }
 
@@ -164,7 +164,7 @@ struct Prompt12AccountView: View {
                 )
 
             Prompt12InfoText(
-                "sign in to keep supported Fruitfolio data connected to you across devices. local features can still use local storage when available."
+                "account connection is unavailable. your information stays on this device, and your public username still works."
             )
 
             TextField("email", text: $email)
@@ -354,7 +354,7 @@ struct Prompt12AccountView: View {
 
     private func signIn() {
         do {
-            try store.signInForDevelopment(email: email)
+            try store.signIn(email: email)
             message = nil
         } catch {
             message = error.localizedDescription

@@ -1,0 +1,7 @@
+# Branch contact repair — actual execution pending
+
+The inherited branch was visually detached from the edge and only applied a continuous left drift inside a broad region. Spawn logic also rerouted nearly every fruit away from it. The original 450×448 branch is now mirrored with its painted trunk anchored at the right screen edge. Rendering and collision share its current aspect-preserving field geometry. A bounded centerline approximation follows the painted trunk and limbs, rather than colliding with the entire transparent image rectangle.
+
+Actual contact produces one short upward/leftward deflection, then resumes normal falling while retaining the object's original immutable base fall speed. This implements the explicitly required obstacle bounce; it does not increase game-level speed during a fall. Deflection state is removed when an object leaves play. The old spawn avoidance is removed so the visible obstacle can actually be encountered. Two deterministic tests exercise trunk placement, noncontact, and the real VM frame through bounce and resumed descent. Visual timing/recording, different iPhone layouts and actual Xcode results remain NOT VERIFIED.
+
+CI queue maintenance retains Run62's verified 528-test unit artifact and metadata before superseding that older attempt, which remained at its artifact-upload step. Run64 and later already include the same native Button-label repair; no pending Run62 UI result is called PASS. Requested Run50 and Run51 remain protected. No commits or artifacts are deleted.

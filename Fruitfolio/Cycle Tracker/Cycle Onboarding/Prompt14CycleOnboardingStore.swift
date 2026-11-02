@@ -167,9 +167,10 @@ actor Prompt14CycleOnboardingStore {
     }
 
     func eraseOnboardingOnly() async throws {
+        // Keep the visible saved answers intact if storage refuses deletion.
+        try await persistence.erase()
         draft = Prompt14OnboardingDraft()
         isLoaded = true
-        try await persistence.erase()
     }
 
     private func loadIfNeeded() async throws {

@@ -117,6 +117,9 @@ struct Prompt28FruitBasketEngine: Sendable {
             default: return [.branch, .wind]
             }
         default:
+            // Rain creates the puddle. Keep the existing two-obstacle budget
+            // rather than add a third obstacle to the ordinary round plan.
+            if level >= 6, round.isMultiple(of: 3) { return [.puddle, .vines] }
             // Levels 5–8 vary the challenge without stacking every obstacle at once.
             switch round % 4 {
             case 0: return [.vines, .puddle]
@@ -194,4 +197,68 @@ struct Prompt28SpawnPlanner: Sendable {
     mutating func reset() {
         consecutiveBadSpawns = 0
     }
+}
+
+/// The same normalized image bounds used by the original vine artwork renderer.
+/// Contact is a bounded image-envelope approximation, not an invisible full-width band.
+struct Prompt28VineContactGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    let level: Int
+
+    var normalizedArtworkBounds: CGRect {
+        guard fieldWidth > 0, fieldHeight > 0 else { return .zero }
+        let width = level == 2 ? 0.20 : 0.30
+        let centerX = level == 2 ? 0.07 : 0.11
+        // Original fruitbasket_vines is 344 x 448 pixels; .fit preserves its aspect ratio.
+        let height = width * fieldWidth * (448.0 / 344.0) / fieldHeight
+        return CGRect(x: centerX - width / 2, y: 0.54 - height / 2,
+                      width: width, height: height)
+    }
+
+    func contains(x: Double, y: Double) -> Bool {
+        guard fieldWidth > 0, fieldHeight > 0 else { return false }
+        return normalizedArtworkBounds.contains(CGPoint(x: x, y: y))
+    }
+}
+
+/// Original branch is mirrored so its painted trunk grows from the right edge.
+/// Centerline contact approximates the painted wood, not the transparent image box.
+struct Prompt28BranchContactGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    var artworkWidth: Double { min(fieldWidth * 0.30, 176) }
+    var artworkCenterX: Double { fieldWidth - artworkWidth * ((1 - 78.0 / 450.0) - 0.5) }
+
+    func point(originalX: Double, originalY: Double) -> CGPoint {
+        CGPoint(x: artworkCenterX + ((1 - originalX / 450) - 0.5) * artworkWidth,
+                y: fieldHeight * 0.40 + (originalY / 448 - 0.5) * artworkWidth * (448.0 / 450.0))
+    }
+
+    func contains(x: Double, y: Double, radius: Double) -> Bool {
+        guard fieldWidth > 0, fieldHeight > 0 else { return false }
+        let point = CGPoint(x: x * fieldWidth, y: y * fieldHeight)
+        let paths: [[CGPoint]] = [
+            [self.point(originalX: 78, originalY: 410), self.point(originalX: 187, originalY: 348),
+             self.point(originalX: 249, originalY: 257), self.point(originalX: 295, originalY: 140), self.point(originalX: 361, originalY: 52)],
+            [self.point(originalX: 249, originalY: 277), self.point(originalX: 326, originalY: 244), self.point(originalX: 372, originalY: 206)],
+            [self.point(originalX: 280, originalY: 268), self.point(originalX: 385, originalY: 276)]
+        ]
+        for path in paths {
+            for (a, b) in zip(path, path.dropFirst()) {
+                let dx = b.x - a.x, dy = b.y - a.y
+                let denominator = dx * dx + dy * dy
+                let t = denominator > 0 ? min(max(((point.x - a.x) * dx + (point.y - a.y) * dy) / denominator, 0), 1) : 0
+                let distance = hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy))
+                if distance <= radius + artworkWidth * (10.0 / 450.0) { return true }
+            }
+        }
+        return false
+    }
+}
+
+struct Prompt28BranchDeflection {
+    var elapsed: Double = 0
+    let horizontalVelocity: Double
+    var verticalMultiplier: Double { min(1, -0.45 + 1.45 * elapsed / 0.24) }
 }

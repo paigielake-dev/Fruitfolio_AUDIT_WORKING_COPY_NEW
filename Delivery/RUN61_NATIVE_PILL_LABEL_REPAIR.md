@@ -1,0 +1,7 @@
+# Actual Run61 native control label diagnosis
+
+Run61's current-source Contact tests failed before reaching the email action, and both strict FAQ audits reported “Element has no description” on the LifeBridge information Button. The captured native hierarchy shows the important distinction: the contained StaticText now has its correct intrinsic 159 × 21.3 bounds, but the enclosing 292 × 82 Button has no label. The same missing action name blocked the Account username journey. These are current-source UI failures, not a regression of the username persistence model, which actually passed its full ordinary-typing/restart journey in Run50.
+
+Keep the real contained text and original painting, and explicitly assign the existing visible label to the actual Button. Do not hide the label, remove its native text bounds, filter audit types, suppress issues, or weaken query/name/target/navigation assertions. This repairs the lost automatic label aggregation caused by adding a contained child. Actual strict Contact/FAQ, username, guarded modal and native contrast reruns are required before accepting it.
+
+Run61 app/test build, 528 XCTest (527 PASS, one physical SKIP, zero FAIL), 25 Swift Testing tests, and controlled offline native Ask/MADLAD verification remain valid only for their exact scope. Current UI acceptance is still incomplete. Superseded Run59/60 attempts are inventoried and retained through GitHub artifacts before cancellation; requested Run50/51 and Run61 evidence are preserved. No cancelled stage is counted as PASS.

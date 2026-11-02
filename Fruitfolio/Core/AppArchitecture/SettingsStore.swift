@@ -50,6 +50,15 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
 
     var id: String { rawValue }
     var localeIdentifier: String { rawValue }
+    /// Exact official model tokenizer tags. Script selection is not collapsed
+    /// into a generic Chinese target; absent language tags remain unsupported.
+    var madladTargetCode: String {
+        switch self {
+        case .chineseSimplified: return "zh"
+        case .chineseTraditional: return "zh_Hant"
+        default: return rawValue
+        }
+    }
     var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu }
 
     /// Native/autonym labels deliberately remain recognizable even when the current UI language changes.
@@ -119,6 +128,7 @@ enum FruitfolioLanguagePreferences {
 @MainActor
 final class SettingsStore: ObservableObject {
     private enum Key {
+        static let allAudioMuted = "fruitfolio.settings.allAudioMuted"
         static let musicEnabled = "fruitfolio.settings.musicEnabled"
         static let rainEnabled = "fruitfolio.settings.rainEnabled"
         static let soundEffectsEnabled = "fruitfolio.settings.soundEffectsEnabled"
@@ -134,6 +144,7 @@ final class SettingsStore: ObservableObject {
 
     private let defaults: UserDefaults
 
+    @Published var allAudioMuted: Bool { didSet { defaults.set(allAudioMuted, forKey: Key.allAudioMuted) } }
     @Published var musicEnabled: Bool { didSet { defaults.set(musicEnabled, forKey: Key.musicEnabled) } }
     @Published var rainEnabled: Bool { didSet { defaults.set(rainEnabled, forKey: Key.rainEnabled) } }
     @Published var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
@@ -150,6 +161,7 @@ final class SettingsStore: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        self.allAudioMuted = Self.bool(defaults, key: Key.allAudioMuted, fallback: false)
         self.musicEnabled = Self.bool(defaults, key: Key.musicEnabled, fallback: true)
         self.rainEnabled = Self.bool(defaults, key: Key.rainEnabled, fallback: true)
         self.soundEffectsEnabled = Self.bool(defaults, key: Key.soundEffectsEnabled, fallback: true)

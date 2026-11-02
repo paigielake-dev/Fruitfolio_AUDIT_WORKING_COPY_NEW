@@ -49,14 +49,6 @@ struct Prompt11GuideBuilderView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if overlay != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(90)
-            }
 
             overlayLayer
                 .zIndex(100)
@@ -185,7 +177,7 @@ struct Prompt11GuideBuilderView: View {
                 .accessibilityHidden(true)
 
             Text("your bookshelf is waiting ♡")
-                .font(.custom("Chalkboard SE", size: 17))
+                .font(.custom("Chalkboard SE", size: 17, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -194,22 +186,24 @@ struct Prompt11GuideBuilderView: View {
             Text(
                 "save things from Ask the Encyclopedia, then bring your favorites together here."
             )
-            .font(.custom("Chalkboard SE", size: 12.5))
+            .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
             .foregroundStyle(
                 DesignTokens.ColorToken.secondaryBurgundy
             )
             .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: 270)
 
             if store.prompt11AllSavedMaterial().isEmpty {
                 Text(
                     "you’ll need something saved before your first guide has pages to gather."
                 )
-                .font(.custom("Chalkboard SE", size: 11))
+                .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: 270)
             }
 

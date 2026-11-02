@@ -43,16 +43,47 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             contentVersion: "native-inference-smoke-test"
         )
 
-        // Calling the llama actor directly ensures a fallback cannot pass this test.
-        // A thrown error (including invalid JSON) fails the test.
-        let draft = try await model.generateDraft(
-            question: "How does progesterone affect basal body temperature?",
-            evidence: evidence
+        let negativeNote = FruitfolioResearchNoteChunk(
+            chunkID: "negative_note_2", researchTopicID: "topic_2",
+            heading: "temperature and ovulation", subheading: nil,
+            text: "A single temperature rise does not confirm ovulation.",
+            sourceIDs: [], semanticTags: [], domainTags: []
         )
-        let hasContent = !(draft.bridge ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-            || !draft.claims.isEmpty
-            || !(draft.limitation ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        XCTAssertTrue(hasContent, "Native llama must generate nonempty structured content")
+        let negativePacket = FruitfolioEvidencePacket(
+            normalizedQuestion: "does a single temperature rise confirm ovulation?",
+            researchNoteChunks: [negativeNote], sourceChunks: [],
+            claimEvidenceMap: [FruitfolioClaimEvidence(
+                claim: FruitfolioClaimNeed(id: "claim_1", text: "temperature rise confirm ovulation"),
+                noteChunkIDs: [negativeNote.chunkID], sourceChunkIDs: []
+            )],
+            sourceRecords: [],
+            safetyClassification: Prompt34SafetyClassification(level: .normal, matchedPatterns: []),
+            permittedContext: nil, contentVersion: "native-negation-fixture"
+        )
+        // Direct native calls cannot be satisfied by a mock or retrieval fallback.
+        // The second request changes evidence IDs and tests a critical negation.
+        let requests = [
+            ("How does progesterone affect basal body temperature?", evidence),
+            ("Does a single temperature rise confirm ovulation?", negativePacket)
+        ]
+        for (index, request) in requests.enumerated() {
+            let attempt = index + 1
+            let draft = try await model.generateDraft(question: request.0, evidence: request.1)
+            let encodedDraft = try JSONEncoder().encode(draft)
+            let attachment = XCTAttachment(data: encodedDraft, uniformTypeIdentifier: "public.json")
+            attachment.name = "NativeDraft_Request_\(attempt)"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            XCTAssertFalse(draft.claims.isEmpty, "Native draft must contain a claim on request \(attempt)")
+            XCTAssertNotNil(
+                FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: request.1),
+                "Native draft must retain the supplied evidence and identifier on request \(attempt): \(String(decoding: encodedDraft, as: UTF8.self))"
+            )
+        }
+    }
+#else
+    func testNativeRuntimeMustBeLinkedForAIValidation() {
+        XCTFail("The llama module is unavailable. Native inference must not be reported as verified by conditionally omitting its test.")
     }
 #endif
 
@@ -193,7 +224,7 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             bridge: "here’s the evidence-bounded version:",
             claims: [
                 FruitfolioGeneratedClaim(
-                    text: "Progesterone is associated with a temperature rise after ovulation.",
+                    text: "Progesterone is associated with a post-ovulatory basal body temperature rise.",
                     evidenceIDs: ["note_1"]
                 )
             ],
@@ -206,5 +237,18 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
         )
         XCTAssertNotNil(text)
         XCTAssertTrue(text?.contains("Progesterone") == true)
+        XCTAssertFalse(text?.contains("here’s the evidence-bounded version") == true)
+        let unsupported = FruitfolioGeneratedDraft(
+            bridge: nil,
+            claims: [FruitfolioGeneratedClaim(text: "Progesterone cures cancer.", evidenceIDs: ["note_1"])],
+            limitation: nil
+        )
+        XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: unsupported, evidence: packet))
+        let changedNegation = FruitfolioGeneratedDraft(
+            bridge: nil,
+            claims: [FruitfolioGeneratedClaim(text: "Progesterone is not associated with a post-ovulatory basal body temperature rise.", evidenceIDs: ["note_1"])],
+            limitation: nil
+        )
+        XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: changedNegation, evidence: packet))
     }
 }

@@ -1,0 +1,11 @@
+# Preserve and repair the existing unified symptom graph
+
+The checkpoint already contained one unified graph and in-place symptom toggles. That implementation is retained rather than rebuilt. Inspection against Prompt1B 15C found two deviations: first selection was fixed to cramps, leaving users who had logged other symptoms with an empty graph; and the canvas silently omitted actual dated observations without a cycle-day assignment while its accessibility count said they were shown.
+
+Initial selection now includes all and only logged symptoms. An explicit user selection, including hiding every symptom, remains respected; removed/unlogged symptoms cannot appear. The graph places each actual observation on its actual recorded date, retaining unknown cycle-day assignments as unknown. It never synthesizes missing days or connects observations into predicted symptoms. Existing repeated-cycle pattern calculations and their evidence thresholds are unchanged.
+
+The original graph-paper treatment remains, with a separate label column, Dynamic Type row/footer spacing, and original burgundy dots. A readable expandable alternative lists the exact symptom, date and recorded cycle day if known. The graph's accessibility count refers only to plotted actual records; individual exact details are available separately. Three deterministic tests cover initial/custom/empty selection, missing cycle-day retention, date spacing, filtered records, and a single recorded point. Actual Xcode, crowded graph, small-screen, accessibility-size and VoiceOver acceptance remain pending.
+
+The Run50 health screenshots also exposed system title typography on the new reported-context screens. Those headers and the new measurement history heading now explicitly use relative Chalkboard SE fonts, preserving artwork and exact stored text. This is pending its own visual/native accessibility verification.
+
+The local tree-sitter Swift parser reports a baseline grammar error on the existing multiline multiplication in Prompt24ChartMath.x. The untouched baseline file has the same parser error and previously compiled in Xcode; no unrelated working math was rewritten to satisfy that parser. The new data model and tests parse. Actual Xcode remains the compilation authority.

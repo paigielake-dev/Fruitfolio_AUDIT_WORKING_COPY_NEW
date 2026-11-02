@@ -1,9 +1,29 @@
 import Foundation
 
 enum AssetRegistry {
-    static let expectedProductionPNGCount = 265
+    static let expectedProductionPNGCount = 266
 
     static let all: [FruitfolioAssetRecord] = [
+        .init(
+            id: .decor_fluffy_cloud,
+            filename: "decor_fluffy_cloud.png",
+            physicalFolder: "Art/Decor:",
+            assetClass: .decorative,
+            category: "Decor",
+            subcategory: nil,
+            primaryDestination: "FAQ",
+            allowedSecondaryDestinations: [],
+            interactionBehavior: "noninteractive decoration; never overlays functional content",
+            accessibilityLabel: nil,
+            longPressLabel: nil,
+            researchSupportRequired: false,
+            preferredWidthMinFraction: 0.3,
+            preferredWidthMaxFraction: 0.44,
+            animationAllowed: false,
+            allowedAnimations: [],
+            status: .wired,
+            notes: "Exact founder-supplied decor_fluffy_cloud.png; no replacement or generated artwork."
+        ),
         .init(
             id: .popup_pushpin,
             filename: "popup_pushpin.png",

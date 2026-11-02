@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 private enum Prompt28TextRole {
     case screenTitle
@@ -58,6 +59,8 @@ struct Prompt28FruitBasketView: View {
     @State private var showTour = false
     @State private var tourStep = 0
     @State private var leaderboardValidationMessage: String?
+    @State private var leaderboardUsernameDraft = ""
+    @FocusState private var leaderboardUsernameFocused: Bool
     @State private var selectedLeaderboardCategory: Prompt28LeaderboardCategory = .fruit
 
     init(
@@ -109,6 +112,13 @@ struct Prompt28FruitBasketView: View {
                     .zIndex(100)
             }
         }
+        .fruitfolioModalBlur(active: viewModel.showingStormNotice, reduceMotion: motionPreferences.reduceMotionActive)
+        .overlay {
+            if viewModel.showingStormNotice {
+                Prompt28StormNoticeView(onContinue: { viewModel.dismissStormNotice() })
+                    .zIndex(200)
+            }
+        }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
@@ -122,6 +132,7 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            viewModel.viewWillDisappear()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
@@ -967,6 +978,13 @@ struct Prompt28FruitBasketView: View {
                             )
                         )
                         .fontWeight(.bold)
+                    Text("star passes: \(viewModel.session?.availableStarPasses ?? 0)")
+                        .font(.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("fruitBasket.availableStarPasses")
+                        .accessibilityValue((viewModel.session?.availableStarPasses ?? 0) > 0
+                            ? "one pass will be used if you catch a bad fruit; the round will continue"
+                            : "with no star pass, a bad-fruit catch ends this round")
                 }
                 .frame(width: width)
                 .offset(
@@ -1011,6 +1029,17 @@ struct Prompt28FruitBasketView: View {
                 audioManager.play(.fruitCatch)
             }
         }
+        .onChange(of: viewModel.vineContactCount) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.vineRustle) }
+        }
+        .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.starChime) }
+            else if newValue < oldValue { audioManager.play(.notificationSoftSparkle) }
+            if UIAccessibility.isVoiceOverRunning {
+                let change = newValue > oldValue ? "star pass banked" : "one star pass used"
+                UIAccessibility.post(notification: .announcement, argument: "\(change). star passes: \(newValue).")
+            }
+        }
     }
 
     @ViewBuilder
@@ -1040,12 +1069,14 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.branch) {
+            let branchGeometry = Prompt28BranchContactGeometry(fieldWidth: width, fieldHeight: height)
             FruitfolioImage(
                 id: .fruitbasket_branch
             )
-            .frame(width: min(width * 0.30, 176))
+            .frame(width: branchGeometry.artworkWidth)
+            .scaleEffect(x: -1, y: 1)
             .position(
-                x: xOffset + width * 0.84,
+                x: xOffset + branchGeometry.artworkCenterX,
                 y: height * 0.40
             )
             .opacity(0.78)
@@ -1059,9 +1090,7 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.puddle) {
-            FruitfolioImage(
-                id: .fruitbasket_puddle
-            )
+            Prompt28PuddleArtwork(reduceMotion: motionPreferences.reduceMotionActive)
             .frame(width: min(width * 0.34, 190))
             .position(
                 x: xOffset + width * 0.50,
@@ -1108,6 +1137,9 @@ struct Prompt28FruitBasketView: View {
                         66
                     )
                 )
+                .modifier(Prompt28VineResistanceVisual(
+                    active: viewModel.isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification),
+                    reduceMotion: motionPreferences.reduceMotionActive, phase: fruit.y))
                 .position(
                     x: xOffset + width * fruit.x,
                     y: height * fruit.y
@@ -1124,6 +1156,9 @@ struct Prompt28FruitBasketView: View {
                 FruitfolioImage(id: .fruitbasket_star)
                     .frame(width: min(max(width * 0.10, 34), 52), height: min(max(width * 0.10, 34), 52))
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees))
+                    .modifier(Prompt28VineResistanceVisual(
+                        active: viewModel.isMeetingVines(x: star.x, y: star.y),
+                        reduceMotion: motionPreferences.reduceMotionActive, phase: star.y))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
                     .accessibilityLabel("star pass")
@@ -1140,6 +1175,8 @@ struct Prompt28FruitBasketView: View {
                 ),
                 height: 132
             )
+            .rotationEffect(.degrees(motionPreferences.reduceMotionActive || !viewModel.basketIsMeetingPuddleResistance ? 0 : -3))
+            .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
             .position(
                 x: xOffset + width * viewModel.basketX,
                 y: height * 0.89
@@ -1164,9 +1201,14 @@ struct Prompt28FruitBasketView: View {
             .accessibilityLabel(
                 "Basket, \(viewModel.basketCount) of 10"
             )
+            .accessibilityValue(viewModel.basketIsMeetingPuddleResistance ? "moving through a puddle with resistance" : "normal movement")
         }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
+        .onAppear { viewModel.updateGameplayFieldSize(width: width, height: height) }
+        .onChange(of: CGSize(width: width, height: height)) { _, size in
+            viewModel.updateGameplayFieldSize(width: size.width, height: size.height)
+        }
     }
 
     @ViewBuilder
@@ -1539,7 +1581,7 @@ struct Prompt28FruitBasketView: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.75)
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(CutePopButtonStyle())
                                 .accessibilityAddTraits(
                                     selectedLeaderboardCategory == category ? .isSelected : []
                                 )
@@ -1581,10 +1623,18 @@ struct Prompt28FruitBasketView: View {
                         TextField(
                             "public username",
                             text: Binding(
-                                get: { usernameStore.username },
+                                get: { leaderboardUsernameDraft },
                                 set: { raw in
                                     let sanitized = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
-                                    leaderboardValidationMessage = usernameStore.setUsername(sanitized) ?? Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw)
+                                    // Keep incomplete typing in the editor. Binding directly
+                                    // to the validated authority discarded the first two
+                                    // characters, preventing ordinary keyboard entry.
+                                    leaderboardUsernameDraft = sanitized
+                                    if let error = Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw) {
+                                        leaderboardValidationMessage = error
+                                    } else {
+                                        leaderboardValidationMessage = usernameStore.setUsername(sanitized)
+                                    }
                                     if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(sanitized) {
                                         store.appearOnLeaderboard = false
                                     }
@@ -1594,6 +1644,10 @@ struct Prompt28FruitBasketView: View {
                         )
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                        .focused($leaderboardUsernameFocused)
+                        .submitLabel(.done)
+                        .onSubmit { leaderboardUsernameFocused = false }
+                        .accessibilityIdentifier("fruitBasket.publicUsername")
                         .prompt28Text(.body)
                         .padding(.horizontal, 14)
                         .frame(minHeight: 46)
@@ -1612,7 +1666,7 @@ struct Prompt28FruitBasketView: View {
                         HStack {
                             Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
                             Spacer()
-                            Text("\(usernameStore.username.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
+                            Text("\(leaderboardUsernameDraft.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
                                 .monospacedDigit()
                         }
                         .prompt28Text(.metadata)
@@ -1660,7 +1714,16 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .onChange(of: usernameStore.username) { _, newValue in
+            // The authority publishes valid intermediate edits. Reflecting a
+            // delayed echo while focused can reinsert the last valid prefix
+            // after the user deletes below the minimum length.
+            if !leaderboardUsernameFocused, leaderboardUsernameDraft != newValue {
+                leaderboardUsernameDraft = newValue
+            }
+        }
         .onAppear {
+            leaderboardUsernameDraft = usernameStore.username
             leaderboardValidationMessage = usernameStore.username.isEmpty
                 ? nil
                 : Prompt28LeaderboardUsernamePolicy.validationMessage(for: usernameStore.username)
@@ -1678,7 +1741,7 @@ struct Prompt28FruitBasketView: View {
                     return
                 }
 
-                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(usernameStore.username)
+                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(leaderboardUsernameDraft)
                 _ = usernameStore.setUsername(cleaned)
                 if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
                     store.appearOnLeaderboard = false
@@ -1910,6 +1973,11 @@ private struct Prompt28MovingFruit: View {
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
+                if fruit.classification == .good {
+                    FruitfolioImage(id: .fruitbasket_star)
+                        .frame(width: starSize, height: starSize)
+                        .accessibilityHidden(true)
+                }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
@@ -2515,5 +2583,18 @@ private struct Prompt28WatercolorConfettiBurst: View {
         case 3: return DesignTokens.ColorToken.lavender
         default: return DesignTokens.ColorToken.mint
         }
+    }
+}
+
+private struct Prompt28VineResistanceVisual: ViewModifier {
+    let active: Bool
+    let reduceMotion: Bool
+    let phase: Double
+
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(active && !reduceMotion ? sin(phase * 70) * 6 : 0))
+            .offset(x: active && !reduceMotion ? sin(phase * 70) * 3 : 0)
+            .scaleEffect(x: active && !reduceMotion ? 1.03 : 1, y: active && !reduceMotion ? 0.97 : 1)
     }
 }

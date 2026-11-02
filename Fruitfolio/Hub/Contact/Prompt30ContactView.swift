@@ -16,36 +16,39 @@ struct Prompt30ContactView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
+                    FruitfolioProtectedHeader {
                         Prompt12RouteHeader(
                             title: "contact",
                             subtitle: "questions, feedback, or just a little hello ♡",
                             assetName: nil,
                             onBack: onBack
                         )
+                    } decoration: { protected, space in
+                        ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_watermelon)
+                            FruitfolioImage(id: .cycledecor_green_flecks)
                                 .frame(width: 52, height: 52)
 
-                            FruitfolioImage(id: .fruitbasket_grape)
+                            FruitfolioImage(id: .fruitbasket_plum)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
+
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)
+                        .fruitfolioAvoidProtectedContent(protected, in: space)
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 92, height: 92)
+                            .frame(width: 52, height: 52)
+                            .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 72, y: -14)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
+                        }
                     }
 
                     VStack(spacing: 4) {

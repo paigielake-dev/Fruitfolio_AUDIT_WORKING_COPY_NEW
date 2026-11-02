@@ -165,6 +165,7 @@ struct Prompt12DataExportRecord: Codable, Equatable, Sendable {
 
 enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case blankEmail
+    case accountServiceUnavailable
     case notSignedIn
     case exportFailed
     case deletionFailed
@@ -173,6 +174,8 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
         switch self {
         case .blankEmail:
             return "enter an email before signing in."
+        case .accountServiceUnavailable:
+            return "account connection is unavailable. your information remains on this device."
         case .notSignedIn:
             return "there isn’t a signed-in account to change."
         case .exportFailed:

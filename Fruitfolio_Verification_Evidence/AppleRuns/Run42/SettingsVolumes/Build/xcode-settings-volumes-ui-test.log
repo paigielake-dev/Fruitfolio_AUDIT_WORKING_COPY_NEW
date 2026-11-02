@@ -1,0 +1,667 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/SettingsVolumeUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-01 20:03:19.768414+0000 FruitfolioUITests-Runner[36119:110517] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-01 20:03:20.347.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-01 20:03:20.347.
+Test Suite 'SettingsVolumeUITests' started at 2026-11-01 20:03:20.347.
+Test Case '-[FruitfolioUITests.SettingsVolumeUITests testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart]' started.
+    t =     0.00s Start Test at 2026-11-01 20:03:20.348
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.03s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 20:03:20.433 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 20:03:20.433 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[36119]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1077c4310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x108230398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.11s         Setting up automation session
+    t =     2.03s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.66s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.72s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.72s         Checking existence of `"I'll explore" Button`
+    t =     4.76s         Capturing element debug description
+    t =     5.69s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.69s         Checking existence of `"I'll explore" Button`
+    t =     5.72s         Capturing element debug description
+    t =     6.67s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.67s         Checking existence of `"I'll explore" Button`
+    t =     6.70s         Capturing element debug description
+    t =     7.67s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.67s         Checking existence of `"I'll explore" Button`
+    t =     7.69s         Capturing element debug description
+    t =     8.67s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.67s         Checking existence of `"I'll explore" Button`
+    t =     8.69s         Capturing element debug description
+    t =     9.74s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.74s         Checking existence of `"I'll explore" Button`
+    t =     9.77s         Capturing element debug description
+    t =    10.74s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.74s         Checking existence of `"I'll explore" Button`
+    t =    10.77s         Capturing element debug description
+    t =    11.70s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.70s         Checking existence of `"I'll explore" Button`
+    t =    11.73s         Capturing element debug description
+    t =    12.70s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.70s         Checking existence of `"I'll explore" Button`
+    t =    12.72s         Capturing element debug description
+    t =    13.67s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.67s         Checking existence of `"I'll explore" Button`
+    t =    13.69s         Capturing element debug description
+    t =    14.74s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.74s         Checking existence of `"I'll explore" Button`
+    t =    14.76s         Capturing element debug description
+    t =    15.67s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.67s         Checking existence of `"I'll explore" Button`
+    t =    15.69s         Capturing element debug description
+    t =    15.69s     Checking existence of `"I'll explore" Button`
+    t =    15.72s Collecting debug information to assist test failure triage
+    t =    15.72s     Requesting snapshot of accessibility hierarchy for app with pid 36324
+    t =    15.76s Waiting 15.0s for Button (First Match) to exist
+    t =    16.81s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    16.81s         Checking existence of `Button (First Match)`
+    t =    16.85s Tap Button (First Match)
+    t =    16.85s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.85s     Find the Button (First Match)
+    t =    16.88s     Check for interrupting elements affecting "Settings" Button
+    t =    16.91s     Synthesize event
+    t =    17.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.69s Waiting 10.0s for "settings.volume.music" Slider to exist
+    t =    18.74s     Checking `Expect predicate `existsNoRetry == 1` for object "settings.volume.music" Slider`
+    t =    18.74s         Checking existence of `"settings.volume.music" Slider`
+    t =    18.81s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    18.83s Find the "settings.volume.music" Slider
+    t =    18.88s Find the "settings.volume.music" Slider
+    t =    18.92s Find the "settings.volume.music" Slider
+    t =    18.97s Find the "settings.volume.music" Slider
+    t =    19.01s Find the "settings.volume.music" Slider
+    t =    19.06s Find the "settings.volume.music" Slider
+    t =    19.10s Find the "settings.volume.music" Slider
+    t =    19.15s Find the "settings.volume.music" Slider
+    t =    19.19s Find the "settings.volume.music" Slider
+    t =    19.24s Find the "settings.volume.music" Slider
+    t =    19.28s Find the "settings.volume.music" Slider
+    t =    19.33s Find the "settings.volume.music" Slider
+    t =    19.37s Find the "settings.volume.music" Slider
+    t =    19.42s Find the "settings.volume.music" Slider
+    t =    19.46s Find the "settings.volume.music" Slider
+    t =    19.51s Find the "settings.volume.music" Slider
+    t =    19.55s Find the "settings.volume.music" Slider
+    t =    19.60s Find the "settings.volume.music" Slider
+    t =    19.64s Find the "settings.volume.music" Slider
+    t =    19.69s Find the "settings.volume.music" Slider
+    t =    19.72s Find the "settings.volume.music" Slider
+    t =    19.77s Find the "settings.volume.music" Slider
+    t =    19.80s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.83s Find the "settings.volume.rain_sounds" Slider
+    t =    19.87s Find the "settings.volume.rain_sounds" Slider
+    t =    19.91s Find the "settings.volume.rain_sounds" Slider
+    t =    19.96s Find the "settings.volume.rain_sounds" Slider
+    t =    19.99s Find the "settings.volume.rain_sounds" Slider
+    t =    20.04s Find the "settings.volume.rain_sounds" Slider
+    t =    20.08s Find the "settings.volume.rain_sounds" Slider
+    t =    20.13s Find the "settings.volume.rain_sounds" Slider
+    t =    20.16s Find the "settings.volume.rain_sounds" Slider
+    t =    20.22s Find the "settings.volume.rain_sounds" Slider
+    t =    20.25s Find the "settings.volume.rain_sounds" Slider
+    t =    20.30s Find the "settings.volume.rain_sounds" Slider
+    t =    20.34s Find the "settings.volume.rain_sounds" Slider
+    t =    20.39s Find the "settings.volume.rain_sounds" Slider
+    t =    20.43s Find the "settings.volume.rain_sounds" Slider
+    t =    20.48s Find the "settings.volume.rain_sounds" Slider
+    t =    20.51s Find the "settings.volume.rain_sounds" Slider
+    t =    20.57s Find the "settings.volume.rain_sounds" Slider
+    t =    20.60s Find the "settings.volume.rain_sounds" Slider
+    t =    20.65s Find the "settings.volume.rain_sounds" Slider
+    t =    20.69s Find the "settings.volume.rain_sounds" Slider
+    t =    20.74s Find the "settings.volume.rain_sounds" Slider
+    t =    20.77s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    20.79s Find the "settings.volume.sound_effects" Slider
+    t =    20.84s Find the "settings.volume.sound_effects" Slider
+    t =    20.88s Find the "settings.volume.sound_effects" Slider
+    t =    20.93s Find the "settings.volume.sound_effects" Slider
+    t =    20.97s Find the "settings.volume.sound_effects" Slider
+    t =    21.02s Find the "settings.volume.sound_effects" Slider
+    t =    21.06s Find the "settings.volume.sound_effects" Slider
+    t =    21.11s Find the "settings.volume.sound_effects" Slider
+    t =    21.15s Find the "settings.volume.sound_effects" Slider
+    t =    21.20s Find the "settings.volume.sound_effects" Slider
+    t =    21.24s Find the "settings.volume.sound_effects" Slider
+    t =    21.29s Find the "settings.volume.sound_effects" Slider
+    t =    21.33s Find the "settings.volume.sound_effects" Slider
+    t =    21.37s Find the "settings.volume.sound_effects" Slider
+    t =    21.41s Find the "settings.volume.sound_effects" Slider
+    t =    21.46s Find the "settings.volume.sound_effects" Slider
+    t =    21.50s Find the "settings.volume.sound_effects" Slider
+    t =    21.55s Find the "settings.volume.sound_effects" Slider
+    t =    21.58s Find the "settings.volume.sound_effects" Slider
+    t =    21.63s Find the "settings.volume.sound_effects" Slider
+    t =    21.67s Find the "settings.volume.sound_effects" Slider
+    t =    21.72s Find the "settings.volume.sound_effects" Slider
+    t =    21.76s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    21.78s Find the "settings.volume.typing_asmr" Slider
+    t =    21.83s Find the "settings.volume.typing_asmr" Slider
+    t =    21.86s Checking existence of `"settings.mainScroll" ScrollView`
+    t =    21.90s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    21.90s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.90s     Find the "settings.mainScroll" ScrollView
+    t =    21.94s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    21.97s     Synthesize event
+    t =    21.97s         Find the "settings.mainScroll" ScrollView
+    t =    22.01s         Find the "settings.mainScroll" ScrollView
+    t =    22.05s         Find the "settings.mainScroll" ScrollView
+    t =    22.09s         Find the "settings.mainScroll" ScrollView
+    t =    22.13s         Find the "settings.mainScroll" ScrollView
+    t =    23.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.98s Find the "settings.volume.typing_asmr" Slider
+    t =    25.03s Find the "settings.volume.typing_asmr" Slider
+    t =    25.07s Find the "settings.volume.typing_asmr" Slider
+    t =    25.11s Find the "settings.volume.typing_asmr" Slider
+    t =    25.15s Find the "settings.volume.typing_asmr" Slider
+    t =    25.20s Find the "settings.volume.typing_asmr" Slider
+    t =    25.24s Find the "settings.volume.typing_asmr" Slider
+    t =    25.29s Find the "settings.volume.typing_asmr" Slider
+    t =    25.33s Find the "settings.volume.typing_asmr" Slider
+    t =    25.38s Find the "settings.volume.typing_asmr" Slider
+    t =    25.43s Find the "settings.volume.typing_asmr" Slider
+    t =    25.49s Find the "settings.volume.typing_asmr" Slider
+    t =    25.53s Find the "settings.volume.typing_asmr" Slider
+    t =    25.59s Find the "settings.volume.typing_asmr" Slider
+    t =    25.63s Find the "settings.volume.typing_asmr" Slider
+    t =    25.68s Find the "settings.volume.typing_asmr" Slider
+    t =    25.72s Find the "settings.volume.typing_asmr" Slider
+    t =    25.78s Find the "settings.volume.typing_asmr" Slider
+    t =    25.82s Find the "settings.volume.typing_asmr" Slider
+    t =    25.88s Find the "settings.volume.typing_asmr" Slider
+    t =    25.92s Find the "settings.volume.music" Slider
+    t =    25.96s Checking existence of `"settings.mainScroll" ScrollView`
+    t =    26.00s Press "settings.mainScroll" ScrollView[0.97, 0.25] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.82] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    26.00s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    26.00s     Find the "settings.mainScroll" ScrollView
+    t =    26.04s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    26.08s     Synthesize event
+    t =    26.08s         Find the "settings.mainScroll" ScrollView
+    t =    26.12s         Find the "settings.mainScroll" ScrollView
+    t =    26.16s         Find the "settings.mainScroll" ScrollView
+    t =    26.21s         Find the "settings.mainScroll" ScrollView
+    t =    26.25s         Find the "settings.mainScroll" ScrollView
+    t =    27.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.58s Find the "settings.volume.music" Slider
+    t =    27.63s Find the "settings.volume.music" Slider
+    t =    27.69s Find the "settings.volume.music" Slider
+    t =    27.75s Find the "settings.volume.music" Slider
+    t =    27.81s Find the "settings.volume.music" Slider
+    t =    27.86s Find the "settings.volume.music" Slider
+    t =    27.91s Find the "settings.volume.music" Slider
+    t =    27.97s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    27.99s Find the "settings.volume.music" Slider
+    t =    28.05s Find the "settings.volume.music" Slider
+    t =    28.10s Find the "settings.volume.music" Slider
+    t =    28.15s Find the "settings.volume.music" Slider
+    t =    28.19s Find the "settings.volume.music" Slider
+    t =    28.25s Find the "settings.volume.music" Slider
+    t =    28.30s Find the "settings.volume.music" Slider
+    t =    28.35s Find the "settings.volume.music" Slider
+    t =    28.40s Find the "settings.volume.music" Slider
+    t =    28.45s Find the "settings.volume.music" Slider
+    t =    28.50s Find the "settings.volume.music" Slider
+    t =    28.56s Find the "settings.volume.music" Slider
+    t =    28.61s Find the "settings.volume.music" Slider
+    t =    28.66s Find the "settings.volume.music" Slider
+    t =    28.70s Find the "settings.volume.music" Slider
+    t =    28.76s Find the "settings.volume.music" Slider
+    t =    28.81s Find the "settings.volume.music" Slider
+    t =    28.86s Find the "settings.volume.music" Slider
+    t =    28.91s Find the "settings.volume.music" Slider
+    t =    28.96s Find the "settings.volume.music" Slider
+    t =    29.01s Find the "settings.volume.music" Slider
+    t =    29.07s Set normalized position of "settings.volume.music" Slider to 0.23
+    t =    29.07s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    29.07s     Find the "settings.volume.music" Slider
+    t =    29.10s     Check for interrupting elements affecting "settings.volume.music" Slider
+    t =    29.14s     Synthesize event
+    t =    29.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    29.70s Find the "settings.volume.music" Slider
+    t =    29.74s Find the "settings.volume.rain_sounds" Slider
+    t =    29.78s Find the "settings.volume.sound_effects" Slider
+    t =    29.82s Find the "settings.volume.typing_asmr" Slider
+    t =    29.86s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    29.99s Added attachment named 'Settings_ArtworkVolume_0_music'
+    t =    29.99s Find the "settings.volume.rain_sounds" Slider
+    t =    30.05s Find the "settings.volume.rain_sounds" Slider
+    t =    30.11s Find the "settings.volume.rain_sounds" Slider
+    t =    30.16s Find the "settings.volume.rain_sounds" Slider
+    t =    30.22s Find the "settings.volume.rain_sounds" Slider
+    t =    30.28s Find the "settings.volume.rain_sounds" Slider
+    t =    30.34s Find the "settings.volume.rain_sounds" Slider
+    t =    30.40s Find the "settings.volume.rain_sounds" Slider
+    t =    30.46s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    30.48s Find the "settings.volume.rain_sounds" Slider
+    t =    30.54s Find the "settings.volume.rain_sounds" Slider
+    t =    30.59s Find the "settings.volume.rain_sounds" Slider
+    t =    30.65s Find the "settings.volume.rain_sounds" Slider
+    t =    30.69s Find the "settings.volume.rain_sounds" Slider
+    t =    30.74s Find the "settings.volume.rain_sounds" Slider
+    t =    30.79s Find the "settings.volume.rain_sounds" Slider
+    t =    30.84s Find the "settings.volume.rain_sounds" Slider
+    t =    30.88s Find the "settings.volume.rain_sounds" Slider
+    t =    30.93s Find the "settings.volume.rain_sounds" Slider
+    t =    30.98s Find the "settings.volume.rain_sounds" Slider
+    t =    31.03s Find the "settings.volume.rain_sounds" Slider
+    t =    31.07s Find the "settings.volume.rain_sounds" Slider
+    t =    31.12s Find the "settings.volume.rain_sounds" Slider
+    t =    31.16s Find the "settings.volume.rain_sounds" Slider
+    t =    31.22s Find the "settings.volume.rain_sounds" Slider
+    t =    31.26s Find the "settings.volume.rain_sounds" Slider
+    t =    31.31s Find the "settings.volume.rain_sounds" Slider
+    t =    31.35s Find the "settings.volume.rain_sounds" Slider
+    t =    31.40s Find the "settings.volume.rain_sounds" Slider
+    t =    31.44s Find the "settings.volume.rain_sounds" Slider
+    t =    31.49s Set normalized position of "settings.volume.rain_sounds" Slider to 0.23
+    t =    31.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    31.50s     Find the "settings.volume.rain_sounds" Slider
+    t =    31.54s     Check for interrupting elements affecting "settings.volume.rain_sounds" Slider
+    t =    31.57s     Synthesize event
+    t =    32.08s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.09s Find the "settings.volume.rain_sounds" Slider
+    t =    32.13s Find the "settings.volume.music" Slider
+    t =    32.17s Find the "settings.volume.sound_effects" Slider
+    t =    32.21s Find the "settings.volume.typing_asmr" Slider
+    t =    32.25s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    32.39s Added attachment named 'Settings_ArtworkVolume_1_rain_sounds'
+    t =    32.39s Find the "settings.volume.sound_effects" Slider
+    t =    32.44s Find the "settings.volume.sound_effects" Slider
+    t =    32.49s Find the "settings.volume.sound_effects" Slider
+    t =    32.54s Find the "settings.volume.sound_effects" Slider
+    t =    32.60s Find the "settings.volume.sound_effects" Slider
+    t =    32.65s Find the "settings.volume.sound_effects" Slider
+    t =    32.71s Find the "settings.volume.sound_effects" Slider
+    t =    32.76s Find the "settings.volume.sound_effects" Slider
+    t =    32.80s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    32.83s Find the "settings.volume.sound_effects" Slider
+    t =    32.88s Find the "settings.volume.sound_effects" Slider
+    t =    32.92s Find the "settings.volume.sound_effects" Slider
+    t =    32.98s Find the "settings.volume.sound_effects" Slider
+    t =    33.02s Find the "settings.volume.sound_effects" Slider
+    t =    33.08s Find the "settings.volume.sound_effects" Slider
+    t =    33.12s Find the "settings.volume.sound_effects" Slider
+    t =    33.17s Find the "settings.volume.sound_effects" Slider
+    t =    33.21s Find the "settings.volume.sound_effects" Slider
+    t =    33.26s Find the "settings.volume.sound_effects" Slider
+    t =    33.30s Find the "settings.volume.sound_effects" Slider
+    t =    33.35s Find the "settings.volume.sound_effects" Slider
+    t =    33.39s Find the "settings.volume.sound_effects" Slider
+    t =    33.44s Find the "settings.volume.sound_effects" Slider
+    t =    33.48s Find the "settings.volume.sound_effects" Slider
+    t =    33.52s Find the "settings.volume.sound_effects" Slider
+    t =    33.56s Find the "settings.volume.sound_effects" Slider
+    t =    33.61s Find the "settings.volume.sound_effects" Slider
+    t =    33.65s Find the "settings.volume.sound_effects" Slider
+    t =    33.70s Find the "settings.volume.sound_effects" Slider
+    t =    33.73s Find the "settings.volume.sound_effects" Slider
+    t =    33.78s Set normalized position of "settings.volume.sound_effects" Slider to 0.23
+    t =    33.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.79s     Find the "settings.volume.sound_effects" Slider
+    t =    33.82s     Check for interrupting elements affecting "settings.volume.sound_effects" Slider
+    t =    33.85s     Synthesize event
+    t =    34.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.40s Find the "settings.volume.sound_effects" Slider
+    t =    34.44s Find the "settings.volume.music" Slider
+    t =    34.48s Find the "settings.volume.rain_sounds" Slider
+    t =    34.52s Find the "settings.volume.typing_asmr" Slider
+    t =    34.56s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    34.69s Added attachment named 'Settings_ArtworkVolume_2_sound_effects'
+    t =    34.69s Find the "settings.volume.typing_asmr" Slider
+    t =    34.74s Find the "settings.volume.typing_asmr" Slider
+    t =    34.79s Find the "settings.volume.typing_asmr" Slider
+    t =    34.84s Find the "settings.volume.typing_asmr" Slider
+    t =    34.88s Find the "settings.volume.typing_asmr" Slider
+    t =    34.94s Find the "settings.volume.typing_asmr" Slider
+    t =    34.99s Find the "settings.volume.typing_asmr" Slider
+    t =    35.03s Find the "settings.volume.typing_asmr" Slider
+    t =    35.08s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    35.10s Find the "settings.volume.typing_asmr" Slider
+    t =    35.15s Find the "settings.volume.typing_asmr" Slider
+    t =    35.19s Find the "settings.volume.typing_asmr" Slider
+    t =    35.24s Find the "settings.volume.typing_asmr" Slider
+    t =    35.28s Find the "settings.volume.typing_asmr" Slider
+    t =    35.32s Find the "settings.volume.typing_asmr" Slider
+    t =    35.36s Find the "settings.volume.typing_asmr" Slider
+    t =    35.42s Find the "settings.volume.typing_asmr" Slider
+    t =    35.46s Find the "settings.volume.typing_asmr" Slider
+    t =    35.51s Find the "settings.volume.typing_asmr" Slider
+    t =    35.55s Find the "settings.volume.typing_asmr" Slider
+    t =    35.59s Find the "settings.volume.typing_asmr" Slider
+    t =    35.63s Find the "settings.volume.typing_asmr" Slider
+    t =    35.69s Find the "settings.volume.typing_asmr" Slider
+    t =    35.73s Find the "settings.volume.typing_asmr" Slider
+    t =    35.79s Find the "settings.volume.typing_asmr" Slider
+    t =    35.83s Find the "settings.volume.typing_asmr" Slider
+    t =    35.88s Find the "settings.volume.typing_asmr" Slider
+    t =    35.92s Find the "settings.volume.typing_asmr" Slider
+    t =    35.97s Find the "settings.volume.typing_asmr" Slider
+    t =    36.01s Find the "settings.volume.typing_asmr" Slider
+    t =    36.06s Set normalized position of "settings.volume.typing_asmr" Slider to 0.23
+    t =    36.06s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.06s     Find the "settings.volume.typing_asmr" Slider
+    t =    36.09s     Check for interrupting elements affecting "settings.volume.typing_asmr" Slider
+    t =    36.13s     Synthesize event
+    t =    36.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.71s Find the "settings.volume.typing_asmr" Slider
+    t =    36.75s Find the "settings.volume.music" Slider
+    t =    36.78s Find the "settings.volume.rain_sounds" Slider
+    t =    36.81s Find the "settings.volume.sound_effects" Slider
+    t =    36.85s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    36.97s Added attachment named 'Settings_ArtworkVolume_3_typing_asmr'
+    t =    36.97s Terminate com.fruitsoflifexo.Fruitfolio:36324
+    t =    37.97s Open com.fruitsoflifexo.Fruitfolio
+    t =    37.97s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 20:03:58.327 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 20:03:58.327 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    38.20s         Setting up automation session
+    t =    39.27s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.91s Waiting 12.0s for "I'll explore" Button to exist
+    t =    41.96s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    41.96s         Checking existence of `"I'll explore" Button`
+    t =    42.00s         Capturing element debug description
+    t =    42.96s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    42.96s         Checking existence of `"I'll explore" Button`
+    t =    42.98s         Capturing element debug description
+    t =    43.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    43.93s         Checking existence of `"I'll explore" Button`
+    t =    43.96s         Capturing element debug description
+    t =    44.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    44.91s         Checking existence of `"I'll explore" Button`
+    t =    44.93s         Capturing element debug description
+    t =    45.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    45.91s         Checking existence of `"I'll explore" Button`
+    t =    45.95s         Capturing element debug description
+    t =    46.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    46.92s         Checking existence of `"I'll explore" Button`
+    t =    46.94s         Capturing element debug description
+    t =    47.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    47.91s         Checking existence of `"I'll explore" Button`
+    t =    47.93s         Capturing element debug description
+    t =    48.97s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    48.97s         Checking existence of `"I'll explore" Button`
+    t =    48.99s         Capturing element debug description
+    t =    49.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    49.92s         Checking existence of `"I'll explore" Button`
+    t =    49.96s         Capturing element debug description
+    t =    50.96s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    50.96s         Checking existence of `"I'll explore" Button`
+    t =    50.98s         Capturing element debug description
+    t =    51.97s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    51.97s         Checking existence of `"I'll explore" Button`
+    t =    52.00s         Capturing element debug description
+    t =    52.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    52.92s         Checking existence of `"I'll explore" Button`
+    t =    52.94s         Capturing element debug description
+    t =    52.94s     Checking existence of `"I'll explore" Button`
+    t =    52.97s Collecting debug information to assist test failure triage
+    t =    52.97s     Requesting snapshot of accessibility hierarchy for app with pid 38546
+    t =    53.00s Waiting 15.0s for Button (First Match) to exist
+    t =    54.02s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    54.02s         Checking existence of `Button (First Match)`
+    t =    54.07s Tap Button (First Match)
+    t =    54.07s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    54.08s     Find the Button (First Match)
+    t =    54.12s     Check for interrupting elements affecting "Settings" Button
+    t =    54.14s     Synthesize event
+    t =    54.45s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    54.94s Waiting 10.0s for "settings.volume.music" Slider to exist
+    t =    55.97s     Checking `Expect predicate `existsNoRetry == 1` for object "settings.volume.music" Slider`
+    t =    55.97s         Checking existence of `"settings.volume.music" Slider`
+    t =    56.04s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    56.07s Find the "settings.volume.music" Slider
+    t =    56.12s Find the "settings.volume.music" Slider
+    t =    56.17s Find the "settings.volume.music" Slider
+    t =    56.23s Find the "settings.volume.music" Slider
+    t =    56.27s Find the "settings.volume.music" Slider
+    t =    56.33s Find the "settings.volume.music" Slider
+    t =    56.38s Find the "settings.volume.music" Slider
+    t =    56.43s Find the "settings.volume.music" Slider
+    t =    56.48s Find the "settings.volume.music" Slider
+    t =    56.53s Find the "settings.volume.music" Slider
+    t =    56.58s Find the "settings.volume.music" Slider
+    t =    56.63s Find the "settings.volume.music" Slider
+    t =    56.68s Find the "settings.volume.music" Slider
+    t =    56.75s Find the "settings.volume.music" Slider
+    t =    56.80s Find the "settings.volume.music" Slider
+    t =    56.85s Find the "settings.volume.music" Slider
+    t =    56.90s Find the "settings.volume.music" Slider
+    t =    56.96s Find the "settings.volume.music" Slider
+    t =    57.00s Find the "settings.volume.music" Slider
+    t =    57.05s Find the "settings.volume.music" Slider
+    t =    57.10s Find the "settings.volume.music" Slider
+    t =    57.15s Find the "settings.volume.music" Slider
+    t =    57.20s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    57.22s Find the "settings.volume.rain_sounds" Slider
+    t =    57.28s Find the "settings.volume.rain_sounds" Slider
+    t =    57.33s Find the "settings.volume.rain_sounds" Slider
+    t =    57.38s Find the "settings.volume.rain_sounds" Slider
+    t =    57.42s Find the "settings.volume.rain_sounds" Slider
+    t =    57.48s Find the "settings.volume.rain_sounds" Slider
+    t =    57.52s Find the "settings.volume.rain_sounds" Slider
+    t =    57.58s Find the "settings.volume.rain_sounds" Slider
+    t =    57.62s Find the "settings.volume.rain_sounds" Slider
+    t =    57.67s Find the "settings.volume.rain_sounds" Slider
+    t =    57.72s Find the "settings.volume.rain_sounds" Slider
+    t =    57.78s Find the "settings.volume.rain_sounds" Slider
+    t =    57.83s Find the "settings.volume.rain_sounds" Slider
+    t =    57.88s Find the "settings.volume.rain_sounds" Slider
+    t =    57.93s Find the "settings.volume.rain_sounds" Slider
+    t =    57.98s Find the "settings.volume.rain_sounds" Slider
+    t =    58.03s Find the "settings.volume.rain_sounds" Slider
+    t =    58.08s Find the "settings.volume.rain_sounds" Slider
+    t =    58.13s Find the "settings.volume.rain_sounds" Slider
+    t =    58.18s Find the "settings.volume.rain_sounds" Slider
+    t =    58.23s Find the "settings.volume.rain_sounds" Slider
+    t =    58.28s Find the "settings.volume.rain_sounds" Slider
+    t =    58.31s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    58.34s Find the "settings.volume.sound_effects" Slider
+    t =    58.39s Find the "settings.volume.sound_effects" Slider
+    t =    58.43s Find the "settings.volume.sound_effects" Slider
+    t =    58.49s Find the "settings.volume.sound_effects" Slider
+    t =    58.53s Find the "settings.volume.sound_effects" Slider
+    t =    58.59s Find the "settings.volume.sound_effects" Slider
+    t =    58.63s Find the "settings.volume.sound_effects" Slider
+    t =    58.68s Find the "settings.volume.sound_effects" Slider
+    t =    58.73s Find the "settings.volume.sound_effects" Slider
+    t =    58.78s Find the "settings.volume.sound_effects" Slider
+    t =    58.83s Find the "settings.volume.sound_effects" Slider
+    t =    58.88s Find the "settings.volume.sound_effects" Slider
+    t =    58.93s Find the "settings.volume.sound_effects" Slider
+    t =    58.98s Find the "settings.volume.sound_effects" Slider
+    t =    59.02s Find the "settings.volume.sound_effects" Slider
+    t =    59.08s Find the "settings.volume.sound_effects" Slider
+    t =    59.12s Find the "settings.volume.sound_effects" Slider
+    t =    59.18s Find the "settings.volume.sound_effects" Slider
+    t =    59.22s Find the "settings.volume.sound_effects" Slider
+    t =    59.29s Find the "settings.volume.sound_effects" Slider
+    t =    59.34s Find the "settings.volume.sound_effects" Slider
+    t =    59.39s Find the "settings.volume.sound_effects" Slider
+    t =    59.43s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    59.46s Find the "settings.volume.typing_asmr" Slider
+    t =    59.51s Find the "settings.volume.typing_asmr" Slider
+    t =    59.56s Checking existence of `"settings.mainScroll" ScrollView`
+    t =    59.60s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    59.60s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    59.60s     Find the "settings.mainScroll" ScrollView
+    t =    59.64s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    59.67s     Synthesize event
+    t =    59.68s         Find the "settings.mainScroll" ScrollView
+    t =    59.72s         Find the "settings.mainScroll" ScrollView
+    t =    59.77s         Find the "settings.mainScroll" ScrollView
+    t =    59.82s         Find the "settings.mainScroll" ScrollView
+    t =    59.86s         Find the "settings.mainScroll" ScrollView
+    t =    61.19s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    62.70s Find the "settings.volume.typing_asmr" Slider
+    t =    62.76s Find the "settings.volume.typing_asmr" Slider
+    t =    62.80s Find the "settings.volume.typing_asmr" Slider
+    t =    62.86s Find the "settings.volume.typing_asmr" Slider
+    t =    62.91s Find the "settings.volume.typing_asmr" Slider
+    t =    62.96s Find the "settings.volume.typing_asmr" Slider
+    t =    63.01s Find the "settings.volume.typing_asmr" Slider
+    t =    63.07s Find the "settings.volume.typing_asmr" Slider
+    t =    63.12s Find the "settings.volume.typing_asmr" Slider
+    t =    63.18s Find the "settings.volume.typing_asmr" Slider
+    t =    63.22s Find the "settings.volume.typing_asmr" Slider
+    t =    63.28s Find the "settings.volume.typing_asmr" Slider
+    t =    63.33s Find the "settings.volume.typing_asmr" Slider
+    t =    63.38s Find the "settings.volume.typing_asmr" Slider
+    t =    63.43s Find the "settings.volume.typing_asmr" Slider
+    t =    63.49s Find the "settings.volume.typing_asmr" Slider
+    t =    63.54s Find the "settings.volume.typing_asmr" Slider
+    t =    63.59s Find the "settings.volume.typing_asmr" Slider
+    t =    63.64s Find the "settings.volume.typing_asmr" Slider
+    t =    63.70s Find the "settings.volume.typing_asmr" Slider
+    t =    63.74s Find the "settings.globalMute" Any
+    t =    63.79s Checking existence of `"settings.mainScroll" ScrollView`
+    t =    63.83s Press "settings.mainScroll" ScrollView[0.97, 0.25] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.82] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    63.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    63.83s     Find the "settings.mainScroll" ScrollView
+    t =    63.88s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    63.92s     Synthesize event
+    t =    63.92s         Find the "settings.mainScroll" ScrollView
+    t =    63.96s         Find the "settings.mainScroll" ScrollView
+    t =    64.01s         Find the "settings.mainScroll" ScrollView
+    t =    64.06s         Find the "settings.mainScroll" ScrollView
+    t =    64.11s         Find the "settings.mainScroll" ScrollView
+    t =    65.44s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    65.45s Find the "settings.globalMute" Switch
+    t =    65.50s Find the "settings.globalMute" Switch
+    t =    65.56s Find the "settings.globalMute" Switch
+    t =    65.62s Find the "settings.globalMute" Switch
+    t =    65.69s Find the "settings.globalMute" Switch
+    t =    65.75s Find the "settings.globalMute" Switch
+    t =    65.80s Find the "settings.globalMute" Switch
+    t =    65.86s Find the "settings.globalMute" Switch
+    t =    65.93s Find the "settings.globalMute" Switch
+    t =    66.00s Find the "settings.globalMute" Switch
+    t =    66.06s Find the "settings.globalMute" Switch
+    t =    66.09s Find the "settings.enabled.music" Any
+    t =    66.14s Find the "settings.enabled.rain_sounds" Any
+    t =    66.18s Find the "settings.enabled.sound_effects" Any
+    t =    66.23s Find the "settings.enabled.typing_asmr" Any
+    t =    66.28s Tap "settings.globalMute" Switch
+    t =    66.28s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    66.28s     Find the "settings.globalMute" Switch
+    t =    66.33s     Check for interrupting elements affecting "settings.globalMute" Switch
+    t =    66.37s     Synthesize event
+    t =    66.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    66.68s Find the "settings.globalMute" Switch
+    t =    66.73s Find the "settings.enabled.music" Any
+    t =    66.78s Find the "settings.enabled.rain_sounds" Any
+    t =    66.83s Find the "settings.enabled.sound_effects" Any
+    t =    66.88s Find the "settings.enabled.typing_asmr" Any
+    t =    66.93s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    67.07s Added attachment named 'Settings_GlobalMute_Toggled'
+    t =    67.08s Terminate com.fruitsoflifexo.Fruitfolio:38546
+    t =    68.16s Open com.fruitsoflifexo.Fruitfolio
+    t =    68.16s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 20:04:28.509 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 20:04:28.509 xcodebuild[35909:109749] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    68.37s         Setting up automation session
+    t =    69.60s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    71.21s Waiting 12.0s for "I'll explore" Button to exist
+    t =    72.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    72.22s         Checking existence of `"I'll explore" Button`
+    t =    72.26s         Capturing element debug description
+    t =    73.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    73.22s         Checking existence of `"I'll explore" Button`
+    t =    73.24s         Capturing element debug description
+    t =    74.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    74.21s         Checking existence of `"I'll explore" Button`
+    t =    74.23s         Capturing element debug description
+    t =    75.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    75.27s         Checking existence of `"I'll explore" Button`
+    t =    75.29s         Capturing element debug description
+    t =    76.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    76.21s         Checking existence of `"I'll explore" Button`
+    t =    76.23s         Capturing element debug description
+    t =    77.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    77.27s         Checking existence of `"I'll explore" Button`
+    t =    77.29s         Capturing element debug description
+    t =    78.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    78.27s         Checking existence of `"I'll explore" Button`
+    t =    78.30s         Capturing element debug description
+    t =    79.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    79.21s         Checking existence of `"I'll explore" Button`
+    t =    79.24s         Capturing element debug description
+    t =    80.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    80.27s         Checking existence of `"I'll explore" Button`
+    t =    80.30s         Capturing element debug description
+    t =    81.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    81.28s         Checking existence of `"I'll explore" Button`
+    t =    81.31s         Capturing element debug description
+    t =    82.22s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    82.22s         Checking existence of `"I'll explore" Button`
+    t =    82.25s         Capturing element debug description
+    t =    83.21s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    83.21s         Checking existence of `"I'll explore" Button`
+    t =    83.23s         Capturing element debug description
+    t =    83.23s     Checking existence of `"I'll explore" Button`
+    t =    83.25s Collecting debug information to assist test failure triage
+    t =    83.25s     Requesting snapshot of accessibility hierarchy for app with pid 40497
+    t =    83.29s Waiting 15.0s for Button (First Match) to exist
+    t =    84.31s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    84.31s         Checking existence of `Button (First Match)`
+    t =    84.34s Tap Button (First Match)
+    t =    84.34s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    84.34s     Find the Button (First Match)
+    t =    84.38s     Check for interrupting elements affecting "Settings" Button
+    t =    84.40s     Synthesize event
+    t =    84.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    85.16s Waiting 10.0s for "settings.volume.music" Slider to exist
+    t =    86.21s     Checking `Expect predicate `existsNoRetry == 1` for object "settings.volume.music" Slider`
+    t =    86.21s         Checking existence of `"settings.volume.music" Slider`
+    t =    86.26s Find the "settings.globalMute" Switch
+    t =    86.30s Find the "settings.enabled.music" Any
+    t =    86.34s Find the "settings.enabled.rain_sounds" Any
+    t =    86.38s Find the "settings.enabled.sound_effects" Any
+    t =    86.42s Find the "settings.enabled.typing_asmr" Any
+    t =    86.46s Find the "settings.globalMute" Switch
+    t =    86.53s Find the "settings.globalMute" Switch
+    t =    86.58s Find the "settings.globalMute" Switch
+    t =    86.64s Find the "settings.globalMute" Switch
+    t =    86.69s Find the "settings.globalMute" Switch
+    t =    86.75s Find the "settings.globalMute" Switch
+    t =    86.80s Find the "settings.globalMute" Switch
+    t =    86.86s Find the "settings.globalMute" Switch
+    t =    86.92s Find the "settings.globalMute" Switch
+    t =    86.97s Tap "settings.globalMute" Switch
+    t =    86.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    86.98s     Find the "settings.globalMute" Switch
+    t =    87.02s     Check for interrupting elements affecting "settings.globalMute" Switch
+    t =    87.06s     Synthesize event
+    t =    87.36s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    87.36s Find the "settings.globalMute" Switch
+    t =    87.43s Tear Down
+Test Case '-[FruitfolioUITests.SettingsVolumeUITests testOriginalArtworkControlsChangeIndependentlyAndPersistAfterRestart]' passed (87.857 seconds).
+Test Suite 'SettingsVolumeUITests' passed at 2026-11-01 20:04:48.205.
+	 Executed 1 test, with 0 failures (0 unexpected) in 87.857 (87.858) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-01 20:04:48.205.
+	 Executed 1 test, with 0 failures (0 unexpected) in 87.857 (87.858) seconds
+Test Suite 'Selected tests' passed at 2026-11-01 20:04:48.206.
+	 Executed 1 test, with 0 failures (0 unexpected) in 87.857 (87.859) seconds
+2026-11-01 20:04:48.742 xcodebuild[35909:109749] [MT] IDETestOperationsObserverDebug: 90.373 elapsed -- Testing started completed.
+2026-11-01 20:04:48.742 xcodebuild[35909:109749] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 20:04:48.742 xcodebuild[35909:109749] [MT] IDETestOperationsObserverDebug: 90.373 sec, +90.373 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

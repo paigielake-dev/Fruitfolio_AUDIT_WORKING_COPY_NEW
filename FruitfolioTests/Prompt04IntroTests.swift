@@ -53,13 +53,12 @@ final class Prompt04IntroTests: XCTestCase {
         XCTAssertTrue(requiredHubIDs.isSubset(of: Set(Prompt04IntroConfiguration.requiredAssetIDs)))
     }
 
-    func testFounderOverridePacingIsRestrainedAndReadable() {
-        XCTAssertEqual(Prompt04IntroConfiguration.initialStillness, .milliseconds(250))
-        XCTAssertTrue((.milliseconds(600)...(.milliseconds(700))).contains(Prompt04IntroConfiguration.firstLaunchBookArrival))
-        XCTAssertTrue((.milliseconds(650)...(.milliseconds(850))).contains(Prompt04IntroConfiguration.logoReveal))
-        XCTAssertTrue((.milliseconds(450)...(.milliseconds(700))).contains(Prompt04IntroConfiguration.rightPageFocus))
-        XCTAssertLessThan(Prompt04IntroConfiguration.slightlyOpenTransition, .seconds(1))
-        XCTAssertLessThan(Prompt04IntroConfiguration.fullyOpenTransition, .seconds(1))
+    func testFounderSignatureIntroLastsSixToEightSeconds() {
+        XCTAssertGreaterThanOrEqual(Prompt04IntroConfiguration.signatureSequenceDuration, .seconds(6))
+        XCTAssertLessThanOrEqual(Prompt04IntroConfiguration.signatureSequenceDuration, .seconds(8))
+        XCTAssertGreaterThan(Prompt04IntroConfiguration.logoReveal, Prompt04IntroConfiguration.firstLaunchBookArrival)
+        XCTAssertGreaterThanOrEqual(Prompt04IntroConfiguration.slightlyOpenHold, .milliseconds(250))
+        XCTAssertGreaterThanOrEqual(Prompt04IntroConfiguration.fullyOpenHold, .milliseconds(250))
     }
 
     func testAllCenteredBookStatesStayInsideSupportedPhoneWidths() {

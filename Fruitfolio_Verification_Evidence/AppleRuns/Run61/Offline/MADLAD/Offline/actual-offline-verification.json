@@ -1,0 +1,19 @@
+{
+  "run": 41363156669,
+  "sourceCommit": "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a",
+  "result": "PASS",
+  "scope": "Controlled external-network-blocked macOS iPhone Simulator verification; not physical-device airplane mode or general medical/language acceptance",
+  "originReachableBefore": "HTTP/2 200",
+  "externalProbeBefore": "curl exit 28, connection timed out",
+  "externalProbeAfter": "curl exit 28, resolving timed out",
+  "actualRule": "block drop out quick all; loopback skipped",
+  "watchdogFired": false,
+  "filterRestored": "Disabled",
+  "actualPassingTests": [
+    "AAAA_MADLADRuntimeIntegrationTests/testCorruptTokenizerIsRejectedBeforeAnyModelInference",
+    "AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
+    "BundledNativeGroundingTests/testNativeAnswerUsesActualBundledResearchAndDocumentCitations",
+    "AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit"
+  ],
+  "importantBoundary": "The strict native integration test forbids retrieval fallback and proves actual local generation. The UI journey separately proves answer/source presentation and clear-on-exit; it alone does not distinguish native from bounded fallback."
+}

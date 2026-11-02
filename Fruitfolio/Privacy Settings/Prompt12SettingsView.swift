@@ -25,36 +25,38 @@ struct Prompt12SettingsView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
+                    FruitfolioProtectedHeader {
                         Prompt12RouteHeader(
                             title: "settings",
                             subtitle: "small controls for how Fruitfolio feels",
-                            assetName: "hub_settings",
+                            assetName: nil,
                             onBack: onBack
                         )
+                    } decoration: { protected, space in
+                        ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_blueberry)
+                            FruitfolioImage(id: .cycledecor_lavender_droplets)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_plum)
+                            FruitfolioImage(id: .cycledecor_flower)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)
+                        .fruitfolioAvoidProtectedContent(protected, in: space)
                          .allowsHitTesting(false)
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 88, height: 88)
+                            .frame(width: 52, height: 52)
+                            .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 74, y: -12)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
+                        }
                     }
 
                     experienceSection
@@ -67,6 +69,7 @@ struct Prompt12SettingsView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("settings.mainScroll")
             .fruitfolioModalBlur(
                 active:
                     showDataManagement ||
@@ -74,13 +77,6 @@ struct Prompt12SettingsView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if showDataManagement ||
-                showAbout {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             if showDataManagement {
                 Prompt12DataManagementView(
@@ -203,12 +199,16 @@ struct Prompt12SettingsView: View {
                 "experience"
             )
 
+            WatercolorToggle(label: "mute all sounds", isOn: $settings.allAudioMuted)
+                .accessibilityIdentifier("settings.globalMute")
+
             WatercolorToggle(
                 label: "sound effects",
                 isOn:
                     $settings
                         .soundEffectsEnabled
             )
+            .accessibilityIdentifier("settings.enabled.sound_effects")
 
             WatercolorToggle(
                 label: "music",
@@ -216,6 +216,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .musicEnabled
             )
+            .accessibilityIdentifier("settings.enabled.music")
 
             WatercolorToggle(
                 label: "rain ambience",
@@ -223,6 +224,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .rainEnabled
             )
+            .accessibilityIdentifier("settings.enabled.rain_sounds")
 
             WatercolorToggle(
                 label: "typing ASMR",
@@ -230,6 +232,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .typingASMREnabled
             )
+            .accessibilityIdentifier("settings.enabled.typing_asmr")
 
             Prompt12VolumeRow(title: "music", value: $settings.musicVolume)
             Prompt12VolumeRow(title: "rain sounds", value: $settings.rainVolume)

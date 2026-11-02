@@ -1,0 +1,45 @@
+name: MADLAD Apple runtime compatibility
+on:
+  pull_request:
+    paths:
+      - 'TranslationInvestigation/madlad-candle-probe/**'
+      - 'Tools/build_ios_madlad.sh'
+      - '.github/workflows/madlad-compatibility.yml'
+  workflow_dispatch:
+concurrency:
+  group: fruitfolio-madlad-compat-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  apple-runtime:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-apple-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
+      - name: Capture runtime build tools
+        run: |
+          mkdir -p Fruitfolio_Verification_Evidence/MADLAD
+          xcodebuild -version
+          rustc --version
+          cargo --version
+      - name: Build official-format encoder-decoder runtime for iOS and Simulator
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/MADLAD/apple-runtime-build.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_MADLAD_Apple_Compatibility
+          path: |
+            Vendor/FruitfolioMADLAD.xcframework
+            Fruitfolio_Verification_Evidence/MADLAD/apple-runtime-build.log

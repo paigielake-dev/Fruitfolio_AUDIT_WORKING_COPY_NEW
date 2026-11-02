@@ -1143,7 +1143,7 @@ actor Prompt13CycleStore {
         let deviceID =
             archive.deviceID
 
-        archive =
+        let erasedArchive =
             Prompt13CycleArchive(
                 localProfileID:
                     preserveLocalIdentity
@@ -1159,10 +1159,15 @@ actor Prompt13CycleStore {
             persistence
                 .erase()
 
+        // If erase fails, do not make the UI report that existing records
+        // vanished. After a successful erase, never revive old health records
+        // merely because writing the empty envelope subsequently fails.
+        archive = erasedArchive
+
         try await
             persistence
                 .save(
-                    archive
+                    erasedArchive
                 )
     }
 

@@ -16,6 +16,11 @@ struct FruitfolioDecorativePlacement {
 /// Shared geometry authority for decorative art. Screen-level art selection,
 /// side, rotation and semantic relationship remain founder-owned at call sites.
 enum FruitfolioDecorativeArtLayout {
+    static func isCollisionFree(paintedFrame: CGRect, protectedRegions: [FruitfolioProtectedRegion], minimumGap: CGFloat = 12) -> Bool {
+        let protectedFootprint = paintedFrame.insetBy(dx: -minimumGap, dy: -minimumGap)
+        return !protectedRegions.contains { $0.rect.intersects(protectedFootprint) }
+    }
+
     static func placement(
         intrinsicSize: CGSize,
         visibleAlphaBounds: CGRect? = nil,
@@ -67,8 +72,7 @@ enum FruitfolioDecorativeArtLayout {
             width: alpha.width * sx,
             height: alpha.height * sy
         )
-        let collisionFrame = visibleFrame.insetBy(dx: -minimumGap, dy: -minimumGap)
-        let collides = protectedRegions.contains { $0.rect.intersects(collisionFrame) }
-        return .init(frame: candidate, isVisible: !collides && safe.contains(visibleFrame))
+        return .init(frame: candidate, isVisible: isCollisionFree(paintedFrame: visibleFrame,
+            protectedRegions: protectedRegions, minimumGap: minimumGap) && safe.contains(visibleFrame))
     }
 }

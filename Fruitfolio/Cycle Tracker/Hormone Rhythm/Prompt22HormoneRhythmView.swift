@@ -6,15 +6,19 @@ struct Prompt22HormoneRhythmView: View {
     var loader: Prompt22HormoneRhythmLoader
     var context: Prompt27AUserReproductiveContext
     var contextPolicy: Prompt27AContextPolicyResult
+    @ObservedObject private var measurements: HormoneMeasurementStore
+    @State private var mode: Prompt22RhythmMode = .typical
 
     init(
         loader: Prompt22HormoneRhythmLoader? = nil,
         context: Prompt27AUserReproductiveContext = .unspecified,
-        contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult()
+        contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult(),
+        measurements: HormoneMeasurementStore? = nil
     ) {
         self.loader = loader ?? Prompt22HormoneRhythmLoader()
         self.context = context
         self.contextPolicy = contextPolicy
+        self.measurements = measurements ?? .shared
     }
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -103,14 +107,18 @@ struct Prompt22HormoneRhythmView: View {
     private var fallbackView: some View {
         VStack(alignment: .leading, spacing: 24) {
             header
+            measurementModeControls
 
             contextClarificationView
 
-            ForEach(displayedPresentation.sections, id: \.hormone) { section in
-                hormoneSection(section)
+            if mode == .measurements {
+                recordedMeasurementReferences
+            } else {
+                ForEach(displayedPresentation.sections, id: \.hormone) { section in
+                    hormoneSection(section)
+                }
+                patternKey
             }
-
-            patternKey
         }
         .frame(maxWidth: 620, alignment: .leading)
         .frame(maxWidth: .infinity, alignment: .center)
@@ -119,10 +127,11 @@ struct Prompt22HormoneRhythmView: View {
     private var content: some View {
         VStack(alignment: .leading, spacing: 24) {
             header
+            measurementModeControls
 
             contextClarificationView
 
-            if let contextNote = displayedPresentation.contextNote {
+            if mode != .measurements, let contextNote = displayedPresentation.contextNote {
                 Text(contextNote)
                     .font(Prompt22Type.context)
                     .foregroundStyle(
@@ -136,19 +145,73 @@ struct Prompt22HormoneRhythmView: View {
                     )
             }
 
-            ForEach(displayedPresentation.sections, id: \.hormone) { section in
-                hormoneSection(section)
+            if mode == .measurements {
+                recordedMeasurementReferences
+            } else {
+                ForEach(displayedPresentation.sections, id: \.hormone) { section in
+                    hormoneSection(section)
+                }
+                patternKey
             }
-
-            patternKey
         }
         .frame(maxWidth: 620, alignment: .leading)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 
+    private var measurementModeControls: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Picker("hormone rhythm presentation", selection: $mode) {
+                ForEach(Prompt22RhythmMode.allCases) { option in
+                    Text(LocalizedStringKey(option.title)).tag(option)
+                }
+            }
+            .pickerStyle(.menu)
+            .frame(minHeight: 44)
+            .accessibilityIdentifier("hormoneRhythm.mode")
+            if let error = measurements.loadError {
+                Text(error).fixedSize(horizontal: false, vertical: true)
+            } else if mode == .adjusted {
+                if Prompt22MeasurementPresentationPolicy.assessment(requested: true,
+                    measurements: measurements.measurements) == .approvedCalibrationUnavailable {
+                    Text(Prompt22MeasurementPresentationPolicy.insufficientTitle).bold()
+                    Text(Prompt22MeasurementPresentationPolicy.insufficientMessage)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("hormoneRhythm.insufficientInformation")
+                } else {
+                    Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            if mode != .typical {
+                WatercolorSecondaryButton(label: "restore original hormone rhythm") { mode = .typical }
+                    .accessibilityIdentifier("hormoneRhythm.restoreOriginal")
+            }
+        }
+        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+    }
+
+    private var recordedMeasurementReferences: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("my measurements").font(Prompt22Type.title).accessibilityAddTraits(.isHeader)
+            if measurements.measurements.isEmpty && measurements.loadError == nil {
+                Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
+            }
+            ForEach(Prompt22MeasurementPresentationPolicy.orderedReferences(measurements.measurements)) { record in
+                HormoneMeasurementSummaryView(record: record)
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("hormoneRhythm.recorded." + record.id.uuidString)
+            }
+            HormoneMeasurementHistoryChart(measurements: measurements.measurements)
+            Text("these are results you recorded, not a diagnosis. timing, sample type, methods, units, and clinical context matter. Fruitfolio does not classify results or recommend treatment.")
+        }
+        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+    }
+
     @ViewBuilder
     private var contextClarificationView: some View {
-        if let contextClarification {
+        if mode != .measurements, let contextClarification {
             Text(contextClarification)
                 .font(Prompt22Type.context)
                 .foregroundStyle(
@@ -177,12 +240,14 @@ struct Prompt22HormoneRhythmView: View {
                     .foregroundStyle(Prompt22Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
-                Text(displayedPresentation.subtitle)
-                    .font(Prompt22Type.subtitle)
-                    .foregroundStyle(
-                        Prompt22Palette.burgundy.opacity(0.68)
-                    )
-                    .fixedSize(horizontal: false, vertical: true)
+                if mode != .measurements {
+                    Text(displayedPresentation.subtitle)
+                        .font(Prompt22Type.subtitle)
+                        .foregroundStyle(
+                            Prompt22Palette.burgundy.opacity(0.68)
+                        )
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
 
             Spacer(minLength: 12)

@@ -290,7 +290,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
         audioManager.play(.starChime)
 
         guard await sleep(
-            .milliseconds(180),
+            Prompt04IntroConfiguration.brandedSettlePulse,
             generation: generation
         ) else {
             return
@@ -452,63 +452,21 @@ final class Prompt04IntroStateMachine: ObservableObject {
         audioManager: AudioManager,
         completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void
     ) async {
-        guard await sleep(
-            .milliseconds(80),
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .brandedBookSettled
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedClosedBookCrossfade
-                    .timeInterval
+        // Retain the normal stage clock. The view replaces the ripple/zoom/
+        // arrival transforms with opacity-only transitions for Reduced Motion.
+        if mode.isFirstLaunch {
+            await runFirstLaunchSequence(
+                generation: generation,
+                audioManager: audioManager,
+                completion: completion
             )
-        ) {
-            bookArrivalProgress = 1
-            logoRevealProgress = 1
-            brandedBookResolved = true
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedClosedBookCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .hubRevealing
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedOpenHubCrossfade
-                    .timeInterval
+        } else {
+            await runReturningSequence(
+                generation: generation,
+                audioManager: audioManager,
+                completion: completion
             )
-        ) {
-            slightlyOpenProgress = 1
-            fullyOpenProgress = 1
-            rightPageFocusProgress = 1
-            standalonePaperProgress = 1
-            hubRevealProgress = 1
         }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedOpenHubCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        await complete(
-            generation: generation,
-            audioManager: audioManager,
-            completion: completion,
-            wasFirstLaunch: mode.isFirstLaunch
-        )
     }
 
     private func finishFromBrandedBook(

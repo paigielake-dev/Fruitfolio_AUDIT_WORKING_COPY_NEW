@@ -1,0 +1,360 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/AskGroundedJourneyUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-01 20:04:53.464053+0000 FruitfolioUITests-Runner[42225:124765] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-01 20:04:54.030.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-01 20:04:54.031.
+Test Suite 'AskGroundedJourneyUITests' started at 2026-11-01 20:04:54.031.
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' started.
+    t =     0.00s Start Test at 2026-11-01 20:04:54.032
+    t =     0.02s Set Up
+    t =     0.03s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.03s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 20:04:54.096 xcodebuild[42213:124569] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 20:04:54.096 xcodebuild[42213:124569] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.88s         Setting up automation session
+objc[42225]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x109780310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a168398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.83s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.45s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.46s         Checking existence of `"I'll explore" Button`
+    t =     4.50s         Capturing element debug description
+    t =     5.45s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.45s         Checking existence of `"I'll explore" Button`
+    t =     5.48s         Capturing element debug description
+    t =     6.53s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.53s         Checking existence of `"I'll explore" Button`
+    t =     6.55s         Capturing element debug description
+    t =     7.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.46s         Checking existence of `"I'll explore" Button`
+    t =     7.50s         Capturing element debug description
+    t =     8.45s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.45s         Checking existence of `"I'll explore" Button`
+    t =     8.50s         Capturing element debug description
+    t =     9.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.46s         Checking existence of `"I'll explore" Button`
+    t =     9.50s         Capturing element debug description
+    t =    10.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.46s         Checking existence of `"I'll explore" Button`
+    t =    10.50s         Capturing element debug description
+    t =    11.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.46s         Checking existence of `"I'll explore" Button`
+    t =    11.51s         Capturing element debug description
+    t =    12.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.46s         Checking existence of `"I'll explore" Button`
+    t =    12.50s         Capturing element debug description
+    t =    13.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.46s         Checking existence of `"I'll explore" Button`
+    t =    13.48s         Capturing element debug description
+    t =    14.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.46s         Checking existence of `"I'll explore" Button`
+    t =    14.48s         Capturing element debug description
+    t =    15.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.46s         Checking existence of `"I'll explore" Button`
+    t =    15.50s         Capturing element debug description
+    t =    15.50s     Checking existence of `"I'll explore" Button`
+    t =    15.52s Collecting debug information to assist test failure triage
+    t =    15.52s     Requesting snapshot of accessibility hierarchy for app with pid 42233
+    t =    15.55s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    16.59s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    16.59s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    16.61s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    16.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.62s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    16.64s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    16.66s     Synthesize event
+    t =    16.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.44s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    18.47s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    18.47s         Checking existence of `"ask.questionInput" TextField`
+    t =    18.52s Tap "ask.questionInput" TextField
+    t =    18.52s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.52s     Find the "ask.questionInput" TextField
+    t =    18.54s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    18.56s     Synthesize event
+    t =    18.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.96s Type 'How does morning s...' into "ask.questionInput" TextField
+    t =    18.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.34s     Find the "ask.questionInput" TextField
+    t =    19.40s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    19.43s     Synthesize event
+    t =    20.43s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.43s Find the Button (First Match)
+    t =    20.52s Find the "Send question" Button
+    t =    20.61s Tap "Send question" Button
+    t =    20.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.61s     Find the "Send question" Button
+    t =    20.69s     Check for interrupting elements affecting "Send question" Button
+    t =    20.72s     Synthesize event
+    t =    21.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.27s Waiting 180.0s for "ask.completedAnswer" TextView to exist
+    t =    22.31s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    22.31s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    22.33s         Capturing element debug description
+    t =    23.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    23.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    23.30s         Capturing element debug description
+    t =    24.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    24.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    24.29s         Capturing element debug description
+    t =    25.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    25.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    25.36s         Capturing element debug description
+    t =    26.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    26.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    26.35s         Capturing element debug description
+    t =    27.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    27.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    27.33s         Capturing element debug description
+    t =    28.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    28.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    28.29s         Capturing element debug description
+    t =    29.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    29.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    29.34s         Capturing element debug description
+    t =    30.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    30.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    30.32s         Capturing element debug description
+    t =    31.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    31.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    31.37s         Capturing element debug description
+    t =    32.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    32.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    32.37s         Capturing element debug description
+    t =    33.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    33.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    33.34s         Capturing element debug description
+    t =    34.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    34.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    34.32s         Capturing element debug description
+    t =    35.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    35.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    35.33s         Capturing element debug description
+    t =    36.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    36.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    36.34s         Capturing element debug description
+    t =    37.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    37.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    37.33s         Capturing element debug description
+    t =    38.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    38.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    38.34s         Capturing element debug description
+    t =    39.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    39.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    39.31s         Capturing element debug description
+    t =    40.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    40.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    40.41s         Capturing element debug description
+    t =    41.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    41.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    41.37s         Capturing element debug description
+    t =    42.30s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    42.30s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    42.36s         Capturing element debug description
+    t =    43.31s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    43.31s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    43.38s         Capturing element debug description
+    t =    44.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    44.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    44.33s         Capturing element debug description
+    t =    45.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    45.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    45.34s         Capturing element debug description
+    t =    46.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    46.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    46.33s         Capturing element debug description
+    t =    47.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    47.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    47.31s         Capturing element debug description
+    t =    48.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    48.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    48.32s         Capturing element debug description
+    t =    49.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    49.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    49.40s         Capturing element debug description
+    t =    50.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    50.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    50.39s         Capturing element debug description
+    t =    51.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    51.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    51.40s         Capturing element debug description
+    t =    52.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    52.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    52.42s         Capturing element debug description
+    t =    53.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    53.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    53.39s         Capturing element debug description
+    t =    54.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    54.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    54.41s         Capturing element debug description
+    t =    55.35s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    55.35s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    55.43s         Capturing element debug description
+    t =    56.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    56.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    56.35s         Capturing element debug description
+    t =    57.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    57.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    57.36s         Capturing element debug description
+    t =    58.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    58.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    58.35s         Capturing element debug description
+    t =    59.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    59.29s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    59.36s         Capturing element debug description
+    t =    60.31s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    60.31s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    60.36s         Capturing element debug description
+    t =    61.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    61.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    61.30s         Capturing element debug description
+    t =    62.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    62.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    62.41s         Capturing element debug description
+    t =    63.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    63.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    63.38s         Capturing element debug description
+    t =    64.33s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    64.33s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    64.38s         Capturing element debug description
+    t =    65.33s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    65.33s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    65.36s         Capturing element debug description
+    t =    66.30s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    66.30s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    66.32s         Capturing element debug description
+    t =    67.27s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    67.27s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    67.38s         Capturing element debug description
+    t =    68.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    68.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    68.39s         Capturing element debug description
+    t =    69.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    69.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    69.41s         Capturing element debug description
+    t =    70.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    70.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    70.39s         Capturing element debug description
+    t =    71.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    71.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    71.38s         Capturing element debug description
+    t =    72.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    72.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    72.39s         Capturing element debug description
+    t =    73.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    73.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    73.38s         Capturing element debug description
+    t =    74.34s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    74.34s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    74.38s         Capturing element debug description
+    t =    75.32s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    75.32s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    75.36s         Capturing element debug description
+    t =    76.30s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    76.30s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    76.32s Find the "ask.completedAnswer" TextView
+    t =    76.35s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    76.50s Added attachment named 'Ask_ActualCompletedAnswer'
+    t =    76.50s Checking existence of `Any (First Match)`
+    t =    76.54s Checking existence of `Any (First Match)`
+    t =    76.57s Checking existence of `Any (First Match)`
+    t =    76.61s Checking existence of `Any (First Match)`
+    t =    76.64s Checking existence of `Any (First Match)`
+    t =    76.67s Checking existence of `Any (First Match)`
+    t =    76.70s Checking existence of `Any (First Match)`
+    t =    76.73s Checking existence of `Any (First Match)`
+    t =    76.76s Checking existence of `Any (First Match)`
+    t =    76.79s Checking existence of `Any (First Match)`
+    t =    76.83s Checking existence of `Any (First Match)`
+    t =    76.86s Checking existence of `Any (First Match)`
+    t =    76.89s Checking existence of `Any (First Match)`
+    t =    76.92s Checking existence of `Any (First Match)`
+    t =    76.96s Checking existence of `Any (First Match)`
+    t =    76.99s Checking existence of `Any (First Match)`
+    t =    77.02s Checking existence of `Any (First Match)`
+    t =    77.05s Checking existence of `Any (First Match)`
+    t =    77.08s Checking existence of `Any (First Match)`
+    t =    77.11s Checking existence of `Any (First Match)`
+    t =    77.14s Checking existence of `Any (First Match)`
+    t =    77.17s Find the Any (First Match)
+    t =    77.20s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    77.35s Added attachment named 'Ask_ActualDocumentSources'
+    t =    77.35s Find the "ask.completedAnswer" TextView
+    t =    77.38s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    77.42s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    77.45s Added attachment named 'Ask_ActualUIAnswerAndSource'
+    t =    77.45s Find the "ask.back" Button
+    t =    77.49s Find the "ask.back" Button
+    t =    77.53s Find the "ask.back" Button
+    t =    77.56s Find the "ask.back" Button
+    t =    77.61s Find the "ask.back" Button
+    t =    77.64s Find the "ask.back" Button
+    t =    77.68s Find the "ask.back" Button
+    t =    77.71s Find the "ask.back" Button
+    t =    77.75s Find the "ask.back" Button
+    t =    77.78s Find the "ask.back" Button
+    t =    77.82s Find the "ask.back" Button
+    t =    77.86s Find the "ask.back" Button
+    t =    77.89s Find the "ask.back" Button
+    t =    77.93s Find the "ask.back" Button
+    t =    77.97s Find the "ask.back" Button
+    t =    78.00s Find the "ask.back" Button
+    t =    78.04s Find the "ask.back" Button
+    t =    78.08s Find the "ask.back" Button
+    t =    78.12s Find the "ask.back" Button
+    t =    78.16s Find the "ask.back" Button
+    t =    78.19s Find the "ask.back" Button
+    t =    78.23s Tap "ask.back" Button
+    t =    78.23s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    78.23s     Find the "ask.back" Button
+    t =    78.26s     Check for interrupting elements affecting "ask.back" Button
+    t =    78.28s     Synthesize event
+    t =    78.58s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    78.96s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    80.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    80.00s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    80.02s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    80.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    80.03s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    80.06s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    80.08s     Synthesize event
+    t =    80.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    80.74s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    81.75s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    81.75s         Checking existence of `"ask.questionInput" TextField`
+    t =    81.78s Checking existence of `"ask.completedAnswer" TextView`
+    t =    81.80s Checking existence of `"How does morning sunlight affect the body clock?" StaticText`
+    t =    81.82s Find the "ask.questionInput" TextField
+    t =    81.83s Find the "ask.questionInput" TextField
+    t =    81.85s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    82.02s Added attachment named 'Ask_ClearedAfterReturning'
+    t =    82.02s Tear Down
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' passed (82.405 seconds).
+Test Suite 'AskGroundedJourneyUITests' passed at 2026-11-01 20:06:16.437.
+	 Executed 1 test, with 0 failures (0 unexpected) in 82.405 (82.406) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-01 20:06:16.438.
+	 Executed 1 test, with 0 failures (0 unexpected) in 82.405 (82.407) seconds
+Test Suite 'Selected tests' passed at 2026-11-01 20:06:16.438.
+	 Executed 1 test, with 0 failures (0 unexpected) in 82.405 (82.408) seconds
+2026-11-01 20:06:26.532 xcodebuild[42213:124569] [MT] IDETestOperationsObserverDebug: 94.403 elapsed -- Testing started completed.
+2026-11-01 20:06:26.532 xcodebuild[42213:124569] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 20:06:26.532 xcodebuild[42213:124569] [MT] IDETestOperationsObserverDebug: 94.403 sec, +94.403 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/AskJourney.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

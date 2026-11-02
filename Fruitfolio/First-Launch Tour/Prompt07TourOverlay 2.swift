@@ -325,7 +325,7 @@ struct Prompt07TourOverlay: View {
                     minHeight: 28,
                     alignment: .center
                 )
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
                 .accessibilityLabel(
                     "Start exploring"
                 )
@@ -354,7 +354,7 @@ struct Prompt07TourOverlay: View {
                         .frame(
                             minHeight: 28
                         )
-                        .buttonStyle(.plain)
+                        .buttonStyle(CutePopButtonStyle())
                     }
 
                     Spacer(
@@ -387,7 +387,7 @@ struct Prompt07TourOverlay: View {
                     .frame(
                         minHeight: 28
                     )
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
 
                     Button(
                         "next →"
@@ -408,7 +408,7 @@ struct Prompt07TourOverlay: View {
                     .frame(
                         minHeight: 28
                     )
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle())
                 }
                 .frame(
                     maxWidth: .infinity
