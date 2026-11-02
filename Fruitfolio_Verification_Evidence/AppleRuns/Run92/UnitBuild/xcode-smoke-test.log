@@ -1,0 +1,200 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData "-only-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/Smoke.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/Smoke.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 08:05:21.874981+0000 FruitfolioUITests-Runner[26457:80532] [Default] Running tests...
+objc[26457]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10823c310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1087e4398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 08:05:34.433.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 08:05:34.435.
+2026-11-02 08:05:36.146 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 08:05:36.146 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: no debugger version
+Test Suite 'SimulatorSmokeEvidenceTests' started at 2026-11-02 08:05:34.436.
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testRealIntroAndReachableHub]' started.
+    t =     0.00s Start Test at 2026-11-02 08:05:34.440
+    t =     0.12s Set Up
+    t =     0.13s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.13s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     8.02s         Setting up automation session
+    t =    11.06s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    15.14s Waiting 15.0s for Window (First Match) to exist
+    t =    16.22s     Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =    16.23s         Checking existence of `Window (First Match)`
+    t =    16.48s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    17.08s Added attachment named 'Smoke_first_FirstObservedFrameAfterLaunch'
+    t =    17.08s Waiting 14.0s for "I'll explore" Button to exist
+    t =    18.14s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.15s         Checking existence of `"I'll explore" Button`
+    t =    18.26s         Capturing element debug description
+    t =    19.10s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.11s         Checking existence of `"I'll explore" Button`
+    t =    19.18s         Capturing element debug description
+    t =    20.17s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.17s         Checking existence of `"I'll explore" Button`
+    t =    20.22s         Capturing element debug description
+    t =    21.17s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.17s         Checking existence of `"I'll explore" Button`
+    t =    21.25s         Capturing element debug description
+    t =    22.11s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.11s         Checking existence of `"I'll explore" Button`
+    t =    22.24s         Capturing element debug description
+    t =    23.10s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.10s         Checking existence of `"I'll explore" Button`
+    t =    23.18s         Capturing element debug description
+    t =    24.13s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    24.13s         Checking existence of `"I'll explore" Button`
+    t =    24.19s         Capturing element debug description
+    t =    25.17s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    25.17s         Checking existence of `"I'll explore" Button`
+    t =    25.25s Tap "I'll explore" Button
+    t =    25.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.25s     Find the "I'll explore" Button
+    t =    25.35s     Check for interrupting elements affecting "I'll explore" Button
+    t =    25.43s     Synthesize event
+    t =    25.90s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.91s Waiting 15.0s for Button (First Match) to exist
+    t =    26.96s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    26.96s         Checking existence of `Button (First Match)`
+    t =    27.09s Find the Button (First Match)
+    t =    27.25s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    27.65s Added attachment named 'Smoke_first_ActualHub'
+    t =    27.66s Tear Down
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testRealIntroAndReachableHub]' passed (29.503 seconds).
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testRealReducedMotionIntroAndReachableHub]' started.
+    t =     0.00s Start Test at 2026-11-02 08:06:03.944
+    t =     0.06s Set Up
+    t =     0.06s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.06s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.06s         Terminate com.fruitsoflifexo.Fruitfolio:26909
+2026-11-02 08:06:06.049 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 08:06:06.049 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.10s         Setting up automation session
+    t =     5.71s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     8.36s Waiting 15.0s for Window (First Match) to exist
+    t =     9.41s     Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     9.42s         Checking existence of `Window (First Match)`
+    t =     9.52s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =     9.91s Added attachment named 'Smoke_reduced-first_FirstObservedFrameAfterLaunch'
+    t =     9.92s Waiting 14.0s for "I'll explore" Button to exist
+    t =    11.00s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.00s         Checking existence of `"I'll explore" Button`
+    t =    11.06s         Capturing element debug description
+    t =    12.00s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.00s         Checking existence of `"I'll explore" Button`
+    t =    12.04s         Capturing element debug description
+    t =    12.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.95s         Checking existence of `"I'll explore" Button`
+    t =    12.98s         Capturing element debug description
+    t =    13.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.94s         Checking existence of `"I'll explore" Button`
+    t =    13.96s         Capturing element debug description
+    t =    14.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.92s         Checking existence of `"I'll explore" Button`
+    t =    15.19s         Capturing element debug description
+    t =    15.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.93s         Checking existence of `"I'll explore" Button`
+    t =    16.13s         Capturing element debug description
+    t =    16.98s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.98s         Checking existence of `"I'll explore" Button`
+    t =    17.06s         Capturing element debug description
+    t =    17.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.99s         Checking existence of `"I'll explore" Button`
+    t =    18.06s         Capturing element debug description
+    t =    18.97s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.97s         Checking existence of `"I'll explore" Button`
+    t =    19.02s         Capturing element debug description
+    t =    19.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.96s         Checking existence of `"I'll explore" Button`
+    t =    20.02s         Capturing element debug description
+    t =    20.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.95s         Checking existence of `"I'll explore" Button`
+    t =    21.00s         Capturing element debug description
+    t =    21.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.95s         Checking existence of `"I'll explore" Button`
+    t =    22.00s         Capturing element debug description
+    t =    22.94s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.94s         Checking existence of `"I'll explore" Button`
+    t =    22.99s         Capturing element debug description
+    t =    23.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.92s         Checking existence of `"I'll explore" Button`
+    t =    23.99s         Capturing element debug description
+    t =    23.99s     Checking existence of `"I'll explore" Button`
+    t =    24.05s Collecting debug information to assist test failure triage
+    t =    24.05s     Requesting snapshot of accessibility hierarchy for app with pid 27327
+    t =    24.13s Waiting 15.0s for Button (First Match) to exist
+    t =    25.16s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    25.17s         Checking existence of `Button (First Match)`
+    t =    25.31s Find the Button (First Match)
+    t =    25.59s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    26.05s Added attachment named 'Smoke_reduced-first_ActualHub'
+    t =    26.06s Tear Down
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testRealReducedMotionIntroAndReachableHub]' passed (26.557 seconds).
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testSkipControlShowsItsVisibleWordingAndEntersTheLiveHub]' started.
+    t =     0.00s Start Test at 2026-11-02 08:06:30.501
+    t =     0.07s Set Up
+    t =     0.08s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.08s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.08s         Terminate com.fruitsoflifexo.Fruitfolio:27327
+2026-11-02 08:06:32.092 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 08:06:32.092 xcodebuild[25514:77584] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     2.51s         Setting up automation session
+    t =     5.22s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     7.94s Waiting 2.0s for "skip introduction" Button to exist
+    t =     8.99s     Checking `Expect predicate `existsNoRetry == 1` for object "skip introduction" Button`
+    t =     8.99s         Checking existence of `"skip introduction" Button`
+    t =     9.11s Find the "skip introduction" Button
+    t =     9.19s Find the "skip introduction" Button
+    t =     9.23s Find the "skip introduction" Button
+    t =     9.27s Checking existence of `"skip tour" StaticText`
+    t =     9.31s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =     9.59s Added attachment named 'Intro_ActualBottomLeftSkipControl'
+    t =     9.63s Tap "skip introduction" Button
+    t =     9.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     9.64s     Find the "skip introduction" Button
+    t =     9.92s     Check for interrupting elements affecting "skip introduction" Button
+    t =    10.04s     Synthesize event
+    t =    10.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    10.56s Waiting 2.0s for "I'll explore" Button to exist
+    t =    11.61s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.61s         Checking existence of `"I'll explore" Button`
+    t =    12.17s         Capturing element debug description
+    t =    12.57s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.57s         Checking existence of `"I'll explore" Button`
+    t =    12.75s         Capturing element debug description
+    t =    12.75s     Checking existence of `"I'll explore" Button`
+    t =    12.87s Collecting debug information to assist test failure triage
+    t =    12.87s     Requesting snapshot of accessibility hierarchy for app with pid 27932
+    t =    12.95s Waiting 10.0s for Button (First Match) to exist
+    t =    14.00s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    14.00s         Checking existence of `Button (First Match)`
+    t =    14.15s Find the Button (First Match)
+    t =    14.26s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    14.56s Added attachment named 'Intro_ActualSkippedToLiveHub'
+    t =    14.57s Tear Down
+Test Case '-[FruitfolioUITests.SimulatorSmokeEvidenceTests testSkipControlShowsItsVisibleWordingAndEntersTheLiveHub]' passed (14.819 seconds).
+Test Suite 'SimulatorSmokeEvidenceTests' passed at 2026-11-02 08:06:45.320.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 70.879 (70.884) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-02 08:06:45.321.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 70.879 (70.886) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 08:06:45.321.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 70.879 (70.889) seconds
+2026-11-02 08:06:46.327 xcodebuild[25514:77584] [MT] IDETestOperationsObserverDebug: 121.558 elapsed -- Testing started completed.
+2026-11-02 08:06:46.328 xcodebuild[25514:77584] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 08:06:46.328 xcodebuild[25514:77584] [MT] IDETestOperationsObserverDebug: 121.558 sec, +121.557 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/Smoke.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

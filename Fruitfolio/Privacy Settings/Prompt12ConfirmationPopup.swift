@@ -26,23 +26,16 @@ struct Prompt12ConfirmationPopup: View {
                         .accessibilityHidden(true)
                 }
 
-                Text(title)
-                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .headline))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
+                FruitfolioNativeActionLabel(text: title,
+                    pointSize: 16, textStyle: .headline,
+                    lineBreakMode: dynamicTypeSize.isAccessibilitySize ? .byCharWrapping : .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
                     .accessibilityFocused($titleFocused)
 
-                Text(message)
-                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
+                FruitfolioNativeActionLabel(text: message,
+                    fontName: "ChalkboardSE-Regular", pointSize: 11.5, textStyle: .body,
+                    lineBreakMode: dynamicTypeSize.isAccessibilitySize ? .byCharWrapping : .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 275)
 

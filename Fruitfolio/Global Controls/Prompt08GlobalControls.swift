@@ -100,6 +100,7 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     var pointSize: CGFloat = 15
     var textStyle: UIFont.TextStyle = .headline
     var lineBreakMode: NSLineBreakMode = .byWordWrapping
+    var lineSpacing: CGFloat = 0
     var textColor: Color = DesignTokens.ColorToken.primaryBurgundy
     var accessibilityText: String? = nil
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
@@ -125,6 +126,16 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
         let scaled = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,
             compatibleWith: UITraitCollection(preferredContentSizeCategory: contentSizeCategory))
         if label.font != scaled { label.font = scaled }
+        if lineSpacing > 0 {
+            let paragraph = NSMutableParagraphStyle()
+            paragraph.alignment = .center
+            paragraph.lineBreakMode = lineBreakMode
+            paragraph.lineSpacing = lineSpacing
+            let attributed = NSAttributedString(string: text, attributes: [
+                .font: scaled, .foregroundColor: UIColor(textColor), .paragraphStyle: paragraph
+            ])
+            if label.attributedText != attributed { label.attributedText = attributed }
+        }
         // UIKit already invalidates intrinsic size when text/font changes.
         // Unconditional invalidation during every SwiftUI update can produce
         // redundant layout work while XCTest cycles Dynamic Type categories.

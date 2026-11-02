@@ -16,8 +16,19 @@ final class FruitBasketGroundedJourneyUITests: XCTestCase {
     }
 
     func testActualApprovedQuestionAnswerFeedbackCatchPauseExitAndFreshReentry() throws {
+        try verifyQuestionJourney(accessibilitySize: false)
+    }
+
+    func testLargestTextApprovedQuestionKeepsBothCompleteChoicesReachableWithoutChangingThePassage() throws {
+        try verifyQuestionJourney(accessibilitySize: true)
+    }
+
+    private func verifyQuestionJourney(accessibilitySize: Bool) throws {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1"]
+        if accessibilitySize {
+            app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        }
         app.launch()
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
@@ -33,7 +44,17 @@ final class FruitBasketGroundedJourneyUITests: XCTestCase {
         let question = app.staticTexts["fruitBasket.researchQuestion"]
         XCTAssertTrue(question.waitForExistence(timeout: 30), "A real approved passage must replace the former unavailable-provider state")
         XCTAssertTrue(question.label.contains("_____"))
-        capture(app, "FruitBasket_ActualApprovedResearchQuestion")
+        let originalQuestion = question.label
+        capture(app, accessibilitySize ? "FruitBasket_ActualApprovedResearchQuestion_Largest" : "FruitBasket_ActualApprovedResearchQuestion")
+        // Exercise both complete choices before selecting either. Scrolling must
+        // not submit an answer, shorten its evidence, or start the catch timer.
+        for index in 0..<2 {
+            let answer = app.buttons["fruitBasket.answer.\(index)"]
+            fruitfolioReachControl(app, answer)
+            XCTAssertEqual(question.label, originalQuestion)
+            XCTAssertFalse(app.buttons["pause"].exists)
+            capture(app, "FruitBasket_ReachableChoice_\(index)_largest_\(accessibilitySize)")
+        }
         var reachedCorrectFeedback = false
         for index in 0..<2 {
             let answer = app.buttons["fruitBasket.answer.\(index)"]

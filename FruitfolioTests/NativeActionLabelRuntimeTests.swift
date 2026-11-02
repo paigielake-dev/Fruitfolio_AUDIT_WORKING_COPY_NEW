@@ -67,6 +67,14 @@ final class NativeActionLabelRuntimeTests: XCTestCase {
             let writing = FruitfolioPopupLayout.geometry(assetSize: CGSize(width: metadata.width, height: metadata.height),
                 normalizedWriting: CGRect(x: 0.24, y: 0.14, width: 0.65, height: 0.76),
                 available: host.view.safeAreaLayoutGuide.layoutFrame.size).writing
+            for text in ["delete all hormone measurements?", "this removes hormone results only. cycle logs, saved guides, and account information are unchanged."] {
+                let label = try XCTUnwrap(actualLabels.first { $0.text == text }, "The actual visible popup wording must remain a native readable label")
+                XCTAssertTrue(label.isAccessibilityElement)
+                XCTAssertEqual(label.textColor, UIColor(DesignTokens.ColorToken.primaryBurgundy))
+                XCTAssertEqual(label.numberOfLines, 0)
+                let full = label.sizeThatFits(CGSize(width: label.bounds.width, height: 4000))
+                XCTAssertLessThanOrEqual(full.height, label.bounds.height + 1, "Keep every glyph; scrolling must not truncate the disclosure")
+            }
             for text in ["cancel", "delete hormone measurements"] {
                 let label = try XCTUnwrap(actualLabels.first { $0.text == text })
                 let base = try XCTUnwrap(UIFont(name: "ChalkboardSE-Bold", size: 15))

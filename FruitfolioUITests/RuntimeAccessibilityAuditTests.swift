@@ -18,6 +18,7 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
             : NSPredicate(format: "label ==[c] %@ OR (%@ == %@ AND label ==[c] %@)", targetLabel, targetLabel, "account", "sign in")
         let target = app.buttons.matching(predicate).firstMatch
         XCTAssertTrue(target.waitForExistence(timeout: 20), "Required Hub destination not found: \(targetLabel)")
+        fruitfolioReachControl(app, target)
         XCTAssertTrue(target.isHittable, "Hub destination must be reachable: \(targetLabel)")
         if destination != nil {
             target.tap()

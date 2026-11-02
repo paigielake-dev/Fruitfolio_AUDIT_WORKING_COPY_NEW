@@ -1901,26 +1901,10 @@ struct Prompt28FruitBasketView: View {
                             vertical: true
                         )
 
-                    Text(tourBody)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13,
-                                relativeTo: .body
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                                .opacity(0.84)
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(2)
-                        .fixedSize(
-                            horizontal: false,
-                            vertical: true
-                        )
+                    FruitfolioNativeActionLabel(text: tourBody,
+                        fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .body,
+                        lineSpacing: 2)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     if tourStep == 4 {
                         HStack(spacing: 16) {
