@@ -1,12 +1,6 @@
 name: Fruitfolio iOS verification
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [main]
-    paths-ignore:
-      - 'Delivery/**'
-      - 'Fruitfolio_Verification_Evidence/**'
-      - 'Specification/**' 
 concurrency:
   group: fruitfolio-ios-${{ github.event.pull_request.number || github.ref }}-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false

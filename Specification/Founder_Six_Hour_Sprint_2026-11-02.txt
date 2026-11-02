@@ -1,0 +1,536 @@
+FRUITFOLIO — STRICT SIX-HOUR COMPLETION SPRINT
+
+COMPLETE IMPLEMENTATION → BATCH REPAIRS → FINAL AUDIT → PROJECT DELIVERY
+
+EXECUTE IMMEDIATELY. THIS IS A TIME-BOXED COMPLETION SPRINT, NOT AN OPEN-ENDED AUDIT.
+
+You are continuing the existing Fruitfolio iOS project using:
+
+* The authoritative 308-page Fruitfolio Prompt 1B specification.
+* The complete 478-requirement implementation breakdown already provided.
+* The existing source-level implementation map.
+* The latest cumulative project.
+* The current GitHub development branch.
+* All previously completed implementations.
+* Existing test suites and verification artifacts.
+* The latest committed research-update architecture.
+* The completed-round snapshot architecture.
+* The existing Fruit Basket physics and audio integration.
+
+Repository:
+https://github.com/paigielake-dev/Fruitfolio_AUDIT_WORKING_COPY_NEW
+
+DO NOT RESTART DEVELOPMENT.
+DO NOT REIMPLEMENT ALREADY VERIFIED FEATURES.
+DO NOT MERGE INTO MAIN.
+
+Your objective is to finish the maximum possible amount of actual source implementation, integration, testing, and verification within a strict six-hour wall-clock execution budget.
+
+The entire sprint must be organized around completing the full requirement list rather than repeatedly investigating isolated issues.
+
+⸻
+
+NON-NEGOTIABLE TIME LIMIT
+
+TOTAL EXECUTION BUDGET: SIX HOURS.
+
+Start the timer when execution begins.
+
+Record:
+
+* Start timestamp.
+* Deadline timestamp.
+* Current Git commit.
+* Initial requirement completion count.
+* Initial known failure count.
+
+Use the actual execution environment’s clock.
+
+Do not claim elapsed time that cannot be verified.
+
+PHASE 1 — IMPLEMENTATION
+
+MAXIMUM: 3 HOURS
+
+Goal: Complete all outstanding source-level requirements.
+
+Spend the first three hours implementing missing or incomplete functionality.
+
+Do not spend this phase repeatedly rerunning the entire test suite.
+
+Use the existing implementation map and requirement tracker.
+
+For each requirement:
+
+1. Locate the existing implementation.
+2. Determine whether it is already complete.
+3. Preserve completed work.
+4. Implement missing behavior.
+5. Add or update relevant tests.
+6. Record the changed files.
+7. Move to the next requirement.
+
+Work in dependency-aware batches.
+
+Prioritize shared systems that resolve multiple requirements simultaneously.
+
+Required implementation order
+
+Batch A — Universal systems
+
+Complete shared blur, popup layout, decorative artwork positioning, button styling, semantic text formatting, audio controls, and performance corrections.
+
+Batch B — Ask the Encyclopedia
+
+Prioritize the continuous-paper experience.
+
+Implement:
+
+* One vertically continuous paper.
+* Multiple questions and answers on the same paper.
+* No visible artificial bottom edge.
+* No hard answer-height limits.
+* Correct horizontal centering.
+* Responsive text wrapping.
+* Bidirectional scrolling.
+* Conditional auto-follow during streaming.
+* No forced scrolling while reading earlier answers.
+* Session-only conversation history.
+* Clearing unsaved history upon leaving Ask.
+* Preservation of explicitly saved Guide content.
+* Correct citations and research grounding.
+* Canonical response styling.
+* Functional help and save popups.
+
+Do not postpone Ask’s continuous-paper requirement to an undefined visual-polishing phase.
+
+Batch C — Introduction, Hub, Encyclopedias, and Guide Builder
+
+Complete:
+
+* Continuous introduction transitions.
+* Correct Skip Tour placement.
+* Background/resume behavior.
+* Hub spotlight alignment.
+* Continuous book-opening animation.
+* Shared guide synchronization.
+* Editable encyclopedia content.
+* Image imports.
+* Correct bookshelf and decorative artwork.
+* Guide save confirmations.
+
+Batch D — Settings, Account, Hormone Information, and Cycle Tracker
+
+Complete:
+
+* Four independent audio sliders.
+* Global mute.
+* Shared usernames.
+* Hormone measurement management.
+* Hormone Library.
+* Hormone Rhythm separation.
+* Optional evidence-supported adjustments.
+* My Context integration.
+* Unified symptom trends.
+* Cycle Tracker responsiveness and scientific safeguards.
+
+Batch E — Fruit Basket
+
+Complete:
+
+* Correct question → catch → reveal flow.
+* Final star-pass rules.
+* Weather and obstacle physics.
+* Difficulty progression.
+* Accurate Basket Reveal results.
+* Educational facts and source snapshots.
+* Completed-round persistence.
+* Background/resume lifecycle.
+* Leaderboard and username synchronization.
+
+Final bad-fruit rule:
+
+Catching bad fruit without a star pass immediately ends the round.
+
+With at least one star pass, consume exactly one pass and continue.
+
+No alternative penalty behavior.
+
+Required Fruit Basket audio
+
+Actual sound files are required.
+
+Create or obtain suitable, legally usable audio for:
+
+1. Puddle entry and movement.
+2. Branch impact.
+
+Integrate the real audio files into the Xcode bundle.
+
+Do not consider collision wiring without audio assets complete.
+
+Respect existing SFX volume, mute, pause, backgrounding, and cleanup behavior.
+
+Batch F — FAQ, Contact, and remaining visual corrections
+
+Complete the specified artwork assignments, popup fixes, button consistency, responsive layout, and accessibility improvements.
+
+Batch G — Localization architecture
+
+Complete all applicable non-MADLAD localization requirements.
+
+This includes:
+
+* Persistent language selection.
+* Shared language state.
+* Localizable UI strings.
+* Responsive translated layouts.
+* Right-to-left support.
+* Accessible language selection.
+* Language persistence.
+* Preservation of user-entered data.
+* Preservation of citations and metadata.
+
+MADLAD inference is explicitly excluded from this sprint.
+
+Do not spend sprint time repairing, optimizing, or clinically validating MADLAD inference.
+
+Preserve the existing MADLAD implementation and known failure evidence without regressing it.
+
+Do not claim the excluded inference requirements are complete.
+
+Additional founder requirements
+
+Preserve and complete the recently added:
+
+* Puddle sound effects.
+* Branch impact sound effects.
+* Basket Reveal educational facts.
+* Founder-maintainable research-update architecture.
+
+Track these separately from the original 478 requirements.
+
+⸻
+
+PHASE 1 EXECUTION RULES
+
+Do not stop after one successful feature.
+
+Do not spend excessive time producing intermediate reports.
+
+Do not repeatedly download previously verified artifacts.
+
+Do not rerun identical tests without a relevant source change.
+
+Do not spend the implementation budget investigating known MADLAD inference failures.
+
+Do not rewrite stable features merely for architectural elegance.
+
+Do not introduce unrelated refactors.
+
+Do not create the final ZIP during this phase.
+
+Commit coherent implementation batches to the existing development branch.
+
+At the three-hour deadline, immediately transition to Phase 2, even if some requirements remain incomplete.
+
+Record unfinished requirements accurately.
+
+⸻
+
+PHASE 2 — INTEGRATION AND ERROR REPAIR
+
+MAXIMUM: 2 HOURS
+
+Goal: Make the implemented project compile, integrate correctly, and pass as many relevant tests as possible.
+
+Begin with one complete build.
+
+Collect all compiler errors.
+
+Fix related errors together.
+
+Do not use a one-error → one-build → one-error loop when multiple errors can be identified and repaired in one batch.
+
+Repair priority
+
+Priority 1 — Build blockers
+
+Resolve compilation failures, missing source references, broken imports, resource packaging problems, and incompatible APIs.
+
+Priority 2 — Data integrity and privacy
+
+Resolve failures affecting:
+
+* Saved user data.
+* Export/import fidelity.
+* Timestamp precision.
+* Measurement persistence.
+* Research-version compatibility.
+* Citation snapshots.
+* Completed-round history.
+* Destructive-action safeguards.
+
+Priority 3 — Functional integration
+
+Resolve:
+
+* Broken navigation.
+* Ask session behavior.
+* Guide synchronization.
+* Fruit Basket gameplay.
+* Background/resume state.
+* Audio playback.
+* Research-update activation and rollback.
+
+Priority 4 — Accessibility
+
+Resolve:
+
+* Text clipping.
+* Contrast.
+* Dynamic Type.
+* Scroll reachability.
+* VoiceOver.
+* Reduce Motion.
+* Popup layout.
+* Control visibility.
+
+Priority 5 — Remaining visual discrepancies
+
+Resolve remaining artwork alignment, animation, spacing, and decorative inconsistencies.
+
+Testing strategy
+
+Use focused test batches first.
+
+Run relevant tests together where possible.
+
+Preserve the original strict assertions.
+
+Do not modify tests merely to make them pass.
+
+Do not substitute source inspection for runtime verification.
+
+Use the available Apple build and simulator environment when accessible.
+
+If Apple verification is unavailable, preserve the source and test code and provide exact Mac verification commands.
+
+Known failures
+
+Investigate current applicable failures using existing logs before downloading duplicates.
+
+Preserve the historical distinction between:
+
+* Run 97 failures.
+* Run 98 failures.
+* Run 99 passing repairs.
+* Run 104 and later verification results.
+
+Do not represent an older passing test as verification of newer source changes.
+
+Phase 2 deadline
+
+At the end of the second hour of repairs, transition immediately to Phase 3.
+
+Do not extend the repair phase indefinitely because one test remains failing.
+
+Record unresolved failures with exact evidence.
+
+⸻
+
+PHASE 3 — FINAL AUDIT AND DELIVERY
+
+MAXIMUM: 1 HOUR
+
+Goal: Produce a complete, transparent final implementation record and downloadable project.
+
+Audit all 478 original Prompt 1B requirements.
+
+Also audit the additional founder requirements separately.
+
+Requirement status categories
+
+Use exactly:
+
+* PASS
+* PARTIAL
+* FAIL
+* BLOCKED
+* NOT VERIFIED
+* EXCLUDED — MADLAD INFERENCE
+
+For each requirement, record:
+
+1. Requirement number.
+2. Requirement description.
+3. Implementation status.
+4. Source file or files.
+5. Relevant test.
+6. Verification evidence.
+7. Remaining issue, if any.
+
+Do not claim PASS without sufficient evidence.
+
+Do not mark implementation complete merely because a source file exists.
+
+Final testing
+
+Run the broadest feasible integrated verification suite within the remaining budget.
+
+Include:
+
+* Build.
+* Unit tests.
+* UI tests.
+* Ask continuous-paper tests.
+* Guide synchronization.
+* Fruit Basket gameplay.
+* Basket Reveal educational facts.
+* Research-update compatibility.
+* Export fidelity.
+* Accessibility.
+* Dynamic Type.
+* Reduce Motion.
+* Background/resume.
+* Localization architecture.
+
+MADLAD inference remains excluded.
+
+Preserve all actual failures.
+
+Do not inflate test counts by adding overlapping runs together.
+
+Final deliverable
+
+Create one complete integrated project ZIP.
+
+Include:
+
+* Full Xcode source project.
+* Required bundled resources.
+* Test source.
+* Research-update tooling.
+* Audio assets.
+* Requirement audit.
+* Corrections log.
+* Test results.
+* Known issues.
+* Mac verification scripts.
+* Restoration instructions.
+
+Verify ZIP integrity.
+
+Provide SHA-256 checksums.
+
+If the ZIP exceeds download limits, split it into numbered parts with exact reconstruction instructions.
+
+Preserve the latest source in the development branch.
+
+Do not merge into main.
+
+⸻
+
+HARD DEADLINE BEHAVIOR
+
+At six hours, stop active implementation and testing.
+
+Do not silently continue indefinitely.
+
+Do not claim full completion if requirements remain unresolved.
+
+Deliver the best verified integrated state available at the deadline.
+
+If the execution environment imposes an earlier limit:
+
+1. Preserve all completed changes.
+2. Commit the latest source.
+3. Save the requirement tracker.
+4. Preserve available test evidence.
+5. Package the latest integrated project if feasible.
+6. Clearly identify unfinished work.
+7. Provide a precise continuation checkpoint.
+
+Never sacrifice saved-data integrity or knowingly ship unsafe medical behavior merely to satisfy the deadline.
+
+A time limit does not authorize skipping critical validation or fabricating successful results.
+
+⸻
+
+EFFICIENCY DIRECTIVES
+
+STOP THE ENDLESS MICRO-AUDIT CYCLE.
+
+Use these rules throughout the sprint:
+
+1. Inspect multiple related files together.
+2. Implement related requirements in coherent batches.
+3. Reuse existing verified components.
+4. Avoid unnecessary refactoring.
+5. Avoid repeated full-suite testing during implementation.
+6. Preserve previous evidence instead of regenerating it.
+7. Prioritize source changes over lengthy status reports.
+8. Fix shared causes before individual symptoms.
+9. Keep implementation, testing, and final auditing within their assigned time budgets.
+10. Continue working until the next scheduled phase transition or actual execution limit.
+
+Do not ask for permission between ordinary implementation steps.
+
+Do not stop after a successful build.
+
+Do not stop after a passing focused test.
+
+Do not produce a final response while feasible implementation work remains within the active execution budget.
+
+The objective is maximum verified implementation coverage within six hours—not maximum commentary about the work.
+
+⸻
+
+REQUIRED FINAL SUMMARY
+
+At the end, provide:
+
+1. Completion
+
+* Original requirements implemented.
+* Original requirements verified PASS.
+* Partial requirements.
+* Failed requirements.
+* Blocked requirements.
+* Excluded MADLAD inference requirements.
+
+2. Source
+
+* Development branch.
+* Final commit SHA.
+* Files changed.
+* New assets added.
+
+3. Testing
+
+* Build result.
+* Unit-test result.
+* UI-test result.
+* Accessibility result.
+* Remaining failures.
+
+4. Deliverables
+
+* Complete project ZIP.
+* Checksums.
+* Requirement audit.
+* Mac verification instructions.
+
+5. Remaining work
+
+* Exact unfinished requirements.
+* Known defects.
+* Recommended next actions.
+
+BEGIN THE SIX-HOUR SPRINT NOW.
+
+PHASE 1: THREE HOURS.
+PHASE 2: TWO HOURS.
+PHASE 3: ONE HOUR.
+
+FINISH AS MUCH OF THE COMPLETE PROMPT 1B IMPLEMENTATION AS POSSIBLE, THEN REPAIR, AUDIT, AND DELIVER.

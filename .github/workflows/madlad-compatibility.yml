@@ -1,10 +1,5 @@
 name: MADLAD Apple runtime compatibility
 on:
-  pull_request:
-    paths:
-      - 'TranslationInvestigation/madlad-candle-probe/**'
-      - 'Tools/build_ios_madlad.sh'
-      - '.github/workflows/madlad-compatibility.yml'
   workflow_dispatch:
 concurrency:
   group: fruitfolio-madlad-compat-${{ github.event.pull_request.number || github.ref }}
