@@ -3,7 +3,7 @@
 
 Preserve requested Run50/51. Only supersede older diagnostics 47-49 and queued
 52-57 and superseded diagnostic attempts 59-60, whose repairs are all retained in the newer source checkpoint. Inventory
-is uploaded before cancellation. Run62 and Run66 unit/build artifacts have been downloaded, SHA/CRC verified and retained; its same Button-label repair is included in Run64 and later source. Run67-69 unit artifacts and failures are also downloaded and retained; their duplicate broad traversals and queued pre-diagnostic export attempt are superseded by source74. Run64 functional evidence and current corrected source remain active. Completed runs and all other later runs are untouched.
+is uploaded before cancellation. Run62 and Run66 unit/build artifacts have been downloaded, SHA/CRC verified and retained; its same Button-label repair is included in Run64 and later source. Run67-69 unit artifacts and failures are also downloaded and retained; their duplicate broad traversals and queued pre-diagnostic export attempt are superseded by source74. Run64 functional evidence and current corrected source remain active. Run64/65 focused and native-audit artifacts and Run70 shared-control failures are retained locally with checksums; only their remaining superseded traversal is cancelled. The duplicate Run73 and queued intermediate source76-78 are superseded by source79, which remains protected, as does source74 unique export/modal diagnostic. Completed runs and all other later runs are untouched.
 """
 import json
 import os
@@ -23,7 +23,14 @@ OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
                     "44eee9e70631e83892380ecd2747e94a59f27f3a",
                     "3eb4b84a83acea614deee0320d8b037e408045ef",
                     "c0e6020eba31f62e56a8f1a14df2722d6afe395d",
-                    "e132ba82bcb61919c291c2031cbbf4a331a38bbf"}
+                    "e132ba82bcb61919c291c2031cbbf4a331a38bbf",
+                    "db650d9d44d9285a199c454540ef1094913637a6",
+                    "a2ae944aa07d23670357e56d4abbcbbcca52e74b",
+                    "3f67f201abde93e9b8d41c86a747e9ac79bb9484",
+                    "ee9fcf87eaf86e9f33738ae40798a2ec0ce5a85f",
+                    "044c8c040c8ed06f06abe2f5e63831ccfcc5075d",
+                    "94da0de68e69de0b2befe226a31625dddcea5769",
+                    "b1aa214ed2494af5192751558eb21116a1af30c3"}
 OUT = Path("verification-queue-state.json")
 
 
