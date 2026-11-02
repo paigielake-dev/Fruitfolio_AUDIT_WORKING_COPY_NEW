@@ -292,36 +292,11 @@ nonisolated struct FruitfolioBoundedTrackerContext:
 
 
 nonisolated enum FruitfolioAnswerPresentationSanitizer {
-    /// Research-note compilation occasionally removes a space after punctuation.
-    /// Repair only obvious prose joins; do not rewrite scientific content, URLs,
-    /// abbreviations such as e.g., or numeric notation.
+    /// Evidence quotations are immutable. A punctuation heuristic cannot
+    /// reliably distinguish a joined sentence from a DOI, domain or unit.
+    /// Only enclosing boundary whitespace may be removed for presentation.
     static func clean(_ raw: String) -> String {
-        var value = raw
-            .replacingOccurrences(of: "\r\n", with: "\n")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-
-        let patterns: [(String, String)] = [
-            (#"(?<=[A-Za-z]{3})\.(?=[A-Za-z])"#, ". "),
-            (#",(?=[A-Za-z])"#, ", "),
-            (#";(?=[A-Za-z])"#, "; "),
-            (#":(?=[A-Za-z])"#, ": ")
-        ]
-
-        for (pattern, replacement) in patterns {
-            value = value.replacingOccurrences(
-                of: pattern,
-                with: replacement,
-                options: .regularExpression
-            )
-        }
-
-        value = value.replacingOccurrences(
-            of: #"[ \t]{2,}"#,
-            with: " ",
-            options: .regularExpression
-        )
-
-        return value
+        raw.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 

@@ -73,6 +73,24 @@ final class GroundingAttributionTests: XCTestCase {
     }
 
     @MainActor
+    func testActualPresentationPathsPreserveQuotedLinksCompoundUnitsAndOriginalSaveVersions() async throws {
+        let original = "Temperature progesterone evidence at 2.500  ng/mL. Source https://example.org/path?a=b,c=d DOI 10.1234/Abc.Def;edition:Final [s1]. This does not confirm ovulation."
+        for fail in [false, true] {
+            let engine = FruitfolioResearchIntelligenceEngine(
+                packageStore: .init(package: package([note("a", original, source: "s1")])),
+                languageModel: FixtureModel(fail: fail))
+            let answer = try await engine.answer(question: "temperature progesterone evidence", conversation: [])
+            XCTAssertTrue(answer.answerText.contains("☆ " + original),
+                          "Both selected-evidence and model-failure presentations must preserve the actual quotation")
+            let snapshot = try AskSavedAttributionSnapshot(answer: answer)
+            XCTAssertEqual(snapshot.sourceIDs, ["s1"])
+            XCTAssertEqual(snapshot.sourceVersions, ["s1": "test"])
+            XCTAssertEqual(snapshot.sources, answer.sources)
+            XCTAssertEqual(answer.resolvedSemanticDocument.plainText, answer.answerText)
+        }
+    }
+
+    @MainActor
     func testFallbackRetainsQualifierBeyondOldClippingBoundary() async throws {
         let text = String(repeating: "Temperature progesterone evidence needs context. ", count: 24)
             + "This does not confirm ovulation."
