@@ -41,10 +41,7 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
         for label in ["ask the encyclopedia", "my encyclopedias", "build your own guide",
                       "cycle tracker", "fruit basket", "faq", "settings", "contact"] {
             let button = app.buttons.matching(NSPredicate(format: "label ==[c] %@", label)).firstMatch
-            for _ in 0..<8 {
-                if button.exists && button.isHittable { break }
-                app.swipeUp()
-            }
+            fruitfolioReachControl(app, button)
             XCTAssertTrue(button.exists && button.isHittable,
                           "Largest Dynamic Type must keep the Hub destination reachable: \(label)")
         }

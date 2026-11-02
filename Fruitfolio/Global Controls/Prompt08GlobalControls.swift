@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 // MARK: - WatercolorPrimaryButton
 
@@ -49,22 +50,6 @@ struct FruitfolioControlPillButton: View {
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    @ViewBuilder
-    private var visibleLabel: some View {
-        let components = label.components(separatedBy: "  •  ")
-        if dynamicTypeSize.isAccessibilitySize, components.count == 2 {
-            // Each real text block has its own intrinsic bounds. Keep the
-            // complete unchanged action name on the native Button below.
-            VStack(spacing: 0) {
-                Text(components[0])
-                Text("•")
-                Text(components[1])
-            }
-        } else {
-            Text(label)
-        }
-    }
-
     var body: some View {
         Button {
             if playsSound { audioManager.play(.buttonSoftPop) }
@@ -75,11 +60,7 @@ struct FruitfolioControlPillButton: View {
             // into a full-shell StaticText by SwiftUI accessibility.
             HStack(spacing: 0) {
                 Spacer(minLength: 0)
-                visibleLabel
-                    .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
-                    .multilineTextAlignment(.center)
+                FruitfolioNativeActionLabel(text: label)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
             }
@@ -100,6 +81,59 @@ struct FruitfolioControlPillButton: View {
         // stops SwiftUI's automatic Button label aggregation. Name the actual
         // action explicitly without hiding text or suppressing any audit.
         .accessibilityLabel(Text(label))
+    }
+}
+
+/// The visible label itself is a native multiline UILabel. This preserves
+/// intrinsic glyph bounds inside a SwiftUI Button, including when the painted
+/// shell is partly clipped by its owning ScrollView. There is no hidden label,
+/// replacement accessibility frame, or audit suppression.
+struct FruitfolioNativeActionLabel: UIViewRepresentable {
+    let text: String
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    func makeUIView(context: Context) -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
+        label.isAccessibilityElement = true
+        label.accessibilityTraits = .staticText
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        return label
+    }
+
+    func updateUIView(_ label: UILabel, context: Context) {
+        label.text = text
+        label.textColor = UIColor(DesignTokens.ColorToken.primaryBurgundy)
+        let base = UIFont(name: "ChalkboardSE-Bold", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: base,
+            compatibleWith: UITraitCollection(preferredContentSizeCategory: contentSizeCategory))
+        label.invalidateIntrinsicContentSize()
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
+        let width = max(1, proposal.width ?? uiView.intrinsicContentSize.width)
+        let measured = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+        return CGSize(width: min(width, measured.width), height: ceil(measured.height))
+    }
+
+    private var contentSizeCategory: UIContentSizeCategory {
+        switch dynamicTypeSize {
+        case .xSmall: return .extraSmall
+        case .small: return .small
+        case .medium: return .medium
+        case .large: return .large
+        case .xLarge: return .extraLarge
+        case .xxLarge: return .extraExtraLarge
+        case .xxxLarge: return .extraExtraExtraLarge
+        case .accessibility1: return .accessibilityMedium
+        case .accessibility2: return .accessibilityLarge
+        case .accessibility3: return .accessibilityExtraLarge
+        case .accessibility4: return .accessibilityExtraExtraLarge
+        case .accessibility5: return .accessibilityExtraExtraExtraLarge
+        @unknown default: return .large
+        }
     }
 }
 

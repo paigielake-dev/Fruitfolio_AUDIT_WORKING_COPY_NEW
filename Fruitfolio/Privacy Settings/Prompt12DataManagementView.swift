@@ -45,11 +45,26 @@ struct Prompt12DataManagementView: View {
             }
             .fileExporter(isPresented: $showingExportDestination, document: exportDocument,
                           contentType: .json, defaultFilename: "Fruitfolio-Personal-Data") { result in
+                let preparedBytes = exportDocument?.data
+                exportDocument = nil
                 switch result {
-                case .success: message = "your personal data JSON was exported. keep it somewhere private."
+                case .success(let destination):
+                    guard let preparedBytes else {
+                        message = "the destination returned, but the prepared JSON could not be verified. please try exporting again."
+                        return
+                    }
+                    Task { @MainActor in
+                        do {
+                            try await Task.detached(priority: .utility) {
+                                try FruitfolioPersonalDataDocument.verifySavedFile(at: destination, expected: preparedBytes)
+                            }.value
+                            message = "your personal data JSON was exported. keep it somewhere private."
+                        } catch {
+                            message = "the destination returned, but the saved JSON could not be read back and verified. please check the file before relying on it."
+                        }
+                    }
                 case .failure(let error): message = error.localizedDescription
                 }
-                exportDocument = nil
             }
     }
 

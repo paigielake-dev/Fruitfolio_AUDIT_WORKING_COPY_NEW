@@ -26,6 +26,7 @@ struct Prompt04HubBridgeView: View {
                 Prompt04StandaloneHubComposition(
                     interactive:
                         !tour.isTourActive,
+                    tourTarget: tour.isTourActive ? tour.currentStep.target : nil,
                     onBrandingAnimationCompleted: {
                         hubBrandingAnimationCompleted =
                             true
@@ -214,6 +215,7 @@ struct Prompt04HubBridgeView: View {
 
 struct Prompt04StandaloneHubComposition: View {
     let interactive: Bool
+    let tourTarget: Prompt07TourTarget?
 
     let onBrandingAnimationCompleted:
         () -> Void
@@ -223,6 +225,7 @@ struct Prompt04StandaloneHubComposition: View {
 
     init(
         interactive: Bool,
+        tourTarget: Prompt07TourTarget? = nil,
         onBrandingAnimationCompleted:
             @escaping () -> Void = {},
         navigate:
@@ -230,6 +233,7 @@ struct Prompt04StandaloneHubComposition: View {
     ) {
         self.interactive =
             interactive
+        self.tourTarget = tourTarget
 
         self.onBrandingAnimationCompleted =
             onBrandingAnimationCompleted
@@ -270,6 +274,7 @@ struct Prompt04StandaloneHubComposition: View {
                     metrics: metrics,
                     interactive:
                         interactive,
+                    tourTarget: tourTarget,
                     onBrandingAnimationCompleted:
                         onBrandingAnimationCompleted,
                     navigate:
@@ -300,6 +305,7 @@ struct Prompt04HubPaperControls: View {
         Prompt04BookLayout.Metrics
 
     let interactive: Bool
+    let tourTarget: Prompt07TourTarget?
 
     let onBrandingAnimationCompleted:
         () -> Void
@@ -311,6 +317,7 @@ struct Prompt04HubPaperControls: View {
         metrics:
             Prompt04BookLayout.Metrics,
         interactive: Bool,
+        tourTarget: Prompt07TourTarget? = nil,
         onBrandingAnimationCompleted:
             @escaping () -> Void = {},
         navigate:
@@ -321,6 +328,7 @@ struct Prompt04HubPaperControls: View {
 
         self.interactive =
             interactive
+        self.tourTarget = tourTarget
 
         self.onBrandingAnimationCompleted =
             onBrandingAnimationCompleted
@@ -335,6 +343,7 @@ struct Prompt04HubPaperControls: View {
                 metrics: metrics
             )
 
+            ScrollViewReader { reader in
             ScrollView(.vertical) {
                 Prompt05HubPaperControls(
                     metrics: metrics,
@@ -345,6 +354,10 @@ struct Prompt04HubPaperControls: View {
                     navigate:
                         navigate
                 )
+            }
+                .onChange(of: tourTarget) { _, target in
+                    if let target { reader.scrollTo(target, anchor: .center) }
+                }
             }
             .scrollBounceBehavior(.basedOnSize)
         }
@@ -753,7 +766,7 @@ private struct Prompt05HubPaperControls:
                 .font(
                     .custom(
                         "Snell Roundhand",
-                        size: 68,
+                        size: dynamicTypeSize.isAccessibilitySize ? 24 : 68,
                         relativeTo: .largeTitle
                     )
                 )
@@ -808,7 +821,7 @@ private struct Prompt05HubPaperControls:
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 20,
+                        size: dynamicTypeSize.isAccessibilitySize ? 14 : 20,
                         relativeTo: .title3
                     )
                 )
@@ -867,27 +880,10 @@ private struct Prompt05HubPaperControls:
             // MARK: Main Buttons
 
             LazyVGrid(
-                columns: [
-                    GridItem(
-                        .fixed(
-                            metrics
-                                .hubGridColumnWidth
-                        ),
-                        spacing:
-                            metrics
-                                .hubGridGap
-                    ),
-
-                    GridItem(
-                        .fixed(
-                            metrics
-                                .hubGridColumnWidth
-                        ),
-                        spacing:
-                            metrics
-                                .hubGridGap
-                    )
-                ],
+                columns: dynamicTypeSize.isAccessibilitySize
+                    ? [GridItem(.fixed(metrics.hubContentWidth))]
+                    : [GridItem(.fixed(metrics.hubGridColumnWidth), spacing: metrics.hubGridGap),
+                       GridItem(.fixed(metrics.hubGridColumnWidth), spacing: metrics.hubGridGap)],
                 alignment: .center,
                 spacing:
                     dynamicTypeSize
@@ -901,9 +897,8 @@ private struct Prompt05HubPaperControls:
 
                     Prompt05PrimaryHubButton(
                         spec: spec,
-                        width:
-                            metrics
-                                .hubGridColumnWidth,
+                        width: dynamicTypeSize.isAccessibilitySize
+                            ? metrics.hubContentWidth : metrics.hubGridColumnWidth,
                         height:
                             metrics
                                 .hubButtonHeight,
@@ -1134,6 +1129,7 @@ private struct Prompt07OptionalTargetModifier:
 
         if let target {
             content
+                .id(target)
                 .prompt07TourTarget(
                     target
                 )
@@ -1175,6 +1171,21 @@ private struct Prompt05PrimaryHubButton:
             activateImmediately()
 
         } label: {
+            if dynamicTypeSize.isAccessibilitySize {
+                HStack(spacing: 12) {
+                    FruitfolioImage(id: spec.symbolAsset)
+                        .scaledToFit().frame(width: 34, height: 34)
+                        .accessibilityHidden(true)
+                    FruitfolioNativeActionLabel(text: spec.displayLabel)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .contain)
+                .padding(.horizontal, 28).padding(.vertical, 20)
+                .frame(width: width, alignment: .center)
+                .frame(minHeight: 82)
+                .background { FruitfolioControlPillArtwork(asset: spec.buttonAsset) }
+                .contentShape(Rectangle())
+            } else {
             ZStack {
                 FruitfolioImage(
                     id:
@@ -1289,7 +1300,8 @@ private struct Prompt05PrimaryHubButton:
             .contentShape(
                 Rectangle()
             )
-            .accessibilityHidden(true)
+            .accessibilityElement(children: .contain)
+            }
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -1303,7 +1315,7 @@ private struct Prompt05PrimaryHubButton:
         .accessibilityHidden(
             !interactive
         )
-        .accessibilityElement(children: .ignore)
+        .accessibilityElement(children: .contain)
         .accessibilityLabel(
             accessibilityLabel
         )

@@ -80,6 +80,18 @@ nonisolated struct FruitfolioPersonalDataDocument: FileDocument {
         guard let data = configuration.file.regularFileContents else { throw CocoaError(.fileReadCorruptFile) }
         self.data = data
     }
+    /// A successful system destination callback is followed by a real read of
+    /// that file. Exact bytes and readable JSON are required; no store changes,
+    /// path logging, deletion, or claim of a complete media backup occurs here.
+    static func verifySavedFile(at url: URL, expected: Data) throws {
+        guard url.isFileURL else { throw CocoaError(.fileReadUnsupportedScheme) }
+        let scoped = url.startAccessingSecurityScopedResource()
+        defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+        let saved = try Data(contentsOf: url)
+        guard saved == expected else { throw CocoaError(.fileReadCorruptFile) }
+        _ = try JSONSerialization.jsonObject(with: saved)
+    }
+
     func makeFileWrapper() -> FileWrapper { FileWrapper(regularFileWithContents: data) }
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
         makeFileWrapper()

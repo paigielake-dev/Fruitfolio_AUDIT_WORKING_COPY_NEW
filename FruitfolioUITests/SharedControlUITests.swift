@@ -14,6 +14,7 @@ final class SharedControlUITests: XCTestCase {
         if explore.waitForExistence(timeout: 12) { explore.tap() }
         let contact = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "contact")).firstMatch
         XCTAssertTrue(contact.waitForExistence(timeout: 15))
+        fruitfolioReachControl(app, contact)
         contact.tap()
         XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Instagram")).firstMatch.waitForExistence(timeout: 10))
         return app
@@ -27,6 +28,8 @@ final class SharedControlUITests: XCTestCase {
         XCTAssertTrue(button.isHittable, "Long contact action must remain reachable")
         XCTAssertGreaterThanOrEqual(button.frame.height, 44)
         XCTAssertEqual(button.label, "email  •  fruitsoflifexo@gmail.com", "The native action must retain the entire original accessible label")
+        XCTAssertTrue(button.staticTexts.matching(NSPredicate(format: "label == %@", button.label)).firstMatch.exists,
+                      "The actual visible native text must remain detectable inside the named action")
         XCTAssertEqual(button.buttons.count, 0, "The action must not contain another separately activatable button")
         // XCTest exposes a native Button's generated StaticText label even when
         // VoiceOver presents one action. A zero-StaticText requirement described
@@ -81,7 +84,7 @@ extension SharedControlUITests {
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
         let destination = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "FAQ")).firstMatch
-        XCTAssertTrue(destination.waitForExistence(timeout: 15)); destination.tap()
+        XCTAssertTrue(destination.waitForExistence(timeout: 15)); fruitfolioReachControl(app, destination); destination.tap()
         let question = app.buttons["faq.question.about-2"]
         XCTAssertTrue(question.waitForExistence(timeout: 10))
         let visible = app.frame.insetBy(dx: 0, dy: 60)

@@ -39,7 +39,7 @@ jobs:
         run: python3 Tools/prune_superseded_verification.py cancel
   ios:
     runs-on: macos-latest
-    timeout-minutes: 180
+    timeout-minutes: 240
     steps:
       - uses: actions/checkout@v4
         with:
@@ -161,6 +161,109 @@ jobs:
           if '@rpath/llama.framework/llama' in text:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
+      - name: Simulator smoke test and representative recording
+        id: smoke
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          # Establish a clean simulator session before attaching XCTest UI automation.
+          xcrun simctl shutdown "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
+          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID"
+          xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
+          python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
+            --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
+            > Fruitfolio_Verification_Evidence/Build/simulator-recording.log 2>&1 &
+          recorder=$!
+          set +e
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -only-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-smoke-test.log
+          test_status=${PIPESTATUS[0]}
+          wait "$recorder"
+          record_status=$?
+          set -e
+          if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
+          exit "$record_status"
+      - name: Export smoke screenshot attachments
+        if: always()
+        run: |
+          if [ -d Fruitfolio_Verification_Evidence/Build/Smoke.xcresult ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/Smoke
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/Smoke
+          fi
+      - name: Preserve early simulator evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Smoke_Evidence
+          path: Fruitfolio_Verification_Evidence
+      - name: Verify shared controls in actual Contact journeys
+        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        timeout-minutes: 6
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/SharedControlUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+      - name: Export and preserve shared-control evidence
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SharedControls
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/SharedControls
+          fi
+      - name: Preserve focused shared-control evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Shared_Control_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
+            Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+            Fruitfolio_Verification_Evidence/Visual/SharedControls
+      - name: Verify native screen accessibility audits
+        timeout-minutes: 12
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/RuntimeAccessibilityAuditTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
+      - name: Export actual AccessibilityAudit attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+          fi
+      - name: Preserve focused AccessibilityAudit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Accessibility_Audit_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
+            Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult
+            Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
+          retention-days: 90
       - name: Run unit and native inference tests
         timeout-minutes: 35
         run: |
@@ -236,78 +339,6 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/Release.xcresult
             Fruitfolio_Verification_Evidence/Build/device-release-bundle-size.txt
             Fruitfolio_Verification_Evidence/Build/device-release-linked-libraries.txt
-      - name: Simulator smoke test and representative recording
-        id: smoke
-        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        run: |
-          set -o pipefail
-          # Reboot after native tests before attaching XCTest UI automation.
-          xcrun simctl shutdown "$FRUITFOLIO_SIMULATOR_ID" 2>/dev/null || true
-          xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID"
-          xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
-          python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
-            --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
-            > Fruitfolio_Verification_Evidence/Build/simulator-recording.log 2>&1 &
-          recorder=$!
-          set +e
-          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
-            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
-            -derivedDataPath .ciDerivedData \
-            -only-testing:FruitfolioUITests/SimulatorSmokeEvidenceTests \
-            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
-            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-smoke-test.log
-          test_status=${PIPESTATUS[0]}
-          wait "$recorder"
-          record_status=$?
-          set -e
-          if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
-          exit "$record_status"
-      - name: Export smoke screenshot attachments
-        if: always()
-        run: |
-          if [ -d Fruitfolio_Verification_Evidence/Build/Smoke.xcresult ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/Visual/Smoke
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/Smoke.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/Visual/Smoke
-          fi
-      - name: Preserve early simulator evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Fruitfolio_Smoke_Evidence
-          path: Fruitfolio_Verification_Evidence
-      - name: Verify shared controls in actual Contact journeys
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
-        timeout-minutes: 6
-        run: |
-          set -o pipefail
-          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
-            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
-            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
-            -only-testing:FruitfolioUITests/SharedControlUITests \
-            -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
-            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
-      - name: Export and preserve shared-control evidence
-        if: always()
-        run: |
-          if [ -f Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult/Info.plist ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/Visual/SharedControls
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/Visual/SharedControls
-          fi
-      - name: Preserve focused shared-control evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Fruitfolio_Shared_Control_Evidence
-          path: |
-            Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
-            Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
-            Fruitfolio_Verification_Evidence/Visual/SharedControls
       - name: Verify shared username through Account and Fruit Basket
         id: username-journey
         timeout-minutes: 8
@@ -341,7 +372,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Visual/UsernameJourney
           retention-days: 90
       - name: Verify optional Personal Health Context lifecycle
-        timeout-minutes: 12
+        timeout-minutes: 18
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: |
           set -o pipefail
@@ -525,37 +556,6 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-guide-journey-ui-test.log
             Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult
             Fruitfolio_Verification_Evidence/Visual/GuideJourney
-          retention-days: 90
-      - name: Verify native screen accessibility audits
-        timeout-minutes: 12
-        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        run: |
-          set -o pipefail
-          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
-            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
-            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
-            -only-testing:FruitfolioUITests/RuntimeAccessibilityAuditTests \
-            -resultBundlePath Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
-            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
-      - name: Export actual AccessibilityAudit attachments
-        if: always()
-        run: |
-          if [ -f Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult/Info.plist ]; then
-            mkdir -p Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
-            xcrun xcresulttool export attachments \
-              --path Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult \
-              --output-path Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
-          fi
-      - name: Preserve focused AccessibilityAudit evidence
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Fruitfolio_Accessibility_Audit_Evidence
-          path: |
-            Fruitfolio_Verification_Evidence/Build/xcode-accessibility-audit-ui-test.log
-            Fruitfolio_Verification_Evidence/Build/AccessibilityAudit.xcresult
-            Fruitfolio_Verification_Evidence/Visual/AccessibilityAudit
           retention-days: 90
       - name: Run actual application UI tests
         timeout-minutes: 60

@@ -30,7 +30,8 @@ OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
                     "ee9fcf87eaf86e9f33738ae40798a2ec0ce5a85f",
                     "044c8c040c8ed06f06abe2f5e63831ccfcc5075d",
                     "94da0de68e69de0b2befe226a31625dddcea5769",
-                    "b1aa214ed2494af5192751558eb21116a1af30c3"}
+                    "b1aa214ed2494af5192751558eb21116a1af30c3",
+                    "34b8051048b1a5e8352f5566bd361f373fbd9f38"}
 OUT = Path("verification-queue-state.json")
 
 

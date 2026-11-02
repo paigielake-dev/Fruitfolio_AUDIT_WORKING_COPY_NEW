@@ -42,6 +42,7 @@ final class PersonalDataExportTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: destination) }
         let document = FruitfolioPersonalDataDocument(data: bytes)
         try document.makeFileWrapper().write(to: destination, options: .atomic, originalContentsURL: nil)
+        try FruitfolioPersonalDataDocument.verifySavedFile(at: destination, expected: bytes)
         let savedBytes = try Data(contentsOf: destination)
         XCTAssertEqual(savedBytes, bytes, "Actual written file must retain all prepared bytes")
         XCTAssertNoThrow(try JSONSerialization.jsonObject(with: savedBytes))
@@ -75,6 +76,20 @@ final class PersonalDataExportTests: XCTestCase {
                 cycle: .inMemory(), onboarding: .inMemory(), fruitBasket: Prompt28FruitBasketStore(defaults: defaults))
             XCTFail("An incomplete unreadable domain must not be reported as a successful export")
         } catch { XCTAssertEqual(try Data(contentsOf: file), original) }
+    }
+
+    func testReadBackRejectsChangedUnreadableOrInvalidJSONWithoutModifyingTheFile() throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let bytes = Data("{\"recordedValue\":\"2.500 ng/mL\"}".utf8)
+        try bytes.write(to: file)
+        XCTAssertThrowsError(try FruitfolioPersonalDataDocument.verifySavedFile(at: file, expected: Data("{}".utf8)))
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        let invalid = Data("not JSON".utf8); try invalid.write(to: file)
+        XCTAssertThrowsError(try FruitfolioPersonalDataDocument.verifySavedFile(at: file, expected: invalid))
+        XCTAssertEqual(try Data(contentsOf: file), invalid)
+        try FileManager.default.removeItem(at: file)
+        XCTAssertThrowsError(try FruitfolioPersonalDataDocument.verifySavedFile(at: file, expected: bytes))
     }
 
     func testReadableDocumentRetainsTheExactPreparedBytesAndJSONContentType() throws {

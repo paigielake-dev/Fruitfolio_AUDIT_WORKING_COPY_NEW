@@ -12,11 +12,11 @@ enum FruitfolioControlArtwork {
         return value
     }()
 
-    static func pill(width: CGFloat, displayScale: CGFloat) -> UIImage? {
+    static func pill(width: CGFloat, displayScale: CGFloat, asset: FruitfolioAssetID = .control_pill_outline) -> UIImage? {
         guard width.isFinite, width > 0, displayScale.isFinite, displayScale > 0 else { return nil }
-        let key = "pill-\(width)-\(displayScale)" as NSString
+        let key = "pill-\(asset.rawValue)-\(width)-\(displayScale)" as NSString
         if let image = cache.object(forKey: key) { return image }
-        guard let original = try? FruitfolioAssetLoader.uiImage(.control_pill_outline) else { return nil }
+        guard let original = try? FruitfolioAssetLoader.uiImage(asset) else { return nil }
         let size = CGSize(width: width, height: width * original.size.height / original.size.width)
         let format = UIGraphicsImageRendererFormat()
         format.scale = displayScale
@@ -30,11 +30,12 @@ enum FruitfolioControlArtwork {
 }
 
 struct FruitfolioControlPillArtwork: View {
+    var asset: FruitfolioAssetID = .control_pill_outline
     @Environment(\.displayScale) private var displayScale
 
     var body: some View {
         GeometryReader { geometry in
-            if let image = FruitfolioControlArtwork.pill(width: geometry.size.width, displayScale: displayScale) {
+            if let image = FruitfolioControlArtwork.pill(width: geometry.size.width, displayScale: displayScale, asset: asset) {
                 Image(uiImage: image)
                     .resizable(capInsets: EdgeInsets(
                         top: image.size.height * 0.40, leading: image.size.height * 0.48,
@@ -42,7 +43,7 @@ struct FruitfolioControlPillArtwork: View {
                     ), resizingMode: .tile)
             } else {
                 // Same registered original; asset loader exposes missing resources.
-                FruitfolioImage(id: .control_pill_outline).scaledToFit()
+                FruitfolioImage(id: asset).scaledToFit()
             }
         }
         .accessibilityHidden(true)

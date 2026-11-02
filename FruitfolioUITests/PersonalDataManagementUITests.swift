@@ -50,18 +50,49 @@ final class PersonalDataManagementUITests: XCTestCase {
     func testActualReadableExportOpensSystemDestinationAndCancellingDoesNotClaimAFileWasExported() {
         let app = openData(); let prepare = app.buttons["data.prepareExport"]
         reach(app, prepare); prepare.tap()
-        let filename = app.textFields["DOCPicker.filenameTextField"]
-        XCTAssertTrue(filename.waitForExistence(timeout: 30), "The real system file-export destination must open after actual local snapshot preparation")
+        let destination = app.descendants(matching: .any).matching(identifier: "Browse View (Picker)").firstMatch
+        XCTAssertTrue(destination.waitForExistence(timeout: 30), "The real system file-export destination must open after actual local snapshot preparation")
+        XCTAssertTrue(app.buttons["Save"].exists, "Require the observed native save action; filename controls vary by picker state")
         // Actual iOS26.6 evidence exposes the system Cancel as an Other,
         // while Save is a Button. Require its real name/hit target, not a guessed role.
         let cancel = app.descendants(matching: .any).matching(NSPredicate(format: "label ==[c] %@", "Cancel")).firstMatch
         XCTAssertTrue(cancel.exists && cancel.isHittable)
         capture(app, "ActualSystemExportDestination")
         cancel.tap()
-        let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: filename)
+        let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: destination)
         XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 10), .completed)
         XCTAssertTrue(app.buttons["data.prepareExport"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["your personal data JSON was exported. keep it somewhere private."].exists)
         capture(app, "SystemExportCancelled")
     }
+
+    func testSystemExportActuallySavesAndReadsBackJSONBeforeReportingSuccess() {
+        let app = openData(); let prepare = app.buttons["data.prepareExport"]
+        reach(app, prepare); prepare.tap()
+        let destination = app.descendants(matching: .any).matching(identifier: "Browse View (Picker)").firstMatch
+        XCTAssertTrue(destination.waitForExistence(timeout: 30))
+        let save = app.buttons["Save"]
+        XCTAssertTrue(save.exists && save.isHittable)
+        capture(app, "SystemExportBeforeActualSave")
+        save.tap()
+        // Some system states request the filename in a second sheet. Enter a
+        // unique synthetic name only when that observed system field appears.
+        let filename = app.textFields["DOCPicker.filenameTextField"]
+        if filename.waitForExistence(timeout: 3) {
+            filename.tap()
+            if let current = filename.value as? String, !current.isEmpty {
+                filename.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
+            }
+            filename.typeText("Fruitfolio-QA-" + UUID().uuidString + ".json")
+            XCTAssertTrue(save.isHittable); save.tap()
+        }
+        let replace = app.buttons["Replace"]
+        if replace.waitForExistence(timeout: 2) { replace.tap() }
+        let success = app.staticTexts["your personal data JSON was exported. keep it somewhere private."]
+        XCTAssertTrue(success.waitForExistence(timeout: 30),
+            "Success is emitted only after reading the returned real file and checking exact JSON bytes")
+        capture(app, "ActualSavedJSONReadBackVerified")
+        XCTAssertTrue(app.buttons["data.prepareExport"].exists)
+    }
+
 }
