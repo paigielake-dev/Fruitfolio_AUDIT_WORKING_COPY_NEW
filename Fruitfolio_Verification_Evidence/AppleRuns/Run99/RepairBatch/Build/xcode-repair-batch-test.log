@@ -1,0 +1,317 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout" "-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings" "-only-testing:FruitfolioTests/TranslationPreservationTests" "-only-testing:FruitfolioTests/PersonalDataExportTests" "-only-testing:FruitfolioTests/AskSessionLifetimeTests" "-only-testing:FruitfolioTests/Prompt28FruitBasketTests" "-only-testing:FruitfolioTests/FruitBasketGroundedResearchTests" "-only-testing:FruitfolioTests/NativeActionLabelRuntimeTests" "-only-testing:FruitfolioTests/LanguagePreferencePersistenceTests" "-only-testing:FruitfolioTests/IntroInterruptionRuntimeTests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 11:38:30.067062+0000 Fruitfolio[10344:34870] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x108474e00> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+2026-11-02 11:39:00.986313+0000 Fruitfolio[10344:37352]   HALC_ProxyIOContext.cpp:1410   HALC_ProxyIOContext::IOWorkLoop: the server failed to start, Error: 0x10004003
+2026-11-02 11:39:15.261960+0000 Fruitfolio[10344:37260] [AMCP]          HALC_ProxyIOContext.cpp:1075  HALC_ProxyIOContext::_StartIO(): Start failed - StartAndWaitForState returned error 268451843
+2026-11-02 11:39:15.263732+0000 Fruitfolio[10344:37260]             HALPlugIn.cpp:520    HALPlugIn::StartIOProc: got an error from the plug-in routine, Error: 268451843 (\^P)
+2026-11-02 11:39:15.272885+0000 Fruitfolio[10344:37260] [aqme]                AQMEIO.cpp:213   error 268451843
+2026-11-02 11:39:15.276026+0000 Fruitfolio[10344:37260] [aqme]  MEDeviceStreamClient.cpp:455   AQME Default-InputOutput: client stopping after failed start: <CA_UISoundClientBase@0x108726300>; running count now 0
+2026-11-02 11:39:15.276189+0000 Fruitfolio[10344:37260]      CA_UISoundClient.cpp:316   CA_UISoundClientBase::StartPlaying: AddRunningClient failed (status = 268451843).
+2026-11-02 11:39:16.231825+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1755  ReadPListFile: unable to open stream for LoudnessManager plist
+2026-11-02 11:39:16.232336+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1261  GetHardwarePlatformKey: cannot get acoustic ID
+2026-11-02 11:39:16.232468+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:16.232544+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-02 11:39:16.296167+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:16.296453+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-02 11:39:16.724605+0000 Fruitfolio[10344:37260] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-02 11:39:16.928772+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:16.929085+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-02 11:39:16.959630+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:16.959827+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-02 11:39:17.059856+0000 Fruitfolio[10344:37266] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+2026-11-02 11:39:17.829735+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:17.829975+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot bookClose = true
+Test Suite 'Selected tests' started at 2026-11-02 11:39:18.281.
+Test Suite 'FruitfolioTests.xctest' started at 2026-11-02 11:39:18.287.
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' started at 2026-11-02 11:39:18.288.
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout]' started.
+2026-11-02 11:39:20.420139+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:20.420840+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot starChime = true
+2026-11-02 11:39:21.466724+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:21.473578+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+2026-11-02 11:39:22.375983+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:39:22.615065+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:22.615596+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:33.251053+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+Fruitfolio AudioManager: one-shot pageTurn = true
+2026-11-02 11:39:52.803970+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:52.804313+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+2026-11-02 11:39:56.271030+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:39:56.271231+0000 Fruitfolio[10344:34870] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot popupOpen = true
+2026-11-02 11:40:09.378425+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:40:10.283653+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:40:10.292387+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Esta estimación no confirma la ovulación.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Esta estimación no confirma la ovulación.\",\"preservedLiteralSuffix\":\"\"},{\"rawOutput\":\"El resultado es [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"El resultado es 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\"}]","output":"Esta estimación no confirma la ovulación.\n\nEl resultado es 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"es","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Cette estimation ne confirme pas l'ovulation.\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"Cette estimation ne confirme pas l'ovulation.\"},{\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"Le résultat est 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"Le résultat est [FFQ0].\"}]","output":"Cette estimation ne confirme pas l'ovulation.\n\nLe résultat est 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"fr","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Diese Schätzung bestätigt nicht den Eisprung.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Diese Schätzung bestätigt nicht den Eisprung.\",\"preservedLiteralSuffix\":\"\"},{\"rawOutput\":\"Das Ergebnis ist [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"Das Ergebnis ist 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\"}]","output":"Diese Schätzung bestätigt nicht den Eisprung.\n\nDas Ergebnis ist 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"de","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Esta estimativa não confirma a ovulação.\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"Esta estimativa não confirma a ovulação.\"},{\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"O resultado é 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"O resultado é [FFQ0].\"}]","output":"Esta estimativa não confirma a ovulação.\n\nO resultado é 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"pt","translationLimitations":""}
+2026-11-02 11:40:58.838305+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Questa stima non conferma l'ovulazione.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Questa stima non conferma l'ovulazione.\",\"preservedLiteralSuffix\":\"\"},{\"rawOutput\":\"Il risultato è [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"Il risultato è 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\"}]","output":"Questa stima non conferma l'ovulazione.\n\nIl risultato è 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"it","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"这个估计并不确认排卵。\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"这个估计并不确认排卵。\"},{\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"结果是2.5 ng\\\/mL [source-1]。\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"结果是[FFQ0 ] 。\"}]","output":"这个估计并不确认排卵。\n\n结果是2.5 ng\/mL [source-1]。","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"zh","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"這種估計並不確認排卵 。\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"這種估計並不確認排卵 。\",\"preservedLiteralSuffix\":\"\"},{\"rawOutput\":\"結果是[FFQ0]。\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"結果是2.5 ng\\\/mL [source-1]。\",\"preservedLiteralSuffix\":\"\"}]","output":"這種估計並不確認排卵 。\n\n結果是2.5 ng\/mL [source-1]。","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"zh_Hant","translationLimitations":""}
+2026-11-02 11:41:58.762443+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This [FFQ0] does not confirm [FFQ1].\",\"restoredOutput\":\"これはestimateはovulationを確認しない。\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"これは［ＦＦＱ０］は［ＦＦＱ１］を確認しない。\"},{\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"結果は2.5 ng\\\/mLであった [source-1]。\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"結果は［ＦＦＱ０］であった。\"}]","output":"これはestimateはovulationを確認しない。\n\n結果は2.5 ng\/mLであった [source-1]。","preservation":"PASS","retainedOriginalMedicalTerms":"estimate, ovulation","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"ja","translationLimitations":"Original English medical\/scientific anchors retained to avoid an observed concept or uncertainty loss: estimate, ovulation"}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"이 추정치는 배란을 확인하지 않습니다.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"이 추정치는 배란을 확인하지 않습니다.\",\"preservedLiteralSuffix\":\"\"},{\"rawOutput\":\"결과는 [FFQ0]입니다.\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"결과는 2.5 ng\\\/mL입니다 [source-1].\",\"preservedLiteralSuffix\":\"\"}]","output":"이 추정치는 배란을 확인하지 않습니다.\n\n결과는 2.5 ng\/mL입니다 [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"ko","translationLimitations":""}
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"وهذا التقدير لا يؤكد الإباضة.\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"وهذا التقدير لا يؤكد الإباضة.\"},{\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"والنتيجة هي 2.5 ng\\\/mL [source-1].\",\"preservedLiteralSuffix\":\"\",\"rawOutput\":\"والنتيجة هي [FFQ0].\"}]","output":"وهذا التقدير لا يؤكد الإباضة.\n\nوالنتيجة هي 2.5 ng\/mL [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"ar","translationLimitations":""}
+2026-11-02 11:42:29.747656+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\" यह अनुमान [FFQ0] की पुष्टि नहीं करता है।\",\"restoredOutput\":\" यह अनुमान ovulation की पुष्टि नहीं करता है।\",\"preservedLiteralSuffix\":\"\",\"actualModelInput\":\"This estimate does not confirm [FFQ0].\",\"sourceSentence\":\"This estimate does not confirm ovulation.\"},{\"rawOutput\":\"परिणाम [FFQ0] है.\",\"restoredOutput\":\"परिणाम 2.5 ng\\\/mL है [source-1].\",\"preservedLiteralSuffix\":\"\",\"actualModelInput\":\"The result is [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\\/mL.\"}]","output":" यह अनुमान ovulation की पुष्टि नहीं करता है।\n\nपरिणाम 2.5 ng\/mL है [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"ovulation","semanticReview":"NOT VERIFIED — requires review of this actual output","target":"hi","translationLimitations":"Original English medical\/scientific anchors retained to avoid an observed concept or uncertainty loss: ovulation"}
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout]' passed (209.487 seconds).
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings]' started.
+2026-11-02 11:42:54.072706+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:42:55.818866+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:42:56.153450+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:42:56.153794+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:42:59.859688+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:42:59.933425+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:43:00.859967+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Estos son valores registrados, no consejos médicos\",\"restoredOutput\":\"Estos son valores registrados, no consejos médicos: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"Estos son valores registrados, no consejos médicos: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"es","translationLimitations":""}
+2026-11-02 11:43:36.485568+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"restoredOutput\":\"Ce sont des valeurs enregistrées, pas des conseils médicaux: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"Ce sont des valeurs enregistrées, pas des conseils médicaux\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]","output":"Ce sont des valeurs enregistrées, pas des conseils médicaux: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"fr","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Dies sind aufgezeichnete Werte, keine medizinische Beratung\",\"restoredOutput\":\"Dies sind aufgezeichnete Werte, keine medizinische Beratung: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"Dies sind aufgezeichnete Werte, keine medizinische Beratung: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"de","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"restoredOutput\":\"Estes são valores registados, não conselhos médicos: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"Estes são valores registados, não conselhos médicos\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]","output":"Estes são valores registados, não conselhos médicos: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"pt","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"Questi sono valori registrati, non consigli medici\",\"restoredOutput\":\"Questi sono valori registrati, non consigli medici: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"Questi sono valori registrati, non consigli medici: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"it","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"restoredOutput\":\"这些是记录值,而不是医学建议: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"这些是记录值,而不是医学建议\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]","output":"这些是记录值,而不是医学建议: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"zh","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"這些是記錄值 ， 不是醫學建議\",\"restoredOutput\":\"這些是記錄值 , 不是醫學建議: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"這些是記錄值 , 不是醫學建議: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"zh_Hant","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"restoredOutput\":\"これは記録値で 医療的なアドバイスではありません: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"これは記録値で 医療的なアドバイスではありません\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]","output":"これは記録値で 医療的なアドバイスではありません: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"ja","translationLimitations":""}
+2026-11-02 11:44:26.741777+0000 Fruitfolio[10344:37273] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"이것은 기록된 값이며 의료 조언이 아닙니다.\",\"restoredOutput\":\"이것은 기록된 값이며 의료 조언이 아닙니다: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"이것은 기록된 값이며 의료 조언이 아닙니다: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"ko","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"restoredOutput\":\"هذه قيم مسجلة، وليست مشورة طبية: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"هذه قيم مسجلة، وليست مشورة طبية\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]","output":"هذه قيم مسجلة، وليست مشورة طبية: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"ar","translationLimitations":""}
+MADLAD_SYNTHETIC_EDGE_FIXTURE_RESULT {"actualSentenceEvidence":"[{\"rawOutput\":\"ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं\",\"restoredOutput\":\"ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"preservedLiteralSuffix\":\": [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"actualModelInput\":\"These are recorded values, not medical advice\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\"}]","output":"ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं: -2.50–-1.00 ng\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].","preservation":"PASS","retainedOriginalMedicalTerms":"","semanticReview":"NOT VERIFIED — review the actual warning and surrounding wording","target":"hi","translationLimitations":""}
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings]' passed (112.397 seconds).
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' passed at 2026-11-02 11:44:40.200.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 321.883 (321.912) seconds
+Test Suite 'AskSessionLifetimeTests' started at 2026-11-02 11:44:40.201.
+Test Case '-[FruitfolioTests.AskSessionLifetimeTests testClearingAnActiveAskVisitPreservesTheIndependentlySavedGuideAndOriginalAttribution]' started.
+Test Case '-[FruitfolioTests.AskSessionLifetimeTests testClearingAnActiveAskVisitPreservesTheIndependentlySavedGuideAndOriginalAttribution]' passed (0.230 seconds).
+Test Case '-[FruitfolioTests.AskSessionLifetimeTests testMultipleAnswersRemainInMemoryWithTheirOriginalCitations]' started.
+Test Case '-[FruitfolioTests.AskSessionLifetimeTests testMultipleAnswersRemainInMemoryWithTheirOriginalCitations]' passed (0.003 seconds).
+Test Suite 'AskSessionLifetimeTests' passed at 2026-11-02 11:44:40.437.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.233 (0.235) seconds
+Test Suite 'FruitBasketGroundedResearchTests' started at 2026-11-02 11:44:40.437.
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testActualBundledResearchProvidesAllFiveMenuTopicsAtEveryDifficultyWithoutModelOrNetwork]' started.
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testActualBundledResearchProvidesAllFiveMenuTopicsAtEveryDifficultyWithoutModelOrNetwork]' passed (6.670 seconds).
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testExclusionUsesStableEvidenceIdentityAndDoesNotRepeatTheSameQuestion]' started.
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testExclusionUsesStableEvidenceIdentityAndDoesNotRepeatTheSameQuestion]' passed (4.238 seconds).
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testSavingTheActualQuestionPreservesSourceSnapshotsRatherThanSubstitutingThePackageVersion]' started.
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testSavingTheActualQuestionPreservesSourceSnapshotsRatherThanSubstitutingThePackageVersion]' passed (0.256 seconds).
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testUnapprovedSourcesAndUnsupportedQueriesCannotBecomePlayableQuestions]' started.
+Test Case '-[FruitfolioTests.FruitBasketGroundedResearchTests testUnapprovedSourcesAndUnsupportedQueriesCannotBecomePlayableQuestions]' passed (3.509 seconds).
+Test Suite 'FruitBasketGroundedResearchTests' passed at 2026-11-02 11:44:55.115.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 14.673 (14.678) seconds
+Test Suite 'IntroInterruptionRuntimeTests' started at 2026-11-02 11:44:55.117.
+Test Case '-[FruitfolioTests.IntroInterruptionRuntimeTests testBackgroundFreezesProgressAndResumingBlankCoverDoesNotSkipItsUnseenLogo]' started.
+Test Case '-[FruitfolioTests.IntroInterruptionRuntimeTests testBackgroundFreezesProgressAndResumingBlankCoverDoesNotSkipItsUnseenLogo]' passed (2.866 seconds).
+Test Case '-[FruitfolioTests.IntroInterruptionRuntimeTests testNormalAndReducedFirstLaunchActuallyExecuteTheSameSixToEightSecondClock]' started.
+Test Case '-[FruitfolioTests.IntroInterruptionRuntimeTests testNormalAndReducedFirstLaunchActuallyExecuteTheSameSixToEightSecondClock]' passed (14.890 seconds).
+Test Suite 'IntroInterruptionRuntimeTests' passed at 2026-11-02 11:45:12.876.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 17.756 (17.760) seconds
+Test Suite 'LanguagePreferencePersistenceTests' started at 2026-11-02 11:45:12.877.
+Test Case '-[FruitfolioTests.LanguagePreferencePersistenceTests testEverySelectionSurvivesStoreRecreationWithoutChangingOtherStoredDataOrFallingBackSilently]' started.
+Test Case '-[FruitfolioTests.LanguagePreferencePersistenceTests testEverySelectionSurvivesStoreRecreationWithoutChangingOtherStoredDataOrFallingBackSilently]' passed (0.096 seconds).
+Test Suite 'LanguagePreferencePersistenceTests' passed at 2026-11-02 11:45:12.974.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.096 (0.097) seconds
+Test Suite 'NativeActionLabelRuntimeTests' started at 2026-11-02 11:45:12.975.
+Test Case '-[FruitfolioTests.NativeActionLabelRuntimeTests testLargestConfirmationActionsFitTheCalibratedWritingViewportAtNarrowAndWidePhoneWidthsWithoutShrinkingFonts]' started.
+Test Case '-[FruitfolioTests.NativeActionLabelRuntimeTests testLargestConfirmationActionsFitTheCalibratedWritingViewportAtNarrowAndWidePhoneWidthsWithoutShrinkingFonts]' passed (0.953 seconds).
+Test Case '-[FruitfolioTests.NativeActionLabelRuntimeTests testLargestTypeRendersTheEntireLongHubLabelInsideItsActualNativeTextBounds]' started.
+Test Case '-[FruitfolioTests.NativeActionLabelRuntimeTests testLargestTypeRendersTheEntireLongHubLabelInsideItsActualNativeTextBounds]' passed (0.045 seconds).
+Test Suite 'NativeActionLabelRuntimeTests' passed at 2026-11-02 11:45:13.974.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.997 (0.999) seconds
+Test Suite 'PersonalDataExportTests' started at 2026-11-02 11:45:13.974.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testActualDomainSnapshotsKeepExactMedicalTextAndOriginalSavedSourceReferencesWithoutMutatingStores]' started.
+2026-11-02 11:45:14.048416+0000 Fruitfolio[10344:34870] Unbalanced calls to begin/end appearance transitions for <_TtGC7SwiftUI19UIHostingControllerGVS_15ModifiedContentGS1_GS1_V10Fruitfolio25Prompt12ConfirmationPopupGVS_30_EnvironmentKeyWritingModifierGSqCS2_12AudioManager___GS4_GSqCS2_17MotionPreferences___GS4_OS_15DynamicTypeSize___: 0x107ae9400>.
+2026-11-02 11:45:14.053968+0000 Fruitfolio[10344:34870] Unbalanced calls to begin/end appearance transitions for <_TtGC7SwiftUI19UIHostingControllerGVS_15ModifiedContentGS1_GS1_V10Fruitfolio25Prompt12ConfirmationPopupGVS_30_EnvironmentKeyWritingModifierGSqCS2_12AudioManager___GS4_GSqCS2_17MotionPreferences___GS4_OS_15DynamicTypeSize___: 0x107aea300>.
+2026-11-02 11:45:14.055250+0000 Fruitfolio[10344:34870] Unbalanced calls to begin/end appearance transitions for <_TtGC7SwiftUI19UIHostingControllerGVS_15ModifiedContentGS1_GS1_V10Fruitfolio25Prompt12ConfirmationPopupGVS_30_EnvironmentKeyWritingModifierGSqCS2_12AudioManager___GS4_GSqCS2_17MotionPreferences___GS4_OS_15DynamicTypeSize___: 0x107aea800>.
+2026-11-02 11:45:14.280994+0000 Fruitfolio[10344:34870] Unbalanced calls to begin/end appearance transitions for <_TtGC7SwiftUI19UIHostingControllerGVS_15ModifiedContentGS1_GS1_V10Fruitfolio27FruitfolioNativeActionLabelVS_16_FixedSizeLayout_VS_12_FrameLayout_GVS_30_EnvironmentKeyWritingModifierOS_15DynamicTypeSize___: 0x107aeb200>.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testActualDomainSnapshotsKeepExactMedicalTextAndOriginalSavedSourceReferencesWithoutMutatingStores]' passed (0.404 seconds).
+Test Case '-[FruitfolioTests.PersonalDataExportTests testReadableDocumentRetainsTheExactPreparedBytesAndJSONContentType]' started.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testReadableDocumentRetainsTheExactPreparedBytesAndJSONContentType]' passed (0.005 seconds).
+Test Case '-[FruitfolioTests.PersonalDataExportTests testReadBackRejectsChangedUnreadableOrInvalidJSONWithoutModifyingTheFile]' started.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testReadBackRejectsChangedUnreadableOrInvalidJSONWithoutModifyingTheFile]' passed (0.004 seconds).
+Test Case '-[FruitfolioTests.PersonalDataExportTests testUnreadableGameStorageBlocksMisleadingExportAndCannotBeOverwrittenByGameActions]' started.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testUnreadableGameStorageBlocksMisleadingExportAndCannotBeOverwrittenByGameActions]' passed (0.013 seconds).
+Test Case '-[FruitfolioTests.PersonalDataExportTests testUnreadableHealthStoragePreventsASuccessfulPartialExportAndPreservesOriginalBytes]' started.
+Test Case '-[FruitfolioTests.PersonalDataExportTests testUnreadableHealthStoragePreventsASuccessfulPartialExportAndPreservesOriginalBytes]' passed (0.004 seconds).
+Test Suite 'PersonalDataExportTests' passed at 2026-11-02 11:45:14.429.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.430 (0.455) seconds
+Test Suite 'Prompt28FruitBasketTests' started at 2026-11-02 11:45:14.430.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualBranchContactBouncesFruitUpAndLeftThenResumesItsUnchangedBaseFallSpeed]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualBranchContactBouncesFruitUpAndLeftThenResumesItsUnchangedBaseFallSpeed]' passed (0.008 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualProductionSpawnsRespectTheBoundedGradualLevelScheduleAndNeverRetrofitAnExistingFallSpeed]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualProductionSpawnsRespectTheBoundedGradualLevelScheduleAndNeverRetrofitAnExistingFallSpeed]' passed (0.026 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualSettledBadFruitConsumesOnePassAndKeepsTheRoundActiveUntilNoneRemain]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualSettledBadFruitConsumesOnePassAndKeepsTheRoundActiveUntilNoneRemain]' passed (0.428 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualStarFrameDoesNotBankUntilFullEntryAndKeepsSettledArtwork]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualStarFrameDoesNotBankUntilFullEntryAndKeepsSettledArtwork]' passed (0.016 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAllTenFruitAssetsHaveCanonicalMappings]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAllTenFruitAssetsHaveCanonicalMappings]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes]' passed (0.006 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAnActiveGameLoopDoesNotRetainItsOwnerAcrossSuspendedFramesEvenWithoutTheViewCallback]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testAnActiveGameLoopDoesNotRetainItsOwnerAcrossSuspendedFramesEvenWithoutTheViewCallback]' passed (0.092 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testBadCatchWithoutStarPassEndsRound]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testBadCatchWithoutStarPassEndsRound]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testBranchPaintedTrunkMeetsScreenEdgeAndContactDoesNotUseTheWholeImageBox]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testBranchPaintedTrunkMeetsScreenEdgeAndContactDoesNotUseTheWholeImageBox]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testCanonicalRoundRulesNeverScaleTarget]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testCanonicalRoundRulesNeverScaleTarget]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testCollisionRequiresTheEntireItemInsideTheActualPaintedBasketOpening]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testCollisionRequiresTheEntireItemInsideTheActualPaintedBasketOpening]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testDismissingStormAfterBackgroundPauseDoesNotAutomaticallyResumeGameplay]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testDismissingStormAfterBackgroundPauseDoesNotAutomaticallyResumeGameplay]' passed (0.006 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testEducationalDifficultyDoesNotChangePhysicsConfig]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testEducationalDifficultyDoesNotChangePhysicsConfig]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle]' passed (0.003 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testFounderFacingLearningTopicsAreExact]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testFounderFacingLearningTopicsAreExact]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testGameLevelCeilingIsEight]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testGameLevelCeilingIsEight]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testGoodCatchAddsExactlyTenPointsAndOneProgress]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testGoodCatchAddsExactlyTenPointsAndOneProgress]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsAggregateAllTopics]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsAggregateAllTopics]' passed (0.003 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsEmptyProgress]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsEmptyProgress]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration]' passed (0.003 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeavingAnActiveGameCancelsItsLoopAndReleasesTheViewModel]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLeavingAnActiveGameCancelsItsLoopAndReleasesTheViewModel]' passed (0.068 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLegacyProgressDefaultsLifetimeStarsToZero]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLegacyProgressDefaultsLifetimeStarsToZero]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsPersistAcrossEncoding]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsPersistAcrossEncoding]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsSurviveProgressStoreUpdates]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsSurviveProgressStoreUpdates]' passed (0.006 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testMissingBadFruitHasNoPenalty]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testMissingBadFruitHasNoPenalty]' passed (0.071 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testMissingGoodFruitHasNoPenalty]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testMissingGoodFruitHasNoPenalty]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewAudioSemanticIDsAreRegistered]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewAudioSemanticIDsAreRegistered]' passed (0.016 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewSessionKeepsTopicDifficultyAndGameLevelIndependent]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewSessionKeepsTopicDifficultyAndGameLevelIndependent]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic]' passed (0.048 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testObstaclePlanStaysLimitedAndLevelDriven]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testObstaclePlanStaysLimitedAndLevelDriven]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testPuddleAddsMildInertiaWithoutTakingAwayBasketControl]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testPuddleAddsMildInertiaWithoutTakingAwayBasketControl]' passed (0.003 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle]' passed (0.003 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testQuestionRequiresSourcesAndDisjointFruitSets]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testQuestionRequiresSourcesAndDisjointFruitSets]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound]' passed (0.004 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testResetPreservesHistoricalProgress]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testResetPreservesHistoricalProgress]' passed (0.006 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testRoundRevealUsesActualCollectedFruitStarsAndConsequencesAndResetsOnlyOnTheNextAttempt]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testRoundRevealUsesActualCollectedFruitStarsAndConsequencesAndResetsOnlyOnTheNextAttempt]' passed (0.827 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSettlingAcknowledgementWhilePausedCannotScoreUntilResumingAndNewAttemptClearsPendingArt]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSettlingAcknowledgementWhilePausedCannotScoreUntilResumingAndNewAttemptClearsPendingArt]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSpawnPlannerNeverCreatesMoreThanTwoBadInARow]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSpawnPlannerNeverCreatesMoreThanTwoBadInARow]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testStandaloneStarsBankWithoutLimitAndProtectBadCatch]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testStandaloneStarsBankWithoutLimitAndProtectBadCatch]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testStarPassAccumulationHasNoArtificialCapAndConsumesOneAtATime]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testStarPassAccumulationHasNoArtificialCapAndConsumesOneAtATime]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSuccessfulRoundProgressionPlateaus]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testSuccessfulRoundProgressionPlateaus]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testTenthGoodCatchCompletesRound]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testTenthGoodCatchCompletesRound]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testTopicNormalizationIsStable]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testTopicNormalizationIsStable]' passed (0.018 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testVinesOnlyNarrowLaneAtHigherLevels]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testVinesOnlyNarrowLaneAtHigherLevels]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testWeatherStaysLevelDrivenNotEducationalDifficultyDriven]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testWeatherStaysLevelDrivenNotEducationalDifficultyDriven]' passed (0.000 seconds).
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testWindDirectionIsPredictableByRound]' started.
+Test Case '-[FruitfolioTests.Prompt28FruitBasketTests testWindDirectionIsPredictableByRound]' passed (0.001 seconds).
+Test Suite 'Prompt28FruitBasketTests' passed at 2026-11-02 11:45:16.251.
+	 Executed 48 tests, with 0 failures (0 unexpected) in 1.687 (1.821) seconds
+Test Suite 'TranslationPreservationTests' started at 2026-11-02 11:45:16.251.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testActualJapaneseQualifierLossPastObservationAndPositiveConfirmationAreRejected]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testActualJapaneseQualifierLossPastObservationAndPositiveConfirmationAreRejected]' passed (0.011 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testAmbiguousSourceCommaAndUnapprovedLocaleAreNeverReinterpreted]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testAmbiguousSourceCommaAndUnapprovedLocaleAreNeverReinterpreted]' passed (0.040 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testBareNumbersUnicodeSignsAndUnitBoundariesArePreservedWithoutInventingUnits]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testBareNumbersUnicodeSignsAndUnitBoundariesArePreservedWithoutInventingUnits]' passed (0.008 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testChangedAddedDroppedReorderedAndSignChangedNumbersAreRejected]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testChangedAddedDroppedReorderedAndSignChangedNumbersAreRejected]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testDecimalLocaleExceptionCannotIgnoreExponentOrUnicodeChanges]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testDecimalLocaleExceptionCannotIgnoreExponentOrUnicodeChanges]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testEquivalentDecimalMarkRestoresTheExactOriginalSpellingWithoutWeakeningTheFinalInvariant]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testEquivalentDecimalMarkRestoresTheExactOriginalSpellingWithoutWeakeningTheFinalInvariant]' passed (0.002 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testFractionsFullWidthUnitsAndComparisonOperatorsStayOpaqueWithoutConversion]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testFractionsFullWidthUnitsAndComparisonOperatorsStayOpaqueWithoutConversion]' passed (0.006 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testKnownHindiOvaryForOvulationSubstitutionIsRejectedAndOriginalConceptIsProtected]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testKnownHindiOvaryForOvulationSubstitutionIsRejectedAndOriginalConceptIsProtected]' passed (0.007 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testLanguageReadinessNeverConfusesModelPresenceWithApprovedMedicalDisplay]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testLanguageReadinessNeverConfusesModelPresenceWithApprovedMedicalDisplay]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testObservedChineseMarkerEdgeSpacingRestoresOnlyExactIdentifiersInExactOrder]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testObservedChineseMarkerEdgeSpacingRestoresOnlyExactIdentifiersInExactOrder]' passed (0.015 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementMarkersCannotCollideWithOriginalSourceAndScientificNotationStaysExact]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementMarkersCannotCollideWithOriginalSourceAndScientificNotationStaysExact]' passed (0.054 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsKeepOriginalPrecisionUnitsAndSpacingOutsideGeneration]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsKeepOriginalPrecisionUnitsAndSpacingOutsideGeneration]' passed (0.011 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsRejectMissingDuplicatedAddedOrReorderedSlots]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsRejectMissingDuplicatedAddedOrReorderedSlots]' passed (0.013 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedQuantitiesPreserveSignsRangesPercentTemperaturePowersAndCompoundUnits]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testProtectedQuantitiesPreserveSignsRangesPercentTemperaturePowersAndCompoundUnits]' passed (0.012 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testPureTerminalMeasurementListsStayOutsideGenerationWhileStrictValidationStillApplies]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testPureTerminalMeasurementListsStayOutsideGenerationWhileStrictValidationStillApplies]' passed (0.016 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testTranslationLayoutRetainsParagraphsListsIndentationAndExactLineEndings]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testTranslationLayoutRetainsParagraphsListsIndentationAndExactLineEndings]' passed (0.005 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testUnitAndExplicitMedicalLiteralChangesOrDuplicationAreRejected]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testUnitAndExplicitMedicalLiteralChangesOrDuplicationAreRejected]' passed (0.001 seconds).
+Test Case '-[FruitfolioTests.TranslationPreservationTests testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt]' started.
+Test Case '-[FruitfolioTests.TranslationPreservationTests testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt]' passed (0.004 seconds).
+Test Suite 'TranslationPreservationTests' passed at 2026-11-02 11:45:16.544.
+	 Executed 18 tests, with 0 failures (0 unexpected) in 0.208 (0.293) seconds
+Test Suite 'FruitfolioTests.xctest' passed at 2026-11-02 11:45:16.545.
+	 Executed 84 tests, with 0 failures (0 unexpected) in 357.964 (358.257) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 11:45:16.546.
+	 Executed 84 tests, with 0 failures (0 unexpected) in 357.964 (358.264) seconds
+2026-11-02 11:45:18.534 xcodebuild[5831:20509] [MT] IDETestOperationsObserverDebug: 694.772 elapsed -- Testing started completed.
+2026-11-02 11:45:18.538 xcodebuild[5831:20509] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 11:45:18.538 xcodebuild[5831:20509] [MT] IDETestOperationsObserverDebug: 694.772 sec, +694.772 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

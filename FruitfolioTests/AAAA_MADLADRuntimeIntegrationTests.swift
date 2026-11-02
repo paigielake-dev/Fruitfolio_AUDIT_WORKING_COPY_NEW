@@ -190,6 +190,7 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                     "preservation": "PASS", "medicalMeaning": "NOT VERIFIED — actual warning, negation, terminology and language require review"])
             } catch {
                 var report = ["target": target, "source": source, "preservation": "FAIL", "error": String(describing: error)]
+                report["actualRuntimeDiagnostic"] = await runtime.lastInferenceDiagnostic
                 if let rejected = error as? FruitfolioTranslationRejectedCandidate {
                     report["actualModelInput"] = rejected.actualModelInput
                     report["actualRejectedRawOutput"] = rejected.rawOutput

@@ -25,8 +25,10 @@ actor FruitfolioMADLADLocalRuntime {
     private var handle: FruitfolioMADLADHandle?
     private var verifiedDirectory: URL?
     private(set) var lastInferenceWasOnMainThread: Bool?
+    private(set) var lastInferenceDiagnostic: String?
 
     func translateRawSentence(_ sentence: String, target: String, directory: URL) throws -> String {
+        lastInferenceDiagnostic = nil
         guard target.range(of: "^[a-z]{2,3}(?:_[A-Z][a-z]{3})?$", options: .regularExpression) != nil else {
             throw FruitfolioMADLADError.invalidLanguage
         }
@@ -39,12 +41,16 @@ actor FruitfolioMADLADLocalRuntime {
         let prompt = "<2\(target)> " + sentence
         lastInferenceWasOnMainThread = Thread.isMainThread
         guard let result = prompt.withCString({ fruitfolio_madlad_translate(handle.pointer, $0) }) else {
+            lastInferenceDiagnostic = "Local inference ABI returned no result"
             throw FruitfolioMADLADError.inferenceFailed
         }
         defer { fruitfolio_madlad_free_string(result) }
         let data = Data(String(cString: result).utf8)
         let decoded = try JSONDecoder().decode(FruitfolioMADLADRawResult.self, from: data)
         guard decoded.ok, let text = decoded.text, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            // Retain the real local runtime cause without logging private input
+            // or accepting partial/non-EOS output as a translation.
+            lastInferenceDiagnostic = decoded.error ?? "Local inference returned an empty result"
             throw FruitfolioMADLADError.inferenceFailed
         }
         return text

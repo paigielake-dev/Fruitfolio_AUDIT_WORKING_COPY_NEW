@@ -13,6 +13,29 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  recover-original-unit-exports:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    strategy:
+      fail-fast: false
+      matrix:
+        original-run: [97, 98]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify immutable original oversized unit archive and select exact logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/recover_original_unit_exports.py ${{ matrix.original-run }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Original_Unit_Run${{ matrix.original-run }}_Selected_Exports
+          path: recovered-unit-run${{ matrix.original-run }}
+          retention-days: 90
   local-research-tooling:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -230,6 +253,7 @@ jobs:
             -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
             -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout \
             -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings \
+            -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testFifteenExpandedTargetsExecuteMedicalWarningPreservationWithoutClaimingMeaningApproval \
             -only-testing:FruitfolioTests/TranslationPreservationTests \
             -only-testing:FruitfolioTests/PersonalDataExportTests \
             -only-testing:FruitfolioTests/AskSessionLifetimeTests \

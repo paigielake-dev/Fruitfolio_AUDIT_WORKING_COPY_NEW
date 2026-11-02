@@ -1,0 +1,126 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -disableAutomaticPackageResolution "-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testEveryRequestedLanguageExecutesOrReportsExactOfficialTagAbsenceWithoutSubstitution" -resultBundlePath Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-requested-languages.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-requested-languages.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 11:41:01.330281+0000 Fruitfolio[34247:351546] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x10783e100> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+2026-11-02 11:41:01.906498+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1755  ReadPListFile: unable to open stream for LoudnessManager plist
+2026-11-02 11:41:01.906740+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1261  GetHardwarePlatformKey: cannot get acoustic ID
+2026-11-02 11:41:01.906851+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:01.906955+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-02 11:41:01.932443+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:01.932566+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-02 11:41:02.092327+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:02.092528+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-02 11:41:02.127067+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:02.127502+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-02 11:41:02.264827+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:02.265807+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+Test Suite 'Selected tests' started at 2026-11-02 11:41:02.443.
+Test Suite 'FruitfolioTests.xctest' started at 2026-11-02 11:41:02.444.
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' started at 2026-11-02 11:41:02.444.
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testEveryRequestedLanguageExecutesOrReportsExactOfficialTagAbsenceWithoutSubstitution]' started.
+2026-11-02 11:41:04.240226+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-02 11:41:04.241515+0000 Fruitfolio[34247:351546] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+2026-11-02 11:41:06.140884+0000 Fruitfolio[34247:352573] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+2026-11-02 11:41:14.178994+0000 Fruitfolio[34247:352573] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Please select a language.","language":"en","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"en","wallSeconds":"26.783746004104614"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Por favor, seleccione un idioma.","language":"es","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"es","wallSeconds":"2.0179660320281982"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Selecione um idioma.","language":"pt","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"pt","wallSeconds":"0.8509259223937988"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Veuillez sélectionner une langue.","language":"fr","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"fr","wallSeconds":"0.7793340682983398"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"请选择一种语言。","language":"zh-Hans","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"zh","wallSeconds":"2.1067490577697754"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"請選擇一種語言。","language":"zh-Hant","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"zh_Hant","wallSeconds":"0.7745310068130493"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"言語を選択してください。","language":"ja","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ja","wallSeconds":"0.5355339050292969"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"언어를 선택하십시오.","language":"ko","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ko","wallSeconds":"0.5639300346374512"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Bitte wählen Sie eine Sprache aus.","language":"de","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"de","wallSeconds":"0.5825090408325195"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Seleziona una lingua.","language":"it","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"it","wallSeconds":"0.5732439756393433"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Xin hãy chọn một ngôn ngữ.","language":"vi","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"vi","wallSeconds":"0.5712469816207886"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Mangyaring piliin ang isang wika.","language":"fil","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"fil","wallSeconds":"0.513484001159668"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"لطفاً یک زبان را انتخاب کنید.","language":"fa","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"fa","wallSeconds":"0.5672279596328735"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"يرجى اختيار لغة.","language":"ar","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ar","wallSeconds":"0.4455310106277466"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"कृपया एक भाषा चुनें.","language":"hi","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"hi","wallSeconds":"0.47251200675964355"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"অনুগ্রহ করে একটি ভাষা বেছে নিন ।","language":"bn","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"bn","wallSeconds":"0.5544439554214478"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"મહેરબાની કરીને ભાષા પસંદ કરો.","language":"gu","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"gu","wallSeconds":"0.5322970151901245"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"ದಯವಿಟ್ಟು ಒಂದು ಭಾಷೆಯನ್ನು ಆರಿಸಿ.","language":"kn","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"kn","wallSeconds":"0.7546141147613525"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"ദയവായി ഒരു ഭാഷ തിരഞ്ഞെടുക്കുക.","language":"ml","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ml","wallSeconds":"1.7760729789733887"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"कृपया भाषा निवडा.","language":"mr","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"mr","wallSeconds":"0.8149869441986084"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"ਇੱਕ ਭਾਸ਼ਾ ਚੁਣੋ ਜੀ ।","language":"pa","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"pa","wallSeconds":"1.3644509315490723"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"தயவு செய்து ஒரு மொழியை தேர்ந்தெடுக்கவும்.","language":"ta","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ta","wallSeconds":"1.7281630039215088"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"దయచేసి ఒక భాషను యెంపికచేయుము.","language":"te","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"te","wallSeconds":"1.4072279930114746"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"لطفاً ایک زبان منتخب کریں.","language":"ur","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ur","wallSeconds":"0.6533119678497314"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"እባክዎን ቋንቋን ይምረጡ","language":"am","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"am","wallSeconds":"0.873276948928833"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Ku zaɓi wata harshe.","language":"ha","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ha","wallSeconds":"0.8698340654373169"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Biko họrọ asụsụ.","language":"ig","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ig","wallSeconds":"1.1104719638824463"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Tafadhali chagua lugha.","language":"sw","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"sw","wallSeconds":"2.119364023208618"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Yan àwọn ìrísí-lẹ́tà.","language":"yo","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"yo","wallSeconds":"2.605404019355774"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Sicela ukhethe ulwimi.","language":"zu","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"zu","wallSeconds":"2.283905029296875"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Faʻamolemole filifili se gagana.","language":"sm","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"sm","wallSeconds":"0.9731409549713135"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Kainga ki ha reo.","language":"to","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"to","wallSeconds":"0.6679719686508179"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Vakacegutaka na vosa.","language":"fj","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"fj","wallSeconds":"0.7678079605102539"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"E koho i kahi'ōlelo.","language":"haw","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"haw","wallSeconds":"0.8014870882034302"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Ka kōwhiria he reo.","language":"mi","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"mi","wallSeconds":"0.8137949705123901"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Selecciona un' idioma.","language":"ch","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ch","wallSeconds":"1.3575719594955444"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Ejellok an wōr juon wōr.","language":"mh","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"mh","wallSeconds":"0.9145710468292236"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"language":"tpi","languageSupport":"BLOCKED","runtimeExecution":"REJECTED — exact official tokenizer target absent","substitution":"NONE","target":"tpi"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"language":"ty","languageSupport":"BLOCKED","runtimeExecution":"REJECTED — exact official tokenizer target absent","substitution":"NONE","target":"ty"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Me a diak a diak a tekoi er a tekoi er a klengar er kid.","language":"pau","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"pau","wallSeconds":"1.5102450847625732"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"language":"rar","languageSupport":"BLOCKED","runtimeExecution":"REJECTED — exact official tokenizer target absent","substitution":"NONE","target":"rar"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"language":"niu","languageSupport":"BLOCKED","runtimeExecution":"REJECTED — exact official tokenizer target absent","substitution":"NONE","target":"niu"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Faka‵lei se gagana.","language":"tvl","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"tvl","wallSeconds":"0.7573639154434204"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"language":"gil","languageSupport":"BLOCKED","runtimeExecution":"REJECTED — exact official tokenizer target absent","substitution":"NONE","target":"gil"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"I moa gud.","language":"bi","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"bi","wallSeconds":"0.5457150936126709"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"โปรดเลือกภาษา","language":"th","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"th","wallSeconds":"0.6325650215148926"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Хэл сонгоно уу.","language":"mn","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"mn","wallSeconds":"0.8004540205001831"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Silakan pilih bahasa.","language":"id","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"id","wallSeconds":"0.47485899925231934"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Выберите язык.","language":"ru","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ru","wallSeconds":"0.3690910339355469"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Proszę wybrać język.","language":"pl","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"pl","wallSeconds":"0.859205961227417"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Selecteer een taal.","language":"nl","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"nl","wallSeconds":"0.8732919692993164"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Välj ett språk.","language":"sv","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"sv","wallSeconds":"0.8699339628219604"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Будь ласка, виберіть мову.","language":"uk","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"uk","wallSeconds":"2.48585307598114"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Lütfen bir dil seçin.","language":"tr","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"tr","wallSeconds":"1.4279539585113525"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"تکایە زمانێک هەڵبژێرە.","language":"ku","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ku","wallSeconds":"1.6514300107955933"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"تکایە زمانێک هەڵبژێرە.","language":"ckb","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ckb","wallSeconds":"1.5690020322799683"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"בבקשה בחר שפה.","language":"he","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"he","wallSeconds":"1.2057960033416748"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Por favor, seleccione un idioma.","language":"qu","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"qu","wallSeconds":"1.5565990209579468"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Oñehai peteĩ ñe'ẽ.","language":"gn","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"gn","wallSeconds":"2.8442739248275757"}
+MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT {"actualRawOutput":"Marañchi, sapüki uka idioma.","language":"ay","languageQuality":"NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance","runtimeExecution":"PASS","source":"Please select a language.","target":"ay","wallSeconds":"2.584370970726013"}
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testEveryRequestedLanguageExecutesOrReportsExactOfficialTagAbsenceWithoutSubstitution]' passed (88.783 seconds).
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' passed at 2026-11-02 11:42:31.237.
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.783 (88.794) seconds
+Test Suite 'FruitfolioTests.xctest' passed at 2026-11-02 11:42:31.242.
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.783 (88.799) seconds
+Test Suite 'Selected tests' passed at 2026-11-02 11:42:31.243.
+	 Executed 1 test, with 0 failures (0 unexpected) in 88.783 (88.800) seconds
+2026-11-02 11:42:33.514 xcodebuild[33310:349309] [MT] IDETestOperationsObserverDebug: 100.706 elapsed -- Testing started completed.
+2026-11-02 11:42:33.515 xcodebuild[33310:349309] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 11:42:33.520 xcodebuild[33310:349309] [MT] IDETestOperationsObserverDebug: 100.706 sec, +100.706 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-requested-languages.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
