@@ -589,6 +589,68 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.viewWillDisappear()
     }
 
+    func testRoundRevealUsesActualCollectedFruitStarsAndConsequencesAndResetsOnlyOnTheNextAttempt() async throws {
+        let suite = "Fruitfolio.ActualRoundReveal.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: .init(defaults: defaults),
+            researchProvider: Prompt28UnavailableResearchProvider())
+        var session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        session.availableStarPasses = 2
+        model.session = session; model.currentQuestion = fixtureQuestion(); model.beginCatch()
+        model.updateGameplayFieldSize(width: 402, height: 874)
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: 402, fieldHeight: 874)
+        var clock: TimeInterval = 200
+        func settle(_ id: UUID) {
+            model.tick(delta: 0.05, now: Date(timeIntervalSince1970: clock))
+            let token = UUID()
+            model.handleCatchPresentation(id: id, event: .appeared(token))
+            model.handleCatchPresentation(id: id, event: .settled(token))
+            model.tick(delta: 0.2, now: Date(timeIntervalSince1970: clock + 0.2))
+            clock += 1
+        }
+        let starEntry = (geometry.mouthY + Prompt28BasketCatchGeometry.starDiameter(fieldWidth: 402) / 2) / 874
+        let star = Prompt28FallingStar(x: 0.5, y: starEntry - 0.002, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeStars = [star]; settle(star.id)
+        let fruitEntry = (geometry.mouthY + Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: 402) / 2) / 874
+        let bad = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: 0.5,
+            y: fruitEntry - 0.002, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeFruit = [bad]; settle(bad.id)
+        let actualFruit: [Prompt28FruitID] = [.pear, .pear, .apple, .pear, .apple, .apple, .pear, .pear, .apple, .pear]
+        for id in actualFruit {
+            let fruit = Prompt28FallingFruit(fruitID: id, classification: .good, x: 0.5,
+                y: fruitEntry - 0.002, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+            model.activeFruit = [fruit]; settle(fruit.id)
+        }
+        try await Task.sleep(for: .milliseconds(800))
+        XCTAssertEqual(model.screen, .basketReveal)
+        XCTAssertEqual(model.roundCollection.goodFruit, actualFruit, "Do not reconstruct decorative fruit from the question pool")
+        XCTAssertEqual(model.roundCollection.badFruit, [.lemon])
+        XCTAssertEqual(model.roundCollection.standaloneStarsCaught, 1)
+        XCTAssertEqual(model.roundCollection.starPassesConsumed, 1)
+        XCTAssertEqual(model.availableStarPasses, 2)
+        XCTAssertEqual(model.score - model.roundCollection.startingScore, 100)
+        XCTAssertEqual(model.settledCatches.filter(\.collected).count, 12)
+        let pending = try XCTUnwrap(model.savePendingContent())
+        XCTAssertTrue(pending.answer.contains(actualFruit.map(\.displayName).joined(separator: ", ")))
+        XCTAssertTrue(pending.answer.contains("standalone stars collected: 1"))
+        XCTAssertTrue(pending.answer.contains("star passes used: 1"))
+        XCTAssertTrue(pending.answer.contains("score this round: 100"))
+        let recorded = model.roundCollection
+        XCTAssertEqual(try JSONDecoder().decode(Prompt28RoundCollection.self,
+            from: JSONEncoder().encode(recorded)), recorded)
+        model.beginCatch()
+        XCTAssertTrue(model.roundCollection.goodFruit.isEmpty)
+        XCTAssertTrue(model.roundCollection.badFruit.isEmpty)
+        XCTAssertEqual(model.roundCollection.standaloneStarsCaught, 0)
+        XCTAssertEqual(model.roundCollection.starPassesConsumed, 0)
+        XCTAssertEqual(model.roundCollection.startingScore, 100)
+        XCTAssertEqual(model.roundCollection.startingStarPasses, 2)
+        XCTAssertFalse(model.isPaused)
+        XCTAssertTrue(pending.answer.contains("standalone stars collected: 1"), "The already prepared saved payload remains immutable")
+        model.viewWillDisappear()
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",

@@ -9887,23 +9887,35 @@
       "originalReference": "Part 3 / 3C. Session-only history / 126",
       "sourceLine": 299,
       "prompt1BSection": {
-        "candidateSection": "Ask the Encyclopedia and research grounding (1348–1705)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "Ask session-only privacy correction"
+        ],
+        "extractedLines": [
+          539
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Ask",
         "Fruitfolio/Core/Intelligence"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted integration/test added; actual new Apple results pending",
+      "changesMade": [
+        "Existing independently saved Guide storage remains separate from Ask session reset; added actual-store save/reset/reopen and unchanged persisted-bytes verification."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new actual Swift integration tests and relevant actual app UI journeys; inspect reveal visual and accessibility states where applicable."
       ],
       "dependsOnParts": [
         1,
@@ -9914,17 +9926,32 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "checkpoint": "source93 targeted implementation/verification",
+          "previousStatus": "NOT VERIFIED",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Do not delete saved Guide content when the Ask session clears.",
       "sourceSection": {
-        "candidateSection": "Ask the Encyclopedia and research grounding (1348–1705)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "Ask session-only privacy correction"
+        ],
+        "extractedLines": [
+          539
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Existing independently saved Guide storage remains separate from Ask session reset; added actual-store save/reset/reopen and unchanged persisted-bytes verification.",
+      "implementationAssessment": "Existing independently saved Guide storage remains separate from Ask session reset; added actual-store save/reset/reopen and unchanged persisted-bytes verification.",
+      "verificationState": "NOT VERIFIED — new source93 integration/frame tests require actual execution",
+      "existingSourceFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -9941,8 +9968,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-127",
@@ -29258,22 +29285,34 @@
       "originalReference": "Part 7 / 7E. Results and leaderboard / 367",
       "sourceLine": 877,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19V — Basket reveal"
+        ],
+        "extractedLines": [
+          737
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted integration/test added; actual new Apple results pending",
+      "changesMade": [
+        "Round collection now records actual registered fruit identities/order, bad catches, standalone stars and protective pass consumption. Reveal uses actual collected artwork and displays actual counters/score delta; saved payload retains those results. Actual new test execution pending."
+      ],
       "testsPerformed": [],
       "testResults": [],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new actual Swift integration tests and relevant actual app UI journeys; inspect reveal visual and accessibility states where applicable."
       ],
       "dependsOnParts": [
         1,
@@ -29288,17 +29327,32 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "checkpoint": "source93 targeted implementation/verification",
+          "previousStatus": "NOT VERIFIED",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Include accumulated fruit, stars, rewards, and consequences in the result.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19V — Basket reveal"
+        ],
+        "extractedLines": [
+          737
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Round collection now records actual registered fruit identities/order, bad catches, standalone stars and protective pass consumption. Reveal uses actual collected artwork and displays actual counters/score delta; saved payload retains those results. Actual new test execution pending.",
+      "implementationAssessment": "Round collection now records actual registered fruit identities/order, bad catches, standalone stars and protective pass consumption. Reveal uses actual collected artwork and displays actual counters/score delta; saved payload retains those results. Actual new test execution pending.",
+      "verificationState": "NOT VERIFIED — new source93 integration/frame tests require actual execution",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -29319,8 +29373,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-368",
@@ -40886,9 +40940,9 @@
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
   "implementationPassVerificationNote": "PASS is scoped to recorded actual evidence and source, not whole-app/final-source acceptance. Actual Run61 full job FAILED with 26 failed executions; volume journey passed. Its exploratory test execution passed but reported 14 unavailable paths, so traversal coverage is NOT VERIFIED.",
   "summary": {
-    "PARTIAL": 165,
+    "PARTIAL": 167,
     "PASS": 49,
-    "NOT VERIFIED": 258,
+    "NOT VERIFIED": 256,
     "BLOCKED": 2,
     "FAIL": 4
   },
@@ -40898,9 +40952,9 @@
   "currentSourceVerification": "Current protected measurement candidate and UI/audit repairs pending. Actual Run67 full unit stage534=533PASS/1physicalSKIP; Run69 538=536PASS/1SKIP/1failed case(7assertions); Run72 unit incomplete/time bound, raw output recovered. No release acceptance.",
   "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures.",
   "statusCounts": {
-    "PARTIAL": 165,
+    "PARTIAL": 167,
     "PASS": 49,
-    "NOT VERIFIED": 258,
+    "NOT VERIFIED": 256,
     "BLOCKED": 2,
     "FAIL": 4
   }

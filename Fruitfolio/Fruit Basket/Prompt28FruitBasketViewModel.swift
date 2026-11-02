@@ -12,6 +12,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published private(set) var showingStormNotice = false
     @Published var rawTopic = ""
     @Published var difficulty: Prompt28EducationalDifficulty
+    @Published private(set) var roundCollection = Prompt28RoundCollection()
     @Published var currentQuestion: Prompt28Question?
     @Published var selectedAnswerID: String?
     @Published var session: Prompt28Session?
@@ -83,6 +84,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     var basketCount: Int { session?.goodFruitCaughtThisRound ?? 0 }
     var score: Int { session?.score ?? 0 }
+    var availableStarPasses: Int { session?.availableStarPasses ?? 0 }
     var currentRound: Int { session?.currentRound ?? 1 }
     var weather: Prompt28Weather { engine.weather(level: gameLevel, round: currentRound) }
     var levelConfig: Prompt28GameLevelConfig { engine.config(for: gameLevel) }
@@ -212,6 +214,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         guard currentQuestion != nil, var session else { return }
         stopGameplay()
         session.goodFruitCaughtThisRound = 0
+        roundCollection = .init(startingStarPasses: session.availableStarPasses, startingScore: session.score)
         self.session = session
         activeFruit.removeAll()
         activeStars.removeAll()
@@ -372,9 +375,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     func savePendingContent() -> Prompt10PendingSavedContent? {
         guard let question = currentQuestion else { return nil }
         let references = question.sourceTitles.joined(separator: "\n")
-        let revealBody = "basket reveal\n\n\(question.explanation)\n\n\(references)"
+        let fruitNames = roundCollection.goodFruit.map(\.displayName).joined(separator: ", ")
+        let outcome = "round results\ngood fruit collected: \(fruitNames)\nunstarred fruit caught: \(roundCollection.badFruit.count)\nstandalone stars collected: \(roundCollection.standaloneStarsCaught)\nstar passes used: \(roundCollection.starPassesConsumed)\nstar passes available: \(session?.availableStarPasses ?? 0)\nscore this round: \((session?.score ?? 0) - roundCollection.startingScore)"
+        let revealBody = "basket reveal\n\n\(question.explanation)\n\n\(references)\n\n\(outcome)"
         return Prompt10PendingSavedContent(
-            question: "basket reveal . ݁₊ ⊹ . ݁˖ . ݁",
+            question: "basket reveal",
             answer: revealBody,
             saveType: .fullAnswer,
             originalAnswerID: "fruitbasket:\(question.id)",
@@ -635,6 +640,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
         }
         let outcome = engine.registerGoodCatch(session: &session)
+        roundCollection.goodFruit.append(fruit)
         self.session = session
         if outcome == .success {
             roundResultLocked = true
@@ -670,6 +676,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             settledCatches.remove(at: oldestStar)
         }
         _ = engine.registerStarCatch(session: &session)
+        roundCollection.standaloneStarsCaught += 1
         self.session = session
 
         var progress = store.ensureProgress(for: session.normalizedTopicID)
@@ -680,6 +687,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func handleBadCatch(_ fruit: Prompt28FruitID) {
         guard !roundResultLocked, var session else { return }
         let outcome = engine.registerBadCatch(fruit, session: &session)
+        roundCollection.badFruit.append(fruit)
+        if case .badFruitBlockedByStar = outcome { roundCollection.starPassesConsumed += 1 }
         self.session = session
         lastBadFruit = fruit
         if case .badFruitBlockedByStar = outcome { return }

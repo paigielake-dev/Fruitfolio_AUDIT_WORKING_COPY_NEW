@@ -1479,7 +1479,8 @@ struct Prompt28FruitBasketView: View {
 
                     Prompt28BasketProgressView(
                         count: 10,
-                        fruitIDs: viewModel.currentGoodFruitIDs
+                        fruitIDs: viewModel.roundCollection.goodFruit,
+                        settledCatches: viewModel.settledCatches.filter(\.collected)
                     )
                     .frame(width: 210, height: 180)
                     .accessibilityHidden(true)
@@ -1510,15 +1511,27 @@ struct Prompt28FruitBasketView: View {
                         spacing: 11
                     ) {
                         Text(
-                            "your basket reveal! ♡"
+                            "your basket reveal!"
                         )
                         .prompt28Text(.screenTitle)
+
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("good fruit collected: \(viewModel.roundCollection.goodFruit.count)")
+                            Text("unstarred fruit caught: \(viewModel.roundCollection.badFruit.count)")
+                            Text("standalone stars collected: \(viewModel.roundCollection.standaloneStarsCaught)")
+                            Text("star passes used: \(viewModel.roundCollection.starPassesConsumed)")
+                            Text("star passes available: \(viewModel.availableStarPasses)")
+                            Text("score this round: \(viewModel.score - viewModel.roundCollection.startingScore)")
+                        }
+                        .prompt28Text(.body)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("fruitBasket.actualRoundResults")
 
                         if let question =
                             viewModel.currentQuestion {
 
                             Text(
-                                "these fit the basket because…"
+                                "here’s the research behind your question."
                             )
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))

@@ -1,6 +1,15 @@
 import XCTest
 @testable import Fruitfolio
 
+/// Synthetic nonmedical answer for a real in-memory Ask session; this test
+/// verifies export privacy, not native inference or scientific grounding.
+private struct PersonalExportSessionFixtureEngine: AskKnowledgeServing {
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        AskAnswer(originalQuestion: question, answerText: "PRIVATE_UNSAVED_ASK_ANSWER_FIXTURE",
+            support: .supported, knowledgeBaseVersion: "synthetic-export-privacy-fixture")
+    }
+}
+
 @MainActor
 final class PersonalDataExportTests: XCTestCase {
     func testActualDomainSnapshotsKeepExactMedicalTextAndOriginalSavedSourceReferencesWithoutMutatingStores() async throws {
@@ -32,6 +41,11 @@ final class PersonalDataExportTests: XCTestCase {
         let onboarding = Prompt14CycleOnboardingStore.inMemory(cycleStore: cycle)
         let originalBooks = library.encyclopedias; let originalContext = context.context
         let originalHormones = hormones.measurements
+        let ask = Prompt09AskViewModel(engine: PersonalExportSessionFixtureEngine())
+        ask.inputText = "PRIVATE_UNSAVED_ASK_QUESTION_FIXTURE"
+        await ask.submitCurrentQuestion(reduceMotion: true)
+        XCTAssertFalse(ask.sessionAnswers.isEmpty)
+        let originalSession = ask.messages
         let game = Prompt28FruitBasketStore(defaults: defaults)
         var progress = game.ensureProgress(for: "nutrition")
         progress.totalFruitCaught = 37; progress.totalStarsEarned = 12
@@ -57,6 +71,10 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertNoThrow(try JSONSerialization.jsonObject(with: savedBytes))
         let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .millisecondsSince1970
         let exported = try decoder.decode(FruitfolioPersonalDataExport.self, from: savedBytes)
+        let evidence = XCTAttachment(data: savedBytes, uniformTypeIdentifier: "public.json")
+        evidence.name = "ActualReopenedPersonalDataExport_SyntheticFixture"
+        evidence.lifetime = .keepAlways; add(evidence)
+        XCTAssertEqual(exported.createdAt, fixed)
         XCTAssertEqual(exported.encyclopediasAndGuides, originalBooks)
         XCTAssertEqual(exported.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots, [reference])
         XCTAssertEqual(exported.reportedContext.personalHealthFields[.thyroid]?.text, originalContext.personalHealthFields[.thyroid]?.text)
@@ -78,6 +96,10 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), originalGameBytes)
         XCTAssertTrue(exported.limitations.contains { $0.contains("not a complete media backup") })
         XCTAssertFalse(String(decoding: bytes, as: UTF8.self).contains("must never be exported"))
+        XCTAssertFalse(String(decoding: savedBytes, as: UTF8.self).contains("PRIVATE_UNSAVED_ASK_QUESTION_FIXTURE"))
+        XCTAssertFalse(String(decoding: savedBytes, as: UTF8.self).contains("PRIVATE_UNSAVED_ASK_ANSWER_FIXTURE"))
+        XCTAssertEqual(ask.messages, originalSession, "Export must neither persist nor clear the active unsaved Ask visit")
+        XCTAssertFalse(ask.sessionAnswers.isEmpty)
         XCTAssertEqual(library.encyclopedias, originalBooks)
         XCTAssertEqual(context.context, originalContext)
         XCTAssertEqual(hormones.measurements, originalHormones)

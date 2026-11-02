@@ -180,6 +180,17 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
 
 }
 
+/// Actual registered collectibles for the current attempt, not a decorative
+/// selection reconstructed from the question's allowed fruit pool.
+struct Prompt28RoundCollection: Hashable, Codable, Sendable {
+    var goodFruit: [Prompt28FruitID] = []
+    var badFruit: [Prompt28FruitID] = []
+    var standaloneStarsCaught = 0
+    var starPassesConsumed = 0
+    var startingStarPasses = 0
+    var startingScore = 0
+}
+
 struct Prompt28Session: Hashable, Codable, Sendable {
     let id: UUID
     var rawTopicQuery: String
