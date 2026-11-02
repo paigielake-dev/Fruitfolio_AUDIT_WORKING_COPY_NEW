@@ -1,0 +1,3 @@
+# Contact destination failure handling
+
+Contact now checks the actual system openURL completion. When no compatible handler accepts a destination, it shows a clear canonical warning popup with the original destination and a reachable Close action instead of silently doing nothing. The shared blur blocks/hides underlying actions while the warning is open. Founder-approved contact addresses, artwork and medical-safety wording remain unchanged. Successful opens retain their existing behavior. Existing Contact normal/largest-text regression applies; actual external-handler failure execution is not yet verified.
