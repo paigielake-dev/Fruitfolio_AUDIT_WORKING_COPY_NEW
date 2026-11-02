@@ -28,7 +28,9 @@ final class FruitfolioUsernameStore: ObservableObject {
 
     @discardableResult
     func setUsername(_ raw: String) -> String? {
-        let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
+        // Validate the user's actual draft before normalization. Sanitizing
+        // first silently accepted overlong names and removed invalid symbols.
+        let cleaned = raw.trimmingCharacters(in: .whitespacesAndNewlines)
         if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
             return message
         }

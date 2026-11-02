@@ -1731,17 +1731,16 @@ struct Prompt28FruitBasketView: View {
                             text: Binding(
                                 get: { leaderboardUsernameDraft },
                                 set: { raw in
-                                    let sanitized = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
-                                    // Keep incomplete typing in the editor. Binding directly
-                                    // to the validated authority discarded the first two
-                                    // characters, preventing ordinary keyboard entry.
-                                    leaderboardUsernameDraft = sanitized
+                                    // Preserve the actual draft, including invalid input,
+                                    // so validation can explain it without silently changing
+                                    // the identity the user intended to enter.
+                                    leaderboardUsernameDraft = raw
                                     if let error = Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw) {
                                         leaderboardValidationMessage = error
                                     } else {
-                                        leaderboardValidationMessage = usernameStore.setUsername(sanitized)
+                                        leaderboardValidationMessage = usernameStore.setUsername(raw)
                                     }
-                                    if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(sanitized) {
+                                    if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(raw) {
                                         store.appearOnLeaderboard = false
                                     }
                                     store.persistPreferences()
@@ -1847,9 +1846,7 @@ struct Prompt28FruitBasketView: View {
                     return
                 }
 
-                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(leaderboardUsernameDraft)
-                _ = usernameStore.setUsername(cleaned)
-                if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
+                if let message = usernameStore.setUsername(leaderboardUsernameDraft) {
                     store.appearOnLeaderboard = false
                     leaderboardValidationMessage = message
                 } else {

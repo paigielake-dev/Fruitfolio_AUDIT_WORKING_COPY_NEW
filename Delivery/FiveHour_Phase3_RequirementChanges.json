@@ -1,0 +1,85 @@
+{
+  "phase": 3,
+  "recordedAtUTC": "2026-11-02T16:17:58.542735+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-229",
+      "originalBreakdownItem": "Allow users to create and edit their username alongside their email.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-230",
+      "originalBreakdownItem": "Use the same username for Account and Fruit Basket.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-231",
+      "originalBreakdownItem": "Synchronize username changes automatically.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-232",
+      "originalBreakdownItem": "Apply appropriate username character limits and moderation.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-233",
+      "originalBreakdownItem": "Reject explicit or otherwise prohibited usernames.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-234",
+      "originalBreakdownItem": "Enforce the requirement against using real names for leaderboard identities.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    }
+  ]
+}
