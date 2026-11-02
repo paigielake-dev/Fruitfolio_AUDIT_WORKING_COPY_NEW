@@ -157,6 +157,38 @@ final class AudioLifecycleRuntimeTests: XCTestCase {
         evidence.name = "MusicRain_RuntimePlayers"; evidence.lifetime = .keepAlways; add(evidence)
     }
 
+    func testInactiveInterfaceStopsEveryChannelAndNeverReplaysTransientSounds() async throws {
+        let suite = "AudioInactive-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.soundEffectsEnabled = true; settings.typingASMREnabled = true
+        let manager = AudioManager(settings: settings)
+        defer {
+            manager.resetAllAudio()
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(150))
+        manager.play(.gentleCheer); manager.playTypingTick()
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertFalse(manager.playbackObservation(for: category).isPlaying,
+                           "Inactive playback requests must stay silent before background notification")
+        }
+        // A settings change while inactive must not restart a requested loop.
+        settings.musicVolume = 0.17
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .typingASMR).isPlaying)
+    }
+
     func testActualLoopStopsAndRestoresAcrossApplicationLifecycleNotifications() async throws {
         let suite = "AudioLifecycle-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

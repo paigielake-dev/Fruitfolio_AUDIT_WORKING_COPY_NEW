@@ -1273,15 +1273,21 @@ final class AudioManager: ObservableObject {
                 self.restoreDesiredLoops()
             }
         })
-        notificationObservers.append(center.addObserver(
-            forName: UIApplication.didEnterBackgroundNotification,
-            object: nil, queue: .main
-        ) { [weak self] _ in
-            Task { @MainActor [weak self] in
-                self?.applicationIsActive = false
-                self?.stopAll()
-            }
-        })
+        // Resigning active precedes backgrounding and also covers the app
+        // switcher/Control Center. Keep requests, but never keep audio playing
+        // while the interface is inactive. Foreground restoration remains gated
+        // by per-channel settings and the OS interruption-resume permission.
+        for name in [UIApplication.willResignActiveNotification,
+                     UIApplication.didEnterBackgroundNotification] {
+            notificationObservers.append(center.addObserver(
+                forName: name, object: nil, queue: .main
+            ) { [weak self] _ in
+                Task { @MainActor [weak self] in
+                    self?.applicationIsActive = false
+                    self?.stopAll()
+                }
+            })
+        }
         notificationObservers.append(center.addObserver(
             forName: UIApplication.didBecomeActiveNotification,
             object: nil, queue: .main
