@@ -3,6 +3,19 @@ import XCTest
 
 @MainActor
 final class TranslationPreservationTests: XCTestCase {
+    func testTranslationLayoutRetainsParagraphsListsIndentationAndExactLineEndings() {
+        let original = "# heading\r\n\r\n  1. First sentence.  Next sentence [source-1].\n\t- A second item.\n\nlast line  "
+        let segments = FruitfolioTranslationLayout.segments(original)
+        XCTAssertEqual(segments.map(\.original).joined(), original)
+        let sentences = segments.compactMap { segment -> String? in
+            if case .sentence(let sentence) = segment { return sentence }; return nil
+        }
+        XCTAssertTrue(sentences.contains("heading"))
+        XCTAssertTrue(sentences.contains("First sentence."))
+        XCTAssertFalse(sentences.contains(where: { $0.hasPrefix("1.") || $0.hasPrefix("# ") || $0.hasPrefix("- ") }))
+        XCTAssertEqual(FruitfolioTranslationLayout.segments(" \n\r\n").map(\.original).joined(), " \n\r\n")
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

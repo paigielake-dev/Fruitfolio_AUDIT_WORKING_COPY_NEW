@@ -57,6 +57,36 @@ final class AAAA_MADLADRuntimeIntegrationTests: XCTestCase {
 
 
 extension AAAA_MADLADRuntimeIntegrationTests {
+    func testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout() async throws {
+        let directory = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
+        let runtime = FruitfolioMADLADLocalRuntime()
+        let translator = FruitfolioMADLADDocumentTranslator(runtime: runtime)
+        let original = "This estimate does not confirm ovulation.\n\nThe result is 2.5 ng/mL [source-1]."
+        var reports: [[String: String]] = []
+        for target in ["es", "fr", "de", "pt", "it", "zh", "zh_Hant", "ja", "ko", "ar", "hi"] {
+            do {
+                let candidate = try await translator.candidate(source: original, sourceIdentifiers: ["source-1"],
+                    target: target, immutableTerms: ["ng/mL"], directory: directory)
+                XCTAssertEqual(candidate.originalText, original)
+                XCTAssertEqual(candidate.citationMarkers, ["[source-1]"])
+                XCTAssertEqual(candidate.sourceIdentifiers, ["source-1"])
+                XCTAssertTrue(candidate.textForVerification.contains("\n\n"), "Paragraph structure must survive actual generation")
+                XCTAssertTrue(candidate.textForVerification.contains("2.5 ng/mL"))
+                XCTAssertFalse(candidate.medicalMeaningVerified)
+                reports.append(["target": target, "output": candidate.textForVerification,
+                    "preservation": "PASS", "semanticReview": "NOT VERIFIED — requires review of this actual output"])
+            } catch {
+                reports.append(["target": target, "error": String(describing: error), "preservation": "FAIL"])
+                XCTFail("Official local candidate failed strict preservation for \(target): \(error)")
+            }
+        }
+        let evidence = XCTAttachment(data: try JSONSerialization.data(withJSONObject: reports, options: [.prettyPrinted, .sortedKeys]),
+                                     uniformTypeIdentifier: "public.json")
+        evidence.name = "MADLAD_ActualMultilingualMedicalCandidates"
+        evidence.lifetime = .keepAlways; add(evidence)
+        await runtime.unload()
+    }
+
     func testCorruptTokenizerIsRejectedBeforeAnyModelInference() async throws {
         let bundled = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)

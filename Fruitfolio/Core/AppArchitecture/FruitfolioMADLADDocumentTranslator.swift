@@ -57,6 +57,49 @@ nonisolated enum FruitfolioTranslationPreservation {
     }
 }
 
+/// Literal layout is never sent through generation. Sentence candidates may
+/// change language, but paragraph separators, indentation and list/header marks
+/// retain their original positions and spelling.
+nonisolated enum FruitfolioTranslationSegment: Equatable, Sendable {
+    case literal(String)
+    case sentence(String)
+    var original: String {
+        switch self { case .literal(let value), .sentence(let value): return value }
+    }
+}
+
+nonisolated enum FruitfolioTranslationLayout {
+    static func segments(_ source: String) -> [FruitfolioTranslationSegment] {
+        var result: [FruitfolioTranslationSegment] = []
+        source.enumerateSubstrings(in: source.startIndex..<source.endIndex, options: .byLines) { _, lineRange, enclosingRange, _ in
+            let line = String(source[lineRange])
+            let prefixPattern = #"^[ \t]*(?:(?:[-*+]\s+|\d+[.)]\s+|#{1,6}\s+))?"#
+            let prefix = line.range(of: prefixPattern, options: .regularExpression)!
+            if !line[prefix].isEmpty { result.append(.literal(String(line[prefix]))) }
+            let body = String(line[prefix.upperBound...])
+            let tokenizer = NLTokenizer(unit: .sentence)
+            tokenizer.setLanguage(.english); tokenizer.string = body
+            var ranges: [Range<String.Index>] = []
+            tokenizer.enumerateTokens(in: body.startIndex..<body.endIndex) { range, _ in ranges.append(range); return true }
+            if ranges.isEmpty && !body.isEmpty { ranges = [body.startIndex..<body.endIndex] }
+            var cursor = body.startIndex
+            for range in ranges {
+                var start = range.lowerBound, end = range.upperBound
+                while start < end, body[start].isWhitespace { start = body.index(after: start) }
+                while end > start, body[body.index(before: end)].isWhitespace { end = body.index(before: end) }
+                if cursor < start { result.append(.literal(String(body[cursor..<start]))) }
+                if start < end { result.append(.sentence(String(body[start..<end]))) }
+                cursor = end
+            }
+            if cursor < body.endIndex { result.append(.literal(String(body[cursor...]))) }
+            if lineRange.upperBound < enclosingRange.upperBound {
+                result.append(.literal(String(source[lineRange.upperBound..<enclosingRange.upperBound])))
+            }
+        }
+        return result
+    }
+}
+
 /// Actual official MADLAD inference with sentence-sized requests and citation
 /// metadata kept outside generation. No replacement model or network service.
 /// Production Ask remains gated until semantic/language/device acceptance; this
@@ -71,16 +114,14 @@ actor FruitfolioMADLADDocumentTranslator {
             throw FruitfolioTranslationPreservationError.emptyInput
         }
         let citation = try NSRegularExpression(pattern: #"\[([A-Za-z0-9_.:-]+)\]"#)
-        let tokenizer = NLTokenizer(unit: .sentence)
-        tokenizer.setLanguage(.english)
-        tokenizer.string = source
-        var ranges: [Range<String.Index>] = []
-        tokenizer.enumerateTokens(in: source.startIndex..<source.endIndex) { range, _ in ranges.append(range); return true }
         var translated: [String] = []
         var markers: [String] = []
-        for range in ranges {
+        for segment in FruitfolioTranslationLayout.segments(source) {
             try Task.checkCancellation()
-            let sentence = String(source[range]).trimmingCharacters(in: .whitespacesAndNewlines)
+            guard case .sentence(let sentence) = segment else {
+                translated.append(segment.original)
+                continue
+            }
             let matches = citation.matches(in: sentence, range: NSRange(sentence.startIndex..., in: sentence))
             let localMarkers = try matches.map { match -> String in
                 guard let idRange = Range(match.range(at: 1), in: sentence),
@@ -118,7 +159,7 @@ actor FruitfolioMADLADDocumentTranslator {
             markers.append(contentsOf: localMarkers)
             translated.append(output)
         }
-        return .init(originalText: source, textForVerification: translated.joined(separator: " "),
+        return .init(originalText: source, textForVerification: translated.joined(),
                      sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target)
     }
 }
