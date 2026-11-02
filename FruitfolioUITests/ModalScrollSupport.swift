@@ -4,6 +4,18 @@ import XCTest
 /// Partial clipping is determined by the leading edge, not the element midpoint.
 func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
                             container explicitContainer: XCUIElement? = nil) {
+    if !target.waitForExistence(timeout: 2) {
+        // Offscreen LazyVGrid cells are not accessibility elements until the
+        // actual owning ScrollView brings them into its rendered range.
+        let owner = explicitContainer ?? app.scrollViews.allElementsBoundByIndex.first(where: {
+            $0.isHittable && !$0.frame.intersection(app.frame).isEmpty
+        }) ?? app
+        for _ in 0..<12 where !target.exists {
+            owner.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.72))
+                .press(forDuration: 0.05, thenDragTo: owner.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.28)),
+                       withVelocity: .slow, thenHoldForDuration: 0.35)
+        }
+    }
     XCTAssertTrue(target.waitForExistence(timeout: 10))
     let identifier = target.identifier.isEmpty ? target.label : target.identifier
     let popup = app.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
@@ -30,8 +42,13 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
         let fraction = distance / max(container.frame.height, 1)
         let startY = towardEarlierContent ? 0.50 - fraction / 2 : 0.50 + fraction / 2
         let endY = towardEarlierContent ? 0.50 + fraction / 2 : 0.50 - fraction / 2
-        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: startY))
-        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: endY))
+        // Run93's actual hierarchy places the interactive scrollbar at
+        // x312...342 inside a x104...345 viewport. The previous dx0.95
+        // starts at x333, on that thumb; attempts5/10 scrubbed backwards
+        // by423pt instead of panning94pt. Pan the real content center.
+        // Full containment, original viewport and hittability stay unchanged.
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: startY))
+        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: endY))
         // Run80's actual trace oscillated past the small writing viewport.
         // A proportional slow drag with a stationary release avoids momentum
         // overshoot without relaxing full containment or hittability.

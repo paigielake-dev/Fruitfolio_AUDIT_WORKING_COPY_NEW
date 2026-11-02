@@ -1,0 +1,1688 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/PersonalDataManagementUITests/testBulkHormoneDeletionHasAnExplicitModalGuardAndCancelReturnsWithoutDeleting" "-only-testing:FruitfolioUITests/PersonalDataManagementUITests/testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable" "-only-testing:FruitfolioUITests/PersonalDataManagementUITests/testCancellingBulkDeletionPreservesAnActuallyEnteredMeasurementAcrossApplicationRestart" -resultBundlePath Fruitfolio_Verification_Evidence/Build/GuardedDeletionJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/GuardedDeletionJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 10:04:59.345105+0000 FruitfolioUITests-Runner[30905:91105] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 10:04:59.866.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 10:04:59.866.
+Test Suite 'PersonalDataManagementUITests' started at 2026-11-02 10:04:59.866.
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable]' started.
+    t =     0.00s Start Test at 2026-11-02 10:04:59.867
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.02s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 10:04:59.941 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:04:59.941 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[30905]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a130310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10a614398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     0.89s         Setting up automation session
+    t =     1.77s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.41s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.47s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.47s         Checking existence of `"I'll explore" Button`
+    t =     4.55s         Capturing element debug description
+    t =     5.50s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.50s         Checking existence of `"I'll explore" Button`
+    t =     5.53s         Capturing element debug description
+    t =     6.46s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.46s         Checking existence of `"I'll explore" Button`
+    t =     6.51s         Capturing element debug description
+    t =     7.45s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.45s         Checking existence of `"I'll explore" Button`
+    t =     7.47s         Capturing element debug description
+    t =     8.42s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.43s         Checking existence of `"I'll explore" Button`
+    t =     8.45s         Capturing element debug description
+    t =     9.41s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.42s         Checking existence of `"I'll explore" Button`
+    t =     9.46s         Capturing element debug description
+    t =    10.41s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.41s         Checking existence of `"I'll explore" Button`
+    t =    10.43s         Capturing element debug description
+    t =    11.49s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.49s         Checking existence of `"I'll explore" Button`
+    t =    11.53s         Capturing element debug description
+    t =    12.50s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.50s         Checking existence of `"I'll explore" Button`
+    t =    12.54s         Capturing element debug description
+    t =    13.50s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.50s         Checking existence of `"I'll explore" Button`
+    t =    13.53s         Capturing element debug description
+    t =    14.49s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.49s         Checking existence of `"I'll explore" Button`
+    t =    14.53s         Capturing element debug description
+    t =    15.41s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.41s         Checking existence of `"I'll explore" Button`
+    t =    15.45s         Capturing element debug description
+    t =    15.45s     Checking existence of `"I'll explore" Button`
+    t =    15.47s Collecting debug information to assist test failure triage
+    t =    15.48s     Requesting snapshot of accessibility hierarchy for app with pid 30912
+    t =    15.50s Waiting 15.0s for Button (First Match) to exist
+    t =    16.55s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    16.55s         Checking existence of `Button (First Match)`
+    t =    16.60s Tap Button (First Match)
+    t =    16.60s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.60s     Find the Button (First Match)
+    t =    16.64s     Check for interrupting elements affecting "settings" Button
+    t =    16.66s     Synthesize event
+    t =    16.67s         Scroll element to visible
+    t =    16.68s         Find the "settings" Button
+    t =    16.72s         Computed hit point {201, 748.83333333333337} after scrolling to visible
+    t =    17.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.48s Waiting 10.0s for Button (First Match) to exist
+    t =    18.53s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    18.53s         Checking existence of `Button (First Match)`
+    t =    18.57s Find the Button (First Match)
+    t =    18.62s Find the "data" Button
+    t =    18.66s Find the "data" Button
+    t =    18.70s Checking existence of `ScrollView (First Match)`
+    t =    18.76s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    18.78s Find the ScrollView (First Match)
+    t =    18.85s Find the "data" Button
+    t =    18.90s Find the "data" Button
+    t =    18.94s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    18.94s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.94s     Find the "settings.mainScroll" ScrollView
+    t =    19.00s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    19.04s     Synthesize event
+    t =    19.04s         Find the "settings.mainScroll" ScrollView
+    t =    19.10s         Find the "settings.mainScroll" ScrollView
+    t =    19.16s         Find the "settings.mainScroll" ScrollView
+    t =    19.22s         Find the "settings.mainScroll" ScrollView
+    t =    19.29s         Find the "settings.mainScroll" ScrollView
+    t =    20.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.13s Find the "data" Button
+    t =    22.20s Find the "data" Button
+    t =    22.24s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    22.24s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.24s     Find the "settings.mainScroll" ScrollView
+    t =    22.30s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    22.33s     Synthesize event
+    t =    22.33s         Find the "settings.mainScroll" ScrollView
+    t =    22.39s         Find the "settings.mainScroll" ScrollView
+    t =    22.45s         Find the "settings.mainScroll" ScrollView
+    t =    22.50s         Find the "settings.mainScroll" ScrollView
+    t =    22.56s         Find the "settings.mainScroll" ScrollView
+    t =    23.91s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.42s Find the "data" Button
+    t =    25.47s Find the "data" Button
+    t =    25.51s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    25.51s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.52s     Find the "settings.mainScroll" ScrollView
+    t =    25.57s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    25.60s     Synthesize event
+    t =    25.60s         Find the "settings.mainScroll" ScrollView
+    t =    25.66s         Find the "settings.mainScroll" ScrollView
+    t =    25.72s         Find the "settings.mainScroll" ScrollView
+    t =    25.77s         Find the "settings.mainScroll" ScrollView
+    t =    25.83s         Find the "settings.mainScroll" ScrollView
+    t =    27.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.68s Find the "data" Button
+    t =    28.73s Find the "data" Button
+    t =    28.78s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    28.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.78s     Find the "settings.mainScroll" ScrollView
+    t =    28.84s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    28.87s     Synthesize event
+    t =    28.87s         Find the "settings.mainScroll" ScrollView
+    t =    28.94s         Find the "settings.mainScroll" ScrollView
+    t =    29.00s         Find the "settings.mainScroll" ScrollView
+    t =    29.06s         Find the "settings.mainScroll" ScrollView
+    t =    29.13s         Find the "settings.mainScroll" ScrollView
+    t =    30.47s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    31.98s Find the "data" Button
+    t =    32.04s Find the "data" Button
+    t =    32.08s Find the "data" Button
+    t =    32.14s Find the "data" Button
+    t =    32.18s Find the "data" Button
+    t =    32.24s Find the "data" Button
+    t =    32.28s Find the "data" Button
+    t =    32.33s Find the "data" Button
+    t =    32.37s Find the "data" Button
+    t =    32.43s Find the "data" Button
+    t =    32.47s Find the "data" Button
+    t =    32.52s Find the "data" Button
+    t =    32.56s Find the "data" Button
+    t =    32.61s Find the "data" Button
+    t =    32.65s Find the "data" Button
+    t =    32.70s Find the "data" Button
+    t =    32.75s Find the "data" Button
+    t =    32.80s Find the "data" Button
+    t =    32.84s Find the "data" Button
+    t =    32.89s Find the "data" Button
+    t =    32.93s Find the "data" Button
+    t =    32.98s Find the "data" Button
+    t =    33.03s Find the "data" Button
+    t =    33.07s Find the "data" Button
+    t =    33.12s Find the "data" Button
+    t =    33.17s Tap "data" Button
+    t =    33.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.17s     Find the "data" Button
+    t =    33.21s     Check for interrupting elements affecting "data" Button
+    t =    33.24s     Synthesize event
+    t =    33.54s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.54s Waiting 10.0s for "data.prepareExport" Button to exist
+    t =    34.62s     Checking `Expect predicate `existsNoRetry == 1` for object "data.prepareExport" Button`
+    t =    34.62s         Checking existence of `"data.prepareExport" Button`
+    t =    34.67s Waiting 10.0s for "data.deleteHormones" Button to exist
+    t =    35.71s     Checking `Expect predicate `existsNoRetry == 1` for object "data.deleteHormones" Button`
+    t =    35.71s         Checking existence of `"data.deleteHormones" Button`
+    t =    35.75s Find the "data.deleteHormones" Button
+    t =    35.78s Find the "data.deleteHormones" Button
+    t =    35.81s Find the "data.deleteHormones" Button
+    t =    35.83s Checking existence of `ScrollView (First Match)`
+    t =    35.85s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    35.87s Find the ScrollView (First Match)
+    t =    35.90s Find the "data.deleteHormones" Button
+    t =    35.93s Find the "data.deleteHormones" Button
+    t =    35.96s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    35.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.97s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    35.99s     Check for interrupting elements affecting ScrollView
+    t =    36.02s     Synthesize event
+    t =    36.02s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    36.05s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    36.08s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    36.11s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    36.14s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.29s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.30s Find the "data.deleteHormones" Button
+    t =    37.34s Find the "data.deleteHormones" Button
+    t =    37.38s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    37.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.38s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.40s     Check for interrupting elements affecting ScrollView
+    t =    37.43s     Synthesize event
+    t =    37.43s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.46s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.50s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.53s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    37.56s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.71s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.72s Find the "data.deleteHormones" Button
+    t =    38.77s Find the "data.deleteHormones" Button
+    t =    38.80s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    38.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.81s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.84s     Check for interrupting elements affecting ScrollView
+    t =    38.86s     Synthesize event
+    t =    38.86s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.89s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.92s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.95s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    38.98s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.14s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.15s Find the "data.deleteHormones" Button
+    t =    40.20s Find the "data.deleteHormones" Button
+    t =    40.23s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    40.23s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.23s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.26s     Check for interrupting elements affecting ScrollView
+    t =    40.28s     Synthesize event
+    t =    40.28s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.31s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.35s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.38s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    40.41s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.56s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.57s Find the "data.deleteHormones" Button
+    t =    41.61s Find the "data.deleteHormones" Button
+    t =    41.64s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    41.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.65s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.67s     Check for interrupting elements affecting ScrollView
+    t =    41.70s     Synthesize event
+    t =    41.70s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.73s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.76s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.79s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    41.82s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    42.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.96s Find the "data.deleteHormones" Button
+    t =    43.00s Find the "data.deleteHormones" Button
+    t =    43.04s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    43.04s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.04s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    43.08s     Check for interrupting elements affecting ScrollView
+    t =    43.10s     Synthesize event
+    t =    43.10s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    43.14s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    43.17s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    43.20s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    43.24s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.39s Find the "data.deleteHormones" Button
+    t =    44.43s Find the "data.deleteHormones" Button
+    t =    44.47s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    44.47s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.47s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.50s     Check for interrupting elements affecting ScrollView
+    t =    44.52s     Synthesize event
+    t =    44.53s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.56s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.59s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.62s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    44.65s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    45.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.80s Find the "data.deleteHormones" Button
+    t =    45.84s Find the "data.deleteHormones" Button
+    t =    45.87s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    45.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.87s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    45.90s     Check for interrupting elements affecting ScrollView
+    t =    45.93s     Synthesize event
+    t =    45.93s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    45.96s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    45.99s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    46.02s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    46.05s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    47.22s Find the "data.deleteHormones" Button
+    t =    47.27s Find the "data.deleteHormones" Button
+    t =    47.30s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    47.30s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    47.30s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.33s     Check for interrupting elements affecting ScrollView
+    t =    47.35s     Synthesize event
+    t =    47.36s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.39s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.42s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.45s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    47.49s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.65s Find the "data.deleteHormones" Button
+    t =    48.70s Find the "data.deleteHormones" Button
+    t =    48.73s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    48.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.73s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.77s     Check for interrupting elements affecting ScrollView
+    t =    48.79s     Synthesize event
+    t =    48.79s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.82s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.85s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.89s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    48.92s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.07s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.08s Find the "data.deleteHormones" Button
+    t =    50.13s Find the "data.deleteHormones" Button
+    t =    50.16s Find the "data.deleteHormones" Button
+    t =    50.19s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    50.19s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.19s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.22s     Check for interrupting elements affecting ScrollView
+    t =    50.24s     Synthesize event
+    t =    50.25s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.28s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.31s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.34s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    50.37s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    51.51s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    51.93s Find the "data.deleteHormones" Button
+    t =    51.97s Find the "data.deleteHormones" Button
+    t =    52.01s Find the "data.deleteHormones" Button
+    t =    52.04s Find the "data.deleteHormones" Button
+    t =    52.07s Find the "data.deleteHormones" Button
+    t =    52.11s Find the "data.deleteHormones" Button
+    t =    52.14s Find the "data.deleteHormones" Button
+    t =    52.17s Find the "data.deleteHormones" Button
+    t =    52.20s Find the "data.deleteHormones" Button
+    t =    52.24s Find the "data.deleteHormones" Button
+    t =    52.27s Find the "data.deleteHormones" Button
+    t =    52.30s Tap "data.deleteHormones" Button
+    t =    52.30s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.31s     Find the "data.deleteHormones" Button
+    t =    52.33s     Check for interrupting elements affecting "data.deleteHormones" Button
+    t =    52.36s     Synthesize event
+    t =    52.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.65s Waiting 10.0s for "delete all hormone measurements?" StaticText to exist
+    t =    53.71s     Checking `Expect predicate `existsNoRetry == 1` for object "delete all hormone measurements?" StaticText`
+    t =    53.71s         Checking existence of `"delete all hormone measurements?" StaticText`
+    t =    53.73s Checking existence of `"data.prepareExport" Button`
+    t =    53.75s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    53.88s Added attachment named 'PersonalData_BulkHormoneDeletionGuard'
+    t =    53.89s Waiting 10.0s for "popup.writingArea" Any to exist
+    t =    54.91s     Checking `Expect predicate `existsNoRetry == 1` for object "popup.writingArea" Any`
+    t =    54.91s         Checking existence of `"popup.writingArea" Any`
+    t =    54.95s Waiting 10.0s for Button (First Match) to exist
+    t =    55.96s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    55.96s         Checking existence of `Button (First Match)`
+    t =    55.98s Find the Button (First Match)
+    t =    56.01s Find the "cancel" Button
+    t =    56.03s Checking existence of `"popup.writingArea" Any`
+    t =    56.07s Find the "cancel" Button
+    t =    56.10s Find the "cancel" Button
+    t =    56.12s Checking existence of `Button (First Match)`
+    t =    56.16s Find the "cancel" Button
+    t =    56.18s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    56.19s Find the "popup.writingArea" Any
+    t =    56.23s Find the "cancel" Button
+    t =    56.27s Find the "cancel" Button
+REACH_CONTROL attempt=0 identifier=cancel target=(104.66666666666667, 1037.3333333333333, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    56.31s Find the "cancel" Button
+    t =    56.34s Find the "popup.writingArea" ScrollView
+    t =    56.38s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    56.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    56.38s     Find the "popup.writingArea" ScrollView
+    t =    56.42s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    56.45s     Synthesize event
+    t =    56.45s         Find the "popup.writingArea" ScrollView
+    t =    56.49s         Find the "popup.writingArea" ScrollView
+    t =    56.53s         Find the "popup.writingArea" ScrollView
+    t =    56.57s         Find the "popup.writingArea" ScrollView
+    t =    56.62s         Find the "popup.writingArea" ScrollView
+    t =    57.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.74s Find the "cancel" Button
+    t =    57.78s Find the "cancel" Button
+REACH_CONTROL attempt=1 identifier=cancel target=(104.66666666666667, 943.0, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    57.81s Find the "cancel" Button
+    t =    57.85s Find the "popup.writingArea" ScrollView
+    t =    57.89s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    57.89s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.90s     Find the "popup.writingArea" ScrollView
+    t =    57.94s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    57.97s     Synthesize event
+    t =    57.97s         Find the "popup.writingArea" ScrollView
+    t =    58.02s         Find the "popup.writingArea" ScrollView
+    t =    58.06s         Find the "popup.writingArea" ScrollView
+    t =    58.11s         Find the "popup.writingArea" ScrollView
+    t =    58.16s         Find the "popup.writingArea" ScrollView
+    t =    59.27s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    59.28s Find the "cancel" Button
+    t =    59.32s Find the "cancel" Button
+REACH_CONTROL attempt=2 identifier=cancel target=(104.66666666666667, 848.6666666666666, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    59.37s Find the "cancel" Button
+    t =    59.40s Find the "popup.writingArea" ScrollView
+    t =    59.44s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    59.44s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    59.45s     Find the "popup.writingArea" ScrollView
+    t =    59.48s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    59.52s     Synthesize event
+    t =    59.52s         Find the "popup.writingArea" ScrollView
+    t =    59.56s         Find the "popup.writingArea" ScrollView
+    t =    59.61s         Find the "popup.writingArea" ScrollView
+    t =    59.65s         Find the "popup.writingArea" ScrollView
+    t =    59.70s         Find the "popup.writingArea" ScrollView
+    t =    60.82s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    60.83s Find the "cancel" Button
+    t =    60.86s Find the "cancel" Button
+REACH_CONTROL attempt=3 identifier=cancel target=(104.66666666666667, 754.3333333333334, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    60.91s Find the "cancel" Button
+    t =    60.95s Find the "popup.writingArea" ScrollView
+    t =    60.98s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    60.98s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    60.99s     Find the "popup.writingArea" ScrollView
+    t =    61.03s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    61.06s     Synthesize event
+    t =    61.06s         Find the "popup.writingArea" ScrollView
+    t =    61.10s         Find the "popup.writingArea" ScrollView
+    t =    61.14s         Find the "popup.writingArea" ScrollView
+    t =    61.18s         Find the "popup.writingArea" ScrollView
+    t =    61.23s         Find the "popup.writingArea" ScrollView
+    t =    62.33s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    62.34s Find the "cancel" Button
+    t =    62.38s Find the "cancel" Button
+REACH_CONTROL attempt=4 identifier=cancel target=(104.66666666666667, 660.0, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    62.42s Find the "cancel" Button
+    t =    62.46s Find the "popup.writingArea" ScrollView
+    t =    62.50s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    62.50s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    62.50s     Find the "popup.writingArea" ScrollView
+    t =    62.54s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    62.57s     Synthesize event
+    t =    62.57s         Find the "popup.writingArea" ScrollView
+    t =    62.61s         Find the "popup.writingArea" ScrollView
+    t =    62.65s         Find the "popup.writingArea" ScrollView
+    t =    62.69s         Find the "popup.writingArea" ScrollView
+    t =    62.73s         Find the "popup.writingArea" ScrollView
+    t =    63.84s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    63.85s Find the "cancel" Button
+    t =    63.88s Find the "cancel" Button
+REACH_CONTROL attempt=5 identifier=cancel target=(104.66666666666667, 565.6666666666666, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=true
+    t =    63.92s Find the "cancel" Button
+    t =    63.96s Find the "popup.writingArea" ScrollView
+    t =    64.00s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    64.00s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    64.00s     Find the "popup.writingArea" ScrollView
+    t =    64.04s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    64.07s     Synthesize event
+    t =    64.08s         Find the "popup.writingArea" ScrollView
+    t =    64.11s         Find the "popup.writingArea" ScrollView
+    t =    64.16s         Find the "popup.writingArea" ScrollView
+    t =    64.20s         Find the "popup.writingArea" ScrollView
+    t =    64.24s         Find the "popup.writingArea" ScrollView
+    t =    65.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    65.47s Find the "cancel" Button
+    t =    65.51s Find the "cancel" Button
+REACH_CONTROL attempt=6 identifier=cancel target=(104.66666666666667, 989.0, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    65.55s Find the "cancel" Button
+    t =    65.58s Find the "popup.writingArea" ScrollView
+    t =    65.63s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    65.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    65.64s     Find the "popup.writingArea" ScrollView
+    t =    65.67s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    65.71s     Synthesize event
+    t =    65.71s         Find the "popup.writingArea" ScrollView
+    t =    65.76s         Find the "popup.writingArea" ScrollView
+    t =    65.81s         Find the "popup.writingArea" ScrollView
+    t =    65.85s         Find the "popup.writingArea" ScrollView
+    t =    65.90s         Find the "popup.writingArea" ScrollView
+    t =    67.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    67.02s Find the "cancel" Button
+    t =    67.05s Find the "cancel" Button
+REACH_CONTROL attempt=7 identifier=cancel target=(104.66666666666667, 894.6666666666666, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    67.09s Find the "cancel" Button
+    t =    67.13s Find the "popup.writingArea" ScrollView
+    t =    67.17s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    67.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    67.18s     Find the "popup.writingArea" ScrollView
+    t =    67.22s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    67.26s     Synthesize event
+    t =    67.26s         Find the "popup.writingArea" ScrollView
+    t =    67.31s         Find the "popup.writingArea" ScrollView
+    t =    67.36s         Find the "popup.writingArea" ScrollView
+    t =    67.41s         Find the "popup.writingArea" ScrollView
+    t =    67.45s         Find the "popup.writingArea" ScrollView
+    t =    68.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    68.57s Find the "cancel" Button
+    t =    68.61s Find the "cancel" Button
+REACH_CONTROL attempt=8 identifier=cancel target=(104.66666666666667, 800.3333333333334, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    68.65s Find the "cancel" Button
+    t =    68.69s Find the "popup.writingArea" ScrollView
+    t =    68.73s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    68.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    68.73s     Find the "popup.writingArea" ScrollView
+    t =    68.77s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    68.80s     Synthesize event
+    t =    68.80s         Find the "popup.writingArea" ScrollView
+    t =    68.84s         Find the "popup.writingArea" ScrollView
+    t =    68.89s         Find the "popup.writingArea" ScrollView
+    t =    68.93s         Find the "popup.writingArea" ScrollView
+    t =    68.97s         Find the "popup.writingArea" ScrollView
+    t =    70.08s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    70.09s Find the "cancel" Button
+    t =    70.12s Find the "cancel" Button
+REACH_CONTROL attempt=9 identifier=cancel target=(104.66666666666667, 706.0, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    70.17s Find the "cancel" Button
+    t =    70.20s Find the "popup.writingArea" ScrollView
+    t =    70.25s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    70.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    70.25s     Find the "popup.writingArea" ScrollView
+    t =    70.29s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    70.32s     Synthesize event
+    t =    70.32s         Find the "popup.writingArea" ScrollView
+    t =    70.36s         Find the "popup.writingArea" ScrollView
+    t =    70.41s         Find the "popup.writingArea" ScrollView
+    t =    70.45s         Find the "popup.writingArea" ScrollView
+    t =    70.49s         Find the "popup.writingArea" ScrollView
+    t =    71.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    71.63s Find the "cancel" Button
+    t =    71.67s Find the "cancel" Button
+REACH_CONTROL attempt=10 identifier=cancel target=(104.66666666666667, 611.6666666666666, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    71.72s Find the "cancel" Button
+    t =    71.75s Find the "popup.writingArea" ScrollView
+    t =    71.80s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    71.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    71.80s     Find the "popup.writingArea" ScrollView
+    t =    71.84s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    71.87s     Synthesize event
+    t =    71.88s         Find the "popup.writingArea" ScrollView
+    t =    71.91s         Find the "popup.writingArea" ScrollView
+    t =    71.96s         Find the "popup.writingArea" ScrollView
+    t =    72.00s         Find the "popup.writingArea" ScrollView
+    t =    72.04s         Find the "popup.writingArea" ScrollView
+    t =    73.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    73.27s Find the "cancel" Button
+    t =    73.30s Find the "cancel" Button
+REACH_CONTROL attempt=11 identifier=cancel target=(104.66666666666667, 1035.0, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    73.34s Find the "cancel" Button
+    t =    73.37s Find the "popup.writingArea" ScrollView
+    t =    73.41s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    73.41s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    73.41s     Find the "popup.writingArea" ScrollView
+    t =    73.45s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    73.48s     Synthesize event
+    t =    73.48s         Find the "popup.writingArea" ScrollView
+    t =    73.52s         Find the "popup.writingArea" ScrollView
+    t =    73.56s         Find the "popup.writingArea" ScrollView
+    t =    73.60s         Find the "popup.writingArea" ScrollView
+    t =    73.65s         Find the "popup.writingArea" ScrollView
+    t =    74.76s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    74.78s Find the "cancel" Button
+    t =    74.82s Find the "cancel" Button
+REACH_CONTROL attempt=12 identifier=cancel target=(104.66666666666667, 940.6666666666666, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    74.86s Find the "cancel" Button
+    t =    74.89s Find the "popup.writingArea" ScrollView
+    t =    74.93s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    74.93s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    74.94s     Find the "popup.writingArea" ScrollView
+    t =    74.97s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    75.00s     Synthesize event
+    t =    75.00s         Find the "popup.writingArea" ScrollView
+    t =    75.04s         Find the "popup.writingArea" ScrollView
+    t =    75.09s         Find the "popup.writingArea" ScrollView
+    t =    75.12s         Find the "popup.writingArea" ScrollView
+    t =    75.17s         Find the "popup.writingArea" ScrollView
+    t =    76.28s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    76.28s Find the "cancel" Button
+    t =    76.32s Find the "cancel" Button
+REACH_CONTROL attempt=13 identifier=cancel target=(104.66666666666667, 846.3333333333334, 240.66666666666663, 82.0) viewport=(104.66666666666667, 341.3333333333333, 240.66666666666663, 231.66666666666669) hittable=false
+    t =    76.36s Find the "cancel" Button
+    t =    76.39s Find the "popup.writingArea" ScrollView
+    t =    76.44s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    76.44s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    76.44s     Find the "popup.writingArea" ScrollView
+    t =    76.47s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    76.51s     Synthesize event
+    t =    76.51s         Find the "popup.writingArea" ScrollView
+    t =    76.55s         Find the "popup.writingArea" ScrollView
+    t =    76.59s         Find the "popup.writingArea" ScrollView
+    t =    76.63s         Find the "popup.writingArea" ScrollView
+    t =    76.67s         Find the "popup.writingArea" ScrollView
+    t =    77.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    77.79s Find the "cancel" Button
+    t =    77.83s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    77.98s Find the "cancel" Button
+    t =    78.00s Actual unreachable control
+    t =    78.00s Requesting snapshot of accessibility hierarchy for app with pid 30912
+    t =    78.07s Requesting snapshot of accessibility hierarchy for app with pid 30912
+    t =    78.08s Actual owning viewport
+    t =    78.09s Find the "cancel" Button
+    t =    78.12s Find the "cancel" Button
+/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioUITests/ModalScrollSupport.swift:46: error: -[FruitfolioUITests.PersonalDataManagementUITests testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable] : XCTAssertTrue failed - Entire control must fit the actual owning viewport: cancel
+    t =    78.46s Tear Down
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable]' failed (78.752 seconds).
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testBulkHormoneDeletionHasAnExplicitModalGuardAndCancelReturnsWithoutDeleting]' started.
+    t =     0.00s Start Test at 2026-11-02 10:06:18.620
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.02s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.02s         Terminate com.fruitsoflifexo.Fruitfolio:30912
+2026-11-02 10:06:19.741 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:06:19.741 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.33s         Setting up automation session
+    t =     2.28s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.90s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.94s         Checking existence of `"I'll explore" Button`
+    t =     4.98s         Capturing element debug description
+    t =     5.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.91s         Checking existence of `"I'll explore" Button`
+    t =     5.95s         Capturing element debug description
+    t =     6.98s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.98s         Checking existence of `"I'll explore" Button`
+    t =     7.02s         Capturing element debug description
+    t =     7.94s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.94s         Checking existence of `"I'll explore" Button`
+    t =     7.96s         Capturing element debug description
+    t =     8.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.91s         Checking existence of `"I'll explore" Button`
+    t =     8.94s         Capturing element debug description
+    t =     9.94s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.94s         Checking existence of `"I'll explore" Button`
+    t =     9.97s         Capturing element debug description
+    t =    10.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.91s         Checking existence of `"I'll explore" Button`
+    t =    10.95s         Capturing element debug description
+    t =    11.98s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.98s         Checking existence of `"I'll explore" Button`
+    t =    12.00s         Capturing element debug description
+    t =    12.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.91s         Checking existence of `"I'll explore" Button`
+    t =    12.93s         Capturing element debug description
+    t =    13.97s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.97s         Checking existence of `"I'll explore" Button`
+    t =    14.00s         Capturing element debug description
+    t =    14.94s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.94s         Checking existence of `"I'll explore" Button`
+    t =    14.97s         Capturing element debug description
+    t =    15.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.91s         Checking existence of `"I'll explore" Button`
+    t =    15.96s         Capturing element debug description
+    t =    15.96s     Checking existence of `"I'll explore" Button`
+    t =    15.98s Collecting debug information to assist test failure triage
+    t =    15.98s     Requesting snapshot of accessibility hierarchy for app with pid 35849
+    t =    16.01s Waiting 15.0s for Button (First Match) to exist
+    t =    17.07s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.07s         Checking existence of `Button (First Match)`
+    t =    17.12s Tap Button (First Match)
+    t =    17.12s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.13s     Find the Button (First Match)
+    t =    17.16s     Check for interrupting elements affecting "settings" Button
+    t =    17.18s     Synthesize event
+    t =    17.48s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.95s Waiting 10.0s for Button (First Match) to exist
+    t =    19.00s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    19.00s         Checking existence of `Button (First Match)`
+    t =    19.05s Find the Button (First Match)
+    t =    19.09s Find the "data" Button
+    t =    19.13s Find the "data" Button
+    t =    19.16s Checking existence of `ScrollView (First Match)`
+    t =    19.22s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.24s Find the ScrollView (First Match)
+    t =    19.30s Find the "data" Button
+    t =    19.36s Find the "data" Button
+    t =    19.40s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    19.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.41s     Find the "settings.mainScroll" ScrollView
+    t =    19.47s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    19.50s     Synthesize event
+    t =    19.50s         Find the "settings.mainScroll" ScrollView
+    t =    19.57s         Find the "settings.mainScroll" ScrollView
+    t =    19.63s         Find the "settings.mainScroll" ScrollView
+    t =    19.69s         Find the "settings.mainScroll" ScrollView
+    t =    19.76s         Find the "settings.mainScroll" ScrollView
+    t =    21.10s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.11s Find the "data" Button
+    t =    21.17s Find the "data" Button
+    t =    21.21s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    21.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.21s     Find the "settings.mainScroll" ScrollView
+    t =    21.27s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    21.30s     Synthesize event
+    t =    21.30s         Find the "settings.mainScroll" ScrollView
+    t =    21.36s         Find the "settings.mainScroll" ScrollView
+    t =    21.42s         Find the "settings.mainScroll" ScrollView
+    t =    21.48s         Find the "settings.mainScroll" ScrollView
+    t =    21.54s         Find the "settings.mainScroll" ScrollView
+    t =    22.89s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.28s Find the "data" Button
+    t =    23.34s Find the "data" Button
+    t =    23.38s Find the "data" Button
+    t =    23.44s Find the "data" Button
+    t =    23.48s Find the "data" Button
+    t =    23.54s Find the "data" Button
+    t =    23.59s Find the "data" Button
+    t =    23.65s Find the "data" Button
+    t =    23.70s Find the "data" Button
+    t =    23.76s Find the "data" Button
+    t =    23.81s Find the "data" Button
+    t =    23.86s Find the "data" Button
+    t =    23.91s Find the "data" Button
+    t =    23.97s Find the "data" Button
+    t =    24.03s Find the "data" Button
+    t =    24.09s Find the "data" Button
+    t =    24.14s Find the "data" Button
+    t =    24.20s Find the "data" Button
+    t =    24.24s Find the "data" Button
+    t =    24.32s Find the "data" Button
+    t =    24.37s Find the "data" Button
+    t =    24.43s Find the "data" Button
+    t =    24.47s Find the "data" Button
+    t =    24.53s Find the "data" Button
+    t =    24.58s Find the "data" Button
+    t =    24.64s Find the "data" Button
+    t =    24.68s Find the "data" Button
+    t =    24.74s Find the "data" Button
+    t =    24.78s Find the "data" Button
+    t =    24.84s Tap "data" Button
+    t =    24.84s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.84s     Find the "data" Button
+    t =    24.88s     Check for interrupting elements affecting "data" Button
+    t =    24.91s     Synthesize event
+    t =    25.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.21s Waiting 10.0s for "data.prepareExport" Button to exist
+    t =    26.23s     Checking `Expect predicate `existsNoRetry == 1` for object "data.prepareExport" Button`
+    t =    26.23s         Checking existence of `"data.prepareExport" Button`
+    t =    26.29s Waiting 10.0s for "data.deleteHormones" Button to exist
+    t =    27.31s     Checking `Expect predicate `existsNoRetry == 1` for object "data.deleteHormones" Button`
+    t =    27.31s         Checking existence of `"data.deleteHormones" Button`
+    t =    27.36s Find the "data.deleteHormones" Button
+    t =    27.40s Find the "data.deleteHormones" Button
+    t =    27.42s Find the "data.deleteHormones" Button
+    t =    27.45s Checking existence of `ScrollView (First Match)`
+    t =    27.47s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    27.49s Find the ScrollView (First Match)
+    t =    27.52s Find the "data.deleteHormones" Button
+    t =    27.56s Find the "data.deleteHormones" Button
+    t =    27.59s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    27.59s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.59s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    27.62s     Check for interrupting elements affecting ScrollView
+    t =    27.65s     Synthesize event
+    t =    27.65s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    27.68s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    27.71s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    27.74s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    27.77s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    28.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.93s Find the "data.deleteHormones" Button
+    t =    28.98s Find the "data.deleteHormones" Button
+    t =    29.01s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.82] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    29.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    29.01s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    29.04s     Check for interrupting elements affecting ScrollView
+    t =    29.07s     Synthesize event
+    t =    29.07s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    29.10s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    29.13s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    29.16s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    29.19s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    30.34s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    30.70s Find the "data.deleteHormones" Button
+    t =    30.74s Find the "data.deleteHormones" Button
+    t =    30.77s Find the "data.deleteHormones" Button
+    t =    30.81s Find the "data.deleteHormones" Button
+    t =    30.84s Find the "data.deleteHormones" Button
+    t =    30.88s Find the "data.deleteHormones" Button
+    t =    30.91s Find the "data.deleteHormones" Button
+    t =    30.94s Find the "data.deleteHormones" Button
+    t =    30.97s Find the "data.deleteHormones" Button
+    t =    31.01s Find the "data.deleteHormones" Button
+    t =    31.04s Find the "data.deleteHormones" Button
+    t =    31.07s Find the "data.deleteHormones" Button
+    t =    31.10s Find the "data.deleteHormones" Button
+    t =    31.14s Find the "data.deleteHormones" Button
+    t =    31.17s Find the "data.deleteHormones" Button
+    t =    31.20s Find the "data.deleteHormones" Button
+    t =    31.23s Find the "data.deleteHormones" Button
+    t =    31.27s Find the "data.deleteHormones" Button
+    t =    31.30s Find the "data.deleteHormones" Button
+    t =    31.33s Find the "data.deleteHormones" Button
+    t =    31.36s Find the "data.deleteHormones" Button
+    t =    31.40s Find the "data.deleteHormones" Button
+    t =    31.43s Find the "data.deleteHormones" Button
+    t =    31.47s Find the "data.deleteHormones" Button
+    t =    31.50s Find the "data.deleteHormones" Button
+    t =    31.53s Find the "data.deleteHormones" Button
+    t =    31.56s Find the "data.deleteHormones" Button
+    t =    31.60s Find the "data.deleteHormones" Button
+    t =    31.63s Find the "data.deleteHormones" Button
+    t =    31.67s Tap "data.deleteHormones" Button
+    t =    31.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    31.67s     Find the "data.deleteHormones" Button
+    t =    31.70s     Check for interrupting elements affecting "data.deleteHormones" Button
+    t =    31.72s     Synthesize event
+    t =    32.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.03s Waiting 10.0s for "delete all hormone measurements?" StaticText to exist
+    t =    33.08s     Checking `Expect predicate `existsNoRetry == 1` for object "delete all hormone measurements?" StaticText`
+    t =    33.08s         Checking existence of `"delete all hormone measurements?" StaticText`
+    t =    33.10s Checking existence of `"data.prepareExport" Button`
+    t =    33.11s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    33.24s Added attachment named 'PersonalData_BulkHormoneDeletionGuard'
+    t =    33.24s Waiting 10.0s for "popup.writingArea" Any to exist
+    t =    34.27s     Checking `Expect predicate `existsNoRetry == 1` for object "popup.writingArea" Any`
+    t =    34.27s         Checking existence of `"popup.writingArea" Any`
+    t =    34.31s Waiting 10.0s for Button (First Match) to exist
+    t =    35.35s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    35.35s         Checking existence of `Button (First Match)`
+    t =    35.38s Find the Button (First Match)
+    t =    35.41s Find the "cancel" Button
+    t =    35.44s Checking existence of `"popup.writingArea" Any`
+    t =    35.48s Find the "cancel" Button
+    t =    35.50s Find the "cancel" Button
+    t =    35.53s Checking existence of `Button (First Match)`
+    t =    35.58s Find the "cancel" Button
+    t =    35.60s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    35.61s Find the "popup.writingArea" Any
+    t =    35.66s Find the "cancel" Button
+    t =    35.69s Find the "cancel" Button
+REACH_CONTROL attempt=0 identifier=cancel target=(136.33333333333331, 594.6666666666666, 170.66666666666669, 82.0) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=false
+    t =    35.73s Find the "cancel" Button
+    t =    35.77s Find the "popup.writingArea" ScrollView
+    t =    35.81s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    35.81s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.81s     Find the "popup.writingArea" ScrollView
+    t =    35.85s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    35.88s     Synthesize event
+    t =    35.88s         Find the "popup.writingArea" ScrollView
+    t =    35.93s         Find the "popup.writingArea" ScrollView
+    t =    35.97s         Find the "popup.writingArea" ScrollView
+    t =    36.01s         Find the "popup.writingArea" ScrollView
+    t =    36.05s         Find the "popup.writingArea" ScrollView
+    t =    37.10s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.11s Find the "cancel" Button
+    t =    37.14s Find the "cancel" Button
+REACH_CONTROL attempt=1 identifier=cancel target=(136.33333333333331, 514.6666666666666, 170.66666666666669, 82.0) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=true
+    t =    37.18s Find the "cancel" Button
+    t =    37.22s Find the "popup.writingArea" ScrollView
+    t =    37.25s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    37.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.26s     Find the "popup.writingArea" ScrollView
+    t =    37.30s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =    37.33s     Synthesize event
+    t =    37.33s         Find the "popup.writingArea" ScrollView
+    t =    37.37s         Find the "popup.writingArea" ScrollView
+    t =    37.41s         Find the "popup.writingArea" ScrollView
+    t =    37.45s         Find the "popup.writingArea" ScrollView
+    t =    37.49s         Find the "popup.writingArea" ScrollView
+    t =    38.53s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.54s Find the "cancel" Button
+    t =    38.57s Find the "cancel" Button
+REACH_CONTROL attempt=2 identifier=cancel target=(136.33333333333331, 434.6666666666667, 170.66666666666669, 81.99999999999994) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=true
+    t =    38.61s Find the "cancel" Button
+    t =    38.64s Find the "cancel" Button
+    t =    38.69s Find the "cancel" Button
+    t =    38.71s Find the "cancel" Button
+    t =    38.75s Find the "cancel" Button
+    t =    38.78s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    38.90s Added attachment named 'PersonalData_BulkHormoneDeletionVisibleActions'
+    t =    40.66s Waiting 10.0s for "cancel" Button to exist
+    t =    41.69s     Checking `Expect predicate `existsNoRetry == 1` for object "cancel" Button`
+    t =    41.70s         Checking existence of `"cancel" Button`
+    t =    41.73s Find the "cancel" Button
+    t =    41.77s Find the "cancel" Button
+    t =    41.79s Checking existence of `"popup.writingArea" Any`
+    t =    41.83s Find the "cancel" Button
+    t =    41.86s Find the "cancel" Button
+    t =    41.89s Checking existence of `Button (First Match)`
+    t =    41.94s Find the "cancel" Button
+    t =    41.96s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    41.97s Find the "popup.writingArea" ScrollView
+    t =    42.02s Find the "cancel" Button
+    t =    42.05s Find the "cancel" Button
+REACH_CONTROL attempt=0 identifier=cancel target=(136.33333333333331, 434.6666666666667, 170.66666666666669, 81.99999999999994) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=true
+    t =    42.09s Find the "cancel" Button
+    t =    42.14s Find the "cancel" Button
+    t =    42.18s Find the "cancel" Button
+    t =    42.22s Find the "cancel" Button
+    t =    42.25s Find the "cancel" Button
+    t =    42.29s Tap "cancel" Button
+    t =    42.29s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.29s     Find the "cancel" Button
+    t =    42.32s     Check for interrupting elements affecting "cancel" Button
+    t =    42.34s     Synthesize event
+    t =    42.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.64s Checking existence of `"delete all hormone measurements?" StaticText`
+    t =    42.68s Checking existence of `"data.prepareExport" Button`
+    t =    42.71s Checking existence of `"hormone measurements have been deleted from this device." StaticText`
+    t =    42.75s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    42.89s Added attachment named 'PersonalData_DeletionCancelled'
+    t =    42.89s Tear Down
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testBulkHormoneDeletionHasAnExplicitModalGuardAndCancelReturnsWithoutDeleting]' passed (43.146 seconds).
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testCancellingBulkDeletionPreservesAnActuallyEnteredMeasurementAcrossApplicationRestart]' started.
+    t =     0.00s Start Test at 2026-11-02 10:07:01.766
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.02s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.02s         Terminate com.fruitsoflifexo.Fruitfolio:35849
+2026-11-02 10:07:02.802 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:07:02.802 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.25s         Setting up automation session
+    t =     2.22s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.86s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.87s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.87s         Checking existence of `"I'll explore" Button`
+    t =     4.92s         Capturing element debug description
+    t =     5.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.86s         Checking existence of `"I'll explore" Button`
+    t =     5.88s         Capturing element debug description
+    t =     6.90s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.90s         Checking existence of `"I'll explore" Button`
+    t =     6.92s         Capturing element debug description
+    t =     7.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.86s         Checking existence of `"I'll explore" Button`
+    t =     7.90s         Capturing element debug description
+    t =     8.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.93s         Checking existence of `"I'll explore" Button`
+    t =     8.97s         Capturing element debug description
+    t =     9.92s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.92s         Checking existence of `"I'll explore" Button`
+    t =     9.96s         Capturing element debug description
+    t =    10.88s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.88s         Checking existence of `"I'll explore" Button`
+    t =    10.93s         Capturing element debug description
+    t =    11.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.95s         Checking existence of `"I'll explore" Button`
+    t =    11.97s         Capturing element debug description
+    t =    12.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.93s         Checking existence of `"I'll explore" Button`
+    t =    12.97s         Capturing element debug description
+    t =    13.87s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.88s         Checking existence of `"I'll explore" Button`
+    t =    13.92s         Capturing element debug description
+    t =    14.87s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.88s         Checking existence of `"I'll explore" Button`
+    t =    14.90s         Capturing element debug description
+    t =    15.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.86s         Checking existence of `"I'll explore" Button`
+    t =    15.88s         Capturing element debug description
+    t =    15.88s     Checking existence of `"I'll explore" Button`
+    t =    15.90s Collecting debug information to assist test failure triage
+    t =    15.90s     Requesting snapshot of accessibility hierarchy for app with pid 38203
+    t =    15.93s Waiting 15.0s for Button (First Match) to exist
+    t =    16.95s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    16.95s         Checking existence of `Button (First Match)`
+    t =    16.99s Waiting 10.0s for Button (First Match) to exist
+    t =    18.04s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    18.04s         Checking existence of `Button (First Match)`
+    t =    18.09s Find the Button (First Match)
+    t =    18.13s Find the "settings" Button
+    t =    18.16s Checking existence of `"popup.writingArea" Any`
+    t =    18.29s Find the "settings" Button
+    t =    18.32s Checking existence of `ScrollView (First Match)`
+    t =    18.36s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    18.37s Find the ScrollView (First Match)
+    t =    18.42s Find the "settings" Button
+    t =    18.46s Find the "settings" Button
+REACH_CONTROL attempt=0 identifier=settings target=(140.0, 761.6666666666666, 122.0, 58.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    18.51s Find the "settings" Button
+    t =    18.56s Find the "settings" Button
+    t =    18.60s Find the "settings" Button
+    t =    18.64s Find the "settings" Button
+    t =    18.69s Find the "settings" Button
+    t =    18.73s Tap "settings" Button
+    t =    18.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.73s     Find the "settings" Button
+    t =    18.77s     Check for interrupting elements affecting "settings" Button
+    t =    18.79s     Synthesize event
+    t =    19.08s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.56s Waiting 15.0s for Button (First Match) to exist
+    t =    20.59s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    20.59s         Checking existence of `Button (First Match)`
+    t =    20.65s Waiting 10.0s for Button (First Match) to exist
+    t =    21.71s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    21.71s         Checking existence of `Button (First Match)`
+    t =    21.78s Find the Button (First Match)
+    t =    21.81s Find the "my context" Button
+    t =    21.85s Checking existence of `"popup.writingArea" Any`
+    t =    22.02s Find the "my context" Button
+    t =    22.06s Checking existence of `ScrollView (First Match)`
+    t =    22.10s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    22.12s Find the ScrollView (First Match)
+    t =    22.18s Find the "my context" Button
+    t =    22.22s Find the "my context" Button
+REACH_CONTROL attempt=0 identifier=my context target=(36.0, 1373.6666666666667, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    22.27s Find the "my context" Button
+    t =    22.32s Find the "settings.mainScroll" ScrollView
+    t =    22.38s Press "settings.mainScroll" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    22.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.38s     Find the "settings.mainScroll" ScrollView
+    t =    22.43s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    22.46s     Synthesize event
+    t =    22.46s         Find the "settings.mainScroll" ScrollView
+    t =    22.52s         Find the "settings.mainScroll" ScrollView
+    t =    22.58s         Find the "settings.mainScroll" ScrollView
+    t =    22.63s         Find the "settings.mainScroll" ScrollView
+    t =    22.69s         Find the "settings.mainScroll" ScrollView
+    t =    24.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.98s Find the "my context" Button
+    t =    25.03s Find the "my context" Button
+REACH_CONTROL attempt=1 identifier=my context target=(36.0, 990.3333333333334, 330.0, 43.999999999999886) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    25.08s Find the "my context" Button
+    t =    25.13s Find the "settings.mainScroll" ScrollView
+    t =    25.19s Press "settings.mainScroll" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    25.19s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.19s     Find the "settings.mainScroll" ScrollView
+    t =    25.24s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    25.27s     Synthesize event
+    t =    25.28s         Find the "settings.mainScroll" ScrollView
+    t =    25.33s         Find the "settings.mainScroll" ScrollView
+    t =    25.39s         Find the "settings.mainScroll" ScrollView
+    t =    25.44s         Find the "settings.mainScroll" ScrollView
+    t =    25.50s         Find the "settings.mainScroll" ScrollView
+    t =    27.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.79s Find the "my context" Button
+    t =    27.84s Find the "my context" Button
+REACH_CONTROL attempt=2 identifier=my context target=(36.0, 606.9999999999999, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    27.89s Find the "my context" Button
+    t =    27.95s Find the "my context" Button
+    t =    28.00s Find the "my context" Button
+    t =    28.04s Find the "my context" Button
+    t =    28.09s Find the "my context" Button
+    t =    28.14s Tap "my context" Button
+    t =    28.14s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.14s     Find the "my context" Button
+    t =    28.18s     Check for interrupting elements affecting "my context" Button
+    t =    28.21s     Synthesize event
+    t =    28.51s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.92s Waiting 15.0s for Button (First Match) to exist
+    t =    29.94s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    29.94s         Checking existence of `Button (First Match)`
+    t =    29.99s Waiting 10.0s for Button (First Match) to exist
+    t =    31.06s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.06s         Checking existence of `Button (First Match)`
+    t =    31.09s Find the Button (First Match)
+    t =    31.11s Find the "hormone information" Button
+    t =    31.13s Checking existence of `"popup.writingArea" Any`
+    t =    31.62s Find the "hormone information" Button
+    t =    31.64s Checking existence of `ScrollView (First Match)`
+    t =    31.66s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    31.71s Find the ScrollView (First Match)
+    t =    31.73s Find the "hormone information" Button
+    t =    31.76s Find the "hormone information" Button
+REACH_CONTROL attempt=0 identifier=hormone information target=(20.0, 512.0, 292.0, 82.0) viewport=(0.0, 114.0, 402.0, 760.0) hittable=true
+    t =    31.79s Find the "hormone information" Button
+    t =    31.83s Find the "hormone information" Button
+    t =    31.86s Find the "hormone information" Button
+    t =    31.89s Find the "hormone information" Button
+    t =    31.91s Find the "hormone information" Button
+    t =    31.95s Tap "hormone information" Button
+    t =    31.95s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    31.95s     Find the "hormone information" Button
+    t =    31.98s     Check for interrupting elements affecting "hormone information" Button
+    t =    32.03s     Synthesize event
+    t =    32.33s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.76s Waiting 10.0s for Button (First Match) to exist
+    t =    33.83s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    33.83s         Checking existence of `Button (First Match)`
+    t =    33.90s Waiting 10.0s for Button (First Match) to exist
+    t =    34.96s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    34.96s         Checking existence of `Button (First Match)`
+    t =    35.01s Find the Button (First Match)
+    t =    35.05s Find the "add measurement" Button
+    t =    35.08s Checking existence of `"popup.writingArea" Any`
+    t =    35.68s Find the "add measurement" Button
+    t =    35.72s Checking existence of `ScrollView (First Match)`
+    t =    35.92s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    35.98s Find the ScrollView (First Match)
+    t =    36.24s Find the "add measurement" Button
+    t =    36.30s Find the "add measurement" Button
+REACH_CONTROL attempt=0 identifier=add measurement target=(20.0, 454.0, 292.0, 82.0) viewport=(20.0, 142.0, 362.0, 678.0) hittable=true
+    t =    36.36s Find the "add measurement" Button
+    t =    36.42s Find the "add measurement" Button
+    t =    36.48s Find the "add measurement" Button
+    t =    36.52s Find the "add measurement" Button
+    t =    36.58s Find the "add measurement" Button
+    t =    36.64s Tap "add measurement" Button
+    t =    36.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.65s     Find the "add measurement" Button
+    t =    36.69s     Check for interrupting elements affecting "add measurement" Button
+    t =    36.76s     Synthesize event
+    t =    37.07s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.14s Checking existence of `"numerical result" TextField`
+    t =    37.36s Waiting 8.0s for "numerical result" TextField to exist
+    t =    38.41s     Checking `Expect predicate `existsNoRetry == 1` for object "numerical result" TextField`
+    t =    38.41s         Checking existence of `"numerical result" TextField`
+    t =    38.57s Tap "numerical result" TextField
+    t =    38.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.57s     Find the "numerical result" TextField
+    t =    38.73s     Check for interrupting elements affecting "numerical result" TextField
+    t =    38.82s     Synthesize event
+    t =    39.12s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    39.86s Type '731.002' into "numerical result" TextField
+    t =    39.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.22s     Find the "numerical result" TextField
+    t =    40.42s     Check for interrupting elements affecting "numerical result" TextField
+    t =    40.54s     Synthesize event
+    t =    40.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.86s Checking existence of `"unit (exactly as reported)" TextField`
+    t =    41.04s Tap "unit (exactly as reported)" TextField
+    t =    41.04s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.05s     Find the "unit (exactly as reported)" TextField
+    t =    41.22s     Check for interrupting elements affecting "unit (exactly as reported)" TextField
+    t =    41.32s     Synthesize event
+    t =    41.63s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.10s Type 'cancel-fixture-3c7...' into "unit (exactly as reported)" TextField
+    t =    42.10s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.10s     Find the "unit (exactly as reported)" TextField
+    t =    42.27s     Check for interrupting elements affecting "unit (exactly as reported)" TextField
+    t =    42.37s     Synthesize event
+    t =    42.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.96s Waiting 8.0s for "hormone.keyboardDone" Button to exist
+    t =    44.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hormone.keyboardDone" Button`
+    t =    44.00s         Checking existence of `"hormone.keyboardDone" Button`
+    t =    44.16s Tap "hormone.keyboardDone" Button
+    t =    44.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.16s     Find the "hormone.keyboardDone" Button
+    t =    44.32s     Check for interrupting elements affecting "hormone.keyboardDone" Button
+    t =    44.42s     Synthesize event
+    t =    44.73s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.96s Waiting 10.0s for Button (First Match) to exist
+    t =    46.00s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    46.00s         Checking existence of `Button (First Match)`
+    t =    46.28s Find the Button (First Match)
+    t =    46.57s Find the "confirm test date" Button
+    t =    46.95s Checking existence of `"popup.writingArea" Any`
+    t =    47.76s Find the "confirm test date" Button
+    t =    47.98s Checking existence of `ScrollView (First Match)`
+    t =    48.25s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    48.32s Find the ScrollView (First Match)
+    t =    48.59s Find the "confirm test date" Button
+    t =    48.83s Find the "confirm test date" Button
+REACH_CONTROL attempt=0 identifier=confirm test date target=(20.0, 408.0, 292.0, 82.0) viewport=(0.0, 72.0, 402.0, 802.0) hittable=true
+    t =    49.07s Find the "confirm test date" Button
+    t =    49.32s Find the "confirm test date" Button
+    t =    49.54s Find the "confirm test date" Button
+    t =    49.76s Find the "confirm test date" Button
+    t =    49.99s Find the "confirm test date" Button
+    t =    50.22s Tap "confirm test date" Button
+    t =    50.22s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.22s     Find the "confirm test date" Button
+    t =    50.44s     Check for interrupting elements affecting "confirm test date" Button
+    t =    50.53s     Synthesize event
+    t =    50.82s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.82s Waiting 10.0s for Button (First Match) to exist
+    t =    51.86s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    51.86s         Checking existence of `Button (First Match)`
+    t =    52.07s Find the Button (First Match)
+    t =    52.29s Find the "save measurement" Button
+    t =    52.52s Checking existence of `"popup.writingArea" Any`
+    t =    53.25s Find the "save measurement" Button
+    t =    53.47s Checking existence of `ScrollView (First Match)`
+    t =    53.74s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    53.80s Find the ScrollView (First Match)
+    t =    54.07s Find the "save measurement" Button
+    t =    54.29s Find the "save measurement" Button
+REACH_CONTROL attempt=0 identifier=save measurement target=(20.0, 809.6666666666666, 292.0, 82.0) viewport=(0.0, 72.0, 402.0, 802.0) hittable=true
+    t =    54.53s Find the "save measurement" Button
+    t =    54.76s Find the "hormone.entryScroll" ScrollView
+    t =    55.03s Press "hormone.entryScroll" ScrollView[0.95, 0.73] for 0.1 seconds, then drag to "hormone.entryScroll" ScrollView[0.95, 0.27] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    55.03s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    55.04s     Find the "hormone.entryScroll" ScrollView
+    t =    55.30s     Check for interrupting elements affecting "hormone.entryScroll" ScrollView
+    t =    55.38s     Synthesize event
+    t =    55.38s         Find the "hormone.entryScroll" ScrollView
+    t =    55.65s         Find the "hormone.entryScroll" ScrollView
+    t =    55.91s         Find the "hormone.entryScroll" ScrollView
+    t =    56.17s         Find the "hormone.entryScroll" ScrollView
+    t =    56.43s         Find the "hormone.entryScroll" ScrollView
+    t =    58.76s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    59.18s Find the "save measurement" Button
+    t =    59.41s Find the "save measurement" Button
+REACH_CONTROL attempt=1 identifier=save measurement target=(20.0, 638.0, 292.0, 82.0) viewport=(0.0, 72.0, 402.0, 802.0) hittable=true
+    t =    59.63s Find the "save measurement" Button
+    t =    59.84s Find the "save measurement" Button
+    t =    60.06s Find the "save measurement" Button
+    t =    60.28s Find the "save measurement" Button
+    t =    60.49s Find the "save measurement" Button
+    t =    60.72s Find the "save measurement" Button
+    t =    60.93s Tap "save measurement" Button
+    t =    60.93s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    60.93s     Find the "save measurement" Button
+    t =    61.13s     Check for interrupting elements affecting "save measurement" Button
+    t =    61.21s     Synthesize event
+    t =    61.52s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    61.98s Waiting 10.0s for "731.002 cancel-fixture-3c727b0a" StaticText to exist
+    t =    63.01s     Checking `Expect predicate `existsNoRetry == 1` for object "731.002 cancel-fixture-3c727b0a" StaticText`
+    t =    63.01s         Checking existence of `"731.002 cancel-fixture-3c727b0a" StaticText`
+    t =    63.13s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    63.30s Added attachment named 'PersonalData_ActualMeasurementBeforeBulkCancellation'
+    t =    63.30s Terminate com.fruitsoflifexo.Fruitfolio:38203
+    t =    64.36s Open com.fruitsoflifexo.Fruitfolio
+    t =    64.36s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 10:08:06.133 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:08:06.133 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    64.58s         Setting up automation session
+    t =    65.57s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    67.31s Waiting 12.0s for "I'll explore" Button to exist
+    t =    68.36s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    68.36s         Checking existence of `"I'll explore" Button`
+    t =    68.41s         Capturing element debug description
+    t =    69.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    69.32s         Checking existence of `"I'll explore" Button`
+    t =    69.35s         Capturing element debug description
+    t =    70.39s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    70.39s         Checking existence of `"I'll explore" Button`
+    t =    70.42s         Capturing element debug description
+    t =    71.37s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    71.37s         Checking existence of `"I'll explore" Button`
+    t =    71.39s         Capturing element debug description
+    t =    72.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    72.32s         Checking existence of `"I'll explore" Button`
+    t =    72.36s         Capturing element debug description
+    t =    73.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    73.31s         Checking existence of `"I'll explore" Button`
+    t =    73.33s         Capturing element debug description
+    t =    74.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    74.33s         Checking existence of `"I'll explore" Button`
+    t =    74.37s         Capturing element debug description
+    t =    75.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    75.31s         Checking existence of `"I'll explore" Button`
+    t =    75.35s         Capturing element debug description
+    t =    76.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    76.32s         Checking existence of `"I'll explore" Button`
+    t =    76.37s         Capturing element debug description
+    t =    77.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    77.32s         Checking existence of `"I'll explore" Button`
+    t =    77.35s         Capturing element debug description
+    t =    78.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    78.32s         Checking existence of `"I'll explore" Button`
+    t =    78.34s         Capturing element debug description
+    t =    79.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    79.31s         Checking existence of `"I'll explore" Button`
+    t =    79.33s         Capturing element debug description
+    t =    79.33s     Checking existence of `"I'll explore" Button`
+    t =    79.35s Collecting debug information to assist test failure triage
+    t =    79.35s     Requesting snapshot of accessibility hierarchy for app with pid 41886
+    t =    79.38s Waiting 15.0s for Button (First Match) to exist
+    t =    80.42s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    80.42s         Checking existence of `Button (First Match)`
+    t =    80.47s Tap Button (First Match)
+    t =    80.47s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    80.47s     Find the Button (First Match)
+    t =    80.51s     Check for interrupting elements affecting "settings" Button
+    t =    80.53s     Synthesize event
+    t =    80.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    81.31s Waiting 10.0s for Button (First Match) to exist
+    t =    82.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    82.37s         Checking existence of `Button (First Match)`
+    t =    82.42s Find the Button (First Match)
+    t =    82.46s Find the "data" Button
+    t =    82.51s Find the "data" Button
+    t =    82.55s Checking existence of `ScrollView (First Match)`
+    t =    82.61s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    82.64s Find the ScrollView (First Match)
+    t =    82.70s Find the "data" Button
+    t =    82.76s Find the "data" Button
+    t =    82.80s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    82.80s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    82.80s     Find the "settings.mainScroll" ScrollView
+    t =    82.87s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    82.90s     Synthesize event
+    t =    82.90s         Find the "settings.mainScroll" ScrollView
+    t =    82.96s         Find the "settings.mainScroll" ScrollView
+    t =    83.02s         Find the "settings.mainScroll" ScrollView
+    t =    83.08s         Find the "settings.mainScroll" ScrollView
+    t =    83.15s         Find the "settings.mainScroll" ScrollView
+    t =    84.48s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    86.01s Find the "data" Button
+    t =    86.08s Find the "data" Button
+    t =    86.12s Find the "data" Button
+    t =    86.17s Press "settings.mainScroll" ScrollView[0.97, 0.82] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.97, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    86.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    86.17s     Find the "settings.mainScroll" ScrollView
+    t =    86.23s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    86.26s     Synthesize event
+    t =    86.26s         Find the "settings.mainScroll" ScrollView
+    t =    86.33s         Find the "settings.mainScroll" ScrollView
+    t =    86.39s         Find the "settings.mainScroll" ScrollView
+    t =    86.45s         Find the "settings.mainScroll" ScrollView
+    t =    86.52s         Find the "settings.mainScroll" ScrollView
+    t =    87.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    88.30s Find the "data" Button
+    t =    88.36s Find the "data" Button
+    t =    88.41s Find the "data" Button
+    t =    88.46s Find the "data" Button
+    t =    88.51s Find the "data" Button
+    t =    88.57s Find the "data" Button
+    t =    88.61s Find the "data" Button
+    t =    88.66s Find the "data" Button
+    t =    88.71s Find the "data" Button
+    t =    88.76s Find the "data" Button
+    t =    88.81s Find the "data" Button
+    t =    88.86s Find the "data" Button
+    t =    88.91s Find the "data" Button
+    t =    88.96s Find the "data" Button
+    t =    89.01s Find the "data" Button
+    t =    89.06s Find the "data" Button
+    t =    89.11s Find the "data" Button
+    t =    89.16s Find the "data" Button
+    t =    89.20s Find the "data" Button
+    t =    89.25s Find the "data" Button
+    t =    89.30s Find the "data" Button
+    t =    89.35s Find the "data" Button
+    t =    89.40s Find the "data" Button
+    t =    89.46s Find the "data" Button
+    t =    89.51s Find the "data" Button
+    t =    89.56s Find the "data" Button
+    t =    89.61s Find the "data" Button
+    t =    89.67s Find the "data" Button
+    t =    89.72s Find the "data" Button
+    t =    89.77s Tap "data" Button
+    t =    89.77s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    89.77s     Find the "data" Button
+    t =    89.82s     Check for interrupting elements affecting "data" Button
+    t =    89.85s     Synthesize event
+    t =    90.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    90.16s Waiting 10.0s for "data.prepareExport" Button to exist
+    t =    91.19s     Checking `Expect predicate `existsNoRetry == 1` for object "data.prepareExport" Button`
+    t =    91.19s         Checking existence of `"data.prepareExport" Button`
+    t =    91.22s Waiting 10.0s for "data.deleteHormones" Button to exist
+    t =    92.26s     Checking `Expect predicate `existsNoRetry == 1` for object "data.deleteHormones" Button`
+    t =    92.26s         Checking existence of `"data.deleteHormones" Button`
+    t =    92.31s Find the "data.deleteHormones" Button
+    t =    92.34s Find the "data.deleteHormones" Button
+    t =    92.36s Checking existence of `"popup.writingArea" Any`
+    t =    92.50s Find the "data.deleteHormones" Button
+    t =    92.53s Checking existence of `ScrollView (First Match)`
+    t =    92.56s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    92.57s Find the ScrollView (First Match)
+    t =    92.61s Find the "data.deleteHormones" Button
+    t =    92.64s Find the "data.deleteHormones" Button
+REACH_CONTROL attempt=0 identifier=data.deleteHormones target=(55.0, 1364.0, 292.0, 83.0) viewport=(26.0, 91.0, 350.0, 720.0) hittable=false
+    t =    92.69s Find the "data.deleteHormones" Button
+    t =    92.74s Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    92.78s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.72] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    92.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    92.79s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    92.82s     Check for interrupting elements affecting ScrollView
+    t =    92.86s     Synthesize event
+    t =    92.86s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    92.90s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    92.94s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    92.99s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    93.03s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.02s Find the "data.deleteHormones" Button
+    t =    95.05s Find the "data.deleteHormones" Button
+REACH_CONTROL attempt=1 identifier=data.deleteHormones target=(55.0, 1050.0, 292.0, 83.0) viewport=(26.0, 91.0, 350.0, 720.0) hittable=false
+    t =    95.09s Find the "data.deleteHormones" Button
+    t =    95.13s Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.17s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.72] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    95.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.17s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.20s     Check for interrupting elements affecting ScrollView
+    t =    95.23s     Synthesize event
+    t =    95.23s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.26s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.30s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.33s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    95.37s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.36s Find the "data.deleteHormones" Button
+    t =    97.40s Find the "data.deleteHormones" Button
+REACH_CONTROL attempt=2 identifier=data.deleteHormones target=(55.0, 736.0, 292.0, 83.0) viewport=(26.0, 91.0, 350.0, 720.0) hittable=true
+    t =    97.43s Find the "data.deleteHormones" Button
+    t =    97.48s Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.51s Press ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.72] for 0.1 seconds, then drag to ScrollView at {{26.0, 91.0}, {350.0, 720.0}}[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    97.51s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    97.52s     Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.55s     Check for interrupting elements affecting ScrollView
+    t =    97.57s     Synthesize event
+    t =    97.57s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.61s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.64s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.68s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    97.71s         Find the ScrollView at {{26.0, 91.0}, {350.0, 720.0}}
+    t =    99.69s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   100.07s Find the "data.deleteHormones" Button
+    t =   100.10s Find the "data.deleteHormones" Button
+REACH_CONTROL attempt=3 identifier=data.deleteHormones target=(55.0, 606.0, 292.0, 83.0) viewport=(26.0, 91.0, 350.0, 720.0) hittable=true
+    t =   100.14s Find the "data.deleteHormones" Button
+    t =   100.18s Find the "data.deleteHormones" Button
+    t =   100.22s Find the "data.deleteHormones" Button
+    t =   100.25s Find the "data.deleteHormones" Button
+    t =   100.28s Find the "data.deleteHormones" Button
+    t =   100.32s Tap "data.deleteHormones" Button
+    t =   100.32s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   100.32s     Find the "data.deleteHormones" Button
+    t =   100.35s     Check for interrupting elements affecting "data.deleteHormones" Button
+    t =   100.38s     Synthesize event
+    t =   100.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   100.68s Waiting 10.0s for "delete all hormone measurements?" StaticText to exist
+    t =   101.70s     Checking `Expect predicate `existsNoRetry == 1` for object "delete all hormone measurements?" StaticText`
+    t =   101.70s         Checking existence of `"delete all hormone measurements?" StaticText`
+    t =   101.72s Waiting 10.0s for Button (First Match) to exist
+    t =   102.75s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   102.75s         Checking existence of `Button (First Match)`
+    t =   102.78s Find the Button (First Match)
+    t =   102.81s Find the "cancel" Button
+    t =   102.83s Checking existence of `"popup.writingArea" Any`
+    t =   102.87s Find the "cancel" Button
+    t =   102.89s Find the "cancel" Button
+    t =   102.92s Checking existence of `Button (First Match)`
+    t =   102.96s Find the "cancel" Button
+    t =   102.99s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   102.99s Find the "popup.writingArea" Any
+    t =   103.05s Find the "cancel" Button
+    t =   103.08s Find the "cancel" Button
+REACH_CONTROL attempt=0 identifier=cancel target=(136.33333333333331, 594.6666666666666, 170.66666666666669, 82.0) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=false
+    t =   103.12s Find the "cancel" Button
+    t =   103.16s Find the "popup.writingArea" ScrollView
+    t =   103.20s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =   103.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   103.20s     Find the "popup.writingArea" ScrollView
+    t =   103.24s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =   103.27s     Synthesize event
+    t =   103.27s         Find the "popup.writingArea" ScrollView
+    t =   103.32s         Find the "popup.writingArea" ScrollView
+    t =   103.36s         Find the "popup.writingArea" ScrollView
+    t =   103.41s         Find the "popup.writingArea" ScrollView
+    t =   103.45s         Find the "popup.writingArea" ScrollView
+    t =   104.51s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   104.52s Find the "cancel" Button
+    t =   104.55s Find the "cancel" Button
+REACH_CONTROL attempt=1 identifier=cancel target=(136.33333333333331, 514.6666666666666, 170.66666666666669, 82.0) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=true
+    t =   104.59s Find the "cancel" Button
+    t =   104.63s Find the "popup.writingArea" ScrollView
+    t =   104.67s Press "popup.writingArea" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "popup.writingArea" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =   104.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   104.67s     Find the "popup.writingArea" ScrollView
+    t =   104.71s     Check for interrupting elements affecting "popup.writingArea" ScrollView
+    t =   104.74s     Synthesize event
+    t =   104.74s         Find the "popup.writingArea" ScrollView
+    t =   104.79s         Find the "popup.writingArea" ScrollView
+    t =   104.83s         Find the "popup.writingArea" ScrollView
+    t =   104.87s         Find the "popup.writingArea" ScrollView
+    t =   104.91s         Find the "popup.writingArea" ScrollView
+    t =   105.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   105.98s Find the "cancel" Button
+    t =   106.01s Find the "cancel" Button
+REACH_CONTROL attempt=2 identifier=cancel target=(136.33333333333331, 434.6666666666667, 170.66666666666669, 81.99999999999994) viewport=(118.33333333333333, 356.6666666666667, 206.66666666666669, 199.33333333333331) hittable=true
+    t =   106.04s Find the "cancel" Button
+    t =   106.08s Find the "cancel" Button
+    t =   106.12s Find the "cancel" Button
+    t =   106.15s Find the "cancel" Button
+    t =   106.18s Find the "cancel" Button
+    t =   106.22s Tap "cancel" Button
+    t =   106.22s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   106.22s     Find the "cancel" Button
+    t =   106.25s     Check for interrupting elements affecting "cancel" Button
+    t =   106.26s     Synthesize event
+    t =   106.55s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   106.56s Waiting 8.0s for "data.prepareExport" Button to exist
+    t =   107.62s     Checking `Expect predicate `existsNoRetry == 1` for object "data.prepareExport" Button`
+    t =   107.62s         Checking existence of `"data.prepareExport" Button`
+    t =   107.67s Terminate com.fruitsoflifexo.Fruitfolio:41886
+    t =   108.68s Open com.fruitsoflifexo.Fruitfolio
+    t =   108.68s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-02 10:08:50.448 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:08:50.448 xcodebuild[30897:90905] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   108.90s         Setting up automation session
+    t =   109.87s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   111.52s Waiting 12.0s for "I'll explore" Button to exist
+    t =   112.54s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   112.54s         Checking existence of `"I'll explore" Button`
+    t =   112.60s         Capturing element debug description
+    t =   113.62s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   113.62s         Checking existence of `"I'll explore" Button`
+    t =   113.65s         Capturing element debug description
+    t =   114.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   114.59s         Checking existence of `"I'll explore" Button`
+    t =   114.61s         Capturing element debug description
+    t =   115.54s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   115.54s         Checking existence of `"I'll explore" Button`
+    t =   115.58s         Capturing element debug description
+    t =   116.53s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   116.53s         Checking existence of `"I'll explore" Button`
+    t =   116.58s         Capturing element debug description
+    t =   117.53s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   117.53s         Checking existence of `"I'll explore" Button`
+    t =   117.55s         Capturing element debug description
+    t =   118.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   118.59s         Checking existence of `"I'll explore" Button`
+    t =   118.61s         Capturing element debug description
+    t =   119.61s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   119.61s         Checking existence of `"I'll explore" Button`
+    t =   119.63s         Capturing element debug description
+    t =   120.56s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   120.56s         Checking existence of `"I'll explore" Button`
+    t =   120.58s         Capturing element debug description
+    t =   121.62s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   121.62s         Checking existence of `"I'll explore" Button`
+    t =   121.64s         Capturing element debug description
+    t =   122.58s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   122.58s         Checking existence of `"I'll explore" Button`
+    t =   122.64s         Capturing element debug description
+    t =   123.53s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =   123.53s         Checking existence of `"I'll explore" Button`
+    t =   123.56s         Capturing element debug description
+    t =   123.56s     Checking existence of `"I'll explore" Button`
+    t =   123.58s Collecting debug information to assist test failure triage
+    t =   123.58s     Requesting snapshot of accessibility hierarchy for app with pid 44508
+    t =   123.61s Waiting 15.0s for Button (First Match) to exist
+    t =   124.66s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   124.66s         Checking existence of `Button (First Match)`
+    t =   124.69s Waiting 10.0s for Button (First Match) to exist
+    t =   125.72s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   125.72s         Checking existence of `Button (First Match)`
+    t =   125.76s Find the Button (First Match)
+    t =   125.79s Find the "settings" Button
+    t =   125.82s Checking existence of `"popup.writingArea" Any`
+    t =   125.95s Find the "settings" Button
+    t =   125.98s Checking existence of `ScrollView (First Match)`
+    t =   126.02s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   126.03s Find the ScrollView (First Match)
+    t =   126.08s Find the "settings" Button
+    t =   126.12s Find the "settings" Button
+REACH_CONTROL attempt=0 identifier=settings target=(140.0, 761.6666666666666, 122.0, 58.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =   126.17s Find the "settings" Button
+    t =   126.22s Find the "settings" Button
+    t =   126.26s Find the "settings" Button
+    t =   126.30s Find the "settings" Button
+    t =   126.35s Find the "settings" Button
+    t =   126.39s Tap "settings" Button
+    t =   126.39s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   126.39s     Find the "settings" Button
+    t =   126.43s     Check for interrupting elements affecting "settings" Button
+    t =   126.45s     Synthesize event
+    t =   126.74s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   127.20s Waiting 15.0s for Button (First Match) to exist
+    t =   128.23s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   128.23s         Checking existence of `Button (First Match)`
+    t =   128.30s Waiting 10.0s for Button (First Match) to exist
+    t =   129.37s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   129.37s         Checking existence of `Button (First Match)`
+    t =   129.40s Find the Button (First Match)
+    t =   129.44s Find the "my context" Button
+    t =   129.48s Checking existence of `"popup.writingArea" Any`
+    t =   129.65s Find the "my context" Button
+    t =   129.68s Checking existence of `ScrollView (First Match)`
+    t =   129.73s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   129.75s Find the ScrollView (First Match)
+    t =   129.81s Find the "my context" Button
+    t =   129.85s Find the "my context" Button
+REACH_CONTROL attempt=0 identifier=my context target=(36.0, 1373.6666666666667, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =   129.90s Find the "my context" Button
+    t =   129.95s Find the "settings.mainScroll" ScrollView
+    t =   130.01s Press "settings.mainScroll" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =   130.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   130.01s     Find the "settings.mainScroll" ScrollView
+    t =   130.06s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =   130.09s     Synthesize event
+    t =   130.10s         Find the "settings.mainScroll" ScrollView
+    t =   130.15s         Find the "settings.mainScroll" ScrollView
+    t =   130.21s         Find the "settings.mainScroll" ScrollView
+    t =   130.27s         Find the "settings.mainScroll" ScrollView
+    t =   130.33s         Find the "settings.mainScroll" ScrollView
+    t =   132.62s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   132.63s Find the "my context" Button
+    t =   132.67s Find the "my context" Button
+REACH_CONTROL attempt=1 identifier=my context target=(36.0, 990.3333333333334, 330.0, 43.999999999999886) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =   132.72s Find the "my context" Button
+    t =   132.77s Find the "settings.mainScroll" ScrollView
+    t =   132.83s Press "settings.mainScroll" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =   132.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   132.83s     Find the "settings.mainScroll" ScrollView
+    t =   132.88s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =   132.91s     Synthesize event
+    t =   132.92s         Find the "settings.mainScroll" ScrollView
+    t =   132.98s         Find the "settings.mainScroll" ScrollView
+    t =   133.04s         Find the "settings.mainScroll" ScrollView
+    t =   133.09s         Find the "settings.mainScroll" ScrollView
+    t =   133.15s         Find the "settings.mainScroll" ScrollView
+    t =   135.43s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   135.45s Find the "my context" Button
+    t =   135.50s Find the "my context" Button
+REACH_CONTROL attempt=2 identifier=my context target=(36.0, 606.9999999999999, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =   135.55s Find the "my context" Button
+    t =   135.61s Find the "my context" Button
+    t =   135.66s Find the "my context" Button
+    t =   135.70s Find the "my context" Button
+    t =   135.74s Find the "my context" Button
+    t =   135.79s Tap "my context" Button
+    t =   135.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   135.80s     Find the "my context" Button
+    t =   135.83s     Check for interrupting elements affecting "my context" Button
+    t =   135.86s     Synthesize event
+    t =   136.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   136.57s Waiting 15.0s for Button (First Match) to exist
+    t =   137.62s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   137.62s         Checking existence of `Button (First Match)`
+    t =   137.65s Waiting 10.0s for Button (First Match) to exist
+    t =   138.69s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   138.69s         Checking existence of `Button (First Match)`
+    t =   138.72s Find the Button (First Match)
+    t =   138.74s Find the "hormone information" Button
+    t =   138.76s Checking existence of `"popup.writingArea" Any`
+    t =   139.25s Find the "hormone information" Button
+    t =   139.27s Checking existence of `ScrollView (First Match)`
+    t =   139.29s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   139.33s Find the ScrollView (First Match)
+    t =   139.36s Find the "hormone information" Button
+    t =   139.39s Find the "hormone information" Button
+REACH_CONTROL attempt=0 identifier=hormone information target=(20.0, 512.0, 292.0, 82.0) viewport=(0.0, 114.0, 402.0, 760.0) hittable=true
+    t =   139.42s Find the "hormone information" Button
+    t =   139.45s Find the "hormone information" Button
+    t =   139.48s Find the "hormone information" Button
+    t =   139.51s Find the "hormone information" Button
+    t =   139.53s Find the "hormone information" Button
+    t =   139.57s Tap "hormone information" Button
+    t =   139.57s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   139.57s     Find the "hormone information" Button
+    t =   139.59s     Check for interrupting elements affecting "hormone information" Button
+    t =   139.65s     Synthesize event
+    t =   139.95s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   140.44s Waiting 10.0s for Button (First Match) to exist
+    t =   141.51s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   141.51s         Checking existence of `Button (First Match)`
+    t =   141.58s Waiting 10.0s for "731.002 cancel-fixture-3c727b0a" StaticText to exist
+    t =   142.63s     Checking `Expect predicate `existsNoRetry == 1` for object "731.002 cancel-fixture-3c727b0a" StaticText`
+    t =   142.63s         Checking existence of `"731.002 cancel-fixture-3c727b0a" StaticText`
+    t =   142.75s Waiting 10.0s for "731.002 cancel-fixture-3c727b0a" StaticText to exist
+    t =   143.79s     Checking `Expect predicate `existsNoRetry == 1` for object "731.002 cancel-fixture-3c727b0a" StaticText`
+    t =   143.79s         Checking existence of `"731.002 cancel-fixture-3c727b0a" StaticText`
+    t =   143.92s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   144.03s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   144.14s Checking existence of `"popup.writingArea" Any`
+    t =   144.72s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   144.83s Checking existence of `ScrollView (First Match)`
+    t =   145.07s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   145.13s Find the ScrollView (First Match)
+    t =   145.38s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   145.50s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+REACH_CONTROL attempt=0 identifier=731.002 cancel-fixture-3c727b0a target=(20.0, 819.5842724768344, 245.0, 22.66666666666663) viewport=(20.0, 142.0, 362.0, 678.0) hittable=false
+    t =   145.62s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   145.75s Find the "hormone.measurementsScroll" ScrollView
+    t =   145.97s Press "hormone.measurementsScroll" ScrollView[0.95, 0.72] for 0.1 seconds, then drag to "hormone.measurementsScroll" ScrollView[0.95, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =   145.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   145.97s     Find the "hormone.measurementsScroll" ScrollView
+    t =   146.19s     Check for interrupting elements affecting "hormone.measurementsScroll" ScrollView
+    t =   146.26s     Synthesize event
+    t =   146.26s         Find the "hormone.measurementsScroll" ScrollView
+    t =   146.48s         Find the "hormone.measurementsScroll" ScrollView
+    t =   146.71s         Find the "hormone.measurementsScroll" ScrollView
+    t =   146.93s         Find the "hormone.measurementsScroll" ScrollView
+    t =   147.15s         Find the "hormone.measurementsScroll" ScrollView
+    t =   149.24s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =   149.25s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   149.38s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+REACH_CONTROL attempt=1 identifier=731.002 cancel-fixture-3c727b0a target=(20.0, 524.250939143501, 245.0, 22.666666666666742) viewport=(20.0, 142.0, 362.0, 678.0) hittable=true
+    t =   149.52s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   149.65s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   149.78s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   149.90s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   150.02s Find the "731.002 cancel-fixture-3c727b0a" StaticText
+    t =   150.14s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   150.30s Added attachment named 'PersonalData_ActualMeasurementPreservedAfterBulkCancellationAndRestart'
+    t =   150.31s Tear Down
+Test Case '-[FruitfolioUITests.PersonalDataManagementUITests testCancellingBulkDeletionPreservesAnActuallyEnteredMeasurementAcrossApplicationRestart]' passed (150.686 seconds).
+Test Suite 'PersonalDataManagementUITests' failed at 2026-11-02 10:09:32.452.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 272.584 (272.585) seconds
+Test Suite 'FruitfolioUITests.xctest' failed at 2026-11-02 10:09:32.452.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 272.584 (272.586) seconds
+Test Suite 'Selected tests' failed at 2026-11-02 10:09:32.453.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 272.584 (272.587) seconds
+2026-11-02 10:09:42.744 xcodebuild[30897:90905] [MT] IDETestOperationsObserverDebug: 284.609 elapsed -- Testing started completed.
+2026-11-02 10:09:42.744 xcodebuild[30897:90905] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 10:09:42.744 xcodebuild[30897:90905] [MT] IDETestOperationsObserverDebug: 284.609 sec, +284.609 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/GuardedDeletionJourney.xcresult
+
+Failing tests:
+	PersonalDataManagementUITests.testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable()
+
+** TEST EXECUTE FAILED **
+
+Testing started

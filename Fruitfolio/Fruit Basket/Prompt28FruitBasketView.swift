@@ -54,6 +54,7 @@ struct Prompt28FruitBasketView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var showingSaveDestination = false
     @State private var showTour = false
@@ -564,14 +565,12 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.sectionHeading)
                             .multilineTextAlignment(.center)
 
-                        HStack(spacing: 6) {
-                            ForEach(
-                                Prompt28EducationalDifficulty.allCases
-                            ) { option in
-                                Prompt28MiniControlPill(
-                                    title: option.displayName,
-                                    isSelected: viewModel.difficulty == option
-                                ) {
+                        let difficultyLayout = dynamicTypeSize.isAccessibilitySize
+                            ? AnyLayout(VStackLayout(spacing: 6)) : AnyLayout(HStackLayout(spacing: 6))
+                        difficultyLayout {
+                            ForEach(Prompt28EducationalDifficulty.allCases) { option in
+                                Prompt28MiniControlPill(title: option.displayName,
+                                    isSelected: viewModel.difficulty == option) {
                                     viewModel.updateDifficulty(option)
                                 }
                             }
@@ -2459,153 +2458,71 @@ private struct Prompt28WatercolorButton: View {
 private struct Prompt28MiniControlPill: View {
     let title: String
     let isSelected: Bool
-    var width: CGFloat = 88
+    var width: CGFloat? = 88
+    var minimumHeight: CGFloat = 52
+    var pointSize: CGFloat = 12
+    var textStyle: UIFont.TextStyle = .subheadline
+    var artworkOpacity: Double? = nil
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         Button {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(
-                        isSelected
-                        ? 1
-                        : 0.56
-                    )
-                    .accessibilityHidden(true)
-
-                Text(title)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 12,
-                            relativeTo: .subheadline
-                        )
-                    )
-                    .fontWeight(
-                        isSelected
-                        ? .bold
-                        : .semibold
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.76)
-                    .padding(.horizontal, 8)
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
+                FruitfolioNativeActionLabel(text: title, pointSize: pointSize, textStyle: textStyle)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             }
-            .frame(
-                width: width,
-                height: 52
-            )
+            .accessibilityElement(children: .contain)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .frame(width: dynamicTypeSize.isAccessibilitySize ? nil : width)
+            .frame(maxWidth: dynamicTypeSize.isAccessibilitySize || width == nil ? .infinity : nil,
+                   minHeight: minimumHeight)
+            .background {
+                if dynamicTypeSize.isAccessibilitySize {
+                    // The existing canonical painted control geometry grows
+                    // with its label; do not stretch the original PNG or shrink
+                    // accessibility text into a fixed52pt shell.
+                    FruitfolioControlPillArtwork()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                } else {
+                    Image("control_pill_outline").resizable().scaledToFit()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                }
+            }
             .contentShape(Rectangle())
         }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityAddTraits(
-            isSelected
-            ? .isSelected
-            : []
-        )
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityLabel(Text(title))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
 private struct Prompt28ChipWrap: View {
     let titles: [String]
     let onSelect: (String) -> Void
-
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                ),
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                )
-            ],
-            spacing: 6
-        ) {
-            ForEach(
-                titles,
-                id: \.self
-            ) { title in
-                Button {
-                    audioManager.play(.buttonSoftPop)
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6),
+                                count: dynamicTypeSize.isAccessibilitySize ? 1 : 2), spacing: 6) {
+            ForEach(titles, id: \.self) { title in
+                Prompt28MiniControlPill(title: title, isSelected: false,
+                    width: nil, minimumHeight: 48, pointSize: 11, textStyle: .caption, artworkOpacity: 0.72) {
                     onSelect(title)
-                } label: {
-                    ZStack {
-                        Image("control_pill_outline")
-                            .resizable()
-                            .scaledToFit()
-                            .opacity(0.72)
-                            .accessibilityHidden(true)
-
-                        Text(title)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 11,
-                                    relativeTo: .caption
-                                )
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.76)
-                            .padding(.horizontal, 10)
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        minHeight: 48
-                    )
                 }
-                .buttonStyle(
-                    CutePopButtonStyle(
-                        reduceMotion:
-                            motionPreferences.reduceMotionActive
-                    )
-                )
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 private struct Prompt28WindGust: View {
     let reduceMotion: Bool

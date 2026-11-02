@@ -35,7 +35,7 @@ struct Prompt12ConfirmationPopup: View {
 
                 FruitfolioNativeActionLabel(text: message,
                     fontName: "ChalkboardSE-Regular", pointSize: 11.5, textStyle: .body,
-                    lineBreakMode: dynamicTypeSize.isAccessibilitySize ? .byCharWrapping : .byWordWrapping)
+                    lineBreakMode: .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 275)
 

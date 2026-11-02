@@ -10,8 +10,8 @@ final class FruitBasketGroundedJourneyUITests: XCTestCase {
 
     private func tap(_ title: String, _ app: XCUIApplication) {
         let button = app.buttons.matching(NSPredicate(format: "label ==[c] %@", title)).firstMatch
-        XCTAssertTrue(button.waitForExistence(timeout: 15), title)
         fruitfolioReachControl(app, button)
+        XCTAssertTrue(button.exists, title)
         button.tap()
     }
 
