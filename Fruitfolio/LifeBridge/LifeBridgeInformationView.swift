@@ -22,12 +22,12 @@ struct LifeBridgeInformationView: View {
                     }
                 }
                 Text("independent education and organization information are different. medical and scientific explanations in Ask must still use the approved Research Library. this directory is not individual medical, legal, financial, or eligibility advice.")
-                Text("these are the website destinations named in Prompt 1B. links require internet access. check the official site for current information. no application or referral link is supplied without verification.")
+                Text("these links let you check current information. external pages require internet access. check the official site for current information. no application or referral link is supplied without verification.")
                 ForEach(LifeBridgeInformation.Destination.allCases) { destination in
                     FruitfolioControlPillButton(label: destination.title) { pending = destination }
                         .accessibilityIdentifier("lifebridge.link." + destination.id)
                 }
-                Text("source directory version: " + LifeBridgeInformation.version)
+                Text("source review: 2026-11-01")
                     .font(.caption)
             }
             .padding(20)

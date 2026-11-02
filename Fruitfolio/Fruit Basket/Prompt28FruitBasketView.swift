@@ -111,6 +111,13 @@ struct Prompt28FruitBasketView: View {
                     .zIndex(100)
             }
         }
+        .fruitfolioModalBlur(active: viewModel.showingStormNotice, reduceMotion: motionPreferences.reduceMotionActive)
+        .overlay {
+            if viewModel.showingStormNotice {
+                Prompt28StormNoticeView(onContinue: { viewModel.dismissStormNotice() })
+                    .zIndex(200)
+            }
+        }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
@@ -124,6 +131,7 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            viewModel.viewWillDisappear()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
@@ -969,6 +977,14 @@ struct Prompt28FruitBasketView: View {
                             )
                         )
                         .fontWeight(.bold)
+                    Text("star passes: \(viewModel.session?.availableStarPasses ?? 0)")
+                        .font(.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("fruitBasket.availableStarPasses")
+                        .accessibilityValue((viewModel.session?.availableStarPasses ?? 0) > 0
+                            ? "one pass will be used if you catch a bad fruit; the round will continue"
+                            : "with no star pass, a bad-fruit catch ends this round")
+                        .accessibilityLiveRegion(.polite)
                 }
                 .frame(width: width)
                 .offset(
@@ -1012,6 +1028,10 @@ struct Prompt28FruitBasketView: View {
             if newValue > oldValue {
                 audioManager.play(.fruitCatch)
             }
+        }
+        .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.starChime) }
+            else if newValue < oldValue { audioManager.play(.notificationSoftSparkle) }
         }
     }
 
@@ -1061,9 +1081,7 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.puddle) {
-            FruitfolioImage(
-                id: .fruitbasket_puddle
-            )
+            Prompt28PuddleArtwork(reduceMotion: motionPreferences.reduceMotionActive)
             .frame(width: min(width * 0.34, 190))
             .position(
                 x: xOffset + width * 0.50,

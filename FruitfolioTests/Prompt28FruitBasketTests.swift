@@ -353,6 +353,48 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertFalse(model.basketIsMeetingPuddleResistance)
     }
 
+    func testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound() throws {
+        XCTAssertEqual(Prompt28WeatherCopy.stormNotice, "uh oh! a little storm is passing. o__o")
+        let suite = "Prompt28.Storm.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 6, currentRound: 3)
+        model.currentQuestion = fixtureQuestion(); model.beginCatch()
+        XCTAssertTrue(model.showingStormNotice); XCTAssertTrue(model.isPaused)
+        model.moveBasket(to: 0.9); XCTAssertEqual(model.basketX, 0.5, "Storm notice blocks gameplay, not just its visible controls")
+        model.dismissStormNotice(); XCTAssertFalse(model.showingStormNotice); XCTAssertFalse(model.isPaused)
+        model.pause(); model.beginCatch()
+        XCTAssertFalse(model.showingStormNotice, "Retrying the same rainy round must not repeat its notice")
+        XCTAssertFalse(model.isPaused, "A new catch attempt must not inherit a previous pause flag")
+        model.pause()
+    }
+
+    func testDismissingStormAfterBackgroundPauseDoesNotAutomaticallyResumeGameplay() throws {
+        let suite = "Prompt28.StormBackground.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 6, currentRound: 3)
+        model.currentQuestion = fixtureQuestion(); model.beginCatch(); model.sceneBecameInactive()
+        model.dismissStormNotice()
+        XCTAssertEqual(model.screen, .paused); XCTAssertTrue(model.isPaused)
+        XCTAssertFalse(model.showingStormNotice)
+    }
+
+    func testLeavingAnActiveGameCancelsItsLoopAndReleasesTheViewModel() async throws {
+        let suite = "Prompt28.Leave.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        var model: Prompt28FruitBasketViewModel? = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        weak var observed = model
+        model?.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 1)
+        model?.currentQuestion = fixtureQuestion(); model?.beginCatch()
+        await Task.yield() // Let the real loop enter its first suspended tick.
+        model?.viewWillDisappear()
+        XCTAssertEqual(model?.screen, .paused)
+        model = nil
+        try await Task.sleep(nanoseconds: 60_000_000)
+        XCTAssertNil(observed, "A hidden game must not be retained by a still-running 30 Hz loop")
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",

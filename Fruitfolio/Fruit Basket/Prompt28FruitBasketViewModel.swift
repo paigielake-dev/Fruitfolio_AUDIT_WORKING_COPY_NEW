@@ -3,7 +3,13 @@ import Foundation
 
 @MainActor
 final class Prompt28FruitBasketViewModel: ObservableObject {
-    @Published var screen: Prompt28ScreenState = .home
+    @Published var screen: Prompt28ScreenState = .home {
+        didSet {
+            if oldValue == .catchActive, screen != .catchActive { stopGameplay() }
+            if screen != .catchActive, screen != .paused { showingStormNotice = false }
+        }
+    }
+    @Published private(set) var showingStormNotice = false
     @Published var rawTopic = ""
     @Published var difficulty: Prompt28EducationalDifficulty
     @Published var currentQuestion: Prompt28Question?
@@ -28,6 +34,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
+    private var lastStormNoticeKey: String?
 
     init(
         store: Prompt28FruitBasketStore,
@@ -187,16 +194,41 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         classificationFruit = nil
         basketX = 0.5
         basketIsMeetingPuddleResistance = false
+        isPaused = false
+        showingStormNotice = false
         roundResultLocked = false
         spawnPlanner.reset()
         lastSpawnAt = .distantPast
         screen = .catchActive
 
-        if store.controlMode == .classification {
-            spawnClassificationFruit()
+        let noticeKey = "\(session.id.uuidString):\(session.currentRound)"
+        if weather == .softRain, lastStormNoticeKey != noticeKey {
+            lastStormNoticeKey = noticeKey
+            showingStormNotice = true
+            isPaused = true
         } else {
-            startGameplayLoop()
+            startCatchInteraction()
         }
+    }
+
+    func dismissStormNotice() {
+        guard showingStormNotice else { return }
+        showingStormNotice = false
+        // Backgrounding already moves active play to the paused menu. Closing
+        // its notice must not silently resume a background-paused round.
+        guard screen == .catchActive else { return }
+        isPaused = false
+        startCatchInteraction()
+    }
+
+    private func startCatchInteraction() {
+        if store.controlMode == .classification { spawnClassificationFruit() }
+        else { startGameplayLoop() }
+    }
+
+    func viewWillDisappear() {
+        stopGameplay()
+        if screen == .catchActive { isPaused = true; screen = .paused }
     }
 
     func moveBasket(to normalizedX: Double) {
