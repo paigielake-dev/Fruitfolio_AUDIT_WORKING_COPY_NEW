@@ -1,0 +1,43 @@
+{
+  "phase": 7,
+  "recordedAtUTC": "2026-11-02T18:21:06.825274+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-359",
+      "originalBreakdownItem": "Base progression primarily on successfully completed rounds.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    },
+    {
+      "requirementID": "FF1B-366",
+      "originalBreakdownItem": "Trigger basket reveal after the actual round finishes.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    },
+    {
+      "requirementID": "FF1B-474",
+      "originalBreakdownItem": "Test persistence and data deletion.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    }
+  ]
+}

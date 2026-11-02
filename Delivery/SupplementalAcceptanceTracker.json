@@ -99,48 +99,7 @@
       "requirement": "Add realistic offline puddle splash obeying SFX slider and mute after core stability.",
       "acceptanceStatus": "PARTIAL",
       "supportingEvidence": [],
-      "actualResult": "Not added; correctly deferred until core game/guard/journey repairs are stable and verified."
-    },
-    {
-      "requirementID": "SUP-GAME-SFX-002",
-      "requirement": "Add soft offline branch impact obeying SFX slider and mute after core stability.",
-      "acceptanceStatus": "PARTIAL",
-      "supportingEvidence": [],
-      "actualResult": "Not added; correctly deferred until core game/guard/journey repairs are stable and verified."
-    },
-    {
-      "requirementID": "SUP-20261102-01-001",
-      "requirement": "When the basket enters a puddle, play a subtle water-entry sound.",
-      "origin": "New explicit founder addition; supplements original478 without renumbering",
-      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:19",
-      "acceptanceStatus": "PARTIAL",
-      "implementationLocations": [
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Core/Assets/AudioManager.swift"
-      ],
-      "testsPerformed": [],
-      "supportingEvidence": [],
-      "actualResult": "Collision/movement integration added; Apple execution pending. Approved named water-entry, water-movement and branch-impact assets are absent; audible quality and natural exit remain unverified."
-    },
-    {
-      "requirementID": "SUP-20261102-01-002",
-      "requirement": "While the basket moves through the puddle, use appropriate gentle splashing or water-movement audio.",
-      "origin": "New explicit founder addition; supplements original478 without renumbering",
-      "sourceReference": "Specification/Founder_Additional_Requirements_2026-11-02.txt:20",
-      "acceptanceStatus": "PARTIAL",
-      "implementationLocations": [
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Core/Assets/AudioManager.swift"
-      ],
-      "testsPerformed": [],
-      "supportingEvidence": [],
-      "actualResult": "Collision/movement integration added; Apple execution pending. Approv…7237 tokens truncated…nce": "Specification/Founder_Additional_Requirements_2026-11-02.txt:110",
-      "acceptanceStatus": "PARTIAL",
-      "implementationLocations": [
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "FruitfolioTests/FruitBasketGroundedResearchTests.swift"
+      "actua…7867 tokens truncated…asketGroundedResearchTests.swift"
       ],
       "testsPerformed": [],
       "supportingEvidence": [],
@@ -914,7 +873,34 @@
       "supportingEvidence": [
         "FruitfolioTests/FruitBasketQuestionLifecycleTests.swift"
       ],
-      "actualResult": "Added owned request cancellation plus generation/session/topic/difficulty checks, including before error publication. Three tests added with actual grounded question fixtures and deliberately noncooperative late callbacks; not executed."
+      "actualResult": "Added owned request cancellation plus generation/session/topic/difficulty checks, including before error publication. Four tests added (including difficulty changes) with actual grounded question fixtures and deliberately noncooperative late callbacks; not executed."
+    },
+    {
+      "requirementID": "SUP-GAME-QUESTION-INTEGRITY-001",
+      "requirement": "Playable questions must have unambiguous choices and pinned, approved original evidence; requested topic/difficulty association must be correct.",
+      "acceptanceStatus": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "supportingEvidence": [
+        "FruitfolioTests/FruitBasketQuestionIntegrityTests.swift",
+        "FruitfolioTests/FruitBasketQuestionLifecycleTests.swift"
+      ],
+      "actualResult": "Malformed duplicate/blank option and citation identities, duplicate choice text, empty questions/explanations/version locks are rejected. A shared snapshot check requires the original passage/package, unique source records, approved-source display eligibility and nonempty original source versions. The adapter and actual question-loading boundary both require this snapshot; source IDs alone do not approve a scientific question. Three integrity XCTest cases with multiple malformed decoded-JSON subcases added; lifecycle coverage extended to difficulty changes (four lifecycle cases). Not executed on Mac."
+    },
+    {
+      "requirementID": "SUP-GAME-RESULT-COMMIT-001",
+      "requirement": "Registered round completion must survive cancellation of result animations, pause/background/navigation and owner release, with exactly-once progress/source snapshots.",
+      "acceptanceStatus": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift"
+      ],
+      "supportingEvidence": [
+        "FruitfolioTests/RoundCompletionPersistenceTests.swift"
+      ],
+      "actualResult": "Separated immediate data commit from delayed result presentation and added idempotence/interruption guards. Five meaningful XCTest cases added, not executed in Xcode."
     }
   ],
   "additional20261102": {

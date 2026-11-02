@@ -68,6 +68,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
+    private var pendingRoundSuccess: Bool?
+    private var roundResultCommitted = false
     private var lastStormNoticeKey: String?
 
     init(
@@ -124,6 +126,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func openSetup() {
+        completePendingRoundIfNeeded()
         stopGameplay()
         guard store.loadError == nil else {
             message = store.loadError; screen = .error; return
@@ -271,6 +274,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func beginCatch() {
+        completePendingRoundIfNeeded()
         guard currentQuestion != nil, var session else { return }
         attemptID = UUID()
         stopGameplay()
@@ -289,6 +293,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         isPaused = false
         showingStormNotice = false
         roundResultLocked = false
+        roundResultCommitted = false
+        pendingRoundSuccess = nil
         spawnPlanner.reset()
         previousVineContacts = []
         branchDeflections = [:]
@@ -321,6 +327,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func viewWillDisappear() {
+        completePendingRoundIfNeeded()
         cancelQuestionRequest()
         if screen == .loading { screen = .learningSetup }
         stopGameplay()
@@ -328,7 +335,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func moveBasket(to normalizedX: Double) {
-        guard screen == .catchActive, !isPaused else { return }
+        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
         guard normalizedX.isFinite else { return }
         let target = min(max(normalizedX, 0.10), 0.90)
         let previousX = basketX
@@ -365,6 +372,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     func classificationDecision(accept: Bool) {
         guard
             screen == .catchActive,
+            !isPaused,
             store.controlMode == .classification,
             let fruit = classificationFruit,
             !roundResultLocked
@@ -388,7 +396,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func pause() {
-        guard screen == .catchActive else { return }
+        guard screen == .catchActive, !roundResultLocked else { return }
         isPaused = true
         gameplayTask?.cancel()
         gameplayTask = nil
@@ -404,6 +412,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func retryRound() {
+        completePendingRoundIfNeeded()
         guard var session else { return }
         session.goodFruitCaughtThisRound = 0
         self.session = session
@@ -412,6 +421,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func resetGameLevel() {
+        completePendingRoundIfNeeded()
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         stopGameplay()
@@ -425,6 +435,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func continueAfterReveal() async {
+        completePendingRoundIfNeeded()
         guard var session else { return }
         session.currentRound += 1
         session.goodFruitCaughtThisRound = 0
@@ -433,6 +444,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func changeTopic() {
+        completePendingRoundIfNeeded()
         stopGameplay()
         currentQuestion = nil
         selectedAnswerID = nil
@@ -447,7 +459,12 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func sceneBecameInactive() {
-        if screen == .catchActive { pause() }
+        if pendingRoundSuccess != nil {
+            completePendingRoundIfNeeded()
+            stopGameplay()
+        } else if screen == .catchActive {
+            pause()
+        }
     }
 
     func savePendingContent() -> Prompt10PendingSavedContent? {
@@ -705,7 +722,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             }
             switch landing.kind {
             case .fruit(let fruit, .good): handleGoodCatch(fruit, existingArtworkID: landing.id)
-            case .fruit(let fruit, .bad): handleBadCatch(fruit)
+            case .fruit(let fruit, .bad): handleBadCatch(fruit, existingArtworkID: landing.id)
             case .star: handleStarCatch(existingArtworkID: landing.id)
             }
         }
@@ -726,7 +743,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
         if outcome == .success {
             roundResultLocked = true
+            pendingRoundSuccess = true
             stopGameplay()
+            finishSuccessfulRound(presentResult: false)
             roundCompletionTask?.cancel()
             roundCompletionTask = Task { [weak self] in
                 try? await Task.sleep(nanoseconds: 650_000_000)
@@ -753,10 +772,6 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         if existingArtworkID == nil {
             settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true, collected: true))
         }
-        if settledCatches.filter({ $0.isStar && $0.collected }).count > 8,
-           let oldestStar = settledCatches.firstIndex(where: { $0.isStar && $0.collected }) {
-            settledCatches.remove(at: oldestStar)
-        }
         _ = engine.registerStarCatch(session: &session)
         roundCollection.standaloneStarsCaught += 1
         self.session = session
@@ -766,8 +781,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         store.updateProgress(progress)
     }
 
-    private func handleBadCatch(_ fruit: Prompt28FruitID) {
+    private func handleBadCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
+        }
         let outcome = engine.registerBadCatch(fruit, session: &session)
         roundCollection.badFruit.append(fruit)
         if case .badFruitBlockedByStar = outcome { roundCollection.starPassesConsumed += 1 }
@@ -775,8 +793,10 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         lastBadFruit = fruit
         if case .badFruitBlockedByStar = outcome { return }
         roundResultLocked = true
+        pendingRoundSuccess = false
         stopGameplay()
         activeFruit.removeAll(); activeStars.removeAll(); classificationFruit = nil
+        finishUnsuccessfulRound(presentResult: false)
         roundCompletionTask?.cancel()
         roundCompletionTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: 280_000_000)
@@ -785,36 +805,62 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
     }
 
-    private func finishSuccessfulRound() {
+    private func finishSuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.totalSuccessfulRounds += 1
-        progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
-        let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
-        progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
-        progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
-        didSetPersonalBestThisRound = session.score > progress.bestScore
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        recordCompletedRound(successful: true)
-        screen = .basketReveal
+        if !roundResultCommitted {
+            roundResultCommitted = true
+            var progress = store.ensureProgress(for: session.normalizedTopicID)
+            progress.totalRoundsCompleted += 1
+            progress.totalSuccessfulRounds += 1
+            progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
+            let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
+            progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
+            progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
+            didSetPersonalBestThisRound = session.score > progress.bestScore
+            progress.bestScore = max(progress.bestScore, session.score)
+            progress.bestStreak = max(progress.bestStreak, session.currentStreak)
+            store.updateProgress(progress)
+            recordCompletedRound(successful: true)
+        }
+        if presentResult {
+            pendingRoundSuccess = nil
+            isPaused = false
+            if let progress = store.progress(for: session.normalizedTopicID) {
+                session.currentGameLevel = progress.currentGameLevel
+                self.session = session
+            }
+            screen = .basketReveal
+        }
     }
 
-    private func finishUnsuccessfulRound() {
+    private func finishUnsuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        recordCompletedRound(successful: false)
-        screen = .catchUnsuccessful
+        if !roundResultCommitted {
+            roundResultCommitted = true
+            var progress = store.ensureProgress(for: session.normalizedTopicID)
+            progress.totalRoundsCompleted += 1
+            progress.bestScore = max(progress.bestScore, session.score)
+            progress.bestStreak = max(progress.bestStreak, session.currentStreak)
+            store.updateProgress(progress)
+            recordCompletedRound(successful: false)
+        }
+        if presentResult {
+            pendingRoundSuccess = nil
+            isPaused = false
+            if let progress = store.progress(for: session.normalizedTopicID) {
+                session.currentGameLevel = progress.currentGameLevel
+                self.session = session
+            }
+            screen = .catchUnsuccessful
+        }
+    }
+
+    /// Results are persisted at the registered final catch. Navigation or
+    /// inactivity may finish their presentation early without counting twice.
+    private func completePendingRoundIfNeeded() {
+        guard let successful = pendingRoundSuccess else { return }
+        if successful { finishSuccessfulRound() }
+        else { finishUnsuccessfulRound() }
     }
 
     private func recordCompletedRound(successful: Bool) {
