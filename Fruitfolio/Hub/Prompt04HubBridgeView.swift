@@ -1567,6 +1567,7 @@ private struct Prompt05HubUtilityButton:
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            .accessibilityElement(children: .contain)
             .frame(
                 width:
                     width
@@ -1593,6 +1594,7 @@ private struct Prompt05HubUtilityButton:
         .accessibilityHidden(
             !interactive
         )
+        .accessibilityLabel(Text(label))
         .accessibilityAddTraits(
             .isButton
         )

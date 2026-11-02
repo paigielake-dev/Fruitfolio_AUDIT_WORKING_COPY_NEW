@@ -201,6 +201,7 @@ struct Prompt28FruitBasketView: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     @ViewBuilder

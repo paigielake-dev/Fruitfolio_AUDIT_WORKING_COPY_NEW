@@ -221,7 +221,7 @@ struct Prompt14CycleOnboardingView: View {
 
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.latestPeriodState == .unanswered)
-                    .opacity(model.draft.latestPeriodState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.latestPeriodState == .unanswered ? 0.82 : 1)
             }
         }
     }
@@ -237,7 +237,7 @@ struct Prompt14CycleOnboardingView: View {
                 }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.currentPeriodState == .unanswered)
-                    .opacity(model.draft.currentPeriodState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.currentPeriodState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -264,7 +264,7 @@ struct Prompt14CycleOnboardingView: View {
                 ) { model.periodEndUnknown() }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.periodEndState == .unanswered)
-                    .opacity(model.draft.periodEndState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.periodEndState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -318,7 +318,7 @@ struct Prompt14CycleOnboardingView: View {
 
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.previousHistoryState == .unanswered)
-                    .opacity(model.draft.previousHistoryState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.previousHistoryState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -335,7 +335,7 @@ struct Prompt14CycleOnboardingView: View {
                 }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.regularityState == .unanswered)
-                    .opacity(model.draft.regularityState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.regularityState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -355,7 +355,7 @@ struct Prompt14CycleOnboardingView: View {
                 }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.cycleContextState == .unanswered)
-                    .opacity(model.draft.cycleContextState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.cycleContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -375,7 +375,7 @@ struct Prompt14CycleOnboardingView: View {
                 }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.recentContextState == .unanswered)
-                    .opacity(model.draft.recentContextState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.recentContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -398,7 +398,7 @@ struct Prompt14CycleOnboardingView: View {
                 }
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.trackingPreferencesState == .unanswered)
-                    .opacity(model.draft.trackingPreferencesState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.trackingPreferencesState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -424,7 +424,7 @@ struct Prompt14CycleOnboardingView: View {
 
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(model.draft.fertilityPreference == nil)
-                    .opacity(model.draft.fertilityPreference == nil ? 0.5 : 1)
+                    .opacity(model.draft.fertilityPreference == nil ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -498,7 +498,7 @@ struct Prompt14CycleOnboardingView: View {
 
                 WatercolorPrimaryButton(label: "continue") { model.advance() }
                     .disabled(!bbtCanContinue)
-                    .opacity(bbtCanContinue ? 1 : 0.5)
+                    .opacity(bbtCanContinue ? 1 : 0.82)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }

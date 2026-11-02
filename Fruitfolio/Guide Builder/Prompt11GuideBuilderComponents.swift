@@ -131,7 +131,9 @@ struct Prompt11NewGuideTile: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .accessibilityElement(children: .contain)
             .frame(maxWidth: .infinity)
         }
         .buttonStyle(
@@ -139,6 +141,7 @@ struct Prompt11NewGuideTile: View {
                 reduceMotion: reduceMotion
             )
         )
+        .accessibilityLabel(Text("make a new guide"))
         .accessibilityAddTraits(.isButton)
     }
 }
