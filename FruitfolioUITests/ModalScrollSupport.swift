@@ -19,10 +19,19 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
     let visible = app.frame.intersection(container.frame)
     for _ in 0..<14 {
         if target.isHittable && visible.contains(target.frame) { break }
-        let towardEarlierContent = target.frame.minY < visible.minY
-        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: towardEarlierContent ? 0.25 : 0.80))
-        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: towardEarlierContent ? 0.80 : 0.25))
-        start.press(forDuration: 0.05, thenDragTo: finish)
+        let frame = target.frame
+        let towardEarlierContent = frame.minY < visible.minY
+        let overflow = towardEarlierContent ? visible.minY - frame.minY : frame.maxY - visible.maxY
+        let distance = min(max(overflow + 8, 12), visible.height * 0.45)
+        let fraction = distance / max(container.frame.height, 1)
+        let startY = towardEarlierContent ? 0.50 - fraction / 2 : 0.50 + fraction / 2
+        let endY = towardEarlierContent ? 0.50 + fraction / 2 : 0.50 - fraction / 2
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: startY))
+        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: endY))
+        // Run80's actual trace oscillated past the small writing viewport.
+        // A proportional slow drag with a stationary release avoids momentum
+        // overshoot without relaxing full containment or hittability.
+        start.press(forDuration: 0.05, thenDragTo: finish, withVelocity: .slow, thenHoldForDuration: 0.20)
     }
     if !target.isHittable || !visible.contains(target.frame) {
         let screen = XCTAttachment(screenshot: app.screenshot()); screen.name = "Unreachable_" + target.label

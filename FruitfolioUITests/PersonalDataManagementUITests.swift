@@ -53,12 +53,28 @@ final class PersonalDataManagementUITests: XCTestCase {
         let destination = app.descendants(matching: .any).matching(identifier: "Browse View (Picker)").firstMatch
         XCTAssertTrue(destination.waitForExistence(timeout: 30), "The real system file-export destination must open after actual local snapshot preparation")
         XCTAssertTrue(app.buttons["Save"].exists, "Require the observed native save action; filename controls vary by picker state")
-        // Actual iOS26.6 evidence exposes the system Cancel as an Other,
-        // while Save is a Button. Require its real name/hit target, not a guessed role.
-        let cancel = app.descendants(matching: .any).matching(NSPredicate(format: "label ==[c] %@", "Cancel")).firstMatch
-        XCTAssertTrue(cancel.exists && cancel.isHittable)
         capture(app, "ActualSystemExportDestination")
-        cancel.tap()
+        // The actual Run80 recording shows On My iPhone with Back/More/Save.
+        // Its unhittable Other labelled Cancel is a host proxy over More, not
+        // a usable cancel button. Navigate the real observed BackButton first.
+        func usableCancel() -> XCUIElement? {
+            app.descendants(matching: .any).matching(NSPredicate(format: "label ==[c] %@", "Cancel"))
+                .allElementsBoundByIndex.first(where: { $0.exists && $0.isHittable })
+        }
+        if usableCancel() == nil {
+            let browse = app.buttons["BackButton"]
+            if browse.exists && browse.isHittable { browse.tap() }
+        }
+        if let cancel = usableCancel() {
+            XCTAssertTrue(cancel.isHittable)
+            cancel.tap()
+        } else {
+            // Native sheet dismissal is also a real user cancellation path.
+            // Drag its observed top navigation area, not the empty file list.
+            let start = destination.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.02))
+            let end = destination.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.72))
+            start.press(forDuration: 0.10, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.20)
+        }
         let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: destination)
         XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 10), .completed)
         XCTAssertTrue(app.buttons["data.prepareExport"].waitForExistence(timeout: 10))

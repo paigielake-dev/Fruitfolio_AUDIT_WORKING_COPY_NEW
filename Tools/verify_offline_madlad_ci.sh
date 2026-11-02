@@ -14,7 +14,7 @@ if [[ $# == 0 ]]; then
   mkdir -p Fruitfolio_Verification_Evidence/MADLAD/Offline
   overall=0
   : > Fruitfolio_Verification_Evidence/MADLAD/Offline/phase-results.tsv
-  for phase in core multilingual edge-quantities; do
+  for phase in core multilingual edge-quantities requested-languages; do
     set +e
     bash "$0" "$phase"
     phase_outcome=$?
@@ -36,6 +36,8 @@ case "$phase" in
     selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout") ;;
   edge-quantities)
     selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings") ;;
+  requested-languages)
+    selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testEveryRequestedLanguageExecutesOrReportsExactOfficialTagAbsenceWithoutSubstitution") ;;
   *) echo "Unknown offline phase"; exit 2 ;;
 esac
 evidence="Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase"

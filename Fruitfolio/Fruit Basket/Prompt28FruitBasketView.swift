@@ -110,15 +110,14 @@ struct Prompt28FruitBasketView: View {
                 .frame(maxWidth: .infinity)
 
             }
-            .fruitfolioModalBlur(active: showTour, reduceMotion: motionPreferences.reduceMotionActive)
+            .accessibilityElement(children: .contain)
+            .fruitfolioModalBlur(active: showTour || viewModel.showingStormNotice,
+                                reduceMotion: motionPreferences.reduceMotionActive)
 
-            if showTour {
+            if showTour && !viewModel.showingStormNotice {
                 tourOverlay
                     .zIndex(100)
             }
-        }
-        .fruitfolioModalBlur(active: viewModel.showingStormNotice, reduceMotion: motionPreferences.reduceMotionActive)
-        .overlay {
             if viewModel.showingStormNotice {
                 Prompt28StormNoticeView(onContinue: { viewModel.dismissStormNotice() })
                     .zIndex(200)
@@ -1184,7 +1183,8 @@ struct Prompt28FruitBasketView: View {
                 count: viewModel.basketCount,
                 fruitIDs: viewModel.currentGoodFruitIDs,
                 settledCatches: viewModel.settledCatches,
-                layer: .front
+                layer: .front,
+                onSettled: { [weak model = viewModel] id in model?.confirmCatchSettling(id: id) }
             )
             .frame(
                 width: min(
@@ -2017,14 +2017,22 @@ private enum Prompt28BasketArtworkLayer { case complete, back, front }
 private struct Prompt28SettledCatchArtwork: View {
     let caught: Prompt28SettledCatch
     let reduceMotion: Bool
+    var onSettled: () -> Void = {}
     @State private var settled = false
     var body: some View {
         FruitfolioImage(id: caught.assetID)
             .scaleEffect(x: settled ? 1.08 : 1, y: settled ? 0.55 : 1, anchor: .bottom)
             .offset(y: settled ? 0 : -5)
             .onAppear {
-                if reduceMotion { settled = true }
-                else { withAnimation(.easeOut(duration: 0.18)) { settled = true } }
+                if reduceMotion { settled = true; onSettled() }
+                else {
+                    withAnimation(.easeOut(duration: Prompt28BasketCatchGeometry.settlingDuration),
+                                  completionCriteria: .logicallyComplete) {
+                        settled = true
+                    } completion: {
+                        onSettled()
+                    }
+                }
             }
     }
 }
@@ -2034,6 +2042,7 @@ private struct Prompt28BasketProgressView: View {
     let fruitIDs: [Prompt28FruitID]
     let settledCatches: [Prompt28SettledCatch]
     let layer: Prompt28BasketArtworkLayer
+    let onSettled: (UUID) -> Void
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
@@ -2043,10 +2052,12 @@ private struct Prompt28BasketProgressView: View {
         count: Int,
         fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases,
         settledCatches: [Prompt28SettledCatch] = [],
-        layer: Prompt28BasketArtworkLayer = .complete
+        layer: Prompt28BasketArtworkLayer = .complete,
+        onSettled: @escaping (UUID) -> Void = { _ in }
     ) {
         self.settledCatches = settledCatches
         self.layer = layer
+        self.onSettled = onSettled
         self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
         self.fruitIDs = fruitIDs.isEmpty ? Prompt28FruitID.allCases : fruitIDs
     }
@@ -2067,7 +2078,8 @@ private struct Prompt28BasketProgressView: View {
             ZStack(alignment: .bottom) {
                 if layer != .back {
                     ForEach(Array(visibleCatches.enumerated()), id: \.element.id) { index, caught in
-                        Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive)
+                        Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive,
+                            onSettled: { onSettled(caught.id) })
                             .frame(width: fruitSize, height: fruitSize)
                             .position(x: width * (0.30 + Double(index % 5) * 0.10),
                                       y: imageTop + imageHeight * (0.60 - Double(index / 5) * 0.055))

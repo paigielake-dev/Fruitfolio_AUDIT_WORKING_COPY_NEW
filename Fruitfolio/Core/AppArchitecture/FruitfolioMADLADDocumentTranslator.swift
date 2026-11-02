@@ -2,7 +2,7 @@ import Foundation
 import NaturalLanguage
 
 nonisolated enum FruitfolioTranslationPreservationError: Error {
-    case emptyInput, changedNumber, changedLiteral, changedProtectedMeasurement, unexpectedCitation, invalidSourceCitation
+    case emptyInput, changedNumber, changedLiteral, changedProtectedMeasurement, changedMedicalMeaning, unexpectedCitation, invalidSourceCitation
 }
 
 /// A failed candidate is never shown as a translation. Synthetic integration
@@ -25,6 +25,8 @@ nonisolated struct FruitfolioTranslationCandidate: Sendable {
     let sourceIdentifiers: [String]
     let citationMarkers: [String]
     let target: String
+    let retainedOriginalMedicalTerms: [String]
+    let translationLimitations: [String]
     let medicalMeaningVerified = false
     /// Ephemeral inference provenance. Only synthetic integration fixtures
     /// serialize this; the application does not log or persist user content.
@@ -84,6 +86,29 @@ nonisolated enum FruitfolioTranslationPreservation {
                   source.components(separatedBy: literal).count == translated.components(separatedBy: literal).count else {
                 throw FruitfolioTranslationPreservationError.changedLiteral
             }
+        }
+    }
+}
+
+/// Narrow source-fidelity protection for an actual demonstrated model error.
+/// It is not a general clinical entailment validator. The Hindi model confused
+/// ovulation with the ovary; keep the exact original medical term outside
+/// generation and disclose that limitation instead of inventing a translation.
+nonisolated enum FruitfolioMedicalConceptPreservation {
+    static func originalTerms(source: String, target: String) -> [String] {
+        guard target == "hi" else { return [] }
+        let expression = try! NSRegularExpression(pattern: #"\bovulation\b"#, options: .caseInsensitive)
+        let ns = source as NSString
+        return Array(Set(expression.matches(in: source, range: NSRange(source.startIndex..., in: source))
+            .map { ns.substring(with: $0.range) })).sorted()
+    }
+
+    static func rejectKnownConceptSubstitutions(source: String, translated: String, target: String) throws {
+        guard target == "hi", !originalTerms(source: source, target: target).isEmpty else { return }
+        let hasOriginalOvary = source.range(of: #"\b(?:ovary|ovaries|ovarian)\b"#,
+            options: [.regularExpression, .caseInsensitive]) != nil
+        if !hasOriginalOvary && translated.contains("अंडाशय") {
+            throw FruitfolioTranslationPreservationError.changedMedicalMeaning
         }
     }
 }
@@ -282,6 +307,8 @@ actor FruitfolioMADLADDocumentTranslator {
         guard !source.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw FruitfolioTranslationPreservationError.emptyInput
         }
+        let retainedMedicalTerms = FruitfolioMedicalConceptPreservation.originalTerms(source: source, target: target)
+        let protectedTerms = Array(Set(immutableTerms + retainedMedicalTerms)).sorted()
         let citation = try NSRegularExpression(pattern: #"\[([A-Za-z0-9_.:-]+)\]"#)
         var translated: [String] = []
         var markers: [String] = []
@@ -315,7 +342,7 @@ actor FruitfolioMADLADDocumentTranslator {
             modelInput = modelInput.replacingOccurrences(of: #"\s+([.!?])$"#, with: "$1", options: .regularExpression)
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             guard !modelInput.isEmpty else { throw FruitfolioTranslationPreservationError.emptyInput }
-            let measurements = try FruitfolioProtectedMeasurements(source: modelInput, immutableTerms: immutableTerms)
+            let measurements = try FruitfolioProtectedMeasurements(source: modelInput, immutableTerms: protectedTerms)
             let literalList = try measurements.terminalLiteralList()
             let actualModelInput = literalList?.modelInput ?? measurements.modelInput
             let rawOutput = try await runtime.translateRawSentence(actualModelInput, target: target, directory: directory)
@@ -328,7 +355,9 @@ actor FruitfolioMADLADDocumentTranslator {
                     throw FruitfolioTranslationPreservationError.unexpectedCitation
                 }
                 output = try FruitfolioTranslationPreservation.preserveNumbers(source: modelInput, translated: output, target: target)
-                try FruitfolioTranslationPreservation.preserveLiterals(immutableTerms, source: modelInput, translated: output)
+                try FruitfolioTranslationPreservation.preserveLiterals(protectedTerms, source: modelInput, translated: output)
+                try FruitfolioMedicalConceptPreservation.rejectKnownConceptSubstitutions(source: modelInput,
+                    translated: output, target: target)
             } catch let reason as FruitfolioTranslationPreservationError {
                 throw FruitfolioTranslationRejectedCandidate(reason: reason, sourceSentence: modelInput,
                     actualModelInput: actualModelInput, rawOutput: rawOutput, target: target)
@@ -345,6 +374,9 @@ actor FruitfolioMADLADDocumentTranslator {
             translated.append(output)
         }
         return .init(originalText: source, textForVerification: translated.joined(),
-                     sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target, sentenceEvidence: sentenceEvidence)
+                     sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target,
+                     retainedOriginalMedicalTerms: retainedMedicalTerms,
+                     translationLimitations: retainedMedicalTerms.isEmpty ? [] : ["Original English medical terms retained to avoid an observed biological concept substitution: " + retainedMedicalTerms.joined(separator: ", ")],
+                     sentenceEvidence: sentenceEvidence)
     }
 }

@@ -20,6 +20,18 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var branchDeflections: [UUID: Prompt28BranchDeflection] = [:]
     private var previousVineContacts: Set<UUID> = []
     private var gameplayFieldSize = CGSize.zero
+    private var catchClock: TimeInterval = 0
+    private var landingOrder = 0
+    private var pendingLandings: [PendingLanding] = []
+
+    private enum LandingKind { case fruit(Prompt28FruitID, Prompt28FruitClassification), star }
+    private struct PendingLanding {
+        let id: UUID
+        let kind: LandingKind
+        let readyAt: TimeInterval
+        let order: Int
+        var artworkSettled = false
+    }
     @Published private(set) var settledCatches: [Prompt28SettledCatch] = []
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
@@ -197,6 +209,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         activeFruit.removeAll()
         activeStars.removeAll()
         settledCatches.removeAll()
+        pendingLandings.removeAll()
+        catchClock = 0
+        landingOrder = 0
         classificationFruit = nil
         basketX = 0.5
         basketIsMeetingPuddleResistance = false
@@ -392,7 +407,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     // Internal frame entry point is also exercised by deterministic physics tests.
     func tick(delta: TimeInterval, now: Date) {
-        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        guard screen == .catchActive, !isPaused, !roundResultLocked, delta.isFinite, delta >= 0 else { return }
+        catchClock += delta
         var remaining: [Prompt28FallingFruit] = []
         var currentVineContacts: Set<UUID> = []
 
@@ -427,9 +443,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                                 fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
                                 itemDiameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width),
                                 previousY: previousY) {
-                if fruit.classification == .good { handleGoodCatch(fruit.fruitID) }
-                else { handleBadCatch(fruit.fruitID) }
-                if roundResultLocked { break }
+                beginLanding(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification),
+                             previousY: previousY, currentY: fruit.y,
+                             diameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
                 continue
             }
 
@@ -459,12 +475,15 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                                 fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
                                 itemDiameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width),
                                 previousY: previousY) {
-                handleStarCatch()
+                beginLanding(id: star.id, kind: .star, previousY: previousY, currentY: star.y,
+                             diameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
                 continue
             }
             if star.y <= 1.06 { remainingStars.append(star) }
         }
         activeStars = remainingStars
+        collectReadyLandings()
+        guard !roundResultLocked else { return }
         if !currentVineContacts.subtracting(previousVineContacts).isEmpty { vineContactCount += 1 }
         previousVineContacts = currentVineContacts
 
@@ -532,9 +551,62 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         )
     }
 
-    private func handleGoodCatch(_ fruit: Prompt28FruitID) {
+    private func beginLanding(id: UUID, kind: LandingKind, previousY: Double, currentY: Double,
+                              diameter: Double, delta: TimeInterval) {
+        guard !pendingLandings.contains(where: { $0.id == id }) else { return }
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height)
+        let threshold = (geometry.mouthY + diameter / 2) / gameplayFieldSize.height
+        let fraction = currentY > previousY ? min(max((threshold - previousY) / (currentY - previousY), 0), 1) : 0
+        let asset: FruitfolioAssetID
+        let isStar: Bool
+        switch kind {
+        case .fruit(let fruit, _): asset = fruit.assetID; isStar = false
+        case .star: asset = .fruitbasket_star; isStar = true
+        }
+        settledCatches.append(.init(id: id, assetID: asset, isStar: isStar))
+        pendingLandings.append(.init(id: id, kind: kind,
+            readyAt: catchClock - delta + fraction * delta + Prompt28BasketCatchGeometry.settlingDuration,
+            order: landingOrder))
+        landingOrder += 1
+    }
+
+    /// A real presentation completion, not a timer-only guess. Repeated/stale
+    /// callbacks cannot collect twice. Paused games retain the acknowledgement
+    /// but never advance scoring until active play resumes.
+    func confirmCatchSettling(id: UUID) {
+        guard let index = pendingLandings.firstIndex(where: { $0.id == id }) else { return }
+        pendingLandings[index].artworkSettled = true
+        collectReadyLandings()
+    }
+
+    private func collectReadyLandings() {
+        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        let ready = pendingLandings.filter { $0.artworkSettled && $0.readyAt <= catchClock }
+            .sorted { $0.readyAt == $1.readyAt ? $0.order < $1.order : $0.readyAt < $1.readyAt }
+        let readyIDs = Set(ready.map(\.id))
+        pendingLandings.removeAll { readyIDs.contains($0.id) }
+        var collectedIDs: Set<UUID> = []
+        for landing in ready {
+            guard !roundResultLocked else { break }
+            collectedIDs.insert(landing.id)
+            switch landing.kind {
+            case .fruit(let fruit, .good): handleGoodCatch(fruit, existingArtworkID: landing.id)
+            case .fruit(let fruit, .bad): handleBadCatch(fruit)
+            case .star: handleStarCatch(existingArtworkID: landing.id)
+            }
+        }
+        if roundResultLocked {
+            let uncollected = readyIDs.subtracting(collectedIDs).union(pendingLandings.map(\.id))
+            settledCatches.removeAll { uncollected.contains($0.id) }
+            pendingLandings.removeAll()
+        }
+    }
+
+    private func handleGoodCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
-        settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false))
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false))
+        }
         let outcome = engine.registerGoodCatch(session: &session)
         self.session = session
         if outcome == .success {
@@ -561,11 +633,14 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
     }
 
-    private func handleStarCatch() {
+    private func handleStarCatch(existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
-        settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true))
-        if settledCatches.filter(\.isStar).count > 8,
-           let oldestStar = settledCatches.firstIndex(where: \.isStar) {
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true))
+        }
+        let stillLanding = Set(pendingLandings.map(\.id))
+        if settledCatches.filter({ $0.isStar && !stillLanding.contains($0.id) }).count > 8,
+           let oldestStar = settledCatches.firstIndex(where: { $0.isStar && !stillLanding.contains($0.id) }) {
             settledCatches.remove(at: oldestStar)
         }
         _ = engine.registerStarCatch(session: &session)

@@ -271,6 +271,7 @@ nonisolated struct Prompt28BasketCatchGeometry: Sendable {
     static let centerYFraction = 0.89
     static let imageWidthFraction = 0.90
     static let frontRimFraction = 0.61
+    static let settlingDuration = 0.18
     var imageWidth: Double { containerWidth * Self.imageWidthFraction }
     var imageHeight: Double { imageWidth * 380 / 398 }
     var imageBottomY: Double { fieldHeight * Self.centerYFraction + Self.containerHeight / 2 }

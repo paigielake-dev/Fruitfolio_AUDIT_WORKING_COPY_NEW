@@ -286,7 +286,7 @@ jobs:
           retention-days: 90
       - name: Run unit and native inference tests
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
-        timeout-minutes: 35
+        timeout-minutes: 45
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
@@ -312,13 +312,13 @@ jobs:
           path: |
             Fruitfolio_Verification_Evidence/Build
       - name: Execute bundled Ask and MADLAD with verified external-network isolation
-        timeout-minutes: 60
+        timeout-minutes: 80
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: bash Tools/verify_offline_madlad_ci.sh
       - name: Export actual offline inference attachments
         if: always()
         run: |
-          for phase in core multilingual edge-quantities; do
+          for phase in core multilingual edge-quantities requested-languages; do
             result="Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult"
             if [ -f "$result/Info.plist" ]; then
               mkdir -p "Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase/Attachments"

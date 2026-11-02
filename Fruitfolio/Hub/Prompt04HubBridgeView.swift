@@ -760,8 +760,9 @@ private struct Prompt05HubPaperControls:
             VStack(
                 spacing: 3
             ) {
-                FruitfolioNativeActionLabel(text: "Fruitfolio", fontName: "SnellRoundhand",
-                    pointSize: 68, textStyle: .largeTitle, lineBreakMode: .byCharWrapping)
+                FruitfolioNativeActionLabel(text: dynamicTypeSize.isAccessibilitySize ? "Fruit\nfolio" : "Fruitfolio",
+                    fontName: "SnellRoundhand", pointSize: 68, textStyle: .largeTitle,
+                    lineBreakMode: .byCharWrapping, accessibilityText: "Fruitfolio")
                 .multilineTextAlignment(
                     .center
                 )

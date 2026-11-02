@@ -126,6 +126,22 @@ final class TranslationPreservationTests: XCTestCase {
         XCTAssertEqual(FruitfolioLocalization.displayReadiness(for: .chineseTraditional), .requiresVerification)
     }
 
+    func testKnownHindiOvaryForOvulationSubstitutionIsRejectedAndOriginalConceptIsProtected() throws {
+        let source = "This estimate does not confirm ovulation."
+        let terms = FruitfolioMedicalConceptPreservation.originalTerms(source: source, target: "hi")
+        XCTAssertEqual(terms, ["ovulation"])
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: terms)
+        XCTAssertFalse(plan.modelInput.contains("ovulation"), "The decoder cannot choose a different biological noun")
+        XCTAssertEqual(try plan.restoring(in: "इस अनुमान में [FFQ0] की पुष्टि नहीं होती है।"),
+            "इस अनुमान में ovulation की पुष्टि नहीं होती है।")
+        XCTAssertThrowsError(try FruitfolioMedicalConceptPreservation.rejectKnownConceptSubstitutions(source: source,
+            translated: "इस अनुमान में अंडाशय की पुष्टि नहीं होती है।", target: "hi"))
+        XCTAssertNoThrow(try FruitfolioMedicalConceptPreservation.rejectKnownConceptSubstitutions(
+            source: "Ovulation involves an ovary.", translated: "Ovulation: अंडाशय", target: "hi"),
+            "A literal ovary actually present in the source must not be prohibited by a blanket word ban")
+        XCTAssertTrue(FruitfolioMedicalConceptPreservation.originalTerms(source: "An ovarian result.", target: "hi").isEmpty)
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

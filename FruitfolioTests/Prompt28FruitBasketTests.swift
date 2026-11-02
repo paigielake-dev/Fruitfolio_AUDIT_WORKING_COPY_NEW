@@ -279,10 +279,47 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(model.session?.availableStarPasses, 0)
         XCTAssertTrue(model.settledCatches.isEmpty)
         model.tick(delta: 0.10, now: Date(timeIntervalSince1970: 1.1))
-        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        XCTAssertEqual(model.session?.availableStarPasses, 0, "Entering the basket starts settling; it must not collect immediately")
         XCTAssertEqual(model.basketCount, 0)
         XCTAssertFalse(model.activeStars.contains(where: { $0.id == star.id }))
         XCTAssertEqual(model.settledCatches.map(\.assetID), [.fruitbasket_star])
+        model.tick(delta: 0.20, now: Date(timeIntervalSince1970: 1.3))
+        XCTAssertEqual(model.session?.availableStarPasses, 0, "Elapsed time alone cannot substitute for actual visual settling")
+        model.confirmCatchSettling(id: star.id)
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        model.confirmCatchSettling(id: star.id)
+        XCTAssertEqual(model.session?.availableStarPasses, 1, "A repeated animation completion cannot bank twice")
+    }
+
+    func testSettlingAcknowledgementWhilePausedCannotScoreUntilResumingAndNewAttemptClearsPendingArt() throws {
+        let suite = "Prompt28.SettlePause.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 402, height: 874)
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: 402, fieldHeight: 874)
+        let diameter = Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: 402)
+        let fruit = Prompt28FallingFruit(fruitID: .apple, classification: .good, x: 0.5,
+            y: (geometry.mouthY + diameter / 2) / 874 + 0.001, fallSpeed: 0,
+            horizontalDrift: 0, rotationDegrees: 0)
+        model.activeFruit = [fruit]
+        model.tick(delta: 0.01, now: Date(timeIntervalSince1970: 1))
+        XCTAssertEqual(model.score, 0)
+        model.pause()
+        model.confirmCatchSettling(id: fruit.id)
+        model.tick(delta: 5, now: Date(timeIntervalSince1970: 6))
+        XCTAssertEqual(model.score, 0)
+        model.resume()
+        model.tick(delta: 0.20, now: Date(timeIntervalSince1970: 6.2))
+        XCTAssertEqual(model.score, 10)
+        XCTAssertEqual(model.basketCount, 1)
+        model.currentQuestion = fixtureQuestion()
+        model.beginCatch()
+        XCTAssertFalse(model.isPaused)
+        XCTAssertTrue(model.settledCatches.isEmpty)
+        model.confirmCatchSettling(id: fruit.id)
+        XCTAssertEqual(model.basketCount, 0, "An old presentation callback cannot alter a fresh attempt")
+        model.viewWillDisappear()
     }
 
     func testStarPassAccumulationHasNoArtificialCapAndConsumesOneAtATime() {

@@ -74,6 +74,10 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 XCTAssertTrue(candidate.textForVerification.contains("2.5 ng/mL"))
                 XCTAssertFalse(candidate.medicalMeaningVerified)
                 if target == "hi" {
+                    XCTAssertTrue(candidate.textForVerification.contains("ovulation"), "The exact original concept must remain when its medical translation is unsafe")
+                    XCTAssertEqual(candidate.retainedOriginalMedicalTerms, ["ovulation"])
+                    XCTAssertFalse(candidate.translationLimitations.isEmpty, "Original-English term retention must be explicit, not presented as complete localization")
+                    XCTAssertFalse(candidate.textForVerification.contains("अंडाशय"), "Ovary is not ovulation")
                     XCTAssertFalse(candidate.textForVerification.contains("घनत्व"),
                         "The actual prior Hindi density hallucination must not pass the corrected medical fixture")
                     XCTAssertFalse(candidate.textForVerification.contains("ग्राम/सेमी"),
@@ -81,6 +85,8 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 }
                 reports.append(["target": target, "output": candidate.textForVerification,
                     "actualSentenceEvidence": String(decoding: try JSONEncoder().encode(candidate.sentenceEvidence), as: UTF8.self),
+                    "retainedOriginalMedicalTerms": candidate.retainedOriginalMedicalTerms.joined(separator: ", "),
+                    "translationLimitations": candidate.translationLimitations.joined(separator: " | "),
                     "preservation": "PASS", "semanticReview": "NOT VERIFIED — requires review of this actual output"])
             } catch {
                 var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
@@ -127,6 +133,8 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 XCTAssertFalse(candidate.medicalMeaningVerified, "Exact values alone do not validate translated medical meaning")
                 reports.append(["target": target, "output": candidate.textForVerification,
                     "actualSentenceEvidence": String(decoding: try JSONEncoder().encode(candidate.sentenceEvidence), as: UTF8.self),
+                    "retainedOriginalMedicalTerms": candidate.retainedOriginalMedicalTerms.joined(separator: ", "),
+                    "translationLimitations": candidate.translationLimitations.joined(separator: " | "),
                     "preservation": "PASS", "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording"])
             } catch {
                 var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
@@ -163,6 +171,57 @@ extension AAAA_MADLADRuntimeIntegrationTests {
             _ = try await runtime.translateRawSentence("Do not stop taking prescribed medication.", target: "es", directory: directory)
             XCTFail("Corrupt tokenization resources must never reach model inference")
         } catch FruitfolioMADLADError.modelIntegrity { /* strict official checksum mismatch */ }
+        await runtime.unload()
+    }
+}
+
+extension AAAA_MADLADRuntimeIntegrationTests {
+    func testEveryRequestedLanguageExecutesOrReportsExactOfficialTagAbsenceWithoutSubstitution() async throws {
+        let directory = try XCTUnwrap(Bundle.main.url(forResource: "MADLAD", withExtension: nil))
+        let tokenizer = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: directory.appendingPathComponent("tokenizer.json"))) as? [String: Any])
+        let model = try XCTUnwrap(tokenizer["model"] as? [String: Any])
+        let vocabulary = try XCTUnwrap(model["vocab"] as? [[Any]])
+        let tags = Set(vocabulary.compactMap { $0.first as? String }.filter { $0.hasPrefix("<2") && $0.hasSuffix(">") })
+        let actuallyAbsent = FruitfolioLanguage.allCases.filter { !tags.contains("<2" + $0.madladTargetCode + ">") }
+        XCTAssertEqual(Set(actuallyAbsent.map(\.rawValue)), Set(["tpi", "ty", "rar", "niu", "gil"]),
+            "The official tokenizer, not a guessed alias, determines unsupported selections")
+        let runtime = FruitfolioMADLADLocalRuntime()
+        var reports: [[String: String]] = []
+        for language in FruitfolioLanguage.allCases {
+            let start = Date()
+            let absent = !tags.contains("<2" + language.madladTargetCode + ">")
+            do {
+                let output = try await runtime.translateRawSentence("Please select a language.",
+                    target: language.madladTargetCode, directory: directory)
+                XCTAssertFalse(absent, "An absent exact target must never be silently substituted")
+                XCTAssertFalse(output.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                if language == .chineseSimplified { XCTAssertTrue(output.contains("选") || output.contains("语")) }
+                if language == .chineseTraditional {
+                    XCTAssertTrue(output.contains("選") || output.contains("語"))
+                    XCTAssertFalse(output.contains("选") || output.contains("语"))
+                }
+                reports.append(["language": language.rawValue, "target": language.madladTargetCode,
+                    "source": "Please select a language.", "actualRawOutput": output,
+                    "runtimeExecution": "PASS", "languageQuality": "NOT VERIFIED — one nonmedical fixture is not full localization or clinical acceptance",
+                    "wallSeconds": String(Date().timeIntervalSince(start))])
+            } catch {
+                if absent, case FruitfolioMADLADError.inferenceFailed = error {
+                    reports.append(["language": language.rawValue, "target": language.madladTargetCode,
+                        "runtimeExecution": "REJECTED — exact official tokenizer target absent",
+                        "languageSupport": "BLOCKED", "substitution": "NONE"])
+                } else {
+                    reports.append(["language": language.rawValue, "target": language.madladTargetCode,
+                                    "runtimeExecution": "FAIL", "error": String(describing: error)])
+                    XCTFail("Actual local requested-language execution failed for \(language.rawValue): \(error)")
+                }
+            }
+            let data = try JSONSerialization.data(withJSONObject: reports.last!, options: [.sortedKeys])
+            print("MADLAD_SYNTHETIC_REQUESTED_LANGUAGE_RESULT " + String(decoding: data, as: UTF8.self))
+        }
+        XCTAssertEqual(reports.count, FruitfolioLanguage.allCases.count)
+        let evidence = XCTAttachment(data: try JSONSerialization.data(withJSONObject: reports, options: [.prettyPrinted, .sortedKeys]),
+            uniformTypeIdentifier: "public.json")
+        evidence.name = "MADLAD_ActualAllRequestedLanguageTargets"; evidence.lifetime = .keepAlways; add(evidence)
         await runtime.unload()
     }
 }

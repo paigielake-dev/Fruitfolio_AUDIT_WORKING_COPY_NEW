@@ -95,6 +95,7 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     var textStyle: UIFont.TextStyle = .headline
     var lineBreakMode: NSLineBreakMode = .byWordWrapping
     var textColor: Color = DesignTokens.ColorToken.primaryBurgundy
+    var accessibilityText: String? = nil
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     func makeUIView(context: Context) -> UILabel {
@@ -110,18 +111,25 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     }
 
     func updateUIView(_ label: UILabel, context: Context) {
-        label.text = text
+        if label.text != text { label.text = text }
+        label.accessibilityLabel = accessibilityText
         label.textColor = UIColor(textColor)
         let base = UIFont(name: fontName, size: pointSize) ?? UIFont.systemFont(ofSize: pointSize, weight: .semibold)
-        label.font = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,
+        let scaled = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,
             compatibleWith: UITraitCollection(preferredContentSizeCategory: contentSizeCategory))
-        label.invalidateIntrinsicContentSize()
+        if label.font != scaled { label.font = scaled }
+        // UIKit already invalidates intrinsic size when text/font changes.
+        // Unconditional invalidation during every SwiftUI update can produce
+        // redundant layout work while XCTest cycles Dynamic Type categories.
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
         let width = max(1, proposal.width ?? uiView.intrinsicContentSize.width)
         let measured = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
-        return CGSize(width: min(width, measured.width), height: ceil(measured.height))
+        // Rendering must use the same width used to measure wrapped height.
+        // Shrinking to measured.width afterwards can introduce another line
+        // without increasing height, clipping long accessibility-size words.
+        return CGSize(width: width, height: ceil(measured.height))
     }
 
     private var contentSizeCategory: UIContentSizeCategory {
