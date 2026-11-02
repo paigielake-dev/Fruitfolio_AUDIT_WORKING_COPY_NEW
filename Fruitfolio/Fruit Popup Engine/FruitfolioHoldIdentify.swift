@@ -12,21 +12,23 @@ import UIKit
 ///   `FruitfolioIconActionSurface`
 struct FruitfolioHoldIdentifyModifier: ViewModifier {
     let word: String
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
+    @State private var identificationTask: Task<Void, Never>?
 
     @State
     private var showing = false
 
     func body(content: Content) -> some View {
         content
-            .accessibilityLabel(Text(word))
+            .accessibilityLabel(Text(LocalizedStringKey(word)))
             .overlay(alignment: .top) {
                 if showing {
                     FruitfolioMicroLabel(word: word)
                         .offset(y: -34)
                         .transition(
-                            .opacity.combined(
-                                with: .scale(scale: 0.96)
-                            )
+                            systemReduceMotion || appReduceMotion
+                                ? .opacity : .opacity.combined(with: .scale(scale: 0.96))
                         )
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
@@ -38,17 +40,17 @@ struct FruitfolioHoldIdentifyModifier: ViewModifier {
             ) {
                 showBriefly()
             }
+            .onDisappear { identificationTask?.cancel(); showing = false }
     }
 
     @MainActor
     private func showBriefly() {
         showing = true
 
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds: 1_150_000_000
-            )
-
+        identificationTask?.cancel()
+        identificationTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 1_150_000_000) }
+            catch { return }
             showing = false
         }
     }
@@ -76,7 +78,7 @@ struct FruitfolioMicroLabel: View {
     let word: String
 
     var body: some View {
-        Text(word.lowercased())
+        Text(LocalizedStringKey(word.lowercased()))
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -131,6 +133,9 @@ struct FruitfolioMicroLabel: View {
 struct FruitfolioIconActionSurface<Label: View>: View {
     let identificationWord: String
     let accessibilityLabel: String
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
+    @State private var identificationTask: Task<Void, Never>?
     let isEnabled: Bool
     let action: () -> Void
 
@@ -173,18 +178,18 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             // MARK: CutePopButtonStyle-matched press animation
 
             .scaleEffect(
-                motionPreferences.reduceMotionActive
+                reduceMotion
                     ? 1.0
                     : (isPressed ? 0.88 : 1.0)
             )
             .offset(
-                y: motionPreferences.reduceMotionActive
+                y: reduceMotion
                     ? 0
                     : (isPressed ? 5 : 0)
             )
             .rotationEffect(
                 .degrees(
-                    motionPreferences.reduceMotionActive
+                    reduceMotion
                         ? 0
                         : (isPressed ? -1.2 : 0)
                 )
@@ -209,9 +214,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                     )
                     .offset(y: -34)
                     .transition(
-                        .opacity.combined(
-                            with: .scale(scale: 0.96)
-                        )
+                        reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 0.96))
                     )
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
@@ -233,7 +236,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                 children: .ignore
             )
             .accessibilityLabel(
-                Text(accessibilityLabel)
+                Text(LocalizedStringKey(accessibilityLabel))
             )
             .accessibilityAddTraits(
                 .isButton
@@ -249,7 +252,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             // MARK: Animation
 
             .animation(
-                motionPreferences.reduceMotionActive
+                reduceMotion
                     ? .easeOut(duration: 0.08)
                     : .spring(
                         response: 0.20,
@@ -259,9 +262,15 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                 value: isPressed
             )
             .animation(
-                .easeOut(duration: 0.12),
+                reduceMotion ? nil : .easeOut(duration: 0.12),
                 value: showingIdentification
             )
+            .disabled(!isEnabled)
+            .onDisappear { identificationTask?.cancel(); showingIdentification = false; isPressed = false }
+    }
+
+    private var reduceMotion: Bool {
+        systemReduceMotion || appReduceMotion || motionPreferences.reduceMotionActive
     }
 
     /// Long press gets first opportunity to recognize.
@@ -323,11 +332,10 @@ struct FruitfolioIconActionSurface<Label: View>: View {
     private func showIdentificationBriefly() {
         showingIdentification = true
 
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds: 1_150_000_000
-            )
-
+        identificationTask?.cancel()
+        identificationTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 1_150_000_000) }
+            catch { return }
             showingIdentification = false
         }
     }

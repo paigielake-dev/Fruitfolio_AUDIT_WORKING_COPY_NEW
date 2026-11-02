@@ -106,3 +106,21 @@ extension SharedControlUITests {
         capture(app, accessibilitySize ? "FAQ_Collapsed_AccessibilityXXXL" : "FAQ_Collapsed_Default")
     }
 }
+
+
+extension SharedControlUITests {
+    func testHoldingBackIdentifiesWithoutNavigatingAndTheNextTapStillReturns() {
+        let app = contact(accessibilitySize: false)
+        let back = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
+        fruitfolioReachControl(app, back)
+        XCTAssertTrue(back.isHittable)
+        back.press(forDuration: 0.7)
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Instagram")).firstMatch.exists,
+                      "A recognized identification hold must never also activate navigation")
+        capture(app, "IconHold_BackIdentifiesWithoutExecutingTap")
+        XCTAssertTrue(back.isHittable)
+        back.tap()
+        XCTAssertTrue(app.buttons["hub.utility.settings"].waitForExistence(timeout: 10))
+        capture(app, "IconHold_NextActualTapReturnsToHub")
+    }
+}
