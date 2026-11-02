@@ -57,7 +57,7 @@ final class PersonalDataExportTests: XCTestCase {
         let originalHistory = game.questionHistory
         let bytes = try await FruitfolioPersonalDataExport.capture(account: nil, username: "peach_qa", settings: settings,
             library: library, context: context, hormones: hormones, cycle: cycle, onboarding: onboarding,
-            fruitBasket: game, now: Date(timeIntervalSince1970: 1_700_000_000))
+            fruitBasket: game, now: fixed)
         // Exercise the same regular FileWrapper supplied to the system exporter,
         // writing and reopening an actual JSON file, then inspect real domains.
         let destination = FileManager.default.temporaryDirectory

@@ -11,8 +11,9 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
             $0.isHittable && !$0.frame.intersection(app.frame).isEmpty
         }) ?? app
         for _ in 0..<12 where !target.exists {
-            owner.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.72))
-                .press(forDuration: 0.05, thenDragTo: owner.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: 0.28)),
+            let lazyPanX: CGFloat = owner.identifier == "popup.writingArea" ? 0.50 : min(0.08, 16 / max(owner.frame.width, 1))
+            owner.coordinate(withNormalizedOffset: CGVector(dx: lazyPanX, dy: 0.72))
+                .press(forDuration: 0.05, thenDragTo: owner.coordinate(withNormalizedOffset: CGVector(dx: lazyPanX, dy: 0.28)),
                        withVelocity: .slow, thenHoldForDuration: 0.35)
         }
     }
@@ -29,7 +30,20 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
     // and could not be repaired by scrolling content that already fitted.
     // Modal writing-area clipping, complete bounds and hittability stay strict.
     let visible = app.frame.intersection(container.frame)
-    for attempt in 0..<14 {
+    // The actual Settings hierarchy puts sliders across x36...366 and the
+    // scroll thumb at x369...399. Center pans hit a slider; right-edge pans
+    // scrub its scrollbar. Use the empty left gutter of full-page content.
+    // A small popup has no such gutter and contains no sliders: use its center.
+    let panX: CGFloat = popupOwnsTarget || container.identifier == "popup.writingArea"
+        ? 0.50 : min(0.08, 16 / max(container.frame.width, 1))
+    // Keep the strict containment test, but budget real pans from measured
+    // distance. A complete large-type scientific passage may legitimately
+    // span far more than14small pans; never truncate it to satisfy a helper.
+    let distance = abs(target.frame.midY - visible.midY)
+    let estimatedPans = distance.isFinite
+        ? Int(min(74, ceil(distance / max(visible.height * 0.40, 1)))) : 14
+    let maximumAttempts = min(80, max(14, estimatedPans + 6))
+    for attempt in 0..<maximumAttempts {
         let frame = target.frame
         print("REACH_CONTROL attempt=\(attempt) identifier=\(identifier) target=\(frame) viewport=\(visible) hittable=\(target.isHittable)")
         if target.isHittable && visible.contains(frame) { break }
@@ -47,8 +61,8 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
         // starts at x333, on that thumb; attempts5/10 scrubbed backwards
         // by423pt instead of panning94pt. Pan the real content center.
         // Full containment, original viewport and hittability stay unchanged.
-        let start = container.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: startY))
-        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: 0.50, dy: endY))
+        let start = container.coordinate(withNormalizedOffset: CGVector(dx: panX, dy: startY))
+        let finish = container.coordinate(withNormalizedOffset: CGVector(dx: panX, dy: endY))
         // Run80's actual trace oscillated past the small writing viewport.
         // A proportional slow drag with a stationary release avoids momentum
         // overshoot without relaxing full containment or hittability.

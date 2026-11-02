@@ -1939,9 +1939,7 @@ struct Prompt28FruitBasketView: View {
 
                     if tourStep == 0 {
                         Button {
-                            viewModel.screen = .howItWorks
-                            store.skipTourAfterRules()
-                            showTour = false
+                            skipTourToRules()
                         } label: {
                             HStack(spacing: 0) {
                                 Spacer(minLength: 0)
@@ -1964,7 +1962,12 @@ struct Prompt28FruitBasketView: View {
         }
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
-        .onAppear { tourHeadingFocused = true }
+        .onAppear {
+            audioManager.play(.popupOpen)
+            tourHeadingFocused = true
+        }
+        .onDisappear { audioManager.play(.popupClose) }
+        .accessibilityAction(.escape) { skipTourToRules() }
         .onChange(of: tourStep) { _, _ in
             tourHeadingFocused = false
             Task { @MainActor in
@@ -1972,6 +1975,13 @@ struct Prompt28FruitBasketView: View {
                 tourHeadingFocused = true
             }
         }
+    }
+
+    private func skipTourToRules() {
+        audioManager.play(.buttonSoftPop)
+        viewModel.screen = .howItWorks
+        store.skipTourAfterRules()
+        showTour = false
     }
 
     private var tourTitle: String {

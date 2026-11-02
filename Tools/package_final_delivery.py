@@ -31,6 +31,7 @@ def digest(path):
 def included(path):
     rel = path.relative_to(ROOT)
     if any(part in SKIP_PARTS or part.endswith('.xcresult') for part in rel.parts): return False
+    if rel.parts[0] in {'Leaderboard_Preparation_Backup', 'FruitBasket_Leaderboard_Backup_20261012_061959'}: return False  # inactive historical copies, absent from project roots/references
     if rel.as_posix() == 'Delivery/CONTINUATION_ARCHIVE_FILES.json': return False
     if rel.parts.count('AppleRuns') > 1: return False  # duplicate embedded historical artifact trees
     if path.name == '.DS_Store' or path.suffix == '.pyc': return False
@@ -66,6 +67,20 @@ def verify_inputs():
                 filename = entry.get('filename')
                 if filename and not (catalog.parent / filename).is_file():
                     raise RuntimeError('Missing catalog resource: ' + str(catalog.parent / filename))
+    project = (ROOT / 'Fruitfolio.xcodeproj/project.pbxproj').read_text()
+    if 'llama.swiftui.xcodeproj' in project:
+        raise RuntimeError('Obsolete missing example subproject reference remains in the delivery project')
+    for record in re.findall(r'isa = PBXFileReference;([^}]+)', project):
+        if not re.search(r'sourceTree\s*=\s*SOURCE_ROOT\s*;', record): continue
+        match = re.search(r'path\s*=\s*(?:"([^"]+)"|([^;]+));', record)
+        if match:
+            rel = (match.group(1) or match.group(2)).strip()
+            if not (ROOT / rel).exists(): raise RuntimeError('Missing SOURCE_ROOT project reference: ' + rel)
+    for record in re.findall(r'isa = PBXFileSystemSynchronizedRootGroup;([^}]+)', project):
+        match = re.search(r'path\s*=\s*(?:"([^"]+)"|([^;]+));', record)
+        if match:
+            rel = (match.group(1) or match.group(2)).strip()
+            if not (ROOT / rel).is_dir(): raise RuntimeError('Missing synchronized source root: ' + rel)
     intelligence = (ROOT / 'Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift').read_text()
     start = intelligence.index('nonisolated enum FruitfolioGeneratedDraftValidator')
     end = intelligence.index('// MARK: - Research intelligence engine', start)

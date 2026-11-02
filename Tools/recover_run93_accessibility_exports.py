@@ -39,7 +39,7 @@ def main():
     assert os.environ.get('GITHUB_ACTIONS') == 'true'
     assert os.environ.get('GITHUB_REPOSITORY') == REPO
     if Path('Fruitfolio_Verification_Evidence/AppleRuns/Run93/AccessibilityAudit/RecoveryProvenance.json').exists():
-        print('Exact recovered evidence is already preserved in the repository; no duplicate transfer.')
+        print('Original log/provenance are tracked; full immutable exports remain in Run96 recovery artifact13133835033. No duplicate transfer or new test acceptance.')
         return
     opener = urllib.request.build_opener(NoCredentialRedirect())
     with opener.open(request('/actions/artifacts/' + str(ARTIFACT)), timeout=30) as response:

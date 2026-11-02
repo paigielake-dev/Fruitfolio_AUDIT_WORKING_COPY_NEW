@@ -41,8 +41,25 @@ final class SimulatorSmokeEvidenceTests: XCTestCase {
         let before = XCTAttachment(screenshot: app.screenshot())
         before.name = "Intro_ActualBeforeHomeInterruption"; before.lifetime = .keepAlways; add(before)
         XCUIDevice.shared.press(.home)
-        XCTAssertTrue(app.wait(for: .runningBackground, timeout: 1)
-            || app.wait(for: .runningBackgroundSuspended, timeout: 2), "The actual app must leave the foreground")
+        var observedBackground = app.wait(for: .runningBackground, timeout: 1)
+            || app.wait(for: .runningBackgroundSuspended, timeout: 2)
+        let homeState = app.state
+        var backgroundMethod = "Home button"
+        if !observedBackground {
+            // Some hosted simulator sessions did not actually leave the app
+            // after the hardware request. Activate the real SpringBoard; still
+            // require the actual app background state, never infer it from a tap.
+            backgroundMethod = "Home request followed by explicit SpringBoard activation"
+            XCUIApplication(bundleIdentifier: "com.apple.springboard").activate()
+            observedBackground = app.wait(for: .runningBackground, timeout: 2)
+                || app.wait(for: .runningBackgroundSuspended, timeout: 2)
+        }
+        let observedState = app.state
+        let stateEvidence = XCTAttachment(string: "Actual state after Home=\(homeState.rawValue); background method=\(backgroundMethod); final actual state=\(observedState.rawValue); expected background or suspended=\(observedBackground)")
+        stateEvidence.name = "Intro_ActualOSStateAfterHome"; stateEvidence.lifetime = .keepAlways; add(stateEvidence)
+        let homeFrame = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        homeFrame.name = "Intro_ActualScreenAfterHome"; homeFrame.lifetime = .keepAlways; add(homeFrame)
+        XCTAssertTrue(observedBackground, "The actual app must leave the foreground; observed state=\(observedState.rawValue)")
         // Longer than the entire6–8s signature. This is a real OS lifecycle
         // transition, not a direct call to the view model's pause handler.
         try await Task.sleep(for: .seconds(9))
