@@ -13,7 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SKIP_PARTS = {'.git', '__pycache__', '.ciDerivedData', 'DerivedData', '.build-apple-runtime', 'target', 'VerificationDownloads', '.venv', 'node_modules', '.build'}
 MODEL_HASHES = {'FruitfolioAI.gguf': '74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db',
                 'Models/MADLAD/model-q4k.gguf': 'ea6e5531a3e95213c7f0635988d119e078a655c09306e47851e15d4c0c3f9c37'}
-REQUIRED = ['Fruitfolio.xcodeproj/project.pbxproj', 'Fruitfolio.xcodeproj/xcshareddata/xcschemes/Fruitfolio.xcscheme',
+REQUIRED = ['Specification/Fruitfolio_Prompt_1B_COMPLETE_ALL_CORRECTIONS_2026-10-16.doc',
+            'Specification/Fruitfolio_Prompt_1B_Change_Breakdown_478.md',
+            'Specification/Prompt1B_Extracted_Text.txt', 'Delivery/FOUNDER_MAC_VERIFICATION.md',
+            'Fruitfolio.xcodeproj/project.pbxproj', 'Fruitfolio.xcodeproj/xcshareddata/xcschemes/Fruitfolio.xcscheme',
             'Fruitfolio/FruitfolioResearchPackage.json', 'Fruitfolio/Localizable.xcstrings',
             'Delivery/ImplementationTracker478.json', 'Delivery/LatestAppleTestResults.json',
             'Fruitfolio_Verification_Evidence/requirement-to-evidence-index.csv',
@@ -70,6 +73,7 @@ def verify_inputs():
     for name, expected in configurations: expected_resources['Models/MADLAD/' + name] = expected
     for rel, expected in expected_resources.items():
         if digest(ROOT / rel) != expected: raise RuntimeError('Model/tokenizer/configuration integrity failure: ' + rel)
+    runtime_provenance = {r['name']: r for r in json.loads((ROOT / 'Delivery/TESTED_LOCAL_RUNTIME_PROVENANCE.json').read_text())['runtimes']}
     for name in ['llama', 'FruitfolioMADLAD']:
         folder = ROOT / 'Vendor' / (name + '.xcframework')
         info = plistlib.loads((folder / 'Info.plist').read_bytes())
@@ -77,8 +81,12 @@ def verify_inputs():
         for library in info['AvailableLibraries']:
             if 'arm64' not in library['SupportedArchitectures']: continue
             variants.add(library.get('SupportedPlatformVariant', 'device'))
-            if not (folder / library['LibraryIdentifier'] / library['LibraryPath']).exists():
-                raise RuntimeError('Missing actual runtime library: ' + name)
+            payload = folder / library['LibraryIdentifier'] / library['LibraryPath']
+            if payload.is_dir(): payload = payload / payload.stem
+            if not payload.is_file(): raise RuntimeError('Missing actual runtime library: ' + name)
+            expected = next((r for r in runtime_provenance[name]['libraries'] if r['slice'] == library['LibraryIdentifier']), None)
+            if expected is None or payload.stat().st_size != expected['bytes'] or digest(payload) != expected['sha256']:
+                raise RuntimeError('Runtime differs from preserved actually tested binary: ' + str(payload))
         if not {'device', 'simulator'} <= variants: raise RuntimeError('Missing ARM64 runtime slice: ' + name)
     for catalog in (ROOT / 'Fruitfolio/Assets.xcassets').rglob('Contents.json'):
         data = json.loads(catalog.read_text())
@@ -87,6 +95,11 @@ def verify_inputs():
                 filename = entry.get('filename')
                 if filename and not (catalog.parent / filename).is_file():
                     raise RuntimeError('Missing catalog resource: ' + str(catalog.parent / filename))
+    for source_root in ['Fruitfolio', 'FruitfolioTests', 'FruitfolioUITests']:
+        for path in (ROOT / source_root).rglob('*.swift'):
+            text = path.read_bytes().decode('utf-8', errors='strict')
+            if re.search(r'(?:[0-9]+ tokens truncated|Warning: truncated output|original token count:)', text):
+                raise RuntimeError('Truncated tool output contaminated active Swift source: ' + str(path))
     project = (ROOT / 'Fruitfolio.xcodeproj/project.pbxproj').read_text()
     if 'llama.swiftui.xcodeproj' in project:
         raise RuntimeError('Obsolete missing example subproject reference remains in the delivery project')
