@@ -85,6 +85,13 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 reports.append(report)
                 XCTFail("Official local candidate failed strict preservation for \(target): \(error)")
             }
+            // These are exclusively the hard-coded synthetic fixture values,
+            // not user data. Preserve each actual result even if a later test
+            // times out before Xcode can finalize the result bundle.
+            if let report = reports.last {
+                let bytes = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+                print("MADLAD_SYNTHETIC_FIXTURE_RESULT " + String(decoding: bytes, as: UTF8.self))
+            }
         }
         let evidence = XCTAttachment(data: try JSONSerialization.data(withJSONObject: reports, options: [.prettyPrinted, .sortedKeys]),
                                      uniformTypeIdentifier: "public.json")

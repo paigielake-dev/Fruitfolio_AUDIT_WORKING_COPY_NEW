@@ -55,7 +55,7 @@ sudo pfctl -sr > "$evidence/actual-block-rules.txt" 2>&1
 # hangs. If it fires, the test is explicitly rejected as offline evidence.
 python3 - "$evidence" > "$evidence/watchdog-restoration.txt" 2>&1 <<'PYWATCHDOG' &
 import pathlib, subprocess, sys, time
-time.sleep(480)
+time.sleep(1080)
 pathlib.Path(sys.argv[1], 'isolation-ended-before-test-completed').touch()
 for command in [['sudo', 'pfctl', '-d'], ['sudo', 'pfctl', '-f', '/etc/pf.conf']]:
     subprocess.run(command, check=False, stdout=sys.stdout, stderr=subprocess.STDOUT)

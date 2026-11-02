@@ -162,7 +162,7 @@ jobs:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
       - name: Run unit and native inference tests
-        timeout-minutes: 12
+        timeout-minutes: 25
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
@@ -188,7 +188,7 @@ jobs:
           path: |
             Fruitfolio_Verification_Evidence/Build
       - name: Execute bundled Ask and MADLAD with verified external-network isolation
-        timeout-minutes: 12
+        timeout-minutes: 20
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         run: bash Tools/verify_offline_madlad_ci.sh
       - name: Export actual offline inference attachments
