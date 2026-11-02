@@ -661,7 +661,7 @@ struct Prompt09AskView: View {
             )
             .accessibilityHidden(true)
 
-            Text(viewModel.searchStatusText)
+            Text(LocalizedStringKey(viewModel.searchStatusText))
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -684,9 +684,8 @@ struct Prompt09AskView: View {
         .accessibilityElement(
             children: .combine
         )
-        .accessibilityLabel(
-            "Looking through the FruitsofLife.xo library"
-        )
+        .accessibilityLabel(Text(LocalizedStringKey(viewModel.searchStatusText)))
+        .accessibilityIdentifier("ask.researchProgress")
     }
 
     // MARK: - Answer
@@ -700,7 +699,8 @@ struct Prompt09AskView: View {
                 .textSelection(.enabled)
                 .fixedSize(horizontal: false, vertical: true)
             if !answer.sources.isEmpty { sourceSection(answer.sources) }
-            FruitfolioControlPillButton(label: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡") {
+            FruitfolioControlPillButton(label: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡",
+                localizationKey: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡") {
                 prepareFullAnswerForLibrarySave(answer)
             }
             .disabled(savedAnswerIDs.contains(String(describing: answer.id)))
@@ -814,6 +814,8 @@ struct Prompt09AskView: View {
                                             .selectedExcerptText
                                         ? "selection saved ♡"
                                         : "save selection ♡",
+                                    localizationKey: savedExcerptText == viewModel.selectedExcerptText
+                                        ? "selection saved ♡" : "save selection ♡",
                                     action: {
                                         prepareExcerptForLibrarySave(
                                             answer
