@@ -1029,6 +1029,9 @@ struct Prompt28FruitBasketView: View {
                 audioManager.play(.fruitCatch)
             }
         }
+        .onChange(of: viewModel.vineContactCount) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.vineRustle) }
+        }
         .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.starChime) }
             else if newValue < oldValue { audioManager.play(.notificationSoftSparkle) }
@@ -1132,6 +1135,9 @@ struct Prompt28FruitBasketView: View {
                         66
                     )
                 )
+                .modifier(Prompt28VineResistanceVisual(
+                    active: viewModel.isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification),
+                    reduceMotion: motionPreferences.reduceMotionActive, phase: fruit.y))
                 .position(
                     x: xOffset + width * fruit.x,
                     y: height * fruit.y
@@ -1148,6 +1154,9 @@ struct Prompt28FruitBasketView: View {
                 FruitfolioImage(id: .fruitbasket_star)
                     .frame(width: min(max(width * 0.10, 34), 52), height: min(max(width * 0.10, 34), 52))
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees))
+                    .modifier(Prompt28VineResistanceVisual(
+                        active: viewModel.isMeetingVines(x: star.x, y: star.y),
+                        reduceMotion: motionPreferences.reduceMotionActive, phase: star.y))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
                     .accessibilityLabel("star pass")
@@ -1194,6 +1203,10 @@ struct Prompt28FruitBasketView: View {
         }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
+        .onAppear { viewModel.updateGameplayFieldSize(width: width, height: height) }
+        .onChange(of: CGSize(width: width, height: height)) { _, size in
+            viewModel.updateGameplayFieldSize(width: size.width, height: size.height)
+        }
     }
 
     @ViewBuilder
@@ -2568,5 +2581,18 @@ private struct Prompt28WatercolorConfettiBurst: View {
         case 3: return DesignTokens.ColorToken.lavender
         default: return DesignTokens.ColorToken.mint
         }
+    }
+}
+
+private struct Prompt28VineResistanceVisual: ViewModifier {
+    let active: Bool
+    let reduceMotion: Bool
+    let phase: Double
+
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(active && !reduceMotion ? sin(phase * 70) * 6 : 0))
+            .offset(x: active && !reduceMotion ? sin(phase * 70) * 3 : 0)
+            .scaleEffect(x: active && !reduceMotion ? 1.03 : 1, y: active && !reduceMotion ? 0.97 : 1)
     }
 }

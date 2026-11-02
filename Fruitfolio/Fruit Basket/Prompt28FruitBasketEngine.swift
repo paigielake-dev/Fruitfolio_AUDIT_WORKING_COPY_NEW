@@ -198,3 +198,26 @@ struct Prompt28SpawnPlanner: Sendable {
         consecutiveBadSpawns = 0
     }
 }
+
+/// The same normalized image bounds used by the original vine artwork renderer.
+/// Contact is a bounded image-envelope approximation, not an invisible full-width band.
+struct Prompt28VineContactGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    let level: Int
+
+    var normalizedArtworkBounds: CGRect {
+        guard fieldWidth > 0, fieldHeight > 0 else { return .zero }
+        let width = level == 2 ? 0.20 : 0.30
+        let centerX = level == 2 ? 0.07 : 0.11
+        // Original fruitbasket_vines is 344 x 448 pixels; .fit preserves its aspect ratio.
+        let height = width * fieldWidth * (448.0 / 344.0) / fieldHeight
+        return CGRect(x: centerX - width / 2, y: 0.54 - height / 2,
+                      width: width, height: height)
+    }
+
+    func contains(x: Double, y: Double) -> Bool {
+        guard fieldWidth > 0, fieldHeight > 0 else { return false }
+        return normalizedArtworkBounds.contains(CGPoint(x: x, y: y))
+    }
+}

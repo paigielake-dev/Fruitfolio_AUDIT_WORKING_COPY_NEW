@@ -395,6 +395,38 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertNil(observed, "A hidden game must not be retained by a still-running 30 Hz loop")
     }
 
+    func testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand() {
+        let geometry = Prompt28VineContactGeometry(fieldWidth: 344, fieldHeight: 896, level: 3)
+        XCTAssertEqual(geometry.normalizedArtworkBounds.height, 0.15, accuracy: 0.00001)
+        XCTAssertTrue(geometry.contains(x: 0.11, y: 0.54))
+        XCTAssertFalse(geometry.contains(x: 0.70, y: 0.54), "Fruit outside the artwork must fall normally")
+        XCTAssertFalse(geometry.contains(x: 0.11, y: 0.25))
+        XCTAssertFalse(Prompt28VineContactGeometry(fieldWidth: 0, fieldHeight: 0, level: 3).contains(x: 0, y: 0))
+    }
+
+    func testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent() throws {
+        let suite = "Prompt28.Vines.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 2)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 344, height: 896)
+        let good = Prompt28FallingFruit(fruitID: .apple, classification: .good, x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let bad = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let outside = Prompt28FallingFruit(fruitID: .pear, classification: .good, x: 0.7, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        let star = Prompt28FallingStar(x: 0.11, y: 0.54, fallSpeed: 0.3, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeFruit = [good, bad, outside]; model.activeStars = [star]
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == good.id })).y, 0.5484, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == bad.id })).y, 0.555, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first(where: { $0.id == outside.id })).y, 0.555, accuracy: 0.00001)
+        XCTAssertEqual(try XCTUnwrap(model.activeStars.first).y, 0.5484, accuracy: 0.00001)
+        XCTAssertEqual(model.vineContactCount, 1)
+        XCTAssertEqual(try XCTUnwrap(model.activeFruit.first).fallSpeed, 0.3, "Contact does not rewrite an object's base velocity")
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1.05))
+        XCTAssertEqual(model.vineContactCount, 1, "Rustle must not restart on every 30 Hz frame")
+        model.viewWillDisappear()
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",

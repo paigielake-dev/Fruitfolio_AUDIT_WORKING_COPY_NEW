@@ -16,6 +16,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var selectedAnswerID: String?
     @Published var session: Prompt28Session?
     @Published var activeFruit: [Prompt28FallingFruit] = []
+    @Published private(set) var vineContactCount = 0
+    private var previousVineContacts: Set<UUID> = []
+    private var gameplayFieldSize = CGSize.zero
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
     @Published private(set) var basketIsMeetingPuddleResistance = false
@@ -198,6 +201,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         showingStormNotice = false
         roundResultLocked = false
         spawnPlanner.reset()
+        previousVineContacts = []
         lastSpawnAt = .distantPast
         screen = .catchActive
 
@@ -370,13 +374,29 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
     }
 
-    private func tick(delta: TimeInterval, now: Date) {
+    func updateGameplayFieldSize(width: Double, height: Double) {
+        guard width.isFinite, height.isFinite, width > 0, height > 0 else { return }
+        gameplayFieldSize = CGSize(width: width, height: height)
+    }
+
+    func isMeetingVines(x: Double, y: Double, classification: Prompt28FruitClassification = .good) -> Bool {
+        guard classification == .good, activeObstacles.contains(.vines) else { return false }
+        return Prompt28VineContactGeometry(fieldWidth: gameplayFieldSize.width,
+                                          fieldHeight: gameplayFieldSize.height,
+                                          level: gameLevel).contains(x: x, y: y)
+    }
+
+    // Internal frame entry point is also exercised by deterministic physics tests.
+    func tick(delta: TimeInterval, now: Date) {
         guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
         var remaining: [Prompt28FallingFruit] = []
+        var currentVineContacts: Set<UUID> = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
-            let vineMultiplier = activeObstacles.contains(.vines) && fruit.classification == .good && (0.22...0.58).contains(fruit.y) ? 0.56 : 1.0
+            let meetingVines = isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification)
+            if meetingVines { currentVineContacts.insert(fruit.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
             fruit.y += fruit.fallSpeed * vineMultiplier * delta
 
             var horizontalVelocity = fruit.horizontalDrift
@@ -415,7 +435,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
-            let vineMultiplier = activeObstacles.contains(.vines) && (0.22...0.58).contains(star.y) ? 0.56 : 1.0
+            let meetingVines = isMeetingVines(x: star.x, y: star.y)
+            if meetingVines { currentVineContacts.insert(star.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
             star.y += star.fallSpeed * vineMultiplier * delta
             star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
             if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX) {
@@ -425,6 +447,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             if star.y <= 1.06 { remainingStars.append(star) }
         }
         activeStars = remainingStars
+        if !currentVineContacts.subtracting(previousVineContacts).isEmpty { vineContactCount += 1 }
+        previousVineContacts = currentVineContacts
 
         let interval = random(in: levelConfig.spawnIntervalRange)
         if activeFruit.count < levelConfig.maxConcurrentItems,

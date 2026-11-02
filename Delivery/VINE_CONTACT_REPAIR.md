@@ -1,0 +1,5 @@
+# Vine contact repair — actual simulator acceptance pending
+
+The old implementation slowed every good fruit and standalone star between normalized y 0.22 and 0.58 regardless of the vine image position. The live physics now use the original 344×448 artwork aspect ratio, current playfield dimensions, level-specific image width and its actual center. Fruit outside the visible image envelope falls normally; bad fruit never uses vine resistance. This is an image-envelope approximation, not pixel-mask collision.
+
+Contact adds a small original-art rotation, horizontal struggle and compression, with all additional motion disabled under Reduced Motion. The existing vineRustle audio is requested once on entering contact rather than restarted on each physics frame. Base per-object fall speed remains immutable. Two deterministic tests exercise geometry and the actual game frame with good fruit, bad fruit, outside fruit and a standalone star, including the single-entry event. These tests require actual Xcode execution before PASS. Branch bounce and settled catches remain separate unfinished work.
