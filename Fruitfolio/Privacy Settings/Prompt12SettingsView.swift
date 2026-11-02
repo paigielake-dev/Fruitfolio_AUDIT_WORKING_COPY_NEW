@@ -285,7 +285,11 @@ struct Prompt12SettingsView: View {
             .accessibilityValue(settings.language.nativeDisplayName)
 
             Prompt12InfoText("choose your preferred language. language names stay recognizable so you can always change this setting again.")
-            if let notice = FruitfolioLocalization.untranslatedContentNotice(for: settings.language) {
+            if let warning = settings.languagePreferenceWarning {
+                Prompt12InfoText(warning)
+                    .accessibilityIdentifier("settings.languageRecoveryNotice")
+            }
+            if let notice = FruitfolioLocalization.interfaceAvailabilityNotice(for: settings.language) {
                 Prompt12InfoText(notice)
                     .accessibilityIdentifier("settings.translationAvailability")
             }

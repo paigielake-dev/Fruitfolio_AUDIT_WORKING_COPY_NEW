@@ -148,10 +148,14 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
 enum FruitfolioLanguagePreferences {
     static let defaultsKey = "fruitfolio.settings.language"
 
+    static func decodeStoredLanguage(_ value: Any?) -> FruitfolioLanguage? {
+        guard let raw = value as? String else { return nil }
+        return FruitfolioLanguage(rawValue: raw)
+            ?? FruitfolioLanguage(rawValue: raw.replacingOccurrences(of: "_", with: "-"))
+    }
+
     static var current: FruitfolioLanguage {
-        guard let raw = UserDefaults.standard.string(forKey: defaultsKey),
-              let language = FruitfolioLanguage(rawValue: raw) else { return .english }
-        return language
+        decodeStoredLanguage(UserDefaults.standard.object(forKey: defaultsKey)) ?? .english
     }
 }
 
@@ -213,7 +217,13 @@ final class SettingsStore: ObservableObject {
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
-    @Published var language: FruitfolioLanguage { didSet { defaults.set(language.rawValue, forKey: Key.language) } }
+    @Published private(set) var languagePreferenceWarning: String? = nil
+    @Published var language: FruitfolioLanguage {
+        didSet {
+            defaults.set(language.rawValue, forKey: Key.language)
+            languagePreferenceWarning = nil
+        }
+    }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -228,7 +238,12 @@ final class SettingsStore: ObservableObject {
         self.typingVolume = Self.double(defaults, key: Key.typingVolume, fallback: 0.08)
         self.reduceAnimationOverride = Self.bool(defaults, key: Key.reduceAnimationOverride, fallback: false)
         self.onboardingCompleted = Self.bool(defaults, key: Key.onboardingCompleted, fallback: false)
-        self.language = defaults.string(forKey: Key.language).flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+        let storedLanguage = defaults.object(forKey: Key.language)
+        let decodedLanguage = FruitfolioLanguagePreferences.decodeStoredLanguage(storedLanguage)
+        self.language = decodedLanguage ?? .english
+        if storedLanguage != nil && decodedLanguage == nil {
+            languagePreferenceWarning = "your saved language setting could not be recognized. English is being used for now, and the original setting is preserved. choose a language to replace it."
+        }
     }
 
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's
