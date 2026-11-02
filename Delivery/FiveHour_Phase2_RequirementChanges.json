@@ -1,0 +1,72 @@
+{
+  "phase": 2,
+  "recordedAtUTC": "2026-11-02T16:08:14.762723+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-222",
+      "originalBreakdownItem": "Add or verify separately adjustable volume controls for music, rain, sound effects, and typing.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioTests/AudioLifecycleRuntimeTests.swift"
+      ],
+      "changes": "Preserved four independent channels, finite persisted volumes and master/category mute. Interruption restart now requires OS resume permission or explicit category play/enable intent; foreground and volume changes cannot bypass a held channel. Media service reset recreates eligible loops only. Repeated UI cues reuse one player while game collision cues remain independent. Nonfinite fade-in duration becomes immediate finite-volume playback.",
+      "verification": "Four new AVAudioPlayer XCTest cases added; not executed in this environment. Earlier source118 tests remain historical evidence only. git diff --check passed for the two changed Swift files.",
+      "evidence": "Delivery/FIVE_HOUR_PHASE2_IMPLEMENTATION.md",
+      "remainingIssues": "Founder Mac execution, real interruptions and audible output/quality still require verification; these source changes do not constitute complete requirement acceptance."
+    },
+    {
+      "requirementID": "FF1B-223",
+      "originalBreakdownItem": "Ensure each control updates the actual audio system.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioTests/AudioLifecycleRuntimeTests.swift"
+      ],
+      "changes": "Preserved four independent channels, finite persisted volumes and master/category mute. Interruption restart now requires OS resume permission or explicit category play/enable intent; foreground and volume changes cannot bypass a held channel. Media service reset recreates eligible loops only. Repeated UI cues reuse one player while game collision cues remain independent. Nonfinite fade-in duration becomes immediate finite-volume playback.",
+      "verification": "Four new AVAudioPlayer XCTest cases added; not executed in this environment. Earlier source118 tests remain historical evidence only. git diff --check passed for the two changed Swift files.",
+      "evidence": "Delivery/FIVE_HOUR_PHASE2_IMPLEMENTATION.md",
+      "remainingIssues": "Founder Mac execution, real interruptions and audible output/quality still require verification; these source changes do not constitute complete requirement acceptance."
+    },
+    {
+      "requirementID": "FF1B-226",
+      "originalBreakdownItem": "Prevent muted or disabled audio from continuing to play.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioTests/AudioLifecycleRuntimeTests.swift"
+      ],
+      "changes": "Preserved four independent channels, finite persisted volumes and master/category mute. Interruption restart now requires OS resume permission or explicit category play/enable intent; foreground and volume changes cannot bypass a held channel. Media service reset recreates eligible loops only. Repeated UI cues reuse one player while game collision cues remain independent. Nonfinite fade-in duration becomes immediate finite-volume playback.",
+      "verification": "Four new AVAudioPlayer XCTest cases added; not executed in this environment. Earlier source118 tests remain historical evidence only. git diff --check passed for the two changed Swift files.",
+      "evidence": "Delivery/FIVE_HOUR_PHASE2_IMPLEMENTATION.md",
+      "remainingIssues": "Founder Mac execution, real interruptions and audible output/quality still require verification; these source changes do not constitute complete requirement acceptance."
+    },
+    {
+      "requirementID": "FF1B-227",
+      "originalBreakdownItem": "Ensure audio preferences persist appropriately.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioTests/AudioLifecycleRuntimeTests.swift"
+      ],
+      "changes": "Preserved four independent channels, finite persisted volumes and master/category mute. Interruption restart now requires OS resume permission or explicit category play/enable intent; foreground and volume changes cannot bypass a held channel. Media service reset recreates eligible loops only. Repeated UI cues reuse one player while game collision cues remain independent. Nonfinite fade-in duration becomes immediate finite-volume playback.",
+      "verification": "Four new AVAudioPlayer XCTest cases added; not executed in this environment. Earlier source118 tests remain historical evidence only. git diff --check passed for the two changed Swift files.",
+      "evidence": "Delivery/FIVE_HOUR_PHASE2_IMPLEMENTATION.md",
+      "remainingIssues": "Founder Mac execution, real interruptions and audible output/quality still require verification; these source changes do not constitute complete requirement acceptance."
+    },
+    {
+      "requirementID": "FF1B-465",
+      "originalBreakdownItem": "Test audio preferences and global mute.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "FruitfolioTests/AudioLifecycleRuntimeTests.swift"
+      ],
+      "changes": "Preserved four independent channels, finite persisted volumes and master/category mute. Interruption restart now requires OS resume permission or explicit category play/enable intent; foreground and volume changes cannot bypass a held channel. Media service reset recreates eligible loops only. Repeated UI cues reuse one player while game collision cues remain independent. Nonfinite fade-in duration becomes immediate finite-volume playback.",
+      "verification": "Four new AVAudioPlayer XCTest cases added; not executed in this environment. Earlier source118 tests remain historical evidence only. git diff --check passed for the two changed Swift files.",
+      "evidence": "Delivery/FIVE_HOUR_PHASE2_IMPLEMENTATION.md",
+      "remainingIssues": "Founder Mac execution, real interruptions and audible output/quality still require verification; these source changes do not constitute complete requirement acceptance."
+    }
+  ]
+}

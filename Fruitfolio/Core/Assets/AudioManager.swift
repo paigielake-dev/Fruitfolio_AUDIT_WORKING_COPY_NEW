@@ -15,11 +15,14 @@ final class AudioManager: ObservableObject {
     private var settingsCancellables = Set<AnyCancellable>()
 
     private var oneShotPlayers: [FruitfolioAudioCategory: [AVAudioPlayer]] = [:]
+    private var uiFeedbackPlayers: [String: AVAudioPlayer] = [:]
     private var loopPlayers: [FruitfolioAudioCategory: AVAudioPlayer] = [:]
     private var desiredLoops: [FruitfolioAudioCategory: LoopRequest] = [:]
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
     private var fadeOutTasks: [FruitfolioAudioCategory: Task<Void, Never>] = [:]
     private var audioInterrupted = false
+    // An ended interruption without shouldResume must not be bypassed by foregrounding.
+    private var interruptionHeldCategories: Set<FruitfolioAudioCategory> = []
     private var applicationIsActive = true
     // @Published emits before SettingsStore updates its stored value. Cache the
     // delivered master state so every playback gate observes the new value.
@@ -174,6 +177,7 @@ final class AudioManager: ObservableObject {
         if loop || isContinuousCategory(category) {
             cancelPendingFadeOut(category)
             suspendedLoopCategories.remove(category)
+            interruptionHeldCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
                 bundle: bundle
@@ -269,11 +273,13 @@ final class AudioManager: ObservableObject {
         duration: TimeInterval,
         bundle: Bundle = .main
     ) {
+        let duration = duration.isFinite ? max(0, duration) : 0
         let category = category(for: id)
 
         if isContinuousCategory(category) {
             cancelPendingFadeOut(category)
             suspendedLoopCategories.remove(category)
+            interruptionHeldCategories.remove(category)
             desiredLoops[category] = LoopRequest(
                 id: id,
                 bundle: bundle
@@ -429,6 +435,7 @@ final class AudioManager: ObservableObject {
     }
 
     func resetAllAudio() {
+        interruptionHeldCategories.removeAll()
         stopAll()
         desiredLoops.removeAll()
         suspendedLoopCategories.removeAll()
@@ -559,6 +566,7 @@ final class AudioManager: ObservableObject {
         enabled: Bool
     ) {
         if enabled {
+            interruptionHeldCategories.remove(category)
             resumeContinuousAudio(
                 category: category
             )
@@ -590,7 +598,8 @@ final class AudioManager: ObservableObject {
     ) {
         guard !allAudioMuted, !audioInterrupted, applicationIsActive,
               volume(for: category) > 0,
-              !suspendedLoopCategories.contains(category) else {
+              !suspendedLoopCategories.contains(category),
+              !interruptionHeldCategories.contains(category) else {
             return
         }
 
@@ -779,8 +788,24 @@ final class AudioManager: ObservableObject {
                 category: category
             )
 
-            let player = try makePlayer(for: id, bundle: bundle)
-
+            // Shared controls and their owners may request the same cue during
+            // one interaction. Reuse only UI feedback, never collision sounds.
+            let coalescesUIFeedback: Bool
+            switch id {
+            case .buttonSoftPop, .popupOpen, .popupClose, .pageTurn, .bookClose:
+                coalescesUIFeedback = true
+            default: coalescesUIFeedback = false
+            }
+            let key = bundle.bundleURL.absoluteString + "|" + semanticKey(for: id)
+            let player: AVAudioPlayer
+            if coalescesUIFeedback, let cached = uiFeedbackPlayers[key] {
+                player = cached
+                player.currentTime = 0
+            } else {
+                player = try makePlayer(for: id, bundle: bundle)
+                if coalescesUIFeedback { uiFeedbackPlayers[key] = player }
+            }
+            oneShotPlayers[category]?.removeAll { $0 === player }
             player.numberOfLoops = 0
 
             player.volume =
@@ -801,6 +826,7 @@ final class AudioManager: ObservableObject {
             )
 
             if !didPlay {
+                if coalescesUIFeedback { uiFeedbackPlayers[key] = nil }
                 pruneFinishedOneShots(
                     category: category
                 )
@@ -820,6 +846,7 @@ final class AudioManager: ObservableObject {
     private func stopOneShots(
         category: FruitfolioAudioCategory
     ) {
+        if category == .soundEffects { uiFeedbackPlayers.removeAll() }
         guard let players =
                 oneShotPlayers[category] else {
             return
@@ -1189,14 +1216,42 @@ final class AudioManager: ObservableObject {
                       let type = AVAudioSession.InterruptionType(rawValue: raw) else { return }
                 switch type {
                 case .began:
+                    self.interruptionHeldCategories.formUnion(self.desiredLoops.keys)
                     self.audioInterrupted = true
                     self.stopAll()
                 case .ended:
                     self.audioInterrupted = false
+                    let rawOptions = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt ?? 0
+                    if AVAudioSession.InterruptionOptions(rawValue: rawOptions).contains(.shouldResume) {
+                        self.interruptionHeldCategories.removeAll()
+                    }
                     self.configureAudioSession()
                     self.restoreDesiredLoops()
                 @unknown default: break
                 }
+            }
+        })
+        notificationObservers.append(center.addObserver(
+            forName: AVAudioSession.mediaServicesWereLostNotification,
+            object: AVAudioSession.sharedInstance(), queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                self?.audioInterrupted = true
+                self?.stopAll()
+            }
+        })
+        notificationObservers.append(center.addObserver(
+            forName: AVAudioSession.mediaServicesWereResetNotification,
+            object: AVAudioSession.sharedInstance(), queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                // Old AVAudioPlayer objects belong to the lost audio service.
+                // Rebuild only eligible continuous requests, never old effects.
+                self.stopAll()
+                self.audioInterrupted = false
+                self.configureAudioSession()
+                self.restoreDesiredLoops()
             }
         })
         notificationObservers.append(center.addObserver(
@@ -1226,6 +1281,7 @@ final class AudioManager: ObservableObject {
         for category in [FruitfolioAudioCategory.music, .rainAmbience] {
             guard isEnabled(category),
                   !suspendedLoopCategories.contains(category),
+                  !interruptionHeldCategories.contains(category),
                   let request = desiredLoops[category] else { continue }
             startLoop(request.id, category: category,
                       bundle: request.bundle, fadeDuration: 0.20)

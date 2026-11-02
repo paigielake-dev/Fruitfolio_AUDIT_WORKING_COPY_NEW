@@ -1,9 +1,109 @@
 import XCTest
 import UIKit
+import AVFoundation
 @testable import Fruitfolio
 
 @MainActor
 final class AudioLifecycleRuntimeTests: XCTestCase {
+    func testInterruptionWithoutResumePermissionSurvivesForegroundAndVolumeChanges() async throws {
+        let suite = "AudioInterruption-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        let center = NotificationCenter.default
+        func post(_ type: AVAudioSession.InterruptionType, options: UInt = 0) {
+            center.post(name: AVAudioSession.interruptionNotification,
+                        object: AVAudioSession.sharedInstance(), userInfo: [
+                            AVAudioSessionInterruptionTypeKey: type.rawValue,
+                            AVAudioSessionInterruptionOptionKey: options])
+        }
+        post(.began)
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        post(.ended)
+        try await Task.sleep(for: .milliseconds(150))
+        center.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        settings.musicVolume = 0.31
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "A new rain request must not release music's interruption hold")
+        post(.began)
+        try await Task.sleep(for: .milliseconds(150))
+        post(.ended, options: AVAudioSession.InterruptionOptions.shouldResume.rawValue)
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+    }
+
+    func testNonfiniteFadeInDurationsProduceFiniteAudibleVolume() throws {
+        let suite = "AudioFade-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.musicVolume = 0.23
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        for duration in [Double.nan, Double.infinity, -Double.infinity, -1] {
+            manager.fadeIn(.fruitBasketMusicbox, duration: duration)
+            let observation = manager.playbackObservation(for: .music)
+            XCTAssertTrue(observation.isPlaying)
+            XCTAssertEqual(try XCTUnwrap(observation.volumes.first), 0.23, accuracy: 0.001)
+            manager.stopAll()
+        }
+    }
+
+    func testRepeatedSharedButtonFeedbackDoesNotStackButGameCuesRemainIndependent() throws {
+        let suite = "AudioFeedback-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        for _ in 0..<12 { manager.play(.buttonSoftPop) }
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 1)
+        manager.play(.fruitCatch)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 2,
+                       "Collision feedback must not be suppressed by UI cue coalescing")
+        settings.soundEffectsEnabled = false
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        settings.soundEffectsEnabled = true
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying,
+                       "Unmuting must not replay a stale button or collision sound")
+    }
+
+    func testMediaServiceResetRebuildsEligibleLoopsWithoutReplayingEffects() async throws {
+        let suite = "AudioService-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.buttonSoftPop)
+        NotificationCenter.default.post(name: AVAudioSession.mediaServicesWereLostNotification,
+                                        object: AVAudioSession.sharedInstance())
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        NotificationCenter.default.post(name: AVAudioSession.mediaServicesWereResetNotification,
+                                        object: AVAudioSession.sharedInstance())
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertEqual(manager.playbackObservation(for: .music).playerCount, 1)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+    }
+
     func testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory() async throws {
         let suite = "AudioLoops-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
