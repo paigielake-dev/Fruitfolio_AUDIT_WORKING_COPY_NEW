@@ -68,3 +68,28 @@ final class AskSessionLifetimeTests: XCTestCase {
     }
 
 }
+
+extension AskSessionLifetimeTests {
+    func testContinuousPaperAutoFollowDistinguishesGrowingAnswersFromReadingEarlierContent() {
+        var policy = AskConversationScrollPolicy()
+        policy.updateBottom(700, viewportHeight: 700)
+        XCTAssertTrue(policy.shouldFollow)
+        policy.updateBottom(1100, viewportHeight: 700)
+        XCTAssertTrue(policy.shouldFollow, "Streaming growth alone cannot disable conditional auto-follow")
+        policy.userDragged(towardEarlier: true)
+        policy.updateBottom(1400, viewportHeight: 700)
+        XCTAssertFalse(policy.shouldFollow)
+        policy.userEndedDrag()
+        XCTAssertFalse(policy.shouldFollow, "Releasing an earlier-answer scroll must not force a jump")
+        policy.updateBottom(1600, viewportHeight: 700)
+        XCTAssertFalse(policy.shouldFollow, "Later streaming must respect the existing reading position")
+        policy.userDragged(towardEarlier: false)
+        policy.updateBottom(710, viewportHeight: 700)
+        XCTAssertFalse(policy.shouldFollow, "Do not fight an active finger gesture")
+        policy.userEndedDrag()
+        XCTAssertTrue(policy.shouldFollow, "Returning to the latest content re-enables following")
+        policy.userDragged(towardEarlier: true); policy.userEndedDrag()
+        policy.requestedNewQuestion()
+        XCTAssertTrue(policy.shouldFollow, "An explicit new question requests the latest response")
+    }
+}

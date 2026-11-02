@@ -32,6 +32,11 @@ final class AudioManager: ObservableObject {
     private var basketPuddleMoving = false
     private var basketPuddleContact = false
     private var basketObstacleOwner: UUID?
+    private var basketPuddleReleaseTask: Task<Void, Never>?
+    #if DEBUG
+    private var basketEntryStarts = 0
+    private var basketBranchStarts = 0
+    #endif
     /// Missing approved assets are explicit; rain/pop/catch audio is never substituted.
     private(set) var missingBasketObstacleAssets: Set<String> = []
 
@@ -44,21 +49,36 @@ final class AudioManager: ObservableObject {
         guard owner == nil || owner == basketObstacleOwner else { return }
         let entered = overlapping && !basketPuddleContact
         basketPuddleContact = overlapping
-        if entered, applicationIsActive, !audioInterrupted, isEnabled(.soundEffects) {
-            playBasketObstacleOneShot("audio_puddle_entry", bundle: bundle)
-        }
-        let moving = overlapping && moving
-        guard moving != basketPuddleMoving else { return }
-        basketPuddleMoving = moving
-        guard moving, applicationIsActive, !audioInterrupted, isEnabled(.soundEffects) else {
-            basketPuddlePlayer?.stop(); basketPuddlePlayer = nil
+        basketPuddleMoving = overlapping && moving
+        guard applicationIsActive, !audioInterrupted, isEnabled(.soundEffects) else {
+            stopBasketObstaclePlayers()
             return
         }
-        if let player = approvedBasketObstaclePlayer("audio_puddle_movement", bundle: bundle) {
+        if entered { playBasketObstacleOneShot("audio_puddle_entry", bundle: bundle) }
+        guard basketPuddleMoving else { releasePuddleMovementNaturally(); return }
+        basketPuddleReleaseTask?.cancel(); basketPuddleReleaseTask = nil
+        if let existing = basketPuddlePlayer {
+            // Rapid stop/re-entry reuses the same live loop instead of stacking
+            // or restarting water from its beginning on every drag frame.
+            existing.setVolume(volume(for: .soundEffects), fadeDuration: 0.08)
+            if !existing.isPlaying { _ = existing.play() }
+        } else if let player = approvedBasketObstaclePlayer("audio_puddle_movement", bundle: bundle) {
             player.numberOfLoops = -1
             player.volume = volume(for: .soundEffects)
             basketPuddlePlayer = player
             _ = player.play()
+        }
+    }
+
+    private func releasePuddleMovementNaturally() {
+        guard basketPuddleReleaseTask == nil, let player = basketPuddlePlayer else { return }
+        player.setVolume(0, fadeDuration: 0.12)
+        basketPuddleReleaseTask = Task { [weak self, weak player] in
+            do { try await Task.sleep(for: .milliseconds(120)) } catch { return }
+            guard let self, let player, !self.basketPuddleMoving,
+                  self.basketPuddlePlayer === player else { return }
+            player.stop(); self.basketPuddlePlayer = nil
+            self.basketPuddleReleaseTask = nil
         }
     }
 
@@ -70,20 +90,35 @@ final class AudioManager: ObservableObject {
 
     func stopBasketObstacleAudio(owner: UUID? = nil) {
         guard owner == nil || owner == basketObstacleOwner else { return }
-        basketPuddleMoving = false
-        basketPuddleContact = false
+        basketPuddleMoving = false; basketPuddleContact = false
+        stopBasketObstaclePlayers()
+    }
+
+    private func stopBasketObstaclePlayers() {
+        basketPuddleReleaseTask?.cancel(); basketPuddleReleaseTask = nil
         basketPuddlePlayer?.stop(); basketPuddlePlayer = nil
         basketImpactPlayers.forEach { $0.stop() }
         basketImpactPlayers.removeAll()
     }
+
+    #if DEBUG
+    func obstaclePlaybackObservation() -> (owner: UUID?, puddlePlayer: ObjectIdentifier?, isPlaying: Bool, oneShotCount: Int, volumes: [Float], durations: [TimeInterval], entryStarts: Int, branchStarts: Int) {
+        let players = basketImpactPlayers + (basketPuddlePlayer.map { [$0] } ?? [])
+        return (basketObstacleOwner, basketPuddlePlayer.map(ObjectIdentifier.init),
+                players.contains(where: \.isPlaying), basketImpactPlayers.filter(\.isPlaying).count,
+                players.map(\.volume), players.map(\.duration), basketEntryStarts, basketBranchStarts)
+    }
+    #endif
 
     private func approvedBasketObstaclePlayer(_ name: String, bundle: Bundle) -> AVAudioPlayer? {
         do {
             if let asset = NSDataAsset(name: name, bundle: bundle) {
                 return try AVAudioPlayer(data: asset.data)
             }
-            if let url = bundle.url(forResource: name, withExtension: "mp3") {
-                return try AVAudioPlayer(contentsOf: url)
+            for extensionName in ["wav", "mp3"] {
+                if let url = bundle.url(forResource: name, withExtension: extensionName) {
+                    return try AVAudioPlayer(contentsOf: url)
+                }
             }
         } catch { debugLog("approved obstacle audio could not load: \(name): \(error)") }
         if missingBasketObstacleAssets.insert(name).inserted {
@@ -97,7 +132,11 @@ final class AudioManager: ObservableObject {
         guard let player = approvedBasketObstaclePlayer(name, bundle: bundle) else { return }
         player.volume = volume(for: .soundEffects)
         basketImpactPlayers.append(player)
-        _ = player.play()
+        let started = player.play()
+        #if DEBUG
+        if started && name == "audio_puddle_entry" { basketEntryStarts += 1 }
+        if started && name == "audio_branch_impact" { basketBranchStarts += 1 }
+        #endif
     }
 
 
@@ -111,6 +150,7 @@ final class AudioManager: ObservableObject {
     }
 
     deinit {
+        basketPuddleReleaseTask?.cancel()
         for observer in notificationObservers {
             NotificationCenter.default.removeObserver(observer)
         }
@@ -334,6 +374,7 @@ final class AudioManager: ObservableObject {
     func pause(
         category: FruitfolioAudioCategory
     ) {
+        if category == .soundEffects { stopBasketObstaclePlayers() }
         if isContinuousCategory(category) {
             cancelPendingFadeOut(category)
             suspendedLoopCategories.insert(category)
@@ -351,6 +392,7 @@ final class AudioManager: ObservableObject {
     func stop(
         category: FruitfolioAudioCategory
     ) {
+        if category == .soundEffects { stopBasketObstaclePlayers() }
         stopOneShots(
             category: category
         )
@@ -440,7 +482,7 @@ final class AudioManager: ObservableObject {
                 }
 
                 if !enabled {
-                    self.stopBasketObstacleAudio()
+                    self.stopBasketObstaclePlayers()
                     self.stopOneShots(
                         category: .soundEffects
                     )
@@ -634,7 +676,7 @@ final class AudioManager: ObservableObject {
         }
 
         if !isEnabled(.soundEffects) {
-            stopBasketObstacleAudio()
+            stopBasketObstaclePlayers()
             stopOneShots(
                 category: .soundEffects
             )
@@ -887,7 +929,7 @@ final class AudioManager: ObservableObject {
         }
         let currentVolume = isEnabled(category) ? volume(for: category) : 0
         if category == .soundEffects {
-            if currentVolume == 0 { stopBasketObstacleAudio() }
+            if currentVolume == 0 { stopBasketObstaclePlayers() }
             basketPuddlePlayer?.volume = currentVolume
             basketImpactPlayers.forEach { $0.volume = currentVolume }
         }

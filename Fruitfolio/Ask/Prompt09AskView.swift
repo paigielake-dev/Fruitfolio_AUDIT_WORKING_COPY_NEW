@@ -11,7 +11,7 @@ struct Prompt09AskView: View {
 
     @StateObject private var viewModel: Prompt09AskViewModel
 
-    @State private var nearConversationBottom = true
+    @State private var conversationScrollPolicy = AskConversationScrollPolicy()
     @State private var conversationViewportHeight: CGFloat = 0
     @State private var suggestionRevealCount = 0
     @State private var showingHelp = false
@@ -121,7 +121,9 @@ struct Prompt09AskView: View {
                         .padding(.top, 14)
                         .padding(.bottom, 28)
                         .frame(minHeight: conversationViewportHeight, alignment: .top)
-                        .background { AskContinuousJournalPaper() }
+                        .background { AskContinuousJournalPaper(viewportHeight: conversationViewportHeight) }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("ask.journalContent")
                         .background {
                             GeometryReader { geometry in
                                 Color.clear.preference(key: AskConversationBottomKey.self,
@@ -139,6 +141,10 @@ struct Prompt09AskView: View {
                         )
                     }
                     .coordinateSpace(name: "askConversationViewport")
+                    .accessibilityIdentifier("ask.conversationScroll")
+                    .simultaneousGesture(DragGesture(minimumDistance: 6)
+                        .onChanged { value in conversationScrollPolicy.userDragged(towardEarlier: value.translation.height > 0) }
+                        .onEnded { _ in conversationScrollPolicy.userEndedDrag() })
                     .background {
                         GeometryReader { geometry in
                             Color.clear
@@ -147,11 +153,11 @@ struct Prompt09AskView: View {
                         }
                     }
                     .onPreferenceChange(AskConversationBottomKey.self) { bottom in
-                        nearConversationBottom = bottom <= conversationViewportHeight + 80
+                        conversationScrollPolicy.updateBottom(Double(bottom), viewportHeight: Double(conversationViewportHeight))
                     }
                     .onChange(of: viewModel.displayedAnswerText.count) {
                         if viewModel.phase == .answering { audioManager.playTypingTick() }
-                        if nearConversationBottom { proxy.scrollTo("askConversationBottom", anchor: .bottom) }
+                        if conversationScrollPolicy.shouldFollow { proxy.scrollTo("askConversationBottom", anchor: .bottom) }
                     }
                     .scrollDismissesKeyboard(
                         .interactively
@@ -162,7 +168,7 @@ struct Prompt09AskView: View {
                                 .messages
                                 .count
                     ) {
-                        if nearConversationBottom, let last =
+                        if conversationScrollPolicy.shouldFollow, let last =
                             viewModel
                                 .messages
                                 .last {
@@ -188,7 +194,7 @@ struct Prompt09AskView: View {
                                 .answer?
                                 .id
                     ) {
-                        if nearConversationBottom, let id =
+                        if conversationScrollPolicy.shouldFollow, let id =
                             viewModel
                                 .answer?
                                 .id {
@@ -1379,6 +1385,7 @@ struct Prompt09AskView: View {
         }
 
         inputFocused = false
+        conversationScrollPolicy.requestedNewQuestion()
 
         audioManager.play(
             .buttonSoftPop
@@ -1697,13 +1704,16 @@ private struct AskConversationBottomKey: PreferenceKey {
 }
 
 private struct AskContinuousJournalPaper: View {
+    let viewportHeight: CGFloat
     var body: some View {
         GeometryReader { geometry in
             Image("ask_answer_paper")
                 .resizable(capInsets: EdgeInsets(top: 140, leading: 80, bottom: 140, trailing: 80), resizingMode: .stretch)
-                .frame(width: geometry.size.width, height: geometry.size.height + 200, alignment: .top)
+                .frame(width: geometry.size.width, height: geometry.size.height + max(viewportHeight * 2, 400), alignment: .top)
         }
-        .clipped()
+        // Continue the same approved paper beyond the final content bounds.
+        // The ScrollView clips its viewport; no artificial sheet bottom is
+        // revealed while reading the final answer or elastically overscrolling.
         .allowsHitTesting(false)
         .accessibilityHidden(true)
     }

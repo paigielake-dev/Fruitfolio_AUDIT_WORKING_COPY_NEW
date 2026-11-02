@@ -252,3 +252,61 @@ extension AudioLifecycleRuntimeTests {
         evidence.name = "ObstacleAudio_MissingApprovedAssets"; evidence.lifetime = .keepAlways; add(evidence)
     }
 }
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testActualBundledWaterAndWoodAssetsPlayWithoutStackingAndRespectSFXMuteVolumeAndOwnerCleanup() async throws {
+        let suite = "CollisionFoley-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true; settings.soundEffectsVolume = 0.22
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        let owner = UUID(); manager.claimBasketObstacleAudioOwner(owner)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        let initial = manager.obstaclePlaybackObservation()
+        XCTAssertTrue(initial.isPlaying)
+        let identity = try XCTUnwrap(initial.puddlePlayer)
+        XCTAssertEqual(initial.entryStarts, 1)
+        XCTAssertTrue(initial.durations.contains { abs($0 - 1.8) < 0.01 })
+        XCTAssertTrue(initial.durations.contains { abs($0 - 0.44) < 0.01 })
+        for _ in 0..<30 { manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner) }
+        XCTAssertEqual(manager.obstaclePlaybackObservation().puddlePlayer, identity)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1, "Continuous contact cannot replay entry")
+        settings.soundEffectsVolume = 0.07
+        XCTAssertTrue(manager.obstaclePlaybackObservation().volumes.allSatisfy { abs($0 - 0.07) < 0.001 })
+        manager.setBasketPuddleInteraction(overlapping: true, moving: false, owner: owner)
+        try await Task.sleep(for: .milliseconds(40))
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().puddlePlayer, identity, "Rapid resumed movement reuses the fading loop")
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1)
+        settings.soundEffectsVolume = 0
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertNil(manager.obstaclePlaybackObservation().puddlePlayer)
+        settings.soundEffectsVolume = 0.12
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1, "Unmuting continuous physical contact does not invent entry")
+        manager.playBasketBranchImpact(owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().branchStarts, 1)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().durations.contains { abs($0 - 0.24) < 0.01 })
+        manager.setBasketPuddleInteraction(overlapping: false, moving: false, owner: owner)
+        try await Task.sleep(for: .milliseconds(220))
+        XCTAssertNil(manager.obstaclePlaybackObservation().puddlePlayer, "Exit release finishes; no retained water loop")
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 2)
+        settings.soundEffectsEnabled = false
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        settings.soundEffectsEnabled = true
+        let newOwner = UUID(); manager.claimBasketObstacleAudioOwner(newOwner)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: newOwner)
+        manager.stopBasketObstacleAudio(owner: owner)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().isPlaying, "Late old-owner cleanup cannot stop a new game")
+        manager.stopBasketObstacleAudio(owner: newOwner)
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertTrue(manager.missingBasketObstacleAssets.isEmpty)
+        let evidence = XCTAttachment(string: "Actual bundled original WAV entry0.44s/movement1.8s/wood0.24s loaded through NSDataAsset and AVAudioPlayer; one live loop identity, continuous-contact event count, natural release, actual SFX volume/zero mute, re-entry and owner cleanup verified. API playback evidence; acoustic realism and physical silent-switch quality remain separate verification.")
+        evidence.name = "CollisionFoley_ActualBundledPlayersAndGates"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}

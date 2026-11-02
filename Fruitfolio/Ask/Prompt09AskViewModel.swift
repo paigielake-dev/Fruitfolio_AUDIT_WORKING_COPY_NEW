@@ -288,3 +288,27 @@ final class Prompt09AskViewModel: ObservableObject {
         }
     }
 }
+
+/// Explicit reading intent, separate from geometry changed by streamed text.
+/// Growing content must not be mistaken for a user's request to stop following.
+nonisolated struct AskConversationScrollPolicy: Equatable, Sendable {
+    private(set) var followsLatest = true
+    private(set) var isUserDragging = false
+    private(set) var isAtLatest = true
+    var shouldFollow: Bool { followsLatest && !isUserDragging }
+
+    mutating func updateBottom(_ bottom: Double, viewportHeight: Double) {
+        guard bottom.isFinite, viewportHeight.isFinite, viewportHeight > 0 else { return }
+        isAtLatest = bottom <= viewportHeight + 24
+        if isAtLatest && !isUserDragging { followsLatest = true }
+    }
+    mutating func userDragged(towardEarlier: Bool) {
+        isUserDragging = true
+        if towardEarlier { followsLatest = false }
+    }
+    mutating func userEndedDrag() {
+        isUserDragging = false
+        if isAtLatest { followsLatest = true }
+    }
+    mutating func requestedNewQuestion() { followsLatest = true; isUserDragging = false }
+}

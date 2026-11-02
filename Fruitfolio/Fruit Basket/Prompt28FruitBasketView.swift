@@ -1053,6 +1053,9 @@ struct Prompt28FruitBasketView: View {
                 audioManager.play(.fruitCatch)
             }
         }
+        .onChange(of: viewModel.basketX) { _, _ in
+            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: viewModel.puddleMovementActive, owner: viewModel.obstacleAudioOwnerID)
+        }
         .onChange(of: viewModel.puddleContactActive) { _, contact in
             audioManager.setBasketPuddleInteraction(overlapping: contact, moving: viewModel.puddleMovementActive, owner: viewModel.obstacleAudioOwnerID)
         }
