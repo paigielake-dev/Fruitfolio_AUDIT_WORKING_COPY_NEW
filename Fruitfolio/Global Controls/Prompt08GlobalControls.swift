@@ -47,6 +47,24 @@ struct FruitfolioControlPillButton: View {
     @EnvironmentObject
     private var audioManager: AudioManager
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    @ViewBuilder
+    private var visibleLabel: some View {
+        let components = label.components(separatedBy: "  •  ")
+        if dynamicTypeSize.isAccessibilitySize, components.count == 2 {
+            // Each real text block has its own intrinsic bounds. Keep the
+            // complete unchanged action name on the native Button below.
+            VStack(spacing: 0) {
+                Text(components[0])
+                Text("•")
+                Text(components[1])
+            }
+        } else {
+            Text(label)
+        }
+    }
+
     var body: some View {
         Button {
             if playsSound { audioManager.play(.buttonSoftPop) }
@@ -57,7 +75,7 @@ struct FruitfolioControlPillButton: View {
             // into a full-shell StaticText by SwiftUI accessibility.
             HStack(spacing: 0) {
                 Spacer(minLength: 0)
-                Text(label)
+                visibleLabel
                     .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
                     .fontWeight(.semibold)
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
