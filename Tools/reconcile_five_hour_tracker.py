@@ -183,6 +183,7 @@ def main():
         lines += [f"## {item['requirementID']} — {item['implementationStatus']}", '',
                   item['originalBreakdownItem'], '', 'Original reference: ' + item['originalReference'], '',
                   'Source mappings: ' + '; '.join(item.get('relevantSourceFiles', [])), '',
+                  'Source-sprint records: ' + '; '.join(x['ledger'] for x in item['currentSourceSprintChanges']), '',
                   'Current verification: ' + item['currentVerification']['actualResult'], '',
                   'Evidence: ' + '; '.join(item.get('supportingEvidence', []) + item.get('evidenceReferences', [])), '',
                   'Remaining discrepancies:']

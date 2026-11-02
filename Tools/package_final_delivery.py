@@ -7,6 +7,7 @@ import json
 from pathlib import Path, PurePosixPath
 import plistlib
 import re
+import tempfile
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -95,6 +96,20 @@ def verify_inputs():
                 filename = entry.get('filename')
                 if filename and not (catalog.parent / filename).is_file():
                     raise RuntimeError('Missing catalog resource: ' + str(catalog.parent / filename))
+    source_inventory = json.loads((ROOT / 'Fruitfolio_Verification_Evidence/FiveHourSprint/Phase8Integration/IntegratedSourceByteVerification316.json').read_text())
+    expected_source_paths = set()
+    for record in source_inventory['rows']:
+        path = ROOT / record['path']
+        if not path.is_file(): raise RuntimeError('Verified active source disappeared: ' + record['path'])
+        data = path.read_bytes()
+        actual = hashlib.sha1(b'blob ' + str(len(data)).encode() + b'\0' + data).hexdigest()
+        expected = record.get('remoteGitBlobSHA', record['sha'])
+        if actual != expected: raise RuntimeError('Active source differs from verified GitHub bytes: ' + record['path'])
+        expected_source_paths.add(record['path'])
+    for folder in ['Fruitfolio', 'FruitfolioTests', 'FruitfolioUITests']:
+        for path in (ROOT / folder).rglob('*.swift'):
+            if path.relative_to(ROOT).as_posix() not in expected_source_paths:
+                raise RuntimeError('Active Swift source is absent from verified Git inventory: ' + str(path))
     for source_root in ['Fruitfolio', 'FruitfolioTests', 'FruitfolioUITests']:
         for path in (ROOT / source_root).rglob('*.swift'):
             text = path.read_bytes().decode('utf-8', errors='strict')
@@ -145,7 +160,10 @@ def package(args):
     files = [(p, p.relative_to(ROOT).as_posix()) for p in sorted(ROOT.rglob('*')) if included(p)]
     if args.verify_only:
         print(json.dumps({'inputIntegrity': 'PASS', 'releaseAcceptance': 'NOT CLAIMED', 'files': len(files), 'tracker': tracker['summary']}, indent=2)); return
-    out = args.output_directory.resolve(); out.mkdir(parents=True, exist_ok=True)
+    out = args.output_directory.resolve()
+    if out == ROOT or ROOT in out.parents:
+        raise RuntimeError('Delivery output must be outside the project root to avoid packaging prior archives or extraction caches')
+    out.mkdir(parents=True, exist_ok=True)
     name = ('Fruitfolio_Prompt_1B_FINAL_COMPLETE.zip' if args.kind == 'final' else
             'Fruitfolio_Prompt_1B_INTEGRATED_SOURCE.zip' if args.kind == 'integrated' else
             'Fruitfolio_Prompt_1B_SNAPSHOT_' + args.source_commit[:12] + '.zip')
@@ -173,7 +191,19 @@ def package(args):
             with z.open(item['path']) as stream:
                 if hashlib.file_digest(stream, 'sha256').hexdigest() != item['sha256']: raise RuntimeError('Changed or damaged file: ' + item['path'])
         # Read the actual extracted project/scheme bytes through ZIP decoding.
-        if b'PBXProject' not in z.read(REQUIRED[0]) or b'<Scheme' not in z.read(REQUIRED[1]): raise RuntimeError('Project or shared scheme was not preserved')
+        if b'PBXProject' not in z.read('Fruitfolio.xcodeproj/project.pbxproj') or b'<Scheme' not in z.read('Fruitfolio.xcodeproj/xcshareddata/xcschemes/Fruitfolio.xcscheme'): raise RuntimeError('Project or shared scheme was not preserved')
+    extraction_verified = False
+    if args.kind in {'integrated', 'final'}:
+        with tempfile.TemporaryDirectory(prefix='Fruitfolio-Extraction-Check-', dir=out) as temporary:
+            extracted = Path(temporary)
+            with zipfile.ZipFile(archive) as z: z.extractall(extracted)
+            for item in manifest['files']:
+                actual = extracted / item['path']
+                if not actual.is_file() or digest(actual) != item['sha256']:
+                    raise RuntimeError('Physical extraction changed a file or filename: ' + item['path'])
+            if b'PBXProject' not in (extracted / 'Fruitfolio.xcodeproj/project.pbxproj').read_bytes():
+                raise RuntimeError('Extracted Xcode project is unreadable')
+            extraction_verified = True
     parts = []; part_size = args.part_size_mib * 1024 * 1024
     with archive.open('rb') as source:
         while True:
@@ -190,7 +220,10 @@ def package(args):
             parts.append({'name': path.name, 'bytes': size, 'sha256': digest(path)})
     index = {'archive': name, 'status': manifest['deliveryStatus'], 'sourceCommit': args.source_commit,
              'sourceTree': args.source_tree, 'developmentBranch': args.branch,
-             'bytes': archive.stat().st_size, 'sha256': digest(archive), 'files': len(files)+1, 'parts': parts}
+             'bytes': archive.stat().st_size, 'sha256': digest(archive), 'files': len(files)+1, 'parts': parts,
+             'verification': {'zipCRC': 'PASS', 'everyManifestFileSHA256': 'PASS', 'safeUTF8Paths': 'PASS',
+                              'physicalExtractionAndFileReadback': 'PASS' if extraction_verified else 'NOT EXECUTED',
+                              'requiredResourceInclusion': 'PASS', 'releaseAcceptance': 'NOT CLAIMED'}}
     reconstructed = hashlib.sha256()
     for item in parts:
         with (out / item['name']).open('rb') as source:
@@ -198,7 +231,16 @@ def package(args):
     if reconstructed.hexdigest() != index['sha256']: raise RuntimeError('Ordered parts do not reconstruct the exact archive')
     (out / (name + '.parts.json')).write_text(json.dumps(index, indent=2) + '\n')
     (out / (name + '.SHA256SUMS.txt')).write_text(''.join(p['sha256'] + '  ' + p['name'] + '\n' for p in parts) + index['sha256'] + '  ' + name + '\n')
-    (out / (name + '.RECONSTRUCTION.txt')).write_text('Concatenate .part01, .part02, ... in numeric order to ' + name + '. Verify every part and full-archive SHA256 against the adjacent parts.json/SHA256SUMS files before extraction. These are binary split parts of one ZIP, not independent ZIP archives. Extract UTF-8 filenames intact, then open Fruitfolio.xcodeproj on an Apple Silicon Mac.\nStatus: ' + manifest['deliveryStatus'] + '\n')
+    (out / 'RECONSTRUCT_FRUITFOLIO.py').write_bytes((ROOT / 'Tools/reconstruct_delivery.py').read_bytes())
+    (out / (name + '.RECONSTRUCTION.txt')).write_text(
+        'Download every .part01, .part02, ... file and the matching .parts.json into one folder. '
+        'These are binary pieces of one ZIP, not separate ZIP archives. Download RECONSTRUCT_FRUITFOLIO.py too.\n'
+        'From that folder run: python3 RECONSTRUCT_FRUITFOLIO.py ' + name + '.parts.json\n'
+        'The script verifies each exact part size/SHA256, numeric sequence and whole-archive SHA256 before publishing the ZIP. '
+        'It never overwrites a different existing ZIP. No network access or model execution occurs.\n'
+        'Alternatively concatenate all .partNN files in numeric order to ' + name + ' and verify SHA256SUMS.\n'
+        'Extract UTF-8 filenames intact, then open Fruitfolio.xcodeproj on an Apple Silicon Mac; see Delivery/FOUNDER_MAC_VERIFICATION.md.\n'
+        'Status: ' + manifest['deliveryStatus'] + '\n')
     print(json.dumps(index, indent=2), flush=True)
 
 
