@@ -8,6 +8,7 @@ from pathlib import Path, PurePosixPath
 import plistlib
 import re
 import tempfile
+import unicodedata
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,9 +28,15 @@ REQUIRED = ['Specification/Fruitfolio_Prompt_1B_COMPLETE_ALL_CORRECTIONS_2026-10
             'Models/MADLAD/special_tokens_map.json', 'Models/MADLAD/spiece.model', *MODEL_HASHES]
 
 
+def stream_digest(stream):
+    result = hashlib.sha256()
+    while block := stream.read(8 * 1024 * 1024): result.update(block)
+    return result.hexdigest()
+
+
 def digest(path):
     with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        return stream_digest(stream)
 
 
 def included(path):
@@ -158,6 +165,13 @@ def package(args):
     tracker = verify_inputs()
     if args.kind == 'final': final_gate(tracker, args.source_commit)
     files = [(p, p.relative_to(ROOT).as_posix()) for p in sorted(ROOT.rglob('*')) if included(p)]
+    canonical_names = {}
+    for _, rel in files:
+        canonical = unicodedata.normalize('NFC', rel).casefold()
+        if canonical in canonical_names and canonical_names[canonical] != rel:
+            raise RuntimeError('Case/Unicode filename collision on common Mac filesystems: ' + canonical_names[canonical] + ' / ' + rel)
+        canonical_names[canonical] = rel
+
     if args.verify_only:
         print(json.dumps({'inputIntegrity': 'PASS', 'releaseAcceptance': 'NOT CLAIMED', 'files': len(files), 'tracker': tracker['summary']}, indent=2)); return
     out = args.output_directory.resolve()
@@ -189,7 +203,7 @@ def package(args):
             rel.encode('utf-8', errors='strict')
         for item in manifest['files']:
             with z.open(item['path']) as stream:
-                if hashlib.file_digest(stream, 'sha256').hexdigest() != item['sha256']: raise RuntimeError('Changed or damaged file: ' + item['path'])
+                if stream_digest(stream) != item['sha256']: raise RuntimeError('Changed or damaged file: ' + item['path'])
         # Read the actual extracted project/scheme bytes through ZIP decoding.
         if b'PBXProject' not in z.read('Fruitfolio.xcodeproj/project.pbxproj') or b'<Scheme' not in z.read('Fruitfolio.xcodeproj/xcshareddata/xcschemes/Fruitfolio.xcscheme'): raise RuntimeError('Project or shared scheme was not preserved')
     extraction_verified = False

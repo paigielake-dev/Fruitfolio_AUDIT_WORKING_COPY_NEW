@@ -9,8 +9,11 @@ import tempfile
 
 
 def digest(path):
+    # Also works with the Python3.9 supplied by some Mac developer tools.
+    result = hashlib.sha256()
     with path.open('rb') as source:
-        return hashlib.file_digest(source, 'sha256').hexdigest()
+        while block := source.read(8 * 1024 * 1024): result.update(block)
+    return result.hexdigest()
 
 
 def reconstruct(index_path):

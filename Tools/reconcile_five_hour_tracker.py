@@ -130,8 +130,27 @@ def reconcile(document, ledgers, root, unchanged_evidence):
             append_unique(item.setdefault('remainingIssues', []), [
                 'Final integrated Mac/Xcode, simulator and applicable visual/accessibility/physical acceptance remains required; see Delivery/FOUNDER_MAC_VERIFICATION.md.'
             ])
+        item.setdefault('preFiveHourStateFields', {key: item.get(key) for key in
+            ['currentImplementationState', 'verificationState', 'inspectionState']})
+        item.setdefault('historicalTestResults', item.get('testResults', []))
+        item.setdefault('historicalTestsPerformed', item.get('testsPerformed', []))
+        item['currentImplementationState'] = {
+            'PASS': 'IMPLEMENTED — SCOPED UNCHANGED HISTORICAL VERIFICATION RETAINED',
+            PENDING: PENDING, 'PARTIAL': 'PARTIALLY IMPLEMENTED — FULL ACCEPTANCE PENDING',
+            'NOT VERIFIED': 'IMPLEMENTATION/VERIFICATION NOT FULLY ESTABLISHED',
+            'BLOCKED': 'BLOCKED — IDENTIFIED RESOURCE OR DEPENDENCY',
+            EXCLUDED_STATUS: EXCLUDED_STATUS}[status]
+        item['verificationState'] = item['currentVerification']['actualResult']
+        item['inspectionState'] = item['currentImplementationState']
+        item['testResults'] = [{'result': 'PASS' if status == 'PASS' else EXCLUDED_STATUS if status == EXCLUDED_STATUS else 'NOT VERIFIED',
+            'scope': item['currentVerification']['actualResult'], 'newAppleExecution': False,
+            'historicalFailureRetained': 'lastKnownFailedAcceptance' in item}]
+        item['testsPerformed'] = ['Existing evidence and phase-ledger reconciliation; source/resource provenance checks. No new integrated Apple execution.']
         item['remainingDiscrepancies'] = list(item.get('remainingIssues', []))
     document['summary'] = dict(Counter(r['implementationStatus'] for r in items))
+    document['schemaVersion'] = 3
+    document.setdefault('originalTrackerCheckpointCommit', document.get('checkpointCommit'))
+    document['checkpointCommit'] = 'c5c6f81386618f482e143ef4984120b2e18eaa06'
     document['completionClaim'] = False
     document['reconciledAtUTC'] = datetime.now(timezone.utc).isoformat()
     document['sourceSprintClock'] = 'Delivery/FIVE_HOUR_SOURCE_SPRINT_CLOCK.json'
