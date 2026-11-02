@@ -182,6 +182,24 @@ nonisolated struct FruitfolioEvidencePacket:
     let contentVersion: String
 }
 
+/// Reference identifiers must have one meaning before dictionary construction
+/// or model selection. Reject malformed packets rather than choosing a duplicate
+/// quote or crashing; this does not relax any scientific validation rule.
+extension FruitfolioEvidencePacket {
+    var hasUnambiguousEvidenceIdentity: Bool {
+        func uniqueNonblank(_ ids: [String]) -> Bool {
+            Set(ids).count == ids.count
+                && ids.allSatisfy { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+        }
+        let noteIDs = researchNoteChunks.map(\.chunkID)
+        let extractIDs = sourceChunks.map(\.sourceChunkID)
+        return uniqueNonblank(noteIDs) && uniqueNonblank(extractIDs)
+            && Set(noteIDs).isDisjoint(with: Set(extractIDs))
+            && uniqueNonblank(claimEvidenceMap.map { $0.claim.id })
+            && uniqueNonblank(sourceRecords.map(\.sourceID))
+    }
+}
+
 /// The local model never gets to hand arbitrary prose directly to the UI.
 /// It must return a small evidence-linked draft that deterministic code can
 /// validate before rendering. This keeps the model downstream of Research.
@@ -213,7 +231,8 @@ nonisolated struct FruitfolioEvidenceSelection: Codable, Sendable {
 nonisolated enum FruitfolioSelectedEvidenceDraftBuilder {
     static func draft(selection: FruitfolioEvidenceSelection, evidence: FruitfolioEvidencePacket) throws -> FruitfolioGeneratedDraft {
         let ids = selection.evidenceIDs
-        guard (1...4).contains(ids.count), Set(ids).count == ids.count else {
+        guard evidence.hasUnambiguousEvidenceIdentity,
+              (1...4).contains(ids.count), Set(ids).count == ids.count else {
             throw FruitfolioResearchIntelligenceError.unsupported
         }
         let texts = Dictionary(uniqueKeysWithValues:
@@ -1395,6 +1414,7 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
         draft: FruitfolioGeneratedDraft,
         evidence: FruitfolioEvidencePacket
     ) -> FruitfolioValidatedDraft? {
+        guard evidence.hasUnambiguousEvidenceIdentity else { return nil }
         let noteByID = Dictionary(
             uniqueKeysWithValues: evidence.researchNoteChunks.map { ($0.chunkID, $0.text) }
         )

@@ -54,6 +54,18 @@
       "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
       "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
       "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-136",
+      "originalBreakdownItem": "Preserve research retrieval, claim/evidence mapping, medical safety, and citation validation.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "changes": "Added an identity preflight before evidence-selection and strict-validator dictionary construction. Duplicate note/extract/claim/source identifiers, blank identifiers and overlapping note/extract namespaces fail closed instead of crashing or selecting ambiguous evidence. Every existing claim-boundary and complete-verbatim-quote check remains intact; no medical safety threshold was lowered.",
+      "verification": "Three adversarial XCTest cases added with multiple malformed subcases and positive verbatim/negation/measurement preservation checks. Runtime not executed for new source. Actual bundled JSON identifiers were checked in Python: 5477 unique notes, 295 unique sources, 470 unique source chunks, no blanks and no note/extract ID collisions.",
+      "evidence": "FruitfolioTests/EvidenceIdentitySafetyTests.swift",
+      "remainingIssues": "Run full grounding suites and controlled offline native FruitfolioAI verification on founder Mac. Structural identities do not independently verify clinical accuracy."
     }
   ]
 }
