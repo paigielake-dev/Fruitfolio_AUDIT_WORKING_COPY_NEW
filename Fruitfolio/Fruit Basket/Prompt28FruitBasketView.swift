@@ -871,7 +871,7 @@ struct Prompt28FruitBasketView: View {
                                 .prompt28Text(.body)
 
                             Text(
-                                "starred = catch it · no star = let it pass"
+                                "starred fruit = catch it · unstarred fruit = let it pass. standalone stars bank one star pass each. a bad-fruit catch uses one pass; with none, the round ends."
                             )
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
@@ -1113,7 +1113,17 @@ struct Prompt28FruitBasketView: View {
         height: CGFloat,
         xOffset: CGFloat
     ) -> some View {
-        ZStack(alignment: .topLeading) {
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: width, fieldHeight: height)
+        return ZStack(alignment: .topLeading) {
+            // Original handle/back rim behind moving items; original front rim
+            // above them. Complementary masks preserve every artwork pixel.
+            Prompt28BasketProgressView(count: viewModel.basketCount, fruitIDs: viewModel.currentGoodFruitIDs,
+                settledCatches: viewModel.settledCatches, layer: .back)
+                .frame(width: geometry.containerWidth, height: Prompt28BasketCatchGeometry.containerHeight)
+                .rotationEffect(.degrees(motionPreferences.reduceMotionActive || !viewModel.basketIsMeetingPuddleResistance ? 0 : -3))
+                .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
+                .position(x: xOffset + width * viewModel.basketX, y: height * Prompt28BasketCatchGeometry.centerYFraction)
+                .zIndex(5).accessibilityHidden(true)
             ForEach(
                 viewModel.activeFruit
             ) { fruit in
@@ -1167,7 +1177,9 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.currentGoodFruitIDs
+                fruitIDs: viewModel.currentGoodFruitIDs,
+                settledCatches: viewModel.settledCatches,
+                layer: .front
             )
             .frame(
                 width: min(
@@ -1180,7 +1192,7 @@ struct Prompt28FruitBasketView: View {
             .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
             .position(
                 x: xOffset + width * viewModel.basketX,
-                y: height * 0.89
+                y: height * Prompt28BasketCatchGeometry.centerYFraction
             )
             .gesture(
                 DragGesture(
@@ -1989,9 +2001,28 @@ private struct Prompt28MovingFruit: View {
     }
 }
 
+private enum Prompt28BasketArtworkLayer { case complete, back, front }
+
+private struct Prompt28SettledCatchArtwork: View {
+    let caught: Prompt28SettledCatch
+    let reduceMotion: Bool
+    @State private var settled = false
+    var body: some View {
+        FruitfolioImage(id: caught.assetID)
+            .scaleEffect(x: settled ? 1.08 : 1, y: settled ? 0.55 : 1, anchor: .bottom)
+            .offset(y: settled ? 0 : -5)
+            .onAppear {
+                if reduceMotion { settled = true }
+                else { withAnimation(.easeOut(duration: 0.18)) { settled = true } }
+            }
+    }
+}
+
 private struct Prompt28BasketProgressView: View {
     let count: Int
     let fruitIDs: [Prompt28FruitID]
+    let settledCatches: [Prompt28SettledCatch]
+    let layer: Prompt28BasketArtworkLayer
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
@@ -1999,8 +2030,12 @@ private struct Prompt28BasketProgressView: View {
 
     init(
         count: Int,
-        fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases
+        fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases,
+        settledCatches: [Prompt28SettledCatch] = [],
+        layer: Prompt28BasketArtworkLayer = .complete
     ) {
+        self.settledCatches = settledCatches
+        self.layer = layer
         self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
         self.fruitIDs = fruitIDs.isEmpty ? Prompt28FruitID.allCases : fruitIDs
     }
@@ -2009,39 +2044,52 @@ private struct Prompt28BasketProgressView: View {
         GeometryReader { proxy in
             let width = max(proxy.size.width, 1)
             let height = max(proxy.size.height, 1)
+            let imageWidth = width * Prompt28BasketCatchGeometry.imageWidthFraction
+            let imageHeight = imageWidth * 380 / 398
+            let imageTop = height - imageHeight
             let fruitSize = min(max(width * 0.19, 22), 38)
-            let visibleCount = min(count, Prompt28FruitBasketEngine.goodFruitTarget)
+            let fallback = (0..<min(count, Prompt28FruitBasketEngine.goodFruitTarget)).map { index in
+                Prompt28SettledCatch(id: UUID(uuid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, UInt8(index))), assetID: fruitIDs[index % fruitIDs.count].assetID, isStar: false)
+            }
+            let visibleCatches = settledCatches.isEmpty ? fallback : settledCatches
 
             ZStack(alignment: .bottom) {
-                // Collected fruit lives inside the basket opening. The basket artwork
-                // renders above it so fruit reads as physically inside, not pasted on top.
-                ZStack {
-                    ForEach(0..<visibleCount, id: \.self) { index in
-                        let row = index / 5
-                        let column = index % 5
-                        let xFractions: [CGFloat] = [0.28, 0.39, 0.50, 0.61, 0.72]
-                        let yFraction: CGFloat = row == 0 ? 0.48 : 0.36
-                        FruitfolioImage(
-                            id: fruitIDs[index % fruitIDs.count].assetID
-                        )
-                        .frame(width: fruitSize, height: fruitSize)
-                        .rotationEffect(.degrees(Double((index % 5) - 2) * 2.0))
-                        .position(
-                            x: width * xFractions[column],
-                            y: height * yFraction
-                        )
-                        .accessibilityHidden(true)
+                if layer != .back {
+                    ForEach(Array(visibleCatches.enumerated()), id: \.element.id) { index, caught in
+                        Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive)
+                            .frame(width: fruitSize, height: fruitSize)
+                            .position(x: width * (0.30 + Double(index % 5) * 0.10),
+                                      y: imageTop + imageHeight * (0.60 - Double(index / 5) * 0.055))
+                            .accessibilityHidden(true)
                     }
                 }
-                .frame(width: width, height: height)
 
                 FruitfolioImage(id: .fruitbasket_basket)
-                    .frame(width: width * 0.90)
-                    .scaleEffect(basketBounce ? 0.975 : 1.0, anchor: .bottom)
-                    .onAppear {
-                        Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket)
+                    .frame(width: imageWidth, height: imageHeight)
+                    .mask(alignment: .top) {
+                        switch layer {
+                        case .complete, .front:
+                            VStack(spacing: 0) {
+                                Color.clear.frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                                Rectangle()
+                            }
+                        case .back:
+                            Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                        }
                     }
+                    .scaleEffect(basketBounce ? 0.975 : 1.0, anchor: .bottom)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket) }
 
+                if layer == .complete {
+                    // Non-gameplay progress cards still retain the entire
+                    // original handle and back rim behind their collected fruit.
+                    FruitfolioImage(id: .fruitbasket_basket)
+                        .frame(width: imageWidth, height: imageHeight)
+                        .mask(alignment: .top) { Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction) }
+                        .zIndex(-1)
+                }
+
+                if layer != .back {
                 Text("\(count) / 10")
                     .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption))
                     .fontWeight(.bold)
@@ -2053,6 +2101,7 @@ private struct Prompt28BasketProgressView: View {
                         in: Capsule()
                     )
                     .offset(y: -2)
+                }
             }
             .frame(width: width, height: height)
         }

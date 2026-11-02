@@ -9769,24 +9769,49 @@
       "originalReference": "Part 3 / 3C. Session-only history / 125",
       "sourceLine": 297,
       "prompt1BSection": {
-        "candidateSection": "Ask the Encyclopedia and research grounding (1348–1705)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "3F — Answer with sources",
+          "3H/3I/3J — saved full answer/excerpt/destination",
+          "4L — Saved page reading",
+          "7.9.5/7.9.6 — preserve attribution and saved originals"
+        ],
+        "extractedLines": [
+          232,
+          240,
+          546,
+          549,
+          550,
+          551,
+          568
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED bounded citation-retention criterion; image-selection acceptance tracked separately"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedCitationResolver.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedCitationsView.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Ask",
         "Fruitfolio/Core/Intelligence"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
+      "changesMade": [
+        "Actual Run64 Ask save/restart/reopen retained the exact original bundled APA reference with no unavailable-reference fallback. Actual six saved-citation unit tests also exercise full/excerpt snapshots, Guide copy, version locks, invalid/missing/duplicate snapshots and restart preservation. This accepts saved citation/attribution retention, not general translation or all UI accessibility."
       ],
+      "testsPerformed": [
+        "Run64 AskGroundedJourneyUITests.testActualAnswerSaveRestartAndReopenRetainTheSameOriginalSourceReference PASS167.146s; SavedCitationPreservationTests six actual PASS Run67/69"
+      ],
+      "testResults": [
+        "Run64 AskGroundedJourneyUITests.testActualAnswerSaveRestartAndReopenRetainTheSameOriginalSourceReference PASS167.146s; SavedCitationPreservationTests six actual PASS Run67/69"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Ask_Journey/Build/xcode-ask-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run67/UnitBuild/actual-test-executions.json"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2
@@ -9796,17 +9821,39 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Retain citations and attribution for successfully saved content.",
       "sourceSection": {
-        "candidateSection": "Ask the Encyclopedia and research grounding (1348–1705)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "3F — Answer with sources",
+          "3H/3I/3J — saved full answer/excerpt/destination",
+          "4L — Saved page reading",
+          "7.9.5/7.9.6 — preserve attribution and saved originals"
+        ],
+        "extractedLines": [
+          232,
+          240,
+          546,
+          549,
+          550,
+          551,
+          568
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED bounded citation-retention criterion; image-selection acceptance tracked separately"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 Ask save/restart/reopen retained the exact original bundled APA reference with no unavailable-reference fallback. Actual six saved-citation unit tests also exercise full/excerpt snapshots, Guide copy, version locks, invalid/missing/duplicate snapshots and restart preservation. This accepts saved citation/attribution retention, not general translation or all UI accessibility.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedCitationResolver.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedCitationsView.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -9818,13 +9865,18 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Retain citations and attribution for successfully saved content.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64 AskGroundedJourneyUITests.testActualAnswerSaveRestartAndReopenRetainTheSameOriginalSourceReference PASS167.146s; SavedCitationPreservationTests six actual PASS Run67/69"
+          ],
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Ask_Journey/Build/xcode-ask-journey-ui-test.log",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run67/UnitBuild/actual-test-executions.json"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-126",
@@ -17656,8 +17708,15 @@
       "originalReference": "Part 5 / 5B. Account / 230",
       "sourceLine": 547,
       "prompt1BSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -17670,16 +17729,18 @@
         "Fruitfolio/Account",
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "sourceMappingStatus": "Confirmed shared username store, Account and Fruit Basket source plus actual two-direction/restart UI assertions",
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
-        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements.",
+        "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria."
       ],
       "testsPerformed": [
         "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
-        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart",
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "testResults": [
         {
@@ -17692,18 +17753,18 @@
             "884184040db65aef0f4fd28a5963509fd9501748"
           ],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
-        }
+        },
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17727,16 +17788,27 @@
         {
           "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
           "status": "PASS"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Use the same username for Account and Fruit Basket.",
       "sourceSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
@@ -17759,9 +17831,9 @@
         {
           "criterion": "Use the same username for Account and Fruit Basket.",
           "testIDs": [
-            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+            "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
           ],
-          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
       "evidenceReferences": [
@@ -17769,10 +17841,11 @@
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-231",
@@ -17783,8 +17856,15 @@
       "originalReference": "Part 5 / 5B. Account / 231",
       "sourceLine": 549,
       "prompt1BSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
       "relevantSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -17797,16 +17877,18 @@
         "Fruitfolio/Account",
         "Fruitfolio/Cycle Tracker"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "sourceMappingStatus": "Confirmed shared username store, Account and Fruit Basket source plus actual two-direction/restart UI assertions",
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
-        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements.",
+        "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria."
       ],
       "testsPerformed": [
         "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
-        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart",
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "testResults": [
         {
@@ -17819,18 +17901,18 @@
             "884184040db65aef0f4fd28a5963509fd9501748"
           ],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
-        }
+        },
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/AppleRuns/Run42/UnitBuild/xcode-unit-test.log",
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -17854,16 +17936,27 @@
         {
           "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
           "status": "PASS"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Synchronize username changes automatically.",
       "sourceSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
@@ -17886,9 +17979,9 @@
         {
           "criterion": "Synchronize username changes automatically.",
           "testIDs": [
-            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+            "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
           ],
-          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
       "evidenceReferences": [
@@ -17896,10 +17989,11 @@
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-232",
@@ -20918,7 +21012,7 @@
         "Fruitfolio/Cycle Tracker"
       ],
       "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "BLOCKED",
+      "implementationStatus": "PARTIAL",
       "inspectionState": "PENDING BASELINE INSPECTION",
       "changesMade": [],
       "testsPerformed": [],
@@ -20927,7 +21021,7 @@
         "Delivery/ADJUSTED_RHYTHM_DEPENDENCY.md"
       ],
       "remainingIssues": [
-        "The current approved research package has no validated quantitative calibration contract connecting assay, units, timing and context to a defensible personal educational curve adjustment. Do not fit/interpolate concentrations or invent coefficients. Establish approved scientific support before implementing an applied adjustment."
+        "Actual unsupported-adjustment guard is implemented and unit-tested; exact insufficient-information and restoration UI require completed acceptance. No supported positive adjustment has been demonstrated from the approved evidence. The specification explicitly authorizes retaining original curves when support is insufficient. No founder coefficient decision is invented."
       ],
       "dependsOnParts": [
         1,
@@ -20940,6 +21034,10 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Review of exact authoritative4.9.8 conditional adjustment requirement",
+          "status": "BLOCKED"
         }
       ],
       "requirementDescription": "Adjust educational curves only when sufficient evidence and context exist.",
@@ -20947,9 +21045,9 @@
         "candidateSection": "Settings/Account (1941 onward); 4.9 Hormone Information; 4.9.8 Hormone Rhythm",
         "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
       },
-      "currentImplementationState": "BLOCKED",
+      "currentImplementationState": "PARTIALLY IMPLEMENTED",
       "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
+      "verificationState": "INCONCLUSIVE",
       "existingSourceFiles": [],
       "missingImplementation": null,
       "dependencies": {
@@ -20971,8 +21069,8 @@
       "evidenceReferences": [
         "Delivery/ADJUSTED_RHYTHM_DEPENDENCY.md"
       ],
-      "finalDisposition": "BLOCKED",
-      "afterStatus": "BLOCKED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-271",
@@ -25832,22 +25930,41 @@
       "originalReference": "Part 7 / 7B. Game rules / 6",
       "sourceLine": 789,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "sourceMappingStatus": "Exact relevant production code inspected; source83 implementation pending Apple verification",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted implementation added; actual rerun pending",
+      "changesMade": [
+        "Shared original-image basket geometry replaces early point threshold; full entry checks include item extent and swept crossing; actual stars and fruit retain matching flattened/settled original artwork; catch-intro instructions clarify conditional star-pass protection. Uncapped pass accounting is unchanged; 10,000-pass test added."
+      ],
+      "testsPerformed": [
+        "New deterministic complete-entry boundary, actual-star frame and 10,000-pass tests authored; Swift syntax checked locally. Apple execution PENDING."
+      ],
+      "testResults": [
+        "NOT VERIFIED — do not infer source83 runtime or visual PASS from prior runs."
+      ],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new Apple unit/frame tests; capture actual gameplay settling frames including Reduce Motion; perform focused visual comparison."
       ],
       "dependsOnParts": [
         1,
@@ -25866,13 +25983,26 @@
       ],
       "requirementDescription": "Allow star passes to accumulate without a fixed maximum.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "implementationAssessment": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "verificationState": "NOT VERIFIED",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -25893,8 +26023,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-332",
@@ -26166,22 +26296,41 @@
       "originalReference": "Part 7 / 7B. Game rules / 10",
       "sourceLine": 797,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "sourceMappingStatus": "Exact relevant production code inspected; source83 implementation pending Apple verification",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted implementation added; actual rerun pending",
+      "changesMade": [
+        "Shared original-image basket geometry replaces early point threshold; full entry checks include item extent and swept crossing; actual stars and fruit retain matching flattened/settled original artwork; catch-intro instructions clarify conditional star-pass protection. Uncapped pass accounting is unchanged; 10,000-pass test added."
+      ],
+      "testsPerformed": [
+        "New deterministic complete-entry boundary, actual-star frame and 10,000-pass tests authored; Swift syntax checked locally. Apple execution PENDING."
+      ],
+      "testResults": [
+        "NOT VERIFIED — do not infer source83 runtime or visual PASS from prior runs."
+      ],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new Apple unit/frame tests; capture actual gameplay settling frames including Reduce Motion; perform focused visual comparison."
       ],
       "dependsOnParts": [
         1,
@@ -26200,13 +26349,26 @@
       ],
       "requirementDescription": "Require stars to fully enter the basket before being counted.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "implementationAssessment": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "verificationState": "NOT VERIFIED",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -26227,8 +26389,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-336",
@@ -26239,22 +26401,41 @@
       "originalReference": "Part 7 / 7B. Game rules / 11",
       "sourceLine": 799,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "sourceMappingStatus": "Exact relevant production code inspected; source83 implementation pending Apple verification",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted implementation added; actual rerun pending",
+      "changesMade": [
+        "Shared original-image basket geometry replaces early point threshold; full entry checks include item extent and swept crossing; actual stars and fruit retain matching flattened/settled original artwork; catch-intro instructions clarify conditional star-pass protection. Uncapped pass accounting is unchanged; 10,000-pass test added."
+      ],
+      "testsPerformed": [
+        "New deterministic complete-entry boundary, actual-star frame and 10,000-pass tests authored; Swift syntax checked locally. Apple execution PENDING."
+      ],
+      "testResults": [
+        "NOT VERIFIED — do not infer source83 runtime or visual PASS from prior runs."
+      ],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new Apple unit/frame tests; capture actual gameplay settling frames including Reduce Motion; perform focused visual comparison."
       ],
       "dependsOnParts": [
         1,
@@ -26273,13 +26454,26 @@
       ],
       "requirementDescription": "Apply the same convincing flattened/settled catch treatment to stars and fruit.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "implementationAssessment": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "verificationState": "NOT VERIFIED",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -26300,8 +26494,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-337",
@@ -26385,22 +26579,41 @@
       "originalReference": "Part 7 / 7B. Game rules / 13",
       "sourceLine": 803,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
+      "sourceMappingStatus": "Exact relevant production code inspected; source83 implementation pending Apple verification",
+      "implementationStatus": "PARTIAL",
+      "inspectionState": "EXISTING CHECKPOINT INSPECTED; targeted implementation added; actual rerun pending",
+      "changesMade": [
+        "Shared original-image basket geometry replaces early point threshold; full entry checks include item extent and swept crossing; actual stars and fruit retain matching flattened/settled original artwork; catch-intro instructions clarify conditional star-pass protection. Uncapped pass accounting is unchanged; 10,000-pass test added."
+      ],
+      "testsPerformed": [
+        "New deterministic complete-entry boundary, actual-star frame and 10,000-pass tests authored; Swift syntax checked locally. Apple execution PENDING."
+      ],
+      "testResults": [
+        "NOT VERIFIED — do not infer source83 runtime or visual PASS from prior runs."
+      ],
       "supportingEvidence": [],
       "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+        "Run new Apple unit/frame tests; capture actual gameplay settling frames including Reduce Motion; perform focused visual comparison."
       ],
       "dependsOnParts": [
         1,
@@ -26419,13 +26632,26 @@
       ],
       "requirementDescription": "Update all game instructions and feedback to reflect the implemented star-pass rules.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "19 — STAR CATCHING / STAR-BAD-FRUIT MECHANIC / STACKABLE STAR PASSES",
+          "19M — Catch intro"
+        ],
+        "extractedLines": [
+          713,
+          714,
+          727
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED binding star corrections"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "implementationAssessment": "Targeted code and tests exist; final visual/runtime acceptance pending",
+      "verificationState": "NOT VERIFIED",
+      "existingSourceFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketEngine.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/Prompt28FruitBasketTests.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -26446,8 +26672,8 @@
         }
       ],
       "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "finalDisposition": "PARTIAL",
+      "afterStatus": "PARTIAL"
     },
     {
       "requirementID": "FF1B-339",
@@ -29017,23 +29243,40 @@
       "originalReference": "Part 7 / 7E. Results and leaderboard / 369",
       "sourceLine": 881,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "sourceMappingStatus": "Confirmed shared username store, Account and Fruit Basket source plus actual two-direction/restart UI assertions",
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
+      "changesMade": [
+        "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria."
       ],
+      "testsPerformed": [
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+      ],
+      "testResults": [
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -29047,17 +29290,32 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Share one username source between Account and Fruit Basket.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -29073,13 +29331,17 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Share one username source between Account and Fruit Basket.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+          ],
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-370",
@@ -29090,23 +29352,40 @@
       "originalReference": "Part 7 / 7E. Results and leaderboard / 370",
       "sourceLine": 883,
       "prompt1BSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "relevantSourceFiles": [],
+      "relevantSourceFiles": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift"
+      ],
       "candidateSourceScopes": [
         "Fruitfolio/Fruit Basket"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "NOT VERIFIED",
-      "inspectionState": "PENDING BASELINE INSPECTION",
-      "changesMade": [],
-      "testsPerformed": [],
-      "testResults": [],
-      "supportingEvidence": [],
-      "remainingIssues": [
-        "Item-level checkpoint assessment and requirement-specific runtime verification pending."
+      "sourceMappingStatus": "Confirmed shared username store, Account and Fruit Basket source plus actual two-direction/restart UI assertions",
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
+      "changesMade": [
+        "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria."
       ],
+      "testsPerformed": [
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+      ],
+      "testResults": [
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+      ],
+      "supportingEvidence": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
+      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -29120,17 +29399,32 @@
         {
           "baseline": "verified November 1 continuation",
           "status": "NOT VERIFIED"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "NOT VERIFIED"
         }
       ],
       "requirementDescription": "Allow username creation and editing from both locations.",
       "sourceSection": {
-        "candidateSection": "Fruit Basket and Atlas 19N/19U (2708–2919)",
-        "exactCrossReferenceStatus": "PENDING: confirm against full authoritative specification"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "currentImplementationState": null,
-      "implementationAssessment": "NOT ASSESSED: no claim of implemented or missing behavior",
-      "verificationState": "NOT TESTED",
-      "existingSourceFiles": [],
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria.",
+      "verificationState": "PASS",
+      "existingSourceFiles": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift"
+      ],
       "missingImplementation": null,
       "dependencies": {
         "parts": [
@@ -29146,13 +29440,17 @@
       "requiredAcceptanceTests": [
         {
           "criterion": "Allow username creation and editing from both locations.",
-          "testIDs": [],
-          "assessment": "Item-specific test mapping still required"
+          "testIDs": [
+            "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
+          ],
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
-      "evidenceReferences": [],
-      "finalDisposition": "NOT VERIFIED",
-      "afterStatus": "NOT VERIFIED"
+      "evidenceReferences": [
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
+      ],
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-371",
@@ -37428,8 +37726,15 @@
       "originalReference": "Part 10 / Testing, integration, and final verification / 463",
       "sourceLine": 1115,
       "prompt1BSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
       "relevantSourceFiles": [
         ".github/workflows/ios-verification.yml",
@@ -37443,16 +37748,18 @@
         "FruitfolioUITests",
         ".github/workflows/ios-verification.yml"
       ],
-      "sourceMappingStatus": "Candidate feature scope; item-level inspection pending",
-      "implementationStatus": "PARTIAL",
-      "inspectionState": "PARTIALLY IMPLEMENTED",
+      "sourceMappingStatus": "Confirmed shared username store, Account and Fruit Basket source plus actual two-direction/restart UI assertions",
+      "implementationStatus": "PASS",
+      "inspectionState": "SOURCE AND EXACT ACTUAL ASSERTIONS REVIEWED",
       "changesMade": [
         "One persistent authority already shared by both features; fixed Fruit Basket editor rejecting first/second keystrokes by separating incomplete draft from validated public name.",
-        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements."
+        "Actual ordinary typing saves through Account, appears in Fruit Basket, edits there, appears back in Account, and survives app restart. This criterion concerns shared local identity; global reservation and real-name moderation remain separate unfinished requirements.",
+        "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria."
       ],
       "testsPerformed": [
         "FruitfolioUsernameStoreTests/testUsernamePersistsThroughSingleAuthority",
-        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+        "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart",
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "testResults": [
         {
@@ -37465,7 +37772,8 @@
             "884184040db65aef0f4fd28a5963509fd9501748"
           ],
           "currentSourceCommit": "0435fa3679e43057f163929189ec845dffdbaf40"
-        }
+        },
+        "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
       ],
       "supportingEvidence": [
         "Fruitfolio_Verification_Evidence/Continuation/AppleRuns/Run13/complete-job.log",
@@ -37474,11 +37782,10 @@
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "remainingIssues": [
-        "Run45 ordinary typing/restart PASS, but Run46 exposed a delayed store echo reintroducing a previously valid prefix. Focus-aware source50 correction is NOT VERIFIED until its actual UI rerun."
-      ],
+      "remainingIssues": [],
       "dependsOnParts": [
         1,
         2,
@@ -37507,16 +37814,27 @@
         {
           "baseline": "Actual Run46 delayed editor echo regression; source50 repair pending",
           "status": "PASS"
+        },
+        {
+          "baseline": "Actual Run64 criterion-specific complete journey review; latest-source regression pending",
+          "status": "PARTIAL"
         }
       ],
       "requirementDescription": "Test username synchronization.",
       "sourceSection": {
-        "candidateSection": "6F / 19X — Shared Account and Fruit Basket username",
-        "exactCrossReferenceStatus": "Corresponding binding text reviewed; original breakdown reference retained"
+        "exactSections": [
+          "6F — Account normal",
+          "19X — Leaderboard"
+        ],
+        "extractedLines": [
+          597,
+          739
+        ],
+        "exactCrossReferenceStatus": "CONFIRMED against authoritative Prompt 1B text"
       },
-      "currentImplementationState": "PARTIALLY IMPLEMENTED",
-      "implementationAssessment": "ASSESSED",
-      "verificationState": "INCONCLUSIVE",
+      "currentImplementationState": "IMPLEMENTED",
+      "implementationAssessment": "Actual Run64 ordinary-character typing edits Account, saves, observes identical Fruit Basket name, edits there, observes identical Account value, restarts and verifies the final value. Deleting to empty/incomplete drafts and synchronization were asserted. This accepts this exact sharing/editing/synchronization criterion; moderation, legal-name guarantees, remote uniqueness and backend accounts remain separate unfinished criteria.",
+      "verificationState": "PASS",
       "existingSourceFiles": [
         ".github/workflows/ios-verification.yml",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
@@ -37545,9 +37863,9 @@
         {
           "criterion": "Test username synchronization.",
           "testIDs": [
-            "UsernameSynchronizationUITests/testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart"
+            "Run64 UsernameSynchronizationUITests.testOrdinaryTypingSynchronizesAccountAndFruitBasketAndSurvivesRestart PASS129.608s"
           ],
-          "assessment": "Actual scoped runtime evidence or explicit pending new implementation"
+          "assessment": "Direct actual criterion-specific assertions; source64 acceptance, final-source regression pending"
         }
       ],
       "evidenceReferences": [
@@ -37557,10 +37875,11 @@
         "Delivery/USERNAME_EDITING_REPAIR.md",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run45/UsernameJourney/Build/xcode-username-journey-ui-test.log",
         "Fruitfolio_Verification_Evidence/AppleRuns/Run46/UsernameJourney/Build/xcode-username-journey-ui-test.log",
-        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md"
+        "Delivery/RUN46_RUNTIME_DIAGNOSTIC_REPAIRS.md",
+        "Fruitfolio_Verification_Evidence/AppleRuns/Run64/Username/Build/xcode-username-journey-ui-test.log"
       ],
-      "finalDisposition": "PARTIAL",
-      "afterStatus": "PARTIAL"
+      "finalDisposition": "PASS",
+      "afterStatus": "PASS"
     },
     {
       "requirementID": "FF1B-464",
@@ -39061,15 +39380,22 @@
   "verificationStatePolicy": "PASS / FAIL / NOT TESTED / INCONCLUSIVE. Previous statuses are retained verbatim in beforeStatus and historicalStatuses.",
   "implementationPassVerificationNote": "PASS is scoped to recorded actual evidence and source, not whole-app/final-source acceptance. Actual Run61 full job FAILED with 26 failed executions; volume journey passed. Its exploratory test execution passed but reported 14 unavailable paths, so traversal coverage is NOT VERIFIED.",
   "summary": {
-    "PARTIAL": 130,
-    "PASS": 42,
-    "NOT VERIFIED": 299,
-    "BLOCKED": 3,
+    "PARTIAL": 128,
+    "PASS": 48,
+    "NOT VERIFIED": 296,
+    "BLOCKED": 2,
     "FAIL": 4
   },
   "totalRequirements": 478,
-  "currentSourceCommit": "3f67f201abde93e9b8d41c86a747e9ac79bb9484",
-  "latestVerifiedUnitCommit": "d3d4a81f265620eb4b6952b3ddcf9148e158c026",
-  "currentSourceVerification": "Current source70: branch bounce, account service integrity and translation layout/multilingual additions await exact-source acceptance. Latest retrieved actual unit stage Run66: 533 executions, 532 PASS, one physical SKIP, zero FAIL; 25 Swift Testing PASS. Run64 actual simulator build, controlled offline stage and unsigned generic iPhone Release passed; focused UI underway.",
-  "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures."
+  "currentSourceCommit": "64fe128df4366175fab8e717deab6866bf064926",
+  "latestVerifiedUnitCommit": "44eee9e70631e83892380ecd2747e94a59f27f3a",
+  "currentSourceVerification": "Current protected measurement candidate and UI/audit repairs pending. Actual Run67 full unit stage534=533PASS/1physicalSKIP; Run69 538=536PASS/1SKIP/1failed case(7assertions); Run72 unit incomplete/time bound, raw output recovered. No release acceptance.",
+  "workingTreeFollowup": "No restart. Preserve source70 and verify pending Hub Dynamic Type, branch bounce, real account-unavailable safety, translation layout and eleven-language outputs; retrieve Run64 focused UI and repair failures.",
+  "statusCounts": {
+    "PARTIAL": 132,
+    "PASS": 48,
+    "NOT VERIFIED": 292,
+    "BLOCKED": 2,
+    "FAIL": 4
+  }
 }

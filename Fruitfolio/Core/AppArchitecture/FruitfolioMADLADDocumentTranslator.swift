@@ -122,8 +122,11 @@ nonisolated struct FruitfolioProtectedMeasurements {
             #"(?<![\p{L}\p{N}_])"# + quantity
         ]
         for term in Set(immutableTerms) where !term.isEmpty {
-            patterns.append(#"(?<![\p{L}\p{N}_])"# + quantity + horizontal
-                + NSRegularExpression.escapedPattern(for: term))
+            let literal = NSRegularExpression.escapedPattern(for: term)
+            patterns.append(#"(?<![\p{L}\p{N}_])"# + quantity + horizontal + literal)
+            // Explicit immutable medical terms are protected even when they
+            // are not adjacent to a measurement (for example TSH).
+            patterns.append(literal)
         }
         var ranges: [NSRange] = []
         for pattern in patterns {
@@ -166,14 +169,20 @@ nonisolated struct FruitfolioProtectedMeasurements {
 
     func restoring(in rawOutput: String) throws -> String {
         var output = Self.canonicalASCIIWidth(rawOutput)
-        let regex = try NSRegularExpression(pattern: #"\["# + prefix + #"\d+\]"#)
-        let found = regex.matches(in: output, range: NSRange(output.startIndex..., in: output)).map {
-            (output as NSString).substring(with: $0.range)
+        // The actual official zh decoder inserted a horizontal space before
+        // the closing bracket. Permit only marker-edge typography, never a
+        // changed identifier, missing slot, extra slot, or reordered quantity.
+        let regex = try NSRegularExpression(pattern: #"\[[\p{Zs}\t]*"# + prefix + #"(\d+)[\p{Zs}\t]*\]"#)
+        let matches = regex.matches(in: output, range: NSRange(output.startIndex..., in: output))
+        let found = matches.map { match in
+            "[" + prefix + (output as NSString).substring(with: match.range(at: 1)) + "]"
         }
         guard found == markers else { throw FruitfolioTranslationPreservationError.changedProtectedMeasurement }
-        for (marker, original) in zip(markers, originalSpans) {
-            output = output.replacingOccurrences(of: marker, with: original)
+        let restored = NSMutableString(string: output)
+        for (match, original) in zip(matches, originalSpans).reversed() {
+            restored.replaceCharacters(in: match.range, with: original)
         }
+        output = restored as String
         return output
     }
 }

@@ -20,6 +20,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var branchDeflections: [UUID: Prompt28BranchDeflection] = [:]
     private var previousVineContacts: Set<UUID> = []
     private var gameplayFieldSize = CGSize.zero
+    @Published private(set) var settledCatches: [Prompt28SettledCatch] = []
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
     @Published private(set) var basketIsMeetingPuddleResistance = false
@@ -195,6 +196,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
         activeFruit.removeAll()
         activeStars.removeAll()
+        settledCatches.removeAll()
         classificationFruit = nil
         basketX = 0.5
         basketIsMeetingPuddleResistance = false
@@ -396,6 +398,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
+            let previousY = fruit.y
             let meetingVines = isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification)
             if meetingVines { currentVineContacts.insert(fruit.id) }
             let vineMultiplier = meetingVines ? 0.56 : 1.0
@@ -420,7 +423,10 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
             fruit.x = min(max(fruit.x + horizontalVelocity * delta, laneBounds.lowerBound), laneBounds.upperBound)
 
-            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX) {
+            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX,
+                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
+                                itemDiameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width),
+                                previousY: previousY) {
                 if fruit.classification == .good { handleGoodCatch(fruit.fruitID) }
                 else { handleBadCatch(fruit.fruitID) }
                 if roundResultLocked { break }
@@ -443,12 +449,16 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
+            let previousY = star.y
             let meetingVines = isMeetingVines(x: star.x, y: star.y)
             if meetingVines { currentVineContacts.insert(star.id) }
             let vineMultiplier = meetingVines ? 0.56 : 1.0
             star.y += star.fallSpeed * vineMultiplier * delta
             star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
-            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX) {
+            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX,
+                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
+                                itemDiameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width),
+                                previousY: previousY) {
                 handleStarCatch()
                 continue
             }
@@ -524,6 +534,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     private func handleGoodCatch(_ fruit: Prompt28FruitID) {
         guard !roundResultLocked, var session else { return }
+        settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false))
         let outcome = engine.registerGoodCatch(session: &session)
         self.session = session
         if outcome == .success {
@@ -552,6 +563,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     private func handleStarCatch() {
         guard !roundResultLocked, var session else { return }
+        settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true))
+        if settledCatches.filter(\.isStar).count > 8,
+           let oldestStar = settledCatches.firstIndex(where: \.isStar) {
+            settledCatches.remove(at: oldestStar)
+        }
         _ = engine.registerStarCatch(session: &session)
         self.session = session
 

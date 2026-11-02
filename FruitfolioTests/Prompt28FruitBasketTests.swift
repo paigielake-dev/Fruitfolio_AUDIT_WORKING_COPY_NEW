@@ -243,10 +243,56 @@ final class Prompt28FruitBasketTests: XCTestCase {
         }
     }
 
-    func testCollisionUsesNormalizedCoordinates() {
-        XCTAssertTrue(engine.collision(fruitX: 0.5, fruitY: 0.85, basketX: 0.5))
-        XCTAssertFalse(engine.collision(fruitX: 0.1, fruitY: 0.85, basketX: 0.9))
-        XCTAssertFalse(engine.collision(fruitX: 0.5, fruitY: 0.5, basketX: 0.5))
+    func testCollisionRequiresTheEntireItemInsideTheActualPaintedBasketOpening() {
+        for (width, height) in [(320.0, 568.0), (402.0, 874.0), (430.0, 932.0)] {
+            let geometry = Prompt28BasketCatchGeometry(fieldWidth: width, fieldHeight: height)
+            for diameter in [Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: width),
+                             Prompt28BasketCatchGeometry.starDiameter(fieldWidth: width)] {
+                let entry = (geometry.mouthY + diameter / 2) / height
+                XCTAssertFalse(engine.collision(fruitX: 0.5, fruitY: entry - 0.001, basketX: 0.5,
+                    fieldWidth: width, fieldHeight: height, itemDiameter: diameter))
+                XCTAssertTrue(engine.collision(fruitX: 0.5, fruitY: entry + 0.001, basketX: 0.5,
+                    fieldWidth: width, fieldHeight: height, itemDiameter: diameter))
+                let clippedX = 0.5 + (geometry.mouthHalfWidth - diameter / 2 + 1) / width
+                XCTAssertFalse(engine.collision(fruitX: clippedX, fruitY: entry + 0.001, basketX: 0.5,
+                    fieldWidth: width, fieldHeight: height, itemDiameter: diameter))
+                XCTAssertTrue(engine.collision(fruitX: 0.5, fruitY: 1.08, basketX: 0.5,
+                    fieldWidth: width, fieldHeight: height, itemDiameter: diameter, previousY: entry - 0.01),
+                    "A real full-entry plane crossing must survive a delayed frame")
+            }
+        }
+        XCTAssertFalse(engine.collision(fruitX: 0.5, fruitY: 0.82, basketX: 0.5),
+            "The historical point threshold was visibly above the painted basket")
+    }
+
+    func testActualStarFrameDoesNotBankUntilFullEntryAndKeepsSettledArtwork() throws {
+        let suite = "Prompt28.FullEntry.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 402, height: 874)
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: 402, fieldHeight: 874)
+        let entry = (geometry.mouthY + Prompt28BasketCatchGeometry.starDiameter(fieldWidth: 402) / 2) / 874
+        let star = Prompt28FallingStar(x: 0.5, y: entry - 0.002, fallSpeed: 0.02, horizontalDrift: 0, rotationDegrees: 0)
+        model.activeStars = [star]
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
+        XCTAssertEqual(model.session?.availableStarPasses, 0)
+        XCTAssertTrue(model.settledCatches.isEmpty)
+        model.tick(delta: 0.10, now: Date(timeIntervalSince1970: 1.1))
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        XCTAssertEqual(model.basketCount, 0)
+        XCTAssertFalse(model.activeStars.contains(where: { $0.id == star.id }))
+        XCTAssertEqual(model.settledCatches.map(\.assetID), [.fruitbasket_star])
+    }
+
+    func testStarPassAccumulationHasNoArtificialCapAndConsumesOneAtATime() {
+        var session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        for _ in 0..<10_000 { _ = engine.registerStarCatch(session: &session) }
+        XCTAssertEqual(session.availableStarPasses, 10_000)
+        XCTAssertEqual(session.goodFruitCaughtThisRound, 0)
+        _ = engine.registerBadCatch(.lemon, session: &session)
+        XCTAssertEqual(session.availableStarPasses, 9_999)
+        XCTAssertEqual(session.goodFruitCaughtThisRound, 0)
     }
 
     func testWeatherStaysLevelDrivenNotEducationalDifficultyDriven() {

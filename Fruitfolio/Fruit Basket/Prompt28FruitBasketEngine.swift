@@ -156,16 +156,12 @@ struct Prompt28FruitBasketEngine: Sendable {
         min(max(Double(goodCount) / Double(rules.goodFruitTarget), 0), 1)
     }
 
-    func collision(
-        fruitX: Double,
-        fruitY: Double,
-        basketX: Double,
-        basketHalfWidth: Double = 0.13,
-        basketTopY: Double = 0.82
-    ) -> Bool {
-        fruitY >= basketTopY
-            && fruitY <= 1.0
-            && abs(fruitX - basketX) <= basketHalfWidth
+    func collision(fruitX: Double, fruitY: Double, basketX: Double,
+                   fieldWidth: Double = 402, fieldHeight: Double = 874,
+                   itemDiameter: Double = 52, previousY: Double? = nil) -> Bool {
+        Prompt28BasketCatchGeometry(fieldWidth: fieldWidth, fieldHeight: fieldHeight)
+            .fullyEntered(x: fruitX, y: fruitY, basketX: basketX,
+                          diameter: itemDiameter, previousY: previousY)
     }
 
     func clampedLevel(_ level: Int) -> Int {
@@ -261,4 +257,40 @@ struct Prompt28BranchDeflection {
     var elapsed: Double = 0
     let horizontalVelocity: Double
     var verticalMultiplier: Double { min(1, -0.45 + 1.45 * elapsed / 0.24) }
+}
+
+/// Geometry shared with the untouched 398 × 380 watercolor basket. The fixed
+/// 132pt container is centered at 89% of the playfield; its original image is
+/// bottom aligned and occupies 90% of the container width. The inner opening
+/// spans 68% of that image, beginning at 52% of its height.
+nonisolated struct Prompt28BasketCatchGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    var containerWidth: Double { min(fieldWidth * 0.36, 150) }
+    static let containerHeight = 132.0
+    static let centerYFraction = 0.89
+    static let imageWidthFraction = 0.90
+    static let frontRimFraction = 0.61
+    var imageWidth: Double { containerWidth * Self.imageWidthFraction }
+    var imageHeight: Double { imageWidth * 380 / 398 }
+    var imageBottomY: Double { fieldHeight * Self.centerYFraction + Self.containerHeight / 2 }
+    var mouthY: Double { imageBottomY - imageHeight * 0.48 }
+    var mouthHalfWidth: Double { imageWidth * 0.34 }
+    static func fruitDiameter(fieldWidth: Double) -> Double { min(max(fieldWidth * 0.13, 46), 66) }
+    static func starDiameter(fieldWidth: Double) -> Double { min(max(fieldWidth * 0.10, 34), 52) }
+
+    func fullyEntered(x: Double, y: Double, basketX: Double, diameter: Double, previousY: Double? = nil) -> Bool {
+        guard fieldWidth.isFinite, fieldHeight.isFinite, fieldWidth > 0, fieldHeight > 0,
+              x.isFinite, y.isFinite, basketX.isFinite, diameter.isFinite, diameter > 0 else { return false }
+        let radius = diameter / 2
+        guard abs(x - basketX) * fieldWidth + radius <= mouthHalfWidth,
+              y * fieldHeight - radius >= mouthY else { return false }
+        if let previousY, previousY.isFinite,
+           previousY * fieldHeight - radius < mouthY {
+            // Swept plane crossing: a slow frame cannot skip a genuine full
+            // entry merely because its end position passes the basket floor.
+            return true
+        }
+        return y * fieldHeight + radius <= imageBottomY
+    }
 }

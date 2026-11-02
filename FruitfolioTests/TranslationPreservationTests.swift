@@ -75,6 +75,16 @@ final class TranslationPreservationTests: XCTestCase {
         }
     }
 
+    func testObservedChineseMarkerEdgeSpacingRestoresOnlyExactIdentifiersInExactOrder() throws {
+        let plan = try FruitfolioProtectedMeasurements(source: "TSH is 2.50 ng/mL and 5 mIU/L", immutableTerms: ["TSH", "ng/mL", "mIU/L"])
+        XCTAssertEqual(plan.originalSpans, ["TSH", "2.50 ng/mL", "5 mIU/L"])
+        XCTAssertEqual(try plan.restoring(in: "[ FFQ0 ]: [FFQ1 ] / ［ＦＦＱ２　］"), "TSH: 2.50 ng/mL / 5 mIU/L")
+        for unsafe in ["[FFQ0] [FFQ01] [FFQ2]", "[FFQ0] [FFQ2] [FFQ1]", "[FFQ0] [FFQ1] [FFQ2] [FFQ2]",
+                       "[FFQ0] [FFQ1A] [FFQ2]", "[FFQ0] [FFQ1\n] [FFQ2]", "[FFQ0] [FFQ1]"] {
+            XCTAssertThrowsError(try plan.restoring(in: unsafe))
+        }
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

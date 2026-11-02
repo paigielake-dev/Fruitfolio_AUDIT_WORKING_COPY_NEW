@@ -425,3 +425,11 @@ struct Prompt28LeaderboardTotals: Equatable, Sendable {
         highestLevel = entries.map(\.highestGameLevelReached).max() ?? 0
     }
 }
+
+/// Transient per-round artwork only. Star-pass accounting remains independent
+/// and uncapped; bounding old decorative star images never removes a pass.
+nonisolated struct Prompt28SettledCatch: Identifiable, Equatable, Sendable {
+    let id: UUID
+    let assetID: FruitfolioAssetID
+    let isStar: Bool
+}
