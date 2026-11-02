@@ -182,17 +182,11 @@ final class PersonalDataManagementUITests: XCTestCase {
         XCTAssertTrue(save.exists && save.isHittable)
         capture(app, "SystemExportBeforeActualSave")
         save.tap()
-        // Some system states request the filename in a second sheet. Enter a
-        // unique synthetic name only when that observed system field appears.
-        let filename = app.textFields["DOCPicker.filenameTextField"]
-        if filename.waitForExistence(timeout: 3) {
-            filename.tap()
-            if let current = filename.value as? String, !current.isEmpty {
-                filename.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
-            }
-            filename.typeText("Fruitfolio-QA-" + UUID().uuidString + ".json")
-            XCTAssertTrue(save.isHittable); save.tap()
-        }
+        // The app provides a nonempty default filename. Actual Run 9 showed
+        // the old filename field briefly survives as a stale remote snapshot
+        // during dismissal; editing it after Save races a completed export.
+        // Use the real supplied filename and retain the exact-byte readback
+        // assertion below, including a real replacement confirmation if shown.
         let replace = app.buttons["Replace"]
         if replace.waitForExistence(timeout: 2) { replace.tap() }
         let success = app.staticTexts["your personal data JSON was exported. keep it somewhere private."]

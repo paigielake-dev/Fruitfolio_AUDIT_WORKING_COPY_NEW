@@ -1,0 +1,46 @@
+{
+  "runID": 41457994650,
+  "sourceCommit": "aee406f335dafdd2fa2d0fa01c1e3c0fc6d7319a",
+  "build": "PASS",
+  "XCTestCore": {
+    "executed": 580,
+    "PASS": 579,
+    "SKIPPED": 1,
+    "FAIL": 0,
+    "MADLADInference": "EXCLUDED"
+  },
+  "SwiftTesting": {
+    "executed": 26,
+    "PASS": 26
+  },
+  "XCTestUI": {
+    "executed": 31,
+    "PASS": 27,
+    "FAIL": 4
+  },
+  "failures": [
+    {
+      "test": "FruitBasketGroundedJourneyUITests/testActualActiveGameBackgroundAndResumeRetainsPausedRoundUntilExplicitResume",
+      "finding": "Paused state/tallies retained, underlying Pause control remained exposed; production repair committed in source122, rerun pending."
+    },
+    {
+      "test": "PersonalDataManagementUITests/testSystemExportActuallySavesAndReadsBackJSONBeforeReportingSuccess",
+      "finding": "A stale filename field existed briefly during native picker dismissal; tap failed after its remote window disappeared. Helper no longer edits the filename after Save; actual saved-byte success assertion retained."
+    },
+    {
+      "test": "RuntimeAccessibilityAuditTests/testFruitBasketLargestDynamicTypeAccessibility",
+      "finding": "Strict contrast failure; original exported evidence recovery pending."
+    },
+    {
+      "test": "RuntimeAccessibilityAuditTests/testFruitBasketOpeningAccessibility",
+      "finding": "Strict contrast failure; original exported evidence recovery pending."
+    }
+  ],
+  "source128DoesNotYetInclude": "The current follow-up RTL journeys and export-helper repair. No later execution is inferred from these results.",
+  "originalArtifact": {
+    "id": 13150184646,
+    "bytes": 1100643888,
+    "sha256": "e65dfcdbe6aa6d3c278a52f4f4ad6bbaa13b1be076546258434817b673691387"
+  },
+  "overlapPolicy": "Independent execution cohort; do not add to earlier overlapping suite totals."
+}

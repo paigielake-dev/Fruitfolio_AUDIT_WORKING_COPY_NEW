@@ -575,7 +575,7 @@ struct BackControl: View {
                 action()
             }
         ) {
-            Image(systemName: "chevron.left")
+            Image(systemName: "chevron.backward")
                 .font(.title2.weight(.semibold))
                 .foregroundColor(
                     DesignTokens.ColorToken.primaryBurgundy

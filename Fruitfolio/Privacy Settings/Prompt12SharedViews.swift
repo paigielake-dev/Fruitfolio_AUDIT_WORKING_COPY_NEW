@@ -56,6 +56,7 @@ struct Prompt12RouteHeader: View {
                 Text(LocalizedStringKey(title))
                     .font(.custom("Chalkboard SE", size: 25, relativeTo: .title2))
                     .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("route.header." + title)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
