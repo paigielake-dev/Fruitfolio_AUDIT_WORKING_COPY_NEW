@@ -6,6 +6,31 @@ final class SimulatorSmokeEvidenceTests: XCTestCase {
     func testRealIntroAndReachableHub() { verifyIntro(mode: "first") }
     func testRealReducedMotionIntroAndReachableHub() { verifyIntro(mode: "reduced-first") }
 
+    func testIntroSkipControlShowsItsVisibleWordingAndEntersTheLiveHub() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1", "-FruitfolioIntroMode", "first"]
+        app.launch()
+        let skip = app.buttons["skip introduction"]
+        XCTAssertTrue(skip.waitForExistence(timeout: 2))
+        XCTAssertTrue(skip.isHittable)
+        XCTAssertGreaterThanOrEqual(skip.frame.width, 44)
+        XCTAssertGreaterThanOrEqual(skip.frame.height, 44)
+        XCTAssertTrue(app.staticTexts["skip tour"].exists, "The real visible wording remains distinct from the action's accessible name")
+        let frame = XCTAttachment(screenshot: app.screenshot())
+        frame.name = "Intro_ActualBottomLeftSkipControl"; frame.lifetime = .keepAlways; add(frame)
+        let start = ContinuousClock.now
+        skip.tap()
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 2) { explore.tap() }
+        let settings = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "settings")).firstMatch
+        XCTAssertTrue(settings.waitForExistence(timeout: 10))
+        XCTAssertTrue(settings.isHittable)
+        let elapsed = start.duration(to: ContinuousClock.now)
+        XCTAssertLessThan(elapsed, .seconds(7), "Skip should enter the live Hub without waiting for the full signature sequence")
+        let result = XCTAttachment(screenshot: app.screenshot())
+        result.name = "Intro_ActualSkippedToLiveHub"; result.lifetime = .keepAlways; add(result)
+    }
+
     private func verifyIntro(mode: String) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1", "-FruitfolioIntroMode", mode]

@@ -28,6 +28,10 @@ struct Prompt04IntroView: View {
                     )
                 } else {
                     introComposition(metrics: metrics)
+                        // Recreate only the painted presentation at the safe
+                        // completed stage after interruption. The authoritative
+                        // state machine and launch progress never restart.
+                        .id(machine.interruptionRestorationID)
                 }
             }
             .frame(width: max(1, proxy.size.width), height: max(1, proxy.size.height))
@@ -46,6 +50,7 @@ struct Prompt04IntroView: View {
                             .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                     }
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .accessibilityElement(children: .contain)
                     .padding(16)
                 }
                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
@@ -215,6 +220,7 @@ struct Prompt04IntroView: View {
             wasInterrupted = false
             machine.resolveAfterInterruption(
                 audioManager: audioManager,
+                settings: settings,
                 completion: completeIntro(wasFirstLaunch:),
                 wasFirstLaunch: launchMode.isFirstLaunch
             )

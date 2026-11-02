@@ -203,8 +203,17 @@ jobs:
             CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
             2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-smoke-test.log
           test_status=${PIPESTATUS[0]}
+          echo "test_status=$test_status" >> "$GITHUB_OUTPUT"
           wait "$recorder"
           record_status=$?
+          if [ "$record_status" -ne 0 ]; then
+            # Preserve the failed recording and retry after XCTest has attached.
+            python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
+              --seconds 10 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmokeAfterTests.mp4 \
+              > Fruitfolio_Verification_Evidence/Build/simulator-recording-retry.log 2>&1
+            record_status=$?
+          fi
+          echo "record_status=$record_status" >> "$GITHUB_OUTPUT"
           set -e
           if [ "$test_status" -ne 0 ]; then exit "$test_status"; fi
           exit "$record_status"
@@ -224,7 +233,7 @@ jobs:
           name: Fruitfolio_Smoke_Evidence
           path: Fruitfolio_Verification_Evidence
       - name: Verify shared controls in actual Contact journeys
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         timeout-minutes: 6
         run: |
           set -o pipefail
@@ -425,7 +434,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Visual/PersonalHealthJourney
           retention-days: 90
       - name: Verify hormone record lifecycle before broad traversal
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         timeout-minutes: 6
         run: |
           set -o pipefail
@@ -455,7 +464,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-hormone-ui-test.log
             Fruitfolio_Verification_Evidence/Visual/HormoneInformation
       - name: Verify user-authored page lifecycle before broad traversal
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         timeout-minutes: 10
         run: |
           set -o pipefail
@@ -488,7 +497,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/UserPages.xcresult
             Fruitfolio_Verification_Evidence/Visual/UserPages
       - name: Verify artwork volume settings and restart persistence before broad traversal
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         timeout-minutes: 6
         run: |
           set -o pipefail
@@ -518,7 +527,7 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/SettingsVolumes.xcresult
             Fruitfolio_Verification_Evidence/Visual/SettingsVolumes
       - name: Verify grounded Ask answer and clear-on-exit lifecycle before broad traversal
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         timeout-minutes: 8
         run: |
           set -o pipefail
@@ -580,7 +589,7 @@ jobs:
           retention-days: 90
       - name: Run actual application UI tests
         timeout-minutes: 60
-        if: ${{ !cancelled() && steps.smoke.outcome == 'success' }}
+        if: ${{ !cancelled() && steps.smoke.outputs.test_status == '0' }}
         run: |
           set -o pipefail
           xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \

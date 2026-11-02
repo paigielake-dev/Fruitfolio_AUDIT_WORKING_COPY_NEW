@@ -432,4 +432,11 @@ nonisolated struct Prompt28SettledCatch: Identifiable, Equatable, Sendable {
     let id: UUID
     let assetID: FruitfolioAssetID
     let isStar: Bool
+    var collected = false
+}
+
+nonisolated enum Prompt28CatchPresentationEvent: Sendable {
+    case appeared(UUID)
+    case settled(UUID)
+    case disappeared(UUID)
 }

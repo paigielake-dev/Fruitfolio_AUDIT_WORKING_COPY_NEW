@@ -31,6 +31,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let readyAt: TimeInterval
         let order: Int
         var artworkSettled = false
+        var presentationID: UUID?
     }
     @Published private(set) var settledCatches: [Prompt28SettledCatch] = []
     @Published var activeStars: [Prompt28FallingStar] = []
@@ -573,15 +574,26 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     /// A real presentation completion, not a timer-only guess. Repeated/stale
     /// callbacks cannot collect twice. Paused games retain the acknowledgement
     /// but never advance scoring until active play resumes.
-    func confirmCatchSettling(id: UUID) {
+    func handleCatchPresentation(id: UUID, event: Prompt28CatchPresentationEvent) {
         guard let index = pendingLandings.firstIndex(where: { $0.id == id }) else { return }
-        pendingLandings[index].artworkSettled = true
+        switch event {
+        case .appeared(let token):
+            pendingLandings[index].presentationID = token
+            pendingLandings[index].artworkSettled = false
+        case .settled(let token):
+            guard pendingLandings[index].presentationID == token else { return }
+            pendingLandings[index].artworkSettled = true
+        case .disappeared(let token):
+            guard pendingLandings[index].presentationID == token else { return }
+            pendingLandings[index].presentationID = nil
+            pendingLandings[index].artworkSettled = false
+        }
         collectReadyLandings()
     }
 
     private func collectReadyLandings() {
         guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
-        let ready = pendingLandings.filter { $0.artworkSettled && $0.readyAt <= catchClock }
+        let ready = pendingLandings.filter { $0.presentationID != nil && $0.artworkSettled && $0.readyAt <= catchClock }
             .sorted { $0.readyAt == $1.readyAt ? $0.order < $1.order : $0.readyAt < $1.readyAt }
         let readyIDs = Set(ready.map(\.id))
         pendingLandings.removeAll { readyIDs.contains($0.id) }
@@ -589,6 +601,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         for landing in ready {
             guard !roundResultLocked else { break }
             collectedIDs.insert(landing.id)
+            if let index = settledCatches.firstIndex(where: { $0.id == landing.id }) {
+                settledCatches[index].collected = true
+            }
             switch landing.kind {
             case .fruit(let fruit, .good): handleGoodCatch(fruit, existingArtworkID: landing.id)
             case .fruit(let fruit, .bad): handleBadCatch(fruit)
@@ -605,7 +620,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func handleGoodCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
         if existingArtworkID == nil {
-            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false))
+            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
         }
         let outcome = engine.registerGoodCatch(session: &session)
         self.session = session
@@ -636,7 +651,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func handleStarCatch(existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
         if existingArtworkID == nil {
-            settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true))
+            settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true, collected: true))
         }
         let stillLanding = Set(pendingLandings.map(\.id))
         if settledCatches.filter({ $0.isStar && !stillLanding.contains($0.id) }).count > 8,

@@ -1184,7 +1184,7 @@ struct Prompt28FruitBasketView: View {
                 fruitIDs: viewModel.currentGoodFruitIDs,
                 settledCatches: viewModel.settledCatches,
                 layer: .front,
-                onSettled: { [weak model = viewModel] id in model?.confirmCatchSettling(id: id) }
+                onPresentation: { [weak model = viewModel] id, event in model?.handleCatchPresentation(id: id, event: event) }
             )
             .frame(
                 width: min(
@@ -2017,23 +2017,27 @@ private enum Prompt28BasketArtworkLayer { case complete, back, front }
 private struct Prompt28SettledCatchArtwork: View {
     let caught: Prompt28SettledCatch
     let reduceMotion: Bool
-    var onSettled: () -> Void = {}
+    var onPresentation: (Prompt28CatchPresentationEvent) -> Void = { _ in }
     @State private var settled = false
+    @State private var presentationID = UUID()
     var body: some View {
         FruitfolioImage(id: caught.assetID)
             .scaleEffect(x: settled ? 1.08 : 1, y: settled ? 0.55 : 1, anchor: .bottom)
             .offset(y: settled ? 0 : -5)
             .onAppear {
-                if reduceMotion { settled = true; onSettled() }
+                guard !caught.collected else { settled = true; return }
+                onPresentation(.appeared(presentationID))
+                if reduceMotion { settled = true; onPresentation(.settled(presentationID)) }
                 else {
                     withAnimation(.easeOut(duration: Prompt28BasketCatchGeometry.settlingDuration),
                                   completionCriteria: .logicallyComplete) {
                         settled = true
                     } completion: {
-                        onSettled()
+                        onPresentation(.settled(presentationID))
                     }
                 }
             }
+            .onDisappear { onPresentation(.disappeared(presentationID)) }
     }
 }
 
@@ -2042,7 +2046,7 @@ private struct Prompt28BasketProgressView: View {
     let fruitIDs: [Prompt28FruitID]
     let settledCatches: [Prompt28SettledCatch]
     let layer: Prompt28BasketArtworkLayer
-    let onSettled: (UUID) -> Void
+    let onPresentation: (UUID, Prompt28CatchPresentationEvent) -> Void
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
@@ -2053,11 +2057,11 @@ private struct Prompt28BasketProgressView: View {
         fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases,
         settledCatches: [Prompt28SettledCatch] = [],
         layer: Prompt28BasketArtworkLayer = .complete,
-        onSettled: @escaping (UUID) -> Void = { _ in }
+        onPresentation: @escaping (UUID, Prompt28CatchPresentationEvent) -> Void = { _, _ in }
     ) {
         self.settledCatches = settledCatches
         self.layer = layer
-        self.onSettled = onSettled
+        self.onPresentation = onPresentation
         self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
         self.fruitIDs = fruitIDs.isEmpty ? Prompt28FruitID.allCases : fruitIDs
     }
@@ -2071,7 +2075,7 @@ private struct Prompt28BasketProgressView: View {
             let imageTop = height - imageHeight
             let fruitSize = min(max(width * 0.19, 22), 38)
             let fallback = (0..<min(count, Prompt28FruitBasketEngine.goodFruitTarget)).map { index in
-                Prompt28SettledCatch(id: UUID(uuid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, UInt8(index))), assetID: fruitIDs[index % fruitIDs.count].assetID, isStar: false)
+                Prompt28SettledCatch(id: UUID(uuid: (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, UInt8(index))), assetID: fruitIDs[index % fruitIDs.count].assetID, isStar: false, collected: true)
             }
             let visibleCatches = settledCatches.isEmpty ? fallback : settledCatches
 
@@ -2079,7 +2083,7 @@ private struct Prompt28BasketProgressView: View {
                 if layer != .back {
                     ForEach(Array(visibleCatches.enumerated()), id: \.element.id) { index, caught in
                         Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive,
-                            onSettled: { onSettled(caught.id) })
+                            onPresentation: { onPresentation(caught.id, $0) })
                             .frame(width: fruitSize, height: fruitSize)
                             .position(x: width * (0.30 + Double(index % 5) * 0.10),
                                       y: imageTop + imageHeight * (0.60 - Double(index / 5) * 0.055))
