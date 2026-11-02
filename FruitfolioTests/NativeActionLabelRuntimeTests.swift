@@ -94,4 +94,25 @@ final class NativeActionLabelRuntimeTests: XCTestCase {
         }
     }
 
+    func testAuthoredControlLocalizesItsRealVisibleLabelButUserAuthoredTextRemainsVerbatim() throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow)
+        let host = UIHostingController(rootView: VStack {
+            FruitfolioNativeActionLabel(text: "save", localizationKey: "save")
+            FruitfolioNativeActionLabel(text: "save")
+        }.environment(\.locale, Locale(identifier: "es")))
+        let window = UIWindow(windowScene: scene)
+        window.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
+        window.rootViewController = host; window.makeKeyAndVisible()
+        defer { window.isHidden = true; previous?.makeKey() }
+        host.view.setNeedsLayout(); host.view.layoutIfNeeded()
+        func labels(_ view: UIView) -> [UILabel] {
+            (view as? UILabel).map { [$0] } ?? view.subviews.flatMap { labels($0) }
+        }
+        let actual = labels(host.view)
+        XCTAssertTrue(actual.contains { $0.text == "guardar" && $0.isAccessibilityElement })
+        XCTAssertTrue(actual.contains { $0.text == "save" && $0.isAccessibilityElement },
+                      "User-authored text is never passed through a UI-key translator")
+    }
+
 }

@@ -112,7 +112,7 @@ struct Prompt14CycleOnboardingView: View {
                             )
                         )
 
-                    FruitfolioControlPillButton(label: "personal health context (optional)") { showPersonalHealth = true }
+                    FruitfolioControlPillButton(label: "personal health context (optional)", localizationKey: "personal health context (optional)") { showPersonalHealth = true }
                         .accessibilityIdentifier("onboarding.openPersonalHealth")
 
                     if let error = model.errorMessage {

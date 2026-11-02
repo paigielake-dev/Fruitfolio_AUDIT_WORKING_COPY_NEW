@@ -27,3 +27,21 @@ final class LanguagePreferencePersistenceTests: XCTestCase {
         }
     }
 }
+
+extension LanguagePreferencePersistenceTests {
+    func testCompiledInterfaceCatalogResolvesExplicitLocalesAndDistinctChineseScriptsWithoutModelInference() {
+        for (locale, key, expected) in [
+            ("es", "cancel", "cancelar"), ("fr", "save", "enregistrer"),
+            ("ar", "save", "حفظ"), ("ja", "save", "保存"),
+            ("zh-Hans", "delete", "删除"), ("zh-Hant", "delete", "刪除")
+        ] {
+            XCTAssertEqual(FruitfolioLocalization.localized(key, locale: Locale(identifier: locale)), expected,
+                           "Actual compiled catalog lookup must follow the app's explicit locale")
+        }
+        XCTAssertEqual(FruitfolioLocalization.localized("PRIVATE_USER_AUTHORED_FIXTURE", locale: Locale(identifier: "es")), "PRIVATE_USER_AUTHORED_FIXTURE")
+        XCTAssertEqual(FruitfolioLocalization.localized("PRIVATE_UNKNOWN_UI_KEY", locale: Locale(identifier: "ay")), "PRIVATE_UNKNOWN_UI_KEY")
+        XCTAssertTrue(FruitfolioLanguage.arabic.isRightToLeft)
+        XCTAssertTrue(FruitfolioLanguage.hebrew.isRightToLeft)
+        XCTAssertFalse(FruitfolioLanguage.chineseTraditional.isRightToLeft)
+    }
+}

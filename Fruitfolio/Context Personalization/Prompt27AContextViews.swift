@@ -43,12 +43,12 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
-                        FruitfolioControlPillButton(label: "edit cycle setup") { showCycleSetup = true }
+                        FruitfolioControlPillButton(label: "edit cycle setup", localizationKey: "edit cycle setup") { showCycleSetup = true }
                             .accessibilityIdentifier("context.editCycleSetup")
-                        FruitfolioControlPillButton(label: "personal health context") { showPersonalHealth = true }
+                        FruitfolioControlPillButton(label: "personal health context", localizationKey: "personal health context") { showPersonalHealth = true }
                             .accessibilityIdentifier("context.openPersonalHealth")
 
-                        FruitfolioControlPillButton(label: "hormone information") {
+                        FruitfolioControlPillButton(label: "hormone information", localizationKey: "hormone information") {
                             showHormoneInformation = true
                         }
 
@@ -137,7 +137,7 @@ struct Prompt27AMyContextView: View {
                         }
 
                         FruitfolioControlPillButton(
-                            label: "clear my context"
+                            label: "clear my context", localizationKey: "clear my context"
                         ) {
                             viewModel.store.clearContext()
                         }

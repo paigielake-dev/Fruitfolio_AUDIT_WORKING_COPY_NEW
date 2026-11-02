@@ -52,10 +52,10 @@ struct Prompt30ContactView: View {
                     }
 
                     VStack(spacing: 4) {
-                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo") { openURL(instagramURL) }
-                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo") { openURL(tiktokURL) }
-                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com") { openURL(emailURL) }
-                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd") { openURL(carrdURL) }
+                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo", localizationKey: "Instagram  •  @fruitsoflife.xo") { openURL(instagramURL) }
+                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo", localizationKey: "TikTok  •  @fruitsoflife.xo") { openURL(tiktokURL) }
+                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com", localizationKey: "email  •  fruitsoflifexo@gmail.com") { openURL(emailURL) }
+                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd", localizationKey: "FruitsofLife.xo Carrd") { openURL(carrdURL) }
                     }
 
                     Text("Fruitfolio is educational. For personal medical questions, diagnosis, treatment, or urgent concerns, contact an appropriate healthcare professional or emergency service.")

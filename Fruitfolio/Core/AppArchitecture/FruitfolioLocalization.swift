@@ -9,17 +9,24 @@ enum FruitfolioLocalization {
         language: FruitfolioLanguage = FruitfolioLanguagePreferences.current,
         fallback: String? = nil
     ) -> String {
-        let locale = Locale(identifier: language.localeIdentifier)
-        let value = String(
-            localized: String.LocalizationValue(key),
-            table: "Localizable",
-            bundle: .main,
-            locale: locale
-        )
-        if value == key || value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return fallback ?? key
+        localized(key, locale: Locale(identifier: language.localeIdentifier), fallback: fallback)
+    }
+
+    /// Resolve the explicitly selected locale, not the system's preferred app
+    /// language. Missing UI translations retain their original source wording.
+    static func localized(_ key: String, locale: Locale, fallback: String? = nil) -> String {
+        let exact = locale.identifier.replacingOccurrences(of: "_", with: "-")
+        let language = locale.language.languageCode?.identifier ?? "en"
+        var candidates = [exact]
+        if let script = locale.language.script?.identifier { candidates.append(language + "-" + script) }
+        candidates.append(language)
+        for candidate in candidates {
+            guard let directory = Bundle.main.url(forResource: candidate, withExtension: "lproj"),
+                  let bundle = Bundle(url: directory) else { continue }
+            let value = bundle.localizedString(forKey: key, value: key, table: "Localizable")
+            if value != key && !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return value }
         }
-        return value
+        return fallback ?? key
     }
 }
 
@@ -46,9 +53,9 @@ extension FruitfolioLocalization {
         switch displayReadiness(for: language) {
         case .originalEnglish: return nil
         case .unsupportedOfficialTarget:
-            return "offline translation isn’t available for \(language.nativeDisplayName). this content remains in its original English; your language selection is saved."
+            return "offline generated-answer translation isn’t available for \(language.nativeDisplayName). original research and generated answers remain in English; your language selection is saved."
         case .requiresVerification:
-            return "translation for \(language.nativeDisplayName) hasn’t been verified for safe display yet. this content remains in its original English; your language selection is saved."
+            return "translation for \(language.nativeDisplayName) hasn’t been verified for safe scientific display yet. original research and generated answers remain in English; your language selection is saved."
         }
     }
 }

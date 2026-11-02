@@ -39,6 +39,7 @@ struct WatercolorSecondaryButton: View {
 /// shell grows vertically when longer text or Dynamic Type needs more room.
 struct FruitfolioControlPillButton: View {
     let label: String
+    var localizationKey: String? = nil
     var playsSound = true
     let action: () -> Void
 
@@ -47,6 +48,9 @@ struct FruitfolioControlPillButton: View {
 
     @EnvironmentObject
     private var audioManager: AudioManager
+
+    @Environment(\.locale) private var locale
+    private var visibleLabel: String { localizationKey.map { FruitfolioLocalization.localized($0, locale: locale) } ?? label }
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.fruitfolioPopupWritingSize) private var popupWritingSize
@@ -65,7 +69,7 @@ struct FruitfolioControlPillButton: View {
             // into a full-shell StaticText by SwiftUI accessibility.
             HStack(spacing: 0) {
                 Spacer(minLength: 0)
-                FruitfolioNativeActionLabel(text: label,
+                FruitfolioNativeActionLabel(text: visibleLabel,
                     lineBreakMode: usesCompactPopupInsets ? .byCharWrapping : .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
@@ -86,7 +90,7 @@ struct FruitfolioControlPillButton: View {
         // The contained label keeps its true text bounds, but containment
         // stops SwiftUI's automatic Button label aggregation. Name the actual
         // action explicitly without hiding text or suppressing any audit.
-        .accessibilityLabel(Text(label))
+        .accessibilityLabel(Text(visibleLabel))
     }
 }
 
@@ -96,6 +100,7 @@ struct FruitfolioControlPillButton: View {
 /// replacement accessibility frame, or audit suppression.
 struct FruitfolioNativeActionLabel: UIViewRepresentable {
     let text: String
+    var localizationKey: String? = nil
     var fontName = "ChalkboardSE-Bold"
     var pointSize: CGFloat = 15
     var textStyle: UIFont.TextStyle = .headline
@@ -103,6 +108,8 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     var lineSpacing: CGFloat = 0
     var textColor: Color = DesignTokens.ColorToken.primaryBurgundy
     var accessibilityText: String? = nil
+    @Environment(\.locale) private var locale
+    private var visibleText: String { localizationKey.map { FruitfolioLocalization.localized($0, locale: locale) } ?? text }
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     func makeUIView(context: Context) -> UILabel {
@@ -118,7 +125,7 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     }
 
     func updateUIView(_ label: UILabel, context: Context) {
-        if label.text != text { label.text = text }
+        if label.text != visibleText { label.text = visibleText }
         label.accessibilityLabel = accessibilityText
         if label.lineBreakMode != lineBreakMode { label.lineBreakMode = lineBreakMode }
         label.textColor = UIColor(textColor)
@@ -131,7 +138,7 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
             paragraph.alignment = .center
             paragraph.lineBreakMode = lineBreakMode
             paragraph.lineSpacing = lineSpacing
-            let attributed = NSAttributedString(string: text, attributes: [
+            let attributed = NSAttributedString(string: visibleText, attributes: [
                 .font: scaled, .foregroundColor: UIColor(textColor), .paragraphStyle: paragraph
             ])
             if label.attributedText != attributed { label.attributedText = attributed }
@@ -1033,7 +1040,7 @@ struct WatercolorToggle: View {
 
     var body: some View {
         Toggle(isOn: $isOn) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -1057,9 +1064,9 @@ struct WatercolorToggle: View {
             )
         )
         .disabled(isDisabled)
-        .accessibilityLabel(Text(label))
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
         .accessibilityValue(
-            Text(isOn ? "on" : "off")
+            Text(LocalizedStringKey(isOn ? "on" : "off"))
         )
     }
 }

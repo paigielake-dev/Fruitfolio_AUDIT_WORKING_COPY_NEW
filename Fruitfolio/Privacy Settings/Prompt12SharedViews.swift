@@ -117,11 +117,11 @@ struct Prompt12NavigationRow: View {
                     alignment: .leading,
                     spacing: 2
                 ) {
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 13
+                                size: 13, relativeTo: .body
                             )
                         )
                         .fontWeight(.bold)
@@ -144,7 +144,7 @@ struct Prompt12NavigationRow: View {
                                     .ColorToken
                                     .secondaryBurgundy
                             )
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
 
@@ -174,7 +174,8 @@ struct Prompt12NavigationRow: View {
                         .reduceMotionActive
             )
         )
-        .accessibilityLabel(title)
+        .accessibilityLabel(Text(LocalizedStringKey(title)))
+        .accessibilityIdentifier("settings.navigation." + title)
     }
 }
 

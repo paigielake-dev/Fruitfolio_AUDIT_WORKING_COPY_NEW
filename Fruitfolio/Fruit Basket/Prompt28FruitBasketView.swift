@@ -460,7 +460,7 @@ struct Prompt28FruitBasketView: View {
                 .frame(maxWidth: 330)
 
                 FruitfolioNativeActionLabel(
-                    text: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆",
+                    text: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆", localizationKey: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆",
                     fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .subheadline)
                 .multilineTextAlignment(.center)
                 .fixedSize(
@@ -1989,7 +1989,7 @@ struct Prompt28FruitBasketView: View {
                         } label: {
                             HStack(spacing: 0) {
                                 Spacer(minLength: 0)
-                                FruitfolioNativeActionLabel(text: "skip tour", fontName: "ChalkboardSE-Regular",
+                                FruitfolioNativeActionLabel(text: "skip tour", localizationKey: "skip tour", fontName: "ChalkboardSE-Regular",
                                     pointSize: 13, textStyle: .subheadline)
                                     .fixedSize(horizontal: false, vertical: true)
                                 Spacer(minLength: 0)
@@ -2526,7 +2526,7 @@ private struct Prompt28WatercolorButton: View {
 
     var body: some View {
         FruitfolioControlPillButton(
-            label: title,
+            label: title, localizationKey: title,
             action: action
         )
         .frame(maxWidth: 292)

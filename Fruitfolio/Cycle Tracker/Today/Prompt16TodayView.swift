@@ -301,7 +301,7 @@ struct Prompt16TodayView: View {
                     )
 
                 FruitfolioControlPillButton(
-                    label: "see what’s happening"
+                    label: "see what’s happening", localizationKey: "see what’s happening"
                 ) {
                     audioManager.play(
                         .buttonSoftPop
@@ -419,7 +419,7 @@ struct Prompt16TodayView: View {
             spacing: 14
         ) {
             FruitfolioControlPillButton(
-                label: "log today +"
+                label: "log today +", localizationKey: "log today +"
             ) {
                 audioManager.play(
                     .buttonSoftPop

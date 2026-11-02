@@ -11,10 +11,10 @@ final class LanguageSelectionJourneyUITests: XCTestCase {
     private func openSettings(_ app: XCUIApplication) {
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
-        let settings = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "settings")).firstMatch
+        let settings = app.buttons["hub.utility.settings"]
         XCTAssertTrue(settings.waitForExistence(timeout: 15))
         fruitfolioReachControl(app, settings); settings.tap()
-        XCTAssertTrue(app.buttons["language"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["settings.languageMenu"].waitForExistence(timeout: 10))
     }
 
     func testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance() {
@@ -31,7 +31,7 @@ final class LanguageSelectionJourneyUITests: XCTestCase {
             })
         }
         let originalVolumes = volumeValues()
-        let menu = app.buttons["language"]
+        let menu = app.buttons["settings.languageMenu"]
         fruitfolioReachControl(app, menu); menu.tap()
         let spanish = app.buttons.matching(identifier: "Español").firstMatch
         XCTAssertTrue(spanish.waitForExistence(timeout: 5)); spanish.tap()

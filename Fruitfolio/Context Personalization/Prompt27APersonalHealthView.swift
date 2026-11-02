@@ -91,15 +91,15 @@ private struct Prompt27AHealthEntryEditor: View {
                 Toggle("a clinician confirmed this, according to what I was told", isOn: $clinicianConfirmed)
                     .accessibilityIdentifier("healthContext.clinicianReported")
                 Text("saved as information you provide. Fruitfolio does not independently verify this or infer a diagnosis, genetic finding, or laboratory method.")
-                FruitfolioControlPillButton(label: "save context") {
+                FruitfolioControlPillButton(label: "save context", localizationKey: "save context") {
                     store.setPersonalHealthField(field, text: text, clinicianConfirmedByUser: clinicianConfirmed); dismiss()
                 }.disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                FruitfolioControlPillButton(label: "prefer not to say") {
+                FruitfolioControlPillButton(label: "prefer not to say", localizationKey: "prefer not to say") {
                     store.setPersonalHealthField(field, text: "", status: .preferNotToSay); dismiss()
                 }
-                FruitfolioControlPillButton(label: "remove this context") { focused = false; confirmRemove = true }
+                FruitfolioControlPillButton(label: "remove this context", localizationKey: "remove this context") { focused = false; confirmRemove = true }
                     .disabled(store.context.personalHealthFields[field]?.status != .supplied)
-                FruitfolioControlPillButton(label: "skip / cancel") {
+                FruitfolioControlPillButton(label: "skip / cancel", localizationKey: "skip / cancel") {
                     focused = false
                     if changed { confirmDiscard = true } else { dismiss() }
                 }

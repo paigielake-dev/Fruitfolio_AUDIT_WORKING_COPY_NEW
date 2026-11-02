@@ -190,7 +190,7 @@ struct Prompt12AccountView: View {
                 )
 
             FruitfolioControlPillButton(
-                label: "sign in"
+                label: "sign in", localizationKey: "sign in"
             ) {
                 signIn()
             }

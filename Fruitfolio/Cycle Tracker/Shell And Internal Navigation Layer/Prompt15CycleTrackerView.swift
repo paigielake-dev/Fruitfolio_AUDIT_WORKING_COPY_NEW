@@ -29,7 +29,7 @@ struct Prompt15CycleTrackerView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         header
-                        FruitfolioControlPillButton(label: "my context") { showMyContext = true }
+                        FruitfolioControlPillButton(label: "my context", localizationKey: "my context") { showMyContext = true }
                             .padding(.top, 12)
 
                         Prompt15CycleNavigation(

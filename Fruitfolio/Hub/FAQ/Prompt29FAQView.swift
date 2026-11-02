@@ -159,7 +159,7 @@ struct Prompt29FAQView: View {
                         onBack: onBack
                     )
 
-                    FruitfolioControlPillButton(label: "LifeBridge information") { showingLifeBridge = true }
+                    FruitfolioControlPillButton(label: "LifeBridge information", localizationKey: "LifeBridge information") { showingLifeBridge = true }
                         .accessibilityIdentifier("faq.lifebridge")
 
                     ForEach(Prompt29FAQCatalog.sections) { section in

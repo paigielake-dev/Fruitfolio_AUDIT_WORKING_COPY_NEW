@@ -27,7 +27,7 @@ struct Prompt28StormNoticeView: View {
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($messageFocused)
                 }
-                FruitfolioControlPillButton(label: "keep catching") { onContinue() }
+                FruitfolioControlPillButton(label: "keep catching", localizationKey: "keep catching") { onContinue() }
                     .accessibilityIdentifier("fruitBasket.stormContinue")
             }
             .padding(.vertical, 8)

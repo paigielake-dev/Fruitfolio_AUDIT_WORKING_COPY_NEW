@@ -79,7 +79,7 @@ struct Prompt10EncyclopediaDetailView: View {
                     }
                 }
 
-                FruitfolioControlPillButton(label: "manage chapters") { managingChapters = true }
+                FruitfolioControlPillButton(label: "manage chapters", localizationKey: "manage chapters") { managingChapters = true }
 
                 if encyclopedia.chapters.isEmpty {
                     Text("this little book is ready for saved pages ♡")
@@ -282,7 +282,7 @@ struct Prompt10EncyclopediaDetailView: View {
 
             if expanded {
                 VStack(spacing: 6) {
-                    FruitfolioControlPillButton(label: "add my own page") { editingChapterID = chapter.id }
+                    FruitfolioControlPillButton(label: "add my own page", localizationKey: "add my own page") { editingChapterID = chapter.id }
                         .accessibilityIdentifier("library.addPage.\(chapter.id)")
 
                     ForEach(
@@ -430,7 +430,7 @@ struct Prompt10SavedPageView: View {
                     .textSelection(.enabled)
 
                 if page.isUserAuthored == true {
-                    FruitfolioControlPillButton(label: "edit my page") {
+                    FruitfolioControlPillButton(label: "edit my page", localizationKey: "edit my page") {
                         editAfterNotes = true; notesFocused = false
                         if noteDraft != page.notes { showUnsavedNotes = true } else { editingPage = true }
                     }

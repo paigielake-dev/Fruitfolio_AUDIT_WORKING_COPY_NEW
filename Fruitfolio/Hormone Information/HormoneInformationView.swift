@@ -29,10 +29,10 @@ struct HormoneInformationView: View {
                     if store.measurements.isEmpty && store.loadError == nil {
                         Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                     }
-                    FruitfolioControlPillButton(label: "add measurement") { editing = HormoneMeasurement() }
+                    FruitfolioControlPillButton(label: "add measurement", localizationKey: "add measurement") { editing = HormoneMeasurement() }
                         .disabled(store.loadError != nil)
-                    FruitfolioControlPillButton(label: "hormone library") { showLibrary = true }
-                    FruitfolioControlPillButton(label: "hormone rhythm") { showRhythm = true }
+                    FruitfolioControlPillButton(label: "hormone library", localizationKey: "hormone library") { showLibrary = true }
+                    FruitfolioControlPillButton(label: "hormone rhythm", localizationKey: "hormone rhythm") { showRhythm = true }
                         .accessibilityIdentifier("hormone.openRhythm")
                     Picker("filter by hormone", selection: $filter) {
                         Text("all hormones").tag(Optional<RecordedHormone>.none)
@@ -44,8 +44,8 @@ struct HormoneInformationView: View {
                     ForEach(records) { record in
                         VStack(alignment: .leading, spacing: 8) {
                             HormoneMeasurementSummaryView(record: record)
-                            FruitfolioControlPillButton(label: "open / edit measurement") { editing = record }
-                            FruitfolioControlPillButton(label: "delete measurement") { pendingDeletion = record }
+                            FruitfolioControlPillButton(label: "open / edit measurement", localizationKey: "open / edit measurement") { editing = record }
+                            FruitfolioControlPillButton(label: "delete measurement", localizationKey: "delete measurement") { pendingDeletion = record }
                         }
                         .fixedSize(horizontal: false, vertical: true)
                         .accessibilityElement(children: .contain)
@@ -131,7 +131,7 @@ private struct HormoneMeasurementEditor: View {
                 DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
                     .onChange(of: draft.testDate) { _, _ in draft.testDateWasProvided = true }
                 if draft.testDateWasProvided != true {
-                    FruitfolioControlPillButton(label: "confirm test date") { draft.testDateWasProvided = true }
+                    FruitfolioControlPillButton(label: "confirm test date", localizationKey: "confirm test date") { draft.testDateWasProvided = true }
                     Text("the displayed date is not saved until you choose or confirm it.")
                 }
                 field("sample type (optional)", text: $draft.sampleType)
@@ -141,10 +141,10 @@ private struct HormoneMeasurementEditor: View {
                 Text("enter a decimal separator only for decimals; do not enter thousands separators. units are saved exactly as entered and are never converted.")
                 if let validation = draft.validationError { Text(LocalizedStringKey(validation)).font(.footnote) }
                 if let error { Text(error).accessibilityLabel(error) }
-                FruitfolioControlPillButton(label: "save measurement") {
+                FruitfolioControlPillButton(label: "save measurement", localizationKey: "save measurement") {
                     do { try store.save(draft); dismiss() } catch { self.error = error.localizedDescription }
                 }.disabled(draft.validationError != nil)
-                FruitfolioControlPillButton(label: "cancel") {
+                FruitfolioControlPillButton(label: "cancel", localizationKey: "cancel") {
                     fieldFocused = false
                     if draft != original { showDiscard = true } else { dismiss() }
                 }
@@ -207,7 +207,7 @@ private struct HormoneResearchLibraryView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                FruitfolioControlPillButton(label: "back") { dismiss() }
+                FruitfolioControlPillButton(label: "back", localizationKey: "back") { dismiss() }
                 Text("hormone library").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
                 Picker("hormone", selection: $selected) {
                     ForEach(RecordedHormone.allCases.filter { $0 != .other }) {

@@ -75,7 +75,7 @@ struct Prompt09AskView: View {
 
                             if LifeBridgeInformation.isDiscoveryQuery(viewModel.inputText) ||
                                 LifeBridgeInformation.isDiscoveryQuery(viewModel.messages.last(where: { $0.role == .user })?.text ?? "") {
-                                FruitfolioControlPillButton(label: "LifeBridge information") {
+                                FruitfolioControlPillButton(label: "LifeBridge information", localizationKey: "LifeBridge information") {
                                     inputFocused = false
                                     showingLifeBridge = true
                                 }
@@ -92,6 +92,7 @@ struct Prompt09AskView: View {
                                 if let priorAnswer = viewModel.sessionAnswers[message.id],
                                    priorAnswer.id != viewModel.answer?.id {
                                     archivedAnswerView(priorAnswer)
+                                        .environment(\.layoutDirection, .leftToRight)
                                         .id(priorAnswer.id)
                                 }
                             }
@@ -107,6 +108,7 @@ struct Prompt09AskView: View {
                             if let answer =
                                 viewModel.answer {
                                 answerView(answer)
+                                    .environment(\.layoutDirection, .leftToRight)
                                     .id(answer.id)
                             }
 

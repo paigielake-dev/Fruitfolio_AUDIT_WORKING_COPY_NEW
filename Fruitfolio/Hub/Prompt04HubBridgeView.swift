@@ -803,7 +803,7 @@ private struct Prompt05HubPaperControls:
                     .isHeader
                 )
 
-                FruitfolioNativeActionLabel(text: "By FruitsofLife.xo", pointSize: 20,
+                FruitfolioNativeActionLabel(text: "By FruitsofLife.xo", localizationKey: "By FruitsofLife.xo", pointSize: 20,
                     textStyle: .title3, lineBreakMode: .byCharWrapping,
                     textColor: DesignTokens.ColorToken.secondaryBurgundy)
                 .multilineTextAlignment(
@@ -1139,17 +1139,19 @@ private struct Prompt05PrimaryHubButton:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
+    @Environment(\.locale) private var locale
+
     var body: some View {
         Button {
             activateImmediately()
 
         } label: {
-            if dynamicTypeSize.isAccessibilitySize {
+            if dynamicTypeSize.isAccessibilitySize || locale.language.languageCode?.identifier != "en" {
                 HStack(spacing: 12) {
                     FruitfolioImage(id: spec.symbolAsset)
                         .scaledToFit().frame(width: 34, height: 34)
                         .accessibilityHidden(true)
-                    FruitfolioNativeActionLabel(text: spec.displayLabel, lineBreakMode: .byCharWrapping)
+                    FruitfolioNativeActionLabel(text: spec.displayLabel, localizationKey: spec.displayLabel, lineBreakMode: .byCharWrapping)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityElement(children: .contain)
@@ -1210,7 +1212,7 @@ private struct Prompt05PrimaryHubButton:
                     )
 
                     Text(
-                        spec.displayLabel
+                        LocalizedStringKey(spec.displayLabel)
                     )
                     .font(
                         .custom(
@@ -1289,7 +1291,7 @@ private struct Prompt05PrimaryHubButton:
             !interactive
         )
         .accessibilityLabel(
-            accessibilityLabel
+            (locale.language.languageCode?.identifier == "en" ? accessibilityLabel : FruitfolioLocalization.localized(spec.displayLabel, locale: locale))
         )
         .accessibilityIdentifier("hub.action." + accessibilityLabel)
         .accessibilityAddTraits(
@@ -1532,7 +1534,7 @@ private struct Prompt05HubUtilityButton:
                     true
                 )
 
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(
                         .custom(
                             "Chalkboard SE",
@@ -1578,7 +1580,8 @@ private struct Prompt05HubUtilityButton:
         .accessibilityHidden(
             !interactive
         )
-        .accessibilityLabel(Text(label))
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
+        .accessibilityIdentifier("hub.utility." + label)
         .accessibilityAddTraits(
             .isButton
         )

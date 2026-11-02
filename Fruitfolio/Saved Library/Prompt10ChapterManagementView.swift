@@ -23,7 +23,7 @@ struct Prompt10ChapterManagementView: View {
                 VStack(alignment: .leading, spacing: 18) {
                     BackControl { dismiss() }
                     Text("my chapters").font(.custom("Chalkboard SE", size: 22, relativeTo: .title2)).bold()
-                    FruitfolioControlPillButton(label: "add chapter") {
+                    FruitfolioControlPillButton(label: "add chapter", localizationKey: "add chapter") {
                         editing = nil; name = ""; error = nil; showingEditor = true
                     }
                     ForEach(chapters) { chapter in
@@ -69,7 +69,7 @@ struct Prompt10ChapterManagementView: View {
                             .textFieldStyle(.roundedBorder).submitLabel(.done)
                             .accessibilityIdentifier("chapters.name")
                         if let error { Text(error) }
-                        FruitfolioControlPillButton(label: "save chapter", action: save)
+                        FruitfolioControlPillButton(label: "save chapter", localizationKey: "save chapter", action: save)
                         WatercolorSecondaryButton(label: "cancel") { showingEditor = false }
                     }
                     .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))

@@ -198,7 +198,7 @@ struct Prompt12DataManagementView: View {
             exportCard
             includedAreasCard
             deletionCard
-            FruitfolioControlPillButton(label: "delete local hormone measurements") {
+            FruitfolioControlPillButton(label: "delete local hormone measurements", localizationKey: "delete local hormone measurements") {
                 confirmHormoneErase = true
             }
             .accessibilityIdentifier("data.deleteHormones")
@@ -400,7 +400,7 @@ struct Prompt12DataManagementView: View {
             )
 
             FruitfolioControlPillButton(
-                label: "review deletion options"
+                label: "review deletion options", localizationKey: "review deletion options"
             ) {
                 showLocalDeletionNotice = true
             }
