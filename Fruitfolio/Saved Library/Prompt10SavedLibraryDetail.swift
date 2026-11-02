@@ -543,19 +543,13 @@ struct Prompt10SavedPageView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
-                if let data = Prompt10LocalMediaStore.shared.data(for: imageID),
-                   let image = UIImage(data: data) {
-                    VStack(spacing: 6) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            .accessibilityLabel("user imported image")
-
-                        Button("remove image") { removeImage(imageID) }
-                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                    }
+                VStack(spacing: 6) {
+                    Prompt10ImportedImagePreview(imageID: imageID, accessibilityLabel: "user imported image")
+                        .frame(maxWidth: .infinity)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    Button("remove image") { removeImage(imageID) }
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .frame(minHeight: 44)
                 }
             }
 

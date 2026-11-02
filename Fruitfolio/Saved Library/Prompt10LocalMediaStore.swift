@@ -1,7 +1,9 @@
 import Foundation
+import ImageIO
+import UniformTypeIdentifiers
 
 /// Owns user-imported Saved Library media locally. UserDefaults stores only IDs.
-struct Prompt10LocalMediaStore: Sendable {
+nonisolated struct Prompt10LocalMediaStore: Sendable {
     static let shared = Prompt10LocalMediaStore()
 
     private let fileManager: FileManager
@@ -76,6 +78,27 @@ struct Prompt10LocalMediaStore: Sendable {
         if let committed = try? Data(contentsOf: url) { return committed }
         let staged = root.appendingPathComponent("Pending", isDirectory: true).appendingPathComponent(url.lastPathComponent)
         return try? Data(contentsOf: staged)
+    }
+
+    /// A display-only, bounded decode. Original image bytes are never
+    /// rewritten and no derivative file is stored beside the user's original.
+    func previewPNGData(for id: String, maximumPixelSize: Int = 2048) -> Data? {
+        guard (1...4096).contains(maximumPixelSize), !Task.isCancelled,
+              let original = data(for: id),
+              let source = CGImageSourceCreateWithData(original as CFData,
+                  [kCGImageSourceShouldCache: false] as CFDictionary),
+              let image = CGImageSourceCreateThumbnailAtIndex(source, 0, [
+                  kCGImageSourceCreateThumbnailFromImageAlways: true,
+                  kCGImageSourceCreateThumbnailWithTransform: true,
+                  kCGImageSourceThumbnailMaxPixelSize: maximumPixelSize,
+                  kCGImageSourceShouldCacheImmediately: true
+              ] as CFDictionary), !Task.isCancelled else { return nil }
+        let preview = NSMutableData()
+        guard let destination = CGImageDestinationCreateWithData(preview as CFMutableData,
+            UTType.png.identifier as CFString, 1, nil) else { return nil }
+        CGImageDestinationAddImage(destination, image, nil)
+        guard CGImageDestinationFinalize(destination), !Task.isCancelled else { return nil }
+        return preview as Data
     }
 
     func delete(_ id: String) throws {

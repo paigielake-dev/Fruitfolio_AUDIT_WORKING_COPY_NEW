@@ -68,12 +68,9 @@ struct Prompt10UserPageEditor: View {
                         .padding(10)
                         .background(.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 16))
                     ForEach(imageIDs, id: \.self) { id in
-                        if let data = Prompt10LocalMediaStore.shared.data(for: id), let image = UIImage(data: data) {
-                            Image(uiImage: image).resizable().scaledToFit()
-                                .accessibilityLabel("my imported image")
-                            Button("remove image") { imageIDs.removeAll { $0 == id } }
-                                .frame(minHeight: 44)
-                        }
+                        Prompt10ImportedImagePreview(imageID: id, accessibilityLabel: "my imported image")
+                        Button("remove image") { imageIDs.removeAll { $0 == id } }
+                            .frame(minHeight: 44)
                     }
                     Button("add image") { showingPhotoPicker = true }
                         .frame(minHeight: 44)
@@ -231,5 +228,47 @@ struct Prompt10SemanticTextEditor: UIViewRepresentable {
             parent.document = updated
         }
         func textViewDidChangeSelection(_ view: UITextView) { if !isApplying { parent.selection = view.selectedRange } }
+    }
+}
+
+
+/// Decode once per immutable imported image, away from typing/layout updates.
+/// This renders existing user content; it never generates or substitutes art.
+struct Prompt10ImportedImagePreview: View {
+    let imageID: String
+    let accessibilityLabel: String
+    @State private var image: UIImage?
+    @State private var loadedImageID: String?
+    @State private var finishedLoading = false
+
+    var body: some View {
+        Group {
+            if let image {
+                Image(uiImage: image).resizable().scaledToFit()
+                    .accessibilityLabel(accessibilityLabel)
+            } else if finishedLoading {
+                Text("this imported image could not be opened. its saved original has not been replaced.")
+                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("userImage.unreadable")
+            } else {
+                ProgressView("opening your image…")
+            }
+        }
+        .task(id: imageID) {
+            if image != nil && loadedImageID == imageID { return }
+            image = nil; finishedLoading = false
+            let requested = imageID
+            let media = Prompt10LocalMediaStore.shared
+            let decoding = Task.detached(priority: .userInitiated) {
+                media.previewPNGData(for: requested)
+            }
+            let data = await withTaskCancellationHandler(operation: { await decoding.value },
+                onCancel: { decoding.cancel() })
+            guard !Task.isCancelled else { return }
+            image = data.flatMap { UIImage(data: $0) }
+            loadedImageID = requested
+            finishedLoading = true
+        }
     }
 }

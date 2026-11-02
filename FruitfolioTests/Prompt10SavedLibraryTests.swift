@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 @testable import Fruitfolio
 
 @MainActor
@@ -518,5 +519,31 @@ extension Prompt10SavedLibraryTests {
         let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key)
         XCTAssertEqual(reopened.encyclopedia(id: book.id)?.name, original[0].name)
         XCTAssertEqual(reopened.encyclopedia(id: book.id)?.subtitle, original[0].subtitle)
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testImportedImagePreviewBoundsItsDecodeWithoutChangingOriginalBytesOrCreatingDerivativeFiles() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 120, height: 80))
+        let fixture = renderer.image { context in
+            UIColor.systemRed.setFill(); context.fill(CGRect(x: 0, y: 0, width: 120, height: 80))
+        }
+        let original = try XCTUnwrap(fixture.pngData())
+        let id = try media.saveImageData(original)
+        let preview = try XCTUnwrap(media.previewPNGData(for: id, maximumPixelSize: 32))
+        let decoded = try XCTUnwrap(UIImage(data: preview)?.cgImage)
+        XCTAssertEqual(max(decoded.width, decoded.height), 32)
+        XCTAssertEqual(Double(decoded.width) / Double(decoded.height), 1.5, accuracy: 0.08)
+        XCTAssertEqual(media.data(for: id), original)
+        XCTAssertEqual(try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil).filter { $0.pathExtension == "image" }.count, 1)
+        XCTAssertNil(media.previewPNGData(for: id, maximumPixelSize: 0))
+        let corrupt = Data([0xff, 0x00, 0x01])
+        let brokenID = try media.saveImageData(corrupt)
+        XCTAssertNil(media.previewPNGData(for: brokenID))
+        XCTAssertEqual(media.data(for: brokenID), corrupt, "An unreadable original is never replaced by an empty or generated image")
     }
 }
