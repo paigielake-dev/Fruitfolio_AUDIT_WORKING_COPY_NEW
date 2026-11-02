@@ -760,21 +760,8 @@ private struct Prompt05HubPaperControls:
             VStack(
                 spacing: 3
             ) {
-                Text(
-                    "Fruitfolio"
-                )
-                .font(
-                    .custom(
-                        "Snell Roundhand",
-                        size: dynamicTypeSize.isAccessibilitySize ? 24 : 68,
-                        relativeTo: .largeTitle
-                    )
-                )
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .primaryBurgundy
-                )
+                FruitfolioNativeActionLabel(text: "Fruitfolio", fontName: "SnellRoundhand",
+                    pointSize: 68, textStyle: .largeTitle, lineBreakMode: .byCharWrapping)
                 .multilineTextAlignment(
                     .center
                 )
@@ -815,24 +802,9 @@ private struct Prompt05HubPaperControls:
                     .isHeader
                 )
 
-                Text(
-                    "By FruitsofLife.xo"
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: dynamicTypeSize.isAccessibilitySize ? 14 : 20,
-                        relativeTo: .title3
-                    )
-                )
-                .fontWeight(
-                    .bold
-                )
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .secondaryBurgundy
-                )
+                FruitfolioNativeActionLabel(text: "By FruitsofLife.xo", pointSize: 20,
+                    textStyle: .title3, lineBreakMode: .byCharWrapping,
+                    textColor: DesignTokens.ColorToken.secondaryBurgundy)
                 .multilineTextAlignment(
                     .center
                 )

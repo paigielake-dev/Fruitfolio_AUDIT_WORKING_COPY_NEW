@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "timestampUTC": "2026-11-02T03:31:24.225463+00:00",
-  "sourceCommit": "067f34db07b5ac17c44c95c4527c66a069deaa4d",
+  "timestampUTC": "2026-11-02T04:05:24.146520+00:00",
+  "sourceCommit": "2794331941610dd3e1b1cca2f22a907fd7ee8ff6",
   "developmentBranch": "fruitfolio/prompt-1b-alignment",
   "mainMerged": false,
   "execution": "ACTIVE: actual implementation and verification continuing",
@@ -110,25 +110,30 @@
     "dataExport": "FAIL test helper role; actual Files picker and filename field did open",
     "bulkHormoneGuard": "FAIL contrast on action outside clipped writing pane; source74 repair pending"
   },
-  "pendingLocalSourceBatch": 83,
+  "pendingLocalSourceBatch": 86,
   "latestRetrievedActualUnitStage": {
-    "run": 77,
-    "commit": "64fe128df4366175fab8e717deab6866bf064926",
+    "run": 79,
+    "commit": "f419672528da8ee68a647a79dfdccdb60db9949d",
     "XCTest": {
-      "executed": 541,
-      "PASS": 539,
+      "executed": 545,
+      "PASS": 542,
       "SKIP": 1,
-      "FAIL": 1
+      "FAIL": 2
     },
-    "SwiftTesting": {
-      "PASS": 25
-    },
-    "elevenLanguagePreservation": {
+    "SwiftTestingPASS": 25,
+    "originalElevenTargets": {
       "PASS": 10,
       "FAIL": 1
     },
-    "failure": "zh adds space inside protected marker; corrected boundary implementation awaits rerun",
-    "medicalMeaning": "NOT ACCEPTED — actual Hindi substitutes ovary for ovulation; production medical translation remains gated"
+    "edgeElevenTargets": {
+      "PASS": 10,
+      "FAIL": 1
+    },
+    "failures": [
+      "zh marker-edge spacing",
+      "ja dropped all six edge-list markers"
+    ],
+    "medicalMeaning": "Hindi ovary/ovulation discrepancy remains FAIL; production medical translation gated"
   },
   "trackerCounts": {
     "PARTIAL": 132,
@@ -136,5 +141,116 @@
     "NOT VERIFIED": 292,
     "BLOCKED": 2,
     "FAIL": 4
+  },
+  "latestRetrievedNativeAuditStage": {
+    "sourceCommit": "067f34db07b5ac17c44c95c4527c66a069deaa4d",
+    "runID": 41382400631,
+    "runNumber": 80,
+    "nativeAudits": [
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testAccountAccessibility",
+        "status": "passed",
+        "seconds": 35.317
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testAskOpeningAccessibility",
+        "status": "passed",
+        "seconds": 34.168
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testContactAccessibility",
+        "status": "passed",
+        "seconds": 25.556
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testCycleOpeningAccessibility",
+        "status": "passed",
+        "seconds": 29.115
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testFAQAccessibility",
+        "status": "passed",
+        "seconds": 25.433
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testFruitBasketOpeningAccessibility",
+        "status": "failed",
+        "seconds": 29.182
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testGuideOpeningAccessibility",
+        "status": "passed",
+        "seconds": 25.634
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testHubAccessibility",
+        "status": "failed",
+        "seconds": 25.734
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testHubLargestDynamicTypeKeepsAllDestinationsReachable",
+        "status": "failed",
+        "seconds": 82.676
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testLibraryOpeningAccessibility",
+        "status": "passed",
+        "seconds": 34.945
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testSettingsAccessibility",
+        "status": "passed",
+        "seconds": 25.497
+      }
+    ],
+    "nativeAuditCounts": {
+      "passed": 8,
+      "failed": 3
+    },
+    "sharedControls": [
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation",
+        "status": "failed",
+        "seconds": 61.814
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping",
+        "status": "failed",
+        "seconds": 58.385
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers",
+        "status": "passed",
+        "seconds": 44.585
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording",
+        "status": "passed",
+        "seconds": 35.619
+      }
+    ],
+    "sharedCounts": {
+      "failed": 2,
+      "passed": 2
+    },
+    "unitStage": "SKIPPED — prior UI failure and default step condition; explicit independent condition added in source85",
+    "originalNativeArtifact": {
+      "id": 13115165029,
+      "sha256": "abcdde1c02c175ac386165a99e1d0df10ee6be305bc587633898fe359783035c",
+      "sizeBytes": 583033084
+    },
+    "recoveryArtifact": {
+      "id": 13114862718,
+      "runID": 41384817748,
+      "sha256": "d015c6f17070658bf165f5dcdbdc1ab051a89e39881d6288e68bdeedcfbd58a7",
+      "operation": "original SHA/CRC checked, exported files copied byte-for-byte; no rerun or outcome edit"
+    },
+    "remainingNativeFailures": [
+      "Fruit Basket tutorial left dimmed background title exposed to accessibility; source86 isolates true modal background through canonical blur",
+      "Hub title font base decreased at accessibility sizes; source86 keeps original68pt base and uses monotonic native font scaling/character wrapping",
+      "Largest Hub settings was below an invented60pt test inset; source84 uses actual owning viewport"
+    ],
+    "sharedContactResult": "Both stopped in helper before Contact; no latest Contact acceptance inferred",
+    "releaseReady": false
   }
 }

@@ -93,6 +93,39 @@ final class TranslationPreservationTests: XCTestCase {
         XCTAssertEqual(FruitfolioTranslationPreservation.numbers("½ 1 ½ 1/2 ＋２．５"), ["½", "1 ½", "1/2", "＋２．５"])
     }
 
+    func testPureTerminalMeasurementListsStayOutsideGenerationWhileStrictValidationStillApplies() throws {
+        let source = "These are recorded values, not medical advice: -2.50 ng/mL; 12.5%; 37.0 °C."
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: [])
+        let detached = try XCTUnwrap(plan.terminalLiteralList())
+        XCTAssertEqual(detached.modelInput, "These are recorded values, not medical advice")
+        XCTAssertEqual(detached.sourceSuffix, ": [FFQ0]; [FFQ1]; [FFQ2].")
+        // Exact actual prior Japanese output dropped every quantity. The list
+        // now never enters the decoder, and is copied verbatim outside it.
+        let rawJapanese = "これらは記録値であり，医療的アドバイスではない。"
+        let restored = try plan.restoring(in: detached.combining(with: rawJapanese))
+        XCTAssertTrue(restored.hasSuffix(": -2.50 ng/mL; 12.5%; 37.0 °C."))
+        XCTAssertEqual(FruitfolioTranslationPreservation.numbers(restored), FruitfolioTranslationPreservation.numbers(source))
+        let addedNumber = try plan.restoring(in: detached.combining(with: "There are 9 values."))
+        XCTAssertThrowsError(try FruitfolioTranslationPreservation.preserveNumbers(source: source, translated: addedNumber, target: "en"))
+        XCTAssertThrowsError(try plan.restoring(in: detached.combining(with: "[FFQ0] added.")))
+        XCTAssertNil(try FruitfolioProtectedMeasurements(source: "Values: 2 ng/mL; and 5 mIU/L.", immutableTerms: []).terminalLiteralList(),
+            "A mixed prose clause must not be bypassed as a pure quantitative list")
+        XCTAssertNil(try FruitfolioProtectedMeasurements(source: "The result is 2.5 ng/mL.", immutableTerms: []).terminalLiteralList())
+    }
+
+    func testLanguageReadinessNeverConfusesModelPresenceWithApprovedMedicalDisplay() {
+        XCTAssertNil(FruitfolioLocalization.untranslatedContentNotice(for: .english))
+        for language in FruitfolioLanguage.allCases where language != .english {
+            XCTAssertNotNil(FruitfolioLocalization.untranslatedContentNotice(for: language))
+            XCTAssertNotEqual(FruitfolioLocalization.displayReadiness(for: language), .originalEnglish)
+        }
+        for language in [FruitfolioLanguage.tokPisin, .tahitian, .cookIslandsMaori, .niuean, .kiribati] {
+            XCTAssertEqual(FruitfolioLocalization.displayReadiness(for: language), .unsupportedOfficialTarget)
+        }
+        XCTAssertEqual(FruitfolioLocalization.displayReadiness(for: .chineseSimplified), .requiresVerification)
+        XCTAssertEqual(FruitfolioLocalization.displayReadiness(for: .chineseTraditional), .requiresVerification)
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

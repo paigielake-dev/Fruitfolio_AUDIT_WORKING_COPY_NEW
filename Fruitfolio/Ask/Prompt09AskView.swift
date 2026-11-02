@@ -690,8 +690,8 @@ struct Prompt09AskView: View {
         _ answer: AskAnswer
     ) -> some View {
         VStack(spacing: 12) {
-            if settings.language != .english {
-                Text("this answer is shown in its original English because offline translation is unavailable. your language preference is unchanged.")
+            if let notice = FruitfolioLocalization.untranslatedContentNotice(for: settings.language) {
+                Text(notice)
                     .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .fixedSize(horizontal: false, vertical: true)

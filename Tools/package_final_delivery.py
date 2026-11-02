@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Verify and package the real project. Never label unfinished work FINAL_COMPLETE."""
 import argparse
+from collections import Counter
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
@@ -73,7 +74,12 @@ def verify_inputs():
     tracker = json.loads((ROOT / 'Delivery/ImplementationTracker478.json').read_text())
     items = tracker['requirements']
     if len(items) != 478 or len({x['requirementID'] for x in items}) != 478: raise RuntimeError('Tracker must retain all 478 unique original requirements')
+    actual_counts = dict(Counter(item['implementationStatus'] for item in items))
+    if tracker.get('summary') != actual_counts:
+        raise RuntimeError('Tracker summary is stale; reconcile it against all 478 individual statuses')
     for item in items:
+        if item.get('finalDisposition', item['implementationStatus']) != item['implementationStatus']:
+            raise RuntimeError('Conflicting item disposition: ' + item['requirementID'])
         for ref in set(item.get('supportingEvidence', []) + item.get('evidenceReferences', [])):
             p = ROOT / ref.split('#')[0]
             if not p.exists() or not included(p): raise RuntimeError('Missing or excluded required evidence: ' + ref)

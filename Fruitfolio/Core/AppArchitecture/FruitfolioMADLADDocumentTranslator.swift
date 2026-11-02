@@ -36,6 +36,7 @@ nonisolated struct FruitfolioTranslationSentenceEvidence: Sendable, Codable {
     let actualModelInput: String
     let rawOutput: String
     let restoredOutput: String
+    let preservedLiteralSuffix: String
 }
 
 nonisolated enum FruitfolioTranslationPreservation {
@@ -161,6 +162,26 @@ nonisolated struct FruitfolioProtectedMeasurements {
         modelInput = protected as String
     }
 
+    /// A terminal list made solely of protected quantities and separators is
+    /// immutable source metadata. Actual Japanese MADLAD dropped a six-marker
+    /// list entirely. Generate only its surrounding prose, then restore the
+    /// exact list outside inference, as with terminal citation metadata.
+    func terminalLiteralList() throws -> FruitfolioTerminalMeasurementList? {
+        guard let colon = modelInput.lastIndex(where: { $0 == ":" || $0 == "：" }) else { return nil }
+        let head = String(modelInput[..<colon]).trimmingCharacters(in: .whitespaces)
+        let suffix = String(modelInput[colon...])
+        guard !head.isEmpty else { return nil }
+        let marker = #"\["# + NSRegularExpression.escapedPattern(for: prefix) + #"[0-9]+\]"#
+        let spacing = #"[\p{Zs}\t]*"#
+        let pattern = #"^[:：]"# + spacing + marker
+            + #"(?:"# + spacing + #"[,;，；،؛]"# + spacing + marker + #")+"#
+            + spacing + #"[.!?。！？؟।]?$"#
+        let expression = try NSRegularExpression(pattern: pattern)
+        let full = NSRange(suffix.startIndex..., in: suffix)
+        guard expression.firstMatch(in: suffix, range: full)?.range == full else { return nil }
+        return .init(modelInput: head, sourceSuffix: suffix)
+    }
+
     static func canonicalASCIIWidth(_ value: String) -> String {
         // Exact Unicode width counterparts only; no script, unit conversion,
         // decimal rounding, synonym replacement or whole-number reinterpretation.
@@ -192,6 +213,16 @@ nonisolated struct FruitfolioProtectedMeasurements {
         }
         output = restored as String
         return output
+    }
+}
+
+nonisolated struct FruitfolioTerminalMeasurementList: Sendable {
+    let modelInput: String
+    let sourceSuffix: String
+    func combining(with rawPrefix: String) -> String {
+        var prefix = rawPrefix.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let last = prefix.last, ".!?。！？؟।:：".contains(last) { prefix.removeLast() }
+        return prefix.trimmingCharacters(in: .whitespaces) + sourceSuffix
     }
 }
 
@@ -285,11 +316,14 @@ actor FruitfolioMADLADDocumentTranslator {
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             guard !modelInput.isEmpty else { throw FruitfolioTranslationPreservationError.emptyInput }
             let measurements = try FruitfolioProtectedMeasurements(source: modelInput, immutableTerms: immutableTerms)
-            let rawOutput = try await runtime.translateRawSentence(measurements.modelInput, target: target, directory: directory)
+            let literalList = try measurements.terminalLiteralList()
+            let actualModelInput = literalList?.modelInput ?? measurements.modelInput
+            let rawOutput = try await runtime.translateRawSentence(actualModelInput, target: target, directory: directory)
+            let candidateWithSourceMetadata = literalList?.combining(with: rawOutput) ?? rawOutput
             try Task.checkCancellation()
             var output: String
             do {
-                output = try measurements.restoring(in: rawOutput)
+                output = try measurements.restoring(in: candidateWithSourceMetadata)
                 guard citation.firstMatch(in: output, range: NSRange(output.startIndex..., in: output)) == nil else {
                     throw FruitfolioTranslationPreservationError.unexpectedCitation
                 }
@@ -297,15 +331,16 @@ actor FruitfolioMADLADDocumentTranslator {
                 try FruitfolioTranslationPreservation.preserveLiterals(immutableTerms, source: modelInput, translated: output)
             } catch let reason as FruitfolioTranslationPreservationError {
                 throw FruitfolioTranslationRejectedCandidate(reason: reason, sourceSentence: modelInput,
-                    actualModelInput: measurements.modelInput, rawOutput: rawOutput, target: target)
+                    actualModelInput: actualModelInput, rawOutput: rawOutput, target: target)
             }
             if !localMarkers.isEmpty {
-                let terminal = output.last.map { ".!?。！？؟".contains($0) } == true ? String(output.removeLast()) : ""
+                let terminal = output.last.map { ".!?。！？؟।".contains($0) } == true ? String(output.removeLast()) : ""
                 output = output.trimmingCharacters(in: .whitespaces)
                 output += " " + localMarkers.joined(separator: " ") + terminal
             }
             sentenceEvidence.append(.init(sourceSentence: modelInput,
-                actualModelInput: measurements.modelInput, rawOutput: rawOutput, restoredOutput: output))
+                actualModelInput: actualModelInput, rawOutput: rawOutput, restoredOutput: output,
+                preservedLiteralSuffix: literalList?.sourceSuffix ?? ""))
             markers.append(contentsOf: localMarkers)
             translated.append(output)
         }

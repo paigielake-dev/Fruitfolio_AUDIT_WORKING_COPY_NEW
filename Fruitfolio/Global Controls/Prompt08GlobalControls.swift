@@ -90,13 +90,19 @@ struct FruitfolioControlPillButton: View {
 /// replacement accessibility frame, or audit suppression.
 struct FruitfolioNativeActionLabel: UIViewRepresentable {
     let text: String
+    var fontName = "ChalkboardSE-Bold"
+    var pointSize: CGFloat = 15
+    var textStyle: UIFont.TextStyle = .headline
+    var lineBreakMode: NSLineBreakMode = .byWordWrapping
+    var textColor: Color = DesignTokens.ColorToken.primaryBurgundy
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     func makeUIView(context: Context) -> UILabel {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.lineBreakMode = .byWordWrapping
+        label.lineBreakMode = lineBreakMode
+        label.adjustsFontForContentSizeCategory = true
         label.isAccessibilityElement = true
         label.accessibilityTraits = .staticText
         label.setContentCompressionResistancePriority(.required, for: .vertical)
@@ -105,9 +111,9 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
 
     func updateUIView(_ label: UILabel, context: Context) {
         label.text = text
-        label.textColor = UIColor(DesignTokens.ColorToken.primaryBurgundy)
-        let base = UIFont(name: "ChalkboardSE-Bold", size: 15) ?? UIFont.systemFont(ofSize: 15, weight: .semibold)
-        label.font = UIFontMetrics(forTextStyle: .headline).scaledFont(for: base,
+        label.textColor = UIColor(textColor)
+        let base = UIFont(name: fontName, size: pointSize) ?? UIFont.systemFont(ofSize: pointSize, weight: .semibold)
+        label.font = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,
             compatibleWith: UITraitCollection(preferredContentSizeCategory: contentSizeCategory))
         label.invalidateIntrinsicContentSize()
     }

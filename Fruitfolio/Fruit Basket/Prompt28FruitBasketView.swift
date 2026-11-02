@@ -58,6 +58,7 @@ struct Prompt28FruitBasketView: View {
     @State private var showingSaveDestination = false
     @State private var showTour = false
     @State private var tourStep = 0
+    @AccessibilityFocusState private var tourHeadingFocused: Bool
     @State private var leaderboardValidationMessage: String?
     @State private var leaderboardUsernameDraft = ""
     @FocusState private var leaderboardUsernameFocused: Bool
@@ -81,6 +82,7 @@ struct Prompt28FruitBasketView: View {
 
     var body: some View {
         ZStack {
+            ZStack {
             GeometryReader { proxy in
                 Image("fruitbasket_background")
                     .resizable()
@@ -106,6 +108,9 @@ struct Prompt28FruitBasketView: View {
             content
                 .frame(maxWidth: 620)
                 .frame(maxWidth: .infinity)
+
+            }
+            .fruitfolioModalBlur(active: showTour, reduceMotion: motionPreferences.reduceMotionActive)
 
             if showTour {
                 tourOverlay
@@ -1832,12 +1837,6 @@ struct Prompt28FruitBasketView: View {
 
     private var tourOverlay: some View {
         ZStack {
-            DesignTokens
-                .ColorToken
-                .backgroundCream
-                .opacity(0.72)
-                .ignoresSafeArea()
-
             Prompt28CompactPopupCard {
                 VStack(spacing: 8) {
                     FruitfolioImage(
@@ -1854,6 +1853,8 @@ struct Prompt28FruitBasketView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
                     Text(tourTitle)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityFocused($tourHeadingFocused)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -1935,6 +1936,16 @@ struct Prompt28FruitBasketView: View {
             }
             .frame(maxWidth: 292)
             .padding(.horizontal, 20)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .onAppear { tourHeadingFocused = true }
+        .onChange(of: tourStep) { _, _ in
+            tourHeadingFocused = false
+            Task { @MainActor in
+                await Task.yield()
+                tourHeadingFocused = true
+            }
         }
     }
 

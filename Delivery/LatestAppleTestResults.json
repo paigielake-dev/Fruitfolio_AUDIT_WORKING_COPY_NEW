@@ -1,96 +1,102 @@
 {
-  "schemaVersion": 3,
-  "verifiedCommit": "d3d4a81f265620eb4b6952b3ddcf9148e158c026",
-  "runID": 41368741497,
-  "runNumber": 66,
-  "scope": "Latest retrieved unit stage only; not whole-run/current-source release acceptance",
-  "appBuild": "PASS actual Run66 Simulator application/test build",
-  "deviceReleaseBuild": {
-    "run": 64,
-    "commit": "db650d9d44d9285a199c454540ef1094913637a6",
-    "result": "PASS unsigned generic iPhone arm64 Release; actual physical launch NOT VERIFIED"
-  },
+  "schemaVersion": 4,
+  "testedCommit": "f419672528da8ee68a647a79dfdccdb60db9949d",
+  "runID": 41381827480,
+  "runNumber": 79,
+  "scope": "Latest retrieved completed actual unit execution; failed, not final source acceptance",
+  "verificationResult": "FAIL",
+  "appBuild": "PASS actual sourcef419 application and test targets compiled on Apple runner",
   "XCTestCounts": {
-    "executed": 533,
-    "PASS": 532,
+    "executed": 545,
+    "PASS": 542,
     "SKIP": 1,
-    "FAIL": 0
+    "FAIL": 2
   },
   "XCTestResults": [
     {
       "name": "FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testCorruptTokenizerIsRejectedBeforeAnyModelInference",
       "status": "passed",
-      "seconds": 0.028
+      "seconds": 0.042
+    },
+    {
+      "name": "FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout",
+      "status": "failed",
+      "seconds": 160.261
+    },
+    {
+      "name": "FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings",
+      "status": "failed",
+      "seconds": 503.369
     },
     {
       "name": "FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime",
       "status": "passed",
-      "seconds": 149.589
+      "seconds": 93.904
     },
     {
       "name": "FruitfolioTests.ArtworkGeometryTests testOriginalArtworkGeometryIsActuallyBundled",
       "status": "passed",
-      "seconds": 0.015
+      "seconds": 0.095
     },
     {
       "name": "FruitfolioTests.ArtworkGeometryTests testTransparentMarginsAreProjectedWithoutChangingAspectOrOrigin",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.AskSessionLifetimeTests testMultipleAnswersRemainInMemoryWithTheirOriginalCitations",
       "status": "passed",
-      "seconds": 0.014
+      "seconds": 0.091
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testActualLoopStopsAndRestoresAcrossApplicationLifecycleNotifications",
       "status": "passed",
-      "seconds": 0.812
+      "seconds": 1.04
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory",
       "status": "passed",
-      "seconds": 1.088
+      "seconds": 1.048
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately",
       "status": "passed",
-      "seconds": 0.224
+      "seconds": 0.245
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops",
       "status": "passed",
-      "seconds": 0.754
+      "seconds": 0.789
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.011
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest",
       "status": "passed",
-      "seconds": 0.249
+      "seconds": 0.221
     },
     {
       "name": "FruitfolioTests.AudioLifecycleRuntimeTests testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops",
       "status": "passed",
-      "seconds": 0.439
+      "seconds": 0.427
     },
     {
       "name": "FruitfolioTests.BundledNativeGroundingTests testNativeAnswerUsesActualBundledResearchAndDocumentCitations",
       "status": "passed",
-      "seconds": 52.513
+      "seconds": 75.749
     },
     {
       "name": "FruitfolioTests.CanonicalVoiceAndKaomojiTests testRareExpressionRequiresExplicitMatchingMomentApproval",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.CanonicalVoiceAndKaomojiTests testRarityLimitsAndRecentChoiceSuppressionRespectTheFounderMaximumOfThree",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.CanonicalVoiceAndKaomojiTests testSeriousLabConsentAndFruitBasketContentNeverReceivesKaomojis",
@@ -100,27 +106,27 @@
     {
       "name": "FruitfolioTests.CanonicalVoiceAndKaomojiTests testVoiceBridgeCannotRewriteEvidenceUnitsIdentifiersOrSafetyQualifiers",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.ChapterManagementTests testInvalidChapterChangeDoesNotRemovePagesAndDeletionLeavesOtherChaptersIntact",
       "status": "passed",
-      "seconds": 0.043
+      "seconds": 0.033
     },
     {
       "name": "FruitfolioTests.ChapterManagementTests testMoveRenameAndReloadPreserveTheSameEvidenceAndUserFormatting",
       "status": "passed",
-      "seconds": 0.01
+      "seconds": 0.025
     },
     {
       "name": "FruitfolioTests.CycleEraseFailureSafetyTests testFailedCycleErasePreservesExistingRecordedDataInMemoryAndPersistence",
       "status": "passed",
-      "seconds": 0.015
+      "seconds": 0.025
     },
     {
       "name": "FruitfolioTests.CycleEraseFailureSafetyTests testFailedOnboardingEraseDoesNotDiscardTheVisiblePersistedAnswers",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.CycleEraseFailureSafetyTests testSuccessfulEraseCannotReviveOldHealthDataWhenSavingEmptyEnvelopeFails",
@@ -130,7 +136,7 @@
     {
       "name": "FruitfolioTests.CycleSetupEditingTests testOpeningOneExistingAnswerDoesNotRestartOrClearCompletedSetup",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.CycleSetupEditingTests testRapidEditsPersistTheLastAnswerWithoutStaleTaskOverwritingIt",
@@ -145,22 +151,22 @@
     {
       "name": "FruitfolioTests.CycleSetupEditingTests testRemovingNoneAndDeclinedOnboardingAnswersDoesNotRetainHiddenSharedValues",
       "status": "passed",
-      "seconds": 0.049
+      "seconds": 0.106
     },
     {
       "name": "FruitfolioTests.CycleSetupEditingTests testRemovingReportedOnboardingContextRemovesItsSharedInfluenceWithoutInferringOtherStates",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.FAQSemanticContentTests testAuthoredMeaningPreservesEveryApprovedFAQAnswerVerbatim",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.FounderOverrideIntegrationTests testPrompt40IsNotRepresentedAsANewProductionPass",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.031
     },
     {
       "name": "FruitfolioTests.FounderOverrideIntegrationTests testSavedSelectionCanonicalColors",
@@ -170,32 +176,32 @@
     {
       "name": "FruitfolioTests.FounderOverrideIntegrationTests testSharedModalBlurMatchesFounderApprovedCanonicalNonTourTreatment",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.FruitfolioUsernameStoreTests testInvalidEditsCannotReplaceTheSharedPublicIdentityOrPersistAnExplicitName",
       "status": "passed",
-      "seconds": 0.019
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.FruitfolioUsernameStoreTests testUsernamePersistsThroughSingleAuthority",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.GroundingAttributionTests testFallbackRetainsQualifierBeyondOldClippingBoundary",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.034
     },
     {
       "name": "FruitfolioTests.GroundingAttributionTests testOnlyDisplayedEvidenceContributesSources",
       "status": "passed",
-      "seconds": 0.038
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.GroundingAttributionTests testSelectedEvidenceAndModelFailureUseTheSameVoiceWithoutChangingCitations",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.011
     },
     {
       "name": "FruitfolioTests.GroundingAttributionTests testUnrelatedExtraCitationCannotRideAlongWithMatchingQuote",
@@ -205,7 +211,7 @@
     {
       "name": "FruitfolioTests.HormoneMeasurementHistoryTests testDifferentExactUnitsHormonesAndSamplesAreNeverCombinedOrConverted",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.031
     },
     {
       "name": "FruitfolioTests.HormoneMeasurementHistoryTests testOnlyActualPointsAreReturnedInDateOrderWithoutInterpolationOrMutation",
@@ -220,22 +226,22 @@
     {
       "name": "FruitfolioTests.HormoneMeasurementTests testOtherHormoneNameAndMissingUnitRemainControlledWithoutInventedDefaults",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.HormoneMeasurementTests testRepeatedResultsRetainTheirOwnDatesOptionalFieldsAndExactStrings",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.014
     },
     {
       "name": "FruitfolioTests.HormoneMeasurementTests testSaveEditRestartAndDeletePreserveRecords",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.HormoneMeasurementTests testUnreadableStorageCannotBeSilentlyOverwritten",
       "status": "passed",
-      "seconds": 0.026
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.HormoneMeasurementTests testValidationAndExactUnitPreservation",
@@ -245,12 +251,12 @@
     {
       "name": "FruitfolioTests.LibraryBookshelfRenderingTests testEmptyAndPopulatedLibraryUseIdenticalApprovedShelfPixels",
       "status": "passed",
-      "seconds": 0.124
+      "seconds": 0.191
     },
     {
       "name": "FruitfolioTests.LifeBridgeInformationTests testDiscoveryDoesNotInterceptUnrelatedOrGeneralMedicalQuestions",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.LifeBridgeInformationTests testOnlyTheExactFounderNamedDestinationsAreExposedWithoutUserOrReferralData",
@@ -260,22 +266,22 @@
     {
       "name": "FruitfolioTests.LifeBridgeInformationTests testUnavailableDetailsRemainExplicitAndCannotInventEligibilityOrRelationship",
       "status": "passed",
-      "seconds": 0.071
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.PersonalDataExportTests testActualDomainSnapshotsKeepExactMedicalTextAndOriginalSavedSourceReferencesWithoutMutatingStores",
       "status": "passed",
-      "seconds": 0.025
+      "seconds": 0.039
     },
     {
-      "name": "FruitfolioTests.PersonalDataExportTests testReadableDocumentRetainsTheExactPreparedBytesWithoutWritingAnAutomaticTemporaryFile",
+      "name": "FruitfolioTests.PersonalDataExportTests testReadableDocumentRetainsTheExactPreparedBytesAndJSONContentType",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.PersonalDataExportTests testUnreadableHealthStoragePreventsASuccessfulPartialExportAndPreservesOriginalBytes",
       "status": "passed",
-      "seconds": 0.035
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.PersonalHealthContextTests testArtworkAssignmentsExistAndFreeTextCannotIncreasePredictionCertainty",
@@ -285,7 +291,7 @@
     {
       "name": "FruitfolioTests.PersonalHealthContextTests testDecliningCannotRetainMedicalTextAndClearRemovesTheEntireProfile",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.PersonalHealthContextTests testExistingContextMigratesWithoutInventingAnyMedicalFields",
@@ -295,17 +301,17 @@
     {
       "name": "FruitfolioTests.PersonalHealthContextTests testReportedHistoryPersistsThroughTheExistingSharedStoreAndRemovalErasesItsText",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.011
     },
     {
       "name": "FruitfolioTests.PopupLayoutTests testNotebookWritingRegionAvoidsBindingAndRemainsInsideArtAtKeyboardAndPhoneSizes",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt01AssetSystemTests testCanonicalIDsAndPhysicalPathsAreUnique",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt01AssetSystemTests testEducationalVisualsAreNeverDecorative",
@@ -325,7 +331,7 @@
     {
       "name": "FruitfolioTests.Prompt01AssetSystemTests testPopupAssetsHaveCanonicalOwnership",
       "status": "passed",
-      "seconds": 0.039
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt01AssetSystemTests testReferenceOnlyFilesAreNotInProductionRegistry",
@@ -345,12 +351,12 @@
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testBurgundyContrastOnCoreLightPaletteIsAtLeastAAForNormalText",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.0
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testMinimumHitTargetIs44",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.021
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testMinimumHorizontalMarginIs16",
@@ -360,22 +366,22 @@
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testMotionRangesMatchCanonicalPrompt",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testPreferredMarginsRemain20To24",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testPrompt01RegistryStillContains266Assets",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.021
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testReferenceCanvasIsDesignReferenceSize",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testScaleGuardrailsMatchCanonicalPrompt",
@@ -385,32 +391,32 @@
     {
       "name": "FruitfolioTests.Prompt02DesignSystemTests testSemanticHubColorMemoryMapIsStable",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testAllRequiredTopLevelRoutesExist",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testAudioCategoriesRemainIndependent",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testBackUsesLogicalStack",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testInstalledAppStateIsNotSecondarilyPaywalled",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.151
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testMotionPreferencesRespectSystemAndAppReduction",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testNavigationAllowsNextPushAfterTransitionWindow",
@@ -440,27 +446,27 @@
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testPurchaseRouteIsNotNormalHubDestination",
       "status": "passed",
-      "seconds": 0.011
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testReturnToHubClearsPath",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.055
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testSettingsPersistAcrossInstances",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.007
     },
     {
       "name": "FruitfolioTests.Prompt03ArchitectureTests testVolumePersistenceClampsToValidRange",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testAllCenteredBookStatesStayInsideSupportedPhoneWidths",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.043
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testAllFinalHubFounderAssetsAreInPrompt04Contract",
@@ -480,27 +486,27 @@
     {
       "name": "FruitfolioTests.Prompt04IntroTests testFocusedRightPageActuallyZoomsAndMovesLeft",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.068
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testFounderSignatureIntroLastsSixToEightSeconds",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testHubLayoutKeepsThreeEqualUtilityColumns",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testLaunchModeSemantics",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testLaunchStorePersistsSignatureCompletionSeparately",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.068
     },
     {
       "name": "FruitfolioTests.Prompt04IntroTests testPrompt04RequiredCanonicalAssetsAreRegistered",
@@ -510,12 +516,12 @@
     {
       "name": "FruitfolioTests.Prompt04IntroTests testStandaloneHubPaperIsPreloaded",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt05MainHubTests testHubAuthenticationLabelTracksAuthoritativeState",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.084
     },
     {
       "name": "FruitfolioTests.Prompt05MainHubTests testHubRouteSetRemainsComplete",
@@ -525,57 +531,57 @@
     {
       "name": "FruitfolioTests.Prompt05MainHubTests testPrompt04LayoutStillProvidesThreeEqualUtilityColumns",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt06FruitPopupTests testCanonicalCharacterAssetMapping",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt06FruitPopupTests testCoordinatorShowsOnlyOnePopup",
       "status": "passed",
-      "seconds": 0.009
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt06FruitPopupTests testDeduplicationPreventsRepeatedReactiveRequest",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt06FruitPopupTests testHigherPriorityReplacesLowerPriority",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.011
     },
     {
       "name": "FruitfolioTests.Prompt07FirstLaunchTourTests testCanonicalCharacterAssignments",
       "status": "passed",
-      "seconds": 0.036
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt07FirstLaunchTourTests testTourHasSixSteps",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt07FirstLaunchTourTests testTourNavigation",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.Prompt08GlobalControlsTests testBookmarkButtonUsesLiveBooleanBinding",
       "status": "passed",
-      "seconds": 0.036
+      "seconds": 0.106
     },
     {
       "name": "FruitfolioTests.Prompt08GlobalControlsTests testCanonicalPrompt08ButtonsCanBeConstructed",
       "status": "passed",
-      "seconds": 0.018
+      "seconds": 0.095
     },
     {
       "name": "FruitfolioTests.Prompt08GlobalControlsTests testCurrentPrompt08TextControlsCanBeConstructed",
       "status": "passed",
-      "seconds": 0.015
+      "seconds": 0.021
     },
     {
       "name": "FruitfolioTests.Prompt08GlobalControlsTests testMinimumHitTargetRemainsFortyFourPoints",
@@ -585,7 +591,7 @@
     {
       "name": "FruitfolioTests.Prompt09AskTests testCanonicalAskPresentationCopyRemainsExact",
       "status": "passed",
-      "seconds": 0.021
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt09AskTests testEducationalRouterRegistersAllFortyFourCanonicalAssets",
@@ -595,7 +601,7 @@
     {
       "name": "FruitfolioTests.Prompt09AskTests testEducationalVisualCannotBypassNoveltyBoundary",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt09AskTests testEveryNewConversationStartsWithCanonicalGreeting",
@@ -605,72 +611,72 @@
     {
       "name": "FruitfolioTests.Prompt09AskTests testFullAnswerSavePreservesProvenanceFields",
       "status": "passed",
-      "seconds": 0.045
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt09AskTests testPrompt09DevelopmentEngineDoesNotFabricateSources",
       "status": "passed",
-      "seconds": 0.449
+      "seconds": 0.438
     },
     {
       "name": "FruitfolioTests.Prompt09AskTests testSupportedConceptSelectsSpecificEducationalVisual",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.Prompt09EducationalAssetRouterTests testConceptLevelMatchCanRetrieveArtwork",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt09EducationalAssetRouterTests testSingleOverlappingWordDoesNotRetrieveArtwork",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.037
     },
     {
       "name": "FruitfolioTests.Prompt10LocalMediaStoreTests testDraftRecoveryPromotesReferencedBytesAndRemovesAbandonedDraftsOnly",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.019
     },
     {
       "name": "FruitfolioTests.Prompt10LocalMediaStoreTests testImportedMediaCompleteProtectionOnPhysicalDevice",
       "status": "skipped",
-      "seconds": 0.015
+      "seconds": 0.075
     },
     {
       "name": "FruitfolioTests.Prompt10LocalMediaStoreTests testImportedMediaRejectsPathTraversalAndIsExcludedFromBackup",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.016
     },
     {
       "name": "FruitfolioTests.Prompt10LocalMediaStoreTests testImportedMediaRoundTripAndDelete",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.Prompt10LocalMediaStoreTests testReconciliationRemovesUnreferencedImportsButPreservesUnknownFiles",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testBlankTitleIsRejected",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testChosenBookStylePersistsInsteadOfAutoCycling",
       "status": "passed",
-      "seconds": 0.039
+      "seconds": 0.124
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testCorruptMetadataNeverDeletesImportedMediaDuringRecovery",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testCreatePersistsAcrossStoreReinitialization",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testDeletingEncyclopediaDoesNotMutateAnotherEncyclopedia",
@@ -680,27 +686,27 @@
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testDeletingOneBookAtLimitImmediatelyRestoresCreation",
       "status": "passed",
-      "seconds": 0.093
+      "seconds": 0.154
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testExactSavedLibraryAssetManifestHasSixteenPhysicalPNGs",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testExcerptDisplaysExactExcerptNotWholeAnswer",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testFullAnswerPreservesPrompt09Provenance",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.206
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testMaximumIsEnforcedAtStoreLayer",
       "status": "passed",
-      "seconds": 0.086
+      "seconds": 0.155
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testRenamePersists",
@@ -710,82 +716,87 @@
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testSearchMatchesTitlesCaseInsensitively",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testSharedImportedImageSurvivesOneBookDeletionAndIsRemovedAfterLastReference",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.148
     },
     {
       "name": "FruitfolioTests.Prompt10SavedLibraryTests testSortControlsDoNotAppearConceptuallyBeforeThirteenBooks",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testAllNineGuideBuilderAssetsUseExactCanonicalNames",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testDeletingGuideDoesNotDeleteSourceSavedMaterial",
       "status": "passed",
-      "seconds": 0.036
+      "seconds": 0.063
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testGuideMetadataPersistsAcrossStoreReload",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testGuideUsesSamePrompt10EncyclopediaObject",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testNewGuideStartsWithoutSyntheticSection",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testPersonalNoteRemainsAttachedToGuidePage",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.065
     },
     {
       "name": "FruitfolioTests.Prompt11GuideBuilderTests testSectionAndPageReorderPersist",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.017
     },
     {
       "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testBlankEmailThrows",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.014
     },
     {
       "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testDefaultStateIsPurchasedSignedOutAndLocalOnly",
       "status": "passed",
-      "seconds": 0.002
-    },
-    {
-      "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testDemoSignInCreatesAccountWithoutRawCredentials",
-      "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.02
     },
     {
       "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testExportCreatesReadableExportRecord",
       "status": "passed",
-      "seconds": 0.02
+      "seconds": 0.024
+    },
+    {
+      "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testUnavailableAccountServiceNeverFabricatesAuthenticationOrRemoteSync",
+      "status": "passed",
+      "seconds": 0.008
+    },
+    {
+      "name": "FruitfolioTests.Prompt12AccountPrivacyStoreTests testUnavailableSyncDoesNotDiscardPendingLocalChanges",
+      "status": "passed",
+      "seconds": 0.007
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testArchiveRoundTripRegeneratesDerivedState",
       "status": "passed",
-      "seconds": 0.029
+      "seconds": 0.107
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testConfidenceChangesAsHistoryGrows",
@@ -795,7 +806,7 @@
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testDeletedCycleStartIsExcludedFromCalculations",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testDeletedObservationDisappearsFromInsights",
@@ -805,12 +816,12 @@
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testDSTBoundaryUsesCalendarDatesNotHours",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.015
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testDuplicateCycleStartDetection",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testEditedCycleStartRecalculatesLength",
@@ -825,7 +836,7 @@
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testEraseAllLocalCycleDataClearsSensitiveRecords",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.096
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testFirstEverCycleStartCreatesOpenCycleAndDayOne",
@@ -840,12 +851,12 @@
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testHistoricalCycleDayCalculation",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testInsufficientPredictionDataProducesNoPrediction",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testIrregularHistoryIsPreservedIndividually",
@@ -865,57 +876,57 @@
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testNoDay14OvulationFallbackAndNoFertileFallback",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testOfflineLogCreationPersistsInMemory",
       "status": "passed",
-      "seconds": 0.017
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testPatternInsightRequiresMinimumEvidence",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testPredictionInvalidatesAfterHistoricalEdit",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testPredictionNeverBecomesRecordedHistory",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.224
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testPregnancyTestObservationDoesNotCreatePregnancyState",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testRetroactiveCycleStartPreservesCreationTimestamp",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testSpottingDoesNotCreateCycleStart",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testSymptomMissingDiffersFromExplicitNone",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testSyncConflictDetectedForSameIDSameRevisionDifferentContent",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testTemperatureConversionPreservesOriginal",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt13CycleEngineTests testTimezoneChangeDoesNotMutateStoredLocalDate",
@@ -930,12 +941,12 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testBBTMeasurementTimePreferenceDoesNotCreateTemperatureObservation",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testCompletingWithoutAnyPeriodDateStillSucceeds",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testCompletionCommitsUserSuppliedStartsIntoPrompt13",
@@ -945,7 +956,7 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testCompletionRetryDoesNotDuplicateCycleStarts",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testEndCurrentPeriodPersistsExplicitEndWithoutChangingStart",
@@ -955,7 +966,7 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testEndCurrentPeriodRejectsDateBeforeRecordedStart",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testEndCurrentPeriodRejectsFutureDate",
@@ -965,7 +976,7 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testFertilityPermissionRemainsPreferenceNotPrediction",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testMedicationContextClearsNone",
@@ -975,7 +986,7 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testNoneCycleContextClearsMedicationCategories",
       "status": "passed",
-      "seconds": 0.01
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testPostpartumAndBreastfeedingCanCoexist",
@@ -990,7 +1001,7 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testSubjectiveRegularityIsIndependentValue",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testSuppliedCycleStartsAreUniqueAndSorted",
@@ -1000,12 +1011,12 @@
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testTrackingPreferenceCanBeDeselected",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testTrackingPreferenceIsMultiSelect",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt14CycleOnboardingTests testUnknownLatestPeriodDoesNotCreateDefaultDate",
@@ -1015,7 +1026,7 @@
     {
       "name": "FruitfolioTests.Prompt15CycleTrackerTests testEveryPrimarySectionHasStableIdentity",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.054
     },
     {
       "name": "FruitfolioTests.Prompt15CycleTrackerTests testPrimarySectionsRemainInCanonicalOrder",
@@ -1025,12 +1036,12 @@
     {
       "name": "FruitfolioTests.Prompt15CycleTrackerTests testSectionCountIsExactlyFive",
       "status": "passed",
-      "seconds": 0.032
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt16TodayStateBuilderTests testBBTShortcutRequiresBothTrackingPreferenceAndSetupChoice",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.057
     },
     {
       "name": "FruitfolioTests.Prompt16TodayStateBuilderTests testCurrentPeriodAnswerProducesMenstruationContextWithoutPrediction",
@@ -1040,17 +1051,17 @@
     {
       "name": "FruitfolioTests.Prompt16TodayStateBuilderTests testNoHistoryDoesNotInventCycleDayOrPhase",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testCurrentDayOutsideRepresentedCycleDoesNotFabricateMarker",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testCurrentMarkerUsesActualCurrentCycleDayAndRepresentedCycleLength",
       "status": "passed",
-      "seconds": 0.033
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testCurrentRegionNeverBecomesFertileBecauseFertileIsNotAnEndocrinePhase",
@@ -1060,7 +1071,7 @@
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testDateWindowAdapterConvertsOnlyExistingEstimatedWindows",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testEstimatedIntervalsAreClampedToRepresentedCycleLength",
@@ -1075,32 +1086,32 @@
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testFractionsRemainWithinZeroAndOne",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testHistoryVersionAndConfidenceArePreservedFromPrompt17",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.048
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testMissingOvulationEstimateDoesNotInventFollicularOrLutealBoundaries",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testNoCycleLengthProducesNoFabricatedPersonalizedGeometry",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt18CycleWheelTests testSegmentAngularFractionsAreProportionalToRepresentedDays",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testAccessibilityLabelPreservesEstimateLanguage",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.01
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testAugust2026RequiresSixRows",
@@ -1115,22 +1126,22 @@
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testCycleDayOneOnRecordedStart",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testCycleDayUsesRecordedDateDifference",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testFebruary2026UsesFourRows",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testFutureCycleDayIsNotFabricated",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testLeapFebruaryHas29RealDates",
@@ -1140,7 +1151,7 @@
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testMergingDoesNotEraseExistingRecordedState",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testMetadataIsCappedAtTwoAndPrioritized",
@@ -1150,7 +1161,7 @@
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testMonthGridPlacesFirstDayInCorrectWeekdayColumn",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt19CalendarEngineTests testMonthShiftCrossesYearBoundary",
@@ -1170,12 +1181,12 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testBasalTemperatureBecomesBBTCalendarMarker",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.01
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testBleedingObservationDoesNotDeclarePeriodInCalendarBridge",
@@ -1185,7 +1196,7 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCalendarBridgeFiltersToDisplayedMonth",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCalendarMetadataRespectsPrompt19TwoIndicatorPriority",
@@ -1195,12 +1206,12 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCelsiusConvertsToFahrenheit",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCervicalFluidStaysObservationOnly",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped",
@@ -1210,7 +1221,7 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testCorruptPersistenceNeverSilentlyTurnsIntoEmptyStore",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.006
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testEditPreservesStableIDAndCreatedAtAndIncrementsRevision",
@@ -1220,27 +1231,27 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testEmptyDraftProducesNoRecordedObservations",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.057
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testFahrenheitConvertsToCanonicalCelsius",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testFailedFileWriteRollsBackInMemoryMutation",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testFileStorePersistsAndReloadsCanonicalLog",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.016
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testFileStorePersistsDeletionTombstoneAsInactive",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.063
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testFutureDateRuleUsesLocalCalendarDayNotElapsedHours",
@@ -1260,12 +1271,12 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testInMemoryRepositoryEnforcesOneCanonicalLogPerOwnerAndDate",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.059
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testIntentionallyClearingExistingLogRemovesActiveLog",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testLocalDayRoundTripUsesCalendarDay",
@@ -1275,7 +1286,7 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testLocalDaySurvivesDSTBoundary",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testMedicationRequiresNameWhenOtherFieldsContainContent",
@@ -1285,12 +1296,12 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testMultipleMedicationsRemainSeparateRows",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testPartialBleedingOnlyLogIsValid",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testPersistedRequestIDRemainsIdempotentAfterStoreReload",
@@ -1300,22 +1311,22 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testPersistencePreservesSubsecondRevisionTimestamps",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testRepeatedRequestIDIsIdempotent",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testRepositoryRejectsFutureObservationSaveEvenIfUICheckIsBypassed",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testSymptomsRemainStructuredAndNoteSeparate",
       "status": "passed",
-      "seconds": 0.046
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testSymptomSummaryDoesNotInventSeverity",
@@ -1340,7 +1351,7 @@
     {
       "name": "FruitfolioTests.Prompt20CoreTests testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.089
     },
     {
       "name": "FruitfolioTests.Prompt20CoreTests testTemperatureValidationRejectsObviousUnitTypo",
@@ -1350,12 +1361,12 @@
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testBroadFollicularContextMapsToEarlyBroadPresentation",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testEstimatedOvulationUsesEstimateLanguageAndBlueberry",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testExplicitLaterFollicularContextMapsToLaterPresentation",
@@ -1365,22 +1376,22 @@
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testFollicularStatesUseDifferentApprovedStageArt",
       "status": "passed",
-      "seconds": 0.023
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testLutealContextMapsToLuteal",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.047
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testLutealUsesCorpusLuteumAsset",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testMenstruationContextMapsWithoutUsingBleedingObservation",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testMenstruationUsesUterusAndEndometriumAssets",
@@ -1390,12 +1401,12 @@
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testNeutralPresentationDoesNotClaimPersonalizedBiology",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.02
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testNoPresentationUsesForbiddenPersonalizedPhrases",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt21BodyBiologyCoreTests testOvulationContextIsExplicitlyEstimatedState",
@@ -1415,7 +1426,7 @@
     {
       "name": "FruitfolioTests.Prompt22CoreTests testAllSevenCanonicalHormoneAssetsAreRegistered",
       "status": "passed",
-      "seconds": 0.023
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testAllThreeHormonesAreDistinctAndPresent",
@@ -1425,37 +1436,37 @@
     {
       "name": "FruitfolioTests.Prompt22CoreTests testAlteredContextNeverGetsMarker",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testAlteredNaturalCycleContextStillSuppressesMarkerEvenWithTimelinePosition",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testApprovedResearchCopyOverridesNeutralFallback",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testContextMarkerCoordinatesRemainNormalized",
       "status": "passed",
-      "seconds": 0.01
+      "seconds": 0.23
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testCoordinatesRemainNormalizedPresentationGeometry",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testCurrentCycleDayKeepsMarkerAvailableWithoutEstimatedLength",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testCycleDayAndEstimatedLengthProvideContinuousFallback",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testEstimatedOvulationMarkerUsesSameTimelineXAcrossHormones",
@@ -1465,12 +1476,12 @@
     {
       "name": "FruitfolioTests.Prompt22CoreTests testExactTitleAndSubtitle",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testInsufficientContextNeverGetsMarker",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testMarkerYIsInterpolatedFromEachEducationalCurve",
@@ -1480,7 +1491,7 @@
     {
       "name": "FruitfolioTests.Prompt22CoreTests testMarkerYMatchesKnownLinearInterpolation",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testPresentationDoesNotContainFakeUnitsOrDiagnosticTerms",
@@ -1490,47 +1501,47 @@
     {
       "name": "FruitfolioTests.Prompt22CoreTests testPrompt17ProgressDrivesContinuousMarkerPosition",
       "status": "passed",
-      "seconds": 0.023
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testPrompt17TimelinePositionKeepsMarkerVisibleWhenSemanticContextIsNeutral",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testTestosteronePatternIsVisuallySubtler",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22CoreTests testTestosteroneUsesCanonicalAsset",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt22MeasurementPresentationTests testOptInCannotCreateAnAdjustedCurveWithoutApprovedCalibration",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt22MeasurementPresentationTests testReferencePresentationDoesNotInventValuesOrRewriteStoredMeasurements",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.Prompt23CoreTests testDigestiveChangesUsesDedicatedFounderArtwork",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt23CoreTests testDraftPreservesOtherDailyLogFields",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt23CoreTests testEmptySelectionIsValid",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.062
     },
     {
       "name": "FruitfolioTests.Prompt23CoreTests testMappedArtworkUsesCanonicalPhysicalStems",
@@ -1550,27 +1561,27 @@
     {
       "name": "FruitfolioTests.Prompt23CoreTests testToggleIsTrueMultiSelect",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testBBTUsesOnlyBasalWakingMeasurements",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testBinarySymptomsStayBinaryAndUsePhase23Taxonomy",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testCurrentIncompleteCycleDoesNotEnterPatternEligibility",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testCycleLengthsRemainActualCompletedHistoryOnly",
       "status": "passed",
-      "seconds": 0.062
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testIncompletePeriodNeverBecomesDefinitiveDuration",
@@ -1590,7 +1601,7 @@
     {
       "name": "FruitfolioTests.Prompt24TrendsCoreTests testTwoCyclesCannotBecomeSupportedPattern",
       "status": "passed",
-      "seconds": 0.05
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testAllAssetNamesAreLowercaseSnakeCase",
@@ -1600,7 +1611,7 @@
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testAllNineFertilizationFolderAssetsHaveReachableModuleUse",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.007
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testCanonicalSequenceHasExactlySixPrimaryStages",
@@ -1610,7 +1621,7 @@
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testEveryStageHasStableContentAndSourceIDs",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testEveryStageIsEducationalOnly",
@@ -1620,7 +1631,7 @@
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testNoExtraPrimaryEightCellZygoteOrImplantationStageExists",
       "status": "passed",
-      "seconds": 0.011
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testOocytePrimaryArtIsNotMisrepresentedByFertilizationFolderArt",
@@ -1630,72 +1641,72 @@
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testPreviousAndNextNeverSkipStages",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testStageIndicatorsAreStable",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt25FertilizationCoreTests testUnavailableContentProviderNeverInventsScience",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testAllCanonicalPregnancyImagesResolveFromApplicationBundle",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.036
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testAllTenPregnancyAssetsHaveReachableProductionUse",
       "status": "passed",
-      "seconds": 0.06
+      "seconds": 0.044
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testAskIndexRequiresResearchSupportForEveryTopic",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testCanonicalTopicHeroAssetMapping",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testClosureProviderReturnsOnlyInjectedApprovedContent",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testEveryTopicIsEducationalOnly",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testExactlySevenCanonicalTopicsExistInRequiredOrder",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testExactlyTenCanonicalPregnancyAssetsAreRegistered",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testFetalDevelopmentUsesReferencePeriodsNotUserPregnancyWeeks",
       "status": "passed",
-      "seconds": 0.014
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testImageInterpretationRequestsAreRejectedByBoundary",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testOrdinaryEducationalQuestionsRemainAllowed",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.016
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testPersonalizedPregnancyQuestionNeverBecomesProbabilityAnswer",
@@ -1710,27 +1721,27 @@
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testPregnancySpecificArtworkRequiresIntentionalEducationalContext",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testSavedEntriesRemainEducational",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testSymptomCombinationsNeverInferPregnancy",
       "status": "passed",
-      "seconds": 0.187
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt26PregnancyEducationTests testUnavailableProviderFailsClosedInsteadOfFabricatingContent",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test01NoContextSupplied",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test02GeneralTracking",
@@ -1745,12 +1756,12 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test04AvoidingPregnancy",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test05SexuallyActive",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test06NotSexuallyActive",
@@ -1760,27 +1771,27 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test07Pregnant",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test08Postpartum",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test09BreastfeedingLactating",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test10PostpartumAndBreastfeeding",
       "status": "passed",
-      "seconds": 0.044
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test11Perimenopause",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test12Menopause",
@@ -1790,12 +1801,12 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test13PCOS",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.089
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test14Endometriosis",
       "status": "passed",
-      "seconds": 0.035
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test15IrregularCycles",
@@ -1805,17 +1816,17 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test16FertilityTreatment",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test17HormonalContraception",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test18NonHormonalContraception",
       "status": "passed",
-      "seconds": 0.02
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test19TTCAndPCOS",
@@ -1825,27 +1836,27 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test20TTCAndIrregularCycles",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test21TTCAndFertilityTreatment",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test22AvoidingPregnancyAndIrregularCycles",
       "status": "passed",
-      "seconds": 0.011
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test23PostpartumBreastfeedingSexuallyActive",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test24EndometriosisAndHormonalContraception",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test25PerimenopauseSexuallyActiveAvoidingPregnancy",
@@ -1855,17 +1866,17 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test26MenopauseWithHistoricalCycleRecordsPreservesHistoryPolicy",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test27PregnancyWithStoredTTCGoalKeepsGoalAndSuppressesPredictions",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test28ContextCleared",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test29ContextChanged",
@@ -1875,12 +1886,12 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test30ConflictingContextsUseCentralPrecedence",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test31HistoricalRecordsPreservedAfterContextChanges",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test32ContextDoesNotModifyPredictionMath",
@@ -1905,37 +1916,37 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test36PregnancyNotInferredFromSymptoms",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.014
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test37PregnancyNotInferredFromSexualActivity",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test38PregnancyNotInferredFromFertileWindowInteraction",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test39PregnancyNotInferredFromPrompt25Use",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test40PCOSNotInferredFromIrregularCycles",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.01
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test41MenopauseNotInferredFromAgeOrAbsentBleeding",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test42PostpartumNotInferredFromPreviousPregnancyContext",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test43LactationDoesNotInferOvulationStatus",
@@ -1945,52 +1956,52 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test44AvoidingPregnancyNeverProducesSafeDay",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test45SexualActivityDoesNotInferIntercourseType",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test46SexualActivityDoesNotInferTTC",
       "status": "passed",
-      "seconds": 0.01
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test47SexualActivityDoesNotInferContraception",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.01
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test48EndometriosisDoesNotCausallyRelabelSymptoms",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test49FertilityTreatmentDoesNotInferTreatmentOutcome",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test50SuppressionPreservesUnderlyingHistoricalData",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test51ContextProvenanceIsAlwaysUserReportedForExplicitSelections",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test52PerimenopauseAndMenopauseRemainDistinct",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test53LactationAndPostpartumRemainIndependent",
       "status": "passed",
-      "seconds": 0.009
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test54HealthContextsCanOverlap",
@@ -2000,22 +2011,22 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test55CodecRoundTripsContext",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test56ExistingUserWithNoStoredDataMigratesToUnspecified",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test57CorruptStoredDataFailsSafeToUnspecified",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test58MinimizedAIContextDoesNotContainSexualActivity",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test59InformationKindsRemainDistinct",
@@ -2025,7 +2036,7 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test60AccessibilitySelectionAssetsExistAsCanonicalNames",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test61SurrogacyPreparationSurfacesOnlyContextualEducation",
@@ -2035,27 +2046,27 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test62PregnantGestationalCarrierSuppressesOrdinaryCyclePredictions",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test63PostpartumAfterSurrogatePregnancyUsesPostpartumRecoveryWithoutParentingAssumption",
       "status": "passed",
-      "seconds": 0.02
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test64SurrogacyContextRoundTripsThroughCodec",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test65LegacyStoredContextWithoutSurrogacyMigratesToUnspecifiedSurrogacy",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.022
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test66SurrogacyContextClearsWithOtherContextWithoutTouchingHistoryPolicy",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test67SurrogacyContextDoesNotInferFertilityTreatmentOrTrackingGoal",
@@ -2070,7 +2081,7 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test69SurrogacyAIContextIsExplicitOnly",
       "status": "passed",
-      "seconds": 0.011
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests test70SurrogacyContextNeverChangesPredictionMathematics",
@@ -2080,17 +2091,17 @@
     {
       "name": "FruitfolioTests.Prompt27AContextPersonalizationTests testUserReportedInfertilityIsExplicitAndBackwardCompatibleByDefault",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testAllCanonicalAssetsAreProductionEligible",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testAllPrompt27CanonicalImagesResolveFromApplicationBundle",
       "status": "passed",
-      "seconds": 0.013
+      "seconds": 0.03
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testBodySectionRoutesToOneExplicitBodyAsset",
@@ -2100,7 +2111,7 @@
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testBrowsingDoesNotBecomeMedicalState",
       "status": "passed",
-      "seconds": 0.013
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testCanonicalAssetFamilyCountsAreExact",
@@ -2115,27 +2126,27 @@
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testCanonicalFilenamesMatchPhysicalManifestExactly",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.02
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testClosureResearchProviderAcceptsApprovedSourcedContent",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testClosureResearchProviderRejectsUnsourcedContent",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testEducationalQuestionsRemainAllowed",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testForbiddenInferencesRemainForbidden",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testGeneticsSectionRoutesToOneExplicitGeneticsAsset",
@@ -2145,7 +2156,7 @@
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testHotspotCoordinatesAreClampedAndAccessibleByLabel",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.008
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testLabSectionRoutesToOneExplicitLabAsset",
@@ -2160,32 +2171,32 @@
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testPCRContextUsesExistingCanonicalArtWithoutInventingFilename",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testPersonalizedRiskAndLabResultInterpretationRequireSeparateValidatedSystem",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testRouterRejectsAssetInNoneContext",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testRouterRejectsFamilyMismatch",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testRouterUsesCuratedMetadataRatherThanArticleKeywords",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.037
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testRuntimeGenerativeScienceArtAndKeywordRoutingAreForbidden",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testUnapprovedScientificAssetFailsClosed",
@@ -2195,52 +2206,62 @@
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testUnavailableResearchProviderFailsClosed",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt27ScienceContentTests testVisualFamilyRequiresExplicitCuratedAsset",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
+    },
+    {
+      "name": "FruitfolioTests.Prompt28FruitBasketTests testActualBranchContactBouncesFruitUpAndLeftThenResumesItsUnchangedBaseFallSpeed",
+      "status": "passed",
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testActualVineFrameSlowsGoodFruitAndStarsOnlyAndEmitsOneEntryEvent",
       "status": "passed",
-      "seconds": 0.009
+      "seconds": 0.051
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testAllTenFruitAssetsHaveCanonicalMappings",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testAllTwentyFourFruitBasketAssetsAreRegisteredForProductionRoutes",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testBadCatchWithoutStarPassEndsRound",
       "status": "passed",
-      "seconds": 0.048
+      "seconds": 0.001
+    },
+    {
+      "name": "FruitfolioTests.Prompt28FruitBasketTests testBranchPaintedTrunkMeetsScreenEdgeAndContactDoesNotUseTheWholeImageBox",
+      "status": "passed",
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testCanonicalRoundRulesNeverScaleTarget",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testCollisionUsesNormalizedCoordinates",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testDismissingStormAfterBackgroundPauseDoesNotAutomaticallyResumeGameplay",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testEducationalDifficultyDoesNotChangePhysicsConfig",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.0
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testEveryRainRoundIncludesItsPuddleWithoutAddingAnExtraObstacle",
@@ -2250,17 +2271,17 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testFounderFacingLearningTopicsAreExact",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testGameLevelCeilingIsEight",
       "status": "passed",
-      "seconds": 0.011
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testGoodCatchAddsExactlyTenPointsAndOneProgress",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.0
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsAggregateAllTopics",
@@ -2270,32 +2291,32 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLeaderboardTotalsEmptyProgress",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLeaderboardUsernamePolicyProtectsBoardLayoutAndModeration",
       "status": "passed",
-      "seconds": 0.045
+      "seconds": 0.019
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLeavingAnActiveGameCancelsItsLoopAndReleasesTheViewModel",
       "status": "passed",
-      "seconds": 0.064
+      "seconds": 0.065
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLegacyProgressDefaultsLifetimeStarsToZero",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsPersistAcrossEncoding",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testLifetimeStarsSurviveProgressStoreUpdates",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.01
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testMissingBadFruitHasNoPenalty",
@@ -2305,7 +2326,7 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testMissingGoodFruitHasNoPenalty",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testNewAudioSemanticIDsAreRegistered",
@@ -2315,12 +2336,12 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testNewSessionKeepsTopicDifficultyAndGameLevelIndependent",
       "status": "passed",
-      "seconds": 0.053
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testNewTopicStartsAtLevelOneWithoutMutatingOtherTopic",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testObstaclePlanStaysLimitedAndLevelDriven",
@@ -2335,7 +2356,7 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testPuddleResistanceEndsAsSoonAsTheBasketHasLeftThePuddle",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testQuestionRequiresSourcesAndDisjointFruitSets",
@@ -2345,27 +2366,27 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testRainNoticeUsesExactFounderWordingAndFreezesPlayUntilAcknowledgedOnlyOncePerRound",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testResetPreservesHistoricalProgress",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testSpawnPlannerNeverCreatesMoreThanTwoBadInARow",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testStandaloneStarsBankWithoutLimitAndProtectBadCatch",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testSuccessfulRoundProgressionPlateaus",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.004
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testTenthGoodCatchCompletesRound",
@@ -2375,12 +2396,12 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testTopicNormalizationIsStable",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.046
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testVineContactFollowsOriginalArtworkAspectRatioAndNotAnEntireHorizontalBand",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testVinesOnlyNarrowLaneAtHigherLevels",
@@ -2390,42 +2411,42 @@
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testWeatherStaysLevelDrivenNotEducationalDifficultyDriven",
       "status": "passed",
-      "seconds": 0.015
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt28FruitBasketTests testWindDirectionIsPredictableByRound",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28OnlineLeaderboardPreparationTests testDuplicateNameIsRejectedAcrossOwners",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt28OnlineLeaderboardPreparationTests testLiveSyncDisabledUntilSecureServiceConfigured",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.034
     },
     {
       "name": "FruitfolioTests.Prompt28OnlineLeaderboardPreparationTests testOnlyOwnerCanRelease",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt28OnlineLeaderboardPreparationTests testUsernameKeysAreCaseInsensitive",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testAutomaticSymptomUnderliningUsesProductionRenderer",
       "status": "passed",
-      "seconds": 0.007
+      "seconds": 0.036
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testFAQContainsAllCanonicalSections",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testMinimumHitArea",
@@ -2435,7 +2456,7 @@
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testPageTurnAudioPolicyUsesExistingProductionAPI",
       "status": "passed",
-      "seconds": 0.026
+      "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testPageTurnNavigationTracksForwardAndBackwardDirection",
@@ -2445,7 +2466,7 @@
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testPrivacyAnalyticsDoesNotExposeRawQuestionAPI",
       "status": "passed",
-      "seconds": 0.103
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testSeriousHealthRouterIsDeterministic",
@@ -2455,7 +2476,7 @@
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testSymptomSemanticRoleIsRecognized",
       "status": "passed",
-      "seconds": 0.0
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt29To55FinalPhaseTests testUnicodeRoundTrip",
@@ -2465,22 +2486,22 @@
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testBoundedTrackerContextContainsNoRawHistoryFields",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testGeneratedDraftKeepsEvidenceLinkedClaim",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testGeneratedDraftRejectsInventedEvidenceID",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testNativeGGUFProducesStructuredDraftWithoutFallback",
       "status": "passed",
-      "seconds": 7.05
+      "seconds": 11.307
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testQueryNormalizationHandlesCommonCycleLanguage",
@@ -2495,12 +2516,12 @@
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testResearchRetrieverCanRunWithoutGeneration",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testUnsupportedEvidenceRemainsUnsupported",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.Prompt56ResearchIntelligenceTests testZeroMeteredAIClientsInvariant",
@@ -2510,17 +2531,17 @@
     {
       "name": "FruitfolioTests.ProtectedDecorationTests testActualAlphaFootprintProtectsTextWithoutBlanketHidingUnrelatedArtwork",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.RequiredMADLADLanguageTagTests testEachRequiredLanguageUsesItsExactOfficialTokenizerTagOrRemainsExplicitlyUnsupported",
       "status": "passed",
-      "seconds": 0.609
+      "seconds": 0.933
     },
     {
       "name": "FruitfolioTests.ResearchPackageBundleTests testRealBundledResearchPackageDecodesAndHasNoOrphanSources",
       "status": "passed",
-      "seconds": 0.081
+      "seconds": 0.162
     },
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testDuplicateMissingBlankAndWrongVersionSnapshotFailClosedWithoutRetrofittingAnotherSource",
@@ -2530,37 +2551,37 @@
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testGuideCopyAndStoreReopenPreserveTheSameReferenceSnapshot",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.012
     },
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testLegacyMetadataResolvesOnlyAnExactlyMatchingApprovedLibrarySource",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testSavedReferenceDoesNotOpenLocalOrCustomSchemeURLs",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testSavedReferenceSurvivesRestartEncodingAndCannotBeReplacedByANewLibraryVersion",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.SavedCitationPreservationTests testUnrelatedExtraReferenceCannotAcquireAttributionOnASavedPage",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.SavedLibraryRecoveryTests testCorruptLibraryCannotBeOverwrittenByCreatingNewBook",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.007
     },
     {
       "name": "FruitfolioTests.SavedLibraryRecoveryTests testUnexpectedStoredTypeIsNotMistakenForEmptyLibrary",
       "status": "passed",
-      "seconds": 0.016
+      "seconds": 0.018
     },
     {
       "name": "FruitfolioTests.SemanticDocumentTests testPersistenceAndProgressiveDisplayPreserveNegationRolesAndUnicode",
@@ -2570,72 +2591,107 @@
     {
       "name": "FruitfolioTests.SemanticPipelineTests testLegacyPageDecodesWithoutFormattingAndMismatchedMetadataCannotRewriteEvidence",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.094
     },
     {
       "name": "FruitfolioTests.SemanticPipelineTests testRepeatedExcerptUsesSelectedOccurrenceAndUnicodeBoundaries",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.002
     },
     {
       "name": "FruitfolioTests.SemanticPipelineTests testSameWordsReceiveOnlyTheirDeclaredContextualRole",
       "status": "passed",
-      "seconds": 0.004
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.SemanticPipelineTests testSavedPageAndGuideReopenRetainFormattingSourceAndImages",
       "status": "passed",
-      "seconds": 0.029
+      "seconds": 0.014
     },
     {
       "name": "FruitfolioTests.SharedControlArtworkTests testInvalidLayoutDoesNotAllocateArtwork",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.003
     },
     {
       "name": "FruitfolioTests.SharedControlArtworkTests testPreparedPillUsesOriginalAspectRatioAndReusesRaster",
       "status": "passed",
-      "seconds": 0.016
+      "seconds": 0.043
     },
     {
       "name": "FruitfolioTests.StorefrontOwnershipTests testActualStoreKitAttemptReportsItsRealOutcome",
       "status": "passed",
-      "seconds": 0.803
+      "seconds": 4.115
     },
     {
       "name": "FruitfolioTests.StorefrontOwnershipTests testCancelledCheckCannotRestoreAStaleVerifiedResultOrLeaveSpinner",
       "status": "passed",
-      "seconds": 0.085
+      "seconds": 0.107
     },
     {
       "name": "FruitfolioTests.StorefrontOwnershipTests testInterruptedPersistedCheckDoesNotRemainIndefinitelyValidatingAfterRestart",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.013
     },
     {
       "name": "FruitfolioTests.StorefrontOwnershipTests testOnlyVerifiedMatchingBundleMarksStorefrontVerification",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.StorefrontOwnershipTests testUnverifiedUnavailableAndWrongBundleCannotBecomeVerifiedOrAddPaywall",
       "status": "passed",
-      "seconds": 0.008
+      "seconds": 0.023
     },
     {
       "name": "FruitfolioTests.TranslationPreservationTests testAmbiguousSourceCommaAndUnapprovedLocaleAreNeverReinterpreted",
       "status": "passed",
-      "seconds": 0.002
+      "seconds": 0.01
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testBareNumbersUnicodeSignsAndUnitBoundariesArePreservedWithoutInventingUnits",
+      "status": "passed",
+      "seconds": 0.015
     },
     {
       "name": "FruitfolioTests.TranslationPreservationTests testChangedAddedDroppedReorderedAndSignChangedNumbersAreRejected",
+      "status": "passed",
+      "seconds": 0.003
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testDecimalLocaleExceptionCannotIgnoreExponentOrUnicodeChanges",
       "status": "passed",
       "seconds": 0.001
     },
     {
       "name": "FruitfolioTests.TranslationPreservationTests testEquivalentDecimalMarkRestoresTheExactOriginalSpellingWithoutWeakeningTheFinalInvariant",
       "status": "passed",
-      "seconds": 0.047
+      "seconds": 0.001
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testProtectedMeasurementMarkersCannotCollideWithOriginalSourceAndScientificNotationStaysExact",
+      "status": "passed",
+      "seconds": 0.258
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsKeepOriginalPrecisionUnitsAndSpacingOutsideGeneration",
+      "status": "passed",
+      "seconds": 0.006
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testProtectedMeasurementsRejectMissingDuplicatedAddedOrReorderedSlots",
+      "status": "passed",
+      "seconds": 0.006
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testProtectedQuantitiesPreserveSignsRangesPercentTemperaturePowersAndCompoundUnits",
+      "status": "passed",
+      "seconds": 0.006
+    },
+    {
+      "name": "FruitfolioTests.TranslationPreservationTests testTranslationLayoutRetainsParagraphsListsIndentationAndExactLineEndings",
+      "status": "passed",
+      "seconds": 0.015
     },
     {
       "name": "FruitfolioTests.TranslationPreservationTests testUnitAndExplicitMedicalLiteralChangesOrDuplicationAreRejected",
@@ -2645,17 +2701,17 @@
     {
       "name": "FruitfolioTests.TranslationPreservationTests testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt",
       "status": "passed",
-      "seconds": 0.006
+      "seconds": 0.005
     },
     {
       "name": "FruitfolioTests.TypingAudioRuntimeTests testRealTypingPlayerRespectsMuteAndAvoidsDuplicatePlayers",
       "status": "passed",
-      "seconds": 0.032
+      "seconds": 0.439
     },
     {
       "name": "FruitfolioTests.UnifiedSymptomTimelineTests testFilteringNeverCreatesMissingObservationsAndSingleDateRemainsARecordedPoint",
       "status": "passed",
-      "seconds": 0.001
+      "seconds": 0.009
     },
     {
       "name": "FruitfolioTests.UnifiedSymptomTimelineTests testInitialGraphShowsAllAndOnlyActuallyLoggedSymptomsAndRespectsExplicitHideAll",
@@ -2670,77 +2726,326 @@
     {
       "name": "FruitfolioTests.UserAuthoredPageTests testCreateEditReloadAndFormattingAreSeparateFromApprovedResearch",
       "status": "passed",
-      "seconds": 0.005
+      "seconds": 0.016
     },
     {
       "name": "FruitfolioTests.UserAuthoredPageTests testEditorCombinesAndTogglesTraitsWithoutRewritingUserText",
       "status": "passed",
-      "seconds": 0.003
+      "seconds": 0.015
     },
     {
       "name": "FruitfolioTests.UserAuthoredPageTests testManualEditorCannotRewriteSourcedEvidenceAndRejectsEmptyDraft",
       "status": "passed",
-      "seconds": 0.035
+      "seconds": 0.008
     }
   ],
   "SwiftTesting": {
-    "executed": 25,
-    "PASS": 25,
-    "FAIL": 0
+    "PASS": 25
   },
-  "currentSourceCommit": "3f67f201abde93e9b8d41c86a747e9ac79bb9484",
-  "currentSourceVerification": "NOT VERIFIED; source70 is committed and current CI is queued/running",
+  "actualFixtureResults": {
+    "original": [
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"rawOutput\":\"Esta estimación no confirma la ovulación.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Esta estimación no confirma la ovulación.\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"rawOutput\":\"El resultado es [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"El resultado es 2.5 ng\\/mL [source-1].\"}]",
+        "output": "Esta estimación no confirma la ovulación.\n\nEl resultado es 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "es"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Cette estimation ne confirme pas l'ovulation.\",\"rawOutput\":\"Cette estimation ne confirme pas l'ovulation.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\"},{\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"Le résultat est 2.5 ng\\/mL [source-1].\",\"rawOutput\":\"Le résultat est [FFQ0].\",\"actualModelInput\":\"The result is [FFQ0].\"}]",
+        "output": "Cette estimation ne confirme pas l'ovulation.\n\nLe résultat est 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "fr"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"rawOutput\":\"Diese Schätzung bestätigt nicht den Eisprung.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Diese Schätzung bestätigt nicht den Eisprung.\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"rawOutput\":\"Das Ergebnis ist [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"Das Ergebnis ist 2.5 ng\\/mL [source-1].\"}]",
+        "output": "Diese Schätzung bestätigt nicht den Eisprung.\n\nDas Ergebnis ist 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "de"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Esta estimativa não confirma a ovulação.\",\"rawOutput\":\"Esta estimativa não confirma a ovulação.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\"},{\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"O resultado é 2.5 ng\\/mL [source-1].\",\"rawOutput\":\"O resultado é [FFQ0].\",\"actualModelInput\":\"The result is [FFQ0].\"}]",
+        "output": "Esta estimativa não confirma a ovulação.\n\nO resultado é 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "pt"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"rawOutput\":\"Questa stima non conferma l'ovulazione.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"Questa stima non conferma l'ovulazione.\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"rawOutput\":\"Il risultato è [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"Il risultato è 2.5 ng\\/mL [source-1].\"}]",
+        "output": "Questa stima non conferma l'ovulazione.\n\nIl risultato è 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "it"
+      },
+      {
+        "actualModelInput": "The result is [FFQ0].",
+        "actualRejectedRawOutput": "结果是[FFQ0 ] 。",
+        "error": "Translation rejected: changedProtectedMeasurement",
+        "preservation": "FAIL",
+        "rejectedSourceSentence": "The result is 2.5 ng/mL.",
+        "strictReason": "changedProtectedMeasurement",
+        "target": "zh"
+      },
+      {
+        "actualSentenceEvidence": "[{\"rawOutput\":\"這種估計並不確認排卵 。\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"這種估計並不確認排卵 。\",\"sourceSentence\":\"This estimate does not confirm ovulation.\"},{\"rawOutput\":\"結果是[FFQ0]。\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"結果是2.5 ng\\/mL [source-1]。\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\"}]",
+        "output": "這種估計並不確認排卵 。\n\n結果是2.5 ng/mL [source-1]。",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "zh_Hant"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"rawOutput\":\"排卵は確認できなかった。\",\"restoredOutput\":\"排卵は確認できなかった。\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"rawOutput\":\"結果は［ＦＦＱ０］であった。\",\"restoredOutput\":\"結果は2.5 ng\\/mLであった [source-1]。\"}]",
+        "output": "排卵は確認できなかった。\n\n結果は2.5 ng/mLであった [source-1]。",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "ja"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"이 추정치는 배란을 확인하지 않습니다.\",\"rawOutput\":\"이 추정치는 배란을 확인하지 않습니다.\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"결과는 2.5 ng\\/mL입니다 [source-1].\",\"rawOutput\":\"결과는 [FFQ0]입니다.\"}]",
+        "output": "이 추정치는 배란을 확인하지 않습니다.\n\n결과는 2.5 ng/mL입니다 [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "ko"
+      },
+      {
+        "actualSentenceEvidence": "[{\"rawOutput\":\"وهذا التقدير لا يؤكد الإباضة.\",\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\"وهذا التقدير لا يؤكد الإباضة.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\"},{\"rawOutput\":\"والنتيجة هي [FFQ0].\",\"actualModelInput\":\"The result is [FFQ0].\",\"restoredOutput\":\"والنتيجة هي 2.5 ng\\/mL [source-1].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\"}]",
+        "output": "وهذا التقدير لا يؤكد الإباضة.\n\nوالنتيجة هي 2.5 ng/mL [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — requires review of this actual output",
+        "target": "ar"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"This estimate does not confirm ovulation.\",\"sourceSentence\":\"This estimate does not confirm ovulation.\",\"restoredOutput\":\" इस अनुमान में अंडाशय की पुष्टि नहीं होती है।\",\"rawOutput\":\" इस अनुमान में अंडाशय की पुष्टि नहीं होती है।\"},{\"actualModelInput\":\"The result is [FFQ0].\",\"sourceSentence\":\"The result is 2.5 ng\\/mL.\",\"restoredOutput\":\"परिणाम 2.5 ng\\/mL है [source-1].\",\"rawOutput\":\"परिणाम [FFQ0] है.\"}]",
+        "output": " इस अनुमान में अंडाशय की पुष्टि नहीं होती है।\n\nपरिणाम 2.5 ng/mL है [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "FAIL — ovary substituted for ovulation; medical presentation remains gated",
+        "target": "hi"
+      }
+    ],
+    "edgeQuantities": [
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"restoredOutput\":\"Estos son valores registrados, no consejos médicos: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\",\"rawOutput\":\"Estos son valores registrados, no consejos médicos: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\"}]",
+        "output": "Estos son valores registrados, no consejos médicos: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "es"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"rawOutput\":\"Ce sont des valeurs enregistrées, pas des conseils médicaux: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"restoredOutput\":\"Ce sont des valeurs enregistrées, pas des conseils médicaux: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\"}]",
+        "output": "Ce sont des valeurs enregistrées, pas des conseils médicaux: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "fr"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"rawOutput\":\"Es handelt sich um aufgezeichnete Werte, keine medizinische Beratung: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"restoredOutput\":\"Es handelt sich um aufgezeichnete Werte, keine medizinische Beratung: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\"}]",
+        "output": "Es handelt sich um aufgezeichnete Werte, keine medizinische Beratung: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "de"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"rawOutput\":\"Estes são valores registrados, não conselhos médicos: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"restoredOutput\":\"Estes são valores registrados, não conselhos médicos: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\"}]",
+        "output": "Estes são valores registrados, não conselhos médicos: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "pt"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"rawOutput\":\"Questi sono valori registrati, non consigli medici: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"restoredOutput\":\"Questi sono valori registrati, non consigli medici: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\"}]",
+        "output": "Questi sono valori registrati, non consigli medici: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "it"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"rawOutput\":\"这些是记录值，而不是医学建议：[FFQ0]；[FFQ1]；[FFQ2]；[FFQ3]；[FFQ4]；[FFQ5]。\",\"restoredOutput\":\"这些是记录值,而不是医学建议:-2.50–-1.00 ng\\/mL;12.5%;37.0 °C;4.20e-3 mol\\/L;1.2 ×10⁻³ kg·m⁻²;١٢٫٥٪ [source-1]。\"}]",
+        "output": "这些是记录值,而不是医学建议:-2.50–-1.00 ng/mL;12.5%;37.0 °C;4.20e-3 mol/L;1.2 ×10⁻³ kg·m⁻²;١٢٫٥٪ [source-1]。",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "zh"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"rawOutput\":\"下列數值是記錄值，不是醫學建議：[FFQ0]；[FFQ1]；[FFQ2]；[FFQ3]；[FFQ4]；[FFQ5]。\",\"restoredOutput\":\"下列數值是記錄值,不是醫學建議:-2.50–-1.00 ng\\/mL;12.5%;37.0 °C;4.20e-3 mol\\/L;1.2 ×10⁻³ kg·m⁻²;١٢٫٥٪ [source-1]。\"}]",
+        "output": "下列數值是記錄值,不是醫學建議:-2.50–-1.00 ng/mL;12.5%;37.0 °C;4.20e-3 mol/L;1.2 ×10⁻³ kg·m⁻²;١٢٫٥٪ [source-1]。",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "zh_Hant"
+      },
+      {
+        "actualModelInput": "These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].",
+        "actualRejectedRawOutput": "これらは記録値であり，医療的アドバイスではない。",
+        "error": "Translation rejected: changedProtectedMeasurement",
+        "preservation": "FAIL",
+        "rejectedSourceSentence": "These are recorded values, not medical advice: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.",
+        "strictReason": "changedProtectedMeasurement",
+        "target": "ja"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"rawOutput\":\"이들은 기록된 값이며 의학적 조언이 아닙니다. [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"restoredOutput\":\"이들은 기록된 값이며 의학적 조언이 아닙니다. -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].\"}]",
+        "output": "이들은 기록된 값이며 의학적 조언이 아닙니다. -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "ko"
+      },
+      {
+        "actualSentenceEvidence": "[{\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"rawOutput\":\"هذه قيم مسجلة وليست مشورة طبية: [FFQ0]؛ [FFQ1]؛ [FFQ2]؛ [FFQ3]؛ [FFQ4]؛ [FFQ5].\",\"restoredOutput\":\"هذه قيم مسجلة وليست مشورة طبية: -2.50–-1.00 ng\\/mL؛ 12.5%؛ 37.0 °C؛ 4.20e-3 mol\\/L؛ 1.2 ×10⁻³ kg·m⁻²؛ ١٢٫٥٪ [source-1].\"}]",
+        "output": "هذه قيم مسجلة وليست مشورة طبية: -2.50–-1.00 ng/mL؛ 12.5%؛ 37.0 °C؛ 4.20e-3 mol/L؛ 1.2 ×10⁻³ kg·m⁻²؛ ١٢٫٥٪ [source-1].",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "ar"
+      },
+      {
+        "actualSentenceEvidence": "[{\"sourceSentence\":\"These are recorded values, not medical advice: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪.\",\"actualModelInput\":\"These are recorded values, not medical advice: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5].\",\"rawOutput\":\" ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं: [FFQ0]; [FFQ1]; [FFQ2]; [FFQ3]; [FFQ4]; [FFQ5]।\",\"restoredOutput\":\"ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं: -2.50–-1.00 ng\\/mL; 12.5%; 37.0 °C; 4.20e-3 mol\\/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪। [source-1]\"}]",
+        "output": "ये रिकॉर्ड किए गए मान हैं, चिकित्सा सलाह नहीं: -2.50–-1.00 ng/mL; 12.5%; 37.0 °C; 4.20e-3 mol/L; 1.2 ×10⁻³ kg·m⁻²; ١٢٫٥٪। [source-1]",
+        "preservation": "PASS",
+        "semanticReview": "NOT VERIFIED — review the actual warning and surrounding wording",
+        "target": "hi"
+      }
+    ]
+  },
+  "latestFullyPassingUnitStage": {
+    "runNumber": 67,
+    "sourceCommit": "44eee9e70631e83892380ecd2747e94a59f27f3a",
+    "executed": 534,
+    "PASS": 533,
+    "SKIP": 1,
+    "FAIL": 0,
+    "SwiftTestingPASS": 25
+  },
+  "latestNativeUIEvidence": {
+    "sourceCommit": "067f34db07b5ac17c44c95c4527c66a069deaa4d",
+    "runID": 41382400631,
+    "runNumber": 80,
+    "nativeAudits": [
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testAccountAccessibility",
+        "status": "passed",
+        "seconds": 35.317
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testAskOpeningAccessibility",
+        "status": "passed",
+        "seconds": 34.168
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testContactAccessibility",
+        "status": "passed",
+        "seconds": 25.556
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testCycleOpeningAccessibility",
+        "status": "passed",
+        "seconds": 29.115
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testFAQAccessibility",
+        "status": "passed",
+        "seconds": 25.433
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testFruitBasketOpeningAccessibility",
+        "status": "failed",
+        "seconds": 29.182
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testGuideOpeningAccessibility",
+        "status": "passed",
+        "seconds": 25.634
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testHubAccessibility",
+        "status": "failed",
+        "seconds": 25.734
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testHubLargestDynamicTypeKeepsAllDestinationsReachable",
+        "status": "failed",
+        "seconds": 82.676
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testLibraryOpeningAccessibility",
+        "status": "passed",
+        "seconds": 34.945
+      },
+      {
+        "name": "FruitfolioUITests.RuntimeAccessibilityAuditTests testSettingsAccessibility",
+        "status": "passed",
+        "seconds": 25.497
+      }
+    ],
+    "nativeAuditCounts": {
+      "passed": 8,
+      "failed": 3
+    },
+    "sharedControls": [
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation",
+        "status": "failed",
+        "seconds": 61.814
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping",
+        "status": "failed",
+        "seconds": 58.385
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers",
+        "status": "passed",
+        "seconds": 44.585
+      },
+      {
+        "name": "FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording",
+        "status": "passed",
+        "seconds": 35.619
+      }
+    ],
+    "sharedCounts": {
+      "failed": 2,
+      "passed": 2
+    },
+    "unitStage": "SKIPPED — prior UI failure and default step condition; explicit independent condition added in source85",
+    "originalNativeArtifact": {
+      "id": 13115165029,
+      "sha256": "abcdde1c02c175ac386165a99e1d0df10ee6be305bc587633898fe359783035c",
+      "sizeBytes": 583033084
+    },
+    "recoveryArtifact": {
+      "id": 13114862718,
+      "runID": 41384817748,
+      "sha256": "d015c6f17070658bf165f5dcdbdc1ab051a89e39881d6288e68bdeedcfbd58a7",
+      "operation": "original SHA/CRC checked, exported files copied byte-for-byte; no rerun or outcome edit"
+    },
+    "remainingNativeFailures": [
+      "Fruit Basket tutorial left dimmed background title exposed to accessibility; source86 isolates true modal background through canonical blur",
+      "Hub title font base decreased at accessibility sizes; source86 keeps original68pt base and uses monotonic native font scaling/character wrapping",
+      "Largest Hub settings was below an invented60pt test inset; source84 uses actual owning viewport"
+    ],
+    "sharedContactResult": "Both stopped in helper before Contact; no latest Contact acceptance inferred",
+    "releaseReady": false
+  },
+  "controlledOffline": {
+    "preservedBoundedAcceptance": {
+      "run": 61,
+      "commit": "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a",
+      "result": "PASS original strict native grounding, original official fixtures and actual Ask answer/return; external probes blocked, filtering restored"
+    },
+    "run77": "FAIL zh marker spacing; actual strict native grounding and Ask return still passed independently",
+    "run79": "Expanded offline phases pending actual results; unit original/edge fixture failures retained",
+    "run80": "Three-phase actual execution active; not accepted from unit/presence alone"
+  },
   "trackerCounts": {
-    "PARTIAL": 130,
-    "PASS": 42,
-    "NOT VERIFIED": 299,
-    "BLOCKED": 3,
+    "PARTIAL": 132,
+    "PASS": 48,
+    "NOT VERIFIED": 292,
+    "BLOCKED": 2,
     "FAIL": 4
   },
-  "fullRun61": {
-    "commit": "1a5861fe8f348c89ad3eeeaeb0daa9296e46b78a",
-    "result": "FAIL",
-    "unitCounts": {
-      "executed": 528,
-      "PASS": 527,
-      "SKIP": 1,
-      "FAIL": 0
-    },
-    "allRepeatedXCTestExecutions": {
-      "PASS": 550,
-      "SKIP": 1,
-      "FAIL": 26
-    },
-    "volumeJourney": "PASS",
-    "strictNativeOfflineAskAndMADLAD": "PASS controlled Simulator fixture",
-    "exploratory": {
-      "testExecution": "PASS",
-      "captures": 52,
-      "inspections": 51,
-      "unavailablePaths": 14,
-      "coverageDisposition": "NOT VERIFIED"
-    },
-    "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run61/actual-complete-test-executions.json"
-  },
-  "run50": {
-    "commit": "7ac5a9e",
-    "result": "FAIL",
-    "allRepeatedXCTestExecutions": {
-      "PASS": 544,
-      "FAIL": 9,
-      "SKIP": 1
-    },
-    "unitCounts": {
-      "executed": 514,
-      "PASS": 512,
-      "FAIL": 1,
-      "SKIP": 1
-    },
-    "usernameJourney": "PASS",
-    "personalHealthJourneys": "PASS both",
-    "volumeJourney": "FAIL",
-    "evidence": "Fruitfolio_Verification_Evidence/AppleRuns/Run50/actual-test-executions.json"
-  },
-  "physicalDevicePrivacy": "SKIPPED; NOT VERIFIED; no privacy PASS inferred",
-  "runtimeProvenance": "Delivery/TESTED_LOCAL_RUNTIME_PROVENANCE.json"
+  "releaseReady": false,
+  "finalArchive": null,
+  "physicalDeviceAcceptance": "NOT VERIFIED; one hardware-only skip retained",
+  "audioAcceptance": "Prior real AVAudioPlayer/category/mute/restart tests preserved; audible quality and physical-device behavior NOT VERIFIED",
+  "mainMerged": false
 }
