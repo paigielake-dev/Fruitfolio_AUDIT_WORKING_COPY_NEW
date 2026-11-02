@@ -82,15 +82,94 @@ final class CycleSetupPersistenceSafetyTests: XCTestCase {
         XCTAssertEqual(persisted, final)
     }
 
+    func testFailedOptimisticAnswerCannotAlterSharedHealthContextOrCompleteOlderSetup() async throws {
+        let suite = "FailedSetupContext-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let context = Prompt27AContextStore(defaults: defaults)
+        let original = Prompt14OnboardingDraft()
+        let persistence = RejectingSetupPersistence(stored: original)
+        let store = Prompt14CycleOnboardingStore(draft: original, persistence: persistence,
+                                                 cycleStore: .inMemory(), isLoaded: true)
+        let model = Prompt14CycleOnboardingViewModel(store: store)
+        model.onPersistedDraftChange = { saved, previous in
+            context.syncFromCycleOnboarding(saved, previous: previous)
+        }
+        await model.load()
+        let before = context.context
+        model.toggleCycleContext(.hormonalBirthControl)
+        XCTAssertTrue(model.draft.cycleAffectingContexts.contains(.hormonalBirthControl))
+        await model.waitForPendingSaves()
+        XCTAssertNotNil(model.errorMessage)
+        XCTAssertEqual(context.context, before, "A failed draft must never become shared health information")
+        XCTAssertEqual(model.persistedDraft, original)
+        model.errorMessage = nil // Dismissing an error must not make unsaved answers safe to complete.
+        let finished = await model.finish()
+        XCTAssertFalse(finished)
+        let attempts = await persistence.saveAttempts
+        XCTAssertEqual(attempts, 1, "Completion must not save an older draft after the latest answer failed")
+    }
+
+    func testSharedContextChangesOnlyAfterSaveAndExplicitRemovalStillSynchronizes() async throws {
+        let suite = "SavedSetupContext-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let context = Prompt27AContextStore(defaults: defaults)
+        let persistence = BlockingFirstSetupSave(stored: Prompt14OnboardingDraft())
+        let store = Prompt14CycleOnboardingStore(persistence: persistence,
+                                                 cycleStore: .inMemory(), isLoaded: true)
+        let model = Prompt14CycleOnboardingViewModel(store: store)
+        model.onPersistedDraftChange = { saved, previous in
+            context.syncFromCycleOnboarding(saved, previous: previous)
+        }
+        await model.load()
+        let before = context.context
+        model.toggleCycleContext(.hormonalBirthControl)
+        await persistence.waitForSaveStart()
+        XCTAssertEqual(context.context, before)
+        await persistence.releaseFirstSave()
+        await model.waitForPendingSaves()
+        XCTAssertEqual(context.context.contraceptionContext.value, .hormonalContraception)
+        model.toggleCycleContext(.hormonalBirthControl)
+        await model.waitForPendingSaves()
+        XCTAssertEqual(context.context.contraceptionContext.value, .unspecified)
+        XCTAssertNil(model.errorMessage)
+    }
+
+    func testReloadWaitsForExistingSaveQueueInsteadOfReplacingPendingAnswer() async throws {
+        let persistence = BlockingFirstSetupSave(stored: Prompt14OnboardingDraft())
+        let store = Prompt14CycleOnboardingStore(persistence: persistence,
+                                                 cycleStore: .inMemory(), isLoaded: true)
+        let model = Prompt14CycleOnboardingViewModel(store: store)
+        await model.load()
+        model.toggleCycleContext(.hormonalBirthControl)
+        await persistence.waitForSaveStart()
+        let reload = Task { await model.load() }
+        try await Task.sleep(for: .milliseconds(60))
+        XCTAssertTrue(model.isLoading)
+        XCTAssertTrue(model.draft.cycleAffectingContexts.contains(.hormonalBirthControl))
+        await persistence.releaseFirstSave()
+        await reload.value
+        XCTAssertFalse(model.isLoading)
+        XCTAssertTrue(model.draft.cycleAffectingContexts.contains(.hormonalBirthControl))
+        let saved = try await store.snapshot()
+        XCTAssertEqual(model.draft, saved)
+        XCTAssertEqual(model.persistedDraft, saved)
+    }
+
 }
 
 private enum SetupWriteFailure: Error, Equatable { case rejected }
 
 private actor RejectingSetupPersistence: Prompt14OnboardingPersistence {
+    private(set) var saveAttempts = 0
     let stored: Prompt14OnboardingDraft
     init(stored: Prompt14OnboardingDraft) { self.stored = stored }
     func load() -> Prompt14OnboardingDraft { stored }
-    func save(_ draft: Prompt14OnboardingDraft) throws { throw SetupWriteFailure.rejected }
+    func save(_ draft: Prompt14OnboardingDraft) throws {
+        saveAttempts += 1
+        throw SetupWriteFailure.rejected
+    }
     func erase() throws { throw SetupWriteFailure.rejected }
 }
 

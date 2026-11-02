@@ -27,6 +27,8 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
     }
 
     func load() async {
+        isLoading = true
+        await waitForPendingSaves()
         do {
             let saved = try await store.snapshot()
             draft = saved
