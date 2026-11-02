@@ -15,4 +15,16 @@ final class LibraryBookshelfRenderingTests: XCTestCase {
         }
         XCTAssertEqual(try render(true), try render(false), "Saved books must never add duplicate art to the decorative shelf")
     }
+    func testApprovedStrawberrySaveCardRendersAtNormalAndLargestTypeWithoutReplacingItsArtwork() throws {
+        for size in [DynamicTypeSize.large, .accessibility5] {
+            let renderer = ImageRenderer(content: Prompt11SavedConfirmation()
+                .environment(\.dynamicTypeSize, size).frame(width: 375, height: 667))
+            let image = try XCTUnwrap(renderer.uiImage)
+            XCTAssertGreaterThan(try XCTUnwrap(image.pngData()).count, 10_000)
+            let evidence = XCTAttachment(image: image)
+            evidence.name = "Guide_OriginalCompactCard_Strawberry_Saved_\(size)"
+            evidence.lifetime = .keepAlways; add(evidence)
+        }
+    }
+
 }

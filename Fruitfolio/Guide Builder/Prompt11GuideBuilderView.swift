@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt11GuideBuilderView: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
@@ -17,6 +18,8 @@ struct Prompt11GuideBuilderView: View {
     @State private var savedStatusVisible = false
     @State private var celebrationVisible = false
     @State private var searchText = ""
+    @State private var savedStatusTask: Task<Void, Never>?
+    @State private var celebrationTask: Task<Void, Never>?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -53,14 +56,11 @@ struct Prompt11GuideBuilderView: View {
             overlayLayer
                 .zIndex(100)
 
-            if savedStatusVisible {
-                savedStatus
+            if savedStatusVisible || celebrationVisible {
+                Prompt11SavedConfirmation()
                     .zIndex(110)
-            }
-
-            if celebrationVisible {
-                firstPageCelebration
-                    .zIndex(120)
+                    .transition(.opacity)
+                    .allowsHitTesting(false)
             }
         }
         .fullScreenCover(isPresented: $showingReadMode) {
@@ -77,6 +77,10 @@ struct Prompt11GuideBuilderView: View {
             }
         }
         .toolbar(.hidden, for: .navigationBar)
+        .onDisappear {
+            savedStatusTask?.cancel(); celebrationTask?.cancel()
+            savedStatusVisible = false; celebrationVisible = false
+        }
     }
 
     private var home: some View {
@@ -1037,69 +1041,6 @@ struct Prompt11GuideBuilderView: View {
         }
     }
 
-    private var savedStatus: some View {
-        VStack {
-            HStack(spacing: 6) {
-                Image("guide_bookmark_saved")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 24)
-                    .accessibilityHidden(true)
-
-                Text("saved ♡")
-                    .font(.custom("Chalkboard SE", size: 11))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-            }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                DesignTokens.ColorToken.backgroundCream.opacity(0.96),
-                in: Capsule()
-            )
-
-            Spacer()
-        }
-        .padding(.top, 52)
-        .transition(.opacity)
-        .allowsHitTesting(false)
-    }
-
-    private var firstPageCelebration: some View {
-        VStack {
-            Spacer()
-
-            HStack(spacing: 10) {
-                Image("fruit_strawberry_silly")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 58)
-                    .accessibilityHidden(true)
-
-                Text("your encyclopedia is growing ♡")
-                    .font(.custom("Chalkboard SE", size: 12))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(
-                DesignTokens.ColorToken.backgroundCream.opacity(0.96),
-                in: RoundedRectangle(
-                    cornerRadius: 18,
-                    style: .continuous
-                )
-            )
-            .padding(.bottom, 36)
-        }
-        .transition(.opacity)
-        .allowsHitTesting(false)
-    }
-
     private func searchMatches(
         in guide: Prompt10Encyclopedia
     ) -> [Prompt11GuideSearchMatch] {
@@ -1196,9 +1137,11 @@ struct Prompt11GuideBuilderView: View {
     private func showSavedStatus() {
         savedStatusVisible = true
 
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 900_000_000)
-
+        UIAccessibility.post(notification: .announcement,
+            argument: FruitfolioLocalization.localized("saved!"))
+        savedStatusTask?.cancel()
+        savedStatusTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 900_000_000) } catch { return }
             withAnimation(.easeOut(duration: 0.16)) {
                 savedStatusVisible = false
             }
@@ -1209,9 +1152,9 @@ struct Prompt11GuideBuilderView: View {
         celebrationVisible = true
         audioManager.play(.gentleCheer)
 
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 1_350_000_000)
-
+        celebrationTask?.cancel()
+        celebrationTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 1_350_000_000) } catch { return }
             withAnimation(.easeOut(duration: 0.18)) {
                 celebrationVisible = false
             }
@@ -1222,5 +1165,37 @@ struct Prompt11GuideBuilderView: View {
         motionPreferences.reduceMotionActive
             ? .easeOut(duration: 0.14)
             : .easeOut(duration: 0.30)
+    }
+}
+
+
+/// Prompt 1B 5O: original compact control-card artwork, Strawberry, then
+/// the exact authored confirmation directly underneath. One card is shared
+/// by ordinary saves and first-page celebration; it never blocks editing.
+struct Prompt11SavedConfirmation: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    var body: some View {
+        GeometryReader { proxy in
+            let width = min(max(1, proxy.size.width - 40), dynamicTypeSize.isAccessibilitySize ? 300 : 248)
+            ZStack {
+                Image("control_large_card").resizable().scaledToFit()
+                    .accessibilityHidden(true)
+                VStack(spacing: 8) {
+                    Image("fruit_strawberry_silly").resizable().scaledToFit()
+                        .frame(width: 64, height: 64)
+                        .accessibilityHidden(true)
+                    Text("saved!")
+                        .font(.custom("Chalkboard SE", size: 18, relativeTo: .headline)).bold()
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(width * 0.12)
+            }
+            .frame(width: width, height: width * 667 / 634)
+            .position(x: proxy.size.width / 2, y: proxy.size.height / 2)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("guide.savedConfirmation")
     }
 }
