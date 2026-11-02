@@ -41,7 +41,7 @@ nonisolated struct FruitfolioTranslationSentenceEvidence: Sendable, Codable {
 nonisolated enum FruitfolioTranslationPreservation {
     // Lexical recognition only: never parse, round, convert units, or infer a
     // measurement's clinical meaning. Unicode digits and exponents stay exact.
-    static let numericPattern = #"[+−﹣－-]?(?:\p{Nd}+(?:[.,٫．]\p{Nd}+)?|[.．]\p{Nd}+)(?:(?:[eEｅＥ][+−﹣－-]?\p{Nd}+)|(?:[\p{Zs}\t]*[×x·][\p{Zs}\t]*10(?:\^?[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+))|\^[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+)?"#
+    static let numericPattern = #"[+＋−﹣－-]?(?:(?:\p{Nd}+[\p{Zs}\t]+)?[¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞]|\p{Nd}+[/⁄／]\p{Nd}+|\p{Nd}+(?:[.,٫．]\p{Nd}+)?|[.．]\p{Nd}+)(?:(?:[eEｅＥ][+−﹣－-]?\p{Nd}+)|(?:[\p{Zs}\t]*[×x·][\p{Zs}\t]*10(?:\^?[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+))|\^[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+)?"#
     private static let numeric = try! NSRegularExpression(pattern: numericPattern)
     static func numbers(_ text: String) -> [String] {
         numeric.matches(in: text, range: NSRange(text.startIndex..., in: text)).compactMap {
@@ -100,14 +100,22 @@ nonisolated struct FruitfolioProtectedMeasurements {
         let full = NSRange(source.startIndex..., in: source)
         let horizontal = #"[\p{Zs}\t]*"#
         let number = FruitfolioTranslationPreservation.numericPattern
-        let quantity = #"(?:[≤≥<>≈~]"# + horizontal + #")?(?:"# + number
+        let quantity = #"(?:(?:<=|>=|≤|≥|<|>|≈|~)"# + horizontal + #")?(?:"# + number
             + #")(?:(?:"# + horizontal + #"(?:[–—−-]|±|to)"# + horizontal + #")(?:"# + number + #"))?"#
         // These spellings identify source spans, not permissible conversions.
         // Longest first plus a letter boundary avoids consuming 'm' in months.
         let prefixes = ["", "f", "p", "n", "u", "µ", "μ", "m", "c", "d", "k", "M"]
         let bases = ["g", "L", "l", "mol", "IU", "U", "Eq", "m", "Pa", "Hz", "J", "W", "cal"]
         let conventional = ["%", "٪", "％", "°C", "°F", "℃", "℉", "K", "mmHg", "bpm", "min", "h", "s", "d"]
-        let unitNames = Set(prefixes.flatMap { prefix in bases.map { prefix + $0 } } + conventional)
+        let baseNames = Set(prefixes.flatMap { prefix in bases.map { prefix + $0 } } + conventional)
+        let widthNames = baseNames.map { term in
+            term.unicodeScalars.reduce(into: "") { result, scalar in
+                if (0x21...0x7E).contains(scalar.value) {
+                    result.unicodeScalars.append(UnicodeScalar(scalar.value + 0xFEE0)!)
+                } else { result.unicodeScalars.append(scalar) }
+            }
+        }
+        let unitNames = baseNames.union(widthNames)
         let unit = unitNames.sorted { $0.count == $1.count ? $0 < $1 : $0.count > $1.count }
             .map(NSRegularExpression.escapedPattern(for:)).joined(separator: "|")
         let power = #"(?:\^[+−-]?\p{Nd}+|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+|[−-]\p{Nd}+)?"#

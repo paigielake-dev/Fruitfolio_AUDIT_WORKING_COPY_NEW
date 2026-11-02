@@ -11,7 +11,12 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
         .matching(NSPredicate(format: "label == %@", target.label)).firstMatch.exists
     let scroll = app.scrollViews.containing(target.elementType, identifier: identifier).firstMatch
     let container = explicitContainer ?? (popupOwnsTarget ? popup : (scroll.exists ? scroll : app))
-    let visible = app.frame.insetBy(dx: 0, dy: 60).intersection(container.frame)
+    // Use the actual owning viewport. Run80's screenshot proves the Hub
+    // contact button is fully painted/hittable at y761.7...819.7 inside its
+    // 874pt ScrollView. An invented 60pt bottom exclusion falsely rejected it
+    // and could not be repaired by scrolling content that already fitted.
+    // Modal writing-area clipping, complete bounds and hittability stay strict.
+    let visible = app.frame.intersection(container.frame)
     for _ in 0..<14 {
         if target.isHittable && visible.contains(target.frame) { break }
         let towardEarlierContent = target.frame.minY < visible.minY

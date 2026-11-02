@@ -85,6 +85,14 @@ final class TranslationPreservationTests: XCTestCase {
         }
     }
 
+    func testFractionsFullWidthUnitsAndComparisonOperatorsStayOpaqueWithoutConversion() throws {
+        let source = "Record >=2.50 ng/mL, ≤5 mg/dL, ½ mg, 1 ½ mL, 1/2 mg, and ＋２．５ ｎｇ／ｍＬ."
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: [])
+        XCTAssertEqual(plan.originalSpans, [">=2.50 ng/mL", "≤5 mg/dL", "½ mg", "1 ½ mL", "1/2 mg", "＋２．５ ｎｇ／ｍＬ"])
+        XCTAssertEqual(try plan.restoring(in: plan.modelInput), source)
+        XCTAssertEqual(FruitfolioTranslationPreservation.numbers("½ 1 ½ 1/2 ＋２．５"), ["½", "1 ½", "1/2", "＋２．５"])
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {
