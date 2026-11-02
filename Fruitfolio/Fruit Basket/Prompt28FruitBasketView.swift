@@ -1938,14 +1938,24 @@ struct Prompt28FruitBasketView: View {
                     .frame(maxWidth: 242)
 
                     if tourStep == 0 {
-                        Button("skip tour") {
+                        Button {
                             viewModel.screen = .howItWorks
                             store.skipTourAfterRules()
                             showTour = false
+                        } label: {
+                            HStack(spacing: 0) {
+                                Spacer(minLength: 0)
+                                FruitfolioNativeActionLabel(text: "skip tour", fontName: "ChalkboardSE-Regular",
+                                    pointSize: 13, textStyle: .subheadline)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Spacer(minLength: 0)
+                            }
+                            .accessibilityElement(children: .contain)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                         }
-                        .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                        .frame(minHeight: 44)
+                        .accessibilityLabel(Text("skip tour"))
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                     }
                 }
             }
@@ -2516,7 +2526,7 @@ private struct Prompt28ChipWrap: View {
                                 count: dynamicTypeSize.isAccessibilitySize ? 1 : 2), spacing: 6) {
             ForEach(titles, id: \.self) { title in
                 Prompt28MiniControlPill(title: title, isSelected: false,
-                    width: nil, minimumHeight: 48, pointSize: 11, textStyle: .caption, artworkOpacity: 0.72) {
+                    width: nil, minimumHeight: 48, pointSize: 11, textStyle: .caption1, artworkOpacity: 0.72) {
                     onSelect(title)
                 }
             }
