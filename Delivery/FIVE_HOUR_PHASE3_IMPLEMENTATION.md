@@ -1,0 +1,9 @@
+# Phase 3: core functionality
+
+Original phase window: 16:15:27–16:45:27 UTC, 2026-11-02. Original final deadline: 20:15:27 UTC. No restart.
+
+Username corrections: both Account and Fruit Basket validate the actual user draft before stripping/truncating it. Fruit Basket retains incomplete or invalid text for correction, rather than changing the intended identity. Failed edits preserve the shared saved identity and persisted values. Added invalid-input/restart/equality test coverage. Existing shared synchronization and valid-name behavior are preserved. No real-name collection, speculative identity inference or fake server reservation was introduced. Actual-name prevention and production uniqueness remain unresolved dependencies, not PASS.
+
+Educational boundary corrections: pregnancy and contextual science now enforce request/topic identity, nonblank display content and usable nonduplicate source identifiers at both provider and view-model boundaries. Pregnancy sections must refer to sources associated with that content. Five new tests exercise malformed fixtures and arbitrary-provider bypass attempts. This is structural protection, not approval of scientific claims. The strict generation validator is not altered. These modules still default to unavailable providers and unconnected callbacks; completing production research/navigation/save integration remains PARTIAL. No scientific content was fabricated to populate them.
+
+Feasible checks: changed Swift files pass `git diff --check`. New Swift tests have not executed on Xcode in this source sprint. The Mac verification stage must include `FruitfolioUsernameStoreTests`, `UsernameSynchronizationUITests`, `EducationalContentBoundaryTests`, `Prompt26PregnancyEducationTests` and `Prompt27ScienceContentTests`.

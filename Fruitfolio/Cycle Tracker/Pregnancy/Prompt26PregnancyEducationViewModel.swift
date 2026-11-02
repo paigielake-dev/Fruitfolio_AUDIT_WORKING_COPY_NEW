@@ -42,6 +42,10 @@ final class Prompt26PregnancyEducationViewModel: ObservableObject {
             do {
                 let content = try await provider.approvedContent(for: contentID)
                 guard !Task.isCancelled else { return }
+                guard content.hasValidStructure(for: contentID) else {
+                    self?.state = .unavailable
+                    return
+                }
                 self?.state = .loaded(content)
             } catch {
                 guard !Task.isCancelled else { return }
