@@ -1,0 +1,5 @@
+# Health Context corruption preservation and guarded clearing
+
+Found and corrected a real data-loss path: initialization removed unreadable Health Context bytes, so the next restart could silently treat them as an empty readable profile. Unreadable and wrong-type values are now retained, edits/onboarding synchronization are blocked, readable export fails, and the UI explains preservation. Healthy edits encode a candidate before publishing it, preserving the previous state on encoding failure. Explicitly confirmed context clearing remains a separate destructive operation and resets the error only after replacing the intentionally discarded context.
+
+Added original-byte/restart/export/wrong-type/isolation tests, a complete-export rejection test, and normal/largest-text actual UI Cancel/confirm/restart journeys. My Context now requires a canonical confirmation before bulk clearing; Cancel has no store mutation. Existing sensitive-context privacy and prediction policy remain unchanged. Apple execution pending.

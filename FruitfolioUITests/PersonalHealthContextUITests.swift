@@ -77,4 +77,42 @@ final class PersonalHealthContextUITests: XCTestCase {
         capture(app, "CycleSetup_RemovedAnswerStaysUnknown")
     }
 
+    func testBulkContextClearRequiresVisibleCancelAndExplicitConfirmationWithoutLosingDataOnCancel() {
+        verifyContextClear(largest: false)
+    }
+    func testLargestTextBulkContextClearRetainsStrictVisibleCancelAndGuardedConfirmation() {
+        verifyContextClear(largest: true)
+    }
+    private func verifyContextClear(largest: Bool) {
+        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]
+        if largest { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch(); open(app)
+        let heart = app.buttons["healthContext.field.heart"]; fruitfolioReachControl(app, heart); heart.tap()
+        let entry = app.descendants(matching: .any).matching(identifier: "healthContext.entryText").firstMatch
+        XCTAssertTrue(entry.waitForExistence(timeout: 8)); entry.tap()
+        let note = "preserve this reported history " + UUID().uuidString
+        entry.typeText(note)
+        let done = button(app, "done"); XCTAssertTrue(done.waitForExistence(timeout: 5)); done.tap()
+        let save = button(app, "save context"); fruitfolioReachControl(app, save); save.tap()
+        func returnToContext() {
+            let back = button(app, "back"); fruitfolioReachControl(app, back); back.tap()
+            XCTAssertTrue(app.buttons["context.openPersonalHealth"].waitForExistence(timeout: 10))
+        }
+        returnToContext()
+        let clear = button(app, "clear my context"); fruitfolioReachControl(app, clear); clear.tap()
+        XCTAssertTrue(app.staticTexts["clear my context?"].waitForExistence(timeout: 8))
+        let cancel = button(app, "cancel"); fruitfolioReachControl(app, cancel)
+        XCTAssertTrue(app.frame.insetBy(dx: 0, dy: 16).contains(cancel.frame), "Keep the complete original strict visibility requirement")
+        capture(app, "ClearContext_FullyVisibleCancel_largest_\(largest)"); cancel.tap()
+        let profile = app.buttons["context.openPersonalHealth"]; fruitfolioReachControl(app, profile); profile.tap()
+        fruitfolioReachControl(app, heart); heart.tap()
+        XCTAssertTrue(entry.waitForExistence(timeout: 8)); XCTAssertEqual(entry.value as? String, note)
+        let skip = button(app, "skip / cancel"); fruitfolioReachControl(app, skip); skip.tap()
+        returnToContext(); fruitfolioReachControl(app, clear); clear.tap()
+        let confirm = button(app, "clear context"); fruitfolioReachControl(app, confirm); confirm.tap()
+        app.terminate(); app.launch(); open(app); fruitfolioReachControl(app, heart); heart.tap()
+        XCTAssertTrue(entry.waitForExistence(timeout: 8)); XCTAssertNotEqual(entry.value as? String, note)
+        capture(app, "ClearContext_ConfirmedRemovalAfterRestart_largest_\(largest)")
+    }
+
 }

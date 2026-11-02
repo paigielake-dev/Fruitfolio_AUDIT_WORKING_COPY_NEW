@@ -8,6 +8,7 @@ struct Prompt27AMyContextView: View {
     @State private var showHormoneInformation = false
     @State private var showPersonalHealth = false
     @State private var showCycleSetup = false
+    @State private var confirmClearContext = false
 
     let onBack: () -> Void
 
@@ -43,6 +44,10 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+                        if let error = viewModel.store.loadError ?? viewModel.store.persistenceError {
+                            Text(error).fixedSize(horizontal: false, vertical: true)
+                                .accessibilityIdentifier("context.storageError")
+                        }
                         FruitfolioControlPillButton(label: "edit cycle setup", localizationKey: "edit cycle setup") { showCycleSetup = true }
                             .accessibilityIdentifier("context.editCycleSetup")
                         FruitfolioControlPillButton(label: "personal health context", localizationKey: "personal health context") { showPersonalHealth = true }
@@ -139,7 +144,7 @@ struct Prompt27AMyContextView: View {
                         FruitfolioControlPillButton(
                             label: "clear my context", localizationKey: "clear my context"
                         ) {
-                            viewModel.store.clearContext()
+                            confirmClearContext = true
                         }
                         .frame(maxWidth: 280, alignment: .leading)
                         .accessibilityHint(
@@ -160,6 +165,14 @@ struct Prompt27AMyContextView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .scrollIndicators(.hidden)
+            }
+            .fruitfolioModalBlur(active: confirmClearContext, reduceMotion: motionPreferences.reduceMotionActive)
+            if confirmClearContext {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "clear my context?",
+                    message: "this removes your saved context selections and personal health context. cycle history, logs, measurements, and saved guides stay unchanged.",
+                    primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "clear context",
+                    primaryAction: { confirmClearContext = false }, secondaryAction: nil,
+                    destructiveAction: { viewModel.store.clearContext(); confirmClearContext = false })
             }
         }
         .fullScreenCover(isPresented: $showCycleSetup) {
@@ -295,6 +308,7 @@ struct Prompt27AMyContextView: View {
                 isSelected: selected
             )
         }
+        .disabled(viewModel.store.didRecoverCorruptStoredContext)
         .buttonStyle(
             CutePopButtonStyle(
                 reduceMotion: motionPreferences.reduceMotionActive

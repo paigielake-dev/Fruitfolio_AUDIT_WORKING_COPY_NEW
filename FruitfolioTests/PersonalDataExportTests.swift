@@ -204,4 +204,24 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(document.data, data)
         XCTAssertEqual(FruitfolioPersonalDataDocument.readableContentTypes.map(\.identifier), ["public.json"])
     }
+    func testUnreadableContextCannotBecomeASuccessfulEmptyExportAfterAStoreRestart() async throws {
+        let suite = "Fruitfolio.ExportContextCorrupt.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let original = Data([0xff, 0x01, 0x02])
+        defaults.set(original, forKey: Prompt27AContextStore.storageKey)
+        for _ in 0..<2 {
+            let context = Prompt27AContextStore(defaults: defaults)
+            do {
+                _ = try await FruitfolioPersonalDataExport.capture(account: nil, username: "",
+                    settings: SettingsStore(defaults: defaults), library: Prompt10SavedLibraryStore(defaults: defaults),
+                    context: context, hormones: HormoneMeasurementStore(fileURL: file),
+                    cycle: .inMemory(), onboarding: .inMemory(), fruitBasket: Prompt28FruitBasketStore(defaults: defaults))
+                XCTFail("An unreadable health-context domain must never be silently exported as empty")
+            } catch { XCTAssertEqual(defaults.data(forKey: Prompt27AContextStore.storageKey), original) }
+        }
+    }
+
 }

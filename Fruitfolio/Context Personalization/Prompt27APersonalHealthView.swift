@@ -12,6 +12,10 @@ struct Prompt27APersonalHealthView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
                     Text("personal health context").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold().accessibilityAddTraits(.isHeader)
+                    if let error = store.loadError ?? store.persistenceError {
+                        Text(error).fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("healthContext.storageError")
+                    }
                     Text("all of this is optional. choose only what you want to share, or leave everything blank. these are your reported details, not a diagnosis or a prediction.")
                     Text("choose a testing category only if you know it applies. having a test does not mean a particular laboratory technique was used.")
                     ForEach(Prompt27AHealthField.allCases) { field in
@@ -28,6 +32,7 @@ struct Prompt27APersonalHealthView: View {
                             }
                             .frame(maxWidth: .infinity, minHeight: 60, alignment: .leading)
                         }
+                        .disabled(store.didRecoverCorruptStoredContext)
                         .accessibilityAddTraits(.isButton)
                         .accessibilityValue(LocalizedStringKey(status(field)))
                         .accessibilityHint("opens an optional editable field")
@@ -84,6 +89,10 @@ private struct Prompt27AHealthEntryEditor: View {
             VStack(alignment: .leading, spacing: 18) {
                 Text(LocalizedStringKey(field.title)).font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
                 if let artwork = field.artwork { Image(artwork).resizable().scaledToFit().frame(maxWidth: 120).accessibilityHidden(true) }
+                if let error = store.loadError ?? store.persistenceError {
+                    Text(error).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("healthContext.editorStorageError")
+                }
                 Text("anything you want Fruitfolio to know?")
                 TextField("optional history", text: $text, axis: .vertical)
                     .textFieldStyle(.roundedBorder).lineLimit(5...12).focused($focused)
@@ -92,10 +101,12 @@ private struct Prompt27AHealthEntryEditor: View {
                     .accessibilityIdentifier("healthContext.clinicianReported")
                 Text("saved as information you provide. Fruitfolio does not independently verify this or infer a diagnosis, genetic finding, or laboratory method.")
                 FruitfolioControlPillButton(label: "save context", localizationKey: "save context") {
-                    store.setPersonalHealthField(field, text: text, clinicianConfirmedByUser: clinicianConfirmed); dismiss()
+                    store.setPersonalHealthField(field, text: text, clinicianConfirmedByUser: clinicianConfirmed)
+                    if store.loadError == nil && store.persistenceError == nil { dismiss() }
                 }.disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 FruitfolioControlPillButton(label: "prefer not to say", localizationKey: "prefer not to say") {
-                    store.setPersonalHealthField(field, text: "", status: .preferNotToSay); dismiss()
+                    store.setPersonalHealthField(field, text: "", status: .preferNotToSay)
+                    if store.loadError == nil && store.persistenceError == nil { dismiss() }
                 }
                 FruitfolioControlPillButton(label: "remove this context", localizationKey: "remove this context") { focused = false; confirmRemove = true }
                     .disabled(store.context.personalHealthFields[field]?.status != .supplied)

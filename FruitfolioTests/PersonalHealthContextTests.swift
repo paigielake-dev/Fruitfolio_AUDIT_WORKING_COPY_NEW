@@ -61,4 +61,44 @@ final class PersonalHealthContextTests: XCTestCase {
         XCTAssertFalse(Prompt27AContextSafety().canIncreasePredictionConfidence(context: supplied))
         XCTAssertFalse(Prompt27AContextSafety().canModifyPredictionMathematics(context: supplied))
     }
+    func testUnreadableContextRemainsBlockedAndByteIdenticalAcrossEditsExportAndRestartUntilExplicitClear() throws {
+        let suite = "Fruitfolio.ContextCorruptProtection.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let original = Data([0xff, 0x00, 0x7f, 0x01])
+        defaults.set(original, forKey: Prompt27AContextStore.storageKey)
+        defaults.set(Data([4, 5, 6]), forKey: "independent-cycle-bytes")
+        let store = Prompt27AContextStore(defaults: defaults)
+        XCTAssertTrue(store.didRecoverCorruptStoredContext)
+        XCTAssertNotNil(store.loadError)
+        store.setPersonalHealthField(.heart, text: "must not replace the unreadable original")
+        store.setTrackingGoal(.generalCycleTracking)
+        store.syncFromCycleOnboarding(Prompt14OnboardingDraft())
+        XCTAssertTrue(store.context.isCompletelyUnspecified)
+        XCTAssertEqual(defaults.data(forKey: Prompt27AContextStore.storageKey), original)
+        XCTAssertThrowsError(try store.exportReadableJSON())
+        let reopened = Prompt27AContextStore(defaults: defaults)
+        XCTAssertTrue(reopened.didRecoverCorruptStoredContext)
+        XCTAssertThrowsError(try reopened.exportReadableJSON())
+        XCTAssertEqual(defaults.data(forKey: Prompt27AContextStore.storageKey), original)
+        reopened.clearContext() // This is the explicit destructive store action, guarded by the production UI.
+        XCTAssertFalse(reopened.didRecoverCorruptStoredContext)
+        XCTAssertNil(reopened.loadError)
+        reopened.setPersonalHealthField(.heart, text: "new context after explicit clear")
+        XCTAssertEqual(Prompt27AContextStore(defaults: defaults).context.personalHealthFields[.heart]?.text, "new context after explicit clear")
+        XCTAssertEqual(defaults.data(forKey: "independent-cycle-bytes"), Data([4, 5, 6]))
+    }
+
+    func testWrongStoredTypeIsPreservedRatherThanSilentlyReplacedWithAnEmptyProfile() throws {
+        let suite = "Fruitfolio.ContextWrongType.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("original unreadable string value", forKey: Prompt27AContextStore.storageKey)
+        let store = Prompt27AContextStore(defaults: defaults)
+        XCTAssertNotNil(store.loadError)
+        store.setTrackingGoal(.generalCycleTracking)
+        XCTAssertThrowsError(try store.exportReadableJSON())
+        XCTAssertEqual(defaults.string(forKey: Prompt27AContextStore.storageKey), "original unreadable string value")
+    }
+
 }
