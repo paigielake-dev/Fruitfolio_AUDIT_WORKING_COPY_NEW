@@ -78,6 +78,10 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        // The contained label keeps its true text bounds, but containment
+        // stops SwiftUI's automatic Button label aggregation. Name the actual
+        // action explicitly without hiding text or suppressing any audit.
+        .accessibilityLabel(Text(label))
     }
 }
 

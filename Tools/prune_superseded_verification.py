@@ -2,7 +2,7 @@
 """One-time CI queue maintenance; never deletes commits, logs or artifacts.
 
 Preserve requested Run50/51. Only supersede older diagnostics 47-49 and queued
-52-57, whose repairs are all retained in the newer source checkpoint. Inventory
+52-57 and superseded diagnostic attempts 59-60, whose repairs are all retained in the newer source checkpoint. Inventory
 is uploaded before cancellation. Completed runs and all later runs are untouched.
 """
 import json
@@ -16,7 +16,7 @@ REPOSITORY = "paigielake-dev/Fruitfolio_AUDIT_WORKING_COPY_NEW"
 BRANCH = "fruitfolio/prompt-1b-alignment"
 WORKFLOW = 403220650
 PRESERVE = {41357420177, 41358742740}
-OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57}
+OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60}
 OUT = Path("verification-queue-state.json")
 
 
