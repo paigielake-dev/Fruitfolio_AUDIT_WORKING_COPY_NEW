@@ -182,10 +182,34 @@ final class SettingsStore: ObservableObject {
     @Published var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
     @Published var typingASMREnabled: Bool { didSet { defaults.set(typingASMREnabled, forKey: Key.typingASMREnabled) } }
 
-    @Published var musicVolume: Double { didSet { persistClamped(musicVolume, key: Key.musicVolume) } }
-    @Published var rainVolume: Double { didSet { persistClamped(rainVolume, key: Key.rainVolume) } }
-    @Published var soundEffectsVolume: Double { didSet { persistClamped(soundEffectsVolume, key: Key.soundEffectsVolume) } }
-    @Published var typingVolume: Double { didSet { persistClamped(typingVolume, key: Key.typingVolume) } }
+    @Published var musicVolume: Double {
+        didSet {
+            let normalized = Self.clamp(musicVolume)
+            if musicVolume != normalized { musicVolume = normalized }
+            defaults.set(normalized, forKey: Key.musicVolume)
+        }
+    }
+    @Published var rainVolume: Double {
+        didSet {
+            let normalized = Self.clamp(rainVolume)
+            if rainVolume != normalized { rainVolume = normalized }
+            defaults.set(normalized, forKey: Key.rainVolume)
+        }
+    }
+    @Published var soundEffectsVolume: Double {
+        didSet {
+            let normalized = Self.clamp(soundEffectsVolume)
+            if soundEffectsVolume != normalized { soundEffectsVolume = normalized }
+            defaults.set(normalized, forKey: Key.soundEffectsVolume)
+        }
+    }
+    @Published var typingVolume: Double {
+        didSet {
+            let normalized = Self.clamp(typingVolume)
+            if typingVolume != normalized { typingVolume = normalized }
+            defaults.set(normalized, forKey: Key.typingVolume)
+        }
+    }
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
@@ -214,10 +238,6 @@ final class SettingsStore: ObservableObject {
         FruitfolioLocalization.localized(key, language: language, fallback: fallback)
     }
 
-    private func persistClamped(_ value: Double, key: String) {
-        defaults.set(Self.clamp(value), forKey: key)
-    }
-
     private static func bool(_ defaults: UserDefaults, key: String, fallback: Bool) -> Bool {
         guard defaults.object(forKey: key) != nil else { return fallback }
         return defaults.bool(forKey: key)
@@ -229,6 +249,7 @@ final class SettingsStore: ObservableObject {
     }
 
     private static func clamp(_ value: Double) -> Double {
-        min(max(value, 0), 1)
+        guard value.isFinite else { return 0 }
+        return min(max(value, 0), 1)
     }
 }

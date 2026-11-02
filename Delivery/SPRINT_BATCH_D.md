@@ -1,0 +1,7 @@
+# Sprint batch D — data/audio integration, no invented clinical calibration
+
+The existing shared username, measurement management, optional Health Context, cycle-setup edits, original-record exports and unified symptom timeline are preserved. Their current modules and relevant existing tests were inspected together, rather than rewritten. The unified chart defaults to actual available symptoms, preserves explicitly empty selections, includes dated observations without a cycle-day assignment, and never manufactures a cycle day. Pattern inference separately requires eligible assigned cycles, as intended.
+
+A confirmed integration defect was repaired: audio preferences previously clamped only persisted values, leaving an out-of-range/nonfinite live @Published value available to controls and export. All four channels now keep live/persisted values consistent in0...1; nonfinite corruption safely resolves to silent0. A focused test verifies independent channels, restart equality and real Preferences JSON encoding. It does not weaken scientific/export validation.
+
+Hormone history already separates exact hormones, original unit strings and sample types and plots only valid dated recorded points, without interpolated concentrations. No approved quantitative personal-curve calibration is present. The existing adjusted-mode limitation remains explicit; this sprint does not invent coefficients, hormone curves or clinical rules to claim completion. Positive calibrated adjustment remains an unresolved evidence dependency.

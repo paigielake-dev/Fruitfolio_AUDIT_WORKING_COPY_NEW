@@ -310,3 +310,33 @@ extension AudioLifecycleRuntimeTests {
         evidence.name = "CollisionFoley_ActualBundledPlayersAndGates"; evidence.lifetime = .keepAlways; add(evidence)
     }
 }
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testInvalidAudioPreferencesCannotLeakNonfiniteOrOutOfRangeValuesIntoLiveStateOrExports() throws {
+        let suite = "AudioFinite-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicVolume = .nan
+        settings.rainVolume = .infinity
+        settings.soundEffectsVolume = -.infinity
+        settings.typingVolume = 1.5
+        XCTAssertEqual(settings.musicVolume, 0)
+        XCTAssertEqual(settings.rainVolume, 0)
+        XCTAssertEqual(settings.soundEffectsVolume, 0)
+        XCTAssertEqual(settings.typingVolume, 1)
+        XCTAssertEqual(defaults.double(forKey: "fruitfolio.settings.musicVolume"), 0)
+        let restored = SettingsStore(defaults: defaults)
+        XCTAssertEqual(restored.musicVolume, settings.musicVolume)
+        XCTAssertEqual(restored.rainVolume, settings.rainVolume)
+        XCTAssertEqual(restored.soundEffectsVolume, settings.soundEffectsVolume)
+        XCTAssertEqual(restored.typingVolume, settings.typingVolume)
+        settings.soundEffectsVolume = 0.43
+        XCTAssertEqual(settings.musicVolume, 0)
+        XCTAssertEqual(settings.rainVolume, 0)
+        XCTAssertEqual(settings.typingVolume, 1, "Each audio slider keeps independent state")
+        let preferences = FruitfolioPersonalDataExport.Preferences(settings)
+        XCTAssertNoThrow(try JSONEncoder().encode(preferences), "Audio preferences must not cause an otherwise valid personal-data export to fail on NaN")
+    }
+}
