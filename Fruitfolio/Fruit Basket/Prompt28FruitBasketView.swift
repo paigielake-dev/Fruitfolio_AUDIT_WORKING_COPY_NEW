@@ -110,7 +110,7 @@ struct Prompt28FruitBasketView: View {
                 .frame(maxWidth: .infinity)
 
             }
-            .accessibilityElement(children: .contain)
+            .accessibilityElement(children: showTour || viewModel.showingStormNotice ? .ignore : .contain)
             .fruitfolioModalBlur(active: showTour || viewModel.showingStormNotice,
                                 reduceMotion: motionPreferences.reduceMotionActive)
 
@@ -732,6 +732,8 @@ struct Prompt28FruitBasketView: View {
 
     @ViewBuilder
     private var questionFlow: some View {
+        GeometryReader { proxy in
+        ScrollView {
         VStack(spacing: 14) {
             topBar
 
@@ -903,6 +905,9 @@ struct Prompt28FruitBasketView: View {
             }
 
             Spacer(minLength: 12)
+        }
+        .frame(minHeight: proxy.size.height)
+        }
         }
     }
 

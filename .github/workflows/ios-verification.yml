@@ -230,7 +230,7 @@ jobs:
           xcrun simctl boot "$FRUITFOLIO_SIMULATOR_ID"
           xcrun simctl bootstatus "$FRUITFOLIO_SIMULATOR_ID" -b
           python3 Tools/record_simulator_clip.py --udid "$FRUITFOLIO_SIMULATOR_ID" \
-            --seconds 60 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
+            --seconds 120 --output Fruitfolio_Verification_Evidence/Animations/SimulatorSmoke.mp4 \
             > Fruitfolio_Verification_Evidence/Build/simulator-recording.log 2>&1 &
           recorder=$!
           set +e

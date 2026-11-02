@@ -6,7 +6,7 @@ final class SimulatorSmokeEvidenceTests: XCTestCase {
     func testRealIntroAndReachableHub() { verifyIntro(mode: "first") }
     func testRealReducedMotionIntroAndReachableHub() { verifyIntro(mode: "reduced-first") }
 
-    func testIntroSkipControlShowsItsVisibleWordingAndEntersTheLiveHub() {
+    func testSkipControlShowsItsVisibleWordingAndEntersTheLiveHub() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1", "-FruitfolioIntroMode", "first"]
         app.launch()

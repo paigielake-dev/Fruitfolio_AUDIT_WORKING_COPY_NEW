@@ -1,3 +1,11 @@
+# Actual latest repair proof (source92 still pending commit)
+
+Run89/source91 actual focused repair batch78PASS/0FAIL/0SKIP; downloaded339311B artifact13119742699 SHA8f6b6e3f0772b8cf964d49e070531cd4e0638ee1c0722779ffdbea23656b6025 CRCverified. Both unchanged11-language model fixtures pass strict preservation; JP exact English estimate/ovulation anchors retained, grammar/full clinical localization NOT accepted. Actual populated export file/reopen/value/no-mutation, game corruption preservation/rejection, original game source versions, all60 preference store recreation, native largest-label bounds and protected bad-catch frame test PASS. Actual full60 model run, offline suite, actual app restart and complete game/tour journeys still pending. Tracker49PASS/165PARTIAL/258NOTVERIFIED/2BLOCKED/4FAIL; previously accepted330/333 revalidated by stronger frame evidence, without increasing the count. Keep executing.
+
+# Latest live checkpoint: source91 committed; source92 pending
+
+Remote13d91a9979c24ae9d11f113476be6eef7e67dc22, tree263080c7d95890655dfaa09ffda7742016733ee7. Source91/Run89 id41396020990 is actually executing the focused repair batch; no result assumed. Source92 pending: fixes actual non-scrollable long game question exposed by Run88, audits real first-use tour/rules/home rather than requiring a hidden Back action, expands smoke recording120s, preserves Run86/87 evidence before superseding duplicate traversals, updates latest actual560/559PASS/1SKIP and all4Contact/FAQ PASS evidence. See SOURCE92_ACTUAL_GAME_FAILURE_AND_TOUR_AUDIT.md. All earlier checkpoints below are historical; keep working and do not restart or send a milestone final.
+
 # Active engineering continuation — keep executing
 
 Remote source90 parent:52e1406ec470ff17f3f4395a168cf44da7ba2c7d, tree5900d33ba2611099c2a441f1b0408c439bc40761, branchfruitfolio/prompt-1b-alignment. Local source91 batch is being committed next. API trees/commits are authoritative; local nativeGit HEAD is stale and Git may hang/SIGBUS. Never reset/checkout. Main untouched; no final ZIP or full acceptance.

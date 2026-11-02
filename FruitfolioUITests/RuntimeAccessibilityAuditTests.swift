@@ -3,9 +3,12 @@ import XCTest
 final class RuntimeAccessibilityAuditTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
-    private func audit(destination: String?) throws {
+    private func audit(destination: String?, accessibilitySize: Bool = false) throws {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1"]
+        if accessibilitySize {
+            app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        }
         app.launch()
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
@@ -19,6 +22,26 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
         if destination != nil {
             target.tap()
             let back = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
+            if destination == "fruit basket" {
+                let skip = app.buttons["skip tour"]
+                if skip.waitForExistence(timeout: 3) {
+                    XCTAssertTrue(app.alerts.firstMatch.exists, "The observed first-use tour is the actual foreground modal")
+                    XCTAssertTrue(app.staticTexts["welcome to the Fruit Basket!"].exists)
+                    XCTAssertFalse(back.exists, "The blurred background Back action must not remain accessible through the tour")
+                    let tour = XCTAttachment(screenshot: app.screenshot())
+                    tour.name = accessibilitySize ? "FruitBasket_Tour_AccessibilityXXXL" : "FruitBasket_Tour_Default"
+                    tour.lifetime = .keepAlways; add(tour)
+                    try fruitfolioStrictAccessibilityAudit(app)
+                    fruitfolioReachControl(app, skip); skip.tap()
+                    let rules = app.buttons["got it!"]
+                    XCTAssertTrue(rules.waitForExistence(timeout: 8))
+                    let page = XCTAttachment(screenshot: app.screenshot())
+                    page.name = accessibilitySize ? "FruitBasket_Rules_AccessibilityXXXL" : "FruitBasket_Rules_Default"
+                    page.lifetime = .keepAlways; add(page)
+                    try fruitfolioStrictAccessibilityAudit(app)
+                    fruitfolioReachControl(app, rules); rules.tap()
+                }
+            }
             XCTAssertTrue(back.waitForExistence(timeout: 12), "Audit must run on the requested destination, not an unchanged Hub")
         }
         let image = XCTAttachment(screenshot: app.screenshot())
@@ -63,6 +86,7 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
     func testGuideOpeningAccessibility() throws { try audit(destination: "build your own guide") }
     func testCycleOpeningAccessibility() throws { try audit(destination: "cycle tracker") }
     func testFruitBasketOpeningAccessibility() throws { try audit(destination: "fruit basket") }
+    func testFruitBasketLargestDynamicTypeAccessibility() throws { try audit(destination: "fruit basket", accessibilitySize: true) }
     func testFAQAccessibility() throws { try audit(destination: "faq") }
     func testContactAccessibility() throws { try audit(destination: "contact") }
     func testSettingsAccessibility() throws { try audit(destination: "settings") }

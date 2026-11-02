@@ -3,7 +3,7 @@
 
 Preserve requested Run50/51. Only supersede older diagnostics 47-49 and queued
 52-57 and superseded diagnostic attempts 59-60, whose repairs are all retained in the newer source checkpoint. Inventory
-is uploaded before cancellation. Run62 and Run66 unit/build artifacts have been downloaded, SHA/CRC verified and retained; its same Button-label repair is included in Run64 and later source. Run67-69 unit artifacts and failures are also downloaded and retained; their duplicate broad traversals and queued pre-diagnostic export attempt are superseded by source74. Run64 functional evidence and current corrected source remain active. Run64/65 focused and native-audit artifacts and Run70 shared-control failures are retained locally with checksums; only their remaining superseded traversal is cancelled. The duplicate Run73 and queued intermediate source76-78 are superseded by source79, which remains protected, as does source74 unique export/modal diagnostic. Run79 actual full unit and raw original/edge language outputs are retained with archive SHA/CRC; its old decoder-list traversal and queued intermediate source83-85 are superseded by source86. Run80 actual saved-file readback PASS, both health lifecycle PASS and separate cancellation/modal FAIL logs have now been downloaded and SHA/CRC verified; its remaining old duplicate traversal is superseded. Source86 current unit/offline/Contact evidence remains active. Completed runs and all other later runs are untouched.
+is uploaded before cancellation. Run62 and Run66 unit/build artifacts have been downloaded, SHA/CRC verified and retained; its same Button-label repair is included in Run64 and later source. Run67-69 unit artifacts and failures are also downloaded and retained; their duplicate broad traversals and queued pre-diagnostic export attempt are superseded by source74. Run64 functional evidence and current corrected source remain active. Run64/65 focused and native-audit artifacts and Run70 shared-control failures are retained locally with checksums; only their remaining superseded traversal is cancelled. The duplicate Run73 and queued intermediate source76-78 are superseded by source79, which remains protected, as does source74 unique export/modal diagnostic. Run79 actual full unit and raw original/edge language outputs are retained with archive SHA/CRC; its old decoder-list traversal and queued intermediate source83-85 are superseded by source86. Run80 actual saved-file readback PASS, both health lifecycle PASS and separate cancellation/modal FAIL logs have now been downloaded and SHA/CRC verified; its remaining old duplicate traversal is superseded. Source86 current unit/offline/Contact evidence remains active. Run86/87 full unit archives and Run87 strict audit/game-provider/intro proofs are now SHA/CRC verified and retained. Their remaining duplicate traversal is superseded by source91/92, while Run85 unique export diagnostics and source90/91 new model tests stay active. Completed runs and all other later runs are untouched.
 """
 import json
 import os
@@ -36,7 +36,9 @@ OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
                     "2aa8d8288b5892a2391a4c958e27d16b5e41863c",
                     "414ecde4c2c4b820e628091d9edc228b26dddaa8",
                     "2794331941610dd3e1b1cca2f22a907fd7ee8ff6",
-                    "067f34db07b5ac17c44c95c4527c66a069deaa4d"}
+                    "067f34db07b5ac17c44c95c4527c66a069deaa4d",
+                    "9ef23c4e1889de431a67c85ad2aa3fb78658e185",
+                    "8d5eb11c5875f315358821fb4f1bad261e4935ed"}
 OUT = Path("verification-queue-state.json")
 
 

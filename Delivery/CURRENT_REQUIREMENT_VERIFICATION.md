@@ -1,3 +1,9 @@
+# Current source92 continuation (parent13d91a9979c24ae9d11f113476be6eef7e67dc22)
+
+Current tracker49PASS/165PARTIAL/258NOTVERIFIED/2BLOCKED/4FAIL. Actual source91 repair batch78PASS/0FAIL/0SKIP is separate from earlier full unit results. Latest retrieved full unit Run87/source89:560XCTest559PASS/one physicalSKIP/zeroFAIL plus25SwiftTestingPASS. New source90–92 code is not accepted from those earlier results. See LatestAppleTestResults.json, SOURCE91_EXPORT_AND_EXPLICIT_LANGUAGE_COVERAGE.md and SOURCE92_ACTUAL_GAME_FAILURE_AND_TOUR_AUDIT.md. All prior text below is historical evidence, not a current-head acceptance claim. Keep executing repairs/tests/packaging; no FINAL_COMPLETE archive generated.
+
+---
+
 # Current requirement verification
 
 Active development record, not release acceptance. All 478 original IDs are preserved. Counts: 132 PARTIAL, 48 PASS, 292 NOT VERIFIED, 2 BLOCKED, 4 FAIL. PASS applies only to its complete bounded criterion and recorded source/evidence. Final-source regression is still required.
