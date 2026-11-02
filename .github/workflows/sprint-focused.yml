@@ -10,7 +10,12 @@ concurrency:
   cancel-in-progress: false
 jobs:
   recover-original-sprint-evidence:
-    if: contains(github.event.head_commit.message, '[sprint-recover]')
+    needs: plan
+    if: needs.plan.outputs.run_recovery == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        original-run: [2, 9]
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -20,14 +25,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: false
-      - name: Verify original immutable Run 9 artifact and recover unchanged exports
+      - name: Verify the selected original immutable artifact and recover unchanged exports
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 Tools/recover_sprint_run2_exports.py 9
+        run: python3 Tools/recover_sprint_run2_exports.py ${{ matrix.original-run }}
       - uses: actions/upload-artifact@v4
         with:
-          name: Fruitfolio_Original_Sprint_Run9_Exports
-          path: recovered-sprint-run9
+          name: Fruitfolio_Original_Sprint_Run${{ matrix.original-run }}_Exports
+          path: recovered-sprint-run${{ matrix.original-run }}
           retention-days: 90
   plan:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
@@ -37,6 +42,7 @@ jobs:
       actions: write
     outputs:
       run_verification: ${{ steps.plan.outputs.run_verification }}
+      run_recovery: ${{ steps.plan.outputs.run_recovery }}
     steps:
       - uses: actions/checkout@v4
         with:

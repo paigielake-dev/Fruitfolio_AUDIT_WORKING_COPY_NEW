@@ -31,7 +31,9 @@ def main():
     message=subprocess.check_output(['git','show','-s','--format=%s','HEAD'],text=True)
     deadline=datetime.fromisoformat(clock['finalDeadlineUTC'])
     run_checks='[sprint-verify]' in message and now<deadline
-    with open(os.environ['GITHUB_OUTPUT'],'a') as output: output.write('run_verification='+str(run_checks).lower()+'\n')
+    with open(os.environ['GITHUB_OUTPUT'],'a') as output:
+        output.write('run_verification='+str(run_checks).lower()+'\n')
+        output.write('run_recovery='+str('[sprint-recover]' in message and now<deadline).lower()+'\n')
     print('Tagged focused verification:',run_checks,'; MADLAD inference excluded. Inventory does not imply test acceptance.')
 
 if __name__=='__main__': main()
