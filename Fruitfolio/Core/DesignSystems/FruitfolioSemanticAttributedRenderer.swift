@@ -23,31 +23,6 @@ extension FruitfolioSemanticEmphasis {
     }
 }
 
-extension FruitfolioSemanticDocument {
-    /// Uses the actual selected occurrence, not a search for possibly repeated words.
-    func slice(utf16Range range: NSRange) -> FruitfolioSemanticDocument? {
-        let text = plainText
-        guard range.location != NSNotFound, range.length > 0,
-              let selected = Range(range, in: text) else { return nil }
-        let boundaries = Set(text.indices).union([text.endIndex])
-        guard boundaries.contains(selected.lowerBound), boundaries.contains(selected.upperBound) else { return nil }
-        let lower = text.distance(from: text.startIndex, to: selected.lowerBound)
-        let upper = lower + text[selected].count
-        var offset = 0
-        var result: [FruitfolioSemanticSpan] = []
-        for span in spans {
-            let end = offset + span.text.count
-            let a = max(offset, lower), b = min(end, upper)
-            if a < b {
-                let start = span.text.index(span.text.startIndex, offsetBy: a - offset)
-                let finish = span.text.index(span.text.startIndex, offsetBy: b - offset)
-                result.append(.init(id: span.id, text: String(span.text[start..<finish]), emphasis: span.emphasis))
-            }
-            offset = end
-        }
-        return .init(spans: result)
-    }
-}
 
 @MainActor
 enum FruitfolioSemanticAttributedRenderer {

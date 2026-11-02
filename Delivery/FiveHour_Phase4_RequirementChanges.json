@@ -68,30 +68,69 @@
       "remainingIssues": "Run full grounding suites and controlled offline native FruitfolioAI verification on founder Mac. Structural identities do not independently verify clinical accuracy."
     },
     {
+      "requirementID": "FF1B-070",
+      "originalBreakdownItem": "Preserve Reduce Motion behavior while eliminating unnecessary lag.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Ask honors live Reduce Motion changes during retrieval, typing and entry/suggestion reveal. Enabling it completes the exact answer and cancels ticks; disabling it does not restart completed typing.",
+      "verification": "Two asynchronous layout-fixture tests added in AskReducedMotionLifecycleTests; not executed. Full app Reduce Motion acceptance is not established by these source changes.",
+      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
+      "remainingIssues": "Actual live system changes, UI recordings and audio stop on founder Mac/device; other screens require independent verification."
+    },
+    {
       "requirementID": "FF1B-109",
       "originalBreakdownItem": "Preserve text selection, citation interactions, and accessibility reading order.",
       "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
       "implementationFiles": [
-        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
       ],
-      "changes": "Ask now honors live Reduce Motion changes while retrieval is waiting and while text is typing. Enabling it reveals the exact complete answer, cancels future typing ticks, hides the entry overlay without animation and completes suggestion reveal without late regressions. Entry/suggestion waits now exit on cancellation. Disabling Reduce Motion does not restart completed typing.",
-      "verification": "Two new asynchronous layout-fixture XCTest cases cover retrieval-time and mid-typewriter preference changes; not executed on Mac. No medical fixture is used as clinical acceptance.",
-      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
-      "remainingIssues": "Actual live system setting changes, audio stop, visual frames, VoiceOver and full Ask UI journeys require founder Mac/device verification."
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
     },
     {
-      "requirementID": "FF1B-138",
-      "originalBreakdownItem": "Use typing ASMR during answer presentation unless disabled by the user.",
+      "requirementID": "FF1B-137",
+      "originalBreakdownItem": "Preserve Canonical Voice and semantic styling during performance optimization.",
       "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
+      ],
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
+    },
+    {
+      "requirementID": "FF1B-141",
+      "originalBreakdownItem": "Preserve selectable text and functional citation controls.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
+      ],
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
+    },
+    {
+      "requirementID": "FF1B-472",
+      "originalBreakdownItem": "Test Reduce Motion.",
+      "status": "PARTIAL",
       "implementationFiles": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift"
       ],
-      "changes": "Ask now honors live Reduce Motion changes while retrieval is waiting and while text is typing. Enabling it reveals the exact complete answer, cancels future typing ticks, hides the entry overlay without animation and completes suggestion reveal without late regressions. Entry/suggestion waits now exit on cancellation. Disabling Reduce Motion does not restart completed typing.",
-      "verification": "Two new asynchronous layout-fixture XCTest cases cover retrieval-time and mid-typewriter preference changes; not executed on Mac. No medical fixture is used as clinical acceptance.",
+      "changes": "Ask honors live Reduce Motion changes during retrieval, typing and entry/suggestion reveal. Enabling it completes the exact answer and cancels ticks; disabling it does not restart completed typing.",
+      "verification": "Two asynchronous layout-fixture tests added in AskReducedMotionLifecycleTests; not executed. Full app Reduce Motion acceptance is not established by these source changes.",
       "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
-      "remainingIssues": "Actual live system setting changes, audio stop, visual frames, VoiceOver and full Ask UI journeys require founder Mac/device verification."
+      "remainingIssues": "Actual live system changes, UI recordings and audio stop on founder Mac/device; other screens require independent verification."
     }
   ]
 }

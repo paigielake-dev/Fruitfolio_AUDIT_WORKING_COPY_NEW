@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 nonisolated enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case plain
@@ -35,15 +36,37 @@ nonisolated struct FruitfolioSemanticDocument: Codable, Hashable, Sendable {
     var plainText: String { spans.map(\.text).joined() }
 
     func prefix(characters count: Int) -> FruitfolioSemanticDocument {
-        var remaining = max(0, count)
+        // Count graphemes in the complete document. A combining mark or ZWJ
+        // sequence can legally continue across separately styled spans.
+        let prefix = plainText.prefix(max(0, count))
+        guard !prefix.isEmpty else { return .init(spans: []) }
+        return sliceAtValidatedUTF16Range(NSRange(location: 0, length: prefix.utf16.count))
+    }
+
+    /// Uses the selected occurrence, with global grapheme boundaries. UTF-16
+    /// intersections preserve exact text even when a cluster spans styles.
+    func slice(utf16Range range: NSRange) -> FruitfolioSemanticDocument? {
+        let text = plainText
+        let length = text.utf16.count
+        guard range.location != NSNotFound, range.location >= 0, range.length > 0,
+              range.location <= length, range.length <= length - range.location,
+              let selected = Range(range, in: text) else { return nil }
+        let boundaries = Set(text.indices).union([text.endIndex])
+        guard boundaries.contains(selected.lowerBound), boundaries.contains(selected.upperBound) else { return nil }
+        return sliceAtValidatedUTF16Range(range)
+    }
+
+    private func sliceAtValidatedUTF16Range(_ range: NSRange) -> FruitfolioSemanticDocument {
+        var offset = 0
         var result: [FruitfolioSemanticSpan] = []
         for span in spans {
-            guard remaining > 0 else { break }
-            let text = String(span.text.prefix(remaining))
-            if !text.isEmpty {
-                result.append(.init(id: span.id, text: text, emphasis: span.emphasis))
-                remaining -= text.count
+            let text = span.text as NSString
+            let intersection = NSIntersectionRange(NSRange(location: offset, length: text.length), range)
+            if intersection.length > 0 {
+                let local = NSRange(location: intersection.location - offset, length: intersection.length)
+                result.append(.init(id: span.id, text: text.substring(with: local), emphasis: span.emphasis))
             }
+            offset += text.length
         }
         return .init(spans: result)
     }
