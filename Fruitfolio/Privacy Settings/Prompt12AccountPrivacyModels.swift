@@ -181,9 +181,12 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case notSignedIn
     case exportFailed
     case deletionFailed
+    case unreadableStoredData
 
     var errorDescription: String? {
         switch self {
+        case .unreadableStoredData:
+            return "your saved account settings could not be read. the original data is preserved. account changes and export are unavailable."
         case .blankEmail:
             return "enter an email before signing in."
         case .accountServiceUnavailable:

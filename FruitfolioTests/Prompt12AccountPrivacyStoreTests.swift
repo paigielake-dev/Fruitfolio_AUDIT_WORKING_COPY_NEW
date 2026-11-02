@@ -1,6 +1,10 @@
 import XCTest
 @testable import Fruitfolio
 
+private struct UnreadableAccountOwnershipFixture: FruitfolioStorefrontOwnershipValidating {
+    func validate() async -> FruitfolioStorefrontOwnershipResult { .unavailable }
+}
+
 @MainActor
 final class Prompt12AccountPrivacyStoreTests: XCTestCase {
     func testDefaultStateIsPurchasedSignedOutAndLocalOnly() {
@@ -67,4 +71,45 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         XCTAssertEqual(store.lastExport, originalExport)
         XCTAssertTrue(NSDictionary(dictionary: before).isEqual(to: defaults.persistentDomain(forName: suite) ?? [:]))
     }
+    func testPrivateNotificationPreferencePersistsImmediatelyWithoutAnUnrelatedOwnershipOrAccountAction() throws {
+        let suite = "Fruitfolio.PrivacyPreference.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt12AccountPrivacyStore(defaults: defaults)
+        XCTAssertTrue(store.usePrivacyModeOnLockScreen)
+        store.usePrivacyModeOnLockScreen = false
+        XCTAssertFalse(Prompt12AccountPrivacyStore(defaults: defaults).usePrivacyModeOnLockScreen)
+        store.usePrivacyModeOnLockScreen = true
+        XCTAssertTrue(Prompt12AccountPrivacyStore(defaults: defaults).usePrivacyModeOnLockScreen)
+        XCTAssertNil(store.account)
+    }
+
+    func testUnreadableAccountSettingsSurviveQuietValidationEditsExportAndRestartWithoutFalseSuccess() async throws {
+        let suite = "Fruitfolio.AccountCorrupt.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let key = "fruitfolio.prompt12.accountPrivacy.v1"
+        let original = Data([0xff, 0x00, 0x7f])
+        defaults.set(original, forKey: key)
+        let store = Prompt12AccountPrivacyStore(defaults: defaults,
+            ownershipValidator: UnreadableAccountOwnershipFixture())
+        XCTAssertNotNil(store.loadError)
+        store.markPurchasedForInstalledApp()
+        store.markLocalChangePending(); store.syncNow()
+        store.usePrivacyModeOnLockScreen = false
+        XCTAssertTrue(store.usePrivacyModeOnLockScreen)
+        XCTAssertThrowsError(try store.signIn(email: "fixture@example.invalid"))
+        XCTAssertThrowsError(try store.signOut())
+        XCTAssertThrowsError(try store.prepareDataExport())
+        XCTAssertThrowsError(try store.deleteAccountAndAssociatedRemoteData())
+        await store.validateOwnership()
+        XCTAssertFalse(store.ownershipVerifiedByStorefront)
+        store.cancelOwnershipValidation()
+        XCTAssertEqual(defaults.data(forKey: key), original)
+        let reopened = Prompt12AccountPrivacyStore(defaults: defaults)
+        XCTAssertNotNil(reopened.loadError)
+        XCTAssertThrowsError(try reopened.prepareDataExport())
+        XCTAssertEqual(defaults.data(forKey: key), original)
+    }
+
 }

@@ -56,6 +56,10 @@ struct Prompt12AccountView: View {
                             .accessibilityHidden(true)
                     }
 
+                    if let error = store.loadError {
+                        Text(error).fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("account.storageError")
+                    }
                     ownershipCard
                     usernameCard
 

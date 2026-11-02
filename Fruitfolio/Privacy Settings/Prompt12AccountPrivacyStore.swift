@@ -5,6 +5,7 @@ import Combine
 final class Prompt12AccountPrivacyStore: ObservableObject {
     static let shared = Prompt12AccountPrivacyStore()
 
+    @Published private(set) var loadError: String?
     @Published private(set) var ownershipState: Prompt12OwnershipState
     @Published private(set) var ownershipVerifiedByStorefront = false
     @Published private(set) var authenticationState: Prompt12AuthenticationState
@@ -13,7 +14,12 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     @Published private(set) var lastExport: Prompt12DataExportRecord?
     @Published private(set) var pendingLocalChanges: Bool
     @Published private(set) var localDataContainerID: UUID
-    @Published var usePrivacyModeOnLockScreen: Bool
+    @Published var usePrivacyModeOnLockScreen: Bool {
+        didSet {
+            guard loadError == nil else { usePrivacyModeOnLockScreen = oldValue; return }
+            saveSnapshot()
+        }
+    }
 
     private let defaults: UserDefaults
     private let persistenceKey: String
@@ -61,6 +67,9 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
             pendingLocalChanges = false
             localDataContainerID = UUID()
             usePrivacyModeOnLockScreen = true
+            if defaults.object(forKey: persistenceKey) != nil {
+                loadError = "your saved account settings could not be read. the original data is preserved; account export and changes are unavailable."
+            }
         }
     }
 
@@ -125,6 +134,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     /// No authenticated account service/configuration was supplied. Never turn
     /// an email string into a fabricated authenticated or remotely synced user.
     func signIn(email rawEmail: String) throws {
+        guard loadError == nil else { throw Prompt12AccountPrivacyError.unreadableStoredData }
         guard !rawEmail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             authenticationState = .signInFailed
             saveSnapshot()
@@ -137,12 +147,14 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func markLocalChangePending() {
+        guard loadError == nil else { return }
         pendingLocalChanges = true
         syncState = isSignedIn ? .pendingLocalChanges : .localOnly
         saveSnapshot()
     }
 
     func syncNow() {
+        guard loadError == nil else { return }
         // A local delay is not a network acknowledgement. Keep pending changes
         // and the local identity intact until a real account service exists.
         syncState = account == nil ? .localOnly : .unavailable
@@ -152,6 +164,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     func signOut(
         keepLocalData: Bool = true
     ) throws {
+        guard loadError == nil else { throw Prompt12AccountPrivacyError.unreadableStoredData }
         guard account != nil else {
             authenticationState = .signedOut
             syncState = .localOnly
@@ -172,11 +185,13 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     func prepareDataExport() throws -> Prompt12DataExportRecord {
         // Compatibility preview only. Preparing/exporting data is read-only:
         // it must not rewrite account snapshots or create a success record.
-        Prompt12DataExportRecord(scopes: Prompt12DataScope.exportedScopes,
+        guard loadError == nil else { throw Prompt12AccountPrivacyError.unreadableStoredData }
+        return Prompt12DataExportRecord(scopes: Prompt12DataScope.exportedScopes,
             summary: "Readable JSON scope preview. A completed file requires the explicit system destination and successful readback.")
     }
 
     func deleteAccountAndAssociatedRemoteData() throws {
+        guard loadError == nil else { throw Prompt12AccountPrivacyError.unreadableStoredData }
         guard account != nil else {
             throw Prompt12AccountPrivacyError.notSignedIn
         }
@@ -188,6 +203,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func resetLocalAccountPrivacyStateForTesting() {
+        loadError = nil
         ownershipVerifiedByStorefront = false
         ownershipState = .purchased
         authenticationState = .signedOut
@@ -201,6 +217,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     private func saveSnapshot() {
+        guard loadError == nil else { return }
         let snapshot = Prompt12StoreSnapshot(
             ownershipState: ownershipState,
             authenticationState: authenticationState,

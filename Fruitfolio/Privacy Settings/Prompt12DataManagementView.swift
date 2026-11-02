@@ -471,6 +471,12 @@ struct Prompt12DataManagementView: View {
 
     private func prepareExport() {
         guard !preparingExport else { return }
+        guard store.loadError == nil else {
+            exportDocument = nil
+            showingExportDestination = false
+            message = Prompt12AccountPrivacyError.unreadableStoredData.localizedDescription
+            return
+        }
         preparingExport = true
         message = nil
         Task { @MainActor in
