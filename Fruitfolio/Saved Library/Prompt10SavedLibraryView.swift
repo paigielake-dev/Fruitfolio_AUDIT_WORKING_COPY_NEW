@@ -691,42 +691,25 @@ private struct Prompt10BookOpeningArtwork: View {
 
     var body: some View {
         ZStack {
-            switch stage {
-            case .idle:
-                Color.clear
-
-            case .spine:
-                Image(
-                    encyclopedia.style.assetName
-                )
-                .resizable()
-                .scaledToFit()
-                .frame(width: 76)
-
-            case .front:
-                tintedArtwork(
-                    assetName:
-                        "library_book_blank",
-                    tintStrength: 0.30
-                )
+            // Keep the original artwork layers alive across stages so the
+            // existing timing animations interpolate opacity and geometry,
+            // instead of replacing Image identities with abrupt asset swaps.
+            Image(encyclopedia.style.assetName)
+                .resizable().scaledToFit().frame(width: 76)
+                .opacity(stage == .spine ? 1 : 0)
+                .scaleEffect(stage == .spine ? 1 : 0.92)
+            tintedArtwork(assetName: "library_book_blank", tintStrength: 0.30)
                 .frame(width: 178)
-
-            case .closed:
-                tintedArtwork(
-                    assetName:
-                        "library_book_closed",
-                    tintStrength: 0.26
-                )
+                .opacity(stage == .front ? 1 : 0)
+                .rotation3DEffect(.degrees(stage == .spine ? -35 : 0), axis: (x: 0, y: 1, z: 0))
+            tintedArtwork(assetName: "library_book_closed", tintStrength: 0.26)
                 .frame(width: 188)
-
-            case .open:
-                tintedArtwork(
-                    assetName:
-                        "library_book_open",
-                    tintStrength: 0.12
-                )
+                .opacity(stage == .closed ? 1 : 0)
+                .rotation3DEffect(.degrees(stage == .open ? -20 : 0), axis: (x: 0, y: 1, z: 0))
+            tintedArtwork(assetName: "library_book_open", tintStrength: 0.12)
                 .frame(width: 322)
-            }
+                .opacity(stage == .open ? 1 : 0)
+                .scaleEffect(stage == .open ? 1 : 0.94)
         }
         .frame(
             width: 340,
