@@ -12,6 +12,7 @@ struct Prompt10EncyclopediaDetailView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var selectedPage: Prompt10SavedPage?
     @State private var expandedChapterIDs: Set<UUID> = []
@@ -61,24 +62,11 @@ struct Prompt10EncyclopediaDetailView: View {
                     .frame(maxWidth: 350)
                     .accessibilityHidden(true)
 
-                    VStack(spacing: 8) {
-                        Text(encyclopedia.name)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 21,
-                                    relativeTo: .title3
-                                )
-                            )
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .padding(.horizontal, 48)
-                    }
+                    if !dynamicTypeSize.isAccessibilitySize { encyclopediaTitle(encyclopedia) }
                 }
+                // Accessibility text remains full size and fully readable;
+                // it must not be forced into the decorative book's fixed art.
+                if dynamicTypeSize.isAccessibilitySize { encyclopediaTitle(encyclopedia) }
 
                 FruitfolioControlPillButton(label: "manage chapters", localizationKey: "manage chapters") { managingChapters = true }
 
@@ -138,6 +126,17 @@ struct Prompt10EncyclopediaDetailView: View {
                 )
             }
         }
+    }
+
+    private func encyclopediaTitle(_ encyclopedia: Prompt10Encyclopedia) -> some View {
+        Text(encyclopedia.name)
+            .font(.custom("Chalkboard SE", size: 21, relativeTo: .title3)).bold()
+            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, dynamicTypeSize.isAccessibilitySize ? 8 : 48)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier("library.openBookTitle")
     }
 
     private func detailHeader(

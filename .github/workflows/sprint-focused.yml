@@ -9,6 +9,26 @@ concurrency:
   group: fruitfolio-sprint-${{ github.event.pull_request.number || github.ref }}-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false
 jobs:
+  recover-original-sprint-evidence:
+    if: contains(github.event.head_commit.message, '[sprint-recover]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify original immutable Run 2 artifact and recover unchanged exports
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/recover_sprint_run2_exports.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Original_Sprint_Run2_Exports
+          path: recovered-sprint-run2
+          retention-days: 90
   plan:
     if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
@@ -160,6 +180,19 @@ jobs:
           text=Path('Fruitfolio_Verification_Evidence/Build/linked-libraries.txt').read_text()
           if '@rpath/llama.framework/llama' in text:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
+          PYCODE
+      - name: Seed the real simulator Photos library when page-import tests are selected
+        run: |
+          python3 - <<'PYCODE'
+          import json, os, subprocess
+          plan=json.load(open('Delivery/SprintVerificationPlan.json'))
+          if any('UserAuthoredPageUITests' in item for item in plan.get('onlyTesting', [])):
+              simulator=os.environ['FRUITFOLIO_SIMULATOR_ID']
+              devices=json.loads(subprocess.check_output(['xcrun','simctl','list','devices','available','--json']))['devices']
+              device=next(d for group in devices.values() for d in group if d['udid']==simulator)
+              if device['state']!='Booted': subprocess.run(['xcrun','simctl','boot',simulator],check=True)
+              subprocess.run(['xcrun','simctl','bootstatus',simulator,'-b'],check=True)
+              subprocess.run(['xcrun','simctl','addmedia',simulator,'Fruitfolio/Assets.xcassets/Art/Decor/decor_fluffy_cloud.imageset/decor_fluffy_cloud.png'],check=True)
           PYCODE
       - name: Run the selected coherent sprint test batch without MADLAD inference
         run: python3 Tools/run_sprint_xcode_tests.py

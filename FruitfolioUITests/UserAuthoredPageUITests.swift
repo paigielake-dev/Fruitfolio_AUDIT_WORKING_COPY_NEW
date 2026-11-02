@@ -19,7 +19,15 @@ final class UserAuthoredPageUITests: XCTestCase {
         XCTAssertTrue(library.waitForExistence(timeout: 15)); library.tap()
     }
     func testCreateReopenEditAndDiscardUserPageThroughActualLibrary() {
-        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]; app.launch()
+        verifyUserPage(largest: false)
+    }
+    func testLargestTextUserPageMultiplePhotoImportsEditingRestartAndGuardedDeletion() {
+        verifyUserPage(largest: true)
+    }
+    private func verifyUserPage(largest: Bool) {
+        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]
+        if largest { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch()
         library(app)
         let name = "My QA " + String(UUID().uuidString.prefix(6))
         let create = button(app, "build my first encyclopedia")
@@ -56,6 +64,21 @@ final class UserAuthoredPageUITests: XCTestCase {
         let imported = app.images["my imported image"]
         XCTAssertTrue(imported.waitForExistence(timeout: 15), "Actual photo import must finish before saving")
         reach(app, imported); capture(app, "UserPage_ActualPhotoImported")
+        // Presenting the real picker again must not discard the first staged
+        // image or typed page. Keep the actual selected photo visible.
+        reach(app, addImage); addImage.tap()
+        XCTAssertTrue(photo.waitForExistence(timeout: 15))
+        XCTAssertTrue(app.frame.contains(photo.frame))
+        photo.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        let allImported = app.images.matching(identifier: "my imported image")
+        let twoPhotos = NSPredicate { _, _ in allImported.count == 2 }
+        expectation(for: twoPhotos, evaluatedWith: nil)
+        waitForExpectations(timeout: 15)
+        capture(app, "UserPage_SecondPickerPreservesEarlierDraftImage")
+        let removeImage = app.buttons.matching(NSPredicate(format: "label == %@", "remove image")).firstMatch
+        reach(app, removeImage); removeImage.tap()
+        XCTAssertEqual(allImported.count, 1)
+
         let save = button(app, "save changes"); reach(app, save); save.tap()
         XCTAssertTrue(app.staticTexts["my own writing stays separate from research."].waitForExistence(timeout: 8))
         capture(app, "UserPage_Saved")

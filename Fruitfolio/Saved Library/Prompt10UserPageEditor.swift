@@ -19,6 +19,7 @@ struct Prompt10UserPageEditor: View {
     @State private var importedDuringEdit: Set<String> = []
     @State private var selection = NSRange(location: 0, length: 0)
     @State private var photo: PhotosPickerItem?
+    @State private var showingPhotoPicker = false
     @State private var showUnsaved = false
     @State private var error: String?
     @State private var saved = false
@@ -74,9 +75,8 @@ struct Prompt10UserPageEditor: View {
                                 .frame(minHeight: 44)
                         }
                     }
-                    PhotosPicker(selection: $photo, matching: .images) {
-                        Text("add image").frame(minHeight: 44)
-                    }
+                    Button("add image") { showingPhotoPicker = true }
+                        .frame(minHeight: 44)
                     .disabled(photoTask != nil)
                     if let error { Text(error).accessibilityIdentifier("userPage.error") }
                     FruitfolioControlPillButton(label: "save changes", localizationKey: "save changes", action: save)
@@ -98,8 +98,12 @@ struct Prompt10UserPageEditor: View {
                     destructiveAction: cancel)
             }
         }
-        .interactiveDismissDisabled(dirty || photoTask != nil)
+        .photosPicker(isPresented: $showingPhotoPicker, selection: $photo, matching: .images)
+        .interactiveDismissDisabled(dirty || photoTask != nil || showingPhotoPicker)
         .onDisappear {
+            // A covering system photo picker is still part of this editing
+            // visit, not cancellation. Keep earlier imported draft images.
+            guard !showingPhotoPicker else { return }
             photoTask?.cancel()
             photoTask = nil
             if !saved { discardDraftImages() }
