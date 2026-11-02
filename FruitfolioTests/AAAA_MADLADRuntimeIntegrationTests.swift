@@ -73,6 +73,13 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 XCTAssertTrue(candidate.textForVerification.contains("\n\n"), "Paragraph structure must survive actual generation")
                 XCTAssertTrue(candidate.textForVerification.contains("2.5 ng/mL"))
                 XCTAssertFalse(candidate.medicalMeaningVerified)
+                if target == "ja" {
+                    XCTAssertEqual(candidate.retainedOriginalMedicalTerms, ["estimate", "ovulation"])
+                    XCTAssertTrue(candidate.textForVerification.contains("estimate"))
+                    XCTAssertTrue(candidate.textForVerification.contains("ovulation"))
+                    XCTAssertFalse(candidate.translationLimitations.isEmpty)
+                    XCTAssertFalse(candidate.textForVerification.contains("なかった"))
+                }
                 if target == "hi" {
                     XCTAssertTrue(candidate.textForVerification.contains("ovulation"), "The exact original concept must remain when its medical translation is unsafe")
                     XCTAssertEqual(candidate.retainedOriginalMedicalTerms, ["ovulation"])

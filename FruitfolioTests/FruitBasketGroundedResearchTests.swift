@@ -51,6 +51,25 @@ final class FruitBasketGroundedResearchTests: XCTestCase {
         } catch { XCTAssertEqual(error as? Prompt28ResearchError, .unsupportedTopic) }
     }
 
+    func testSavingTheActualQuestionPreservesSourceSnapshotsRatherThanSubstitutingThePackageVersion() async throws {
+        let suite = "Fruitfolio.GameSources.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let provider = Prompt28CanonicalResearchProvider()
+        let question = try await provider.question(topic: "nutrition", normalizedTopic: "nutrition",
+            difficulty: .easy, excludingQuestionIDs: [])
+        let model = Prompt28FruitBasketViewModel(store: .init(defaults: defaults), researchProvider: provider)
+        model.currentQuestion = question
+        let pending = try XCTUnwrap(model.savePendingContent())
+        let original = try XCTUnwrap(question.evidenceSnapshot)
+        XCTAssertEqual(pending.sourceVersions, Dictionary(uniqueKeysWithValues: original.sources.map { ($0.sourceID, $0.contentVersion) }))
+        XCTAssertEqual(pending.sourceSnapshots?.map(\.id), original.sources.map(\.sourceID))
+        XCTAssertEqual(pending.sourceSnapshots?.map(\.sourceText), original.sources.map(\.apa7Reference))
+        XCTAssertTrue(pending.answer.contains(original.originalPassage))
+        XCTAssertFalse(pending.answer.contains("^_"))
+        XCTAssertEqual(pending.knowledgeBaseVersion, original.packageVersion)
+    }
+
     func testExclusionUsesStableEvidenceIdentityAndDoesNotRepeatTheSameQuestion() async throws {
         let provider = Prompt28CanonicalResearchProvider()
         let first = try await provider.question(topic: "hormones", normalizedTopic: "hormones", difficulty: .easy, excludingQuestionIDs: [])

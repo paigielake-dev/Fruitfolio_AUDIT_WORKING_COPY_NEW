@@ -136,7 +136,7 @@ actor Prompt28CanonicalResearchProvider: Prompt28ResearchProviding {
                               source: FruitfolioSourceChunk?) -> Prompt28Question? {
         guard text.count >= 40, text.count <= 1800,
               Prompt34LocalSafetyRouter.classify(text).level != .urgent,
-              !["♡", ":-)", ":,)", "^_", "☆", "<3"].contains(where: text.contains) else { return nil }
+              !FruitfolioEmotionalBeat.allCases.flatMap { FruitfolioKaomojiSystem.approvedForms(for: $0) }.contains(where: text.contains) else { return nil }
         let claim = FruitfolioClaimNeed(id: "fruitbasket:\(id)", text: topic)
         let packet = FruitfolioEvidencePacket(normalizedQuestion: topic,
             researchNoteChunks: note.map { [$0] } ?? [], sourceChunks: source.map { [$0] } ?? [],

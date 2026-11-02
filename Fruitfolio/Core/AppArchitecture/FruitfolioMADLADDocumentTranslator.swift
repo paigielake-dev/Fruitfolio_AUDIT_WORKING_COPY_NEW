@@ -90,25 +90,41 @@ nonisolated enum FruitfolioTranslationPreservation {
     }
 }
 
-/// Narrow source-fidelity protection for an actual demonstrated model error.
-/// It is not a general clinical entailment validator. The Hindi model confused
-/// ovulation with the ovary; keep the exact original medical term outside
-/// generation and disclose that limitation instead of inventing a translation.
+/// Narrow protections for demonstrated concept/qualifier regressions. Exact
+/// original English anchors are retained and disclosed, never presented as
+/// complete medical localization or a general entailment validator.
 nonisolated enum FruitfolioMedicalConceptPreservation {
     static func originalTerms(source: String, target: String) -> [String] {
-        guard target == "hi" else { return [] }
-        let expression = try! NSRegularExpression(pattern: #"\bovulation\b"#, options: .caseInsensitive)
+        let pattern: String
+        switch target {
+        case "hi": pattern = #"\bovulation\b"#
+        case "ja": pattern = #"\b(?:ovulation|estimate|estimates|estimated|estimation)\b"#
+        default: return []
+        }
+        let expression = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let ns = source as NSString
         return Array(Set(expression.matches(in: source, range: NSRange(source.startIndex..., in: source))
             .map { ns.substring(with: $0.range) })).sorted()
     }
 
     static func rejectKnownConceptSubstitutions(source: String, translated: String, target: String) throws {
-        guard target == "hi", !originalTerms(source: source, target: target).isEmpty else { return }
+        guard target == "hi" || target == "ja" else { return }
+        let hasOvulation = source.range(of: #"\bovulation\b"#,
+            options: [.regularExpression, .caseInsensitive]) != nil
         let hasOriginalOvary = source.range(of: #"\b(?:ovary|ovaries|ovarian)\b"#,
             options: [.regularExpression, .caseInsensitive]) != nil
-        if !hasOriginalOvary && translated.contains("अंडाशय") {
+        if hasOvulation && !hasOriginalOvary && translated.contains(target == "hi" ? "अंडाशय" : "卵巣") {
             throw FruitfolioTranslationPreservationError.changedMedicalMeaning
+        }
+        // Actual Japanese output dropped "estimate" and turned a present
+        // epistemic limit into a past observation. Do not accept that regression.
+        if target == "ja", source.range(of: #"\bdoes not confirm\b"#,
+            options: [.regularExpression, .caseInsensitive]) != nil {
+            let presentNegative = translated.range(of: "ない|ません|未確認", options: .regularExpression) != nil
+            let pastObservation = translated.contains("なかった") || translated.contains("ませんでした")
+            guard presentNegative && !pastObservation else {
+                throw FruitfolioTranslationPreservationError.changedMedicalMeaning
+            }
         }
     }
 }
@@ -376,7 +392,7 @@ actor FruitfolioMADLADDocumentTranslator {
         return .init(originalText: source, textForVerification: translated.joined(),
                      sourceIdentifiers: sourceIdentifiers, citationMarkers: markers, target: target,
                      retainedOriginalMedicalTerms: retainedMedicalTerms,
-                     translationLimitations: retainedMedicalTerms.isEmpty ? [] : ["Original English medical terms retained to avoid an observed biological concept substitution: " + retainedMedicalTerms.joined(separator: ", ")],
+                     translationLimitations: retainedMedicalTerms.isEmpty ? [] : ["Original English medical/scientific anchors retained to avoid an observed concept or uncertainty loss: " + retainedMedicalTerms.joined(separator: ", ")],
                      sentenceEvidence: sentenceEvidence)
     }
 }

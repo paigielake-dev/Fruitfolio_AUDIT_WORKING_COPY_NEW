@@ -1,0 +1,71 @@
+import XCTest
+
+final class FruitBasketGroundedJourneyUITests: XCTestCase {
+    override func setUpWithError() throws { continueAfterFailure = false }
+
+    private func capture(_ app: XCUIApplication, _ name: String) {
+        let frame = XCTAttachment(screenshot: app.screenshot())
+        frame.name = name; frame.lifetime = .keepAlways; add(frame)
+    }
+
+    private func tap(_ title: String, _ app: XCUIApplication) {
+        let button = app.buttons.matching(NSPredicate(format: "label ==[c] %@", title)).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 15), title)
+        fruitfolioReachControl(app, button)
+        button.tap()
+    }
+
+    func testActualApprovedQuestionAnswerFeedbackCatchPauseExitAndFreshReentry() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch()
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 12) { explore.tap() }
+        tap("fruit basket", app)
+        let tour = app.buttons["skip tour"]
+        if tour.waitForExistence(timeout: 3) { tour.tap(); tap("got it!", app) }
+        tap("play", app)
+        tap("nutrition", app)
+        tap("easy", app)
+        tap("let’s play!", app)
+        let returning = app.buttons["keep my level"]
+        if returning.waitForExistence(timeout: 2) { fruitfolioReachControl(app, returning); returning.tap() }
+        let question = app.staticTexts["fruitBasket.researchQuestion"]
+        XCTAssertTrue(question.waitForExistence(timeout: 30), "A real approved passage must replace the former unavailable-provider state")
+        XCTAssertTrue(question.label.contains("_____"))
+        capture(app, "FruitBasket_ActualApprovedResearchQuestion")
+        var reachedCorrectFeedback = false
+        for index in 0..<2 {
+            let answer = app.buttons["fruitBasket.answer.\(index)"]
+            fruitfolioReachControl(app, answer); answer.tap()
+            let catchButton = app.buttons["catch"]
+            if catchButton.waitForExistence(timeout: 2) {
+                reachedCorrectFeedback = true; break
+            }
+            XCTAssertTrue(app.buttons["got it ♡"].waitForExistence(timeout: 5))
+            capture(app, "FruitBasket_ActualIncorrectAnswerAndOriginalExplanation")
+            tap("got it ♡", app)
+        }
+        XCTAssertTrue(reachedCorrectFeedback, "Both actual choices were tried; one must match the original passage")
+        capture(app, "FruitBasket_ActualCorrectFeedback")
+        tap("catch", app)
+        capture(app, "FruitBasket_ActualStarAndBadFruitInstructions")
+        tap("ready ♡", app)
+        XCTAssertTrue(app.buttons["pause"].waitForExistence(timeout: 5))
+        capture(app, "FruitBasket_ActualLiveGameplayBeforePause")
+        app.buttons["pause"].tap()
+        XCTAssertTrue(app.staticTexts["little game menu"].waitForExistence(timeout: 5))
+        capture(app, "FruitBasket_ActualPausedRound")
+        tap("exit fruit basket", app)
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label ==[c] %@", "settings")).firstMatch.waitForExistence(timeout: 10))
+        tap("fruit basket", app)
+        XCTAssertFalse(app.staticTexts["little game menu"].exists, "Leaving must not retain the previous paused gameplay presentation")
+        capture(app, "FruitBasket_ActualFreshReentry")
+        tap("play", app)
+        tap("nutrition", app)
+        tap("let’s play!", app)
+        if returning.waitForExistence(timeout: 2) { fruitfolioReachControl(app, returning); returning.tap() }
+        XCTAssertTrue(question.waitForExistence(timeout: 30))
+        capture(app, "FruitBasket_ActualNextGroundedQuestionAfterReentry")
+    }
+}

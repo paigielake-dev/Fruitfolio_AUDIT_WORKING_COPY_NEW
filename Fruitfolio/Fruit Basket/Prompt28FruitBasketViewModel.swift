@@ -659,9 +659,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         if existingArtworkID == nil {
             settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true, collected: true))
         }
-        let stillLanding = Set(pendingLandings.map(\.id))
-        if settledCatches.filter({ $0.isStar && !stillLanding.contains($0.id) }).count > 8,
-           let oldestStar = settledCatches.firstIndex(where: { $0.isStar && !stillLanding.contains($0.id) }) {
+        if settledCatches.filter({ $0.isStar && $0.collected }).count > 8,
+           let oldestStar = settledCatches.firstIndex(where: { $0.isStar && $0.collected }) {
             settledCatches.remove(at: oldestStar)
         }
         _ = engine.registerStarCatch(session: &session)

@@ -755,6 +755,7 @@ struct Prompt28FruitBasketView: View {
                         }
 
                         Text(question.questionText)
+                            .accessibilityIdentifier("fruitBasket.researchQuestion")
                             .prompt28Text(.screenTitle)
                             .fixedSize(
                                 horizontal: false,
@@ -797,6 +798,7 @@ struct Prompt28FruitBasketView: View {
                                     )
                                 )
                             }
+                            .accessibilityIdentifier("fruitBasket.answer.\(question.answerOptions.firstIndex(of: answer) ?? 0)")
                             .prompt28Text(.body)
                             .buttonStyle(
                                 CutePopButtonStyle(

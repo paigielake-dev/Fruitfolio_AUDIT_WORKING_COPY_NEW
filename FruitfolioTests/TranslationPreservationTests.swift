@@ -126,6 +126,21 @@ final class TranslationPreservationTests: XCTestCase {
         XCTAssertEqual(FruitfolioLocalization.displayReadiness(for: .chineseTraditional), .requiresVerification)
     }
 
+    func testActualJapaneseQualifierLossPastObservationAndPositiveConfirmationAreRejected() throws {
+        let source = "This estimate does not confirm ovulation."
+        XCTAssertEqual(FruitfolioMedicalConceptPreservation.originalTerms(source: source, target: "ja"), ["estimate", "ovulation"])
+        let plan = try FruitfolioProtectedMeasurements(source: source,
+            immutableTerms: FruitfolioMedicalConceptPreservation.originalTerms(source: source, target: "ja"))
+        let restored = try plan.restoring(in: "この[FFQ0]は[FFQ1]を確認するものではありません。")
+        XCTAssertTrue(restored.contains("estimate")); XCTAssertTrue(restored.contains("ovulation"))
+        XCTAssertNoThrow(try FruitfolioMedicalConceptPreservation.rejectKnownConceptSubstitutions(
+            source: source, translated: restored, target: "ja"))
+        for unsafe in ["排卵は確認できなかった。", "このestimateはovulationを確認します。", "このestimateは卵巣を確認するものではありません。"] {
+            XCTAssertThrowsError(try FruitfolioMedicalConceptPreservation.rejectKnownConceptSubstitutions(
+                source: source, translated: unsafe, target: "ja"))
+        }
+    }
+
     func testKnownHindiOvaryForOvulationSubstitutionIsRejectedAndOriginalConceptIsProtected() throws {
         let source = "This estimate does not confirm ovulation."
         let terms = FruitfolioMedicalConceptPreservation.originalTerms(source: source, target: "hi")
