@@ -1251,7 +1251,15 @@ struct Prompt28FruitBasketView: View {
             .accessibilityLabel(
                 "Basket, \(viewModel.basketCount) of 10"
             )
-            .accessibilityValue(viewModel.basketIsMeetingPuddleResistance ? "moving through a puddle with resistance" : "normal movement")
+            .accessibilityValue("position \(Int((viewModel.basketX * 100).rounded())) percent; " + (viewModel.basketIsMeetingPuddleResistance ? "moving through a puddle with resistance" : "normal movement"))
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment: viewModel.moveBasket(to: viewModel.basketX + 0.08)
+                case .decrement: viewModel.moveBasket(to: viewModel.basketX - 0.08)
+                @unknown default: break
+                }
+                viewModel.basketMovementEnded()
+            }
         }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
@@ -1554,8 +1562,25 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                            Text(question.explanation)
-                                .prompt28Text(.body)
+                            if !viewModel.revealFacts.isEmpty {
+                                ForEach(Array(viewModel.revealFacts.enumerated()), id: \.element.id) { index, fact in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        if viewModel.revealFacts.count > 1 {
+                                            Text("\(index + 1) of \(viewModel.revealFacts.count)")
+                                                .prompt28Text(.metadata)
+                                        }
+                                        FruitfolioSemanticText(document: .init(spans: [.init(text: fact.text)]),
+                                            baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                    .accessibilityElement(children: .contain)
+                                    .accessibilityIdentifier("fruitBasket.fact." + fact.id)
+                                }
+                            } else {
+                                Text(question.explanation).prompt28Text(.body)
+                                Text("the original evidence snapshot for these notes could not be verified.")
+                                    .prompt28Text(.secondary)
+                            }
                             ForEach(question.sourceTitles, id: \.self) { reference in
                                 Text(reference).prompt28Text(.secondary)
                                     .fixedSize(horizontal: false, vertical: true)

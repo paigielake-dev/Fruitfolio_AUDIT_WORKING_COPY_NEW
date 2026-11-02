@@ -88,6 +88,17 @@ struct Prompt28QuestionEvidence: Hashable, Codable, Sendable {
     let sources: [FruitfolioResearchSource]
 }
 
+/// Verbatim educational blocks from the actual question's pinned research.
+/// All paragraphs remain in order; no scientific clause is summarized or omitted.
+struct Prompt28EducationalFactSnapshot: Identifiable, Hashable, Codable, Sendable {
+    let id: String
+    let questionID: String
+    let evidenceID: String
+    let text: String
+    let packageVersion: String
+    let sources: [FruitfolioResearchSource]
+}
+
 struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let id: String
     let topicQuery: String
@@ -108,6 +119,21 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let reviewStatus: String
     let createdAt: Date
     var evidenceSnapshot: Prompt28QuestionEvidence? = nil
+
+    var verifiedEducationalFacts: [Prompt28EducationalFactSnapshot]? {
+        guard let evidence = evidenceSnapshot,
+              evidence.originalPassage == explanation,
+              evidence.packageVersion == contentVersion,
+              !evidence.sources.isEmpty,
+              Set(evidence.sources.map(\.sourceID)) == Set(sourceIDs),
+              evidence.sources.allSatisfy(\.isApprovedForDisplay),
+              !FruitfolioEmotionalBeat.allCases.flatMap({ FruitfolioKaomojiSystem.approvedForms(for: $0) }).contains(where: explanation.contains)
+        else { return nil }
+        return explanation.components(separatedBy: "\n\n").enumerated().map { index, paragraph in
+            .init(id: "\(id):fact:\(index)", questionID: id, evidenceID: evidence.evidenceID,
+                  text: paragraph, packageVersion: evidence.packageVersion, sources: evidence.sources)
+        }
+    }
 
     var isPlayable: Bool {
         answerOptions.count >= 2
@@ -204,6 +230,7 @@ struct Prompt28CompletedRound: Identifiable, Hashable, Codable, Sendable {
     let finalScore: Int
     let remainingStarPasses: Int
     let personalBest: Bool
+    var educationalFacts: [Prompt28EducationalFactSnapshot]? = nil
 
     var roundScore: Int { finalScore - collection.startingScore }
 }

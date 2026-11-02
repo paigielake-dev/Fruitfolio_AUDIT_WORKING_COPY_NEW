@@ -345,9 +345,7 @@ struct Prompt07TourOverlay: View {
                             DesignTokens.ColorToken
                                 .secondaryBurgundy
                         )
-                        .frame(
-                            minHeight: 44
-                        )
+                        .frame(minWidth: 44, minHeight: 44)
                         .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
                     }
 
@@ -378,9 +376,7 @@ struct Prompt07TourOverlay: View {
                                 0.82
                             )
                     )
-                    .frame(
-                        minHeight: 44
-                    )
+                    .frame(minWidth: 44, minHeight: 44)
                     .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
 
                     Button(
@@ -399,9 +395,7 @@ struct Prompt07TourOverlay: View {
                         DesignTokens.ColorToken
                             .primaryBurgundy
                     )
-                    .frame(
-                        minHeight: 44
-                    )
+                    .frame(minWidth: 44, minHeight: 44)
                     .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
                 }
                 .frame(

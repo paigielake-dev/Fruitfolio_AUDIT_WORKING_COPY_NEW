@@ -295,3 +295,15 @@ nonisolated struct Prompt28BasketCatchGeometry: Sendable {
         return y * fieldHeight + radius <= imageBottomY
     }
 }
+
+/// Horizontal overlap uses the same painted sizes as the production playfield,
+/// rather than treating a wide basket as a zero-width point at its center.
+nonisolated struct Prompt28PuddleContactGeometry: Sendable {
+    let fieldWidth: Double
+    func overlaps(basketX: Double) -> Bool {
+        guard fieldWidth.isFinite, fieldWidth > 0, basketX.isFinite else { return false }
+        let puddleHalfWidth = min(fieldWidth * 0.34, 190) / 2
+        let basketHalfWidth = Prompt28BasketCatchGeometry(fieldWidth: fieldWidth, fieldHeight: 1).imageWidth / 2
+        return abs(basketX - 0.5) * fieldWidth <= puddleHalfWidth + basketHalfWidth
+    }
+}

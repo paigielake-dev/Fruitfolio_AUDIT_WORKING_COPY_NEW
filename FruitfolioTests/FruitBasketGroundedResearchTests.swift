@@ -95,7 +95,8 @@ extension FruitBasketGroundedResearchTests {
         let record = Prompt28CompletedRound(id: UUID(), sessionID: UUID(), round: 1,
             completedAt: Date(timeIntervalSinceReferenceDate: 799999999.1234568), successful: true,
             question: question, collection: .init(goodFruit: [.apple, .pear], startingScore: 40),
-            finalScore: 60, remainingStarPasses: 1, personalBest: false)
+            finalScore: 60, remainingStarPasses: 1, personalBest: false,
+            educationalFacts: question.verifiedEducationalFacts)
         // Persistence fixture only: actual registered full-round scoring has its
         // separate frame-driven test. Do not mistake this fixture for gameplay.
         store.recordCompletedRound(record)
@@ -123,5 +124,25 @@ extension FruitBasketGroundedResearchTests {
                        "New retrieval must not rewrite the original completed-round bytes")
         let factRecord = XCTAttachment(data: try JSONEncoder().encode(record), uniformTypeIdentifier: "public.json")
         factRecord.name = "CompletedRound_OriginalGroundedFactAndSourceVersions"; factRecord.lifetime = .keepAlways; add(factRecord)
+    }
+}
+
+extension FruitBasketGroundedResearchTests {
+    func testRevealFactsAreExactOrderedQuestionParagraphsWithPinnedSourcesAndNoKaomojis() async throws {
+        let question = try await Prompt28CanonicalResearchProvider().question(topic: "nutrition", normalizedTopic: "nutrition", difficulty: .easy, excludingQuestionIDs: [])
+        let facts = try XCTUnwrap(question.verifiedEducationalFacts)
+        XCTAssertFalse(facts.isEmpty)
+        XCTAssertEqual(facts.map(\.text).joined(separator: "\n\n"), question.explanation,
+                       "Readable fact blocks must preserve every original scientific clause and qualifier")
+        let evidence = try XCTUnwrap(question.evidenceSnapshot)
+        XCTAssertTrue(facts.allSatisfy { $0.questionID == question.id && $0.evidenceID == evidence.evidenceID && $0.packageVersion == question.contentVersion && $0.sources == evidence.sources })
+        let stored = try JSONDecoder().decode([Prompt28EducationalFactSnapshot].self,
+            from: JSONEncoder().encode(facts))
+        XCTAssertEqual(stored, facts)
+        var unavailable = question; unavailable.evidenceSnapshot = nil
+        XCTAssertNil(unavailable.verifiedEducationalFacts, "Missing evidence cannot become an invented educational fact")
+        let attachment = XCTAttachment(data: try JSONEncoder().encode(facts), uniformTypeIdentifier: "public.json")
+        attachment.name = "BasketReveal_ActualVerbatimEducationalFactsAndSourceVersions"
+        attachment.lifetime = .keepAlways; add(attachment)
     }
 }

@@ -493,9 +493,10 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy,
             startingGameLevel: 5, currentRound: 4)
         model.screen = .catchActive; model.basketX = 0.5
+        model.updateGameplayFieldSize(width: 402, height: 874)
         model.moveBasket(to: 0.9)
         XCTAssertTrue(model.basketIsMeetingPuddleResistance)
-        XCTAssertFalse(model.puddleMovementActive, "The moved basket has already left the puddle; no lingering water loop")
+        XCTAssertTrue(model.puddleMovementActive, "The painted basket still overlaps water even after its center passes the puddle edge")
         XCTAssertLessThan(model.basketX, 0.9)
         for _ in 0..<8 { model.moveBasket(to: 0.9) }
         XCTAssertEqual(model.basketX, 0.9)
@@ -784,4 +785,20 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(FruitfolioAudioID.fruitBasketWind.rawValue, "audio_fruitbasket_wind_gust")
     }
 
+}
+
+extension Prompt28FruitBasketTests {
+    func testPuddleContactMatchesPaintedBasketAndPuddleWidthsAcrossActualFieldSizes() {
+        for width in [280.0, 344, 402, 480] {
+            let geometry = Prompt28PuddleContactGeometry(fieldWidth: width)
+            XCTAssertTrue(geometry.overlaps(basketX: 0.5))
+            XCTAssertTrue(geometry.overlaps(basketX: 0.732), "A wide basket can still touch water with its center beyond0.67")
+            XCTAssertFalse(geometry.overlaps(basketX: 0.1))
+            XCTAssertFalse(geometry.overlaps(basketX: 0.9))
+            let edge = (min(width * 0.34, 190) + Prompt28BasketCatchGeometry(fieldWidth: width, fieldHeight: 874).imageWidth) / 2 / width
+            XCTAssertTrue(geometry.overlaps(basketX: 0.5 + edge - 0.001))
+            XCTAssertFalse(geometry.overlaps(basketX: 0.5 + edge + 0.001))
+        }
+        XCTAssertFalse(Prompt28PuddleContactGeometry(fieldWidth: 0).overlaps(basketX: 0.5))
+    }
 }

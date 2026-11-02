@@ -83,6 +83,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         gameplayCleanup = cleanup
     }
 
+    var revealFacts: [Prompt28EducationalFactSnapshot] {
+        store.completedRounds.last(where: { $0.id == attemptID })?.educationalFacts
+            ?? currentQuestion?.verifiedEducationalFacts ?? []
+    }
+
     var normalizedTopic: String { engine.normalizeTopic(rawTopic) }
 
     var progress: Prompt28TopicProgress? {
@@ -295,12 +300,18 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let pathMin = min(basketX, target)
         let pathMax = max(basketX, target)
         let crossingPuddle = pathMax >= 0.33 && pathMin <= 0.67
-        basketIsMeetingPuddleResistance = crossingPuddle
         let response = crossingPuddle ? 0.58 : 1.0
         basketX += (target - basketX) * response
         basketX = min(max(basketX, 0.10), 0.90)
         // Audio follows real displacement inside the physical puddle, not a timer.
-        puddleContactActive = basketX >= 0.33 && basketX <= 0.67
+        if gameplayFieldSize.width > 0 {
+            puddleContactActive = Prompt28PuddleContactGeometry(fieldWidth: gameplayFieldSize.width).overlaps(basketX: basketX)
+        } else {
+            // Legacy model-only callers have no rendered field yet. Production
+            // supplies its actual field before accepting basket gestures.
+            puddleContactActive = basketX >= 0.33 && basketX <= 0.67
+        }
+        basketIsMeetingPuddleResistance = crossingPuddle && puddleContactActive
         puddleMovementActive = abs(basketX - previousX) > 0.000001 && puddleContactActive
     }
 
@@ -767,7 +778,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             round: session.currentRound, completedAt: Date(), successful: successful,
             question: question, collection: roundCollection, finalScore: session.score,
             remainingStarPasses: session.availableStarPasses,
-            personalBest: successful && didSetPersonalBestThisRound))
+            personalBest: successful && didSetPersonalBestThisRound,
+            educationalFacts: question.verifiedEducationalFacts))
     }
 
     private func stopGameplay() {
