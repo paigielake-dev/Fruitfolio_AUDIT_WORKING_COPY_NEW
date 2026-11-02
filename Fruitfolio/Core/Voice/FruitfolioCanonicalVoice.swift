@@ -10,8 +10,14 @@ nonisolated enum FruitfolioCanonicalVoice {
         guard !supportedBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return .init(spans: [])
         }
-        return .init(spans: [
-            .init(text: serious ? carefulEvidenceBridge : evidenceBridge, emphasis: .plain),
+        // These roles belong to this authored bridge in this evidence-bound
+        // conversational context. They are not rules about matching words in
+        // medical evidence. The immutable supported body remains verbatim.
+        let bridge = serious ? carefulEvidenceBridge : evidenceBridge
+        let authoredBridge = FruitfolioSemanticDocument.authored(bridge, annotations: [
+            .init(phrase: serious ? "with the limits kept clear" : "supports", emphasis: .spokenItalic)
+        ])
+        return .init(spans: authoredBridge.spans + [
             .init(text: "\n\n", emphasis: .plain),
             .init(text: supportedBody, emphasis: .plain)
         ])

@@ -46,4 +46,18 @@ final class CanonicalVoiceAndKaomojiTests: XCTestCase {
             XCTAssertNotNil(system.choose(for: beat, domain: .generalEducation, allowRareExpression: true))
         }
     }
+    func testAuthoredEvidenceBridgeRolesUseTheSharedAuthorityWithoutReclassifyingIdenticalSourceWords() {
+        let body = "The source supports this qualifier with the limits kept clear. 2.50 ng/mL [source-1]."
+        for serious in [false, true] {
+            let document = FruitfolioCanonicalVoice.evidenceDocument(body, serious: serious)
+            let bridge = serious ? FruitfolioCanonicalVoice.carefulEvidenceBridge : FruitfolioCanonicalVoice.evidenceBridge
+            XCTAssertEqual(document.plainText, bridge + "\n\n" + body)
+            XCTAssertEqual(document.spans.first { $0.emphasis == .spokenItalic }?.text,
+                           serious ? "with the limits kept clear" : "supports")
+            XCTAssertEqual(document.spans.last?.text, body)
+            XCTAssertEqual(document.spans.last?.emphasis, .plain,
+                           "Identical words in a scientific source do not inherit a bridge's authored role")
+        }
+    }
+
 }
