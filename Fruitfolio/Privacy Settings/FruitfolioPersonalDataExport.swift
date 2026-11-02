@@ -80,7 +80,8 @@ nonisolated struct FruitfolioPersonalDataDocument: FileDocument {
         guard let data = configuration.file.regularFileContents else { throw CocoaError(.fileReadCorruptFile) }
         self.data = data
     }
+    func makeFileWrapper() -> FileWrapper { FileWrapper(regularFileWithContents: data) }
     func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
-        FileWrapper(regularFileWithContents: data)
+        makeFileWrapper()
     }
 }

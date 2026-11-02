@@ -35,8 +35,18 @@ final class PersonalDataExportTests: XCTestCase {
         let bytes = try await FruitfolioPersonalDataExport.capture(account: nil, username: "peach_qa", settings: settings,
             library: library, context: context, hormones: hormones, cycle: cycle, onboarding: onboarding,
             fruitBasket: Prompt28FruitBasketStore(defaults: defaults), now: Date(timeIntervalSince1970: 1_700_000_000))
+        // Exercise the same regular FileWrapper supplied to the system exporter,
+        // writing and reopening an actual JSON file, then inspect real domains.
+        let destination = FileManager.default.temporaryDirectory
+            .appendingPathComponent("FruitfolioActualExport-\(UUID().uuidString).json")
+        defer { try? FileManager.default.removeItem(at: destination) }
+        let document = FruitfolioPersonalDataDocument(data: bytes)
+        try document.makeFileWrapper().write(to: destination, options: .atomic, originalContentsURL: nil)
+        let savedBytes = try Data(contentsOf: destination)
+        XCTAssertEqual(savedBytes, bytes, "Actual written file must retain all prepared bytes")
+        XCTAssertNoThrow(try JSONSerialization.jsonObject(with: savedBytes))
         let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .millisecondsSince1970
-        let exported = try decoder.decode(FruitfolioPersonalDataExport.self, from: bytes)
+        let exported = try decoder.decode(FruitfolioPersonalDataExport.self, from: savedBytes)
         XCTAssertEqual(exported.encyclopediasAndGuides, originalBooks)
         XCTAssertEqual(exported.encyclopediasAndGuides.first?.chapters.first?.pages.first?.sourceSnapshots, [reference])
         XCTAssertEqual(exported.reportedContext.personalHealthFields[.thyroid]?.text, originalContext.personalHealthFields[.thyroid]?.text)
@@ -67,7 +77,7 @@ final class PersonalDataExportTests: XCTestCase {
         } catch { XCTAssertEqual(try Data(contentsOf: file), original) }
     }
 
-    func testReadableDocumentRetainsTheExactPreparedBytesWithoutWritingAnAutomaticTemporaryFile() throws {
+    func testReadableDocumentRetainsTheExactPreparedBytesAndJSONContentType() throws {
         let data = Data("{\"sensitive_fixture\":\"original\"}".utf8)
         let document = FruitfolioPersonalDataDocument(data: data)
         XCTAssertEqual(document.data, data)
