@@ -18,6 +18,7 @@ struct FruitfolioPersonalDataExport: Codable {
     let hormoneMeasurements: [HormoneMeasurement]
     let fruitBasketProgress: [String: Prompt28TopicProgress]
     let fruitBasketQuestionHistory: [String: [String]]
+    let fruitBasketCompletedRounds: [Prompt28CompletedRound]?
     let limitations: [String]
 
     struct Preferences: Codable {
@@ -65,9 +66,11 @@ struct FruitfolioPersonalDataExport: Codable {
             cycleArchive: archive, cycleSetup: setup, reportedContext: context.context,
             hormoneMeasurements: hormones.measurements, fruitBasketProgress: fruitBasket.topicProgress,
             fruitBasketQuestionHistory: fruitBasket.questionHistory.mapValues { $0.sorted() },
+            fruitBasketCompletedRounds: fruitBasket.completedRounds,
             limitations: ["Readable JSON includes sensitive health and personal data. Store and share it carefully.",
                           "User-imported image file contents are not included; saved page attachment metadata is retained. This is not a complete media backup.",
                           "Ask conversations are session-only and are not exported. Saved answers and their original source snapshots remain in encyclopedias and guides.",
+                          "Fruit Basket includes stored progress, question history and completed-round explanations with their original citation snapshots.",
                           "No remote account data, production purchase receipt, credentials, or research/model binaries are included."])
         let encoder = JSONEncoder(); encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         // Epoch conversion adds978307200 and multiplies1000. At contemporary

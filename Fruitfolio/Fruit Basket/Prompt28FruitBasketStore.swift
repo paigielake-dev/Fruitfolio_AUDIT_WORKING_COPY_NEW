@@ -6,6 +6,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
     private struct PersistedState: Codable {
         var topicProgress: [String: Prompt28TopicProgress] = [:]
         var questionHistory: [String: [String]] = [:]
+        var completedRounds: [Prompt28CompletedRound]? = nil
         var tourState = Prompt28TourState()
         var appearOnLeaderboard = false
         var leaderboardPseudonym: String? = nil
@@ -16,6 +17,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
     @Published private(set) var loadError: String?
     @Published private(set) var topicProgress: [String: Prompt28TopicProgress] = [:]
     @Published private(set) var questionHistory: [String: Set<String>] = [:]
+    @Published private(set) var completedRounds: [Prompt28CompletedRound] = []
     @Published var tourState = Prompt28TourState()
     @Published var appearOnLeaderboard = false
     @Published var leaderboardPseudonym = ""
@@ -77,6 +79,12 @@ final class Prompt28FruitBasketStore: ObservableObject {
         persist()
     }
 
+    func recordCompletedRound(_ record: Prompt28CompletedRound) {
+        guard loadError == nil, !completedRounds.contains(where: { $0.id == record.id }) else { return }
+        completedRounds.append(record)
+        persist()
+    }
+
     func completeTour() {
         tourState.hasCompletedTour = true
         tourState.currentStep = 0
@@ -113,6 +121,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
 
         topicProgress = state.topicProgress
         questionHistory = state.questionHistory.mapValues(Set.init)
+        completedRounds = state.completedRounds ?? []
         tourState = state.tourState
         leaderboardPseudonym = Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
         // Legacy local opt-in is not proof of global registration.
@@ -127,6 +136,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
         let state = PersistedState(
             topicProgress: topicProgress,
             questionHistory: questionHistory.mapValues { Array($0).sorted() },
+            completedRounds: completedRounds,
             tourState: tourState,
             appearOnLeaderboard: appearOnLeaderboard,
             leaderboardPseudonym: leaderboardPseudonym,

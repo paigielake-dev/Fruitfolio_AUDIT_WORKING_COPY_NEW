@@ -31,10 +31,17 @@ final class AudioManager: ObservableObject {
     private var basketImpactPlayers: [AVAudioPlayer] = []
     private var basketPuddleMoving = false
     private var basketPuddleContact = false
+    private var basketObstacleOwner: UUID?
     /// Missing approved assets are explicit; rain/pop/catch audio is never substituted.
     private(set) var missingBasketObstacleAssets: Set<String> = []
 
-    func setBasketPuddleInteraction(overlapping: Bool, moving: Bool, bundle: Bundle = .main) {
+    func claimBasketObstacleAudioOwner(_ owner: UUID) {
+        stopBasketObstacleAudio()
+        basketObstacleOwner = owner
+    }
+
+    func setBasketPuddleInteraction(overlapping: Bool, moving: Bool, owner: UUID? = nil, bundle: Bundle = .main) {
+        guard owner == nil || owner == basketObstacleOwner else { return }
         let entered = overlapping && !basketPuddleContact
         basketPuddleContact = overlapping
         if entered, applicationIsActive, !audioInterrupted, isEnabled(.soundEffects) {
@@ -55,12 +62,14 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    func playBasketBranchImpact(bundle: Bundle = .main) {
+    func playBasketBranchImpact(owner: UUID? = nil, bundle: Bundle = .main) {
+        guard owner == nil || owner == basketObstacleOwner else { return }
         guard applicationIsActive, !audioInterrupted, isEnabled(.soundEffects) else { return }
         playBasketObstacleOneShot("audio_branch_impact", bundle: bundle)
     }
 
-    func stopBasketObstacleAudio() {
+    func stopBasketObstacleAudio(owner: UUID? = nil) {
+        guard owner == nil || owner == basketObstacleOwner else { return }
         basketPuddleMoving = false
         basketPuddleContact = false
         basketPuddlePlayer?.stop(); basketPuddlePlayer = nil

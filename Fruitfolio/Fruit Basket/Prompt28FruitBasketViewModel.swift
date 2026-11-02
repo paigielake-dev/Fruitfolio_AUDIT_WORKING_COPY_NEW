@@ -26,6 +26,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var gameplayFieldSize = CGSize.zero
     private var catchClock: TimeInterval = 0
     private var landingOrder = 0
+    private var attemptID = UUID()
+    let obstacleAudioOwnerID = UUID()
+    private var gameplayCleanup: (@MainActor @Sendable () -> Void)?
     private var pendingLandings: [PendingLanding] = []
 
     private enum LandingKind { case fruit(Prompt28FruitID, Prompt28FruitClassification), star }
@@ -70,8 +73,14 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     deinit {
+        let cleanup = gameplayCleanup
+        Task { @MainActor in cleanup?() }
         gameplayTask?.cancel()
         roundCompletionTask?.cancel()
+    }
+
+    func installGameplayCleanup(_ cleanup: @escaping @MainActor @Sendable () -> Void) {
+        gameplayCleanup = cleanup
     }
 
     var normalizedTopic: String { engine.normalizeTopic(rawTopic) }
@@ -215,6 +224,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     func beginCatch() {
         guard currentQuestion != nil, var session else { return }
+        attemptID = UUID()
         stopGameplay()
         session.goodFruitCaughtThisRound = 0
         roundCollection = .init(startingStarPasses: session.availableStarPasses, startingScore: session.score)
@@ -734,6 +744,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         store.updateProgress(progress)
         session.currentGameLevel = progress.currentGameLevel
         self.session = session
+        recordCompletedRound(successful: true)
         screen = .basketReveal
     }
 
@@ -746,10 +757,21 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         store.updateProgress(progress)
         session.currentGameLevel = progress.currentGameLevel
         self.session = session
+        recordCompletedRound(successful: false)
         screen = .catchUnsuccessful
     }
 
+    private func recordCompletedRound(successful: Bool) {
+        guard let session, let question = currentQuestion else { return }
+        store.recordCompletedRound(.init(id: attemptID, sessionID: session.id,
+            round: session.currentRound, completedAt: Date(), successful: successful,
+            question: question, collection: roundCollection, finalScore: session.score,
+            remainingStarPasses: session.availableStarPasses,
+            personalBest: successful && didSetPersonalBestThisRound))
+    }
+
     private func stopGameplay() {
+        gameplayCleanup?()
         puddleMovementActive = false
         puddleContactActive = false
         gameplayTask?.cancel(); gameplayTask = nil

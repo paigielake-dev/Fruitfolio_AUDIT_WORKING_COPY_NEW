@@ -191,6 +191,23 @@ struct Prompt28RoundCollection: Hashable, Codable, Sendable {
     var startingScore = 0
 }
 
+/// Immutable completed-attempt record. Its original question contains the full
+/// approved explanation and exact source records; never resolve it against a newer library.
+struct Prompt28CompletedRound: Identifiable, Hashable, Codable, Sendable {
+    let id: UUID
+    let sessionID: UUID
+    let round: Int
+    let completedAt: Date
+    let successful: Bool
+    let question: Prompt28Question
+    let collection: Prompt28RoundCollection
+    let finalScore: Int
+    let remainingStarPasses: Int
+    let personalBest: Bool
+
+    var roundScore: Int { finalScore - collection.startingScore }
+}
+
 struct Prompt28Session: Hashable, Codable, Sendable {
     let id: UUID
     var rawTopicQuery: String

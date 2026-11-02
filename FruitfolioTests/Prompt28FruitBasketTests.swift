@@ -733,6 +733,16 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertTrue(pending.answer.contains("standalone stars collected: 1"))
         XCTAssertTrue(pending.answer.contains("star passes used: 1"))
         XCTAssertTrue(pending.answer.contains("score this round: 100"))
+        let completed = try XCTUnwrap(model.store.completedRounds.last)
+        XCTAssertEqual(completed.question, model.currentQuestion)
+        XCTAssertEqual(completed.collection, model.roundCollection)
+        XCTAssertEqual(completed.roundScore, 100)
+        XCTAssertEqual(completed.remainingStarPasses, 2)
+        XCTAssertTrue(completed.successful)
+        let restoredStore = Prompt28FruitBasketStore(defaults: defaults)
+        XCTAssertEqual(restoredStore.completedRounds, [completed], "Restart preserves original question, facts, source versions and real collection")
+        restoredStore.recordCompletedRound(completed)
+        XCTAssertEqual(restoredStore.completedRounds.count, 1, "Repeated completion cannot duplicate a round")
         let recorded = model.roundCollection
         XCTAssertEqual(try JSONDecoder().decode(Prompt28RoundCollection.self,
             from: JSONEncoder().encode(recorded)), recorded)

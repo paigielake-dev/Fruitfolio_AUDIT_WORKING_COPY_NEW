@@ -13,6 +13,25 @@ concurrency:
 permissions:
   contents: read
 jobs:
+  local-research-tooling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify offline research publication and restart-aware evidence tools
+        run: |
+          mkdir -p Fruitfolio_Verification_Evidence/ResearchUpdates
+          set -o pipefail
+          python3 -m unittest discover -s Tools/tests -v 2>&1 | tee Fruitfolio_Verification_Evidence/ResearchUpdates/local-tooling-tests.log
+          python3 Tools/manage_research_snapshot.py validate --package Fruitfolio/FruitfolioResearchPackage.json --manifest Delivery/ResearchUpdate_Baseline_Manifest.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_Local_Research_Tooling
+          path: Fruitfolio_Verification_Evidence/ResearchUpdates
+          retention-days: 90
   preserve-superseded-diagnostics:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fruitfolio/prompt-1b-alignment'
     runs-on: ubuntu-latest

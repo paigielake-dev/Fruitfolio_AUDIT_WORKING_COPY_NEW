@@ -128,6 +128,11 @@ struct Prompt28FruitBasketView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            let audioOwner = viewModel.obstacleAudioOwnerID
+            audioManager.claimBasketObstacleAudioOwner(audioOwner)
+            viewModel.installGameplayCleanup { [weak manager = audioManager] in
+                manager?.stopBasketObstacleAudio(owner: audioOwner)
+            }
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
@@ -141,14 +146,14 @@ struct Prompt28FruitBasketView: View {
         }
         .onDisappear {
             viewModel.viewWillDisappear()
-            audioManager.stopBasketObstacleAudio()
+            audioManager.stopBasketObstacleAudio(owner: viewModel.obstacleAudioOwnerID)
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
                 viewModel.sceneBecameInactive()
-                audioManager.stopBasketObstacleAudio()
+                audioManager.stopBasketObstacleAudio(owner: viewModel.obstacleAudioOwnerID)
             }
         }
         .sheet(isPresented: $showingSaveDestination) {
@@ -1051,13 +1056,13 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onChange(of: viewModel.puddleContactActive) { _, contact in
-            audioManager.setBasketPuddleInteraction(overlapping: contact, moving: viewModel.puddleMovementActive)
+            audioManager.setBasketPuddleInteraction(overlapping: contact, moving: viewModel.puddleMovementActive, owner: viewModel.obstacleAudioOwnerID)
         }
         .onChange(of: viewModel.puddleMovementActive) { _, moving in
-            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: moving)
+            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: moving, owner: viewModel.obstacleAudioOwnerID)
         }
         .onChange(of: viewModel.branchContactCount) { oldValue, newValue in
-            for _ in 0..<max(0, newValue - oldValue) { audioManager.playBasketBranchImpact() }
+            for _ in 0..<max(0, newValue - oldValue) { audioManager.playBasketBranchImpact(owner: viewModel.obstacleAudioOwnerID) }
         }
         .onChange(of: viewModel.vineContactCount) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.vineRustle) }
@@ -1355,6 +1360,7 @@ struct Prompt28FruitBasketView: View {
                 ) {
                     viewModel.resume()
                 }
+                .accessibilityValue("score \(viewModel.score), caught \(viewModel.basketCount) of 10, star passes \(viewModel.availableStarPasses), round \(viewModel.currentRound)")
 
                 Prompt28WatercolorButton(
                     title: "change topic",

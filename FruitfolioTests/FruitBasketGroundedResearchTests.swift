@@ -80,3 +80,48 @@ final class FruitBasketGroundedResearchTests: XCTestCase {
         XCTAssertEqual(repeated.id, first.id)
     }
 }
+
+extension FruitBasketGroundedResearchTests {
+    func testCompletedRoundKeepsActualApprovedExplanationAndSourceVersionsAfterResearchReplacementAndRestart() async throws {
+        let suite = "Fruitfolio.CompletedRoundSnapshot.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let packages = FruitfolioResearchPackageStore()
+        let originalPackage = try await packages.load()
+        let provider = Prompt28CanonicalResearchProvider(packages: packages)
+        let question = try await provider.question(topic: "nutrition", normalizedTopic: "nutrition", difficulty: .easy, excludingQuestionIDs: [])
+        let originalEvidence = try XCTUnwrap(question.evidenceSnapshot)
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let record = Prompt28CompletedRound(id: UUID(), sessionID: UUID(), round: 1,
+            completedAt: Date(timeIntervalSinceReferenceDate: 799999999.1234568), successful: true,
+            question: question, collection: .init(goodFruit: [.apple, .pear], startingScore: 40),
+            finalScore: 60, remainingStarPasses: 1, personalBest: false)
+        // Persistence fixture only: actual registered full-round scoring has its
+        // separate frame-driven test. Do not mistake this fixture for gameplay.
+        store.recordCompletedRound(record)
+        let storedBefore = try XCTUnwrap(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"))
+        var replacement = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(originalPackage)) as? [String: Any])
+        replacement["contentVersion"] = "test-only-successor-package"
+        var sources = try XCTUnwrap(replacement["sources"] as? [[String: Any]])
+        let usedIDs = Set(originalEvidence.sources.map(\.sourceID))
+        for index in sources.indices where usedIDs.contains(sources[index]["sourceID"] as? String ?? "") {
+            sources[index]["sourceVersion"] = "test-only-successor-source"
+            sources[index]["contentVersion"] = "test-only-successor-package"
+        }
+        replacement["sources"] = sources
+        let nextPackage = try JSONDecoder().decode(FruitfolioResearchPackage.self,
+            from: JSONSerialization.data(withJSONObject: replacement))
+        let nextProvider = Prompt28CanonicalResearchProvider(packages: .init(package: nextPackage))
+        let nextQuestion = try await nextProvider.question(topic: "nutrition", normalizedTopic: "nutrition", difficulty: .easy, excludingQuestionIDs: [])
+        XCTAssertEqual(nextQuestion.contentVersion, "test-only-successor-package")
+        XCTAssertTrue(try XCTUnwrap(nextQuestion.evidenceSnapshot).sources.allSatisfy { $0.sourceVersion == "test-only-successor-source" })
+        let restored = Prompt28FruitBasketStore(defaults: defaults)
+        XCTAssertEqual(restored.completedRounds, [record])
+        XCTAssertEqual(restored.completedRounds.first?.question.explanation, originalEvidence.originalPassage)
+        XCTAssertEqual(restored.completedRounds.first?.question.evidenceSnapshot, originalEvidence)
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), storedBefore,
+                       "New retrieval must not rewrite the original completed-round bytes")
+        let factRecord = XCTAttachment(data: try JSONEncoder().encode(record), uniformTypeIdentifier: "public.json")
+        factRecord.name = "CompletedRound_OriginalGroundedFactAndSourceVersions"; factRecord.lifetime = .keepAlways; add(factRecord)
+    }
+}

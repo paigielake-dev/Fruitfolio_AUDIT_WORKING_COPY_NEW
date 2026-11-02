@@ -23,7 +23,11 @@ final class FruitBasketGroundedJourneyUITests: XCTestCase {
         try verifyQuestionJourney(accessibilitySize: true)
     }
 
-    private func verifyQuestionJourney(accessibilitySize: Bool) throws {
+    func testActualActiveGameBackgroundAndResumeRetainsPausedRoundUntilExplicitResume() throws {
+        try verifyQuestionJourney(accessibilitySize: false, backgroundInterruption: true)
+    }
+
+    private func verifyQuestionJourney(accessibilitySize: Bool, backgroundInterruption: Bool = false) throws {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1"]
         if accessibilitySize {
@@ -74,6 +78,37 @@ final class FruitBasketGroundedJourneyUITests: XCTestCase {
         tap("ready ♡", app)
         XCTAssertTrue(app.buttons["pause"].waitForExistence(timeout: 5))
         capture(app, "FruitBasket_ActualLiveGameplayBeforePause")
+        if backgroundInterruption {
+            XCUIDevice.shared.press(.home)
+            var backgrounded = app.wait(for: .runningBackground, timeout: 2)
+                || app.wait(for: .runningBackgroundSuspended, timeout: 2)
+            let homeState = app.state
+            if !backgrounded {
+                XCUIApplication(bundleIdentifier: "com.apple.springboard").activate()
+                backgrounded = app.wait(for: .runningBackground, timeout: 2)
+                    || app.wait(for: .runningBackgroundSuspended, timeout: 2)
+            }
+            let state = XCTAttachment(string: "Active gameplay Home state=\(homeState.rawValue); final actual state=\(app.state.rawValue); background observed=\(backgrounded)")
+            state.name = "FruitBasket_ActualOSBackgroundState"; state.lifetime = .keepAlways; add(state)
+            XCTAssertTrue(backgrounded, "A real OS transition is required; a direct model callback is insufficient")
+            let springboard = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            springboard.name = "FruitBasket_ActualBackgroundScreen"; springboard.lifetime = .keepAlways; add(springboard)
+            Thread.sleep(forTimeInterval: 3)
+            app.activate()
+            XCTAssertTrue(app.staticTexts["little game menu"].waitForExistence(timeout: 5))
+            let resume = app.buttons["resume"]
+            fruitfolioReachControl(app, resume)
+            let pausedValues = try XCTUnwrap(resume.value as? String)
+            XCTAssertTrue(pausedValues.contains("score "))
+            capture(app, "FruitBasket_ActualForegroundStillPaused")
+            Thread.sleep(forTimeInterval: 3)
+            XCTAssertEqual(resume.value as? String, pausedValues, "Paused score, catches, passes and round must remain unchanged")
+            XCTAssertFalse(app.buttons["pause"].exists, "Foregrounding must not silently resume gameplay")
+            resume.tap()
+            XCTAssertTrue(app.buttons["pause"].waitForExistence(timeout: 5))
+            XCTAssertFalse(app.staticTexts["little game menu"].exists)
+            capture(app, "FruitBasket_ActualExplicitResumeAfterBackground")
+        }
         app.buttons["pause"].tap()
         XCTAssertTrue(app.staticTexts["little game menu"].waitForExistence(timeout: 5))
         capture(app, "FruitBasket_ActualPausedRound")
