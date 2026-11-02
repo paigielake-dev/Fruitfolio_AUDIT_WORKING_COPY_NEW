@@ -57,6 +57,26 @@ jobs:
           name: Fruitfolio_Run80_Accessibility_Exports_Recovery
           path: recovered-run80-accessibility
           retention-days: 90
+  recover-original-run93-accessibility:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.head.ref == 'fruitfolio/prompt-1b-alignment'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify and select original immutable Run93 attachments
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/recover_run93_accessibility_exports.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Run93_Accessibility_Exports_Recovery
+          path: recovered-run93-accessibility
+          retention-days: 90
   ios:
     runs-on: macos-latest
     timeout-minutes: 360
