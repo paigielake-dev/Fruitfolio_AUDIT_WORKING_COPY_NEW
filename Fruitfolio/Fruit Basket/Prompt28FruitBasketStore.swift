@@ -144,9 +144,14 @@ final class Prompt28FruitBasketStore: ObservableObject {
             return
         }
 
+        let restoredRounds = state.completedRounds ?? []
+        guard Set(restoredRounds.map(\.id)).count == restoredRounds.count else {
+            loadError = "your saved game records have conflicting identities. the original data has been preserved."
+            return
+        }
         topicProgress = state.topicProgress
         questionHistory = state.questionHistory.mapValues(Set.init)
-        completedRounds = state.completedRounds ?? []
+        completedRounds = restoredRounds
         tourState = state.tourState
         leaderboardPseudonym = Prompt28LeaderboardUsernamePolicy.sanitized(state.leaderboardPseudonym ?? "")
         // Legacy local opt-in is not proof of global registration.

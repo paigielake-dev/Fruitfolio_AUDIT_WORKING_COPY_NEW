@@ -107,6 +107,30 @@ final class RoundCompletionPersistenceTests: XCTestCase {
         game.viewWillDisappear()
     }
 
+    func testDuplicateStoredRoundIdentitiesFailExplicitlyWithoutDroppingEvidenceOrReplacingBytes() async throws {
+        let suite = "RoundDuplicateIdentity-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let game = try await model(defaults: defaults)
+        try finishGoodBasket(game)
+        game.viewWillDisappear()
+        let record = try XCTUnwrap(game.store.completedRounds.first)
+        let progress = try XCTUnwrap(game.store.progress(for: "nutrition"))
+        let saved = try XCTUnwrap(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"))
+        var snapshot = try XCTUnwrap(JSONSerialization.jsonObject(with: saved) as? [String: Any])
+        let rounds = try XCTUnwrap(snapshot["completedRounds"] as? [[String: Any]])
+        snapshot["completedRounds"] = rounds + rounds
+        let unreadable = try JSONSerialization.data(withJSONObject: snapshot, options: [.sortedKeys])
+        defaults.set(unreadable, forKey: "fruitfolio.prompt28.fruitBasket.v1")
+        let reopened = Prompt28FruitBasketStore(defaults: defaults)
+        XCTAssertNotNil(reopened.loadError)
+        XCTAssertFalse(reopened.commitCompletedRound(record, updating: progress))
+        reopened.persistPreferences()
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), unreadable)
+        XCTAssertTrue(reopened.completedRounds.isEmpty,
+                      "Do not present an ambiguous subset as successfully restored history")
+    }
+
     func testRejectedRoundSnapshotDoesNotPublishProgressOrReplaceSavedBytes() async throws {
         let suite = "RoundSnapshotRejection-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
