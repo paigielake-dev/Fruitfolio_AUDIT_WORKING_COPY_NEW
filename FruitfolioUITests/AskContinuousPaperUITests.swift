@@ -33,13 +33,13 @@ final class AskContinuousPaperUITests: XCTestCase {
         func submit(_ question: String) {
             input.tap(); input.typeText(question)
             XCTAssertTrue(send.isEnabled && send.isHittable); send.tap()
-            XCTAssertTrue(app.textViews["ask.completedAnswer"].waitForExistence(timeout: 180))
-            XCTAssertGreaterThan(app.textViews["ask.completedAnswer"].label.count, 30)
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "ask.completedAnswer").firstMatch.waitForExistence(timeout: 180))
+            XCTAssertGreaterThan(app.descendants(matching: .any).matching(identifier: "ask.completedAnswer").firstMatch.label.count, 30)
         }
         submit(first)
         capture(app, "AskContinuous_FirstGroundedAnswer_largest_\(largest)")
         submit(second)
-        let latest = app.textViews["ask.completedAnswer"]
+        let latest = app.descendants(matching: .any).matching(identifier: "ask.completedAnswer").firstMatch
         let originalLatest = latest.label
         let scroll = app.scrollViews["ask.conversationScroll"]
         XCTAssertTrue(scroll.exists)
@@ -49,14 +49,14 @@ final class AskContinuousPaperUITests: XCTestCase {
                        "Paper must remain horizontally centered at the actual device size")
         capture(app, "AskContinuous_SecondGroundedAnswerAndSinglePaper_largest_\(largest)")
         let priorQuestion = app.staticTexts[first]
-        for _ in 0..<18 where !priorQuestion.exists || !priorQuestion.isHittable { scroll.swipeDown() }
+        reachJournalElement(app, scroll: scroll, target: priorQuestion, towardEarlier: true)
         XCTAssertTrue(priorQuestion.exists && priorQuestion.isHittable,
                       "Earlier questions remain reachable by actual backward scrolling")
         capture(app, "AskContinuous_BackwardScrollToEarlierAnswer_largest_\(largest)")
         let currentQuestion = app.staticTexts[second]
-        for _ in 0..<18 where !currentQuestion.exists || !currentQuestion.isHittable { scroll.swipeUp() }
+        reachJournalElement(app, scroll: scroll, target: currentQuestion, towardEarlier: false)
         XCTAssertTrue(currentQuestion.exists && currentQuestion.isHittable)
-        for _ in 0..<18 where !latest.isHittable { scroll.swipeUp() }
+        reachJournalElement(app, scroll: scroll, target: latest, towardEarlier: false)
         XCTAssertEqual(latest.label, originalLatest, "Bidirectional scrolling must not regenerate or alter answers")
         scroll.swipeUp(); scroll.swipeUp()
         capture(app, "AskContinuous_FinalContentAndOverscrollPaper_largest_\(largest)")
@@ -68,7 +68,25 @@ final class AskContinuousPaperUITests: XCTestCase {
         XCTAssertTrue(open.waitForExistence(timeout: 10)); open.tap()
         XCTAssertFalse(app.staticTexts[first].exists)
         XCTAssertFalse(app.staticTexts[second].exists)
-        XCTAssertFalse(app.textViews["ask.completedAnswer"].exists)
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "ask.completedAnswer").firstMatch.exists)
         capture(app, "AskContinuous_NewVisitClearsOnlyUnsavedSession_largest_\(largest)")
     }
+    private func reachJournalElement(_ app: XCUIApplication, scroll: XCUIElement,
+                                     target: XCUIElement, towardEarlier: Bool) {
+        // Actual iOS26 evidence showed a selectable UITextView changes its
+        // reported automation class after scrolling. Query its stable identity,
+        // not a guessed class, and pan on the blank paper margin so selection
+        // gestures and the right-hand scroll indicator cannot consume the pan.
+        for attempt in 0..<80 {
+            if target.exists && target.isHittable { return }
+            print("ASK_JOURNAL_PAN attempt=\(attempt) earlier=\(towardEarlier) exists=\(target.exists) viewport=\(scroll.frame)")
+            scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.03, dy: towardEarlier ? 0.22 : 0.80))
+                .press(forDuration: 0.05, thenDragTo: scroll.coordinate(withNormalizedOffset:
+                    CGVector(dx: 0.03, dy: towardEarlier ? 0.80 : 0.22)))
+        }
+        capture(app, "AskContinuous_StrictReachFailure_earlier_\(towardEarlier)")
+        XCTAssertTrue(target.exists && target.isHittable,
+                      "The complete earlier/current content must actually be reachable; no visibility assertion is weakened")
+    }
+
 }

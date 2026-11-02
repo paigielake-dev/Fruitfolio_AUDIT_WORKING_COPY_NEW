@@ -163,12 +163,22 @@ jobs:
           PYCODE
       - name: Run the selected coherent sprint test batch without MADLAD inference
         run: python3 Tools/run_sprint_xcode_tests.py
+      - name: Verify native FruitfolioAI and Ask while external connections are blocked
+        if: always() && steps.app-build.outcome == 'success'
+        run: |
+          if python3 -c "import json,sys;sys.exit(0 if json.load(open('Delivery/SprintVerificationPlan.json')).get('offlineNativeGrounding') else 1)"; then
+            bash Tools/verify_offline_madlad_ci.sh native-grounding
+          fi
       - name: Export actual focused screenshots and test evidence
         if: always()
         run: |
           if [ -f Fruitfolio_Verification_Evidence/Build/SprintFocused.xcresult/Info.plist ]; then
             mkdir -p Fruitfolio_Verification_Evidence/Visual/SprintFocused
             xcrun xcresulttool export attachments --path Fruitfolio_Verification_Evidence/Build/SprintFocused.xcresult --output-path Fruitfolio_Verification_Evidence/Visual/SprintFocused
+          fi
+          if [ -f Fruitfolio_Verification_Evidence/Build/OfflineNativeGrounding.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
+            xcrun xcresulttool export attachments --path Fruitfolio_Verification_Evidence/Build/OfflineNativeGrounding.xcresult --output-path Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
           fi
       - uses: actions/upload-artifact@v4
         if: always()
@@ -177,4 +187,13 @@ jobs:
           path: |
             Fruitfolio_Verification_Evidence/Build
             Fruitfolio_Verification_Evidence/Visual/SprintFocused
+            Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
+            Fruitfolio_Verification_Evidence/AI/OfflineNativeGrounding
+            !Fruitfolio_Verification_Evidence/Build/**/*.xcresult/**
+          retention-days: 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_Sprint_Original_XCResults
+          path: Fruitfolio_Verification_Evidence/Build/*.xcresult
           retention-days: 90

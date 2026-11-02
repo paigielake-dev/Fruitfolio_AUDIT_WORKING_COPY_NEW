@@ -1,18 +1,17 @@
 {
-  "scope": "Integrated core unit and affected shared-control, locale, library, game and guarded-data UI regression; MADLAD inference excluded",
+  "scope": "Changed Health Context preservation/guard, Guide confirmation, game paused modal, and continuous paper helper repair; controlled offline native FruitfolioAI only",
   "onlyTesting": [
-    "FruitfolioTests",
-    "FruitfolioUITests/SharedControlUITests",
-    "FruitfolioUITests/LanguageSelectionJourneyUITests",
-    "FruitfolioUITests/UserAuthoredPageUITests",
+    "FruitfolioTests/PersonalHealthContextTests",
+    "FruitfolioTests/Prompt27AContextPersonalizationTests",
+    "FruitfolioTests/PersonalDataExportTests",
+    "FruitfolioTests/LibraryBookshelfRenderingTests",
+    "FruitfolioTests/HormoneMeasurementTests",
+    "FruitfolioUITests/AskContinuousPaperUITests",
     "FruitfolioUITests/FruitBasketGroundedJourneyUITests",
-    "FruitfolioUITests/PersonalDataManagementUITests",
-    "FruitfolioUITests/UsernameSynchronizationUITests",
-    "FruitfolioUITests/PersonalHealthContextUITests",
-    "FruitfolioUITests/RuntimeAccessibilityAuditTests"
+    "FruitfolioUITests/PersonalHealthContextUITests"
   ],
   "skipTesting": [
     "FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests"
   ],
-  "offlineNativeGrounding": false
+  "offlineNativeGrounding": true
 }

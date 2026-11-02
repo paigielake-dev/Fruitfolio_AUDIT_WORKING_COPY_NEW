@@ -27,6 +27,9 @@ fi
 phase="$1"
 selectors=()
 case "$phase" in
+  native-grounding)
+    selectors+=("-only-testing:FruitfolioTests/BundledNativeGroundingTests")
+    selectors+=("-only-testing:FruitfolioUITests/AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit") ;;
   core)
     selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime")
     selectors+=("-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testCorruptTokenizerIsRejectedBeforeAnyModelInference")
@@ -43,6 +46,13 @@ case "$phase" in
   *) echo "Unknown offline phase"; exit 2 ;;
 esac
 evidence="Fruitfolio_Verification_Evidence/MADLAD/Offline/$phase"
+result_bundle="Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult"
+log_name="xcode-offline-madlad-test.log"
+if [[ "$phase" == native-grounding ]]; then
+  evidence="Fruitfolio_Verification_Evidence/AI/OfflineNativeGrounding"
+  result_bundle="Fruitfolio_Verification_Evidence/Build/OfflineNativeGrounding.xcresult"
+  log_name="xcode-offline-native-grounding-test.log"
+fi
 mkdir -p "$evidence"
 # pfctl may return nonzero when filtering is disabled. Inspect the actual
 # status text; that is the required safe baseline, not a failure to restore.
@@ -107,9 +117,9 @@ xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfoli
   -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
   -disableAutomaticPackageResolution \
   "${selectors[@]}" \
-  -resultBundlePath "Fruitfolio_Verification_Evidence/Build/OfflineMADLAD-$phase.xcresult" \
+  -resultBundlePath "$result_bundle" \
   CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
-  2>&1 | tee "$evidence/xcode-offline-madlad-test.log"
+  2>&1 | tee "$evidence/$log_name"
 test_outcome=$?
 set -e
 if [[ -e "$evidence/isolation-ended-before-test-completed" ]]; then

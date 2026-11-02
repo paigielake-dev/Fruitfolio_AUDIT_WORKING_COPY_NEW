@@ -1016,9 +1016,22 @@ struct Prompt28FruitBasketView: View {
                     y: 8
                 )
                 .zIndex(20)
+                .fruitfolioModalBlur(active: viewModel.screen == .paused,
+                    reduceMotion: motionPreferences.reduceMotionActive)
 
                 if viewModel.screen == .paused {
-                    pausePanel
+                    ScrollView(.vertical) {
+                        VStack(spacing: 0) {
+                            Spacer(minLength: 0)
+                            pausePanel
+                            Spacer(minLength: 0)
+                        }
+                        .frame(minHeight: max(44, proxy.size.height - 32))
+                    }
+                        .scrollBounceBehavior(.basedOnSize)
+                        .frame(maxHeight: max(44, proxy.size.height - 32))
+                        .accessibilityIdentifier("fruitBasket.pauseMenu")
+                        .accessibilityAddTraits(.isModal)
                         .frame(
                             width: min(
                                 width - 40,
