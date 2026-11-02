@@ -32,9 +32,18 @@ final class PersonalDataExportTests: XCTestCase {
         let onboarding = Prompt14CycleOnboardingStore.inMemory(cycleStore: cycle)
         let originalBooks = library.encyclopedias; let originalContext = context.context
         let originalHormones = hormones.measurements
+        let game = Prompt28FruitBasketStore(defaults: defaults)
+        var progress = game.ensureProgress(for: "nutrition")
+        progress.totalFruitCaught = 37; progress.totalStarsEarned = 12
+        progress.totalRoundsCompleted = 3; progress.currentGameLevel = 2
+        game.updateProgress(progress)
+        game.recordQuestion("exact-original-evidence-question", topic: "nutrition")
+        let originalGameBytes = defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1")
+        let originalGame = game.topicProgress
+        let originalHistory = game.questionHistory
         let bytes = try await FruitfolioPersonalDataExport.capture(account: nil, username: "peach_qa", settings: settings,
             library: library, context: context, hormones: hormones, cycle: cycle, onboarding: onboarding,
-            fruitBasket: Prompt28FruitBasketStore(defaults: defaults), now: Date(timeIntervalSince1970: 1_700_000_000))
+            fruitBasket: game, now: Date(timeIntervalSince1970: 1_700_000_000))
         // Exercise the same regular FileWrapper supplied to the system exporter,
         // writing and reopening an actual JSON file, then inspect real domains.
         let destination = FileManager.default.temporaryDirectory
@@ -56,11 +65,50 @@ final class PersonalDataExportTests: XCTestCase {
         XCTAssertEqual(exported.hormoneMeasurements.first?.notes, "my exact original note")
         XCTAssertEqual(exported.settings.musicVolume, 0.23)
         XCTAssertEqual(exported.publicUsername, "peach_qa")
+        let exportedGame = try XCTUnwrap(exported.fruitBasketProgress["nutrition"])
+        XCTAssertEqual(exportedGame.totalFruitCaught, 37)
+        XCTAssertEqual(exportedGame.totalStarsEarned, 12)
+        XCTAssertEqual(exportedGame.totalRoundsCompleted, 3)
+        XCTAssertEqual(exportedGame.currentGameLevel, 2)
+        XCTAssertEqual(exportedGame.lastPlayedAt.timeIntervalSince1970,
+            try XCTUnwrap(originalGame["nutrition"]).lastPlayedAt.timeIntervalSince1970, accuracy: 0.001)
+        XCTAssertEqual(exported.fruitBasketQuestionHistory["nutrition"], ["exact-original-evidence-question"])
+        XCTAssertEqual(game.topicProgress, originalGame)
+        XCTAssertEqual(game.questionHistory, originalHistory)
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), originalGameBytes)
         XCTAssertTrue(exported.limitations.contains { $0.contains("not a complete media backup") })
         XCTAssertFalse(String(decoding: bytes, as: UTF8.self).contains("must never be exported"))
         XCTAssertEqual(library.encyclopedias, originalBooks)
         XCTAssertEqual(context.context, originalContext)
         XCTAssertEqual(hormones.measurements, originalHormones)
+    }
+
+    func testUnreadableGameStorageBlocksMisleadingExportAndCannotBeOverwrittenByGameActions() async throws {
+        let suite = "Fruitfolio.GameExportCorruption.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let key = "fruitfolio.prompt28.fruitBasket.v1"
+        let original = Data([0xff, 0x00, 0x7f])
+        defaults.set(original, forKey: key)
+        let game = Prompt28FruitBasketStore(defaults: defaults)
+        XCTAssertNotNil(game.loadError)
+        game.recordQuestion("must-not-replace-corrupt-history", topic: "nutrition")
+        game.completeTour()
+        _ = game.ensureProgress(for: "nutrition")
+        XCTAssertEqual(defaults.data(forKey: key), original)
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent("empty-hormones-\(UUID().uuidString).json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        do {
+            _ = try await FruitfolioPersonalDataExport.capture(account: nil, username: "test_pear",
+                settings: SettingsStore(defaults: defaults), library: Prompt10SavedLibraryStore(defaults: defaults),
+                context: Prompt27AContextStore(defaults: defaults), hormones: HormoneMeasurementStore(fileURL: file),
+                cycle: .inMemory(), onboarding: .inMemory(cycleStore: .inMemory()), fruitBasket: game)
+            XCTFail("Unreadable game progress must not be represented as a successful empty export")
+        } catch { XCTAssertEqual(error as? Prompt12AccountPrivacyError, .exportFailed) }
+        XCTAssertEqual(defaults.data(forKey: key), original)
+        let model = Prompt28FruitBasketViewModel(store: game, researchProvider: Prompt28CanonicalResearchProvider())
+        model.openSetup(); XCTAssertEqual(model.screen, .error)
+        XCTAssertEqual(model.message, game.loadError)
     }
 
     func testUnreadableHealthStoragePreventsASuccessfulPartialExportAndPreservesOriginalBytes() async throws {

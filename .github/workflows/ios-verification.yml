@@ -181,6 +181,45 @@ jobs:
           if '@rpath/llama.framework/llama' in text:
               raise SystemExit('Obsolete dynamic llama framework is still autolinked')
           PYCODE
+      - name: Verify repaired medical preservation and persistence before UI traversal
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        timeout-minutes: 20
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualCandidatesExecuteWithOriginalMeasurementsCitationsAndParagraphLayout \
+            -only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests/testMultilingualEdgeQuantitiesExecuteWithoutChangingRecordedValuesOrWarnings \
+            -only-testing:FruitfolioTests/TranslationPreservationTests \
+            -only-testing:FruitfolioTests/PersonalDataExportTests \
+            -only-testing:FruitfolioTests/Prompt28FruitBasketTests \
+            -only-testing:FruitfolioTests/FruitBasketGroundedResearchTests \
+            -only-testing:FruitfolioTests/NativeActionLabelRuntimeTests \
+            -only-testing:FruitfolioTests/LanguagePreferencePersistenceTests \
+            -only-testing:FruitfolioTests/IntroInterruptionRuntimeTests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-repair-batch-test.log
+      - name: Export actual repair batch attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/RepairBatch
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/RepairBatch
+          fi
+      - name: Preserve actual repair batch evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Repair_Batch_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-repair-batch-test.log
+            Fruitfolio_Verification_Evidence/Build/RepairBatch.xcresult
+            Fruitfolio_Verification_Evidence/Visual/RepairBatch
+          retention-days: 90
       - name: Simulator smoke test and representative recording
         id: smoke
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
@@ -262,6 +301,37 @@ jobs:
             Fruitfolio_Verification_Evidence/Build/xcode-shared-controls-ui.log
             Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
             Fruitfolio_Verification_Evidence/Visual/SharedControls
+      - name: Verify language selection through an actual app restart
+        if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
+        timeout-minutes: 8
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData -parallel-testing-enabled NO \
+            -only-testing:FruitfolioUITests/LanguageSelectionJourneyUITests \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-language-journey.log
+      - name: Export actual language restart attachments
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/LanguageJourney
+            xcrun xcresulttool export attachments \
+              --path Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult \
+              --output-path Fruitfolio_Verification_Evidence/Visual/LanguageJourney
+          fi
+      - name: Preserve actual language restart evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Language_Restart_Evidence
+          path: |
+            Fruitfolio_Verification_Evidence/Build/xcode-language-journey.log
+            Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult
+            Fruitfolio_Verification_Evidence/Visual/LanguageJourney
+          retention-days: 90
       - name: Verify actual grounded Fruit Basket gameplay journey
         if: ${{ !cancelled() && steps.app-build.outcome == 'success' }}
         timeout-minutes: 12

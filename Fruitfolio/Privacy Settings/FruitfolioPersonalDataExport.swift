@@ -52,6 +52,7 @@ struct FruitfolioPersonalDataExport: Codable {
             throw Prompt12AccountPrivacyError.exportFailed
         }
         let fruitBasket = fruitBasket ?? Prompt28FruitBasketStore()
+        guard fruitBasket.loadError == nil else { throw Prompt12AccountPrivacyError.exportFailed }
         // Read the actual domain stores. No raw defaults dump, credentials,
         // purchase receipts, model binaries or unrelated files are exported.
         async let archive = cycle.snapshot()

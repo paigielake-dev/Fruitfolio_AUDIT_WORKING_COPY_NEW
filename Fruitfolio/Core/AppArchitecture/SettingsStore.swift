@@ -47,6 +47,22 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
     case tuvaluan = "tvl"
     case kiribati = "gil"
     case bislama = "bi"
+    case thai = "th"
+    case mongolian = "mn"
+    case indonesian = "id"
+    case russian = "ru"
+    case polish = "pl"
+    case dutch = "nl"
+    case swedish = "sv"
+    case ukrainian = "uk"
+    case turkish = "tr"
+    case kurdishKurmanji = "ku"
+    case kurdishSorani = "ckb"
+    case hebrew = "he"
+    case quechua = "qu"
+    case guarani = "gn"
+    case aymara = "ay"
+
 
     var id: String { rawValue }
     var localeIdentifier: String { rawValue }
@@ -59,7 +75,7 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
         default: return rawValue
         }
     }
-    var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu }
+    var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu || self == .hebrew || self == .kurdishSorani }
 
     /// Native/autonym labels deliberately remain recognizable even when the current UI language changes.
     var nativeDisplayName: String {
@@ -109,6 +125,22 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
         case .tuvaluan: return "Te Gagana Tuuvalu"
         case .kiribati: return "Te Taetae ni Kiribati"
         case .bislama: return "Bislama"
+        case .thai: return "ไทย"
+        case .mongolian: return "Монгол хэл"
+        case .indonesian: return "Bahasa Indonesia"
+        case .russian: return "Русский"
+        case .polish: return "Polski"
+        case .dutch: return "Nederlands"
+        case .swedish: return "Svenska"
+        case .ukrainian: return "Українська"
+        case .turkish: return "Türkçe"
+        case .kurdishKurmanji: return "Kurmancî"
+        case .kurdishSorani: return "کوردی (سۆرانی)"
+        case .hebrew: return "עברית"
+        case .quechua: return "Runasimi"
+        case .guarani: return "Avañe’ẽ"
+        case .aymara: return "Aymar aru"
+
         }
     }
 }

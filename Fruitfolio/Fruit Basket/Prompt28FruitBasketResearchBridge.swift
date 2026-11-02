@@ -134,7 +134,7 @@ actor Prompt28CanonicalResearchProvider: Prompt28ResearchProviding {
                               difficulty: Prompt28EducationalDifficulty, package: FruitfolioResearchPackage,
                               sources: [FruitfolioResearchSource], note: FruitfolioResearchNoteChunk?,
                               source: FruitfolioSourceChunk?) -> Prompt28Question? {
-        guard text.count >= 40, text.count <= 1800,
+        guard text.count >= 40, text.count <= 1800, !text.contains("_____"),
               Prompt34LocalSafetyRouter.classify(text).level != .urgent,
               !FruitfolioEmotionalBeat.allCases.flatMap { FruitfolioKaomojiSystem.approvedForms(for: $0) }.contains(where: text.contains) else { return nil }
         let claim = FruitfolioClaimNeed(id: "fruitbasket:\(id)", text: topic)

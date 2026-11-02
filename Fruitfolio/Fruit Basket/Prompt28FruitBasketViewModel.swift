@@ -96,6 +96,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     func openSetup() {
         stopGameplay()
+        guard store.loadError == nil else {
+            message = store.loadError; screen = .error; return
+        }
         screen = .learningSetup
         message = nil
     }
@@ -152,6 +155,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func loadQuestion() async {
+        guard store.loadError == nil else {
+            message = store.loadError; screen = .error; return
+        }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         screen = .loading

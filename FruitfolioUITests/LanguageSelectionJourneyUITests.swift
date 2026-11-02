@@ -1,0 +1,44 @@
+import XCTest
+
+final class LanguageSelectionJourneyUITests: XCTestCase {
+    override func setUpWithError() throws { continueAfterFailure = false }
+
+    private func capture(_ app: XCUIApplication, _ name: String) {
+        let frame = XCTAttachment(screenshot: app.screenshot())
+        frame.name = name; frame.lifetime = .keepAlways; add(frame)
+    }
+
+    private func openSettings(_ app: XCUIApplication) {
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 12) { explore.tap() }
+        let settings = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "settings")).firstMatch
+        XCTAssertTrue(settings.waitForExistence(timeout: 15))
+        fruitfolioReachControl(app, settings); settings.tap()
+        XCTAssertTrue(app.buttons["language"].waitForExistence(timeout: 10))
+    }
+
+    func testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        app.launch(); openSettings(app)
+        let menu = app.buttons["language"]
+        fruitfolioReachControl(app, menu); menu.tap()
+        let spanish = app.buttons.matching(identifier: "Español").firstMatch
+        XCTAssertTrue(spanish.waitForExistence(timeout: 5)); spanish.tap()
+        XCTAssertEqual(menu.value as? String, "Español")
+        let notice = app.staticTexts["settings.translationAvailability"]
+        XCTAssertTrue(notice.waitForExistence(timeout: 5))
+        XCTAssertTrue(notice.label.contains("hasn’t been verified"))
+        capture(app, "Language_ActualSelectedSpanishAndUnverifiedDisplayNotice")
+        app.terminate(); app.launch(); openSettings(app)
+        fruitfolioReachControl(app, menu)
+        XCTAssertEqual(menu.value as? String, "Español", "Actual termination/relaunch must retain selection")
+        capture(app, "Language_ActualPersistedSelectionAfterRestart")
+        menu.tap()
+        let english = app.buttons.matching(identifier: "English").firstMatch
+        XCTAssertTrue(english.waitForExistence(timeout: 5)); english.tap()
+        XCTAssertEqual(menu.value as? String, "English")
+        XCTAssertFalse(app.staticTexts["settings.translationAvailability"].exists)
+        capture(app, "Language_ActualReturnToOriginalEnglish")
+    }
+}

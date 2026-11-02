@@ -130,7 +130,10 @@ struct Prompt28FruitBasketView: View {
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
-            if !store.tourState.hasCompletedTour {
+            if let error = store.loadError {
+                viewModel.message = error
+                viewModel.screen = .error
+            } else if !store.tourState.hasCompletedTour {
                 showTour = true
                 tourStep = 0
             }

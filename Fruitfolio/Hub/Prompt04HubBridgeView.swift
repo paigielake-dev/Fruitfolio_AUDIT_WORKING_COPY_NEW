@@ -1149,7 +1149,7 @@ private struct Prompt05PrimaryHubButton:
                     FruitfolioImage(id: spec.symbolAsset)
                         .scaledToFit().frame(width: 34, height: 34)
                         .accessibilityHidden(true)
-                    FruitfolioNativeActionLabel(text: spec.displayLabel)
+                    FruitfolioNativeActionLabel(text: spec.displayLabel, lineBreakMode: .byCharWrapping)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .accessibilityElement(children: .contain)

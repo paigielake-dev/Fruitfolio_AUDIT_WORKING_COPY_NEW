@@ -26,6 +26,18 @@ struct FruitfolioLocalizationTests {
         #expect(FruitfolioLanguage.filipino.rawValue == "fil")
     }
 
+    @Test func allAdditionalLanguagesExplicitlyNamedInPrompt1BRemainIndividualChoices() {
+        let required: Set<FruitfolioLanguage> = [.thai, .mongolian, .indonesian, .russian,
+            .polish, .dutch, .swedish, .ukrainian, .turkish, .kurdishKurmanji,
+            .kurdishSorani, .hebrew, .quechua, .guarani, .aymara]
+        #expect(required.isSubset(of: Set(FruitfolioLanguage.allCases)))
+        #expect(FruitfolioLanguage.hebrew.isRightToLeft)
+        #expect(FruitfolioLanguage.kurdishSorani.isRightToLeft)
+        #expect(!FruitfolioLanguage.kurdishKurmanji.isRightToLeft)
+        #expect(FruitfolioLanguage.kurdishSorani.madladTargetCode == "ckb")
+        #expect(FruitfolioLanguage.hebrew.madladTargetCode == "he")
+    }
+
     @Test func pacificLanguagesRemainFirstClassChoices() {
         let required: Set<FruitfolioLanguage> = [
             .samoan, .tongan, .fijian, .hawaiian, .maori, .chamorro,

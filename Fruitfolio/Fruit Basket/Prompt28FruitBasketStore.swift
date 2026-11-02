@@ -13,6 +13,7 @@ final class Prompt28FruitBasketStore: ObservableObject {
         var preferredDifficulty = Prompt28EducationalDifficulty.easy
     }
 
+    @Published private(set) var loadError: String?
     @Published private(set) var topicProgress: [String: Prompt28TopicProgress] = [:]
     @Published private(set) var questionHistory: [String: Set<String>] = [:]
     @Published var tourState = Prompt28TourState()
@@ -98,10 +99,17 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     private func load() {
-        guard
-            let data = defaults.data(forKey: persistenceKey),
-            let state = try? JSONDecoder().decode(PersistedState.self, from: data)
-        else { return }
+        guard defaults.object(forKey: persistenceKey) != nil else { return }
+        guard let data = defaults.data(forKey: persistenceKey) else {
+            loadError = "your saved game data couldn’t be read. it hasn’t been replaced."
+            return
+        }
+        let state: PersistedState
+        do { state = try JSONDecoder().decode(PersistedState.self, from: data) }
+        catch {
+            loadError = "your saved game data couldn’t be read. it hasn’t been replaced."
+            return
+        }
 
         topicProgress = state.topicProgress
         questionHistory = state.questionHistory.mapValues(Set.init)
@@ -114,6 +122,8 @@ final class Prompt28FruitBasketStore: ObservableObject {
     }
 
     private func persist() {
+        // Never overwrite unreadable saved records with an empty/default state.
+        guard loadError == nil else { return }
         let state = PersistedState(
             topicProgress: topicProgress,
             questionHistory: questionHistory.mapValues { Array($0).sorted() },

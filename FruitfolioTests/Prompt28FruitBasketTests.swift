@@ -554,6 +554,41 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.viewWillDisappear()
     }
 
+    func testActualSettledBadFruitConsumesOnePassAndKeepsTheRoundActiveUntilNoneRemain() async throws {
+        let suite = "Fruitfolio.ProtectedCatch.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: .init(defaults: defaults),
+            researchProvider: Prompt28UnavailableResearchProvider())
+        var session = engine.newSession(topic: "fixture", normalizedTopic: "fixture", difficulty: .easy, startingLevel: 1)
+        session.availableStarPasses = 2
+        model.session = session; model.currentQuestion = fixtureQuestion(); model.screen = .catchActive
+        model.updateGameplayFieldSize(width: 402, height: 874)
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: 402, fieldHeight: 874)
+        let entry = (geometry.mouthY + Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: 402) / 2) / 874
+        for attempt in 0..<3 {
+            let fruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad, x: 0.5,
+                y: entry - 0.002, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+            model.activeFruit = [fruit]
+            model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 100 + Double(attempt)))
+            XCTAssertTrue(model.settledCatches.contains { $0.id == fruit.id })
+            let presentation = UUID()
+            model.handleCatchPresentation(id: fruit.id, event: .appeared(presentation))
+            model.handleCatchPresentation(id: fruit.id, event: .settled(presentation))
+            model.tick(delta: 0.2, now: Date(timeIntervalSince1970: 100.2 + Double(attempt)))
+            XCTAssertEqual(model.session?.availableStarPasses, max(1 - attempt, 0))
+            XCTAssertEqual(model.session?.goodFruitCaughtThisRound, 0)
+            if attempt < 2 {
+                XCTAssertEqual(model.screen, .catchActive)
+                XCTAssertFalse(model.isPaused)
+                XCTAssertEqual(model.session?.score, 0)
+            }
+        }
+        try await Task.sleep(for: .milliseconds(400))
+        XCTAssertEqual(model.screen, .catchUnsuccessful, "The first unprotected bad catch ends the actual view-model round")
+        model.viewWillDisappear()
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",

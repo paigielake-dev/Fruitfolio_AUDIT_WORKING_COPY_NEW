@@ -19,8 +19,9 @@ final class FruitBasketGroundedResearchTests: XCTestCase {
                 XCTAssertTrue(snapshot.sources.allSatisfy(\.isApprovedForDisplay))
                 XCTAssertEqual(question.answerOptions.filter { $0.id == question.correctAnswerID }.count, 1)
                 let correct = try XCTUnwrap(question.answerOptions.first { $0.id == question.correctAnswerID })
-                let excerpt = String(question.questionText.split(separator: "\n", maxSplits: 1).last ?? "")
-                    .trimmingCharacters(in: .newlines)
+                let prefix = "which word fills the blank in this research-library passage?\n\n"
+                XCTAssertTrue(question.questionText.hasPrefix(prefix))
+                let excerpt = String(question.questionText.dropFirst(prefix.count))
                 XCTAssertEqual(excerpt.replacingOccurrences(of: "_____", with: correct.text), snapshot.originalPassage)
                 XCTAssertTrue(package.researchNoteChunks.contains { $0.chunkID == snapshot.evidenceID && $0.text == question.explanation }
                     || package.sourceChunks.contains { $0.sourceChunkID == snapshot.evidenceID && $0.text == question.explanation })
