@@ -11,7 +11,7 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
             $0.isHittable && !$0.frame.intersection(app.frame).isEmpty
         }) ?? app
         for _ in 0..<12 where !target.exists {
-            let lazyPanX: CGFloat = owner.identifier == "popup.writingArea" ? 0.50 : min(0.08, 16 / max(owner.frame.width, 1))
+            let lazyPanX: CGFloat = ["popup.writingArea", "fruitBasket.tourWritingArea"].contains(owner.identifier) ? 0.50 : min(0.08, 16 / max(owner.frame.width, 1))
             owner.coordinate(withNormalizedOffset: CGVector(dx: lazyPanX, dy: 0.72))
                 .press(forDuration: 0.05, thenDragTo: owner.coordinate(withNormalizedOffset: CGVector(dx: lazyPanX, dy: 0.28)),
                        withVelocity: .slow, thenHoldForDuration: 0.35)
@@ -34,7 +34,7 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
     // scroll thumb at x369...399. Center pans hit a slider; right-edge pans
     // scrub its scrollbar. Use the empty left gutter of full-page content.
     // A small popup has no such gutter and contains no sliders: use its center.
-    let panX: CGFloat = popupOwnsTarget || container.identifier == "popup.writingArea"
+    let panX: CGFloat = popupOwnsTarget || ["popup.writingArea", "fruitBasket.tourWritingArea"].contains(container.identifier)
         ? 0.50 : min(0.08, 16 / max(container.frame.width, 1))
     // Keep the strict containment test, but budget real pans from measured
     // distance. A complete large-type scientific passage may legitimately

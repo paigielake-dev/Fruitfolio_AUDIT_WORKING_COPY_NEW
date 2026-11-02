@@ -29,7 +29,7 @@ final class PersonalDataManagementUITests: XCTestCase {
         if explore.waitForExistence(timeout: 12) { explore.tap() }
         let settings = button(app, "settings"); XCTAssertTrue(settings.waitForExistence(timeout: 15)); settings.tap()
         if reducedMotion {
-            let control = button(app, "reduced motion")
+            let control = app.switches["reduced motion"]
             fruitfolioReachControl(app, control)
             XCTAssertEqual(control.value as? String, "on", "Observe the real production preference in Settings before auditing its popup")
         }

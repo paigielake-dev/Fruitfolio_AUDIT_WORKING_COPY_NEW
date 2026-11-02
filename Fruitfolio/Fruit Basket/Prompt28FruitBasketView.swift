@@ -459,11 +459,9 @@ struct Prompt28FruitBasketView: View {
                 }
                 .frame(maxWidth: 330)
 
-                Text(
-                    "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆"
-                )
-                .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                FruitfolioNativeActionLabel(
+                    text: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆",
+                    fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .subheadline)
                 .multilineTextAlignment(.center)
                 .fixedSize(
                     horizontal: false,
@@ -1885,8 +1883,10 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var tourOverlay: some View {
+        GeometryReader { viewport in
         ZStack {
-            Prompt28CompactPopupCard {
+            Prompt28CompactPopupCard(maximumHeight: dynamicTypeSize.isAccessibilitySize
+                ? max(44, viewport.size.height - viewport.safeAreaInsets.top - viewport.safeAreaInsets.bottom - 32) : nil) {
                 VStack(spacing: 8) {
                     FruitfolioImage(
                         id: .fruit_strawberry_silly
@@ -1977,6 +1977,8 @@ struct Prompt28FruitBasketView: View {
             }
             .frame(maxWidth: 292)
             .padding(.horizontal, 20)
+        }
+        .frame(width: viewport.size.width, height: viewport.size.height)
         }
         .accessibilityElement(children: .contain)
         .accessibilityAddTraits(.isModal)
@@ -2305,17 +2307,27 @@ private struct Prompt28PaperPanel<Content: View>: View {
 
 private struct Prompt28CompactPopupCard<Content: View>: View {
     let content: Content
+    let maximumHeight: CGFloat?
 
-    init(
+    init(maximumHeight: CGFloat? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.content = content()
+        self.maximumHeight = maximumHeight
     }
 
     var body: some View {
-        content
-            .padding(.horizontal, 22)
-            .padding(.vertical, 20)
+        Group {
+            if let maximumHeight {
+                ScrollView {
+                    content.padding(.horizontal, 22).padding(.vertical, 20)
+                }
+                .frame(maxHeight: maximumHeight)
+                .accessibilityIdentifier("fruitBasket.tourWritingArea")
+            } else {
+                content.padding(.horizontal, 22).padding(.vertical, 20)
+            }
+        }
             .frame(maxWidth: 292)
             .background {
                 Prompt28CodedLargeCardBackground(cornerRadius: 28)

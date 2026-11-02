@@ -1,0 +1,26 @@
+{
+  "runID": 41431534863,
+  "runNumber": 98,
+  "sourceCommit": "31ec66554ec40ce056328f6b04cdc492a9e05c86",
+  "scope": "Actual inspected stage executions; not complete release acceptance or cumulative totals",
+  "artifacts": [
+    {"id": 13135198240, "name": "Fruitfolio_Guarded_Deletion_Journey_Evidence", "sha256": "f36f931d0717dbc18703cf52b7c41fef4e2ffb5db55ce5cab59290ce721a410c", "bytes": 150963089, "zipCRC": "PASS"},
+    {"id": 13136930576, "name": "Fruitfolio_Grounded_Game_Journey_Evidence", "sha256": "0d3a317980cc48f5104a9bbc1f0f5a907a51dfce170339f57451c13710449a14", "bytes": 104013032, "zipCRC": "PASS"},
+    {"id": 13136947290, "name": "Fruitfolio_Accessibility_Audit_Evidence", "sha256": "c3fe5e715be49976847c2c28c41c64edeff1c4410973bdd2838a780755ffa692", "bytes": 454356554, "zipCRC": "PASS"}
+  ],
+  "guardedDeletion": {
+    "PASS": 2, "FAIL": 2,
+    "passed": ["Largest full-bounds and strict modal audit99.569s", "Normal full-bounds and strict modal audit56.977s"],
+    "failed": ["Entered-measurement journey failed before entry: Settings my context helper visibility82.771s", "Reduce Motion journey queried Button while actual production hierarchy exposes Switch76.660s"],
+    "followup": "Preserve original strict full-visibility and audit assertions. Source102 left gutter repairs Settings helper; source105 changes only the observed Reduced Motion element type, retaining actual on-value assertion. New actual results pending."
+  },
+  "groundedGame": {"PASS": 2, "FAIL": 0, "scope": "Normal and largest actual question/choices/answer/catch/pause/exit/fresh reentry journeys. New OS-background extension not part of this run."},
+  "nativeAccessibility": {
+    "PASS": 10, "FAIL": 2,
+    "passed": ["Account", "Ask opening", "Contact", "Cycle opening", "FAQ", "Guide opening", "Hub", "Largest Hub destinations", "Library opening", "Settings"],
+    "failed": ["Largest Fruit Basket first-use tour: real skip button y916.3..960.3 beyond874pt screen; compact card had no ScrollView", "Normal Fruit Basket: tour succeeded, then Rules explanatory SwiftUI text at0.72opacity failed strict contrast"],
+    "followup": "Source105 adds constrained safe-area-aware scrolling only to largest-text tour, retains original text/native button/design; Rules statement uses actual native13pt label at full burgundy. No audit issue suppressed or threshold changed."
+  },
+  "localStaticReader": {"result": "FAIL", "scope": "Optional tree-sitter reader with pinned0.26.0/Swift0.7.4 dependencies crashed while serializing parse diagnostics. Not an iOS compiler execution or evidence of app correctness. Non-parser resource checks passed separately."},
+  "releaseAcceptance": "NOT CLAIMED"
+}
