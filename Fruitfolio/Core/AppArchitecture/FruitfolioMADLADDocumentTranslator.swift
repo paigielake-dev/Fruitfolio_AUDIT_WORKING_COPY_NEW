@@ -5,6 +5,17 @@ nonisolated enum FruitfolioTranslationPreservationError: Error {
     case emptyInput, changedNumber, changedLiteral, unexpectedCitation, invalidSourceCitation
 }
 
+/// A failed candidate is never shown as a translation. Synthetic integration
+/// tests may inspect its exact raw sentence; normal error descriptions contain
+/// no user text, and this object is neither logged nor persisted by the adapter.
+nonisolated struct FruitfolioTranslationRejectedCandidate: Error, Sendable, CustomStringConvertible {
+    let reason: FruitfolioTranslationPreservationError
+    let sourceSentence: String
+    let rawOutput: String
+    let target: String
+    var description: String { "Translation rejected: \(reason)" }
+}
+
 /// A candidate is deliberately distinct from an approved user-facing medical
 /// translation. Preservation checks alone cannot establish clinical entailment.
 nonisolated struct FruitfolioTranslationCandidate: Sendable {
@@ -147,11 +158,17 @@ actor FruitfolioMADLADDocumentTranslator {
             guard !modelInput.isEmpty else { throw FruitfolioTranslationPreservationError.emptyInput }
             var output = try await runtime.translateRawSentence(modelInput, target: target, directory: directory)
             try Task.checkCancellation()
-            guard citation.firstMatch(in: output, range: NSRange(output.startIndex..., in: output)) == nil else {
-                throw FruitfolioTranslationPreservationError.unexpectedCitation
+            let rawOutput = output
+            do {
+                guard citation.firstMatch(in: output, range: NSRange(output.startIndex..., in: output)) == nil else {
+                    throw FruitfolioTranslationPreservationError.unexpectedCitation
+                }
+                output = try FruitfolioTranslationPreservation.preserveNumbers(source: modelInput, translated: output, target: target)
+                try FruitfolioTranslationPreservation.preserveLiterals(immutableTerms, source: modelInput, translated: output)
+            } catch let reason as FruitfolioTranslationPreservationError {
+                throw FruitfolioTranslationRejectedCandidate(reason: reason, sourceSentence: modelInput,
+                    rawOutput: rawOutput, target: target)
             }
-            output = try FruitfolioTranslationPreservation.preserveNumbers(source: modelInput, translated: output, target: target)
-            try FruitfolioTranslationPreservation.preserveLiterals(immutableTerms, source: modelInput, translated: output)
             if !localMarkers.isEmpty {
                 let terminal = output.last.map { ".!?".contains($0) } == true ? String(output.removeLast()) : ""
                 output += " " + localMarkers.joined(separator: " ") + terminal

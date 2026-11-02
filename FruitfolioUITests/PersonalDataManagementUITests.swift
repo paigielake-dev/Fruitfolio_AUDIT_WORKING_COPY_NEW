@@ -35,8 +35,17 @@ final class PersonalDataManagementUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["delete all hormone measurements?"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["data.prepareExport"].exists, "Blurred background controls must not remain exposed to accessibility while confirming deletion")
         capture(app, "BulkHormoneDeletionGuard")
+        let cancel = button(app, "cancel")
+        let pane = app.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
+        XCTAssertTrue(pane.waitForExistence(timeout: 10))
+        for _ in 0..<8 {
+            if cancel.exists && pane.frame.contains(cancel.frame) { break }
+            pane.swipeUp()
+        }
+        XCTAssertTrue(cancel.isHittable && pane.frame.contains(cancel.frame), "The real cancel control must be visible inside the modal writing area")
+        capture(app, "BulkHormoneDeletionVisibleActions")
         try fruitfolioStrictAccessibilityAudit(app)
-        let cancel = button(app, "cancel"); reach(app, cancel); cancel.tap()
+        cancel.tap()
         XCTAssertFalse(app.staticTexts["delete all hormone measurements?"].exists)
         XCTAssertTrue(app.buttons["data.prepareExport"].exists)
         XCTAssertFalse(app.staticTexts["hormone measurements have been deleted from this device."].exists)
@@ -45,10 +54,16 @@ final class PersonalDataManagementUITests: XCTestCase {
     func testActualReadableExportOpensSystemDestinationAndCancellingDoesNotClaimAFileWasExported() {
         let app = openData(); let prepare = app.buttons["data.prepareExport"]
         reach(app, prepare); prepare.tap()
-        let cancel = button(app, "cancel")
-        XCTAssertTrue(cancel.waitForExistence(timeout: 30), "The real system file-export destination must open after actual local snapshot preparation")
+        let filename = app.textFields["DOCPicker.filenameTextField"]
+        XCTAssertTrue(filename.waitForExistence(timeout: 30), "The real system file-export destination must open after actual local snapshot preparation")
+        // Actual iOS26.6 evidence exposes the system Cancel as an Other,
+        // while Save is a Button. Require its real name/hit target, not a guessed role.
+        let cancel = app.descendants(matching: .any).matching(NSPredicate(format: "label ==[c] %@", "Cancel")).firstMatch
+        XCTAssertTrue(cancel.exists && cancel.isHittable)
         capture(app, "ActualSystemExportDestination")
         cancel.tap()
+        let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: filename)
+        XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 10), .completed)
         XCTAssertTrue(app.buttons["data.prepareExport"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["your personal data JSON was exported. keep it somewhere private."].exists)
         capture(app, "SystemExportCancelled")

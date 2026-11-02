@@ -76,7 +76,13 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 reports.append(["target": target, "output": candidate.textForVerification,
                     "preservation": "PASS", "semanticReview": "NOT VERIFIED — requires review of this actual output"])
             } catch {
-                reports.append(["target": target, "error": String(describing: error), "preservation": "FAIL"])
+                var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
+                if let rejected = error as? FruitfolioTranslationRejectedCandidate {
+                    report["rejectedSourceSentence"] = rejected.sourceSentence
+                    report["actualRejectedRawOutput"] = rejected.rawOutput
+                    report["strictReason"] = String(describing: rejected.reason)
+                }
+                reports.append(report)
                 XCTFail("Official local candidate failed strict preservation for \(target): \(error)")
             }
         }

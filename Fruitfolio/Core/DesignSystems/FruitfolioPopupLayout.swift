@@ -52,12 +52,13 @@ struct FruitfolioPopupArtworkSurface<Content: View>: View {
                 }
                 .scrollBounceBehavior(.basedOnSize)
                 .scrollDismissesKeyboard(.interactively)
+                .accessibilityIdentifier("popup.writingArea")
+                .accessibilityAddTraits(.isModal)
                 .frame(width: layout.writing.width, height: layout.writing.height)
                 .position(x: layout.writing.midX, y: layout.writing.midY)
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityAddTraits(.isModal)
     }
 }

@@ -70,8 +70,6 @@ struct Prompt12ConfirmationPopup: View {
             .padding(.bottom, 28)
         }
         .frame(maxWidth: 350)
-        .accessibilityElement(children: .contain)
-        .accessibilityAddTraits(.isModal)
         .accessibilityAction(.escape) { (secondaryAction ?? primaryAction)() }
         .task { await Task.yield(); guard !Task.isCancelled else { return }; titleFocused = true }
         .onAppear {
