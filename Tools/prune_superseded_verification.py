@@ -17,7 +17,13 @@ BRANCH = "fruitfolio/prompt-1b-alignment"
 WORKFLOW = 403220650
 PRESERVE = {41357420177, 41358742740}
 OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60}
-OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
+# Source106 contains the preserved Run97 failure evidence and newer repairs.
+# Its queued intermediate ancestors have no unique executed acceptance to lose.
+# Running source102/103 evidence stays active; never delete artifacts or commits.
+OBSOLETE_COMMITS = {"7ca11f1db89dbae985bc807626c5e17597bdba1e",
+                    "3b7f3ac7bcc49d2edb5fd2ccde58d93163133d21",
+                    "945fdbf275abacf7cc2318e7cc94835bd33c45ff",
+                    "82584a01b407af83f331eab1861083facd0469dc","8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
                     "5a4e0ec21e6c8737700516302afe3682cf023a6a",
                     "d3d4a81f265620eb4b6952b3ddcf9148e158c026",
                     "44eee9e70631e83892380ecd2747e94a59f27f3a",
