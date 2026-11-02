@@ -13,16 +13,31 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         XCTAssertNil(store.account)
     }
 
-    func testDemoSignInCreatesAccountWithoutRawCredentials() throws {
+    func testUnavailableAccountServiceNeverFabricatesAuthenticationOrRemoteSync() {
+        let suite = UUID().uuidString
+        let defaults = UserDefaults(suiteName: suite)!
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt12AccountPrivacyStore(defaults: defaults)
+        XCTAssertThrowsError(try store.signIn(email: "paige@example.com")) {
+            XCTAssertEqual($0 as? Prompt12AccountPrivacyError, .accountServiceUnavailable)
+        }
+        XCTAssertFalse(store.isSignedIn)
+        XCTAssertNil(store.account)
+        XCTAssertEqual(store.authenticationState, .signInFailed)
+        XCTAssertEqual(store.syncState, .unavailable)
+        let restarted = Prompt12AccountPrivacyStore(defaults: defaults)
+        XCTAssertFalse(restarted.isSignedIn)
+        XCTAssertNil(restarted.account, "An entered email must not become a fabricated account after restart")
+    }
+
+    func testUnavailableSyncDoesNotDiscardPendingLocalChanges() {
         let defaults = UserDefaults(suiteName: UUID().uuidString)!
         let store = Prompt12AccountPrivacyStore(defaults: defaults)
-
-        try store.signInForDevelopment(email: "paige@example.com")
-
-        XCTAssertTrue(store.isSignedIn)
-        XCTAssertEqual(store.account?.email, "paige@example.com")
-        XCTAssertEqual(store.account?.provider, "demo")
-        XCTAssertEqual(store.syncState, .synced)
+        store.markLocalChangePending()
+        store.syncNow()
+        XCTAssertTrue(store.pendingLocalChanges)
+        XCTAssertEqual(store.syncState, .localOnly)
+        XCTAssertNil(store.account)
     }
 
     func testBlankEmailThrows() {
@@ -30,7 +45,7 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         let store = Prompt12AccountPrivacyStore(defaults: defaults)
 
         XCTAssertThrowsError(
-            try store.signInForDevelopment(email: "   ")
+            try store.signIn(email: "   ")
         )
     }
 

@@ -46,6 +46,12 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
             pendingLocalChanges = snapshot.pendingLocalChanges
             localDataContainerID = snapshot.localDataContainerID
             usePrivacyModeOnLockScreen = snapshot.usePrivacyModeOnLockScreen
+            if snapshot.account?.provider == "demo" {
+                // Preserve old fixture identity for export/local sign-out, but
+                // do not restore an email-only demo as an authenticated session.
+                authenticationState = .sessionExpired
+                syncState = .unavailable
+            }
         } else {
             ownershipState = .purchased
             authenticationState = .signedOut
@@ -116,39 +122,18 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
         }
     }
 
-    func signInForDevelopment(
-        email rawEmail: String,
-        provider: String = "demo"
-    ) throws {
-        let cleanEmail = rawEmail.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
-
-        guard !cleanEmail.isEmpty else {
+    /// No authenticated account service/configuration was supplied. Never turn
+    /// an email string into a fabricated authenticated or remotely synced user.
+    func signIn(email rawEmail: String) throws {
+        guard !rawEmail.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             authenticationState = .signInFailed
             saveSnapshot()
             throw Prompt12AccountPrivacyError.blankEmail
         }
-
-        authenticationState = .signingIn
-        syncState = .syncing
+        authenticationState = .signInFailed
+        syncState = .unavailable
         saveSnapshot()
-
-        let username = cleanEmail
-            .split(separator: "@")
-            .first
-            .map(String.init) ?? "Fruitfolio friend"
-
-        account = Prompt12AccountIdentity(
-            provider: provider,
-            email: cleanEmail,
-            username: username
-        )
-
-        authenticationState = .signedIn
-        syncState = .synced
-        pendingLocalChanges = false
-        saveSnapshot()
+        throw Prompt12AccountPrivacyError.accountServiceUnavailable
     }
 
     func markLocalChangePending() {
@@ -158,21 +143,10 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func syncNow() {
-        guard isSignedIn else {
-            syncState = .localOnly
-            saveSnapshot()
-            return
-        }
-
-        syncState = .syncing
+        // A local delay is not a network acknowledgement. Keep pending changes
+        // and the local identity intact until a real account service exists.
+        syncState = account == nil ? .localOnly : .unavailable
         saveSnapshot()
-
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 450_000_000)
-            pendingLocalChanges = false
-            syncState = .synced
-            saveSnapshot()
-        }
     }
 
     func signOut(
@@ -223,15 +197,10 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
             throw Prompt12AccountPrivacyError.notSignedIn
         }
 
-        authenticationState = .deletingAccount
-        syncState = .syncing
+        // Local record deletion cannot certify deletion from a remote account.
+        syncState = .unavailable
         saveSnapshot()
-
-        account = nil
-        authenticationState = .accountDeleted
-        syncState = .localOnly
-        pendingLocalChanges = false
-        saveSnapshot()
+        throw Prompt12AccountPrivacyError.accountServiceUnavailable
     }
 
     func resetLocalAccountPrivacyStateForTesting() {

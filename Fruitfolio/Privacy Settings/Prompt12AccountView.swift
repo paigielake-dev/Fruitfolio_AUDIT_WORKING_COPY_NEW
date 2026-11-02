@@ -164,7 +164,7 @@ struct Prompt12AccountView: View {
                 )
 
             Prompt12InfoText(
-                "sign in to keep supported Fruitfolio data connected to you across devices. local features can still use local storage when available."
+                "account connection is unavailable. your information stays on this device, and your public username still works."
             )
 
             TextField("email", text: $email)
@@ -354,7 +354,7 @@ struct Prompt12AccountView: View {
 
     private func signIn() {
         do {
-            try store.signInForDevelopment(email: email)
+            try store.signIn(email: email)
             message = nil
         } catch {
             message = error.localizedDescription
