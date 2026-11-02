@@ -11,3 +11,5 @@ Feasible check: changed Swift files pass `git diff --check`. No Xcode, simulator
 Outstanding: run the new and prior audio suites on Mac, test real interruptions and routes, test every slider/mute independently, listen for unwanted overlap and clipping, verify background/foreground and Reduce Motion interactions. Existing Foley assets are preserved without regeneration. MADLAD inference remains excluded for the founder-handled future sprint.
 
 Feasible tooling regression run: `python -m unittest discover -s Tools/tests -v` executed 11 tests, all passed (0.049 s). This verifies research-update and XCTest-report tooling, not audio runtime acceptance.
+
+Unchanged Foley resource checks: all three committed WAV files matched their original SHA256, sample rate, channel count, sample width and exact frame count. Results and a distinct tooling regression log are retained in `Fruitfolio_Verification_Evidence/FiveHourSprint/Phase2Audio/`. This is resource-integrity evidence only.
