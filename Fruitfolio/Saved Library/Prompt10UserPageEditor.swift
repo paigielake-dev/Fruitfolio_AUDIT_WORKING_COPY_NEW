@@ -169,6 +169,7 @@ struct Prompt10UserPageEditor: View {
 struct Prompt10SemanticTextEditor: UIViewRepresentable {
     @Binding var document: FruitfolioSemanticDocument
     @Binding var selection: NSRange
+    @Environment(\.locale) private var locale
 
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIView(context: Context) -> UITextView {
@@ -177,12 +178,14 @@ struct Prompt10SemanticTextEditor: UIViewRepresentable {
         context.coordinator.textView = view
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
         toolbar.tintColor = UIColor(red: 128.0 / 255, green: 0, blue: 0, alpha: 1)
-        toolbar.items = [UIBarButtonItem(systemItem: .flexibleSpace),
-            UIBarButtonItem(title: "done", style: .done, target: context.coordinator, action: #selector(Coordinator.finishEditing))]
+        let done = UIBarButtonItem(title: FruitfolioLocalization.localized("done", locale: locale),
+            style: .done, target: context.coordinator, action: #selector(Coordinator.finishEditing))
+        done.accessibilityIdentifier = "userPage.keyboardDone"
+        toolbar.items = [UIBarButtonItem(systemItem: .flexibleSpace), done]
         view.inputAccessoryView = toolbar
         view.backgroundColor = .clear
         view.adjustsFontForContentSizeCategory = true
-        view.accessibilityLabel = "page content"
+        view.accessibilityLabel = FruitfolioLocalization.localized("page content", locale: locale)
         view.accessibilityIdentifier = "userPage.content"
         view.attributedText = FruitfolioSemanticAttributedRenderer.render(document, traits: view.traitCollection)
         context.coordinator.lastAppliedDocument = document
@@ -193,6 +196,10 @@ struct Prompt10SemanticTextEditor: UIViewRepresentable {
     }
     func updateUIView(_ view: UITextView, context: Context) {
         context.coordinator.parent = self
+        // UIKit accessories do not consume SwiftUI LocalizedStringKey. Update
+        // authored UI chrome separately, before the unchanged-document guard.
+        (view.inputAccessoryView as? UIToolbar)?.items?.last?.title = FruitfolioLocalization.localized("done", locale: locale)
+        view.accessibilityLabel = FruitfolioLocalization.localized("page content", locale: locale)
         // UIKit already contains edits emitted by its delegate. Reapplying the
         // attributed string for each SwiftUI echo can move the insertion point
         // between keystrokes and interleave the user's text.

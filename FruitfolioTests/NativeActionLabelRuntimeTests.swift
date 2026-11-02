@@ -115,4 +115,28 @@ final class NativeActionLabelRuntimeTests: XCTestCase {
                       "User-authored text is never passed through a UI-key translator")
     }
 
+    func testActualNativePageEditorKeyboardActionLocalizesWithoutTranslatingTheUserDocument() throws {
+        let scene = try XCTUnwrap(UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.first)
+        let previous = scene.windows.first(where: \.isKeyWindow)
+        let original = "my exact note: 2.50 ng/mL [source-1] — ملاحظة شخصية"
+        let document = FruitfolioSemanticDocument(spans: [.init(text: original, emphasis: .spokenItalic)])
+        let host = UIHostingController(rootView: Prompt10SemanticTextEditor(document: .constant(document),
+            selection: .constant(NSRange(location: 0, length: 0)))
+            .environment(\.locale, Locale(identifier: "es")))
+        let window = UIWindow(windowScene: scene)
+        window.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
+        window.rootViewController = host; window.makeKeyAndVisible()
+        defer { window.isHidden = true; previous?.makeKey() }
+        host.view.setNeedsLayout(); host.view.layoutIfNeeded()
+        func editors(_ view: UIView) -> [UITextView] {
+            (view as? UITextView).map { [$0] } ?? view.subviews.flatMap { editors($0) }
+        }
+        let editor = try XCTUnwrap(editors(host.view).first)
+        let toolbar = try XCTUnwrap(editor.inputAccessoryView as? UIToolbar)
+        XCTAssertEqual(toolbar.items?.last?.title, "listo")
+        XCTAssertEqual(toolbar.items?.last?.accessibilityIdentifier, "userPage.keyboardDone")
+        XCTAssertEqual(editor.attributedText.string, original)
+        XCTAssertEqual(FruitfolioSemanticAttributedRenderer.document(from: editor.attributedText).plainText, original)
+    }
+
 }
