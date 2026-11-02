@@ -1,0 +1,59 @@
+{
+  "phase": 4,
+  "recordedAtUTC": "2026-11-02T16:48:36.875250+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-125",
+      "originalBreakdownItem": "Retain citations and attribution for successfully saved content.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-128",
+      "originalBreakdownItem": "Prevent canceled or failed saves from creating persistent copies.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-162",
+      "originalBreakdownItem": "Preserve source titles, publication details, and citation identifiers.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-167",
+      "originalBreakdownItem": "Apply the updated popup system to Ask help and save interactions.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    }
+  ]
+}

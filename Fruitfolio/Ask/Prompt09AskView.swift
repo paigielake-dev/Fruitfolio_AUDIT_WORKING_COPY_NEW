@@ -25,6 +25,7 @@ struct Prompt09AskView: View {
 
     @State private var savedAnswerIDs: Set<String> = []
     @State private var savedExcerptText: String?
+    @State private var librarySaveError: String?
 
     @FocusState private var inputFocused: Bool
 
@@ -219,7 +220,7 @@ struct Prompt09AskView: View {
                 }
             }
             .fruitfolioModalBlur(
-                active: pendingLibrarySave != nil || showingHelp,
+                active: pendingLibrarySave != nil || showingHelp || librarySaveError != nil,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
@@ -265,7 +266,7 @@ struct Prompt09AskView: View {
         ) {
             inputBar
                 .fruitfolioModalBlur(
-                    active: pendingLibrarySave != nil || showingHelp,
+                    active: pendingLibrarySave != nil || showingHelp || librarySaveError != nil,
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
         }
@@ -283,7 +284,13 @@ struct Prompt09AskView: View {
             }
         }
         .overlay {
-            if showingHelp {
+            if let librarySaveError {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "answer could not be saved",
+                    message: librarySaveError, primaryLabel: "keep reading", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { audioManager.play(.popupClose); self.librarySaveError = nil }, secondaryAction: nil, destructiveAction: nil)
+                    .accessibilityIdentifier("ask.saveAttributionError")
+                    .zIndex(20)
+            } else if showingHelp {
                 Prompt12ConfirmationPopup(assetName: "popup_info", title: "ask Fruitfolio",
                     message: "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used.",
                     primaryLabel: "got it", secondaryLabel: nil, destructiveLabel: nil,
@@ -311,6 +318,7 @@ struct Prompt09AskView: View {
             viewModel.resetConversation()
             savedAnswerIDs.removeAll()
             savedExcerptText = nil
+            librarySaveError = nil
         }
         .toolbar(
             .hidden,
@@ -1008,6 +1016,10 @@ struct Prompt09AskView: View {
             return
         }
 
+        let attribution: AskSavedAttributionSnapshot
+        do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
+        catch { librarySaveError = error.localizedDescription; return }
+
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
@@ -1024,15 +1036,10 @@ struct Prompt09AskView: View {
                 originalConversationID:
                     String(describing: viewModel.conversationID),
                 sourceIDs:
-                    answer.sourceIDs,
+                    attribution.sourceIDs,
                 sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
-                sourceSnapshots: answer.sources.filter { answer.sourceIDs.contains($0.id) },
+                    attribution.sourceVersions,
+                sourceSnapshots: attribution.sources,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
@@ -1055,6 +1062,10 @@ struct Prompt09AskView: View {
             return
         }
 
+        let attribution: AskSavedAttributionSnapshot
+        do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
+        catch { librarySaveError = error.localizedDescription; return }
+
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
@@ -1073,15 +1084,10 @@ struct Prompt09AskView: View {
                 originalConversationID:
                     String(describing: viewModel.conversationID),
                 sourceIDs:
-                    answer.sourceIDs,
+                    attribution.sourceIDs,
                 sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
-                sourceSnapshots: answer.sources.filter { answer.sourceIDs.contains($0.id) },
+                    attribution.sourceVersions,
+                sourceSnapshots: attribution.sources,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
