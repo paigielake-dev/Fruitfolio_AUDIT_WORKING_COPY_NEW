@@ -104,6 +104,23 @@ final class AudioLifecycleRuntimeTests: XCTestCase {
         XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
     }
 
+    func testExplicitLoopReplacesTheRequestedResourceWithinItsChannel() throws {
+        let suite = "AudioLoopResource-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.buttonSoftPop, loop: true)
+        XCTAssertEqual(manager.activeLoopID(for: .soundEffects), .buttonSoftPop)
+        manager.play(.popupOpen, loop: true)
+        XCTAssertEqual(manager.activeLoopID(for: .soundEffects), .popupOpen)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 1)
+        manager.stop(category: .soundEffects)
+        XCTAssertNil(manager.activeLoopID(for: .soundEffects))
+    }
+
     func testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory() async throws {
         let suite = "AudioLoops-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

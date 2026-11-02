@@ -17,6 +17,7 @@ final class AudioManager: ObservableObject {
     private var oneShotPlayers: [FruitfolioAudioCategory: [AVAudioPlayer]] = [:]
     private var uiFeedbackPlayers: [String: AVAudioPlayer] = [:]
     private var loopPlayers: [FruitfolioAudioCategory: AVAudioPlayer] = [:]
+    private var currentLoopRequests: [FruitfolioAudioCategory: LoopRequest] = [:]
     private var desiredLoops: [FruitfolioAudioCategory: LoopRequest] = [:]
     private var suspendedLoopCategories = Set<FruitfolioAudioCategory>()
     private var fadeOutTasks: [FruitfolioAudioCategory: Task<Void, Never>] = [:]
@@ -187,6 +188,10 @@ final class AudioManager: ObservableObject {
                 return
             }
 
+            if let current = currentLoopRequests[category],
+               current.id != id || current.bundle.bundleURL != bundle.bundleURL {
+                stopPhysicalLoop(category: category)
+            }
             if let existingPlayer = loopPlayers[category] {
                 let targetVolume = volume(for: category)
 
@@ -262,6 +267,10 @@ final class AudioManager: ObservableObject {
         return (players.count, players.contains(where: \.isPlaying), players.map(\.volume), players.map(\.duration))
     }
 
+    func activeLoopID(for category: FruitfolioAudioCategory) -> FruitfolioAudioID? {
+        currentLoopRequests[category]?.id
+    }
+
     var typingPlaybackState: (playerCount: Int, isPlaying: Bool, volume: Float) {
         let players = oneShotPlayers[.typingASMR] ?? []
         return (players.count, players.contains(where: \.isPlaying), players.first?.volume ?? 0)
@@ -289,6 +298,10 @@ final class AudioManager: ObservableObject {
                 return
             }
 
+            if let current = currentLoopRequests[category],
+               current.id != id || current.bundle.bundleURL != bundle.bundleURL {
+                stopPhysicalLoop(category: category)
+            }
             if let existingPlayer = loopPlayers[category] {
                 let targetVolume = volume(for: category)
 
@@ -603,6 +616,10 @@ final class AudioManager: ObservableObject {
             return
         }
 
+        if let request = desiredLoops[category], let current = currentLoopRequests[category],
+           current.id != request.id || current.bundle.bundleURL != request.bundle.bundleURL {
+            stopPhysicalLoop(category: category)
+        }
         if let player = loopPlayers[category] {
             let targetVolume = volume(for: category)
 
@@ -743,6 +760,7 @@ final class AudioManager: ObservableObject {
                 return
             }
 
+            currentLoopRequests[category] = LoopRequest(id: id, bundle: bundle)
             if fadeDuration > 0 {
                 player.setVolume(
                     targetVolume,
@@ -763,6 +781,7 @@ final class AudioManager: ObservableObject {
         category: FruitfolioAudioCategory
     ) {
         cancelPendingFadeOut(category)
+        currentLoopRequests[category] = nil
         guard let player = loopPlayers[category] else {
             return
         }
