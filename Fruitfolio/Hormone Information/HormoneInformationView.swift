@@ -30,6 +30,7 @@ struct HormoneInformationView: View {
                         Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                     }
                     FruitfolioControlPillButton(label: "add measurement", localizationKey: "add measurement") { editing = HormoneMeasurement() }
+                        .accessibilityIdentifier("hormone.addMeasurement")
                         .disabled(store.loadError != nil)
                     FruitfolioControlPillButton(label: "hormone library", localizationKey: "hormone library") { showLibrary = true }
                     FruitfolioControlPillButton(label: "hormone rhythm", localizationKey: "hormone rhythm") { showRhythm = true }
@@ -122,16 +123,19 @@ private struct HormoneMeasurementEditor: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 Text("record a measurement").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("hormone.editor.title")
                 Picker("hormone", selection: $draft.hormone) {
                     ForEach(RecordedHormone.allCases) { Text(LocalizedStringKey($0.title)).tag($0) }
                 }
                 if draft.hormone == .other { field("other hormone name", text: $draft.otherHormoneName) }
-                field("numerical result", text: $draft.result).keyboardType(.decimalPad)
-                field("unit (exactly as reported)", text: $draft.unit)
+                field("numerical result", text: $draft.result, identifier: "hormone.result").keyboardType(.decimalPad)
+                field("unit (exactly as reported)", text: $draft.unit, identifier: "hormone.unit")
                 DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
                     .onChange(of: draft.testDate) { _, _ in draft.testDateWasProvided = true }
                 if draft.testDateWasProvided != true {
                     FruitfolioControlPillButton(label: "confirm test date", localizationKey: "confirm test date") { draft.testDateWasProvided = true }
+                        .accessibilityIdentifier("hormone.confirmTestDate")
                     Text("the displayed date is not saved until you choose or confirm it.")
                 }
                 field("sample type (optional)", text: $draft.sampleType)
@@ -144,10 +148,12 @@ private struct HormoneMeasurementEditor: View {
                 FruitfolioControlPillButton(label: "save measurement", localizationKey: "save measurement") {
                     do { try store.save(draft); dismiss() } catch { self.error = error.localizedDescription }
                 }.disabled(draft.validationError != nil)
+                    .accessibilityIdentifier("hormone.saveMeasurement")
                 FruitfolioControlPillButton(label: "cancel", localizationKey: "cancel") {
                     fieldFocused = false
                     if draft != original { showDiscard = true } else { dismiss() }
                 }
+                .accessibilityIdentifier("hormone.cancelEditing")
             }
             .frame(maxWidth: 620, alignment: .leading)
             .frame(maxWidth: .infinity)
@@ -183,7 +189,7 @@ private struct HormoneMeasurementEditor: View {
         }
     }
 
-    private func field(_ label: String, text: Binding<String>, multiline: Bool = false) -> some View {
+    private func field(_ label: String, text: Binding<String>, multiline: Bool = false, identifier: String? = nil) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             Text(LocalizedStringKey(label))
             TextField(LocalizedStringKey(label), text: text, axis: multiline ? .vertical : .horizontal)
@@ -192,6 +198,7 @@ private struct HormoneMeasurementEditor: View {
                 .submitLabel(.done)
                 .onSubmit { fieldFocused = false }
                 .accessibilityLabel(LocalizedStringKey(label))
+                .accessibilityIdentifier(identifier ?? label)
                 .autocorrectionDisabled()
         }
     }

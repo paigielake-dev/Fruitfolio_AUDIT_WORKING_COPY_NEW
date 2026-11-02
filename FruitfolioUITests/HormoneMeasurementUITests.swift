@@ -39,6 +39,67 @@ final class HormoneMeasurementUITests: XCTestCase {
         XCTAssertTrue(button(app, prefix: "add measurement").waitForExistence(timeout: 8))
     }
 
+    func testUnsavedMeasurementCancelKeepEditingAndDiscardDoNotCreateARecord() throws {
+        try verifyUnsavedMeasurementGuard(largest: false)
+    }
+
+    func testLargestTextUnsavedMeasurementGuardPreservesExactDraftUntilExplicitDiscard() throws {
+        try verifyUnsavedMeasurementGuard(largest: true)
+    }
+
+    private func verifyUnsavedMeasurementGuard(largest: Bool) throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1"]
+        if largest {
+            app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        }
+        app.launch()
+        openMeasurements(app)
+        let add = app.buttons["hormone.addMeasurement"]
+        fruitfolioReachControl(app, add); add.tap()
+        let result = app.textFields["hormone.result"]
+        XCTAssertTrue(result.waitForExistence(timeout: 8))
+        fruitfolioReachControl(app, result); result.tap(); result.typeText("731.2200")
+        let unit = app.textFields["hormone.unit"]
+        fruitfolioReachControl(app, unit); unit.tap()
+        let fixtureUnit = "unsaved-" + String(UUID().uuidString.prefix(8)).lowercased()
+        unit.typeText(fixtureUnit)
+        let done = app.buttons["hormone.keyboardDone"]
+        XCTAssertTrue(done.waitForExistence(timeout: 8)); done.tap()
+        let date = app.buttons["hormone.confirmTestDate"]
+        fruitfolioReachControl(app, date); date.tap()
+        let save = app.buttons["hormone.saveMeasurement"]
+        fruitfolioReachControl(app, save)
+        XCTAssertTrue(save.isEnabled, "The draft must be valid enough to save before testing safe cancellation")
+        let cancel = app.buttons["hormone.cancelEditing"]
+        fruitfolioReachControl(app, cancel); cancel.tap()
+        let title = app.staticTexts["discard unsaved measurement?"]
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+        let pane = app.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
+        let keep = button(app, prefix: "keep editing")
+        fruitfolioReachControl(app, keep, container: pane)
+        capture(app, "Unsaved_KeepEditing_FullyVisible_largest_\(largest)")
+        try fruitfolioStrictAccessibilityAudit(app)
+        fruitfolioReachControl(app, keep, container: pane); keep.tap()
+        XCTAssertFalse(title.exists)
+        fruitfolioReachControl(app, result)
+        XCTAssertEqual(result.value as? String, "731.2200")
+        fruitfolioReachControl(app, unit)
+        XCTAssertEqual(unit.value as? String, fixtureUnit)
+        fruitfolioReachControl(app, cancel); cancel.tap()
+        XCTAssertTrue(title.waitForExistence(timeout: 8))
+        let discard = button(app, prefix: "discard")
+        fruitfolioReachControl(app, discard, container: pane)
+        capture(app, "Unsaved_ExplicitDiscard_FullyVisible_largest_\(largest)")
+        discard.tap()
+        XCTAssertTrue(app.buttons["hormone.addMeasurement"].waitForExistence(timeout: 8))
+        let forbiddenRecord = app.staticTexts["731.2200 " + fixtureUnit]
+        XCTAssertFalse(forbiddenRecord.exists)
+        app.terminate(); app.launch(); openMeasurements(app)
+        XCTAssertFalse(forbiddenRecord.exists, "Discarded values must not be persisted by cancel or app restart")
+        capture(app, "Unsaved_AbsentAfterRestart_largest_\(largest)")
+    }
+
     func testCreateRestartEditAndDeleteMeasurement() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioUITest", "1"]

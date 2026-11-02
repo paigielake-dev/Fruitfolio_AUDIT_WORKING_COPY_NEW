@@ -128,6 +128,42 @@
       "changes": "Readable JSON with duplicate measurement identities is now rejected as conflicting storage, with original bytes preserved and writes/deletion disabled. No observation is silently deduplicated or selected. Explicit guarded bulk erase remains the separate recovery action. Export already refuses any hormone store loadError.",
       "verification": "Added actual encoded-file, restart, byte-equality and explicit recovery XCTest. Runtime pending founder Mac; changed-file git diff --check passed.",
       "remainingIssues": "New safety path and unaffected save/edit/delete/export journeys require Mac regression verification."
+    },
+    {
+      "requirementID": "FF1B-248",
+      "originalBreakdownItem": "Support cancellation and unsaved-change protection.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
+    },
+    {
+      "requirementID": "FF1B-261",
+      "originalBreakdownItem": "Ensure the feature supports Dynamic Type, VoiceOver, and accessible graph distinctions.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
+    },
+    {
+      "requirementID": "FF1B-458",
+      "originalBreakdownItem": "Test Hormone Information creation, editing, deletion, and persistence.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
     }
   ]
 }
