@@ -76,6 +76,33 @@ final class HormoneMeasurementTests: XCTestCase {
         XCTAssertEqual(try XCTUnwrap(defaults.persistentDomain(forName: suite)) as NSDictionary, before)
     }
 
+    func testDuplicateStoredRecordIdentitiesFailClosedAcrossRestartsWithoutDiscardingOriginalValues() throws {
+        struct Snapshot: Encodable { let version: Int; let measurements: [HormoneMeasurement] }
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let file = directory.appendingPathComponent("measurements.json")
+        let first = record()
+        var conflicting = first
+        conflicting.result = "99.1250"
+        conflicting.notes = "separate stored observation sharing an invalid duplicate ID"
+        let original = try JSONEncoder().encode(Snapshot(version: 1, measurements: [first, conflicting]))
+        try original.write(to: file)
+        for _ in 0..<2 {
+            let reopened = HormoneMeasurementStore(fileURL: file)
+            XCTAssertNotNil(reopened.loadError)
+            XCTAssertThrowsError(try reopened.save(record()))
+            XCTAssertThrowsError(try reopened.delete(id: first.id))
+            XCTAssertEqual(try Data(contentsOf: file), original,
+                           "Recovery must never deduplicate or select one of conflicting medical records")
+        }
+        let reopened = HormoneMeasurementStore(fileURL: file)
+        try reopened.eraseAll() // Only an explicit guarded production action may discard these bytes.
+        XCTAssertNil(reopened.loadError)
+        try reopened.save(record())
+        XCTAssertEqual(HormoneMeasurementStore(fileURL: file).measurements.count, 1)
+    }
+
     func testUnreadableStorageCannotBeSilentlyOverwritten() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

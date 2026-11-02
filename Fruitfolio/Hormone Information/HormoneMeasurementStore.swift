@@ -17,6 +17,11 @@ final class HormoneMeasurementStore: ObservableObject {
         do {
             let snapshot = try JSONDecoder().decode(Snapshot.self, from: Data(contentsOf: self.fileURL))
             guard snapshot.version == 1 else { throw StoreError.unsupportedVersion }
+            // Duplicate identities make edit/delete ambiguous. Preserve the
+            // complete file and fail explicitly instead of dropping a result.
+            guard Set(snapshot.measurements.map(\.id)).count == snapshot.measurements.count else {
+                throw StoreError.duplicateRecordIdentity
+            }
             measurements = snapshot.measurements
         } catch {
             // Never replace unreadable health records with an empty snapshot.
@@ -73,12 +78,13 @@ final class HormoneMeasurementStore: ObservableObject {
 
     private struct Snapshot: Codable { let version: Int; let measurements: [HormoneMeasurement] }
     enum StoreError: LocalizedError {
-        case validation(String), unreadableStorage, unsupportedVersion
+        case validation(String), unreadableStorage, unsupportedVersion, duplicateRecordIdentity
         var errorDescription: String? {
             switch self {
             case .validation(let message): return message
             case .unreadableStorage: return "stored measurements could not be opened. no changes have been saved."
             case .unsupportedVersion: return "this measurement file uses an unsupported version."
+            case .duplicateRecordIdentity: return "stored measurements have conflicting record identities. the original file is preserved."
             }
         }
     }
