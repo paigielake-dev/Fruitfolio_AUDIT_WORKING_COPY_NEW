@@ -220,9 +220,18 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
     case chapterNotFound
     case pageNotFound
     case persistenceFailure
+    case titleTooLong
+    case descriptionTooLong
+    case inappropriateMetadata
 
     var errorDescription: String? {
         switch self {
+        case .titleTooLong:
+            return "keep your encyclopedia title to 60 characters or fewer. your writing has not been changed."
+        case .descriptionTooLong:
+            return "keep your little description to 240 characters or fewer. your writing has not been changed."
+        case .inappropriateMetadata:
+            return "please choose a title or description without profanity, crude wording, or violent threats. sexual-health and anatomical terms are welcome."
         case .blankTitle:
             return "give your little encyclopedia a name first."
         case .encyclopediaLimitReached:
@@ -235,6 +244,45 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
             return "that saved page could not be found."
         case .persistenceFailure:
             return "that change didn’t settle properly."
+        }
+    }
+}
+
+
+/// Metadata only: never run moderation over saved evidence, source citations,
+/// questions, health records, or the user's independently authored page body.
+/// Existing records are not rewritten/truncated during loading or migration.
+nonisolated enum Prompt10MetadataPolicy {
+    static let maximumTitleCharacters = 60
+    static let maximumDescriptionCharacters = 240
+
+    static func validateTitle(_ text: String) throws {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw Prompt10LibraryError.blankTitle }
+        guard trimmed.count <= maximumTitleCharacters else { throw Prompt10LibraryError.titleTooLong }
+        try validateWording(trimmed)
+    }
+
+    static func validateDescription(_ text: String) throws {
+        guard text.trimmingCharacters(in: .whitespacesAndNewlines).count <= maximumDescriptionCharacters else {
+            throw Prompt10LibraryError.descriptionTooLong
+        }
+        try validateWording(text)
+    }
+
+    private static func validateWording(_ text: String) throws {
+        let folded = text.folding(options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive],
+                                  locale: Locale(identifier: "en_US_POSIX"))
+        let words = folded.components(separatedBy: CharacterSet.letters.inverted).filter { !$0.isEmpty }
+        let profanity: Set<String> = ["fuck", "fucking", "fucked", "motherfucker", "shit", "shitty", "bullshit",
+            "bitch", "cunt", "dick", "cock", "pussy", "asshole", "whore", "slut"]
+        if !profanity.isDisjoint(with: words) { throw Prompt10LibraryError.inappropriateMetadata }
+        // Whole-word boundaries keep legitimate anatomy/sexual-health language
+        // and words such as assessment/intersex from substring false positives.
+        // This local guardrail is not a claim of comprehensive multilingual moderation.
+        let violentThreat = #"^\s*(?:(?:how|ways)\s+to\s+)?(?:kill|murder|torture)\s+(?:you|them|people|someone|everyone)\b"#
+        if folded.range(of: violentThreat, options: .regularExpression) != nil {
+            throw Prompt10LibraryError.inappropriateMetadata
         }
     }
 }

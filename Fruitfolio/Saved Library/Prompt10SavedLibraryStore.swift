@@ -48,9 +48,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
 
         let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard !cleanName.isEmpty else {
-            throw Prompt10LibraryError.blankTitle
-        }
+        try Prompt10MetadataPolicy.validateTitle(cleanName)
 
         let id = UUID()
         let defaultChapter = Prompt10Chapter(
@@ -78,9 +76,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
     ) throws {
         let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard !cleanName.isEmpty else {
-            throw Prompt10LibraryError.blankTitle
-        }
+        try Prompt10MetadataPolicy.validateTitle(cleanName)
 
         guard let index = encyclopedias.firstIndex(where: { $0.id == id }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
@@ -319,9 +315,8 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanSubtitle = rawSubtitle.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        guard !cleanName.isEmpty else {
-            throw Prompt10LibraryError.blankTitle
-        }
+        try Prompt10MetadataPolicy.validateTitle(cleanName)
+        try Prompt10MetadataPolicy.validateDescription(cleanSubtitle)
 
         let guide = Prompt10Encyclopedia(
             ownerID: ownerID,
@@ -347,6 +342,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         }
 
         let cleaned = rawDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        try Prompt10MetadataPolicy.validateDescription(cleaned)
 
         encyclopedias[index].subtitle =
             cleaned.isEmpty ? nil : cleaned

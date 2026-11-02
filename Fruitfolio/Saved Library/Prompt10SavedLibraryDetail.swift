@@ -66,7 +66,8 @@ struct Prompt10EncyclopediaDetailView: View {
                             .font(
                                 .custom(
                                     "Chalkboard SE",
-                                    size: 21
+                                    size: 21,
+                                    relativeTo: .title3
                                 )
                             )
                             .fontWeight(.bold)
@@ -74,7 +75,7 @@ struct Prompt10EncyclopediaDetailView: View {
                                 DesignTokens.ColorToken.primaryBurgundy
                             )
                             .multilineTextAlignment(.center)
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.horizontal, 48)
                     }
                 }
