@@ -17,12 +17,16 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
     // and could not be repaired by scrolling content that already fitted.
     // Modal writing-area clipping, complete bounds and hittability stay strict.
     let visible = app.frame.intersection(container.frame)
-    for _ in 0..<14 {
-        if target.isHittable && visible.contains(target.frame) { break }
+    for attempt in 0..<14 {
         let frame = target.frame
-        let towardEarlierContent = frame.minY < visible.minY
-        let overflow = towardEarlierContent ? visible.minY - frame.minY : frame.maxY - visible.maxY
-        let distance = min(max(overflow + 8, 12), visible.height * 0.45)
+        print("REACH_CONTROL attempt=\(attempt) identifier=\(identifier) target=\(frame) viewport=\(visible) hittable=\(target.isHittable)")
+        if target.isHittable && visible.contains(frame) { break }
+        // Run85 left Cancel just9.7pt clipped and oscillated with12–24pt
+        // edge corrections. Center the target with a reliable pan, preserving
+        // full bounds and giving the control breathing room inside the paper.
+        let delta = frame.midY - visible.midY
+        let towardEarlierContent = delta < 0
+        let distance = min(max(abs(delta), 32), visible.height * 0.45)
         let fraction = distance / max(container.frame.height, 1)
         let startY = towardEarlierContent ? 0.50 - fraction / 2 : 0.50 + fraction / 2
         let endY = towardEarlierContent ? 0.50 + fraction / 2 : 0.50 - fraction / 2
@@ -31,7 +35,7 @@ func fruitfolioReachControl(_ app: XCUIApplication, _ target: XCUIElement,
         // Run80's actual trace oscillated past the small writing viewport.
         // A proportional slow drag with a stationary release avoids momentum
         // overshoot without relaxing full containment or hittability.
-        start.press(forDuration: 0.05, thenDragTo: finish, withVelocity: .slow, thenHoldForDuration: 0.20)
+        start.press(forDuration: 0.05, thenDragTo: finish, withVelocity: .slow, thenHoldForDuration: 0.35)
     }
     if !target.isHittable || !visible.contains(target.frame) {
         let screen = XCTAttachment(screenshot: app.screenshot()); screen.name = "Unreachable_" + target.label

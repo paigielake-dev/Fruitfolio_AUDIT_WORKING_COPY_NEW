@@ -1,5 +1,16 @@
 import SwiftUI
 
+private struct FruitfolioPopupWritingSizeKey: EnvironmentKey {
+    static let defaultValue: CGSize? = nil
+}
+
+extension EnvironmentValues {
+    var fruitfolioPopupWritingSize: CGSize? {
+        get { self[FruitfolioPopupWritingSizeKey.self] }
+        set { self[FruitfolioPopupWritingSizeKey.self] = newValue }
+    }
+}
+
 nonisolated struct FruitfolioPopupGeometry {
     let artwork: CGRect
     let writing: CGRect
@@ -47,6 +58,7 @@ struct FruitfolioPopupArtworkSurface<Content: View>: View {
                     .accessibilityHidden(true).allowsHitTesting(false)
                 ScrollView(.vertical) {
                     content()
+                        .environment(\.fruitfolioPopupWritingSize, layout.writing.size)
                         .frame(maxWidth: .infinity)
                         .frame(minHeight: layout.writing.height, alignment: .center)
                 }

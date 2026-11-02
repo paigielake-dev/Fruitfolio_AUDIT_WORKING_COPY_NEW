@@ -17,8 +17,10 @@ final class PersonalDataManagementUITests: XCTestCase {
         }
         XCTAssertTrue(target.isHittable)
     }
-    private func openData() -> XCUIApplication {
-        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]; app.launch()
+    private func openData(accessibilitySize: Bool = false) -> XCUIApplication {
+        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]
+        if accessibilitySize { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch()
         let explore = app.buttons["I'll explore"]
         if explore.waitForExistence(timeout: 12) { explore.tap() }
         let settings = button(app, "settings"); XCTAssertTrue(settings.waitForExistence(timeout: 15)); settings.tap()
@@ -30,7 +32,13 @@ final class PersonalDataManagementUITests: XCTestCase {
         let a = XCTAttachment(screenshot: app.screenshot()); a.name = "PersonalData_" + name; a.lifetime = .keepAlways; add(a)
     }
     func testBulkHormoneDeletionHasAnExplicitModalGuardAndCancelReturnsWithoutDeleting() throws {
-        let app = openData(); let erase = app.buttons["data.deleteHormones"]
+        try verifyBulkHormoneGuard(accessibilitySize: false)
+    }
+    func testBulkHormoneDeletionGuardAtLargestTypeKeepsTheCompleteActionsReachable() throws {
+        try verifyBulkHormoneGuard(accessibilitySize: true)
+    }
+    private func verifyBulkHormoneGuard(accessibilitySize: Bool) throws {
+        let app = openData(accessibilitySize: accessibilitySize); let erase = app.buttons["data.deleteHormones"]
         reach(app, erase); erase.tap()
         XCTAssertTrue(app.staticTexts["delete all hormone measurements?"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.buttons["data.prepareExport"].exists, "Blurred background controls must not remain exposed to accessibility while confirming deletion")
@@ -41,12 +49,67 @@ final class PersonalDataManagementUITests: XCTestCase {
         fruitfolioReachControl(app, cancel, container: pane)
         capture(app, "BulkHormoneDeletionVisibleActions")
         try fruitfolioStrictAccessibilityAudit(app)
+        fruitfolioReachControl(app, cancel, container: pane)
         cancel.tap()
         XCTAssertFalse(app.staticTexts["delete all hormone measurements?"].exists)
         XCTAssertTrue(app.buttons["data.prepareExport"].exists)
         XCTAssertFalse(app.staticTexts["hormone measurements have been deleted from this device."].exists)
         capture(app, "DeletionCancelled")
     }
+    private func openHormoneHistoryFromTheActualHub(_ app: XCUIApplication) {
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 12) { explore.tap() }
+        func prefix(_ text: String) -> XCUIElement {
+            app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", text)).firstMatch
+        }
+        for label in ["settings", "my context", "hormone information"] {
+            let control = prefix(label)
+            XCTAssertTrue(control.waitForExistence(timeout: 15))
+            fruitfolioReachControl(app, control); control.tap()
+        }
+        XCTAssertTrue(prefix("add measurement").waitForExistence(timeout: 10))
+    }
+
+    func testCancellingBulkDeletionPreservesAnActuallyEnteredMeasurementAcrossApplicationRestart() throws {
+        let app = XCUIApplication(); app.launchArguments += ["-fruitfolioUITest", "1"]; app.launch()
+        openHormoneHistoryFromTheActualHub(app)
+        let add = button(app, "add measurement")
+        fruitfolioReachControl(app, add); add.tap()
+        let result = app.textFields["numerical result"].exists
+            ? app.textFields["numerical result"] : app.textViews["numerical result"]
+        XCTAssertTrue(result.waitForExistence(timeout: 8)); result.tap(); result.typeText("731.002")
+        let unitTitle = "unit (exactly as reported)"
+        let unit = app.textFields[unitTitle].exists ? app.textFields[unitTitle] : app.textViews[unitTitle]
+        let fixtureUnit = "cancel-fixture-" + String(UUID().uuidString.prefix(8)).lowercased()
+        unit.tap(); unit.typeText(fixtureUnit)
+        let done = app.buttons["hormone.keyboardDone"]
+        XCTAssertTrue(done.waitForExistence(timeout: 8)); done.tap()
+        let confirmDate = app.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] %@", "confirm test date")).firstMatch
+        fruitfolioReachControl(app, confirmDate); confirmDate.tap()
+        let save = button(app, "save measurement")
+        fruitfolioReachControl(app, save); XCTAssertTrue(save.isEnabled); save.tap()
+        let displayed = "731.002 " + fixtureUnit
+        XCTAssertTrue(app.staticTexts[displayed].waitForExistence(timeout: 10))
+        capture(app, "ActualMeasurementBeforeBulkCancellation")
+        app.terminate()
+        let dataApp = openData()
+        let erase = dataApp.buttons["data.deleteHormones"]
+        fruitfolioReachControl(dataApp, erase); erase.tap()
+        XCTAssertTrue(dataApp.staticTexts["delete all hormone measurements?"].waitForExistence(timeout: 10))
+        let cancel = button(dataApp, "cancel")
+        let pane = dataApp.descendants(matching: .any).matching(identifier: "popup.writingArea").firstMatch
+        fruitfolioReachControl(dataApp, cancel, container: pane); cancel.tap()
+        XCTAssertTrue(dataApp.buttons["data.prepareExport"].waitForExistence(timeout: 8))
+        dataApp.terminate()
+        app.launch(); openHormoneHistoryFromTheActualHub(app)
+        let preserved = app.staticTexts[displayed]
+        XCTAssertTrue(preserved.waitForExistence(timeout: 10), "A real record created through the actual entry UI must survive cancellation and process restart")
+        fruitfolioReachControl(app, preserved)
+        capture(app, "ActualMeasurementPreservedAfterBulkCancellationAndRestart")
+        // This uniquely named synthetic fixture remains only in the owned CI
+        // simulator as evidence. No production user's records are accessed.
+    }
+
     func testActualReadableExportOpensSystemDestinationAndCancellingDoesNotClaimAFileWasExported() {
         let app = openData(); let prepare = app.buttons["data.prepareExport"]
         reach(app, prepare); prepare.tap()

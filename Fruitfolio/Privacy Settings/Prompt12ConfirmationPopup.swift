@@ -12,6 +12,7 @@ struct Prompt12ConfirmationPopup: View {
     let destructiveAction: (() -> Void)?
 
     @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @AccessibilityFocusState private var titleFocused: Bool
 
     var body: some View {
@@ -65,11 +66,11 @@ struct Prompt12ConfirmationPopup: View {
                     }
                 }
             }
-            .padding(.horizontal, 18)
+            .padding(.horizontal, dynamicTypeSize.isAccessibilitySize ? 0 : 18)
             .padding(.top, 30)
             .padding(.bottom, 28)
         }
-        .frame(maxWidth: 350)
+        .frame(maxWidth: dynamicTypeSize.isAccessibilitySize ? .infinity : 350)
         .accessibilityAction(.escape) { (secondaryAction ?? primaryAction)() }
         .task { await Task.yield(); guard !Task.isCancelled else { return }; titleFocused = true }
         .onAppear {

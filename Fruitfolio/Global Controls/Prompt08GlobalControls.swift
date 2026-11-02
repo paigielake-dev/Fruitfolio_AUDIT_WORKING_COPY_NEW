@@ -49,6 +49,11 @@ struct FruitfolioControlPillButton: View {
     private var audioManager: AudioManager
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.fruitfolioPopupWritingSize) private var popupWritingSize
+
+    private var usesCompactPopupInsets: Bool {
+        dynamicTypeSize.isAccessibilitySize && popupWritingSize != nil
+    }
 
     var body: some View {
         Button {
@@ -60,13 +65,14 @@ struct FruitfolioControlPillButton: View {
             // into a full-shell StaticText by SwiftUI accessibility.
             HStack(spacing: 0) {
                 Spacer(minLength: 0)
-                FruitfolioNativeActionLabel(text: label)
+                FruitfolioNativeActionLabel(text: label,
+                    lineBreakMode: usesCompactPopupInsets ? .byCharWrapping : .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 0)
             }
             .accessibilityElement(children: .contain)
-            .padding(.horizontal, 46)
-            .padding(.vertical, 20)
+            .padding(.horizontal, usesCompactPopupInsets ? 8 : 46)
+            .padding(.vertical, usesCompactPopupInsets ? 8 : 20)
             .frame(maxWidth: 292, minHeight: 82, alignment: .center)
             .background { FruitfolioControlPillArtwork() }
             .contentShape(Rectangle())
@@ -113,6 +119,7 @@ struct FruitfolioNativeActionLabel: UIViewRepresentable {
     func updateUIView(_ label: UILabel, context: Context) {
         if label.text != text { label.text = text }
         label.accessibilityLabel = accessibilityText
+        if label.lineBreakMode != lineBreakMode { label.lineBreakMode = lineBreakMode }
         label.textColor = UIColor(textColor)
         let base = UIFont(name: fontName, size: pointSize) ?? UIFont.systemFont(ofSize: pointSize, weight: .semibold)
         let scaled = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,

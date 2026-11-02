@@ -24,7 +24,19 @@ final class RuntimeAccessibilityAuditTests: XCTestCase {
             let back = app.buttons.matching(NSPredicate(format: "label ==[c] %@", "back")).firstMatch
             if destination == "fruit basket" {
                 let skip = app.buttons["skip tour"]
-                if skip.waitForExistence(timeout: 3) {
+                if !skip.waitForExistence(timeout: 3) {
+                    // Earlier game journeys may already have completed the
+                    // first-use tour. Replay it through the real public UI so
+                    // normal/largest audits cannot silently omit this state.
+                    let instructions = app.buttons["how it works"]
+                    XCTAssertTrue(instructions.waitForExistence(timeout: 8))
+                    fruitfolioReachControl(app, instructions); instructions.tap()
+                    let replay = app.buttons["show me the tour again"]
+                    XCTAssertTrue(replay.waitForExistence(timeout: 8))
+                    fruitfolioReachControl(app, replay); replay.tap()
+                }
+                XCTAssertTrue(skip.waitForExistence(timeout: 8), "The real requested/replayed tour must be audited, not silently omitted")
+                if skip.exists {
                     XCTAssertTrue(app.alerts.firstMatch.exists, "The observed first-use tour is the actual foreground modal")
                     XCTAssertTrue(app.staticTexts["welcome to the Fruit Basket!"].exists)
                     XCTAssertFalse(back.exists, "The blurred background Back action must not remain accessible through the tour")
