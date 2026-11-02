@@ -309,6 +309,17 @@ struct Prompt09AskView: View {
         .task {
             await revealSuggestions()
         }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, enabled in
+            viewModel.setReducedMotion(enabled)
+            if enabled {
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    showingEntryPageTurn = false
+                    suggestionRevealCount = discoverySuggestions.count
+                }
+            }
+        }
         .onChange(of: viewModel.phase) { _, phase in
             if phase != .answering { audioManager.stop(category: .typingASMR) }
         }
@@ -1430,10 +1441,8 @@ struct Prompt09AskView: View {
         if motionPreferences
             .reduceMotionActive {
 
-            try? await Task.sleep(
-                nanoseconds:
-                    120_000_000
-            )
+            do { try await Task.sleep(nanoseconds: 120_000_000) }
+            catch { return }
 
             showingEntryPageTurn =
                 false
@@ -1441,10 +1450,14 @@ struct Prompt09AskView: View {
             return
         }
 
-        try? await Task.sleep(
-            nanoseconds:
-                90_000_000
-        )
+        do { try await Task.sleep(nanoseconds: 90_000_000) }
+        catch { return }
+        guard !Task.isCancelled else { return }
+        if motionPreferences.reduceMotionActive {
+            var transaction = Transaction(); transaction.disablesAnimations = true
+            withTransaction(transaction) { showingEntryPageTurn = false }
+            return
+        }
 
         withAnimation(
             .easeInOut(
@@ -1484,7 +1497,10 @@ struct Prompt09AskView: View {
 
         for count in 1...totalSuggestions {
 
-            if Task.isCancelled {
+            if Task.isCancelled { return }
+            if motionPreferences.reduceMotionActive {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { suggestionRevealCount = totalSuggestions }
                 return
             }
 
@@ -1497,10 +1513,8 @@ struct Prompt09AskView: View {
                     count
             }
 
-            try? await Task.sleep(
-                nanoseconds:
-                    115_000_000
-            )
+            do { try await Task.sleep(nanoseconds: 115_000_000) }
+            catch { return }
         }
     }
 }

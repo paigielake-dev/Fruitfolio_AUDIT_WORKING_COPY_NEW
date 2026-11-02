@@ -66,6 +66,32 @@
       "verification": "Three adversarial XCTest cases added with multiple malformed subcases and positive verbatim/negation/measurement preservation checks. Runtime not executed for new source. Actual bundled JSON identifiers were checked in Python: 5477 unique notes, 295 unique sources, 470 unique source chunks, no blanks and no note/extract ID collisions.",
       "evidence": "FruitfolioTests/EvidenceIdentitySafetyTests.swift",
       "remainingIssues": "Run full grounding suites and controlled offline native FruitfolioAI verification on founder Mac. Structural identities do not independently verify clinical accuracy."
+    },
+    {
+      "requirementID": "FF1B-109",
+      "originalBreakdownItem": "Preserve text selection, citation interactions, and accessibility reading order.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Ask now honors live Reduce Motion changes while retrieval is waiting and while text is typing. Enabling it reveals the exact complete answer, cancels future typing ticks, hides the entry overlay without animation and completes suggestion reveal without late regressions. Entry/suggestion waits now exit on cancellation. Disabling Reduce Motion does not restart completed typing.",
+      "verification": "Two new asynchronous layout-fixture XCTest cases cover retrieval-time and mid-typewriter preference changes; not executed on Mac. No medical fixture is used as clinical acceptance.",
+      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
+      "remainingIssues": "Actual live system setting changes, audio stop, visual frames, VoiceOver and full Ask UI journeys require founder Mac/device verification."
+    },
+    {
+      "requirementID": "FF1B-138",
+      "originalBreakdownItem": "Use typing ASMR during answer presentation unless disabled by the user.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Ask now honors live Reduce Motion changes while retrieval is waiting and while text is typing. Enabling it reveals the exact complete answer, cancels future typing ticks, hides the entry overlay without animation and completes suggestion reveal without late regressions. Entry/suggestion waits now exit on cancellation. Disabling Reduce Motion does not restart completed typing.",
+      "verification": "Two new asynchronous layout-fixture XCTest cases cover retrieval-time and mid-typewriter preference changes; not executed on Mac. No medical fixture is used as clinical acceptance.",
+      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
+      "remainingIssues": "Actual live system setting changes, audio stop, visual frames, VoiceOver and full Ask UI journeys require founder Mac/device verification."
     }
   ]
 }

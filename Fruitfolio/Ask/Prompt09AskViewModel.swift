@@ -42,6 +42,7 @@ final class Prompt09AskViewModel: ObservableObject {
     private var typingTask: Task<Void, Never>?
     private var requestTask: Task<Void, Never>?
     private var requestGeneration = UUID()
+    private var reducedMotion = false
 
     init(
         conversationID: UUID = UUID(),
@@ -104,12 +105,13 @@ final class Prompt09AskViewModel: ObservableObject {
         reduceMotion: Bool
     ) async {
         guard canSend else { return }
+        setReducedMotion(reduceMotion)
         requestTask?.cancel()
         let generation = UUID()
         requestGeneration = generation
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation)
+            await self.performSubmitCurrentQuestion(generation: generation)
         }
         requestTask = task
         await task.value
@@ -119,7 +121,6 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     private func performSubmitCurrentQuestion(
-        reduceMotion: Bool,
         generation: UUID
     ) async {
         let question = inputText
@@ -194,7 +195,7 @@ final class Prompt09AskViewModel: ObservableObject {
 
             phase = .answering
 
-            if reduceMotion {
+            if reducedMotion {
                 displayedAnswerText =
                     response.answerText
 
@@ -212,12 +213,18 @@ final class Prompt09AskViewModel: ObservableObject {
         }
     }
 
+    func setReducedMotion(_ enabled: Bool) {
+        reducedMotion = enabled
+        if enabled, phase == .answering { showAll() }
+    }
+
     func showAll() {
         guard let answer else {
             return
         }
 
         typingTask?.cancel()
+        typingTask = nil
 
         displayedAnswerText =
             answer.answerText
