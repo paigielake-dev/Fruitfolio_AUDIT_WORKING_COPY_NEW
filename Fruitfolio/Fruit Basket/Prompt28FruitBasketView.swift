@@ -1069,12 +1069,14 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.branch) {
+            let branchGeometry = Prompt28BranchContactGeometry(fieldWidth: width, fieldHeight: height)
             FruitfolioImage(
                 id: .fruitbasket_branch
             )
-            .frame(width: min(width * 0.30, 176))
+            .frame(width: branchGeometry.artworkWidth)
+            .scaleEffect(x: -1, y: 1)
             .position(
-                x: xOffset + width * 0.84,
+                x: xOffset + branchGeometry.artworkCenterX,
                 y: height * 0.40
             )
             .opacity(0.78)

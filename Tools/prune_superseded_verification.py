@@ -3,7 +3,7 @@
 
 Preserve requested Run50/51. Only supersede older diagnostics 47-49 and queued
 52-57 and superseded diagnostic attempts 59-60, whose repairs are all retained in the newer source checkpoint. Inventory
-is uploaded before cancellation. Completed runs and all later runs are untouched.
+is uploaded before cancellation. Run62 unit/build artifacts have been downloaded, SHA/CRC verified and retained; its same Button-label repair is included in Run64 and later source. Completed runs and all other later runs are untouched.
 """
 import json
 import os
@@ -17,7 +17,8 @@ BRANCH = "fruitfolio/prompt-1b-alignment"
 WORKFLOW = 403220650
 PRESERVE = {41357420177, 41358742740}
 OBSOLETE_NUMBERS = {47, 48, 49, 52, 53, 54, 55, 56, 57, 59, 60}
-OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4"}
+OBSOLETE_COMMITS = {"8d9d067f392cac84ec1edc47ca8bcc08b1d444a4",
+                    "5a4e0ec21e6c8737700516302afe3682cf023a6a"}
 OUT = Path("verification-queue-state.json")
 
 

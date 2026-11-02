@@ -427,6 +427,36 @@ final class Prompt28FruitBasketTests: XCTestCase {
         model.viewWillDisappear()
     }
 
+    func testBranchPaintedTrunkMeetsScreenEdgeAndContactDoesNotUseTheWholeImageBox() {
+        let geometry = Prompt28BranchContactGeometry(fieldWidth: 344, fieldHeight: 896)
+        XCTAssertEqual(geometry.point(originalX: 78, originalY: 410).x, 344, accuracy: 0.00001)
+        let contact = geometry.point(originalX: 249, originalY: 257)
+        XCTAssertTrue(geometry.contains(x: contact.x / 344, y: contact.y / 896, radius: 0))
+        XCTAssertFalse(geometry.contains(x: 0.5, y: 0.4, radius: 20))
+        XCTAssertFalse(Prompt28BranchContactGeometry(fieldWidth: 0, fieldHeight: 0).contains(x: 0, y: 0, radius: 20))
+    }
+
+    func testActualBranchContactBouncesFruitUpAndLeftThenResumesItsUnchangedBaseFallSpeed() throws {
+        let suite = "Prompt28.Branch.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite)); defer { defaults.removePersistentDomain(forName: suite) }
+        let model = Prompt28FruitBasketViewModel(store: Prompt28FruitBasketStore(defaults: defaults), researchProvider: Prompt28UnavailableResearchProvider())
+        model.session = Prompt28Session(rawTopicQuery: "fixture", normalizedTopicID: "fixture", educationalDifficulty: .easy, startingGameLevel: 3)
+        model.screen = .catchActive; model.updateGameplayFieldSize(width: 344, height: 896)
+        let point = Prompt28BranchContactGeometry(fieldWidth: 344, fieldHeight: 896).point(originalX: 249, originalY: 257)
+        let fruit = Prompt28FallingFruit(fruitID: .apple, classification: .good, x: point.x / 344, y: point.y / 896, fallSpeed: 0.3, horizontalDrift: 0.02, rotationDegrees: 0)
+        model.activeFruit = [fruit]
+        model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1))
+        let deflected = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertLessThan(deflected.x, fruit.x); XCTAssertLessThan(deflected.y, fruit.y)
+        XCTAssertEqual(deflected.fallSpeed, fruit.fallSpeed)
+        for index in 1...8 { model.tick(delta: 0.05, now: Date(timeIntervalSince1970: 1 + Double(index) * 0.05)) }
+        let falling = try XCTUnwrap(model.activeFruit.first)
+        XCTAssertGreaterThan(falling.y, deflected.y)
+        XCTAssertLessThan(falling.x, deflected.x)
+        XCTAssertEqual(falling.fallSpeed, fruit.fallSpeed)
+        model.viewWillDisappear()
+    }
+
     private func fixtureQuestion() -> Prompt28Question {
         Prompt28Question(
             id: "q1", topicQuery: "demo", normalizedTopic: "demo", category: "demo",
