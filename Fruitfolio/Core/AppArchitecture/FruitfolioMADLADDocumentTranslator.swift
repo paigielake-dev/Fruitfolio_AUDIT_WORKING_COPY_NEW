@@ -2,7 +2,7 @@ import Foundation
 import NaturalLanguage
 
 nonisolated enum FruitfolioTranslationPreservationError: Error {
-    case emptyInput, changedNumber, changedLiteral, unexpectedCitation, invalidSourceCitation
+    case emptyInput, changedNumber, changedLiteral, changedProtectedMeasurement, unexpectedCitation, invalidSourceCitation
 }
 
 /// A failed candidate is never shown as a translation. Synthetic integration
@@ -11,6 +11,7 @@ nonisolated enum FruitfolioTranslationPreservationError: Error {
 nonisolated struct FruitfolioTranslationRejectedCandidate: Error, Sendable, CustomStringConvertible {
     let reason: FruitfolioTranslationPreservationError
     let sourceSentence: String
+    let actualModelInput: String
     let rawOutput: String
     let target: String
     var description: String { "Translation rejected: \(reason)" }
@@ -28,7 +29,8 @@ nonisolated struct FruitfolioTranslationCandidate: Sendable {
 }
 
 nonisolated enum FruitfolioTranslationPreservation {
-    private static let numeric = try! NSRegularExpression(pattern: #"[+−-]?\d+(?:[.,]\d+)?"#)
+    static let numericPattern = #"[+−-]?\d+(?:[.,]\d+)?(?:[eE][+−-]?\d+)?"#
+    private static let numeric = try! NSRegularExpression(pattern: numericPattern)
     static func numbers(_ text: String) -> [String] {
         numeric.matches(in: text, range: NSRange(text.startIndex..., in: text)).compactMap {
             Range($0.range, in: text).map { String(text[$0]) }
@@ -65,6 +67,72 @@ nonisolated enum FruitfolioTranslationPreservation {
                 throw FruitfolioTranslationPreservationError.changedLiteral
             }
         }
+    }
+}
+
+/// Numeric results and their explicitly supplied immutable unit are opaque
+/// source metadata, like citations. The model may translate surrounding words
+/// but cannot convert a result, translate its unit, or choose another quantity.
+nonisolated struct FruitfolioProtectedMeasurements {
+    let modelInput: String
+    let markers: [String]
+    let originalSpans: [String]
+    private let prefix: String
+
+    init(source: String, immutableTerms: [String]) throws {
+        let full = NSRange(source.startIndex..., in: source)
+        var ranges: [NSRange] = []
+        for term in Set(immutableTerms) where !term.isEmpty {
+            let pattern = FruitfolioTranslationPreservation.numericPattern
+                + #"[\p{Zs}\t]*"# + NSRegularExpression.escapedPattern(for: term)
+            let regex = try NSRegularExpression(pattern: pattern)
+            ranges.append(contentsOf: regex.matches(in: source, range: full).map(\.range))
+        }
+        ranges.sort { $0.location == $1.location ? $0.length > $1.length : $0.location < $1.location }
+        var selected: [NSRange] = []
+        for range in ranges {
+            if let previous = selected.last, range.location < NSMaxRange(previous) { continue }
+            selected.append(range)
+        }
+        var prefix = "FFQ"
+        let normalizedSource = Self.canonicalASCIIWidth(source)
+        while normalizedSource.contains("[" + prefix) { prefix += "X" }
+        self.prefix = prefix
+        markers = selected.indices.map { "[" + prefix + String($0) + "]" }
+        let nsSource = source as NSString
+        originalSpans = selected.map { nsSource.substring(with: $0) }
+        let protected = NSMutableString(string: source)
+        for (index, range) in selected.enumerated().reversed() {
+            protected.replaceCharacters(in: range, with: markers[index])
+        }
+        modelInput = protected as String
+    }
+
+    static func canonicalASCIIWidth(_ value: String) -> String {
+        // Exact Unicode width counterparts only; no script, unit conversion,
+        // decimal rounding, synonym replacement or whole-number reinterpretation.
+        var output = ""
+        for scalar in value.unicodeScalars {
+            if (0xFF01...0xFF5E).contains(scalar.value) {
+                output.unicodeScalars.append(UnicodeScalar(scalar.value - 0xFEE0)!)
+            } else if scalar.value == 0x3000 {
+                output.append(" ")
+            } else { output.unicodeScalars.append(scalar) }
+        }
+        return output
+    }
+
+    func restoring(in rawOutput: String) throws -> String {
+        var output = Self.canonicalASCIIWidth(rawOutput)
+        let regex = try NSRegularExpression(pattern: #"\["# + prefix + #"\d+\]"#)
+        let found = regex.matches(in: output, range: NSRange(output.startIndex..., in: output)).map {
+            (output as NSString).substring(with: $0.range)
+        }
+        guard found == markers else { throw FruitfolioTranslationPreservationError.changedProtectedMeasurement }
+        for (marker, original) in zip(markers, originalSpans) {
+            output = output.replacingOccurrences(of: marker, with: original)
+        }
+        return output
     }
 }
 
@@ -156,10 +224,12 @@ actor FruitfolioMADLADDocumentTranslator {
             modelInput = modelInput.replacingOccurrences(of: #"\s+([.!?])$"#, with: "$1", options: .regularExpression)
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             guard !modelInput.isEmpty else { throw FruitfolioTranslationPreservationError.emptyInput }
-            var output = try await runtime.translateRawSentence(modelInput, target: target, directory: directory)
+            let measurements = try FruitfolioProtectedMeasurements(source: modelInput, immutableTerms: immutableTerms)
+            let rawOutput = try await runtime.translateRawSentence(measurements.modelInput, target: target, directory: directory)
             try Task.checkCancellation()
-            let rawOutput = output
+            var output: String
             do {
+                output = try measurements.restoring(in: rawOutput)
                 guard citation.firstMatch(in: output, range: NSRange(output.startIndex..., in: output)) == nil else {
                     throw FruitfolioTranslationPreservationError.unexpectedCitation
                 }
@@ -167,10 +237,11 @@ actor FruitfolioMADLADDocumentTranslator {
                 try FruitfolioTranslationPreservation.preserveLiterals(immutableTerms, source: modelInput, translated: output)
             } catch let reason as FruitfolioTranslationPreservationError {
                 throw FruitfolioTranslationRejectedCandidate(reason: reason, sourceSentence: modelInput,
-                    rawOutput: rawOutput, target: target)
+                    actualModelInput: measurements.modelInput, rawOutput: rawOutput, target: target)
             }
             if !localMarkers.isEmpty {
-                let terminal = output.last.map { ".!?".contains($0) } == true ? String(output.removeLast()) : ""
+                let terminal = output.last.map { ".!?。！？؟".contains($0) } == true ? String(output.removeLast()) : ""
+                output = output.trimmingCharacters(in: .whitespaces)
                 output += " " + localMarkers.joined(separator: " ") + terminal
             }
             markers.append(contentsOf: localMarkers)

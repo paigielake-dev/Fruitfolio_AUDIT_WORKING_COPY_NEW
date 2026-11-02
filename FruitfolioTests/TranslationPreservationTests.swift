@@ -16,6 +16,36 @@ final class TranslationPreservationTests: XCTestCase {
         XCTAssertEqual(FruitfolioTranslationLayout.segments(" \n\r\n").map(\.original).joined(), " \n\r\n")
     }
 
+    func testProtectedMeasurementsKeepOriginalPrecisionUnitsAndSpacingOutsideGeneration() throws {
+        let source = "The result is 2.500 ng/mL and 4e-3 mIU/L."
+        let plan = try FruitfolioProtectedMeasurements(source: source, immutableTerms: ["ng/mL", "mIU/L"])
+        XCTAssertEqual(plan.modelInput, "The result is [FFQ0] and [FFQ1].")
+        XCTAssertEqual(try plan.restoring(in: "Le résultat est [FFQ0] et [FFQ1]."),
+                       "Le résultat est 2.500 ng/mL et 4e-3 mIU/L.")
+        XCTAssertEqual(try plan.restoring(in: "結果は［ＦＦＱ０］と［ＦＦＱ１］です。"),
+                       "結果は2.500 ng/mLと4e-3 mIU/Lです。")
+    }
+
+    func testProtectedMeasurementsRejectMissingDuplicatedAddedOrReorderedSlots() throws {
+        let plan = try FruitfolioProtectedMeasurements(source: "2.5 ng/mL and 5 mIU/L", immutableTerms: ["ng/mL", "mIU/L"])
+        for invalid in ["[FFQ0]", "[FFQ0] [FFQ0] [FFQ1]", "[FFQ1] [FFQ0]", "[FFQ0] [FFQ1] [FFQ2]", "2.5 grams/cm3"] {
+            XCTAssertThrowsError(try plan.restoring(in: invalid))
+        }
+        XCTAssertThrowsError(try FruitfolioTranslationPreservation.preserveNumbers(
+            source: "The result is 2.5 ng/mL.", translated: "इसका घनत्व 2.5 ग्राम/सेमी3 है।", target: "hi"),
+            "The actual unsafe Hindi density output must remain rejected, never normalized into acceptance")
+    }
+
+    func testProtectedMeasurementMarkersCannotCollideWithOriginalSourceAndScientificNotationStaysExact() throws {
+        let plan = try FruitfolioProtectedMeasurements(source: "The [FFQ0] label and 2.50 ng/mL", immutableTerms: ["ng/mL", "ng/mL"])
+        XCTAssertEqual(plan.markers, ["[FFQX0]"])
+        XCTAssertEqual(try plan.restoring(in: "The [FFQ0] label and [FFQX0]"), "The [FFQ0] label and 2.50 ng/mL")
+        XCTAssertEqual(FruitfolioTranslationPreservation.numbers("2.50e-3 and -4E+5"), ["2.50e-3", "-4E+5"])
+        XCTAssertThrowsError(try FruitfolioTranslationPreservation.preserveNumbers(
+            source: "2.5e-3", translated: "2.5e3", target: "es"))
+        XCTAssertEqual(FruitfolioProtectedMeasurements.canonicalASCIIWidth("２．５ｎｇ／ｍＬと漢字"), "2.5ng/mLと漢字")
+    }
+
     func testUnknownAndNonterminalCitationCannotBeReattributedByMovingIt() async throws {
         let translator = FruitfolioMADLADDocumentTranslator()
         for (source, identifiers) in [("A result [unapproved].", ["approved"]), ("A result [approved] and another claim.", ["approved"])] {

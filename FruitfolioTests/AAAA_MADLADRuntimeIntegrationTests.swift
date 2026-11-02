@@ -79,6 +79,7 @@ extension AAAA_MADLADRuntimeIntegrationTests {
                 var report = ["target": target, "error": String(describing: error), "preservation": "FAIL"]
                 if let rejected = error as? FruitfolioTranslationRejectedCandidate {
                     report["rejectedSourceSentence"] = rejected.sourceSentence
+                    report["actualModelInput"] = rejected.actualModelInput
                     report["actualRejectedRawOutput"] = rejected.rawOutput
                     report["strictReason"] = String(describing: rejected.reason)
                 }
