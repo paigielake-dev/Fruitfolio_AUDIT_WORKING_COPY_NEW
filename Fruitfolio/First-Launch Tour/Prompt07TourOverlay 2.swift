@@ -98,15 +98,7 @@ struct Prompt07TourOverlay: View {
                 height: proxy.size.height
             )
             .contentShape(Rectangle())
-            .onAppear {
-                animateStepEntrance()
-            }
-            .onChange(of: step) {
-                _,
-                _ in
-
-                animateStepEntrance()
-            }
+            .task(id: step.rawValue) { await animateStepEntrance() }
         }
         .ignoresSafeArea(edges: [])
         .accessibilityElement(
@@ -420,44 +412,20 @@ struct Prompt07TourOverlay: View {
             baseFont: .custom("Chalkboard SE", size: 10.25, relativeTo: .body))
     }
 
-    private func animateStepEntrance() {
+    @MainActor
+    private func animateStepEntrance() async {
         dialogueVisible = false
         targetPulse = false
-
-        Task { @MainActor in
-            if reduceMotion {
-                withAnimation(
-                    .easeOut(
-                        duration: 0.17
-                    )
-                ) {
-                    dialogueVisible = true
-                    targetPulse = true
-                }
-
-                return
+        guard !Task.isCancelled else { return }
+        if reduceMotion {
+            withAnimation(.easeOut(duration: 0.17)) {
+                dialogueVisible = true; targetPulse = true
             }
-
-            try? await Task.sleep(
-                nanoseconds:
-                    80_000_000
-            )
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.24
-                )
-            ) {
-                dialogueVisible = true
-            }
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.36
-                )
-            ) {
-                targetPulse = true
-            }
+            return
         }
+        do { try await Task.sleep(nanoseconds: 80_000_000) } catch { return }
+        guard !Task.isCancelled else { return }
+        withAnimation(.easeOut(duration: 0.24)) { dialogueVisible = true }
+        withAnimation(.easeOut(duration: 0.36)) { targetPulse = true }
     }
 }

@@ -245,114 +245,19 @@ struct FruitfolioLargeCard<Content: View>: View {
 
 // MARK: - FruitfolioTapedPaperPopup
 
-/// Code-built popup inspired by popup_taped_white.png.
-/// The paper body is content-driven, so it expands and contracts naturally
-/// without stretching artwork. The paperclip remains decorative.
+/// Original founder-provided paper with one calibrated, scrollable writing
+/// region. The tape and paper keep their native proportions at every text size.
 struct FruitfolioTapedPaperPopup<Content: View>: View {
     private let content: Content
-
-    init(
-        @ViewBuilder content: () -> Content
-    ) {
-        self.content = content()
-    }
-
+    init(@ViewBuilder content: () -> Content) { self.content = content() }
     var body: some View {
-        VStack(
-            alignment: .center,
-            spacing: 0
-        ) {
-            content
-        }
-        .multilineTextAlignment(.center)
-        .frame(
-            maxWidth: .infinity,
-            alignment: .center
-        )
-        .padding(.horizontal, 30)
-        .padding(.top, 42)
-        .padding(.bottom, 30)
-        .frame(
-            maxWidth: 330,
-            alignment: .center
-        )
-        .background {
-            ZStack {
-                FruitfolioTornPaperShape()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(
-                                    red: 1.0,
-                                    green: 0.995,
-                                    blue: 0.975
-                                ),
-                                Color(
-                                    red: 0.985,
-                                    green: 0.978,
-                                    blue: 0.955
-                                )
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-
-                FruitfolioPaperWrinkleOverlay()
-                    .clipShape(
-                        FruitfolioTornPaperShape()
-                    )
-
-                FruitfolioTornPaperShape()
-                    .stroke(
-                        Color(
-                            red: 0.80,
-                            green: 0.76,
-                            blue: 0.69
-                        )
-                        .opacity(0.28),
-                        lineWidth: 0.85
-                    )
+        FruitfolioPopupArtworkSurface(assetName: "popup_taped_white",
+            normalizedWriting: CGRect(x: 0.13, y: 0.23, width: 0.74, height: 0.64), maximumWidth: 420) {
+                content
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.vertical, 8)
             }
-            .shadow(
-                color: Color.black.opacity(0.075),
-                radius: 7,
-                x: 0,
-                y: 4
-            )
-        }
-        .overlay(alignment: .top) {
-            FruitfolioPaperTape()
-                .frame(
-                    width: 176,
-                    height: 48
-                )
-                .offset(y: -22)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
-        .overlay(alignment: .topTrailing) {
-            Image("popup_paperclip")
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: 30,
-                    height: 43
-                )
-                .rotationEffect(
-                    .degrees(7)
-                )
-                .offset(
-                    x: -18,
-                    y: 19
-                )
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
-        .padding(.top, 24)
-        .accessibilityElement(
-            children: .contain
-        )
     }
 }
 

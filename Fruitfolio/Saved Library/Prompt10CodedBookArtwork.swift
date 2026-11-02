@@ -22,10 +22,10 @@ struct Prompt10CodedBookArtwork: View, Animatable {
             let bottom = size.height * (0.965 - 0.035 * p)
             let spine = size.width * (0.085 - 0.07 * p)
             let cover = CGRect(x: middle - half, y: top, width: half * 2, height: bottom - top)
-            let coverPath = Path(roundedRect: cover, cornerRadius: min(size.width, size.height) * 0.025)
+            let coverPath = Path(roundedRect: cover, cornerSize: CGSize(width: min(size.width, size.height) * 0.025, height: min(size.width, size.height) * 0.025))
             context.fill(coverPath, with: .color(coverColor))
             context.stroke(coverPath, with: .color(coverColor.opacity(0.7)), lineWidth: 2)
-            let spineLabel = Path(roundedRect: cover.insetBy(dx: cover.width * 0.16, dy: cover.height * 0.07), cornerRadius: 1)
+            let spineLabel = Path(roundedRect: cover.insetBy(dx: cover.width * 0.16, dy: cover.height * 0.07), cornerSize: CGSize(width: 1, height: 1))
             context.stroke(spineLabel, with: .color(Color.white.opacity(Double(0.65 * (1 - p)))), lineWidth: 1)
 
 
@@ -64,7 +64,7 @@ struct Prompt10CodedBookArtwork: View, Animatable {
             }
             let gutter = Path(roundedRect: CGRect(x: middle - spine * 0.35,
                 y: top + size.height * 0.06, width: spine * 0.7,
-                height: cover.height - size.height * 0.07), cornerRadius: 2)
+                height: cover.height - size.height * 0.07), cornerSize: CGSize(width: 2, height: 2))
             context.fill(gutter, with: .color(coverColor.opacity(Double(0.7 - 0.45 * p))))
         }
         .accessibilityHidden(true)

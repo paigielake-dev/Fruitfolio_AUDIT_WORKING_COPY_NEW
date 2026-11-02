@@ -2,6 +2,7 @@ import SwiftUI
 
 struct Prompt12SettingsView: View {
     @ObservedObject var store: Prompt12AccountPrivacyStore
+    @AccessibilityFocusState private var aboutHeadingFocused: Bool
 
     let onBack: () -> Void
     let onShowAccount: () -> Void
@@ -108,10 +109,13 @@ struct Prompt12SettingsView: View {
                             .font(
                                 .custom(
                                     "Chalkboard SE",
-                                    size: 16
+                                    size: 16,
+                                    relativeTo: .headline
                                 )
                             )
                             .fontWeight(.bold)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($aboutHeadingFocused)
                             .foregroundStyle(
                                 DesignTokens
                                     .ColorToken
@@ -132,13 +136,14 @@ struct Prompt12SettingsView: View {
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 11.5
+                                size: 11.5,
+                                relativeTo: .body
                             )
                         )
                         .foregroundStyle(
                             DesignTokens
                                 .ColorToken
-                                .secondaryBurgundy
+                                .primaryBurgundy
                         )
                         .multilineTextAlignment(
                             .center
@@ -168,6 +173,9 @@ struct Prompt12SettingsView: View {
                     )
                 }
                 .frame(maxWidth: 350)
+                .accessibilityIdentifier("settings.aboutPopup")
+                .accessibilityAction(.escape) { audioManager.play(.popupClose); showAbout = false }
+                .task { await Task.yield(); guard !Task.isCancelled else { return }; aboutHeadingFocused = true }
                 .onAppear {
                     audioManager.play(
                         .popupOpen

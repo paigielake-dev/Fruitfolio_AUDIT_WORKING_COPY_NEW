@@ -124,3 +124,27 @@ extension SharedControlUITests {
         capture(app, "IconHold_NextActualTapReturnsToHub")
     }
 }
+
+
+extension SharedControlUITests {
+    func testLargestTypeOriginalAboutPaperKeepsCloseFullyReachableAndReturnsToSettings() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioUITest", "1", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let explore = app.buttons["I'll explore"]
+        if explore.waitForExistence(timeout: 12) { explore.tap() }
+        let settings = app.buttons["hub.utility.settings"]
+        XCTAssertTrue(settings.waitForExistence(timeout: 15)); fruitfolioReachControl(app, settings); settings.tap()
+        let about = app.buttons["settings.navigation.about"]
+        XCTAssertTrue(about.waitForExistence(timeout: 10)); fruitfolioReachControl(app, about); about.tap()
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "settings.aboutPopup").firstMatch.waitForExistence(timeout: 10))
+        let close = app.buttons["got it ♡"]
+        fruitfolioReachControl(app, close)
+        XCTAssertTrue(app.frame.insetBy(dx: 0, dy: 16).contains(close.frame))
+        XCTAssertTrue(close.isHittable)
+        capture(app, "About_OriginalTapedPaper_Largest_FullyVisibleClose")
+        close.tap()
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "settings.aboutPopup").firstMatch.exists)
+        XCTAssertTrue(app.buttons["settings.languageMenu"].exists)
+    }
+}
