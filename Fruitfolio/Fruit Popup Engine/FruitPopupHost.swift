@@ -83,29 +83,15 @@ struct FruitPopupHost<Content: View>: View {
                 .popupClose
             )
 
-            Task { @MainActor in
-                let delay: UInt64 =
-                    motionPreferences.reduceMotionActive
-                    ? 150_000_000
-                    : 175_000_000
-
-                try? await Task.sleep(
-                    nanoseconds: delay
-                )
-
-                /*
-                 Do not finish an unrelated future popup dismissal if the
-                 coordinator changed state while this task was sleeping.
-                */
-                guard
-                    popupCoordinator.presentationState
-                        == .dismissing
-                else {
-                    return
-                }
-
-                popupCoordinator.finishDismissal()
-            }
+        }
+        .task(id: popupCoordinator.presentationState == .dismissing ? popupCoordinator.currentPopup?.id : nil) {
+            guard popupCoordinator.presentationState == .dismissing,
+                  let expectedID = popupCoordinator.currentPopup?.id else { return }
+            let delay: UInt64 = motionPreferences.reduceMotionActive ? 150_000_000 : 175_000_000
+            do { try await Task.sleep(nanoseconds: delay) } catch { return }
+            guard !Task.isCancelled else { return }
+            // State alone is insufficient: a newer popup can also be dismissing.
+            popupCoordinator.finishDismissal(expectedPopupID: expectedID)
         }
     }
 
