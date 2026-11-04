@@ -4,6 +4,8 @@ struct Prompt30ContactView: View {
     let onBack: () -> Void
 
     @Environment(\.openURL) private var openURL
+    @EnvironmentObject private var motion: MotionPreferences
+    @State private var failedDestination: URL?
 
     private let instagramURL = URL(string: "https://www.instagram.com/fruitsoflife.xo")!
     private let tiktokURL = URL(string: "https://www.tiktok.com/@fruitsoflife.xo?lang=en")!
@@ -16,43 +18,46 @@ struct Prompt30ContactView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
+                    FruitfolioProtectedHeader {
                         Prompt12RouteHeader(
                             title: "contact",
                             subtitle: "questions, feedback, or just a little hello ♡",
                             assetName: nil,
                             onBack: onBack
                         )
+                    } decoration: { protected, space in
+                        ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_watermelon)
+                            FruitfolioImage(id: .cycledecor_green_flecks)
                                 .frame(width: 52, height: 52)
 
-                            FruitfolioImage(id: .fruitbasket_grape)
+                            FruitfolioImage(id: .fruitbasket_plum)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
+
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)
+                        .fruitfolioAvoidProtectedContent(protected, in: space)
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 92, height: 92)
+                            .frame(width: 52, height: 52)
+                            .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 72, y: -14)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
+                        }
                     }
 
                     VStack(spacing: 4) {
-                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo") { openURL(instagramURL) }
-                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo") { openURL(tiktokURL) }
-                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com") { openURL(emailURL) }
-                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd") { openURL(carrdURL) }
+                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo", localizationKey: "Instagram  •  @fruitsoflife.xo") { openContact(instagramURL) }
+                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo", localizationKey: "TikTok  •  @fruitsoflife.xo") { openContact(tiktokURL) }
+                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com", localizationKey: "email  •  fruitsoflifexo@gmail.com") { openContact(emailURL) }
+                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd", localizationKey: "FruitsofLife.xo Carrd") { openContact(carrdURL) }
                     }
 
                     Text("Fruitfolio is educational. For personal medical questions, diagnosis, treatment, or urgent concerns, contact an appropriate healthcare professional or emergency service.")
@@ -68,10 +73,24 @@ struct Prompt30ContactView: View {
                 .frame(maxWidth: .infinity)
             }
             .scrollIndicators(.hidden)
+            .fruitfolioModalBlur(active: failedDestination != nil, reduceMotion: motion.reduceMotionActive)
 
+            if let destination = failedDestination {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "that link couldn’t open",
+                    message: "please try again when a compatible app or connection is available. destination: \(destination.absoluteString)",
+                    primaryLabel: "close", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { failedDestination = nil }, secondaryAction: nil, destructiveAction: nil)
+                    .accessibilityIdentifier("contact.linkFailure")
+            }
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private func openContact(_ destination: URL) {
+        openURL(destination) { accepted in
+            if !accepted { failedDestination = destination }
+        }
     }
 }

@@ -1,0 +1,589 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/SharedControlUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-01 19:56:48.543071+0000 FruitfolioUITests-Runner[14717:54724] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-01 19:56:49.284.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-01 19:56:49.284.
+Test Suite 'SharedControlUITests' started at 2026-11-01 19:56:49.285.
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation]' started.
+    t =     0.00s Start Test at 2026-11-01 19:56:49.286
+    t =     0.03s Set Up
+    t =     0.04s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.04s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 19:56:49.482 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 19:56:49.482 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[14717]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1047b8310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1080c0398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.51s         Setting up automation session
+    t =     2.67s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     4.80s Waiting 12.0s for "I'll explore" Button to exist
+    t =     5.88s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.89s         Checking existence of `"I'll explore" Button`
+    t =     5.95s         Capturing element debug description
+    t =     6.81s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.81s         Checking existence of `"I'll explore" Button`
+    t =     6.84s         Capturing element debug description
+    t =     7.88s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.89s         Checking existence of `"I'll explore" Button`
+    t =     7.91s         Capturing element debug description
+    t =     8.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.86s         Checking existence of `"I'll explore" Button`
+    t =     8.89s         Capturing element debug description
+    t =     9.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.83s         Checking existence of `"I'll explore" Button`
+    t =     9.86s         Capturing element debug description
+    t =    10.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.83s         Checking existence of `"I'll explore" Button`
+    t =    10.86s         Capturing element debug description
+    t =    11.91s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.91s         Checking existence of `"I'll explore" Button`
+    t =    11.93s         Capturing element debug description
+    t =    12.87s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.87s         Checking existence of `"I'll explore" Button`
+    t =    12.90s         Capturing element debug description
+    t =    13.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.83s         Checking existence of `"I'll explore" Button`
+    t =    13.86s         Capturing element debug description
+    t =    14.81s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.81s         Checking existence of `"I'll explore" Button`
+    t =    14.84s         Capturing element debug description
+    t =    15.88s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.89s         Checking existence of `"I'll explore" Button`
+    t =    15.91s         Capturing element debug description
+    t =    16.81s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.81s         Checking existence of `"I'll explore" Button`
+    t =    16.83s         Capturing element debug description
+    t =    16.83s     Checking existence of `"I'll explore" Button`
+    t =    16.85s Collecting debug information to assist test failure triage
+    t =    16.86s     Requesting snapshot of accessibility hierarchy for app with pid 14729
+    t =    16.90s Waiting 15.0s for Button (First Match) to exist
+    t =    17.95s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.95s         Checking existence of `Button (First Match)`
+    t =    17.99s Tap Button (First Match)
+    t =    17.99s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.99s     Find the Button (First Match)
+    t =    18.04s     Check for interrupting elements affecting "Contact" Button
+    t =    18.06s     Synthesize event
+    t =    18.37s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.82s Waiting 10.0s for Button (First Match) to exist
+    t =    19.87s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    19.87s         Checking existence of `Button (First Match)`
+    t =    19.90s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.92s Find the Button (First Match)
+    t =    19.97s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.01s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.06s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.10s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.14s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.17s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.21s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.25s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.29s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.32s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.37s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.41s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.46s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.49s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.54s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.57s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.61s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.65s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    20.67s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    20.81s Added attachment named 'SharedPill_Contact_Default'
+    t =    22.93s Find the Button (First Match)
+    t =    22.99s Find the "Back" Button
+    t =    23.04s Find the "Back" Button
+    t =    23.07s Find the "Back" Button
+    t =    23.12s Find the "Back" Button
+    t =    23.16s Find the "Back" Button
+    t =    23.20s Tap "Back" Button
+    t =    23.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.20s     Find the "Back" Button
+    t =    23.22s     Check for interrupting elements affecting "Back" Button
+    t =    23.24s     Synthesize event
+    t =    23.54s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.87s Waiting 10.0s for Button (First Match) to exist
+    t =    24.87s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    24.87s         Checking existence of `Button (First Match)`
+    t =    24.92s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation]' passed (25.177 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping]' started.
+    t =     0.00s Start Test at 2026-11-01 19:57:14.464
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.02s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.02s         Terminate com.fruitsoflifexo.Fruitfolio:14729
+2026-11-01 19:57:15.522 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 19:57:15.522 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.48s         Setting up automation session
+    t =     2.43s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     4.09s Waiting 12.0s for "I'll explore" Button to exist
+    t =     5.15s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.15s         Checking existence of `"I'll explore" Button`
+    t =     5.19s         Capturing element debug description
+    t =     6.14s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.14s         Checking existence of `"I'll explore" Button`
+    t =     6.16s         Capturing element debug description
+    t =     7.11s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.11s         Checking existence of `"I'll explore" Button`
+    t =     7.13s         Capturing element debug description
+    t =     8.17s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.17s         Checking existence of `"I'll explore" Button`
+    t =     8.19s         Capturing element debug description
+    t =     9.15s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.15s         Checking existence of `"I'll explore" Button`
+    t =     9.17s         Capturing element debug description
+    t =    10.11s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.11s         Checking existence of `"I'll explore" Button`
+    t =    10.13s         Capturing element debug description
+    t =    11.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.09s         Checking existence of `"I'll explore" Button`
+    t =    11.12s         Capturing element debug description
+    t =    12.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.09s         Checking existence of `"I'll explore" Button`
+    t =    12.13s         Capturing element debug description
+    t =    13.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.09s         Checking existence of `"I'll explore" Button`
+    t =    13.13s         Capturing element debug description
+    t =    14.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.09s         Checking existence of `"I'll explore" Button`
+    t =    14.12s         Capturing element debug description
+    t =    15.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.09s         Checking existence of `"I'll explore" Button`
+    t =    15.14s         Capturing element debug description
+    t =    16.09s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.09s         Checking existence of `"I'll explore" Button`
+    t =    16.12s         Capturing element debug description
+    t =    16.12s     Checking existence of `"I'll explore" Button`
+    t =    16.15s Collecting debug information to assist test failure triage
+    t =    16.15s     Requesting snapshot of accessibility hierarchy for app with pid 16068
+    t =    16.17s Waiting 15.0s for Button (First Match) to exist
+    t =    17.25s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.25s         Checking existence of `Button (First Match)`
+    t =    17.30s Tap Button (First Match)
+    t =    17.30s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.30s     Find the Button (First Match)
+    t =    17.33s     Check for interrupting elements affecting "Contact" Button
+    t =    17.35s     Synthesize event
+    t =    17.65s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.06s Waiting 10.0s for Button (First Match) to exist
+    t =    19.11s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    19.11s         Checking existence of `Button (First Match)`
+    t =    19.13s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.14s Find the Button (First Match)
+    t =    19.18s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.21s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.25s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.27s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.31s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.34s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.38s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.40s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.44s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.47s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.50s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.53s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.57s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.59s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.63s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.66s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.69s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.72s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.75s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    19.78s Terminate com.fruitsoflifexo.Fruitfolio:16068
+    t =    20.83s Open com.fruitsoflifexo.Fruitfolio
+    t =    20.83s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 19:57:35.294 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 19:57:35.294 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    21.05s         Setting up automation session
+    t =    21.96s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.58s Waiting 12.0s for "I'll explore" Button to exist
+    t =    24.62s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    24.62s         Checking existence of `"I'll explore" Button`
+    t =    24.66s         Capturing element debug description
+    t =    25.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    25.59s         Checking existence of `"I'll explore" Button`
+    t =    25.61s         Capturing element debug description
+    t =    26.64s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    26.64s         Checking existence of `"I'll explore" Button`
+    t =    26.66s         Capturing element debug description
+    t =    27.62s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    27.62s         Checking existence of `"I'll explore" Button`
+    t =    27.64s         Capturing element debug description
+    t =    28.58s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    28.58s         Checking existence of `"I'll explore" Button`
+    t =    28.61s         Capturing element debug description
+    t =    29.64s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    29.64s         Checking existence of `"I'll explore" Button`
+    t =    29.69s         Capturing element debug description
+    t =    30.62s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    30.62s         Checking existence of `"I'll explore" Button`
+    t =    30.64s         Capturing element debug description
+    t =    31.58s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    31.58s         Checking existence of `"I'll explore" Button`
+    t =    31.60s         Capturing element debug description
+    t =    32.64s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    32.64s         Checking existence of `"I'll explore" Button`
+    t =    32.69s         Capturing element debug description
+    t =    33.65s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    33.65s         Checking existence of `"I'll explore" Button`
+    t =    33.70s         Capturing element debug description
+    t =    34.64s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    34.64s         Checking existence of `"I'll explore" Button`
+    t =    34.66s         Capturing element debug description
+    t =    35.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    35.59s         Checking existence of `"I'll explore" Button`
+    t =    35.62s         Capturing element debug description
+    t =    35.62s     Checking existence of `"I'll explore" Button`
+    t =    35.64s Collecting debug information to assist test failure triage
+    t =    35.64s     Requesting snapshot of accessibility hierarchy for app with pid 17744
+    t =    35.68s Waiting 15.0s for Button (First Match) to exist
+    t =    36.72s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    36.72s         Checking existence of `Button (First Match)`
+    t =    36.77s Tap Button (First Match)
+    t =    36.77s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.77s     Find the Button (First Match)
+    t =    36.80s     Check for interrupting elements affecting "Contact" Button
+    t =    36.82s     Synthesize event
+    t =    37.13s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    37.51s Waiting 10.0s for Button (First Match) to exist
+    t =    38.56s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    38.56s         Checking existence of `Button (First Match)`
+    t =    38.59s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    38.61s Find the Button (First Match)
+    t =    38.65s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    38.67s Swipe up Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    38.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.67s     Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    38.69s     Check for interrupting elements affecting "Fruitfolio" Application
+    t =    38.70s     Synthesize event
+    t =    39.13s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.23s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.27s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.30s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.33s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.35s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.39s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.42s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.45s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.47s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.51s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.54s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.57s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.60s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.63s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.66s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.68s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.72s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.75s Find the "email  •  fruitsoflifexo@gmail.com" Button
+    t =    41.77s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    41.91s Added attachment named 'SharedPill_Contact_AccessibilityXXXL'
+    t =    43.85s Find the Any (Descendant with identity binding to AX element pid: 17744, elementOrHash.elementID: 4576462592.75)
+    t =    43.86s Checking existence of `"TikTok  •  @fruitsoflife.xo" StaticText`
+    t =    43.87s Find the "TikTok  •  @fruitsoflife.xo" StaticText
+    t =    43.89s Find the "TikTok  •  @fruitsoflife.xo" StaticText
+    t =    43.90s Find the "TikTok  •  @fruitsoflife.xo" StaticText
+    t =    43.93s Requesting snapshot of accessibility hierarchy for app with pid 17744
+    t =    43.94s Find: Descendant with identity binding to AX element pid: 17744, elementOrHash.elementID: 4576462592.75
+    t =    44.01s Requesting snapshot of accessibility hierarchy for app with pid 17744
+    t =    44.02s Find: Descendant with identity binding to AX element pid: 17744, elementOrHash.elementID: 4576462592.75
+    t =    44.03s Requesting snapshot of accessibility hierarchy for app with pid 17744
+STRICT_ACCESSIBILITY_ISSUE: {
+  "auditType" : 1,
+  "compactDescription" : "Contrast failed",
+  "detailedDescription" : "Contrast failed for SwiftUI.AccessibilityNode",
+  "elementDescription" : "Attributes: StaticText, 0x104a3f480, {{55.0, 624.7}, {292.0, 218.3}}, label: 'TikTok  •  @fruitsoflife.xo'\nElement subtree:\n →StaticText, 0x104a3f480, {{55.0, 624.7}, {292.0, 218.3}}, label: 'TikTok  •  @fruitsoflife.xo'\nPath to element:\n →Application, 0x114845900, pid: 17744, label: 'Fruitfolio'\n  ↳Window (Main), 0x114846580, {{0.0, 0.0}, {402.0, 874.0}}\n   ↳Other, 0x114846940, {{0.0, 0.0}, {402.0, 874.0}}\n    ↳Other, 0x114844dc0, {{0.0, 0.0}, {402.0, 874.0}}\n     ↳Other, 0x114846bc0, {{0.0, 0.0}, {402.0, 874.0}}\n      ↳Other, 0x114846800, {{0.0, 0.0}, {402.0, 874.0}}\n       ↳Other, 0x114845680, {{0.0, 0.0}, {402.0, 874.0}}\n        ↳Other, 0x114847c00, {{0.0, 0.0}, {402.0, 874.0}}\n         ↳Other, 0x114845400, {{0.0, 0.0}, {402.0, 874.0}}\n          ↳Other, 0x1148452c0, {{0.0, 0.0}, {402.0, 874.0}}\n           ↳Other, 0x114847d40, {{0.0, 0.0}, {402.0, 874.0}}\n            ↳ScrollView, 0x114844000, {{0.0, 0.0}, {402.0, 874.0}}\n             ↳Other, 0x114845e00, {{0.0, 62.0}, {402.0, 1846.3}}\n              ↳Button, 0x104a3f5c0, {{55.0, 624.7}, {292.0, 218.3}}, label: 'TikTok  •  @fruitsoflife.xo'\n               ↳StaticText, 0x104a3f480, {{55.0, 624.7}, {292.0, 218.3}}, label: 'TikTok  •  @fruitsoflife.xo'\nQuery chain:\n →Find: Target Application 'com.fruitsoflifexo.Fruitfolio'\n  Output: {\n    Application, 0x107be2e40, pid: 17744, label: 'Fruitfolio'\n  }\n  ↪︎Find: Descendant with identity binding to AX element pid: 17744, elementOrHash.elementID: 4576462592.75\n    Output: {\n      StaticText, 0x107be21c0, {{55.0, 624.7}, {292.0, 218.3}}, label: 'TikTok  •  @fruitsoflife.xo'\n    }\n",
+  "elementFrame" : "(55.0, 624.6666666666666, 292.0, 218.33333333333337)",
+  "elementIdentifier" : "",
+  "elementLabel" : "TikTok  •  @fruitsoflife.xo",
+  "suppressed" : false
+}
+    t =    44.05s Added attachment named 'StrictAccessibilityIssue_1'
+    t =    44.05s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    44.18s Added attachment named 'StrictAccessibilityIssueViewport_1'
+    t =    44.18s Find the Any (Descendant with identity binding to AX element pid: 17744, elementOrHash.elementID: 4576462592.75)
+    t =    44.20s Checking existence of `"TikTok  •  @fruitsoflife.xo" StaticText`
+    t =    44.21s Find the "TikTok  •  @fruitsoflife.xo" StaticText
+/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioUITests/StrictAccessibilityAudit.swift:7: error: -[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping] : Contrast failed
+    t =    44.55s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping]' failed (44.830 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers]' started.
+    t =     0.00s Start Test at 2026-11-01 19:57:59.295
+    t =     0.02s Set Up
+    t =     0.02s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.02s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.03s         Terminate com.fruitsoflifexo.Fruitfolio:17744
+2026-11-01 19:58:00.346 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 19:58:00.346 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.26s         Setting up automation session
+    t =     2.33s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.98s Waiting 12.0s for "I'll explore" Button to exist
+    t =     4.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     4.99s         Checking existence of `"I'll explore" Button`
+    t =     5.04s         Capturing element debug description
+    t =     5.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.99s         Checking existence of `"I'll explore" Button`
+    t =     6.01s         Capturing element debug description
+    t =     6.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.99s         Checking existence of `"I'll explore" Button`
+    t =     7.02s         Capturing element debug description
+    t =     7.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.99s         Checking existence of `"I'll explore" Button`
+    t =     8.04s         Capturing element debug description
+    t =     8.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.99s         Checking existence of `"I'll explore" Button`
+    t =     9.01s         Capturing element debug description
+    t =    10.04s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.04s         Checking existence of `"I'll explore" Button`
+    t =    10.06s         Capturing element debug description
+    t =    11.01s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.01s         Checking existence of `"I'll explore" Button`
+    t =    11.03s         Capturing element debug description
+    t =    11.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.99s         Checking existence of `"I'll explore" Button`
+    t =    12.01s         Capturing element debug description
+    t =    12.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.99s         Checking existence of `"I'll explore" Button`
+    t =    13.03s         Capturing element debug description
+    t =    13.98s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.99s         Checking existence of `"I'll explore" Button`
+    t =    14.02s         Capturing element debug description
+    t =    14.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.99s         Checking existence of `"I'll explore" Button`
+    t =    15.01s         Capturing element debug description
+    t =    15.99s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.99s         Checking existence of `"I'll explore" Button`
+    t =    16.02s         Capturing element debug description
+    t =    16.02s     Checking existence of `"I'll explore" Button`
+    t =    16.04s Collecting debug information to assist test failure triage
+    t =    16.04s     Requesting snapshot of accessibility hierarchy for app with pid 19064
+    t =    16.07s Waiting 15.0s for Button (First Match) to exist
+    t =    17.09s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.09s         Checking existence of `Button (First Match)`
+    t =    17.14s Tap Button (First Match)
+    t =    17.14s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.14s     Find the Button (First Match)
+    t =    17.17s     Check for interrupting elements affecting "hub.action.FAQ" Button
+    t =    17.19s     Synthesize event
+    t =    17.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.88s Waiting 10.0s for "faq.question.about-2" Button to exist
+    t =    18.94s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.question.about-2" Button`
+    t =    18.94s         Checking existence of `"faq.question.about-2" Button`
+    t =    18.99s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.00s Find the "faq.question.about-2" Button
+    t =    19.04s Find the "faq.question.about-2" Button
+    t =    19.08s Find the "faq.question.about-2" Button
+    t =    19.12s Find the "faq.question.about-2" Button
+    t =    19.15s Find the "faq.question.about-2" Button
+    t =    19.19s Find the "faq.question.about-2" Button
+    t =    19.22s Find the "faq.question.about-2" Button
+    t =    19.26s Find the "faq.question.about-2" Button
+    t =    19.30s Find the "faq.question.about-2" Button
+    t =    19.34s Find the "faq.question.about-2" Button
+    t =    19.37s Find the "faq.question.about-2" Button
+    t =    19.41s Find the "faq.question.about-2" Button
+    t =    19.44s Find the "faq.question.about-2" Button
+    t =    19.49s Find the "faq.question.about-2" Button
+    t =    19.52s Find the "faq.question.about-2" Button
+    t =    19.57s Find the "faq.question.about-2" Button
+    t =    19.60s Find the "faq.question.about-2" Button
+    t =    19.64s Find the "faq.question.about-2" Button
+    t =    19.68s Tap "faq.question.about-2" Button
+    t =    19.68s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.68s     Find the "faq.question.about-2" Button
+    t =    19.71s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    19.73s     Synthesize event
+    t =    20.03s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.03s Waiting 8.0s for "faq.answer.about-2" StaticText to exist
+    t =    21.07s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.answer.about-2" StaticText`
+    t =    21.07s         Checking existence of `"faq.answer.about-2" StaticText`
+    t =    21.10s Find the "faq.answer.about-2" StaticText
+    t =    21.14s Find the "faq.answer.about-2" StaticText
+    t =    21.18s Swipe up Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    21.18s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.18s     Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    21.21s     Check for interrupting elements affecting "Fruitfolio" Application
+    t =    21.23s     Synthesize event
+    t =    21.65s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.77s Find the "faq.answer.about-2" StaticText
+    t =    23.81s Find the "faq.answer.about-2" StaticText
+    t =    23.85s Find the "faq.answer.about-2" StaticText
+    t =    23.89s Find the "faq.answer.about-2" StaticText
+    t =    23.94s Find the "faq.answer.about-2" StaticText
+    t =    23.99s Find the "faq.answer.about-2" StaticText
+    t =    24.03s Find the "faq.answer.about-2" StaticText
+    t =    24.06s Find the "faq.answer.about-2" StaticText
+    t =    24.10s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    24.22s Added attachment named 'FAQ_Expanded_AccessibilityXXXL'
+    t =    26.29s Find the "faq.question.about-2" Button
+    t =    26.36s Find the "faq.question.about-2" Button
+    t =    26.43s Find the "faq.question.about-2" Button
+    t =    26.49s Find the "faq.question.about-2" Button
+    t =    26.56s Find the "faq.question.about-2" Button
+    t =    26.64s Find the "faq.question.about-2" Button
+    t =    26.72s Find the "faq.question.about-2" Button
+    t =    26.79s Find the "faq.question.about-2" Button
+    t =    26.86s Tap "faq.question.about-2" Button
+    t =    26.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    26.87s     Find the "faq.question.about-2" Button
+    t =    26.93s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    26.96s     Synthesize event
+    t =    27.27s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.29s Checking existence of `"faq.answer.about-2" StaticText`
+    t =    27.34s Find the "faq.question.about-2" Button
+    t =    27.39s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    27.53s Added attachment named 'FAQ_Collapsed_AccessibilityXXXL'
+    t =    27.53s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers]' passed (27.793 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording]' started.
+    t =     0.00s Start Test at 2026-11-01 19:58:27.088
+    t =     0.03s Set Up
+    t =     0.03s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.03s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.03s         Terminate com.fruitsoflifexo.Fruitfolio:19064
+2026-11-01 19:58:28.122 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 19:58:28.122 xcodebuild[14429:53922] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.45s         Setting up automation session
+    t =     2.54s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     4.25s Waiting 12.0s for "I'll explore" Button to exist
+    t =     5.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.28s         Checking existence of `"I'll explore" Button`
+    t =     5.33s         Capturing element debug description
+    t =     6.27s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.27s         Checking existence of `"I'll explore" Button`
+    t =     6.30s         Capturing element debug description
+    t =     7.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.33s         Checking existence of `"I'll explore" Button`
+    t =     7.37s         Capturing element debug description
+    t =     8.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.33s         Checking existence of `"I'll explore" Button`
+    t =     8.36s         Capturing element debug description
+    t =     9.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.31s         Checking existence of `"I'll explore" Button`
+    t =     9.34s         Capturing element debug description
+    t =    10.30s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.30s         Checking existence of `"I'll explore" Button`
+    t =    10.34s         Capturing element debug description
+    t =    11.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.28s         Checking existence of `"I'll explore" Button`
+    t =    11.32s         Capturing element debug description
+    t =    12.26s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.26s         Checking existence of `"I'll explore" Button`
+    t =    12.29s         Capturing element debug description
+    t =    13.25s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.25s         Checking existence of `"I'll explore" Button`
+    t =    13.28s         Capturing element debug description
+    t =    14.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.33s         Checking existence of `"I'll explore" Button`
+    t =    14.37s         Capturing element debug description
+    t =    15.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.31s         Checking existence of `"I'll explore" Button`
+    t =    15.33s         Capturing element debug description
+    t =    16.26s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.26s         Checking existence of `"I'll explore" Button`
+    t =    16.29s         Capturing element debug description
+    t =    16.29s     Checking existence of `"I'll explore" Button`
+    t =    16.33s Collecting debug information to assist test failure triage
+    t =    16.33s     Requesting snapshot of accessibility hierarchy for app with pid 20500
+    t =    16.37s Waiting 15.0s for Button (First Match) to exist
+    t =    17.43s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    17.43s         Checking existence of `Button (First Match)`
+    t =    17.46s Tap Button (First Match)
+    t =    17.46s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.46s     Find the Button (First Match)
+    t =    17.51s     Check for interrupting elements affecting "hub.action.FAQ" Button
+    t =    17.54s     Synthesize event
+    t =    17.85s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.29s Waiting 10.0s for "faq.question.about-2" Button to exist
+    t =    19.31s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.question.about-2" Button`
+    t =    19.31s         Checking existence of `"faq.question.about-2" Button`
+    t =    19.36s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.38s Find the "faq.question.about-2" Button
+    t =    19.43s Find the "faq.question.about-2" Button
+    t =    19.48s Find the "faq.question.about-2" Button
+    t =    19.54s Find the "faq.question.about-2" Button
+    t =    19.59s Find the "faq.question.about-2" Button
+    t =    19.65s Find the "faq.question.about-2" Button
+    t =    19.71s Find the "faq.question.about-2" Button
+    t =    19.76s Find the "faq.question.about-2" Button
+    t =    19.82s Find the "faq.question.about-2" Button
+    t =    19.87s Find the "faq.question.about-2" Button
+    t =    19.90s Find the "faq.question.about-2" Button
+    t =    19.95s Find the "faq.question.about-2" Button
+    t =    19.99s Find the "faq.question.about-2" Button
+    t =    20.04s Find the "faq.question.about-2" Button
+    t =    20.08s Find the "faq.question.about-2" Button
+    t =    20.13s Find the "faq.question.about-2" Button
+    t =    20.17s Find the "faq.question.about-2" Button
+    t =    20.21s Find the "faq.question.about-2" Button
+    t =    20.24s Tap "faq.question.about-2" Button
+    t =    20.24s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.25s     Find the "faq.question.about-2" Button
+    t =    20.28s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    20.30s     Synthesize event
+    t =    20.60s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.61s Waiting 8.0s for "faq.answer.about-2" StaticText to exist
+    t =    21.67s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.answer.about-2" StaticText`
+    t =    21.67s         Checking existence of `"faq.answer.about-2" StaticText`
+    t =    21.74s Find the "faq.answer.about-2" StaticText
+    t =    21.78s Find the "faq.answer.about-2" StaticText
+    t =    21.83s Find the "faq.answer.about-2" StaticText
+    t =    21.88s Find the "faq.answer.about-2" StaticText
+    t =    21.92s Find the "faq.answer.about-2" StaticText
+    t =    21.97s Find the "faq.answer.about-2" StaticText
+    t =    22.01s Find the "faq.answer.about-2" StaticText
+    t =    22.05s Find the "faq.answer.about-2" StaticText
+    t =    22.10s Find the "faq.answer.about-2" StaticText
+    t =    22.14s Find the "faq.answer.about-2" StaticText
+    t =    22.18s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    22.32s Added attachment named 'FAQ_Expanded_Default'
+    t =    24.54s Find the "faq.question.about-2" Button
+    t =    24.60s Find the "faq.question.about-2" Button
+    t =    24.67s Find the "faq.question.about-2" Button
+    t =    24.74s Find the "faq.question.about-2" Button
+    t =    24.81s Find the "faq.question.about-2" Button
+    t =    24.87s Find the "faq.question.about-2" Button
+    t =    24.94s Find the "faq.question.about-2" Button
+    t =    25.01s Find the "faq.question.about-2" Button
+    t =    25.09s Tap "faq.question.about-2" Button
+    t =    25.09s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.10s     Find the "faq.question.about-2" Button
+    t =    25.16s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    25.19s     Synthesize event
+    t =    25.50s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.51s Checking existence of `"faq.answer.about-2" StaticText`
+    t =    25.56s Find the "faq.question.about-2" Button
+    t =    25.61s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    25.74s Added attachment named 'FAQ_Collapsed_Default'
+    t =    25.74s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording]' passed (25.968 seconds).
+Test Suite 'SharedControlUITests' failed at 2026-11-01 19:58:53.056.
+	 Executed 4 tests, with 1 failure (0 unexpected) in 123.768 (123.771) seconds
+Test Suite 'FruitfolioUITests.xctest' failed at 2026-11-01 19:58:53.057.
+	 Executed 4 tests, with 1 failure (0 unexpected) in 123.768 (123.772) seconds
+Test Suite 'Selected tests' failed at 2026-11-01 19:58:53.057.
+	 Executed 4 tests, with 1 failure (0 unexpected) in 123.768 (123.773) seconds
+2026-11-01 19:59:04.339 xcodebuild[14429:53922] [MT] IDETestOperationsObserverDebug: 137.670 elapsed -- Testing started completed.
+2026-11-01 19:59:04.339 xcodebuild[14429:53922] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 19:59:04.339 xcodebuild[14429:53922] [MT] IDETestOperationsObserverDebug: 137.670 sec, +137.670 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+
+Failing tests:
+	SharedControlUITests.testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping()
+
+** TEST EXECUTE FAILED **
+
+Testing started

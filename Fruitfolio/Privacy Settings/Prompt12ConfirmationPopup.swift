@@ -12,6 +12,8 @@ struct Prompt12ConfirmationPopup: View {
     let destructiveAction: (() -> Void)?
 
     @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @AccessibilityFocusState private var titleFocused: Bool
 
     var body: some View {
         Prompt10WatercolorPopup {
@@ -24,32 +26,26 @@ struct Prompt12ConfirmationPopup: View {
                         .accessibilityHidden(true)
                 }
 
-                Text(title)
-                    .font(.custom("Chalkboard SE", size: 16))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
+                FruitfolioNativeActionLabel(text: title,
+                    pointSize: 16, textStyle: .headline,
+                    lineBreakMode: dynamicTypeSize.isAccessibilitySize ? .byCharWrapping : .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityFocused($titleFocused)
 
-                Text(message)
-                    .font(.custom("Chalkboard SE", size: 11.5))
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
+                FruitfolioNativeActionLabel(text: message,
+                    fontName: "ChalkboardSE-Regular", pointSize: 11.5, textStyle: .body,
+                    lineBreakMode: .byWordWrapping)
                     .fixedSize(horizontal: false, vertical: true)
                     .frame(maxWidth: 275)
 
-                WatercolorPrimaryButton(label: primaryLabel) {
-                    audioManager.play(.buttonSoftPop)
+                WatercolorPrimaryButton(label: primaryLabel, localizationKey: primaryLabel) {
                     primaryAction()
                 }
 
                 if let secondaryLabel,
                    let secondaryAction {
-                    WatercolorSecondaryButton(label: secondaryLabel) {
+                    WatercolorSecondaryButton(label: secondaryLabel, localizationKey: secondaryLabel) {
                         audioManager.play(.popupClose)
                         secondaryAction()
                     }
@@ -57,24 +53,19 @@ struct Prompt12ConfirmationPopup: View {
 
                 if let destructiveLabel,
                    let destructiveAction {
-                    Button(destructiveLabel) {
+                    FruitfolioControlPillButton(label: destructiveLabel, localizationKey: destructiveLabel, playsSound: false) {
                         audioManager.play(.buttonSoftPop)
                         destructiveAction()
                     }
-                    .font(.custom("Chalkboard SE", size: 11.5))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.secondaryBurgundy
-                    )
-                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                    .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal, 18)
+            .padding(.horizontal, dynamicTypeSize.isAccessibilitySize ? 0 : 18)
             .padding(.top, 30)
             .padding(.bottom, 28)
         }
-        .frame(maxWidth: 350)
+        .frame(maxWidth: dynamicTypeSize.isAccessibilitySize ? .infinity : 350)
+        .accessibilityAction(.escape) { (secondaryAction ?? primaryAction)() }
+        .task { await Task.yield(); guard !Task.isCancelled else { return }; titleFocused = true }
         .onAppear {
             audioManager.play(.popupOpen)
         }

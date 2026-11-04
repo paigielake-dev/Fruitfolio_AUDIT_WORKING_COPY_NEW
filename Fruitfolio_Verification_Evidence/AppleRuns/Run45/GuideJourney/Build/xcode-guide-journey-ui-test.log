@@ -1,0 +1,272 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/FruitfolioDeepCoverageTests/test03GuideBuilderCoverSelectorAccessible" -resultBundlePath Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-01 21:48:25.583961+0000 FruitfolioUITests-Runner[61715:172576] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-01 21:48:26.134.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-01 21:48:26.135.
+Test Suite 'FruitfolioDeepCoverageTests' started at 2026-11-01 21:48:26.135.
+Test Case '-[FruitfolioUITests.FruitfolioDeepCoverageTests test03GuideBuilderCoverSelectorAccessible]' started.
+    t =     0.00s Start Test at 2026-11-01 21:48:26.136
+    t =     0.02s Set Up
+    t =     0.03s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.03s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 21:48:26.228 xcodebuild[61707:172391] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 21:48:26.228 xcodebuild[61707:172391] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.91s         Setting up automation session
+objc[61715]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x108744310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x108dd0398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     1.86s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     3.48s Waiting 15.0s for Window (First Match) to exist
+    t =     4.52s     Checking `Expect predicate `existsNoRetry == 1` for object Window (First Match)`
+    t =     4.52s         Checking existence of `Window (First Match)`
+    t =     4.53s Waiting 10.0s for "I'll explore" Button to exist
+    t =     5.61s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     5.61s         Checking existence of `"I'll explore" Button`
+    t =     5.64s         Capturing element debug description
+    t =     6.60s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.60s         Checking existence of `"I'll explore" Button`
+    t =     6.64s         Capturing element debug description
+    t =     7.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.59s         Checking existence of `"I'll explore" Button`
+    t =     7.61s         Capturing element debug description
+    t =     8.60s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.60s         Checking existence of `"I'll explore" Button`
+    t =     8.64s         Capturing element debug description
+    t =     9.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.59s         Checking existence of `"I'll explore" Button`
+    t =     9.61s         Capturing element debug description
+    t =    10.54s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.54s         Checking existence of `"I'll explore" Button`
+    t =    10.57s         Capturing element debug description
+    t =    11.59s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.59s         Checking existence of `"I'll explore" Button`
+    t =    11.63s         Capturing element debug description
+    t =    12.55s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.55s         Checking existence of `"I'll explore" Button`
+    t =    12.58s         Capturing element debug description
+    t =    13.55s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.55s         Checking existence of `"I'll explore" Button`
+    t =    13.58s         Capturing element debug description
+    t =    14.54s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.54s         Checking existence of `"I'll explore" Button`
+    t =    14.56s         Capturing element debug description
+    t =    14.56s     Checking existence of `"I'll explore" Button`
+    t =    14.59s Collecting debug information to assist test failure triage
+    t =    14.59s     Requesting snapshot of accessibility hierarchy for app with pid 61721
+    t =    14.62s Checking existence of `Button (First Match)`
+    t =    14.65s Find the Button (First Match)
+    t =    14.69s Tap "hub.action.Build Your Own Guide" Button
+    t =    14.69s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    14.70s     Find the "hub.action.Build Your Own Guide" Button
+    t =    14.72s     Check for interrupting elements affecting "hub.action.Build Your Own Guide" Button
+    t =    14.75s     Synthesize event
+    t =    15.04s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    15.48s Checking existence of `Button (First Match)`
+    t =    15.50s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    15.63s Added attachment named 'Entered_Guide Builder'
+DEEP_COVERAGE_SCREENSHOT: Entered_Guide Builder
+    t =    15.63s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    15.76s Added attachment named 'Guide_Initial'
+DEEP_COVERAGE_SCREENSHOT: Guide_Initial
+    t =    15.77s Checking existence of `Button (First Match)`
+    t =    15.79s Find the Button (First Match)
+    t =    15.82s Tap "make my first guide" Button
+    t =    15.82s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    15.82s     Find the "make my first guide" Button
+    t =    15.85s     Check for interrupting elements affecting "make my first guide" Button
+    t =    15.87s     Synthesize event
+    t =    16.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.16s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    16.32s Added attachment named 'Guide_CreatePopup'
+DEEP_COVERAGE_SCREENSHOT: Guide_CreatePopup
+    t =    16.32s Checking existence of `"ex. my hormone guide" TextField`
+    t =    16.34s Tap "ex. my hormone guide" TextField
+    t =    16.34s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.34s     Find the "ex. my hormone guide" TextField
+    t =    16.36s     Check for interrupting elements affecting "ex. my hormone guide" TextField
+    t =    16.39s     Synthesize event
+    t =    16.70s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.78s Type 'Fruitfolio QA Guide' into "ex. my hormone guide" TextField
+    t =    16.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.16s     Find the "ex. my hormone guide" TextField
+    t =    17.22s     Check for interrupting elements affecting "ex. my hormone guide" TextField
+    t =    17.26s     Synthesize event
+    t =    17.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    17.79s Waiting 5.0s for "guide.keyboardDone" Button to exist
+    t =    18.86s     Checking `Expect predicate `existsNoRetry == 1` for object "guide.keyboardDone" Button`
+    t =    18.86s         Checking existence of `"guide.keyboardDone" Button`
+    t =    18.93s Tap "guide.keyboardDone" Button
+    t =    18.93s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.93s     Find the "guide.keyboardDone" Button
+    t =    18.96s     Check for interrupting elements affecting "guide.keyboardDone" Button
+    t =    19.01s     Found 1 interrupting element:
+    t =    19.01s         Find the Alert (Identity Binding)
+    t =    19.04s Alert from Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.04s     Invoking UI interruption monitors for Alert from Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    19.04s         Find the Alert
+    t =    19.06s         Checking existence of `Button (Elements matching predicate 'userTestingAttributes CONTAINS "cancel-button"')`
+    t =    19.09s         Get all elements bound by accessibility element for: Elements matching predicate 'userTestingAttributes CONTAINS "default-button"'
+    t =    19.12s         Checking existence of `Button (Elements matching predicate 'label CONTAINS[d] "Don’t" OR label CONTAINS "Cancel"')`
+    t =    19.15s         Requesting snapshot of accessibility hierarchy for app with pid 61721
+    t =    19.20s         Find: Descendants matching type Alert
+    t =    19.20s         Find: Identity Binding
+    t =    19.29s         Requesting snapshot of accessibility hierarchy for app with pid 61721
+    t =    19.34s         Find: Descendants matching type Alert
+    t =    19.34s         Find: Identity Binding
+    t =    19.34s         Requesting snapshot of accessibility hierarchy for app with pid 61721
+    t =    19.38s         Find: Descendants matching type Alert
+    t =    19.38s         Requesting snapshot of accessibility hierarchy for app with pid 61721
+    t =    19.45s Default interruption handler not attempting to dismiss alert: unable to find any qualified button in Attributes: Alert, 0x1154288c0, {{16.0, 122.0}, {370.0, 305.0}}
+Element subtree:
+ →Alert, 0x1154288c0, {{16.0, 122.0}, {370.0, 305.0}}
+    Image, 0x115428a00, {{16.0, 122.0}, {370.0, 305.0}}, label: 'popup_notebook_paper'
+    ScrollView, 0x115428b40, {{101.0, 164.7}, {248.0, 232.0}}
+      Other, 0x115428c80, {{101.0, 164.7}, {248.0, 584.0}}
+        StaticText, 0x115428dc0, {{133.0, 190.6}, {184.0, 22.7}}, label: 'let’s make your guide ♡'
+        StaticText, 0x115428f00, {{101.0, 321.3}, {59.3, 15.7}}, label: 'guide name'
+        TextField, 0x115424000, {{113.0, 359.7}, {224.0, 20.3}}, placeholderValue: 'ex. my hormone guide', value: Fruitfolio QA Guide, Keyboard Focused
+        StaticText, 0x115424140, {{101.0, 402.9}, {86.0, 15.7}}, label: 'little description'
+        TextField, 0x115424280, {{113.0, 438.7}, {224.0, 34.0}}, placeholderValue: 'ex. everything i want to remember about my cycle'
+          Other, 0x1154243c0, {{113.0, 452.7}, {224.0, 17.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+            Other, 0x115424500, {{116.0, 466.7}, {218.0, 3.0}}
+        Button, 0x115424640, {{101.0, 492.7}, {44.0, 54.0}}, label: 'sage cover', Selected
+        Button, 0x115424780, {{152.0, 492.7}, {44.0, 54.0}}, label: 'yellow cover'
+        Button, 0x1154248c0, {{203.0, 492.7}, {44.0, 54.0}}, label: 'pink cover'
+        Button, 0x115424a00, {{254.0, 492.7}, {44.0, 54.0}}, label: 'coral cover'
+        Button, 0x115424b40, {{305.0, 492.7}, {44.0, 54.0}}, label: 'lavender cover'
+        Button, 0x115424c80, {{101.0, 556.7}, {248.0, 82.0}}, label: 'create my guide'
+          Button, 0x115424dc0, {{101.0, 556.7}, {248.0, 82.0}}, label: 'create my guide'
+            Image, 0x115424f00, {{101.0, 556.7}, {248.0, 82.0}}
+            StaticText, 0x115425040, {{101.0, 556.7}, {248.0, 82.0}}, label: 'create my guide'
+        Button, 0x115425180, {{101.0, 648.7}, {248.0, 82.0}}, label: 'not yet'
+          Button, 0x1154252c0, {{101.0, 648.7}, {248.0, 82.0}}, label: 'not yet'
+            Image, 0x115425400, {{101.0, 648.7}, {248.0, 82.0}}
+            StaticText, 0x115425540, {{101.0, 648.7}, {248.0, 82.0}}, label: 'not yet'
+      Other, 0x115425680, {{316.0, 164.7}, {30.0, 232.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+        Other, 0x1154257c0, {{343.0, 167.7}, {3.0, 89.7}}
+      Other, 0x115425900, {{316.0, 164.7}, {30.0, 232.0}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+        Other, 0x115425a40, {{343.0, 167.7}, {3.0, 89.7}}
+Path to element:
+ →Application, 0x1052235c0, pid: 61721, label: 'Fruitfolio'
+  ↳Window (Main), 0x105223840, {{0.0, 0.0}, {402.0, 874.0}}
+   ↳Other, 0x105223980, {{0.0, 0.0}, {402.0, 874.0}}
+    ↳Other, 0x105223ac0, {{0.0, 0.0}, {402.0, 874.0}}
+     ↳Other, 0x105223c00, {{0.0, 0.0}, {402.0, 874.0}}
+      ↳Other, 0x105223e80, {{0.0, 0.0}, {402.0, 874.0}}
+       ↳Other, 0x105223d40, {{0.0, 0.0}, {402.0, 874.0}}
+        ↳Other, 0x105222e40, {{0.0, 0.0}, {402.0, 874.0}}
+         ↳Other, 0x115429040, {{0.0, 0.0}, {402.0, 874.0}}
+          ↳Other, 0x115428000, {{0.0, 0.0}, {402.0, 874.0}}
+           ↳Other, 0x1154283c0, {{0.0, 0.0}, {402.0, 874.0}}
+            ↳Alert, 0x1154288c0, {{16.0, 122.0}, {370.0, 305.0}}
+Query chain:
+ →Find: Target Application 'com.fruitsoflifexo.Fruitfolio'
+  Output: {
+    Application, 0x115750c80, pid: 61721, label: 'Fruitfolio'
+  }
+  ↪︎Find: Descendants matching type Alert
+    Output: {
+      Alert, 0x115738c80, {{16.0, 122.0}, {370.0, 305.0}}
+    }
+    ↪︎Find: Identity Binding
+      Output: {
+        Alert, 0x105222f80, {{16.0, 122.0}, {370.0, 305.0}}
+      }
+.
+    t =    19.45s         Find the Alert at {{16.0, 122.0}, {370.0, 305.0}}
+    t =    19.48s         Find the Alert
+    t =    19.50s No monitors handled UI interruption, checking to see if element still exists...
+    t =    19.51s             Checking existence of `Alert`
+    t =    19.53s Did not handle the interruption, but will attempt to continue…
+    t =    19.53s     Synthesize event
+    t =    19.84s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.08s Find the Button (First Match)
+    t =    20.14s Checking existence of `ScrollView (First Match)`
+    t =    20.18s Press ScrollView (First Match)[0.90, 0.80] for 0.1 seconds, then drag to ScrollView (First Match)[0.90, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    20.18s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.18s     Find the ScrollView (First Match)
+    t =    20.23s     Check for interrupting elements affecting ScrollView
+    t =    20.26s     Synthesize event
+    t =    20.27s         Find the ScrollView at {{101.0, 341.3}, {248.0, 231.7}}
+    t =    20.31s         Find the ScrollView at {{101.0, 341.3}, {248.0, 231.7}}
+    t =    20.37s         Find the ScrollView at {{101.0, 341.3}, {248.0, 231.7}}
+    t =    20.41s         Find the ScrollView at {{101.0, 341.3}, {248.0, 231.7}}
+    t =    20.46s         Find the ScrollView at {{101.0, 341.3}, {248.0, 231.7}}
+    t =    21.06s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.69s Find the "create my guide" Button
+    t =    22.74s Find the "create my guide" Button
+    t =    22.79s Find the "create my guide" Button
+    t =    22.84s Find the "create my guide" Button
+    t =    22.89s Find the "create my guide" Button
+    t =    22.93s Find the "create my guide" Button
+    t =    22.98s Find the "create my guide" Button
+    t =    23.02s Find the "create my guide" Button
+    t =    23.08s Find the "create my guide" Button
+    t =    23.12s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    23.27s Added attachment named 'Guide_NameEntered'
+DEEP_COVERAGE_SCREENSHOT: Guide_NameEntered
+    t =    23.27s Checking existence of `Button (First Match)`
+    t =    23.31s Find the Button (First Match)
+    t =    23.36s Tap "create my guide" Button
+    t =    23.36s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.37s     Find the "create my guide" Button
+    t =    23.41s     Check for interrupting elements affecting "create my guide" Button
+    t =    23.44s     Synthesize event
+    t =    23.74s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.75s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    23.90s Added attachment named 'Guide_AfterCreation'
+DEEP_COVERAGE_SCREENSHOT: Guide_AfterCreation
+    t =    23.90s Checking existence of `Button (First Match)`
+    t =    23.92s Find the Button (First Match)
+    t =    23.96s Checking existence of `Button (First Match)`
+    t =    23.98s Find the Button (First Match)
+    t =    24.03s Tap "guide options" Button
+    t =    24.03s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.03s     Find the "guide options" Button
+    t =    24.06s     Check for interrupting elements affecting "guide options" Button
+    t =    24.08s     Synthesize event
+    t =    24.39s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.39s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    24.53s Added attachment named 'Guide_OptionsOpen'
+DEEP_COVERAGE_SCREENSHOT: Guide_OptionsOpen
+    t =    24.53s Checking existence of `Button (First Match)`
+    t =    24.57s Find the Button (First Match)
+    t =    24.61s Tap "change cover" Button
+    t =    24.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.61s     Find the "change cover" Button
+    t =    24.64s     Check for interrupting elements affecting "change cover" Button
+    t =    24.67s     Synthesize event
+    t =    24.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.97s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    25.17s Added attachment named 'Guide_CoverPicker'
+DEEP_COVERAGE_SCREENSHOT: Guide_CoverPicker
+    t =    25.17s Checking existence of `"choose a cover" StaticText`
+    t =    25.20s Tear Down
+Test Case '-[FruitfolioUITests.FruitfolioDeepCoverageTests test03GuideBuilderCoverSelectorAccessible]' passed (25.474 seconds).
+Test Suite 'FruitfolioDeepCoverageTests' passed at 2026-11-01 21:48:51.610.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.474 (25.475) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-01 21:48:51.610.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.474 (25.475) seconds
+Test Suite 'Selected tests' passed at 2026-11-01 21:48:51.610.
+	 Executed 1 test, with 0 failures (0 unexpected) in 25.474 (25.476) seconds
+2026-11-01 21:48:52.106 xcodebuild[61707:172391] [MT] IDETestOperationsObserverDebug: 27.969 elapsed -- Testing started completed.
+2026-11-01 21:48:52.106 xcodebuild[61707:172391] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 21:48:52.106 xcodebuild[61707:172391] [MT] IDETestOperationsObserverDebug: 27.969 sec, +27.969 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/GuideJourney.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

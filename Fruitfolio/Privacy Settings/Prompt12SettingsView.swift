@@ -2,6 +2,7 @@ import SwiftUI
 
 struct Prompt12SettingsView: View {
     @ObservedObject var store: Prompt12AccountPrivacyStore
+    @AccessibilityFocusState private var aboutHeadingFocused: Bool
 
     let onBack: () -> Void
     let onShowAccount: () -> Void
@@ -25,36 +26,38 @@ struct Prompt12SettingsView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
+                    FruitfolioProtectedHeader {
                         Prompt12RouteHeader(
                             title: "settings",
                             subtitle: "small controls for how Fruitfolio feels",
-                            assetName: "hub_settings",
+                            assetName: nil,
                             onBack: onBack
                         )
+                    } decoration: { protected, space in
+                        ZStack(alignment: .topTrailing) {
 
                         HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_blueberry)
+                            FruitfolioImage(id: .cycledecor_lavender_droplets)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_plum)
+                            FruitfolioImage(id: .cycledecor_flower)
                                 .frame(width: 46, height: 46)
 
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
                         }
                         .padding(.top, 2)
                         .padding(.trailing, 2)
+                        .fruitfolioAvoidProtectedContent(protected, in: space)
                          .allowsHitTesting(false)
                         .accessibilityHidden(true)
 
                         FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 88, height: 88)
+                            .frame(width: 52, height: 52)
+                            .fruitfolioAvoidProtectedContent(protected, in: space, assetName: "decor_sparkles_2")
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             .offset(x: 74, y: -12)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
+                        }
                     }
 
                     experienceSection
@@ -67,6 +70,7 @@ struct Prompt12SettingsView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .accessibilityIdentifier("settings.mainScroll")
             .fruitfolioModalBlur(
                 active:
                     showDataManagement ||
@@ -74,13 +78,6 @@ struct Prompt12SettingsView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if showDataManagement ||
-                showAbout {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             if showDataManagement {
                 Prompt12DataManagementView(
@@ -112,10 +109,13 @@ struct Prompt12SettingsView: View {
                             .font(
                                 .custom(
                                     "Chalkboard SE",
-                                    size: 16
+                                    size: 16,
+                                    relativeTo: .headline
                                 )
                             )
                             .fontWeight(.bold)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($aboutHeadingFocused)
                             .foregroundStyle(
                                 DesignTokens
                                     .ColorToken
@@ -136,13 +136,14 @@ struct Prompt12SettingsView: View {
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 11.5
+                                size: 11.5,
+                                relativeTo: .body
                             )
                         )
                         .foregroundStyle(
                             DesignTokens
                                 .ColorToken
-                                .secondaryBurgundy
+                                .primaryBurgundy
                         )
                         .multilineTextAlignment(
                             .center
@@ -158,7 +159,7 @@ struct Prompt12SettingsView: View {
                         )
 
                         FruitfolioControlPillButton(
-                            label: "got it ♡"
+                            label: "got it ♡", localizationKey: "got it ♡"
                         ) {
                             audioManager.play(
                                 .popupClose
@@ -172,6 +173,9 @@ struct Prompt12SettingsView: View {
                     )
                 }
                 .frame(maxWidth: 350)
+                .accessibilityIdentifier("settings.aboutPopup")
+                .accessibilityAction(.escape) { audioManager.play(.popupClose); showAbout = false }
+                .task { await Task.yield(); guard !Task.isCancelled else { return }; aboutHeadingFocused = true }
                 .onAppear {
                     audioManager.play(
                         .popupOpen
@@ -203,12 +207,16 @@ struct Prompt12SettingsView: View {
                 "experience"
             )
 
+            WatercolorToggle(label: "mute all sounds", isOn: $settings.allAudioMuted)
+                .accessibilityIdentifier("settings.globalMute")
+
             WatercolorToggle(
                 label: "sound effects",
                 isOn:
                     $settings
                         .soundEffectsEnabled
             )
+            .accessibilityIdentifier("settings.enabled.sound_effects")
 
             WatercolorToggle(
                 label: "music",
@@ -216,6 +224,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .musicEnabled
             )
+            .accessibilityIdentifier("settings.enabled.music")
 
             WatercolorToggle(
                 label: "rain ambience",
@@ -223,6 +232,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .rainEnabled
             )
+            .accessibilityIdentifier("settings.enabled.rain_sounds")
 
             WatercolorToggle(
                 label: "typing ASMR",
@@ -230,6 +240,7 @@ struct Prompt12SettingsView: View {
                     $settings
                         .typingASMREnabled
             )
+            .accessibilityIdentifier("settings.enabled.typing_asmr")
 
             Prompt12VolumeRow(title: "music", value: $settings.musicVolume)
             Prompt12VolumeRow(title: "rain sounds", value: $settings.rainVolume)
@@ -269,10 +280,19 @@ struct Prompt12SettingsView: View {
                 .frame(maxWidth: .infinity, minHeight: 44)
                 .contentShape(Rectangle())
             }
-            .accessibilityLabel("language")
+            .accessibilityLabel(Text(LocalizedStringKey("language")))
+            .accessibilityIdentifier("settings.languageMenu")
             .accessibilityValue(settings.language.nativeDisplayName)
 
-            Prompt12InfoText("choose the language Fruitfolio uses throughout the app. language names stay recognizable so you can always change this setting again.")
+            Prompt12InfoText("choose your preferred language. language names stay recognizable so you can always change this setting again.")
+            if let warning = settings.languagePreferenceWarning {
+                Prompt12InfoText(warning)
+                    .accessibilityIdentifier("settings.languageRecoveryNotice")
+            }
+            if let notice = FruitfolioLocalization.interfaceAvailabilityNotice(for: settings.language) {
+                Prompt12InfoText(notice)
+                    .accessibilityIdentifier("settings.translationAvailability")
+            }
         }
     }
 

@@ -37,6 +37,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
     @Published private(set) var hubRevealProgress: CGFloat = 0
     @Published private(set) var hubInteractionEnabled = false
     @Published private(set) var hasStarted = false
+    @Published private(set) var interruptionRestorationID: UInt = 0
 
     private var sequenceTask: Task<Void, Never>?
     private var sequenceGeneration: UInt = 0
@@ -96,6 +97,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
     ) {
         guard hasStarted, stage != .introComplete else { return }
 
+        interruptionRestorationID &+= 1
         sequenceGeneration &+= 1
         sequenceTask?.cancel()
         sequenceTask = nil
@@ -135,6 +137,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
 
     func resolveAfterInterruption(
         audioManager: AudioManager,
+        settings: SettingsStore,
         completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void,
         wasFirstLaunch: Bool
     ) {
@@ -143,6 +146,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
         sequenceGeneration &+= 1
 
         let generation = sequenceGeneration
+        startAmbience(audioManager: audioManager, settings: settings)
 
         sequenceTask?.cancel()
 
@@ -151,13 +155,11 @@ final class Prompt04IntroStateMachine: ObservableObject {
 
             switch self.stage {
             case .blankBookSettled:
-                self.settleAtBrandedBook()
-
-                guard await self.sleep(
-                    .milliseconds(120),
-                    generation: generation
-                ) else {
-                    return
+                if wasFirstLaunch {
+                    guard await self.sleep(Prompt04IntroConfiguration.blankBookHold, generation: generation),
+                          await self.revealBranding(generation: generation, audioManager: audioManager) else { return }
+                } else {
+                    self.settleAtBrandedBook()
                 }
 
                 await self.finishFromBrandedBook(
@@ -260,53 +262,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
             return
         }
 
-        stage = .logoRevealing
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .logoReveal
-                    .timeInterval
-            )
-        ) {
-            logoRevealProgress = 1
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.logoReveal,
-            generation: generation
-        ) else {
-            return
-        }
-
-        brandedBookResolved = true
-        stage = .brandedBookSettled
-
-        withAnimation(.easeInOut(duration: 0.18)) {
-            logoSettleScale = 1.010
-            sparkleOpacity = 0.58
-        }
-
-        audioManager.play(.starChime)
-
-        guard await sleep(
-            .milliseconds(180),
-            generation: generation
-        ) else {
-            return
-        }
-
-        withAnimation(.easeInOut(duration: 0.18)) {
-            logoSettleScale = 1
-            sparkleOpacity = 0
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.brandedBookHold,
-            generation: generation
-        ) else {
-            return
-        }
+        guard await revealBranding(generation: generation, audioManager: audioManager) else { return }
 
         stage = .slightlyOpening
 
@@ -377,6 +333,58 @@ final class Prompt04IntroStateMachine: ObservableObject {
             completion: completion,
             wasFirstLaunch: true
         )
+    }
+
+    private func revealBranding(generation: UInt, audioManager: AudioManager) async -> Bool {
+        stage = .logoRevealing
+
+        withAnimation(
+            .easeInOut(
+                duration: Prompt04IntroConfiguration
+                    .logoReveal
+                    .timeInterval
+            )
+        ) {
+            logoRevealProgress = 1
+        }
+
+        guard await sleep(
+            Prompt04IntroConfiguration.logoReveal,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        brandedBookResolved = true
+        stage = .brandedBookSettled
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            logoSettleScale = 1.010
+            sparkleOpacity = 0.58
+        }
+
+        audioManager.play(.starChime)
+
+        guard await sleep(
+            Prompt04IntroConfiguration.brandedSettlePulse,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        withAnimation(.easeInOut(duration: 0.18)) {
+            logoSettleScale = 1
+            sparkleOpacity = 0
+        }
+
+        guard await sleep(
+            Prompt04IntroConfiguration.brandedBookHold,
+            generation: generation
+        ) else {
+            return false
+        }
+
+        return isCurrent(generation)
     }
 
     private func runReturningSequence(
@@ -452,63 +460,21 @@ final class Prompt04IntroStateMachine: ObservableObject {
         audioManager: AudioManager,
         completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void
     ) async {
-        guard await sleep(
-            .milliseconds(80),
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .brandedBookSettled
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedClosedBookCrossfade
-                    .timeInterval
+        // Retain the normal stage clock. The view replaces the ripple/zoom/
+        // arrival transforms with opacity-only transitions for Reduced Motion.
+        if mode.isFirstLaunch {
+            await runFirstLaunchSequence(
+                generation: generation,
+                audioManager: audioManager,
+                completion: completion
             )
-        ) {
-            bookArrivalProgress = 1
-            logoRevealProgress = 1
-            brandedBookResolved = true
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedClosedBookCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .hubRevealing
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedOpenHubCrossfade
-                    .timeInterval
+        } else {
+            await runReturningSequence(
+                generation: generation,
+                audioManager: audioManager,
+                completion: completion
             )
-        ) {
-            slightlyOpenProgress = 1
-            fullyOpenProgress = 1
-            rightPageFocusProgress = 1
-            standalonePaperProgress = 1
-            hubRevealProgress = 1
         }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedOpenHubCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        await complete(
-            generation: generation,
-            audioManager: audioManager,
-            completion: completion,
-            wasFirstLaunch: mode.isFirstLaunch
-        )
     }
 
     private func finishFromBrandedBook(
@@ -519,17 +485,24 @@ final class Prompt04IntroStateMachine: ObservableObject {
     ) async {
         stage = .slightlyOpening
 
-        withAnimation(.easeInOut(duration: 0.45)) {
+        let duration = wasFirstLaunch ? Prompt04IntroConfiguration.slightlyOpenTransition
+            : Prompt04IntroConfiguration.returningSlightlyOpenTransition
+        audioManager.play(.pageTurn)
+        withAnimation(.easeInOut(duration: duration.timeInterval)) {
             slightlyOpenProgress = 1
         }
 
         guard await sleep(
-            .milliseconds(450),
+            duration,
             generation: generation
         ) else {
             return
         }
 
+        stage = .slightlyOpenSettled
+        if wasFirstLaunch {
+            guard await sleep(Prompt04IntroConfiguration.slightlyOpenHold, generation: generation) else { return }
+        }
         await finishFromSlightlyOpenBook(
             generation: generation,
             audioManager: audioManager,
@@ -546,18 +519,24 @@ final class Prompt04IntroStateMachine: ObservableObject {
     ) async {
         stage = .fullyOpening
 
-        withAnimation(.easeInOut(duration: 0.48)) {
+        let duration = wasFirstLaunch ? Prompt04IntroConfiguration.fullyOpenTransition
+            : Prompt04IntroConfiguration.returningFullyOpenTransition
+        audioManager.play(.pageTurn)
+        withAnimation(.easeInOut(duration: duration.timeInterval)) {
             fullyOpenProgress = 1
         }
 
         guard await sleep(
-            .milliseconds(480),
+            duration,
             generation: generation
         ) else {
             return
         }
 
         stage = .fullyOpenSettled
+        if wasFirstLaunch {
+            guard await sleep(Prompt04IntroConfiguration.fullyOpenHold, generation: generation) else { return }
+        }
 
         await finishFromFullyOpenBook(
             generation: generation,
@@ -575,9 +554,9 @@ final class Prompt04IntroStateMachine: ObservableObject {
     ) async {
         await focusPageResolvePaperAndRevealHub(
             generation: generation,
-            focusDuration: .milliseconds(420),
-            paperDuration: .milliseconds(220),
-            hubDuration: .milliseconds(280),
+            focusDuration: wasFirstLaunch ? Prompt04IntroConfiguration.rightPageFocus : Prompt04IntroConfiguration.returningRightPageFocus,
+            paperDuration: wasFirstLaunch ? Prompt04IntroConfiguration.standalonePaperResolve : Prompt04IntroConfiguration.returningStandalonePaperResolve,
+            hubDuration: wasFirstLaunch ? Prompt04IntroConfiguration.hubReveal : Prompt04IntroConfiguration.returningHubReveal,
             audioManager: audioManager,
             completion: completion,
             wasFirstLaunch: wasFirstLaunch

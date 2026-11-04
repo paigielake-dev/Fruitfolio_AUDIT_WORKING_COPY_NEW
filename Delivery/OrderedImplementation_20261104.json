@@ -1,0 +1,871 @@
+{
+  "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
+  "currentPart": 6,
+  "part1Complete": false,
+  "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
+  "actualVerification": {
+    "gitDiffCheck": "PASS — whitespace only",
+    "SwiftXcodeSimulator": "NOT RUN — unavailable on this Linux host",
+    "PythonTooling": "PASS — 27 tests; tooling only, not SwiftUI runtime",
+    "log": "Fruitfolio_Verification_Evidence/OrderedImplementation20261104/PythonToolingTests.log"
+  },
+  "requirements": [
+    {
+      "requirementID": "FF1B-001",
+      "originalReference": "Part 1 / Universal blur system / 1",
+      "originalRequirement": "Create one canonical blur treatment used throughout Fruitfolio.",
+      "change": "The existing shared blur is retained; nested active hosts no longer compound its appearance.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-002",
+      "originalReference": "Part 1 / Universal blur system / 2",
+      "originalRequirement": "Apply identical blur appearance, intensity, opacity, and behavior wherever blur is required.",
+      "change": "Canonical treatment respects inherited active modal ownership and system Reduce Motion.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-003",
+      "originalReference": "Part 1 / Universal blur system / 3",
+      "originalRequirement": "Remove inconsistent feature-specific blur implementations.",
+      "change": "Generic fruit popups now use the canonical background treatment.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-005",
+      "originalReference": "Part 1 / Universal blur system / 5",
+      "originalRequirement": "Exception: retain the Hub’s existing tour-specific blur treatment.",
+      "change": "Hub first-launch tour source retains its existing visual-treatment exception.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-006",
+      "originalReference": "Part 1 / Universal blur system / 6",
+      "originalRequirement": "Ensure blur responds correctly to popup opening, closing, navigation, and other state changes.",
+      "change": "Generic popup hosts block hit testing/VoiceOver for their lifetime; inherited ownership survives inner dismissal.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-018",
+      "originalReference": "Part 1 / Universal popup layout system / 18",
+      "originalRequirement": "Ensure text wraps without clipping, overflowing, or truncating with ellipses.",
+      "change": "Invalid/out-of-art/nonfinite writing regions fail closed instead of yielding unsafe frames.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-019",
+      "originalReference": "Part 1 / Universal popup layout system / 19",
+      "originalRequirement": "Support different popup artwork sizes, text lengths, and screen sizes.",
+      "change": "Narrow popup compositions fit their actual available width; decorative fruit is omitted only when it cannot fit at usable size.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-021",
+      "originalReference": "Part 1 / Universal popup layout system / 21",
+      "originalRequirement": "Account for Strawberry, Blueberry, and Peach artwork.",
+      "change": "Existing strawberry/blueberry/peach assets retained; no replacement art introduced.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-022",
+      "originalReference": "Part 1 / Universal popup layout system / 22",
+      "originalRequirement": "Preserve character proportions and prevent characters from overlapping text.",
+      "change": "Existing fruit proportions retained; constrained layout does not shrink fruit below its existing minimum.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-047",
+      "originalReference": "Part 1 / Universal semantic text stylization / 47",
+      "originalRequirement": "Apply it across all eligible app-generated and dynamically presented text.",
+      "change": "Generic popup rendering accepts author-declared semantic spans through the shared renderer.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-048",
+      "originalReference": "Part 1 / Universal semantic text stylization / 48",
+      "originalRequirement": "Include Ask answers, fallbacks, Cycle Tracker, Fruit Basket, tutorials, popups, character dialogue, saved content, and guides.",
+      "change": "Fruit-character popup request transport preserves explicitly supplied semantic roles.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-064",
+      "originalReference": "Part 1 / Universal semantic text stylization / 64",
+      "originalRequirement": "Ensure styling never causes text overflow or popup collisions.",
+      "change": "Text remains inside a validated writing region and the popup fits its available width.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-028",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 1",
+      "originalRequirement": "Create a separate shared Swift system for decorative artwork.",
+      "change": "Retained the canonical decorative-art geometry; invalid/nonfinite dimensions fail closed.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-029",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 2",
+      "originalRequirement": "Preserve each screen’s founder-approved artwork selection.",
+      "change": "Existing asset selections remain unchanged.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-035",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 8",
+      "originalRequirement": "Preserve watercolor proportions, visual weight, and orientation.",
+      "change": "Measured painted bounds are validated inside their original PNG canvas.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-036",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 9",
+      "originalRequirement": "Prevent artwork from overlapping headings, text, controls, citations, or scientific illustrations.",
+      "change": "Height-constrained art retains aspect ratio and its screen-approved size interval.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-039",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 12",
+      "originalRequirement": "Recalculate placement when content expands.",
+      "change": "Shorter containers reuse only approved role sizes, rather than omitting art that still fits.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-040",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 13",
+      "originalRequirement": "Recalculate placement when the keyboard appears.",
+      "change": "Geometry responds to the current container, including keyboard-adjusted height.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-043",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 16",
+      "originalRequirement": "Resize, reposition, or temporarily omit artwork when necessary.",
+      "change": "Decorations are omitted if their minimum approved size cannot fit.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-044",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 17",
+      "originalRequirement": "Do not indiscriminately shrink artwork to make it fit.",
+      "change": "No below-minimum blanket shrinking is introduced.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-060",
+      "originalReference": "Part 1 / Universal semantic text stylization / 60",
+      "originalRequirement": "Preserve formatting during progressive rendering.",
+      "change": "Added a transient semantic render session that preserves Unicode, roles and quantities across streaming prefixes.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-063",
+      "originalReference": "Part 1 / Universal semantic text stylization / 63",
+      "originalRequirement": "Preserve readable VoiceOver output.",
+      "change": "The rendered visible prefix retains coherent full-text accessibility output.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-066",
+      "originalReference": "Part 1 / Performance and responsiveness / 66",
+      "originalRequirement": "Remove avoidable UI-thread blocking.",
+      "change": "Per-view semantic rendering avoids repeating font/role construction for each streamed character.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-067",
+      "originalReference": "Part 1 / Performance and responsiveness / 67",
+      "originalRequirement": "Reduce redundant calculations and processing.",
+      "change": "Equivalent reconstructed span identities reuse rendering; byte or role changes invalidate it.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-007",
+      "originalReference": "Part 1 / Universal button system / 1",
+      "originalRequirement": "Remove every gray button with a red outline.",
+      "change": "Retained watercolor pill replacements; canonical icon controls now use original control_previous/close/plus/check artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-008",
+      "originalReference": "Part 1 / Universal button system / 2",
+      "originalRequirement": "Replace those buttons with the appropriate existing control-pill artwork.",
+      "change": "Shared Back/Close/Add/Confirm wrappers retain existing native actions and adopt the bundled approved artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-009",
+      "originalReference": "Part 1 / Universal button system / 3",
+      "originalRequirement": "Apply the same cute button-pop animation across the entire application.",
+      "change": "Shared icon wrappers retain CutePopButtonStyle; no second gesture recognizer or artificial action delay.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-010",
+      "originalReference": "Part 1 / Universal button system / 4",
+      "originalRequirement": "Include Cycle Tracker buttons, which were specifically identified as inconsistent.",
+      "change": "Cycle onboarding, daily logging and hormone/context screens inherit the canonical shared Back/Close artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-011",
+      "originalReference": "Part 1 / Universal button system / 5",
+      "originalRequirement": "Keep button interaction, sound, and navigation synchronized.",
+      "change": "Generic popup actions now play the shared button sound before their immediate handler, respecting existing SFX preferences.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-012",
+      "originalReference": "Part 1 / Universal button system / 6",
+      "originalRequirement": "Prevent animations from introducing noticeable input lag.",
+      "change": "Actions remain immediate; animation and focus timing never delay handlers.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-026",
+      "originalReference": "Part 1 / Universal popup layout system / 26",
+      "originalRequirement": "Apply this system to all applicable confirmations, errors, help popups, character dialogue, and feature-specific overlays.",
+      "change": "Generic fruit dialog messages gain per-presentation VoiceOver focus and stable accessibility identifiers.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-070",
+      "originalReference": "Part 1 / Performance and responsiveness / 70",
+      "originalRequirement": "Preserve Reduce Motion behavior while eliminating unnecessary lag.",
+      "change": "Generic page turns disable 3D rotation under system/app Reduce Motion; bottom sheets use an opacity-only transition under reduced motion.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-088",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 88",
+      "originalRequirement": "Optimize Hub loading and navigation responsiveness.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-090",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 90",
+      "originalRequirement": "Play popup-opening audio when the tour invitation appears.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-091",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 91",
+      "originalRequirement": "Play popup-closing audio when the tour is dismissed or skipped.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-096",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 96",
+      "originalRequirement": "Replace the limited answer presentation with a continuous vertically scrollable paper experience.",
+      "change": "The existing continuous paper is retained; streaming and completed answers now share the native semantic rendering surface.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-097",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 97",
+      "originalRequirement": "Keep previous questions and answers visible throughout the active Ask session.",
+      "change": "Earlier answers retain independently scoped native text selection and excerpt-saving actions.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-107",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 107",
+      "originalRequirement": "Automatically follow new streamed text only when the user is near the bottom.",
+      "change": "Geometry distinguishes content growth from movement toward earlier answers, including VoiceOver and scrollbar movement.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-108",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 108",
+      "originalRequirement": "Do not force scrolling to the bottom while the user is reading older content.",
+      "change": "Earlier-reader intent is preserved without relying solely on finger-drag callbacks.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-109",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 109",
+      "originalRequirement": "Preserve text selection, citation interactions, and accessibility reading order.",
+      "change": "Earlier/native answer selection uses exact UTF-16 ranges, distinct accessibility identifiers, and unchanged source references.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-118",
+      "originalReference": "Part 3 / 3C. Session-only history / 118",
+      "originalRequirement": "Keep Ask conversation history only while the user remains in the active Ask session.",
+      "change": "Selection and save-badge UI state remains active-session-only.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-119",
+      "originalReference": "Part 3 / 3C. Session-only history / 119",
+      "originalRequirement": "Clear unsaved questions and answers when the user exits Ask.",
+      "change": "Exit and explicit conversation reset clear current and archived selection state and pending save references.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-124",
+      "originalReference": "Part 3 / 3C. Session-only history / 124",
+      "originalRequirement": "Preserve only explicitly selected content saved through the Guide workflow.",
+      "change": "Saved excerpt feedback is keyed by answer identity, exact occurrence and bytes instead of shared text alone.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-125",
+      "originalReference": "Part 3 / 3C. Session-only history / 125",
+      "originalRequirement": "Retain citations and attribution for successfully saved content.",
+      "change": "Archived excerpts reuse immutable original-answer attribution and semantic range validation.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-128",
+      "originalReference": "Part 3 / 3C. Session-only history / 128",
+      "originalRequirement": "Prevent canceled or failed saves from creating persistent copies.",
+      "change": "Cancelled saves do not mark excerpts saved; successful destination callbacks mark only the matching pending identity.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-133",
+      "originalReference": "Part 3 / 3D. Ask AI performance / 133",
+      "originalRequirement": "Cache appropriate reusable results.",
+      "change": "Progressive answers now actually use the view-owned semantic render cache; it is cleared on native-view dismantling.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-136",
+      "originalReference": "Part 3 / 3D. Ask AI performance / 136",
+      "originalRequirement": "Preserve research retrieval, claim/evidence mapping, medical safety, and citation validation.",
+      "change": "Strict research validator and retrieval code were not modified; semantic output now also rejects byte-mismatched annotation text.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-197",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 197",
+      "originalRequirement": "Allow users to add their own notes.",
+      "change": "User-note edits retain original bytes even when Unicode strings compare canonically equal.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-198",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 198",
+      "originalRequirement": "Allow users to import their own images from their device or photo library.",
+      "change": "Photo import uses generation ownership; old completions cannot clear replacement-import busy state. Image validation and staging move off the UI thread.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-202",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 202",
+      "originalRequirement": "Allow imported images to be removed or replaced.",
+      "change": "Replacement/cancelled imports clean up only their own undelivered staged bytes.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-203",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 203",
+      "originalRequirement": "Provide save and discard behavior.",
+      "change": "Save stays disabled until the current import owner finishes; stale cancelled tasks cannot report completion.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-204",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 204",
+      "originalRequirement": "Protect unsaved edits.",
+      "change": "Discard/navigation invalidates import ownership; byte-only user text/title edits trigger unsaved protection.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-209",
+      "originalReference": "Part 4 / 4D. Shared Guide data / 209",
+      "originalRequirement": "Preserve guide title, cover style, contents, ordering, and edits.",
+      "change": "Saved semantic rendering preserves original content bytes rather than normalizing through canonically equivalent annotation text.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-193",
+      "originalReference": "Part 4 / 4B. Book-opening animation / 193",
+      "originalRequirement": "Prevent book duplication, disappearance, jumps, and color resets.",
+      "change": "Cancelled book-opening tasks no longer clear a newer opening-task handle; cancellation drops the old handle immediately.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-249",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 15",
+      "originalRequirement": "Store measurements locally.",
+      "change": "Unreadable hormone storage now has an explicit read-only retry path; only a fully validated original snapshot re-enables writes.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-250",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 16",
+      "originalRequirement": "Preserve measurements across app restarts.",
+      "change": "Recovery does not rewrite dates, units or record bytes and does not treat a disappeared unreadable file as empty.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-254",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 20",
+      "originalRequirement": "Restrict measurement graphs to actual recorded values.",
+      "change": "History groups distinguish exact unit/sample/name bytes, preserving independently recorded categories even when Unicode strings compare canonically equal.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-281",
+      "originalReference": "Part 6 / 6A. My Context personalization / 281",
+      "originalRequirement": "Connect optional My Context information to the relevant Cycle Tracker interpretation systems.",
+      "change": "Cycle shell observes every shared-context change, not only dismissal of its own My Context cover.",
+      "requirementStatus": "PARTIAL — targeted cycle/context integration; complete acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/CyclePredictionPopupRuntimeTests.swift",
+        "FruitfolioUITests/PersonalHealthContextUITests.swift"
+      ],
+      "remaining": "Run actual context-edit/deletion, open-draft preservation and prediction-information accessibility journeys. New screenshot attachments are test code, not executed evidence."
+    },
+    {
+      "requirementID": "FF1B-287",
+      "originalReference": "Part 6 / 6A. My Context personalization / 287",
+      "originalRequirement": "Ensure context changes do not corrupt previous logs.",
+      "change": "Context refresh invalidates only derived content; the outer date-specific daily-log sheet/draft remains untouched.",
+      "requirementStatus": "PARTIAL — targeted cycle/context integration; complete acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/CyclePredictionPopupRuntimeTests.swift",
+        "FruitfolioUITests/PersonalHealthContextUITests.swift"
+      ],
+      "remaining": "Run actual context-edit/deletion, open-draft preservation and prediction-information accessibility journeys. New screenshot attachments are test code, not executed evidence."
+    },
+    {
+      "requirementID": "FF1B-289",
+      "originalReference": "Part 6 / 6B. Today and cycle visualization / 289",
+      "originalRequirement": "Ensure context-dependent changes appear consistently in the Today presentation.",
+      "change": "Today/calendar derived presentation identities refresh together after context edits or removals.",
+      "requirementStatus": "PARTIAL — targeted cycle/context integration; complete acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/CyclePredictionPopupRuntimeTests.swift",
+        "FruitfolioUITests/PersonalHealthContextUITests.swift"
+      ],
+      "remaining": "Run actual context-edit/deletion, open-draft preservation and prediction-information accessibility journeys. New screenshot attachments are test code, not executed evidence."
+    },
+    {
+      "requirementID": "FF1B-294",
+      "originalReference": "Part 6 / 6B. Today and cycle visualization / 294",
+      "originalRequirement": "Apply universal button animation to Today controls.",
+      "change": "Prediction-information dismissal uses the canonical painted button, immediate action and popup-close audio.",
+      "requirementStatus": "PARTIAL — targeted cycle/context integration; complete acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/CyclePredictionPopupRuntimeTests.swift",
+        "FruitfolioUITests/PersonalHealthContextUITests.swift"
+      ],
+      "remaining": "Run actual context-edit/deletion, open-draft preservation and prediction-information accessibility journeys. New screenshot attachments are test code, not executed evidence."
+    },
+    {
+      "requirementID": "FF1B-300",
+      "originalReference": "Part 6 / 6C. Calendar and logging / 300",
+      "originalRequirement": "Ensure logging overlays use the universal popup and control systems.",
+      "change": "Prediction-information overlay now uses canonical modal background blocking and the calibrated shared wooden-sign writing surface without line caps or minimum-scale shrinking.",
+      "requirementStatus": "PARTIAL — targeted cycle/context integration; complete acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/CyclePredictionPopupRuntimeTests.swift",
+        "FruitfolioUITests/PersonalHealthContextUITests.swift"
+      ],
+      "remaining": "Run actual context-edit/deletion, open-draft preservation and prediction-information accessibility journeys. New screenshot attachments are test code, not executed evidence."
+    }
+  ],
+  "nextAction": "Continue Part 6 remaining source checks, then Part 7 Fruit Basket final-rule and collision/audio integration. LifeBridge approved-content dependency remains explicit.",
+  "allTenPartsComplete": false,
+  "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
+  "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",
+  "latestLocalVerification": {
+    "gitDiffCheck": "PASS — whitespace only",
+    "SwiftRuntime": "NOT RUN — MAC EXECUTION REQUIRED"
+  },
+  "partProgress": {
+    "1": "Shared source batches committed; runtime, full visual adoption and residual feature-specific checks remain pending. Not a full acceptance claim.",
+    "2": "Hub invitation lifecycle repair implemented; intro source and existing clock/interruption tests preserved.",
+    "3-10": "Existing cumulative implementations preserved; remaining ordered implementation work not completed in this batch."
+  },
+  "specificDependencies": [
+    {
+      "scope": "Production account authentication/remote deletion/global username reservation",
+      "status": "BLOCKED — authenticated service contract/configuration not present; local shared pseudonym is preserved.",
+      "evidence": "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift signIn(email:) and deleteAccountAndAssociatedRemoteData()",
+      "noFakeAuthentication": true
+    },
+    {
+      "scope": "Research-supported Adjusted Hormone Rhythm calibration",
+      "status": "BLOCKED — no approved cited mapping from assay/units/timing/context to adjusted educational curves. Existing actual measurements/typical rhythm remain preserved; functioning adjustment not claimed.",
+      "evidence": "Delivery/ADJUSTED_RHYTHM_DEPENDENCY.md; Prompt22MeasurementPresentationPolicy.swift",
+      "requiredResolution": "Approved, scientifically defensible calibration/sufficiency contract with its supporting evidence; no invented curves."
+    }
+  ]
+}

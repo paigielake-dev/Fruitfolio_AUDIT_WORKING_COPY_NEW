@@ -117,6 +117,9 @@ struct Prompt28FruitBasketEngine: Sendable {
             default: return [.branch, .wind]
             }
         default:
+            // Rain creates the puddle. Keep the existing two-obstacle budget
+            // rather than add a third obstacle to the ordinary round plan.
+            if level >= 6, round.isMultiple(of: 3) { return [.puddle, .vines] }
             // Levels 5–8 vary the challenge without stacking every obstacle at once.
             switch round % 4 {
             case 0: return [.vines, .puddle]
@@ -153,16 +156,12 @@ struct Prompt28FruitBasketEngine: Sendable {
         min(max(Double(goodCount) / Double(rules.goodFruitTarget), 0), 1)
     }
 
-    func collision(
-        fruitX: Double,
-        fruitY: Double,
-        basketX: Double,
-        basketHalfWidth: Double = 0.13,
-        basketTopY: Double = 0.82
-    ) -> Bool {
-        fruitY >= basketTopY
-            && fruitY <= 1.0
-            && abs(fruitX - basketX) <= basketHalfWidth
+    func collision(fruitX: Double, fruitY: Double, basketX: Double,
+                   fieldWidth: Double = 402, fieldHeight: Double = 874,
+                   itemDiameter: Double = 52, previousY: Double? = nil) -> Bool {
+        Prompt28BasketCatchGeometry(fieldWidth: fieldWidth, fieldHeight: fieldHeight)
+            .fullyEntered(x: fruitX, y: fruitY, basketX: basketX,
+                          diameter: itemDiameter, previousY: previousY)
     }
 
     func clampedLevel(_ level: Int) -> Int {
@@ -193,5 +192,118 @@ struct Prompt28SpawnPlanner: Sendable {
 
     mutating func reset() {
         consecutiveBadSpawns = 0
+    }
+}
+
+/// The same normalized image bounds used by the original vine artwork renderer.
+/// Contact is a bounded image-envelope approximation, not an invisible full-width band.
+struct Prompt28VineContactGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    let level: Int
+
+    var normalizedArtworkBounds: CGRect {
+        guard fieldWidth > 0, fieldHeight > 0 else { return .zero }
+        let width = level == 2 ? 0.20 : 0.30
+        let centerX = level == 2 ? 0.07 : 0.11
+        // Original fruitbasket_vines is 344 x 448 pixels; .fit preserves its aspect ratio.
+        let height = width * fieldWidth * (448.0 / 344.0) / fieldHeight
+        return CGRect(x: centerX - width / 2, y: 0.54 - height / 2,
+                      width: width, height: height)
+    }
+
+    func contains(x: Double, y: Double) -> Bool {
+        guard fieldWidth > 0, fieldHeight > 0 else { return false }
+        return normalizedArtworkBounds.contains(CGPoint(x: x, y: y))
+    }
+}
+
+/// Original branch is mirrored so its painted trunk grows from the right edge.
+/// Centerline contact approximates the painted wood, not the transparent image box.
+struct Prompt28BranchContactGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    var artworkWidth: Double { min(fieldWidth * 0.30, 176) }
+    var artworkCenterX: Double { fieldWidth - artworkWidth * ((1 - 78.0 / 450.0) - 0.5) }
+
+    func point(originalX: Double, originalY: Double) -> CGPoint {
+        CGPoint(x: artworkCenterX + ((1 - originalX / 450) - 0.5) * artworkWidth,
+                y: fieldHeight * 0.40 + (originalY / 448 - 0.5) * artworkWidth * (448.0 / 450.0))
+    }
+
+    func contains(x: Double, y: Double, radius: Double) -> Bool {
+        guard fieldWidth > 0, fieldHeight > 0 else { return false }
+        let point = CGPoint(x: x * fieldWidth, y: y * fieldHeight)
+        let paths: [[CGPoint]] = [
+            [self.point(originalX: 78, originalY: 410), self.point(originalX: 187, originalY: 348),
+             self.point(originalX: 249, originalY: 257), self.point(originalX: 295, originalY: 140), self.point(originalX: 361, originalY: 52)],
+            [self.point(originalX: 249, originalY: 277), self.point(originalX: 326, originalY: 244), self.point(originalX: 372, originalY: 206)],
+            [self.point(originalX: 280, originalY: 268), self.point(originalX: 385, originalY: 276)]
+        ]
+        for path in paths {
+            for (a, b) in zip(path, path.dropFirst()) {
+                let dx = b.x - a.x, dy = b.y - a.y
+                let denominator = dx * dx + dy * dy
+                let t = denominator > 0 ? min(max(((point.x - a.x) * dx + (point.y - a.y) * dy) / denominator, 0), 1) : 0
+                let distance = hypot(point.x - (a.x + t * dx), point.y - (a.y + t * dy))
+                if distance <= radius + artworkWidth * (10.0 / 450.0) { return true }
+            }
+        }
+        return false
+    }
+}
+
+struct Prompt28BranchDeflection {
+    var elapsed: Double = 0
+    let horizontalVelocity: Double
+    var verticalMultiplier: Double { min(1, -0.45 + 1.45 * elapsed / 0.24) }
+}
+
+/// Geometry shared with the untouched 398 × 380 watercolor basket. The fixed
+/// 132pt container is centered at 89% of the playfield; its original image is
+/// bottom aligned and occupies 90% of the container width. The inner opening
+/// spans 68% of that image, beginning at 52% of its height.
+nonisolated struct Prompt28BasketCatchGeometry: Sendable {
+    let fieldWidth: Double
+    let fieldHeight: Double
+    var containerWidth: Double { min(fieldWidth * 0.36, 150) }
+    static let containerHeight = 132.0
+    static let centerYFraction = 0.89
+    static let imageWidthFraction = 0.90
+    static let frontRimFraction = 0.61
+    static let settlingDuration = 0.18
+    var imageWidth: Double { containerWidth * Self.imageWidthFraction }
+    var imageHeight: Double { imageWidth * 380 / 398 }
+    var imageBottomY: Double { fieldHeight * Self.centerYFraction + Self.containerHeight / 2 }
+    var mouthY: Double { imageBottomY - imageHeight * 0.48 }
+    var mouthHalfWidth: Double { imageWidth * 0.34 }
+    static func fruitDiameter(fieldWidth: Double) -> Double { min(max(fieldWidth * 0.13, 46), 66) }
+    static func starDiameter(fieldWidth: Double) -> Double { min(max(fieldWidth * 0.10, 34), 52) }
+
+    func fullyEntered(x: Double, y: Double, basketX: Double, diameter: Double, previousY: Double? = nil) -> Bool {
+        guard fieldWidth.isFinite, fieldHeight.isFinite, fieldWidth > 0, fieldHeight > 0,
+              x.isFinite, y.isFinite, basketX.isFinite, diameter.isFinite, diameter > 0 else { return false }
+        let radius = diameter / 2
+        guard abs(x - basketX) * fieldWidth + radius <= mouthHalfWidth,
+              y * fieldHeight - radius >= mouthY else { return false }
+        if let previousY, previousY.isFinite,
+           previousY * fieldHeight - radius < mouthY {
+            // Swept plane crossing: a slow frame cannot skip a genuine full
+            // entry merely because its end position passes the basket floor.
+            return true
+        }
+        return y * fieldHeight + radius <= imageBottomY
+    }
+}
+
+/// Horizontal overlap uses the same painted sizes as the production playfield,
+/// rather than treating a wide basket as a zero-width point at its center.
+nonisolated struct Prompt28PuddleContactGeometry: Sendable {
+    let fieldWidth: Double
+    func overlaps(basketX: Double) -> Bool {
+        guard fieldWidth.isFinite, fieldWidth > 0, basketX.isFinite else { return false }
+        let puddleHalfWidth = min(fieldWidth * 0.34, 190) / 2
+        let basketHalfWidth = Prompt28BasketCatchGeometry(fieldWidth: fieldWidth, fieldHeight: 1).imageWidth / 2
+        return abs(basketX - 0.5) * fieldWidth <= puddleHalfWidth + basketHalfWidth
     }
 }

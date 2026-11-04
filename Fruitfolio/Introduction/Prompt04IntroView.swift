@@ -28,10 +28,34 @@ struct Prompt04IntroView: View {
                     )
                 } else {
                     introComposition(metrics: metrics)
+                        // Recreate only the painted presentation at the safe
+                        // completed stage after interruption. The authoritative
+                        // state machine and launch progress never restart.
+                        .id(machine.interruptionRestorationID)
                 }
             }
             .frame(width: max(1, proxy.size.width), height: max(1, proxy.size.height))
             .clipped()
+        }
+        .overlay(alignment: .bottomLeading) {
+            if machine.stage != .introComplete {
+                Button {
+                    machine.handleBackgrounding(audioManager: audioManager)
+                    completeIntro(wasFirstLaunch: launchMode?.isFirstLaunch ?? false)
+                } label: {
+                    VStack(spacing: 4) {
+                        Image("control_next").resizable().scaledToFit().frame(width: 44, height: 44)
+                            .accessibilityHidden(true)
+                        Text("skip tour")
+                            .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    }
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .accessibilityElement(children: .contain)
+                    .padding(16)
+                }
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .accessibilityLabel("skip introduction")
+            }
         }
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .task {
@@ -56,7 +80,11 @@ struct Prompt04IntroView: View {
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhase(newPhase)
         }
-        .accessibilityElement(children: machine.hubInteractionEnabled ? .contain : .ignore)
+        .accessibilityElement(children: .contain)
+    }
+
+    private var usesReducedMotion: Bool {
+        motionPreferences.reduceMotionActive || launchMode?.usesReducedMotion == true
     }
 
     @ViewBuilder
@@ -64,7 +92,7 @@ struct Prompt04IntroView: View {
         let arrival = clamped(machine.bookArrivalProgress)
         let slight = clamped(machine.slightlyOpenProgress)
         let full = clamped(machine.fullyOpenProgress)
-        let focus = clamped(machine.rightPageFocusProgress)
+        let focus = usesReducedMotion ? 0 : clamped(machine.rightPageFocusProgress)
         let paper = clamped(machine.standalonePaperProgress)
 
         let closedOpacity = 1 - slight
@@ -106,7 +134,7 @@ struct Prompt04IntroView: View {
             // STATES 1 + 2 — blank closed book, then exact branded closed book.
             closedBookComposition(metrics: metrics)
                 .opacity(closedOpacity)
-                .scaleEffect(0.94 + (0.06 * arrival))
+                .scaleEffect(usesReducedMotion ? 1 : 0.94 + (0.06 * arrival))
                 .opacity(arrival)
 
             // Hub controls appear only on the standalone paper, never over the
@@ -138,9 +166,13 @@ struct Prompt04IntroView: View {
                 .scaledToFit()
                 .frame(width: metrics.closedBookWidth)
                 .mask {
-                    Prompt04WatercolorPuddleMask(
-                        progress: machine.logoRevealProgress
-                    )
+                    if usesReducedMotion {
+                        Color.white.opacity(machine.logoRevealProgress)
+                    } else {
+                        Prompt04WatercolorPuddleMask(
+                            progress: machine.logoRevealProgress
+                        )
+                    }
                 }
                 .opacity(machine.logoRevealProgress > 0 ? 1 : 0)
         }
@@ -179,7 +211,8 @@ struct Prompt04IntroView: View {
         guard let launchMode else { return }
 
         switch newPhase {
-        case .background:
+        case .background, .inactive:
+            guard !wasInterrupted else { return }
             wasInterrupted = machine.stage != .introComplete
             machine.handleBackgrounding(audioManager: audioManager)
         case .active:
@@ -187,11 +220,10 @@ struct Prompt04IntroView: View {
             wasInterrupted = false
             machine.resolveAfterInterruption(
                 audioManager: audioManager,
+                settings: settings,
                 completion: completeIntro(wasFirstLaunch:),
                 wasFirstLaunch: launchMode.isFirstLaunch
             )
-        case .inactive:
-            break
         @unknown default:
             break
         }

@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 @testable import Fruitfolio
 
 @MainActor
@@ -398,3 +399,151 @@ final class Prompt10SavedLibraryTests: XCTestCase {
     }
 }
 
+
+
+extension Prompt10SavedLibraryTests {
+    func testCorruptMetadataNeverDeletesImportedMediaDuringRecovery() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let id = try media.saveImageData(Data([3,2,1]))
+        defaults.set(Data("unreadable metadata".utf8), forKey: key)
+        let broken = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertNotNil(broken.loadError)
+        broken.recoverMedia(discardAbandonedDrafts: true)
+        XCTAssertEqual(media.data(for: id), Data([3,2,1]))
+        XCTAssertEqual(defaults.data(forKey: key), Data("unreadable metadata".utf8))
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testSharedImportedImageSurvivesOneBookDeletionAndIsRemovedAfterLastReference() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        let first = try library.createEncyclopedia(name: "first", style: .pink)
+        let second = try library.createEncyclopedia(name: "second", style: .sage)
+        let id = try media.stageImageData(Data([2,4,6]))
+        let writing = FruitfolioSemanticDocument(spans: [.init(text: "my image notes")])
+        _ = try library.saveUserPage(pageID: nil, encyclopediaID: first.id,
+            chapterID: first.chapters[0].id, title: "first image", document: writing, imageIDs: [id])
+        _ = try library.saveUserPage(pageID: nil, encyclopediaID: second.id,
+            chapterID: second.chapters[0].id, title: "second image", document: writing, imageIDs: [id])
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertEqual(media.data(for: id), Data([2,4,6]))
+        XCTAssertNil(reopened.mediaRecoveryError)
+        try reopened.deleteEncyclopedia(id: first.id)
+        XCTAssertEqual(media.data(for: id), Data([2,4,6]), "Another saved page still owns these bytes")
+        try reopened.deleteEncyclopedia(id: second.id)
+        XCTAssertNil(media.data(for: id))
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testReplacingAUserImageCommitsNewBytesAndRemovesOnlyTheUnreferencedOriginal() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let library = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        let book = try library.createEncyclopedia(name: "image replacement", style: .sage)
+        let first = try media.stageImageData(Data([1, 3, 5]))
+        let replacement = try media.stageImageData(Data([2, 4, 6]))
+        let abandoned = try media.stageImageData(Data([9, 9, 9]))
+        let document = FruitfolioSemanticDocument(spans: [.init(text: "original writing")])
+        let page = try library.saveUserPage(pageID: nil, encyclopediaID: book.id,
+            chapterID: book.chapters[0].id, title: "my page", document: document, imageIDs: [first])
+        let edited = try library.saveUserPage(pageID: page.id, encyclopediaID: book.id,
+            chapterID: book.chapters[0].id, title: "my page", document: document, imageIDs: [replacement])
+        XCTAssertEqual(edited.id, page.id)
+        XCTAssertEqual(edited.resolvedSemanticDocument, document)
+        XCTAssertNil(media.data(for: first))
+        XCTAssertEqual(media.data(for: replacement), Data([2, 4, 6]))
+        // The persistence operation must not erase an unrelated live draft.
+        XCTAssertEqual(media.data(for: abandoned), Data([9, 9, 9]))
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key, mediaStore: media)
+        XCTAssertEqual(reopened.encyclopedias[0].chapters[0].pages[0].importedImageIDs, [replacement])
+        XCTAssertEqual(media.data(for: replacement), Data([2, 4, 6]))
+        XCTAssertNil(media.data(for: abandoned), "Abandoned drafts are removed only during explicit restart recovery")
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testMetadataLimitsAreEnforcedByBothCreationPathsAndEditsWithoutPartialMutation() throws {
+        let book = try store.createEncyclopedia(name: "preserve my book", style: .sage)
+        let before = store.encyclopedias
+        for action in [
+            { _ = try self.store.createEncyclopedia(name: String(repeating: "a", count: 61), style: .pink) },
+            { _ = try self.store.createGuideEncyclopedia(name: "valid title", subtitle: String(repeating: "b", count: 241), style: .coral) },
+            { try self.store.renameEncyclopedia(id: book.id, to: String(repeating: "a", count: 61)) },
+            { try self.store.updateEncyclopediaDescription(id: book.id, description: String(repeating: "b", count: 241)) }
+        ] {
+            XCTAssertThrowsError(try action())
+            XCTAssertEqual(store.encyclopedias, before)
+            XCTAssertEqual(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key).encyclopedias, before)
+        }
+        let exact = String(repeating: "e\u{0301}", count: 60)
+        let created = try store.createGuideEncyclopedia(name: exact, subtitle: String(repeating: "x", count: 240), style: .lavender)
+        XCTAssertEqual(created.name, exact, "Count extended grapheme clusters without normalizing or truncating stored wording")
+        XCTAssertEqual(created.subtitle?.count, 240)
+    }
+
+    func testMetadataModerationAllowsLegitimateSexualHealthAndNeverFiltersSavedBodyOrCitations() throws {
+        for title in ["sexual health", "sex hormone tests", "assessment of intersex care", "penis, vagina and breast health", "vaginal discharge and semen"] {
+            XCTAssertNoThrow(try store.createEncyclopedia(name: title, style: .sage), title)
+        }
+        let before = store.encyclopedias
+        for title in ["FUCK", "that is bullshit", "my dick", "murder everyone", "how to kill people"] {
+            XCTAssertThrowsError(try store.createEncyclopedia(name: title, style: .pink)) { error in
+                XCTAssertEqual(error as? Prompt10LibraryError, .inappropriateMetadata)
+            }
+            XCTAssertEqual(store.encyclopedias, before)
+        }
+        let book = try XCTUnwrap(store.encyclopedias.first)
+        let authored = FruitfolioSemanticDocument(spans: [.init(text: "My own exact quoted writing: bullshit; sexual health and violence prevention.")])
+        let page = try store.saveUserPage(pageID: nil, encyclopediaID: book.id, chapterID: book.chapters[0].id,
+            title: "my unmodified writing", document: authored, imageIDs: [])
+        XCTAssertEqual(page.resolvedSemanticDocument, authored)
+        XCTAssertEqual(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key).encyclopedias[0].chapters[0].pages[0].displayBody, authored.plainText)
+    }
+
+    func testLegacyLongMetadataIsNotSilentlyTruncatedOrErasedWhenLoading() throws {
+        let book = try store.createEncyclopedia(name: "legacy", style: .sage)
+        var original = store.encyclopedias
+        original[0].name = String(repeating: "original legacy title ", count: 8)
+        original[0].subtitle = String(repeating: "original description ", count: 20)
+        try defaults.set(JSONEncoder().encode(original), forKey: key)
+        let reopened = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: key)
+        XCTAssertEqual(reopened.encyclopedia(id: book.id)?.name, original[0].name)
+        XCTAssertEqual(reopened.encyclopedia(id: book.id)?.subtitle, original[0].subtitle)
+    }
+}
+
+
+extension Prompt10SavedLibraryTests {
+    func testImportedImagePreviewBoundsItsDecodeWithoutChangingOriginalBytesOrCreatingDerivativeFiles() throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let media = Prompt10LocalMediaStore(root: root)
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 120, height: 80))
+        let fixture = renderer.image { context in
+            UIColor.systemRed.setFill(); context.fill(CGRect(x: 0, y: 0, width: 120, height: 80))
+        }
+        let original = try XCTUnwrap(fixture.pngData())
+        let id = try media.saveImageData(original)
+        let preview = try XCTUnwrap(media.previewPNGData(for: id, maximumPixelSize: 32))
+        let decoded = try XCTUnwrap(UIImage(data: preview)?.cgImage)
+        XCTAssertEqual(max(decoded.width, decoded.height), 32)
+        XCTAssertEqual(Double(decoded.width) / Double(decoded.height), 1.5, accuracy: 0.08)
+        XCTAssertEqual(media.data(for: id), original)
+        XCTAssertEqual(try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil).filter { $0.pathExtension == "image" }.count, 1)
+        XCTAssertNil(media.previewPNGData(for: id, maximumPixelSize: 0))
+        let corrupt = Data([0xff, 0x00, 0x01])
+        let brokenID = try media.saveImageData(corrupt)
+        XCTAssertNil(media.previewPNGData(for: brokenID))
+        XCTAssertEqual(media.data(for: brokenID), corrupt, "An unreadable original is never replaced by an empty or generated image")
+    }
+}

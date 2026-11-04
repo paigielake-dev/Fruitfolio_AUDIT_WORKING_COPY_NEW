@@ -1,0 +1,5 @@
+# Hub Dynamic Type repair — awaiting simulator verification
+
+Run61 native accessibility audit reported DynamicType on the actual Fruitfolio title. Its font explicitly became smaller at accessibility sizes and the fixed-height Hub could not scroll. The approved Snell Roundhand title and Chalkboard SE byline now use relative custom fonts, wrap vertically without minimum-scale suppression, and retain the existing writing animation. The Hub content uses a minimum viewport height inside a vertical ScrollView; watercolor decorations remain fixed behind it.
+
+The existing strict audit remains unchanged. A new actual-app UI test launches at Accessibility XXXL, checks reachability of all six primary destinations plus Settings and Contact, captures branding/utilities screenshots, and runs the strict audit. Source changes alone do not establish PASS. Run62 remains the separate verification of native shared Button labels; Run64 verifies the newest game repair. Documentation-only skipped CI commits mean source-batch ordinals are not GitHub Actions run numbers. Queue supersession now identifies the bad provisional storm commit by SHA rather than cancelling Run64 by number.

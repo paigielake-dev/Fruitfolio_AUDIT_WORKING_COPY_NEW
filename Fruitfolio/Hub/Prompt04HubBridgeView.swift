@@ -5,6 +5,8 @@ struct Prompt04HubBridgeView: View {
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var invitationScheduler = Prompt07TourInvitationScheduler()
 
     @StateObject
     private var tour =
@@ -15,9 +17,6 @@ struct Prompt04HubBridgeView: View {
         [Prompt07TourTarget: CGRect] = [:]
 
     @State
-    private var invitationScheduled = false
-
-    @State
     private var hubBrandingAnimationCompleted = false
 
     var body: some View {
@@ -26,6 +25,7 @@ struct Prompt04HubBridgeView: View {
                 Prompt04StandaloneHubComposition(
                     interactive:
                         !tour.isTourActive,
+                    tourTarget: tour.isTourActive ? tour.currentStep.target : nil,
                     onBrandingAnimationCompleted: {
                         hubBrandingAnimationCompleted =
                             true
@@ -83,6 +83,7 @@ struct Prompt04HubBridgeView: View {
         ) { _, isReady in
 
             guard isReady else {
+                invitationScheduler.cancel()
                 return
             }
 
@@ -100,6 +101,14 @@ struct Prompt04HubBridgeView: View {
 
             beginManualReplayIfNeeded()
         }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { scheduleInvitationIfNeeded() }
+            else { invitationScheduler.cancel() }
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, id in
+            if id == nil { scheduleInvitationIfNeeded() }
+        }
+        .onDisappear { invitationScheduler.cancel() }
     }
 
     private var shouldOfferFirstLaunchTour: Bool {
@@ -112,7 +121,9 @@ struct Prompt04HubBridgeView: View {
 
     private func scheduleInvitationIfNeeded() {
         guard
-            !invitationScheduled,
+            scenePhase == .active,
+            !tour.isTourActive,
+            !appState.tourWasManuallyReplayed,
             hubBrandingAnimationCompleted,
             onboardingHookAllowsInvitation,
             shouldOfferFirstLaunchTour
@@ -120,22 +131,10 @@ struct Prompt04HubBridgeView: View {
             return
         }
 
-        invitationScheduled = true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    600_000_000
-            )
-
-            guard
-                shouldOfferFirstLaunchTour,
-                popupCoordinator
-                    .currentPopup == nil
-            else {
-                return
-            }
-
+        invitationScheduler.schedule(eligible: {
+            shouldOfferFirstLaunchTour && onboardingHookAllowsInvitation && hubBrandingAnimationCompleted &&
+                !tour.isTourActive && !appState.tourWasManuallyReplayed && popupCoordinator.currentPopup == nil
+        }) {
             popupCoordinator.request(
                 .init(
                     character: .blueberry,
@@ -194,6 +193,7 @@ struct Prompt04HubBridgeView: View {
 
     private func beginManualReplayIfNeeded() {
         guard appState.tourWasManuallyReplayed else { return }
+        invitationScheduler.cancel()
 
         popupCoordinator.dismissCurrent(
             reason: .programmatic
@@ -214,6 +214,7 @@ struct Prompt04HubBridgeView: View {
 
 struct Prompt04StandaloneHubComposition: View {
     let interactive: Bool
+    let tourTarget: Prompt07TourTarget?
 
     let onBrandingAnimationCompleted:
         () -> Void
@@ -223,6 +224,7 @@ struct Prompt04StandaloneHubComposition: View {
 
     init(
         interactive: Bool,
+        tourTarget: Prompt07TourTarget? = nil,
         onBrandingAnimationCompleted:
             @escaping () -> Void = {},
         navigate:
@@ -230,6 +232,7 @@ struct Prompt04StandaloneHubComposition: View {
     ) {
         self.interactive =
             interactive
+        self.tourTarget = tourTarget
 
         self.onBrandingAnimationCompleted =
             onBrandingAnimationCompleted
@@ -270,6 +273,7 @@ struct Prompt04StandaloneHubComposition: View {
                     metrics: metrics,
                     interactive:
                         interactive,
+                    tourTarget: tourTarget,
                     onBrandingAnimationCompleted:
                         onBrandingAnimationCompleted,
                     navigate:
@@ -300,6 +304,7 @@ struct Prompt04HubPaperControls: View {
         Prompt04BookLayout.Metrics
 
     let interactive: Bool
+    let tourTarget: Prompt07TourTarget?
 
     let onBrandingAnimationCompleted:
         () -> Void
@@ -311,6 +316,7 @@ struct Prompt04HubPaperControls: View {
         metrics:
             Prompt04BookLayout.Metrics,
         interactive: Bool,
+        tourTarget: Prompt07TourTarget? = nil,
         onBrandingAnimationCompleted:
             @escaping () -> Void = {},
         navigate:
@@ -321,6 +327,7 @@ struct Prompt04HubPaperControls: View {
 
         self.interactive =
             interactive
+        self.tourTarget = tourTarget
 
         self.onBrandingAnimationCompleted =
             onBrandingAnimationCompleted
@@ -335,15 +342,23 @@ struct Prompt04HubPaperControls: View {
                 metrics: metrics
             )
 
-            Prompt05HubPaperControls(
-                metrics: metrics,
-                interactive:
-                    interactive,
-                onBrandingAnimationCompleted:
-                    onBrandingAnimationCompleted,
-                navigate:
-                    navigate
-            )
+            ScrollViewReader { reader in
+            ScrollView(.vertical) {
+                Prompt05HubPaperControls(
+                    metrics: metrics,
+                    interactive:
+                        interactive,
+                    onBrandingAnimationCompleted:
+                        onBrandingAnimationCompleted,
+                    navigate:
+                        navigate
+                )
+            }
+                .onChange(of: tourTarget) { _, target in
+                    if let target { reader.scrollTo(target, anchor: .center) }
+                }
+            }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .frame(
             width:
@@ -744,31 +759,13 @@ private struct Prompt05HubPaperControls:
             VStack(
                 spacing: 3
             ) {
-                Text(
-                    "Fruitfolio"
-                )
-                .font(
-                    .custom(
-                        "Snell Roundhand",
-                        size:
-                            dynamicTypeSize
-                                .isAccessibilitySize
-                            ? 58
-                            : 68
-                    )
-                )
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .primaryBurgundy
-                )
+                FruitfolioNativeActionLabel(text: dynamicTypeSize.isAccessibilitySize ? "Fruit\nfolio" : "Fruitfolio",
+                    fontName: "SnellRoundhand", pointSize: 68, textStyle: .largeTitle,
+                    lineBreakMode: .byCharWrapping, accessibilityText: "Fruitfolio")
                 .multilineTextAlignment(
                     .center
                 )
-                .minimumScaleFactor(
-                    0.78
-                )
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(
                     width:
                         metrics
@@ -805,34 +802,13 @@ private struct Prompt05HubPaperControls:
                     .isHeader
                 )
 
-                Text(
-                    "By FruitsofLife.xo"
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size:
-                            dynamicTypeSize
-                                .isAccessibilitySize
-                            ? 18
-                            : 20
-                    )
-                )
-                .fontWeight(
-                    .bold
-                )
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .secondaryBurgundy
-                )
+                FruitfolioNativeActionLabel(text: "By FruitsofLife.xo", localizationKey: "By FruitsofLife.xo", pointSize: 20,
+                    textStyle: .title3, lineBreakMode: .byCharWrapping,
+                    textColor: DesignTokens.ColorToken.secondaryBurgundy)
                 .multilineTextAlignment(
                     .center
                 )
-                .minimumScaleFactor(
-                    0.80
-                )
-                .lineLimit(1)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(
                     width:
                         metrics
@@ -876,27 +852,10 @@ private struct Prompt05HubPaperControls:
             // MARK: Main Buttons
 
             LazyVGrid(
-                columns: [
-                    GridItem(
-                        .fixed(
-                            metrics
-                                .hubGridColumnWidth
-                        ),
-                        spacing:
-                            metrics
-                                .hubGridGap
-                    ),
-
-                    GridItem(
-                        .fixed(
-                            metrics
-                                .hubGridColumnWidth
-                        ),
-                        spacing:
-                            metrics
-                                .hubGridGap
-                    )
-                ],
+                columns: dynamicTypeSize.isAccessibilitySize
+                    ? [GridItem(.fixed(metrics.hubContentWidth))]
+                    : [GridItem(.fixed(metrics.hubGridColumnWidth), spacing: metrics.hubGridGap),
+                       GridItem(.fixed(metrics.hubGridColumnWidth), spacing: metrics.hubGridGap)],
                 alignment: .center,
                 spacing:
                     dynamicTypeSize
@@ -910,9 +869,8 @@ private struct Prompt05HubPaperControls:
 
                     Prompt05PrimaryHubButton(
                         spec: spec,
-                        width:
-                            metrics
-                                .hubGridColumnWidth,
+                        width: dynamicTypeSize.isAccessibilitySize
+                            ? metrics.hubContentWidth : metrics.hubGridColumnWidth,
                         height:
                             metrics
                                 .hubButtonHeight,
@@ -979,9 +937,10 @@ private struct Prompt05HubPaperControls:
         )
         .frame(
             width:
-                metrics.viewportWidth,
-            height:
-                metrics.viewportHeight
+                metrics.viewportWidth
+        )
+        .frame(
+            minHeight: metrics.viewportHeight
         )
         .accessibilityElement(
             children: .contain
@@ -1142,6 +1101,7 @@ private struct Prompt07OptionalTargetModifier:
 
         if let target {
             content
+                .id(target)
                 .prompt07TourTarget(
                     target
                 )
@@ -1178,15 +1138,28 @@ private struct Prompt05PrimaryHubButton:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
-    @State
-    private var activationInFlight =
-        false
+    @Environment(\.locale) private var locale
 
     var body: some View {
         Button {
-            activateAfterBounce()
+            activateImmediately()
 
         } label: {
+            if dynamicTypeSize.isAccessibilitySize || locale.language.languageCode?.identifier != "en" {
+                HStack(spacing: 12) {
+                    FruitfolioImage(id: spec.symbolAsset)
+                        .scaledToFit().frame(width: 34, height: 34)
+                        .accessibilityHidden(true)
+                    FruitfolioNativeActionLabel(text: spec.displayLabel, localizationKey: spec.displayLabel, lineBreakMode: .byCharWrapping)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .contain)
+                .padding(.horizontal, 28).padding(.vertical, 20)
+                .frame(width: width, alignment: .center)
+                .frame(minHeight: 82)
+                .background { FruitfolioControlPillArtwork(asset: spec.buttonAsset) }
+                .contentShape(Rectangle())
+            } else {
             ZStack {
                 FruitfolioImage(
                     id:
@@ -1238,7 +1211,7 @@ private struct Prompt05PrimaryHubButton:
                     )
 
                     Text(
-                        spec.displayLabel
+                        LocalizedStringKey(spec.displayLabel)
                     )
                     .font(
                         .custom(
@@ -1301,58 +1274,36 @@ private struct Prompt05PrimaryHubButton:
             .contentShape(
                 Rectangle()
             )
+            .accessibilityElement(children: .contain)
+            }
         }
         .buttonStyle(
-            Prompt05WatercolorBounceStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     reduceMotion
             )
         )
         .disabled(
             !interactive
-            || activationInFlight
         )
         .accessibilityHidden(
             !interactive
         )
         .accessibilityLabel(
-            accessibilityLabel
+            (locale.language.languageCode?.identifier == "en" ? accessibilityLabel : FruitfolioLocalization.localized(spec.displayLabel, locale: locale))
         )
+        .accessibilityIdentifier("hub.action." + accessibilityLabel)
         .accessibilityAddTraits(
             .isButton
         )
     }
 
-    // MARK: - Delayed Navigation
+    // MARK: - Immediate Navigation
 
     @MainActor
-    private func activateAfterBounce() {
-        guard
-            interactive,
-            !activationInFlight
-        else {
-            return
-        }
-
-        if reduceMotion {
-            action()
-            return
-        }
-
-        activationInFlight =
-            true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    240_000_000
-            )
-
-            activationInFlight =
-                false
-
-            action()
-        }
+    private func activateImmediately() {
+        guard interactive else { return }
+        action()
     }
 
     private var accessibilityLabel:
@@ -1388,70 +1339,6 @@ private struct Prompt05PrimaryHubButton:
             return
                 spec.displayLabel
         }
-    }
-}
-
-// MARK: - Main Hub Button Bounce
-
-private struct Prompt05WatercolorBounceStyle:
-    ButtonStyle {
-
-    let reduceMotion:
-        Bool
-
-    func makeBody(
-        configuration: Configuration
-    ) -> some View {
-
-        configuration.label
-            .scaleEffect(
-                reduceMotion
-                ? 1
-                : (
-                    configuration.isPressed
-                    ? 0.89
-                    : 1
-                )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? 5
-                        : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? -1.1
-                        : 0
-                    )
-                )
-            )
-            .brightness(
-                configuration.isPressed
-                ? -0.04
-                : 0
-            )
-            .animation(
-                reduceMotion
-                ? .easeOut(
-                    duration: 0.08
-                )
-                : .spring(
-                    response: 0.27,
-                    dampingFraction: 0.34,
-                    blendDuration: 0
-                ),
-                value:
-                    configuration.isPressed
-            )
     }
 }
 
@@ -1624,13 +1511,9 @@ private struct Prompt05HubUtilityButton:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
-    @State
-    private var activationInFlight =
-        false
-
     var body: some View {
         Button {
-            activateAfterBounce()
+            activateImmediately()
 
         } label: {
             VStack(
@@ -1650,15 +1533,12 @@ private struct Prompt05HubUtilityButton:
                     true
                 )
 
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size:
-                                dynamicTypeSize
-                                    .isAccessibilitySize
-                                ? 12
-                                : 11
+                            size: 11,
+                            relativeTo: .caption
                         )
                     )
                     .fontWeight(
@@ -1669,11 +1549,10 @@ private struct Prompt05HubUtilityButton:
                             .ColorToken
                             .primaryBurgundy
                     )
-                    .lineLimit(1)
-                    .minimumScaleFactor(
-                        0.82
-                    )
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
             }
+            .accessibilityElement(children: .contain)
             .frame(
                 width:
                     width
@@ -1689,158 +1568,29 @@ private struct Prompt05HubUtilityButton:
             )
         }
         .buttonStyle(
-            Prompt05UtilityPressStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     reduceMotion
             )
         )
         .disabled(
             !interactive
-            || activationInFlight
         )
         .accessibilityHidden(
             !interactive
         )
-        .accessibilityLabel(
-            label == "sign in"
-            ? "Sign In"
-            : label.capitalized
-        )
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
+        .accessibilityIdentifier("hub.utility." + label)
         .accessibilityAddTraits(
             .isButton
         )
     }
 
     @MainActor
-    private func activateAfterBounce() {
-        guard
-            interactive,
-            !activationInFlight
-        else {
-            return
-        }
-
-        if reduceMotion {
-            activate(route)
-            return
-        }
-
-        activationInFlight =
-            true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    240_000_000
-            )
-
-            activationInFlight =
-                false
-
-            activate(route)
-        }
+    private func activateImmediately() {
+        guard interactive else { return }
+        activate(route)
     }
+
 }
-
-// MARK: - Utility Button Animation
-
-private struct Prompt05UtilityPressStyle:
-    ButtonStyle {
-
-    let reduceMotion:
-        Bool
-
-    func makeBody(
-        configuration: Configuration
-    ) -> some View {
-
-        configuration.label
-            .scaleEffect(
-                reduceMotion
-                ? 1
-                : (
-                    configuration.isPressed
-                    ? 0.89
-                    : 1
-                )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? 5
-                        : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? -1.1
-                        : 0
-                    )
-                )
-            )
-            .brightness(
-                configuration.isPressed
-                ? -0.04
-                : 0
-            )
-            .animation(
-                reduceMotion
-                ? .easeOut(
-                    duration: 0.08
-                )
-                : .spring(
-                    response: 0.27,
-                    dampingFraction: 0.34,
-                    blendDuration: 0
-                ),
-                value:
-                    configuration.isPressed
-            )
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -137,3 +137,18 @@ extension View {
         modifier(Prompt07TourTargetModifier(target: target))
     }
 }
+
+extension Prompt07TourStep {
+    var semanticMessage: FruitfolioSemanticDocument {
+        let anchors: [String]
+        switch self {
+        case .ask: anchors = ["FruitsofLife.xo library"]
+        case .library: anchors = ["encyclopedia"]
+        case .guideBuilder: anchors = ["chapters", "notes", "study guides", "little handbooks"]
+        case .cycle: anchors = ["biology", "patterns", "cycle"]
+        case .fruitBasket: anchors = ["come fill your fruit basket"]
+        case .ready: anchors = []
+        }
+        return .authored(message, annotations: anchors.map { .init(phrase: $0, emphasis: .anchorBold) })
+    }
+}

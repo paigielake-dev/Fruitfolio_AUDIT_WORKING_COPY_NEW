@@ -1,0 +1,7 @@
+# Non-inference script/direction navigation verification
+
+The shared Back control now uses the semantic backward SF Symbol, allowing the existing app-wide RTL environment to render the correct direction. Route headings expose stable canonical identifiers independent of their displayed translation. Added normal/largest-text actual UI selection and restart journeys for Arabic, Hebrew, Simplified Chinese and Traditional Chinese, checking visible compiled wording, full control bounds, mirrored Back placement and persisted autonyms. The scrolling helper uses the blank margin opposite the system's actual RTL indicator and preserves strict full-visibility assertions; it never drags audio sliders.
+
+These tests do not execute MADLAD, approve scientific translations, or establish complete interface coverage. Their actual execution remains pending; all untranslated research disclosures remain.
+
+Actual Run 9 at aee406f3 built successfully: 580 core XCTest executions (579 PASS, one physical-device-only skip, zero failures), all 26 Swift Testing cases passed; 31 UI executions included 27 PASS and four FAIL. The native export UI failure was a stale filename-field tap after Save during picker dismissal. That unnecessary post-Save edit is removed; final real-file byte/readback success and cancellation checks remain strict. The two Fruit Basket contrast failures require original exported evidence inspection; recovery of that immutable oversized artifact is requested separately from Run 2, without rerunning tests or replacing results.

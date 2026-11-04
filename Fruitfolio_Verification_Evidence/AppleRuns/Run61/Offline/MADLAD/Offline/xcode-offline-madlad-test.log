@@ -1,0 +1,1389 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO -disableAutomaticPackageResolution "-only-testing:FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests" "-only-testing:FruitfolioTests/BundledNativeGroundingTests" "-only-testing:FruitfolioUITests/AskGroundedJourneyUITests/testActualGroundedAnswerSourcesAndClearOnExit" -resultBundlePath Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-01 23:45:29.811520+0000 Fruitfolio[12123:47175] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x106045cc0> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+Fruitfolio AudioManager: no stored loop request for music
+Fruitfolio AudioManager: no stored loop request for rainAmbience
+2026-11-01 23:45:30.150390+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1755  ReadPListFile: unable to open stream for LoudnessManager plist
+2026-11-01 23:45:30.150682+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1261  GetHardwarePlatformKey: cannot get acoustic ID
+2026-11-01 23:45:30.150994+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:30.151298+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-01 23:45:30.184414+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:30.184907+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-01 23:45:30.321327+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:30.321624+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketMusicbox = true
+2026-11-01 23:45:30.350668+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:30.350764+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: start fruitBasketRainAmbience = true
+2026-11-01 23:45:30.501652+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:30.501749+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+Test Suite 'Selected tests' started at 2026-11-01 23:45:31.300.
+Test Suite 'FruitfolioTests.xctest' started at 2026-11-01 23:45:31.300.
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' started at 2026-11-01 23:45:31.301.
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testCorruptTokenizerIsRejectedBeforeAnyModelInference]' started.
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testCorruptTokenizerIsRejectedBeforeAnyModelInference]' passed (0.024 seconds).
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime]' started.
+2026-11-01 23:45:32.061894+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+2026-11-01 23:45:32.062042+0000 Fruitfolio[12123:47175] [AQ]        LoudnessManager.mm:1215  IsHardwareSupported: no plist loaded, returning false
+Fruitfolio AudioManager: one-shot pageTurn = true
+2026-11-01 23:45:43.843559+0000 Fruitfolio[12123:47494] [AMCP]          HALC_ProxyIOContext.cpp:1623  HALC_ProxyIOContext::IOWorkLoop: skipping cycle due to overload
+Test Case '-[FruitfolioTests.AAAA_MADLADRuntimeIntegrationTests testOfficialModelExecutesLocallyThroughTheLinkedAppleRuntime]' passed (46.081 seconds).
+Test Suite 'AAAA_MADLADRuntimeIntegrationTests' passed at 2026-11-01 23:46:17.407.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 46.104 (46.106) seconds
+Test Suite 'BundledNativeGroundingTests' started at 2026-11-01 23:46:17.407.
+Test Case '-[FruitfolioTests.BundledNativeGroundingTests testNativeAnswerUsesActualBundledResearchAndDocumentCitations]' started.
+ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices
+ggml_metal_library_init: using embedded metal library
+ggml_metal_library_compile_all: compiled 'fa' library in 0.070 sec
+ggml_metal_library_compile_all: compiled 'mul_mv' library in 0.076 sec
+ggml_metal_library_compile_all: compiled 'mul_mm' library in 0.018 sec
+ggml_metal_library_compile_all: compiled 'quantize' library in 0.023 sec
+ggml_metal_library_compile_all: compiled 'softmax' library in 0.079 sec
+ggml_metal_library_compile_all: compiled 'norm' library in 0.075 sec
+ggml_metal_library_compile_all: compiled 'unary' library in 0.074 sec
+ggml_metal_library_compile_all: compiled 'binbcast' library in 0.073 sec
+ggml_metal_library_compile_all: compiled 'reduce' library in 0.073 sec
+ggml_metal_library_compile_all: compiled 'tri' library in 0.068 sec
+ggml_metal_library_compile_all: compiled 'ssm' library in 0.073 sec
+ggml_metal_library_compile_all: compiled 'wkv' library in 0.072 sec
+ggml_metal_library_compile_all: compiled 'gated_delta_net' library in 0.064 sec
+ggml_metal_library_compile_all: compiled 'solve_tri' library in 0.063 sec
+ggml_metal_library_compile_all: compiled 'rope' library in 0.063 sec
+ggml_metal_library_compile_all: compiled 'conv' library in 0.061 sec
+ggml_metal_library_compile_all: compiled 'upscale' library in 0.056 sec
+ggml_metal_library_compile_all: compiled 'argsort' library in 0.046 sec
+ggml_metal_library_compile_all: compiled 'pool' library in 0.048 sec
+ggml_metal_library_compile_all: compiled 'misc' library in 0.047 sec
+ggml_metal_library_compile_all: loaded 20 libraries from embedded data in 0.081 sec (max single = 0.079 sec)
+ggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)
+ggml_metal_device_init: GPU name:   MTL0 (Apple iOS simulator GPU)
+ggml_metal_device_init: GPU family: MTLGPUFamilyApple2  (1002)
+ggml_metal_device_init: GPU family: MTLGPUFamilyCommon1 (3001)
+ggml_metal_device_init: simdgroup reduction   = false
+ggml_metal_device_init: simdgroup matrix mul. = false
+ggml_metal_device_init: has unified memory    = false
+ggml_metal_device_init: has bfloat            = false
+ggml_metal_device_init: has tensor            = false
+ggml_metal_device_init: use residency sets    = true
+ggml_metal_device_init: use shared buffers    = false
+ggml_metal_device_init: recommendedMaxWorkingSetSize  =     0.00 MB
+llama_model_loader: loaded meta data with 26 key-value pairs and 291 tensors from /Users/runner/Library/Developer/CoreSimulator/Devices/7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8/data/Containers/Bundle/Application/5BC3A11C-6E98-47A4-A6FD-B10BD6DC46D8/Fruitfolio.app/FruitfolioAI.gguf (version GGUF V3 (latest))
+llama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.
+llama_model_loader: - kv   0:                       general.architecture str              = qwen2
+llama_model_loader: - kv   1:                               general.type str              = model
+llama_model_loader: - kv   2:                               general.name str              = qwen2.5-0.5b-instruct
+llama_model_loader: - kv   3:                            general.version str              = v0.1
+llama_model_loader: - kv   4:                           general.finetune str              = qwen2.5-0.5b-instruct
+llama_model_loader: - kv   5:                         general.size_label str              = 630M
+llama_model_loader: - kv   6:                          qwen2.block_count u32              = 24
+llama_model_loader: - kv   7:                       qwen2.context_length u32              = 32768
+llama_model_loader: - kv   8:                     qwen2.embedding_length u32              = 896
+llama_model_loader: - kv   9:                  qwen2.feed_forward_length u32              = 4864
+llama_model_loader: - kv  10:                 qwen2.attention.head_count u32              = 14
+llama_model_loader: - kv  11:              qwen2.attention.head_count_kv u32              = 2
+llama_model_loader: - kv  12:                       qwen2.rope.freq_base f32              = 1000000.000000
+llama_model_loader: - kv  13:     qwen2.attention.layer_norm_rms_epsilon f32              = 0.000001
+llama_model_loader: - kv  14:                          general.file_type u32              = 15
+llama_model_loader: - kv  15:                       tokenizer.ggml.model str              = gpt2
+llama_model_loader: - kv  16:                         tokenizer.ggml.pre str              = qwen2
+llama_model_loader: - kv  17:                      tokenizer.ggml.tokens arr[str,151936]  = ["!", "\"", "#", "$", "%", "&", "'", ...
+llama_model_loader: - kv  18:                  tokenizer.ggml.token_type arr[i32,151936]  = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+llama_model_loader: - kv  19:                      tokenizer.ggml.merges arr[str,151387]  = ["Ġ Ġ", "ĠĠ ĠĠ", "i n", "Ġ t",...
+llama_model_loader: - kv  20:                tokenizer.ggml.eos_token_id u32              = 151645
+llama_model_loader: - kv  21:            tokenizer.ggml.padding_token_id u32              = 151643
+llama_model_loader: - kv  22:                tokenizer.ggml.bos_token_id u32              = 151643
+llama_model_loader: - kv  23:               tokenizer.ggml.add_bos_token bool             = false
+llama_model_loader: - kv  24:                    tokenizer.chat_template str              = {%- if tools %}\n    {{- '<|im_start|>...
+llama_model_loader: - kv  25:               general.quantization_version u32              = 2
+llama_model_loader: - type  f32:  121 tensors
+llama_model_loader: - type q5_0:  133 tensors
+llama_model_loader: - type q8_0:   13 tensors
+llama_model_loader: - type q4_K:   12 tensors
+llama_model_loader: - type q6_K:   12 tensors
+print_info: file format = GGUF V3 (latest)
+print_info: file type   = Q4_K - Medium
+print_info: file size   = 462.96 MiB (6.16 BPW) 
+llama_prepare_model_devices: using device MTL0 (Apple iOS simulator GPU) (unknown id) - 0 MiB free
+init_tokenizer: initializing tokenizer for type 2
+load: 0 unused tokens
+load: control token: 151659 '<|fim_prefix|>' is not marked as EOG
+load: control token: 151656 '<|video_pad|>' is not marked as EOG
+load: control token: 151655 '<|image_pad|>' is not marked as EOG
+load: control token: 151653 '<|vision_end|>' is not marked as EOG
+load: control token: 151652 '<|vision_start|>' is not marked as EOG
+load: control token: 151651 '<|quad_end|>' is not marked as EOG
+load: control token: 151649 '<|box_end|>' is not marked as EOG
+load: control token: 151648 '<|box_start|>' is not marked as EOG
+load: control token: 151646 '<|object_ref_start|>' is not marked as EOG
+load: control token: 151644 '<|im_start|>' is not marked as EOG
+load: control token: 151661 '<|fim_suffix|>' is not marked as EOG
+load: control token: 151647 '<|object_ref_end|>' is not marked as EOG
+load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+load: control token: 151660 '<|fim_middle|>' is not marked as EOG
+load: control token: 151654 '<|vision_pad|>' is not marked as EOG
+load: control token: 151650 '<|quad_start|>' is not marked as EOG
+load: printing all EOG tokens:
+load:   - 128247 ('</s>')
+load:   - 151643 ('<|endoftext|>')
+load:   - 151645 ('<|im_end|>')
+load:   - 151662 ('<|fim_pad|>')
+load:   - 151663 ('<|repo_name|>')
+load:   - 151664 ('<|file_sep|>')
+load: special tokens cache size = 23
+load: token to piece cache size = 0.9310 MB
+print_info: arch                  = qwen2
+print_info: vocab_only            = 0
+print_info: no_alloc              = 0
+print_info: n_ctx_train           = 32768
+print_info: n_embd_inp            = 896
+print_info: n_embd                = 896
+print_info: n_embd_out            = 896
+print_info: n_layer               = 24
+print_info: n_layer_all           = 24
+print_info: n_head                = 14
+print_info: n_head_kv             = 2
+print_info: n_rot                 = 64
+print_info: n_swa                 = 0
+print_info: is_swa_any            = 0
+print_info: non_causal_type       = 0
+print_info: n_embd_head_k         = 64
+print_info: n_embd_head_v         = 64
+print_info: n_gqa                 = 7
+print_info: n_embd_k_gqa          = 128
+print_info: n_embd_v_gqa          = 128
+print_info: f_norm_eps            = 0.0e+00
+print_info: f_norm_rms_eps        = 1.0e-06
+print_info: f_clamp_kqv           = 0.0e+00
+print_info: f_max_alibi_bias      = 0.0e+00
+print_info: f_logit_scale         = 0.0e+00
+print_info: f_attn_scale          = 0.0e+00
+print_info: f_attn_value_scale    = 0.0000
+print_info: n_ff                  = 4864
+print_info: n_expert              = 0
+print_info: n_expert_used         = 0
+print_info: n_expert_groups       = 0
+print_info: n_group_used          = 0
+print_info: causal attn           = 1
+print_info: pooling type          = -1
+print_info: rope type             = 2
+print_info: rope scaling          = linear
+print_info: freq_base_train       = 1000000.0
+print_info: freq_scale_train      = 1
+print_info: n_ctx_orig_yarn       = 32768
+print_info: rope_yarn_log_mul     = 0.0000
+print_info: rope_finetuned        = unknown
+print_info: model type            = 1B
+print_info: model params          = 630.17 M
+print_info: general.name          = qwen2.5-0.5b-instruct
+print_info: vocab type            = BPE
+print_info: n_vocab               = 151936
+print_info: n_merges              = 151387
+print_info: BOS token             = 151643 '<|endoftext|>'
+print_info: EOS token             = 151645 '<|im_end|>'
+print_info: EOT token             = 151645 '<|im_end|>'
+print_info: PAD token             = 151643 '<|endoftext|>'
+print_info: LF token              = 198 'Ċ'
+print_info: FIM PRE token         = 151659 '<|fim_prefix|>'
+print_info: FIM SUF token         = 151661 '<|fim_suffix|>'
+print_info: FIM MID token         = 151660 '<|fim_middle|>'
+print_info: FIM PAD token         = 151662 '<|fim_pad|>'
+print_info: FIM REP token         = 151663 '<|repo_name|>'
+print_info: FIM SEP token         = 151664 '<|file_sep|>'
+print_info: EOG token             = 128247 '</s>'
+print_info: EOG token             = 151643 '<|endoftext|>'
+print_info: EOG token             = 151645 '<|im_end|>'
+print_info: EOG token             = 151662 '<|fim_pad|>'
+print_info: EOG token             = 151663 '<|repo_name|>'
+print_info: EOG token             = 151664 '<|file_sep|>'
+print_info: max token length      = 256
+load_tensors: loading model tensors, this can take a while... (load_mode = mmap)
+load_tensors: layer   0 assigned to device CPU, is_swa = 0
+load_tensors: layer   1 assigned to device CPU, is_swa = 0
+load_tensors: layer   2 assigned to device CPU, is_swa = 0
+load_tensors: layer   3 assigned to device CPU, is_swa = 0
+load_tensors: layer   4 assigned to device CPU, is_swa = 0
+load_tensors: layer   5 assigned to device CPU, is_swa = 0
+load_tensors: layer   6 assigned to device CPU, is_swa = 0
+load_tensors: layer   7 assigned to device CPU, is_swa = 0
+load_tensors: layer   8 assigned to device CPU, is_swa = 0
+load_tensors: layer   9 assigned to device CPU, is_swa = 0
+load_tensors: layer  10 assigned to device CPU, is_swa = 0
+load_tensors: layer  11 assigned to device CPU, is_swa = 0
+load_tensors: layer  12 assigned to device CPU, is_swa = 0
+load_tensors: layer  13 assigned to device CPU, is_swa = 0
+load_tensors: layer  14 assigned to device CPU, is_swa = 0
+load_tensors: layer  15 assigned to device CPU, is_swa = 0
+load_tensors: layer  16 assigned to device CPU, is_swa = 0
+load_tensors: layer  17 assigned to device CPU, is_swa = 0
+load_tensors: layer  18 assigned to device CPU, is_swa = 0
+load_tensors: layer  19 assigned to device CPU, is_swa = 0
+load_tensors: layer  20 assigned to device CPU, is_swa = 0
+load_tensors: layer  21 assigned to device CPU, is_swa = 0
+load_tensors: layer  22 assigned to device CPU, is_swa = 0
+load_tensors: layer  23 assigned to device CPU, is_swa = 0
+load_tensors: layer  24 assigned to device CPU, is_swa = 0
+create_tensor: loading tensor token_embd.weight
+create_tensor: loading tensor output_norm.weight
+create_tensor: loading tensor output.weight
+create_tensor: loading tensor output.bias
+create_tensor: loading tensor blk.0.attn_norm.weight
+create_tensor: loading tensor blk.0.attn_qkv.weight
+create_tensor: loading tensor blk.0.attn_q.weight
+create_tensor: loading tensor blk.0.attn_k.weight
+create_tensor: loading tensor blk.0.attn_v.weight
+create_tensor: loading tensor blk.0.attn_q.bias
+create_tensor: loading tensor blk.0.attn_k.bias
+create_tensor: loading tensor blk.0.attn_v.bias
+create_tensor: loading tensor blk.0.attn_output.weight
+create_tensor: loading tensor blk.0.ffn_norm.weight
+create_tensor: loading tensor blk.0.ffn_gate.weight
+create_tensor: loading tensor blk.0.ffn_down.weight
+create_tensor: loading tensor blk.0.ffn_up.weight
+create_tensor: loading tensor blk.1.attn_norm.weight
+create_tensor: loading tensor blk.1.attn_qkv.weight
+create_tensor: loading tensor blk.1.attn_q.weight
+create_tensor: loading tensor blk.1.attn_k.weight
+create_tensor: loading tensor blk.1.attn_v.weight
+create_tensor: loading tensor blk.1.attn_q.bias
+create_tensor: loading tensor blk.1.attn_k.bias
+create_tensor: loading tensor blk.1.attn_v.bias
+create_tensor: loading tensor blk.1.attn_output.weight
+create_tensor: loading tensor blk.1.ffn_norm.weight
+create_tensor: loading tensor blk.1.ffn_gate.weight
+create_tensor: loading tensor blk.1.ffn_down.weight
+create_tensor: loading tensor blk.1.ffn_up.weight
+create_tensor: loading tensor blk.2.attn_norm.weight
+create_tensor: loading tensor blk.2.attn_qkv.weight
+create_tensor: loading tensor blk.2.attn_q.weight
+create_tensor: loading tensor blk.2.attn_k.weight
+create_tensor: loading tensor blk.2.attn_v.weight
+create_tensor: loading tensor blk.2.attn_q.bias
+create_tensor: loading tensor blk.2.attn_k.bias
+create_tensor: loading tensor blk.2.attn_v.bias
+create_tensor: loading tensor blk.2.attn_output.weight
+create_tensor: loading tensor blk.2.ffn_norm.weight
+create_tensor: loading tensor blk.2.ffn_gate.weight
+create_tensor: loading tensor blk.2.ffn_down.weight
+create_tensor: loading tensor blk.2.ffn_up.weight
+create_tensor: loading tensor blk.3.attn_norm.weight
+create_tensor: loading tensor blk.3.attn_qkv.weight
+create_tensor: loading tensor blk.3.attn_q.weight
+create_tensor: loading tensor blk.3.attn_k.weight
+create_tensor: loading tensor blk.3.attn_v.weight
+create_tensor: loading tensor blk.3.attn_q.bias
+create_tensor: loading tensor blk.3.attn_k.bias
+create_tensor: loading tensor blk.3.attn_v.bias
+create_tensor: loading tensor blk.3.attn_output.weight
+create_tensor: loading tensor blk.3.ffn_norm.weight
+create_tensor: loading tensor blk.3.ffn_gate.weight
+create_tensor: loading tensor blk.3.ffn_down.weight
+create_tensor: loading tensor blk.3.ffn_up.weight
+create_tensor: loading tensor blk.4.attn_norm.weight
+create_tensor: loading tensor blk.4.attn_qkv.weight
+create_tensor: loading tensor blk.4.attn_q.weight
+create_tensor: loading tensor blk.4.attn_k.weight
+create_tensor: loading tensor blk.4.attn_v.weight
+create_tensor: loading tensor blk.4.attn_q.bias
+create_tensor: loading tensor blk.4.attn_k.bias
+create_tensor: loading tensor blk.4.attn_v.bias
+create_tensor: loading tensor blk.4.attn_output.weight
+create_tensor: loading tensor blk.4.ffn_norm.weight
+create_tensor: loading tensor blk.4.ffn_gate.weight
+create_tensor: loading tensor blk.4.ffn_down.weight
+create_tensor: loading tensor blk.4.ffn_up.weight
+create_tensor: loading tensor blk.5.attn_norm.weight
+create_tensor: loading tensor blk.5.attn_qkv.weight
+create_tensor: loading tensor blk.5.attn_q.weight
+create_tensor: loading tensor blk.5.attn_k.weight
+create_tensor: loading tensor blk.5.attn_v.weight
+create_tensor: loading tensor blk.5.attn_q.bias
+create_tensor: loading tensor blk.5.attn_k.bias
+create_tensor: loading tensor blk.5.attn_v.bias
+create_tensor: loading tensor blk.5.attn_output.weight
+create_tensor: loading tensor blk.5.ffn_norm.weight
+create_tensor: loading tensor blk.5.ffn_gate.weight
+create_tensor: loading tensor blk.5.ffn_down.weight
+create_tensor: loading tensor blk.5.ffn_up.weight
+create_tensor: loading tensor blk.6.attn_norm.weight
+create_tensor: loading tensor blk.6.attn_qkv.weight
+create_tensor: loading tensor blk.6.attn_q.weight
+create_tensor: loading tensor blk.6.attn_k.weight
+create_tensor: loading tensor blk.6.attn_v.weight
+create_tensor: loading tensor blk.6.attn_q.bias
+create_tensor: loading tensor blk.6.attn_k.bias
+create_tensor: loading tensor blk.6.attn_v.bias
+create_tensor: loading tensor blk.6.attn_output.weight
+create_tensor: loading tensor blk.6.ffn_norm.weight
+create_tensor: loading tensor blk.6.ffn_gate.weight
+create_tensor: loading tensor blk.6.ffn_down.weight
+create_tensor: loading tensor blk.6.ffn_up.weight
+create_tensor: loading tensor blk.7.attn_norm.weight
+create_tensor: loading tensor blk.7.attn_qkv.weight
+create_tensor: loading tensor blk.7.attn_q.weight
+create_tensor: loading tensor blk.7.attn_k.weight
+create_tensor: loading tensor blk.7.attn_v.weight
+create_tensor: loading tensor blk.7.attn_q.bias
+create_tensor: loading tensor blk.7.attn_k.bias
+create_tensor: loading tensor blk.7.attn_v.bias
+create_tensor: loading tensor blk.7.attn_output.weight
+create_tensor: loading tensor blk.7.ffn_norm.weight
+create_tensor: loading tensor blk.7.ffn_gate.weight
+create_tensor: loading tensor blk.7.ffn_down.weight
+create_tensor: loading tensor blk.7.ffn_up.weight
+create_tensor: loading tensor blk.8.attn_norm.weight
+create_tensor: loading tensor blk.8.attn_qkv.weight
+create_tensor: loading tensor blk.8.attn_q.weight
+create_tensor: loading tensor blk.8.attn_k.weight
+create_tensor: loading tensor blk.8.attn_v.weight
+create_tensor: loading tensor blk.8.attn_q.bias
+create_tensor: loading tensor blk.8.attn_k.bias
+create_tensor: loading tensor blk.8.attn_v.bias
+create_tensor: loading tensor blk.8.attn_output.weight
+create_tensor: loading tensor blk.8.ffn_norm.weight
+create_tensor: loading tensor blk.8.ffn_gate.weight
+create_tensor: loading tensor blk.8.ffn_down.weight
+create_tensor: loading tensor blk.8.ffn_up.weight
+create_tensor: loading tensor blk.9.attn_norm.weight
+create_tensor: loading tensor blk.9.attn_qkv.weight
+create_tensor: loading tensor blk.9.attn_q.weight
+create_tensor: loading tensor blk.9.attn_k.weight
+create_tensor: loading tensor blk.9.attn_v.weight
+create_tensor: loading tensor blk.9.attn_q.bias
+create_tensor: loading tensor blk.9.attn_k.bias
+create_tensor: loading tensor blk.9.attn_v.bias
+create_tensor: loading tensor blk.9.attn_output.weight
+create_tensor: loading tensor blk.9.ffn_norm.weight
+create_tensor: loading tensor blk.9.ffn_gate.weight
+create_tensor: loading tensor blk.9.ffn_down.weight
+create_tensor: loading tensor blk.9.ffn_up.weight
+create_tensor: loading tensor blk.10.attn_norm.weight
+create_tensor: loading tensor blk.10.attn_qkv.weight
+create_tensor: loading tensor blk.10.attn_q.weight
+create_tensor: loading tensor blk.10.attn_k.weight
+create_tensor: loading tensor blk.10.attn_v.weight
+create_tensor: loading tensor blk.10.attn_q.bias
+create_tensor: loading tensor blk.10.attn_k.bias
+create_tensor: loading tensor blk.10.attn_v.bias
+create_tensor: loading tensor blk.10.attn_output.weight
+create_tensor: loading tensor blk.10.ffn_norm.weight
+create_tensor: loading tensor blk.10.ffn_gate.weight
+create_tensor: loading tensor blk.10.ffn_down.weight
+create_tensor: loading tensor blk.10.ffn_up.weight
+create_tensor: loading tensor blk.11.attn_norm.weight
+create_tensor: loading tensor blk.11.attn_qkv.weight
+create_tensor: loading tensor blk.11.attn_q.weight
+create_tensor: loading tensor blk.11.attn_k.weight
+create_tensor: loading tensor blk.11.attn_v.weight
+create_tensor: loading tensor blk.11.attn_q.bias
+create_tensor: loading tensor blk.11.attn_k.bias
+create_tensor: loading tensor blk.11.attn_v.bias
+create_tensor: loading tensor blk.11.attn_output.weight
+create_tensor: loading tensor blk.11.ffn_norm.weight
+create_tensor: loading tensor blk.11.ffn_gate.weight
+create_tensor: loading tensor blk.11.ffn_down.weight
+create_tensor: loading tensor blk.11.ffn_up.weight
+create_tensor: loading tensor blk.12.attn_norm.weight
+create_tensor: loading tensor blk.12.attn_qkv.weight
+create_tensor: loading tensor blk.12.attn_q.weight
+create_tensor: loading tensor blk.12.attn_k.weight
+create_tensor: loading tensor blk.12.attn_v.weight
+create_tensor: loading tensor blk.12.attn_q.bias
+create_tensor: loading tensor blk.12.attn_k.bias
+create_tensor: loading tensor blk.12.attn_v.bias
+create_tensor: loading tensor blk.12.attn_output.weight
+create_tensor: loading tensor blk.12.ffn_norm.weight
+create_tensor: loading tensor blk.12.ffn_gate.weight
+create_tensor: loading tensor blk.12.ffn_down.weight
+create_tensor: loading tensor blk.12.ffn_up.weight
+create_tensor: loading tensor blk.13.attn_norm.weight
+create_tensor: loading tensor blk.13.attn_qkv.weight
+create_tensor: loading tensor blk.13.attn_q.weight
+create_tensor: loading tensor blk.13.attn_k.weight
+create_tensor: loading tensor blk.13.attn_v.weight
+create_tensor: loading tensor blk.13.attn_q.bias
+create_tensor: loading tensor blk.13.attn_k.bias
+create_tensor: loading tensor blk.13.attn_v.bias
+create_tensor: loading tensor blk.13.attn_output.weight
+create_tensor: loading tensor blk.13.ffn_norm.weight
+create_tensor: loading tensor blk.13.ffn_gate.weight
+create_tensor: loading tensor blk.13.ffn_down.weight
+create_tensor: loading tensor blk.13.ffn_up.weight
+create_tensor: loading tensor blk.14.attn_norm.weight
+create_tensor: loading tensor blk.14.attn_qkv.weight
+create_tensor: loading tensor blk.14.attn_q.weight
+create_tensor: loading tensor blk.14.attn_k.weight
+create_tensor: loading tensor blk.14.attn_v.weight
+create_tensor: loading tensor blk.14.attn_q.bias
+create_tensor: loading tensor blk.14.attn_k.bias
+create_tensor: loading tensor blk.14.attn_v.bias
+create_tensor: loading tensor blk.14.attn_output.weight
+create_tensor: loading tensor blk.14.ffn_norm.weight
+create_tensor: loading tensor blk.14.ffn_gate.weight
+create_tensor: loading tensor blk.14.ffn_down.weight
+create_tensor: loading tensor blk.14.ffn_up.weight
+create_tensor: loading tensor blk.15.attn_norm.weight
+create_tensor: loading tensor blk.15.attn_qkv.weight
+create_tensor: loading tensor blk.15.attn_q.weight
+create_tensor: loading tensor blk.15.attn_k.weight
+create_tensor: loading tensor blk.15.attn_v.weight
+create_tensor: loading tensor blk.15.attn_q.bias
+create_tensor: loading tensor blk.15.attn_k.bias
+create_tensor: loading tensor blk.15.attn_v.bias
+create_tensor: loading tensor blk.15.attn_output.weight
+create_tensor: loading tensor blk.15.ffn_norm.weight
+create_tensor: loading tensor blk.15.ffn_gate.weight
+create_tensor: loading tensor blk.15.ffn_down.weight
+create_tensor: loading tensor blk.15.ffn_up.weight
+create_tensor: loading tensor blk.16.attn_norm.weight
+create_tensor: loading tensor blk.16.attn_qkv.weight
+create_tensor: loading tensor blk.16.attn_q.weight
+create_tensor: loading tensor blk.16.attn_k.weight
+create_tensor: loading tensor blk.16.attn_v.weight
+create_tensor: loading tensor blk.16.attn_q.bias
+create_tensor: loading tensor blk.16.attn_k.bias
+create_tensor: loading tensor blk.16.attn_v.bias
+create_tensor: loading tensor blk.16.attn_output.weight
+create_tensor: loading tensor blk.16.ffn_norm.weight
+create_tensor: loading tensor blk.16.ffn_gate.weight
+create_tensor: loading tensor blk.16.ffn_down.weight
+create_tensor: loading tensor blk.16.ffn_up.weight
+create_tensor: loading tensor blk.17.attn_norm.weight
+create_tensor: loading tensor blk.17.attn_qkv.weight
+create_tensor: loading tensor blk.17.attn_q.weight
+create_tensor: loading tensor blk.17.attn_k.weight
+create_tensor: loading tensor blk.17.attn_v.weight
+create_tensor: loading tensor blk.17.attn_q.bias
+create_tensor: loading tensor blk.17.attn_k.bias
+create_tensor: loading tensor blk.17.attn_v.bias
+create_tensor: loading tensor blk.17.attn_output.weight
+create_tensor: loading tensor blk.17.ffn_norm.weight
+create_tensor: loading tensor blk.17.ffn_gate.weight
+create_tensor: loading tensor blk.17.ffn_down.weight
+create_tensor: loading tensor blk.17.ffn_up.weight
+create_tensor: loading tensor blk.18.attn_norm.weight
+create_tensor: loading tensor blk.18.attn_qkv.weight
+create_tensor: loading tensor blk.18.attn_q.weight
+create_tensor: loading tensor blk.18.attn_k.weight
+create_tensor: loading tensor blk.18.attn_v.weight
+create_tensor: loading tensor blk.18.attn_q.bias
+create_tensor: loading tensor blk.18.attn_k.bias
+create_tensor: loading tensor blk.18.attn_v.bias
+create_tensor: loading tensor blk.18.attn_output.weight
+create_tensor: loading tensor blk.18.ffn_norm.weight
+create_tensor: loading tensor blk.18.ffn_gate.weight
+create_tensor: loading tensor blk.18.ffn_down.weight
+create_tensor: loading tensor blk.18.ffn_up.weight
+create_tensor: loading tensor blk.19.attn_norm.weight
+create_tensor: loading tensor blk.19.attn_qkv.weight
+create_tensor: loading tensor blk.19.attn_q.weight
+create_tensor: loading tensor blk.19.attn_k.weight
+create_tensor: loading tensor blk.19.attn_v.weight
+create_tensor: loading tensor blk.19.attn_q.bias
+create_tensor: loading tensor blk.19.attn_k.bias
+create_tensor: loading tensor blk.19.attn_v.bias
+create_tensor: loading tensor blk.19.attn_output.weight
+create_tensor: loading tensor blk.19.ffn_norm.weight
+create_tensor: loading tensor blk.19.ffn_gate.weight
+create_tensor: loading tensor blk.19.ffn_down.weight
+create_tensor: loading tensor blk.19.ffn_up.weight
+create_tensor: loading tensor blk.20.attn_norm.weight
+create_tensor: loading tensor blk.20.attn_qkv.weight
+create_tensor: loading tensor blk.20.attn_q.weight
+create_tensor: loading tensor blk.20.attn_k.weight
+create_tensor: loading tensor blk.20.attn_v.weight
+create_tensor: loading tensor blk.20.attn_q.bias
+create_tensor: loading tensor blk.20.attn_k.bias
+create_tensor: loading tensor blk.20.attn_v.bias
+create_tensor: loading tensor blk.20.attn_output.weight
+create_tensor: loading tensor blk.20.ffn_norm.weight
+create_tensor: loading tensor blk.20.ffn_gate.weight
+create_tensor: loading tensor blk.20.ffn_down.weight
+create_tensor: loading tensor blk.20.ffn_up.weight
+create_tensor: loading tensor blk.21.attn_norm.weight
+create_tensor: loading tensor blk.21.attn_qkv.weight
+create_tensor: loading tensor blk.21.attn_q.weight
+create_tensor: loading tensor blk.21.attn_k.weight
+create_tensor: loading tensor blk.21.attn_v.weight
+create_tensor: loading tensor blk.21.attn_q.bias
+create_tensor: loading tensor blk.21.attn_k.bias
+create_tensor: loading tensor blk.21.attn_v.bias
+create_tensor: loading tensor blk.21.attn_output.weight
+create_tensor: loading tensor blk.21.ffn_norm.weight
+create_tensor: loading tensor blk.21.ffn_gate.weight
+create_tensor: loading tensor blk.21.ffn_down.weight
+create_tensor: loading tensor blk.21.ffn_up.weight
+create_tensor: loading tensor blk.22.attn_norm.weight
+create_tensor: loading tensor blk.22.attn_qkv.weight
+create_tensor: loading tensor blk.22.attn_q.weight
+create_tensor: loading tensor blk.22.attn_k.weight
+create_tensor: loading tensor blk.22.attn_v.weight
+create_tensor: loading tensor blk.22.attn_q.bias
+create_tensor: loading tensor blk.22.attn_k.bias
+create_tensor: loading tensor blk.22.attn_v.bias
+create_tensor: loading tensor blk.22.attn_output.weight
+create_tensor: loading tensor blk.22.ffn_norm.weight
+create_tensor: loading tensor blk.22.ffn_gate.weight
+create_tensor: loading tensor blk.22.ffn_down.weight
+create_tensor: loading tensor blk.22.ffn_up.weight
+create_tensor: loading tensor blk.23.attn_norm.weight
+create_tensor: loading tensor blk.23.attn_qkv.weight
+create_tensor: loading tensor blk.23.attn_q.weight
+create_tensor: loading tensor blk.23.attn_k.weight
+create_tensor: loading tensor blk.23.attn_v.weight
+create_tensor: loading tensor blk.23.attn_q.bias
+create_tensor: loading tensor blk.23.attn_k.bias
+create_tensor: loading tensor blk.23.attn_v.bias
+create_tensor: loading tensor blk.23.attn_output.weight
+create_tensor: loading tensor blk.23.ffn_norm.weight
+create_tensor: loading tensor blk.23.ffn_gate.weight
+create_tensor: loading tensor blk.23.ffn_down.weight
+create_tensor: loading tensor blk.23.ffn_up.weight
+create_tensor: loading tensor blk.0.attn_q.scale
+create_tensor: loading tensor blk.0.attn_k.scale
+create_tensor: loading tensor blk.0.attn_v.scale
+create_tensor: loading tensor blk.0.attn_output.scale
+create_tensor: loading tensor blk.0.ffn_gate.scale
+create_tensor: loading tensor blk.0.ffn_down.scale
+create_tensor: loading tensor blk.0.ffn_up.scale
+create_tensor: loading tensor blk.0.attn_q.input_scale
+create_tensor: loading tensor blk.0.attn_k.input_scale
+create_tensor: loading tensor blk.0.attn_v.input_scale
+create_tensor: loading tensor blk.0.attn_output.input_scale
+create_tensor: loading tensor blk.0.ffn_gate.input_scale
+create_tensor: loading tensor blk.0.ffn_down.input_scale
+create_tensor: loading tensor blk.0.ffn_up.input_scale
+create_tensor: loading tensor blk.1.attn_q.scale
+create_tensor: loading tensor blk.1.attn_k.scale
+create_tensor: loading tensor blk.1.attn_v.scale
+create_tensor: loading tensor blk.1.attn_output.scale
+create_tensor: loading tensor blk.1.ffn_gate.scale
+create_tensor: loading tensor blk.1.ffn_down.scale
+create_tensor: loading tensor blk.1.ffn_up.scale
+create_tensor: loading tensor blk.1.attn_q.input_scale
+create_tensor: loading tensor blk.1.attn_k.input_scale
+create_tensor: loading tensor blk.1.attn_v.input_scale
+create_tensor: loading tensor blk.1.attn_output.input_scale
+create_tensor: loading tensor blk.1.ffn_gate.input_scale
+create_tensor: loading tensor blk.1.ffn_down.input_scale
+create_tensor: loading tensor blk.1.ffn_up.input_scale
+create_tensor: loading tensor blk.2.attn_q.scale
+create_tensor: loading tensor blk.2.attn_k.scale
+create_tensor: loading tensor blk.2.attn_v.scale
+create_tensor: loading tensor blk.2.attn_output.scale
+create_tensor: loading tensor blk.2.ffn_gate.scale
+create_tensor: loading tensor blk.2.ffn_down.scale
+create_tensor: loading tensor blk.2.ffn_up.scale
+create_tensor: loading tensor blk.2.attn_q.input_scale
+create_tensor: loading tensor blk.2.attn_k.input_scale
+create_tensor: loading tensor blk.2.attn_v.input_scale
+create_tensor: loading tensor blk.2.attn_output.input_scale
+create_tensor: loading tensor blk.2.ffn_gate.input_scale
+create_tensor: loading tensor blk.2.ffn_down.input_scale
+create_tensor: loading tensor blk.2.ffn_up.input_scale
+create_tensor: loading tensor blk.3.attn_q.scale
+create_tensor: loading tensor blk.3.attn_k.scale
+create_tensor: loading tensor blk.3.attn_v.scale
+create_tensor: loading tensor blk.3.attn_output.scale
+create_tensor: loading tensor blk.3.ffn_gate.scale
+create_tensor: loading tensor blk.3.ffn_down.scale
+create_tensor: loading tensor blk.3.ffn_up.scale
+create_tensor: loading tensor blk.3.attn_q.input_scale
+create_tensor: loading tensor blk.3.attn_k.input_scale
+create_tensor: loading tensor blk.3.attn_v.input_scale
+create_tensor: loading tensor blk.3.attn_output.input_scale
+create_tensor: loading tensor blk.3.ffn_gate.input_scale
+create_tensor: loading tensor blk.3.ffn_down.input_scale
+create_tensor: loading tensor blk.3.ffn_up.input_scale
+create_tensor: loading tensor blk.4.attn_q.scale
+create_tensor: loading tensor blk.4.attn_k.scale
+create_tensor: loading tensor blk.4.attn_v.scale
+create_tensor: loading tensor blk.4.attn_output.scale
+create_tensor: loading tensor blk.4.ffn_gate.scale
+create_tensor: loading tensor blk.4.ffn_down.scale
+create_tensor: loading tensor blk.4.ffn_up.scale
+create_tensor: loading tensor blk.4.attn_q.input_scale
+create_tensor: loading tensor blk.4.attn_k.input_scale
+create_tensor: loading tensor blk.4.attn_v.input_scale
+create_tensor: loading tensor blk.4.attn_output.input_scale
+create_tensor: loading tensor blk.4.ffn_gate.input_scale
+create_tensor: loading tensor blk.4.ffn_down.input_scale
+create_tensor: loading tensor blk.4.ffn_up.input_scale
+create_tensor: loading tensor blk.5.attn_q.scale
+create_tensor: loading tensor blk.5.attn_k.scale
+create_tensor: loading tensor blk.5.attn_v.scale
+create_tensor: loading tensor blk.5.attn_output.scale
+create_tensor: loading tensor blk.5.ffn_gate.scale
+create_tensor: loading tensor blk.5.ffn_down.scale
+create_tensor: loading tensor blk.5.ffn_up.scale
+create_tensor: loading tensor blk.5.attn_q.input_scale
+create_tensor: loading tensor blk.5.attn_k.input_scale
+create_tensor: loading tensor blk.5.attn_v.input_scale
+create_tensor: loading tensor blk.5.attn_output.input_scale
+create_tensor: loading tensor blk.5.ffn_gate.input_scale
+create_tensor: loading tensor blk.5.ffn_down.input_scale
+create_tensor: loading tensor blk.5.ffn_up.input_scale
+create_tensor: loading tensor blk.6.attn_q.scale
+create_tensor: loading tensor blk.6.attn_k.scale
+create_tensor: loading tensor blk.6.attn_v.scale
+create_tensor: loading tensor blk.6.attn_output.scale
+create_tensor: loading tensor blk.6.ffn_gate.scale
+create_tensor: loading tensor blk.6.ffn_down.scale
+create_tensor: loading tensor blk.6.ffn_up.scale
+create_tensor: loading tensor blk.6.attn_q.input_scale
+create_tensor: loading tensor blk.6.attn_k.input_scale
+create_tensor: loading tensor blk.6.attn_v.input_scale
+create_tensor: loading tensor blk.6.attn_output.input_scale
+create_tensor: loading tensor blk.6.ffn_gate.input_scale
+create_tensor: loading tensor blk.6.ffn_down.input_scale
+create_tensor: loading tensor blk.6.ffn_up.input_scale
+create_tensor: loading tensor blk.7.attn_q.scale
+create_tensor: loading tensor blk.7.attn_k.scale
+create_tensor: loading tensor blk.7.attn_v.scale
+create_tensor: loading tensor blk.7.attn_output.scale
+create_tensor: loading tensor blk.7.ffn_gate.scale
+create_tensor: loading tensor blk.7.ffn_down.scale
+create_tensor: loading tensor blk.7.ffn_up.scale
+create_tensor: loading tensor blk.7.attn_q.input_scale
+create_tensor: loading tensor blk.7.attn_k.input_scale
+create_tensor: loading tensor blk.7.attn_v.input_scale
+create_tensor: loading tensor blk.7.attn_output.input_scale
+create_tensor: loading tensor blk.7.ffn_gate.input_scale
+create_tensor: loading tensor blk.7.ffn_down.input_scale
+create_tensor: loading tensor blk.7.ffn_up.input_scale
+create_tensor: loading tensor blk.8.attn_q.scale
+create_tensor: loading tensor blk.8.attn_k.scale
+create_tensor: loading tensor blk.8.attn_v.scale
+create_tensor: loading tensor blk.8.attn_output.scale
+create_tensor: loading tensor blk.8.ffn_gate.scale
+create_tensor: loading tensor blk.8.ffn_down.scale
+create_tensor: loading tensor blk.8.ffn_up.scale
+create_tensor: loading tensor blk.8.attn_q.input_scale
+create_tensor: loading tensor blk.8.attn_k.input_scale
+create_tensor: loading tensor blk.8.attn_v.input_scale
+create_tensor: loading tensor blk.8.attn_output.input_scale
+create_tensor: loading tensor blk.8.ffn_gate.input_scale
+create_tensor: loading tensor blk.8.ffn_down.input_scale
+create_tensor: loading tensor blk.8.ffn_up.input_scale
+create_tensor: loading tensor blk.9.attn_q.scale
+create_tensor: loading tensor blk.9.attn_k.scale
+create_tensor: loading tensor blk.9.attn_v.scale
+create_tensor: loading tensor blk.9.attn_output.scale
+create_tensor: loading tensor blk.9.ffn_gate.scale
+create_tensor: loading tensor blk.9.ffn_down.scale
+create_tensor: loading tensor blk.9.ffn_up.scale
+create_tensor: loading tensor blk.9.attn_q.input_scale
+create_tensor: loading tensor blk.9.attn_k.input_scale
+create_tensor: loading tensor blk.9.attn_v.input_scale
+create_tensor: loading tensor blk.9.attn_output.input_scale
+create_tensor: loading tensor blk.9.ffn_gate.input_scale
+create_tensor: loading tensor blk.9.ffn_down.input_scale
+create_tensor: loading tensor blk.9.ffn_up.input_scale
+create_tensor: loading tensor blk.10.attn_q.scale
+create_tensor: loading tensor blk.10.attn_k.scale
+create_tensor: loading tensor blk.10.attn_v.scale
+create_tensor: loading tensor blk.10.attn_output.scale
+create_tensor: loading tensor blk.10.ffn_gate.scale
+create_tensor: loading tensor blk.10.ffn_down.scale
+create_tensor: loading tensor blk.10.ffn_up.scale
+create_tensor: loading tensor blk.10.attn_q.input_scale
+create_tensor: loading tensor blk.10.attn_k.input_scale
+create_tensor: loading tensor blk.10.attn_v.input_scale
+create_tensor: loading tensor blk.10.attn_output.input_scale
+create_tensor: loading tensor blk.10.ffn_gate.input_scale
+create_tensor: loading tensor blk.10.ffn_down.input_scale
+create_tensor: loading tensor blk.10.ffn_up.input_scale
+create_tensor: loading tensor blk.11.attn_q.scale
+create_tensor: loading tensor blk.11.attn_k.scale
+create_tensor: loading tensor blk.11.attn_v.scale
+create_tensor: loading tensor blk.11.attn_output.scale
+create_tensor: loading tensor blk.11.ffn_gate.scale
+create_tensor: loading tensor blk.11.ffn_down.scale
+create_tensor: loading tensor blk.11.ffn_up.scale
+create_tensor: loading tensor blk.11.attn_q.input_scale
+create_tensor: loading tensor blk.11.attn_k.input_scale
+create_tensor: loading tensor blk.11.attn_v.input_scale
+create_tensor: loading tensor blk.11.attn_output.input_scale
+create_tensor: loading tensor blk.11.ffn_gate.input_scale
+create_tensor: loading tensor blk.11.ffn_down.input_scale
+create_tensor: loading tensor blk.11.ffn_up.input_scale
+create_tensor: loading tensor blk.12.attn_q.scale
+create_tensor: loading tensor blk.12.attn_k.scale
+create_tensor: loading tensor blk.12.attn_v.scale
+create_tensor: loading tensor blk.12.attn_output.scale
+create_tensor: loading tensor blk.12.ffn_gate.scale
+create_tensor: loading tensor blk.12.ffn_down.scale
+create_tensor: loading tensor blk.12.ffn_up.scale
+create_tensor: loading tensor blk.12.attn_q.input_scale
+create_tensor: loading tensor blk.12.attn_k.input_scale
+create_tensor: loading tensor blk.12.attn_v.input_scale
+create_tensor: loading tensor blk.12.attn_output.input_scale
+create_tensor: loading tensor blk.12.ffn_gate.input_scale
+create_tensor: loading tensor blk.12.ffn_down.input_scale
+create_tensor: loading tensor blk.12.ffn_up.input_scale
+create_tensor: loading tensor blk.13.attn_q.scale
+create_tensor: loading tensor blk.13.attn_k.scale
+create_tensor: loading tensor blk.13.attn_v.scale
+create_tensor: loading tensor blk.13.attn_output.scale
+create_tensor: loading tensor blk.13.ffn_gate.scale
+create_tensor: loading tensor blk.13.ffn_down.scale
+create_tensor: loading tensor blk.13.ffn_up.scale
+create_tensor: loading tensor blk.13.attn_q.input_scale
+create_tensor: loading tensor blk.13.attn_k.input_scale
+create_tensor: loading tensor blk.13.attn_v.input_scale
+create_tensor: loading tensor blk.13.attn_output.input_scale
+create_tensor: loading tensor blk.13.ffn_gate.input_scale
+create_tensor: loading tensor blk.13.ffn_down.input_scale
+create_tensor: loading tensor blk.13.ffn_up.input_scale
+create_tensor: loading tensor blk.14.attn_q.scale
+create_tensor: loading tensor blk.14.attn_k.scale
+create_tensor: loading tensor blk.14.attn_v.scale
+create_tensor: loading tensor blk.14.attn_output.scale
+create_tensor: loading tensor blk.14.ffn_gate.scale
+create_tensor: loading tensor blk.14.ffn_down.scale
+create_tensor: loading tensor blk.14.ffn_up.scale
+create_tensor: loading tensor blk.14.attn_q.input_scale
+create_tensor: loading tensor blk.14.attn_k.input_scale
+create_tensor: loading tensor blk.14.attn_v.input_scale
+create_tensor: loading tensor blk.14.attn_output.input_scale
+create_tensor: loading tensor blk.14.ffn_gate.input_scale
+create_tensor: loading tensor blk.14.ffn_down.input_scale
+create_tensor: loading tensor blk.14.ffn_up.input_scale
+create_tensor: loading tensor blk.15.attn_q.scale
+create_tensor: loading tensor blk.15.attn_k.scale
+create_tensor: loading tensor blk.15.attn_v.scale
+create_tensor: loading tensor blk.15.attn_output.scale
+create_tensor: loading tensor blk.15.ffn_gate.scale
+create_tensor: loading tensor blk.15.ffn_down.scale
+create_tensor: loading tensor blk.15.ffn_up.scale
+create_tensor: loading tensor blk.15.attn_q.input_scale
+create_tensor: loading tensor blk.15.attn_k.input_scale
+create_tensor: loading tensor blk.15.attn_v.input_scale
+create_tensor: loading tensor blk.15.attn_output.input_scale
+create_tensor: loading tensor blk.15.ffn_gate.input_scale
+create_tensor: loading tensor blk.15.ffn_down.input_scale
+create_tensor: loading tensor blk.15.ffn_up.input_scale
+create_tensor: loading tensor blk.16.attn_q.scale
+create_tensor: loading tensor blk.16.attn_k.scale
+create_tensor: loading tensor blk.16.attn_v.scale
+create_tensor: loading tensor blk.16.attn_output.scale
+create_tensor: loading tensor blk.16.ffn_gate.scale
+create_tensor: loading tensor blk.16.ffn_down.scale
+create_tensor: loading tensor blk.16.ffn_up.scale
+create_tensor: loading tensor blk.16.attn_q.input_scale
+create_tensor: loading tensor blk.16.attn_k.input_scale
+create_tensor: loading tensor blk.16.attn_v.input_scale
+create_tensor: loading tensor blk.16.attn_output.input_scale
+create_tensor: loading tensor blk.16.ffn_gate.input_scale
+create_tensor: loading tensor blk.16.ffn_down.input_scale
+create_tensor: loading tensor blk.16.ffn_up.input_scale
+create_tensor: loading tensor blk.17.attn_q.scale
+create_tensor: loading tensor blk.17.attn_k.scale
+create_tensor: loading tensor blk.17.attn_v.scale
+create_tensor: loading tensor blk.17.attn_output.scale
+create_tensor: loading tensor blk.17.ffn_gate.scale
+create_tensor: loading tensor blk.17.ffn_down.scale
+create_tensor: loading tensor blk.17.ffn_up.scale
+create_tensor: loading tensor blk.17.attn_q.input_scale
+create_tensor: loading tensor blk.17.attn_k.input_scale
+create_tensor: loading tensor blk.17.attn_v.input_scale
+create_tensor: loading tensor blk.17.attn_output.input_scale
+create_tensor: loading tensor blk.17.ffn_gate.input_scale
+create_tensor: loading tensor blk.17.ffn_down.input_scale
+create_tensor: loading tensor blk.17.ffn_up.input_scale
+create_tensor: loading tensor blk.18.attn_q.scale
+create_tensor: loading tensor blk.18.attn_k.scale
+create_tensor: loading tensor blk.18.attn_v.scale
+create_tensor: loading tensor blk.18.attn_output.scale
+create_tensor: loading tensor blk.18.ffn_gate.scale
+create_tensor: loading tensor blk.18.ffn_down.scale
+create_tensor: loading tensor blk.18.ffn_up.scale
+create_tensor: loading tensor blk.18.attn_q.input_scale
+create_tensor: loading tensor blk.18.attn_k.input_scale
+create_tensor: loading tensor blk.18.attn_v.input_scale
+create_tensor: loading tensor blk.18.attn_output.input_scale
+create_tensor: loading tensor blk.18.ffn_gate.input_scale
+create_tensor: loading tensor blk.18.ffn_down.input_scale
+create_tensor: loading tensor blk.18.ffn_up.input_scale
+create_tensor: loading tensor blk.19.attn_q.scale
+create_tensor: loading tensor blk.19.attn_k.scale
+create_tensor: loading tensor blk.19.attn_v.scale
+create_tensor: loading tensor blk.19.attn_output.scale
+create_tensor: loading tensor blk.19.ffn_gate.scale
+create_tensor: loading tensor blk.19.ffn_down.scale
+create_tensor: loading tensor blk.19.ffn_up.scale
+create_tensor: loading tensor blk.19.attn_q.input_scale
+create_tensor: loading tensor blk.19.attn_k.input_scale
+create_tensor: loading tensor blk.19.attn_v.input_scale
+create_tensor: loading tensor blk.19.attn_output.input_scale
+create_tensor: loading tensor blk.19.ffn_gate.input_scale
+create_tensor: loading tensor blk.19.ffn_down.input_scale
+create_tensor: loading tensor blk.19.ffn_up.input_scale
+create_tensor: loading tensor blk.20.attn_q.scale
+create_tensor: loading tensor blk.20.attn_k.scale
+create_tensor: loading tensor blk.20.attn_v.scale
+create_tensor: loading tensor blk.20.attn_output.scale
+create_tensor: loading tensor blk.20.ffn_gate.scale
+create_tensor: loading tensor blk.20.ffn_down.scale
+create_tensor: loading tensor blk.20.ffn_up.scale
+create_tensor: loading tensor blk.20.attn_q.input_scale
+create_tensor: loading tensor blk.20.attn_k.input_scale
+create_tensor: loading tensor blk.20.attn_v.input_scale
+create_tensor: loading tensor blk.20.attn_output.input_scale
+create_tensor: loading tensor blk.20.ffn_gate.input_scale
+create_tensor: loading tensor blk.20.ffn_down.input_scale
+create_tensor: loading tensor blk.20.ffn_up.input_scale
+create_tensor: loading tensor blk.21.attn_q.scale
+create_tensor: loading tensor blk.21.attn_k.scale
+create_tensor: loading tensor blk.21.attn_v.scale
+create_tensor: loading tensor blk.21.attn_output.scale
+create_tensor: loading tensor blk.21.ffn_gate.scale
+create_tensor: loading tensor blk.21.ffn_down.scale
+create_tensor: loading tensor blk.21.ffn_up.scale
+create_tensor: loading tensor blk.21.attn_q.input_scale
+create_tensor: loading tensor blk.21.attn_k.input_scale
+create_tensor: loading tensor blk.21.attn_v.input_scale
+create_tensor: loading tensor blk.21.attn_output.input_scale
+create_tensor: loading tensor blk.21.ffn_gate.input_scale
+create_tensor: loading tensor blk.21.ffn_down.input_scale
+create_tensor: loading tensor blk.21.ffn_up.input_scale
+create_tensor: loading tensor blk.22.attn_q.scale
+create_tensor: loading tensor blk.22.attn_k.scale
+create_tensor: loading tensor blk.22.attn_v.scale
+create_tensor: loading tensor blk.22.attn_output.scale
+create_tensor: loading tensor blk.22.ffn_gate.scale
+create_tensor: loading tensor blk.22.ffn_down.scale
+create_tensor: loading tensor blk.22.ffn_up.scale
+create_tensor: loading tensor blk.22.attn_q.input_scale
+create_tensor: loading tensor blk.22.attn_k.input_scale
+create_tensor: loading tensor blk.22.attn_v.input_scale
+create_tensor: loading tensor blk.22.attn_output.input_scale
+create_tensor: loading tensor blk.22.ffn_gate.input_scale
+create_tensor: loading tensor blk.22.ffn_down.input_scale
+create_tensor: loading tensor blk.22.ffn_up.input_scale
+create_tensor: loading tensor blk.23.attn_q.scale
+create_tensor: loading tensor blk.23.attn_k.scale
+create_tensor: loading tensor blk.23.attn_v.scale
+create_tensor: loading tensor blk.23.attn_output.scale
+create_tensor: loading tensor blk.23.ffn_gate.scale
+create_tensor: loading tensor blk.23.ffn_down.scale
+create_tensor: loading tensor blk.23.ffn_up.scale
+create_tensor: loading tensor blk.23.attn_q.input_scale
+create_tensor: loading tensor blk.23.attn_k.input_scale
+create_tensor: loading tensor blk.23.attn_v.input_scale
+create_tensor: loading tensor blk.23.attn_output.input_scale
+create_tensor: loading tensor blk.23.ffn_gate.input_scale
+create_tensor: loading tensor blk.23.ffn_down.input_scale
+create_tensor: loading tensor blk.23.ffn_up.input_scale
+done_getting_tensors: tensor 'token_embd.weight' (q5_0) (and 253 others) cannot be used with preferred buffer type CPU_REPACK, using CPU instead
+load_tensors: offloading 0 repeating layers to GPU
+load_tensors: offloaded 0/25 layers to GPU
+load_tensors:   CPU_Mapped model buffer size =   325.02 MiB
+load_tensors:   CPU_REPACK model buffer size =   208.30 MiB
+.....................................repack: repack tensor output.weight with q8_0_4x4
+.repack: repack tensor blk.0.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.0.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.1.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.1.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.2.ffn_down.weight with q4_K_8x4
+repack: repack tensor blk.3.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.3.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.4.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.5.ffn_down.weight with q4_K_8x4
+repack: repack tensor blk.6.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.6.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.7.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.7.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.8.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.8.ffn_down.weight with q6_K_8x4
+repack: repack tensor blk.9.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.9.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.10.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.10.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.11.ffn_down.weight with q4_K_8x4
+repack: repack tensor blk.12.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.13.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.13.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.14.ffn_down.weight with q4_K_8x4
+repack: repack tensor blk.15.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.16.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.16.ffn_down.weight with q6_K_8x4
+repack: repack tensor blk.17.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.18.ffn_down.weight with q4_K_8x4
+repack: repack tensor blk.19.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.19.ffn_down.weight with q6_K_8x4
+.repack: repack tensor blk.20.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.21.attn_v.weight with q8_0_4x4
+repack: repack tensor blk.21.ffn_down.weight with q6_K_8x4
+repack: repack tensor blk.22.ffn_down.weight with q4_K_8x4
+.repack: repack tensor blk.23.ffn_down.weight with q4_K_8x4
+.
+llama_context: constructing llama_context
+llama_context: n_seq_max             = 1
+llama_context: n_ctx                 = 4096
+llama_context: n_ctx_seq             = 4096
+llama_context: n_batch               = 4096
+llama_context: n_ubatch              = 512
+llama_context: causal_attn           = 1
+llama_context: flash_attn            = auto
+llama_context: kv_unified            = false
+llama_context: freq_base             = 1000000.0
+llama_context: freq_scale            = 1
+llama_context: n_rs_seq              = 0
+llama_context: n_outputs_max         = 4096
+llama_context: n_outputs_max_per_seq = 1
+llama_context: n_ctx_seq (4096) < n_ctx_train (32768) -- the full capacity of the model will not be utilized
+ggml_metal_init: allocating
+ggml_metal_init: picking default device: Apple iOS simulator GPU
+ggml_metal_init: use fusion         = true
+ggml_metal_init: use concurrency    = true
+ggml_metal_init: use graph optimize = true
+set_abort_callback: call
+llama_context:        CPU  output buffer size =     0.58 MiB
+llama_kv_cache: layer   0: dev = CPU
+llama_kv_cache: layer   1: dev = CPU
+llama_kv_cache: layer   2: dev = CPU
+llama_kv_cache: layer   3: dev = CPU
+llama_kv_cache: layer   4: dev = CPU
+llama_kv_cache: layer   5: dev = CPU
+llama_kv_cache: layer   6: dev = CPU
+llama_kv_cache: layer   7: dev = CPU
+llama_kv_cache: layer   8: dev = CPU
+llama_kv_cache: layer   9: dev = CPU
+llama_kv_cache: layer  10: dev = CPU
+llama_kv_cache: layer  11: dev = CPU
+llama_kv_cache: layer  12: dev = CPU
+llama_kv_cache: layer  13: dev = CPU
+llama_kv_cache: layer  14: dev = CPU
+llama_kv_cache: layer  15: dev = CPU
+llama_kv_cache: layer  16: dev = CPU
+llama_kv_cache: layer  17: dev = CPU
+llama_kv_cache: layer  18: dev = CPU
+llama_kv_cache: layer  19: dev = CPU
+llama_kv_cache: layer  20: dev = CPU
+llama_kv_cache: layer  21: dev = CPU
+llama_kv_cache: layer  22: dev = CPU
+llama_kv_cache: layer  23: dev = CPU
+llama_kv_cache:        CPU KV buffer size =    48.00 MiB
+llama_kv_cache: size =   48.00 MiB (  4096 cells,  24 layers,  1/1 seqs), K (f16):   24.00 MiB, V (f16):   24.00 MiB
+llama_kv_cache: attn_rot_k = 0, n_embd_head_k_all = 64
+llama_kv_cache: attn_rot_v = 0, n_embd_head_k_all = 64
+llama_context: enumerating backends
+llama_context: backend_ptrs.size() = 3
+sched_reserve: reserving ...
+sched_reserve: max_nodes = 2328
+sched_reserve: reserving full memory module
+sched_reserve: worst-case: n_tokens = 512, n_seqs = 1, n_outputs = 1
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: Flash Attention enabled
+resolve_fused_ops: resolving fused DeepSeek V4 HC support:
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC pre enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC comb enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+resolve_fused_ops: fused DeepSeek V4 HC post enabled
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+graph_reserve: reserving a graph for ubatch with n_tokens =    1, n_seqs =  1, n_outputs =    1
+graph_reserve: reserving a graph for ubatch with n_tokens =  512, n_seqs =  1, n_outputs =  512
+sched_reserve:        CPU compute buffer size =   300.25 MiB
+sched_reserve: graph nodes  = 822
+sched_reserve: graph splits = 217 (with bs=512), 1 (with bs=1)
+sched_reserve: reserve took 3.04 ms, sched copies = 1
+Test Case '-[FruitfolioTests.BundledNativeGroundingTests testNativeAnswerUsesActualBundledResearchAndDocumentCitations]' passed (13.297 seconds).
+Test Suite 'BundledNativeGroundingTests' passed at 2026-11-01 23:46:30.705.
+	 Executed 1 test, with 0 failures (0 unexpected) in 13.297 (13.297) seconds
+Test Suite 'FruitfolioTests.xctest' passed at 2026-11-01 23:46:30.705.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 59.401 (59.405) seconds
+Test Suite 'Selected tests' passed at 2026-11-01 23:46:30.705.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 59.401 (59.405) seconds
+2026-11-01 23:46:33.110326+0000 FruitfolioUITests-Runner[14431:55973] [Default] Running tests...
+objc[14431]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106654310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106740398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-01 23:46:37.431.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-01 23:46:37.432.
+Test Suite 'AskGroundedJourneyUITests' started at 2026-11-01 23:46:37.433.
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' started.
+    t =     0.00s Start Test at 2026-11-01 23:46:37.435
+    t =     0.42s Set Up
+    t =     0.42s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.43s     Launch com.fruitsoflifexo.Fruitfolio
+2026-11-01 23:46:38.499 xcodebuild[11532:44011] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-01 23:46:38.500 xcodebuild[11532:44011] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.51s         Setting up automation session
+    t =     2.82s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     5.30s Waiting 12.0s for "I'll explore" Button to exist
+    t =     6.36s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     6.37s         Checking existence of `"I'll explore" Button`
+    t =     6.42s         Capturing element debug description
+    t =     7.38s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     7.38s         Checking existence of `"I'll explore" Button`
+    t =     7.41s         Capturing element debug description
+    t =     8.36s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.36s         Checking existence of `"I'll explore" Button`
+    t =     8.39s         Capturing element debug description
+    t =     9.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.33s         Checking existence of `"I'll explore" Button`
+    t =     9.35s         Capturing element debug description
+    t =    10.30s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.30s         Checking existence of `"I'll explore" Button`
+    t =    10.34s         Capturing element debug description
+    t =    11.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.31s         Checking existence of `"I'll explore" Button`
+    t =    11.34s         Capturing element debug description
+    t =    12.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.32s         Checking existence of `"I'll explore" Button`
+    t =    12.36s         Capturing element debug description
+    t =    13.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.32s         Checking existence of `"I'll explore" Button`
+    t =    13.36s         Capturing element debug description
+    t =    14.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.33s         Checking existence of `"I'll explore" Button`
+    t =    14.37s         Capturing element debug description
+    t =    15.34s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.34s         Checking existence of `"I'll explore" Button`
+    t =    15.38s         Capturing element debug description
+    t =    16.34s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.34s         Checking existence of `"I'll explore" Button`
+    t =    16.36s         Capturing element debug description
+    t =    17.30s     Checking existence of `"I'll explore" Button`
+    t =    17.35s Collecting debug information to assist test failure triage
+    t =    17.35s     Requesting snapshot of accessibility hierarchy for app with pid 14861
+    t =    17.39s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    18.46s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    18.46s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    18.50s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    18.50s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    18.50s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    18.53s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    18.56s     Synthesize event
+    t =    18.99s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    19.10s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    20.13s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    20.13s         Checking existence of `"ask.questionInput" TextField`
+    t =    20.19s Tap "ask.questionInput" TextField
+    t =    20.19s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    20.19s     Find the "ask.questionInput" TextField
+    t =    20.21s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    20.24s     Synthesize event
+    t =    20.54s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.39s Type 'How does morning s...' into "ask.questionInput" TextField
+    t =    21.39s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    21.76s     Find the "ask.questionInput" TextField
+    t =    21.86s     Check for interrupting elements affecting "ask.questionInput" TextField
+    t =    21.92s     Synthesize event
+    t =    22.94s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    22.95s Find the Button (First Match)
+    t =    23.06s Find the "Send question" Button
+    t =    23.18s Tap "Send question" Button
+    t =    23.18s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.18s     Find the "Send question" Button
+    t =    23.29s     Check for interrupting elements affecting "Send question" Button
+    t =    23.35s     Synthesize event
+    t =    23.66s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    23.92s Waiting 180.0s for "ask.completedAnswer" TextView to exist
+    t =    24.97s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    24.97s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    25.00s         Capturing element debug description
+    t =    25.96s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    25.96s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    25.99s         Capturing element debug description
+    t =    26.93s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    26.93s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    26.96s         Capturing element debug description
+    t =    28.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    28.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    28.02s         Capturing element debug description
+    t =    28.97s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    28.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    29.00s         Capturing element debug description
+    t =    29.93s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    29.93s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    29.95s         Capturing element debug description
+    t =    31.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    31.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    31.04s         Capturing element debug description
+    t =    32.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    32.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    32.03s         Capturing element debug description
+    t =    32.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    32.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    33.02s         Capturing element debug description
+    t =    33.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    33.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    33.97s         Capturing element debug description
+    t =    34.93s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    34.93s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    34.96s         Capturing element debug description
+    t =    36.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    36.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    36.04s         Capturing element debug description
+    t =    36.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    36.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    37.05s         Capturing element debug description
+    t =    37.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    37.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    38.02s         Capturing element debug description
+    t =    38.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    38.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    39.01s         Capturing element debug description
+    t =    39.93s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    39.93s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    39.98s         Capturing element debug description
+    t =    40.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    40.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    40.98s         Capturing element debug description
+    t =    41.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    41.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    41.98s         Capturing element debug description
+    t =    42.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    42.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    42.98s         Capturing element debug description
+    t =    43.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    43.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    43.98s         Capturing element debug description
+    t =    45.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    45.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    45.06s         Capturing element debug description
+    t =    45.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    45.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    46.04s         Capturing element debug description
+    t =    46.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    46.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    47.02s         Capturing element debug description
+    t =    47.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    47.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    47.97s         Capturing element debug description
+    t =    49.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    49.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    49.07s         Capturing element debug description
+    t =    50.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    50.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    50.07s         Capturing element debug description
+    t =    51.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    51.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    51.09s         Capturing element debug description
+    t =    51.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    51.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    51.99s         Capturing element debug description
+    t =    52.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    52.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    53.02s         Capturing element debug description
+    t =    54.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    54.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    54.04s         Capturing element debug description
+    t =    54.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    54.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    55.06s         Capturing element debug description
+    t =    55.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    55.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    56.05s         Capturing element debug description
+    t =    57.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    57.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    57.10s         Capturing element debug description
+    t =    57.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    57.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    58.00s         Capturing element debug description
+    t =    58.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    58.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    58.98s         Capturing element debug description
+    t =    60.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    60.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    60.07s         Capturing element debug description
+    t =    61.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    61.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    61.08s         Capturing element debug description
+    t =    62.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    62.02s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    62.07s         Capturing element debug description
+    t =    62.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    63.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    63.08s         Capturing element debug description
+    t =    64.02s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    64.03s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    64.09s         Capturing element debug description
+    t =    64.94s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    64.94s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    65.03s         Capturing element debug description
+    t =    65.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    65.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    66.01s         Capturing element debug description
+    t =    66.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    66.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    66.99s         Capturing element debug description
+    t =    67.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    67.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    67.99s         Capturing element debug description
+    t =    68.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    68.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    69.04s         Capturing element debug description
+    t =    69.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    69.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    70.04s         Capturing element debug description
+    t =    70.96s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    70.96s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    71.06s         Capturing element debug description
+    t =    72.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    72.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    72.04s         Capturing element debug description
+    t =    72.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    72.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    73.06s         Capturing element debug description
+    t =    74.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    74.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    74.11s         Capturing element debug description
+    t =    74.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    74.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    74.99s         Capturing element debug description
+    t =    75.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    75.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    76.00s         Capturing element debug description
+    t =    76.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    76.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    77.04s         Capturing element debug description
+    t =    77.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    77.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    78.05s         Capturing element debug description
+    t =    79.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    79.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    79.08s         Capturing element debug description
+    t =    80.00s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    80.00s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    80.04s         Capturing element debug description
+    t =    80.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    80.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    81.04s         Capturing element debug description
+    t =    81.98s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    81.98s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    82.02s         Capturing element debug description
+    t =    82.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    82.95s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    83.06s         Capturing element debug description
+    t =    83.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    83.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    84.05s         Capturing element debug description
+    t =    84.97s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    84.97s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    85.04s         Capturing element debug description
+    t =    85.99s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    85.99s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    86.03s         Capturing element debug description
+    t =    86.95s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    86.96s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    87.06s         Capturing element debug description
+    t =    88.01s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.completedAnswer" TextView`
+    t =    88.01s         Checking existence of `"ask.completedAnswer" TextView`
+    t =    88.23s Find the "ask.completedAnswer" TextView
+    t =    88.27s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    88.45s Added attachment named 'Ask_ActualCompletedAnswer'
+    t =    88.45s Checking existence of `Any (First Match)`
+    t =    88.50s Checking existence of `Any (First Match)`
+    t =    88.54s Checking existence of `Any (First Match)`
+    t =    88.58s Checking existence of `Any (First Match)`
+    t =    88.62s Checking existence of `Any (First Match)`
+    t =    88.66s Checking existence of `Any (First Match)`
+    t =    88.71s Checking existence of `Any (First Match)`
+    t =    88.75s Checking existence of `Any (First Match)`
+    t =    88.79s Checking existence of `Any (First Match)`
+    t =    88.83s Checking existence of `Any (First Match)`
+    t =    88.87s Checking existence of `Any (First Match)`
+    t =    88.91s Checking existence of `Any (First Match)`
+    t =    88.95s Checking existence of `Any (First Match)`
+    t =    88.99s Checking existence of `Any (First Match)`
+    t =    89.03s Checking existence of `Any (First Match)`
+    t =    89.07s Checking existence of `Any (First Match)`
+    t =    89.11s Checking existence of `Any (First Match)`
+    t =    89.15s Checking existence of `Any (First Match)`
+    t =    89.19s Checking existence of `Any (First Match)`
+    t =    89.23s Checking existence of `Any (First Match)`
+    t =    89.27s Checking existence of `Any (First Match)`
+    t =    89.31s Find the Any (First Match)
+    t =    89.36s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    89.52s Added attachment named 'Ask_ActualDocumentSources'
+    t =    89.53s Find the "ask.completedAnswer" TextView
+    t =    89.59s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    89.64s Find the "ask.source.founder_corpus_13d89a17c6a65d0272b9" StaticText
+    t =    89.70s Added attachment named 'Ask_ActualUIAnswerAndSource'
+    t =    89.70s Find the "ask.back" Button
+    t =    89.74s Find the "ask.back" Button
+    t =    89.80s Find the "ask.back" Button
+    t =    89.85s Find the "ask.back" Button
+    t =    89.89s Find the "ask.back" Button
+    t =    89.95s Find the "ask.back" Button
+    t =    90.00s Find the "ask.back" Button
+    t =    90.04s Find the "ask.back" Button
+    t =    90.09s Find the "ask.back" Button
+    t =    90.13s Find the "ask.back" Button
+    t =    90.18s Find the "ask.back" Button
+    t =    90.22s Find the "ask.back" Button
+    t =    90.27s Find the "ask.back" Button
+    t =    90.32s Find the "ask.back" Button
+    t =    90.36s Find the "ask.back" Button
+    t =    90.41s Find the "ask.back" Button
+    t =    90.45s Find the "ask.back" Button
+    t =    90.50s Find the "ask.back" Button
+    t =    90.54s Find the "ask.back" Button
+    t =    90.58s Find the "ask.back" Button
+    t =    90.64s Find the "ask.back" Button
+    t =    90.68s Tap "ask.back" Button
+    t =    90.68s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    90.69s     Find the "ask.back" Button
+    t =    90.72s     Check for interrupting elements affecting "ask.back" Button
+    t =    90.76s     Synthesize event
+    t =    91.07s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    91.43s Waiting 15.0s for "hub.action.Ask the Encyclopedia" Button to exist
+    t =    92.51s     Checking `Expect predicate `existsNoRetry == 1` for object "hub.action.Ask the Encyclopedia" Button`
+    t =    92.51s         Checking existence of `"hub.action.Ask the Encyclopedia" Button`
+    t =    92.54s Tap "hub.action.Ask the Encyclopedia" Button
+    t =    92.54s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    92.55s     Find the "hub.action.Ask the Encyclopedia" Button
+    t =    92.58s     Check for interrupting elements affecting "hub.action.Ask the Encyclopedia" Button
+    t =    92.61s     Synthesize event
+    t =    92.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    93.35s Waiting 10.0s for "ask.questionInput" TextField to exist
+    t =    94.39s     Checking `Expect predicate `existsNoRetry == 1` for object "ask.questionInput" TextField`
+    t =    94.39s         Checking existence of `"ask.questionInput" TextField`
+    t =    94.43s Checking existence of `"ask.completedAnswer" TextView`
+    t =    94.46s Checking existence of `"How does morning sunlight affect the body clock?" StaticText`
+    t =    94.49s Find the "ask.questionInput" TextField
+    t =    94.53s Find the "ask.questionInput" TextField
+    t =    94.56s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    94.79s Added attachment named 'Ask_ClearedAfterReturning'
+    t =    94.80s Tear Down
+Test Case '-[FruitfolioUITests.AskGroundedJourneyUITests testActualGroundedAnswerSourcesAndClearOnExit]' passed (95.290 seconds).
+Test Suite 'AskGroundedJourneyUITests' passed at 2026-11-01 23:48:12.724.
+	 Executed 1 test, with 0 failures (0 unexpected) in 95.290 (95.292) seconds
+Test Suite 'FruitfolioUITests.xctest' passed at 2026-11-01 23:48:12.725.
+	 Executed 1 test, with 0 failures (0 unexpected) in 95.290 (95.293) seconds
+Test Suite 'Selected tests' passed at 2026-11-01 23:48:12.725.
+	 Executed 1 test, with 0 failures (0 unexpected) in 95.290 (95.294) seconds
+2026-11-01 23:48:25.666 xcodebuild[11532:44011] [MT] IDETestOperationsObserverDebug: 212.402 elapsed -- Testing started completed.
+2026-11-01 23:48:25.666 xcodebuild[11532:44011] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-01 23:48:25.666 xcodebuild[11532:44011] [MT] IDETestOperationsObserverDebug: 212.402 sec, +212.402 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/OfflineMADLAD.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

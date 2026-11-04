@@ -1,0 +1,42 @@
+Attributes: Button, 0x112c3a300, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+Element subtree:
+ →Button, 0x112c3a300, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+    Image, 0x112c38140, {{55.0, 142.0}, {292.0, 278.0}}
+    Other, 0x112c38780, {{55.0, 142.0}, {292.0, 278.0}}
+      StaticText, 0x112c3a940, {{101.0, 162.0}, {200.0, 238.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+Path to element:
+ →Application, 0x11387e1c0, pid: 33387, label: 'Fruitfolio'
+  ↳Window (Main), 0x11387e080, {{0.0, 0.0}, {402.0, 874.0}}
+   ↳Other, 0x11387fc00, {{0.0, 0.0}, {402.0, 874.0}}
+    ↳Other, 0x11387c280, {{0.0, 0.0}, {402.0, 874.0}}
+     ↳Other, 0x11387c3c0, {{0.0, 0.0}, {402.0, 874.0}}
+      ↳Other, 0x11387df40, {{0.0, 0.0}, {402.0, 874.0}}
+       ↳Other, 0x11387de00, {{0.0, 0.0}, {402.0, 874.0}}
+        ↳Other, 0x11387db80, {{0.0, 0.0}, {402.0, 874.0}}
+         ↳Other, 0x11387ea80, {{0.0, 0.0}, {402.0, 874.0}}
+          ↳Other, 0x11387e800, {{0.0, 0.0}, {402.0, 874.0}}
+           ↳Other, 0x11387da40, {{0.0, 0.0}, {402.0, 874.0}}
+            ↳ScrollView, 0x11387f0c0, {{0.0, 0.0}, {402.0, 874.0}}
+             ↳Other, 0x11387f200, {{0.0, -644.0}, {402.0, 1848.3}}
+              ↳Button, 0x112c3a300, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+Query chain:
+ →Find: Target Application 'com.fruitsoflifexo.Fruitfolio'
+  Output: {
+    Application, 0x114f9b5c0, pid: 33387, label: 'Fruitfolio'
+  }
+  ↪︎Find: Descendants matching type Button
+    Output: {
+      Button, 0x114f99900, {{20.0, -606.3}, {44.0, 44.0}}, label: 'Back'
+      Button, 0x114f99e00, {{55.0, -363.0}, {292.0, 278.0}}, label: 'Instagram  •  @fruitsoflife.xo'
+      Button, 0x114f9a300, {{55.0, -81.0}, {292.0, 219.0}}, label: 'TikTok  •  @fruitsoflife.xo'
+      Button, 0x114f9a800, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+      Button, 0x114f9ad00, {{55.0, 424.0}, {292.0, 219.0}}, label: 'FruitsofLife.xo Carrd'
+    }
+    ↪︎Find: Elements matching predicate 'label CONTAINS "fruitsoflifexo@gmail.com"'
+      Output: {
+        Button, 0x11386ebc0, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+      }
+      ↪︎Find: First Match
+        Output: {
+          Button, 0x11387c140, {{55.0, 142.0}, {292.0, 278.0}}, label: 'email  •  fruitsoflifexo@gmail.com'
+        }

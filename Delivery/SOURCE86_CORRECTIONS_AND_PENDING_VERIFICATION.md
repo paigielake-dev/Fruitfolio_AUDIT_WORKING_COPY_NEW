@@ -1,0 +1,13 @@
+# Source86 corrections — acceptance pending
+
+Preserved branch and baseline. No main merge. Original local AI, official MADLAD Q4/resources, watercolor/audio/research and strict research validator remain intact.
+
+Actual Run79 retained545 XCTest:542 passed, one physical-only skip, two failed;25 Swift Testing passed. It identified exact zh marker-edge spacing and Japanese six-quantity list omission. Source86 protects pure terminal quantitative lists outside generation, just as citation metadata, while translating prose. Missing/added/reordered/corrupt markers and newly generated numbers still fail. The original eleven-target fixture and all eleven edge fixtures remain. Exact per-sentence model input/raw output/literal suffix/restored output are synthetic-only diagnostics; no user content is logged. Fractions, Unicode/full-width units, comparison operators, exponents and compound units have strict source-span tests. Medical meaning remains unapproved, including known Hindi ovary/ovulation substitution. No runtime/model/cloud substitution.
+
+Source82 built successfully and passed8 actual native screen audits; source86 repairs remaining diagnosed Hub font scaling and true FruitBasket modal containment. The visible native UILabel itself scales monotonically from the original font base and opts into UIKit content-size changes. Artwork is preserved. Largest-type controls remain content-driven. The actual viewport helper removes a guessed60pt inset proven false by the Run80 screenshot; full real viewport containment, hittability and unconditional strict audit stay required.
+
+Export now requires actual returned-file readback, exact bytes and readable JSON before success. Preparation no longer mutates account export metadata; scope disclosure matches actual JSON and excludes session Ask. Creation/edit/deletion and stored health records remain separate. Actual save/readback UI, cancellation and guard journeys still require current rerun.
+
+Source83 adds actual-image full-entry basket geometry, delayed-frame crossing, shared fruit/star settling and unchanged uncapped pass accounting. Actual visual/gameplay acceptance remains pending. SFX additions remain deferred until stable core.
+
+CI runs every bounded offline phase, independently restores isolation, and preserves failures. Unit tests now explicitly execute after unrelated UI failures when app compilation succeeds. Stale tracker summaries/conflicting dispositions are packaging errors. Updated tracker48PASS/132PARTIAL/292NOTVERIFIED/2BLOCKED/4FAIL does not establish release readiness. No FINAL_COMPLETE archive is generated or claimed.

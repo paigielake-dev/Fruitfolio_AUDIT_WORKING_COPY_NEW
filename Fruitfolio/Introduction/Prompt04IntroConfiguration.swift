@@ -1,32 +1,33 @@
 import Foundation
 
 /// Deterministic Prompt 04 pacing and complete visible-asset contract.
-/// Prompt 04 uses restrained production pacing: every founder-painted book state
-/// remains readable without making launch feel cinematic or slow.
+/// Prompt 1B first-launch pacing: 6–8 seconds, preserving every painted stage.
+/// Reduced Motion uses this same clock with crossfades instead of camera motion.
 enum Prompt04IntroConfiguration {
     static let initialStillness: Duration = .milliseconds(250)
 
     static let firstLaunchBookArrival: Duration = .milliseconds(650)
-    static let blankBookHold: Duration = .milliseconds(250)
+    static let blankBookHold: Duration = .milliseconds(400)
 
-    static let logoReveal: Duration = .milliseconds(780)
-    static let brandedBookHold: Duration = .milliseconds(300)
+    static let logoReveal: Duration = .milliseconds(1650)
+    static let brandedSettlePulse: Duration = .milliseconds(180)
+    static let brandedBookHold: Duration = .milliseconds(450)
 
-    static let slightlyOpenTransition: Duration = .milliseconds(420)
-    static let slightlyOpenHold: Duration = .milliseconds(180)
+    static let slightlyOpenTransition: Duration = .milliseconds(700)
+    static let slightlyOpenHold: Duration = .milliseconds(300)
 
-    static let fullyOpenTransition: Duration = .milliseconds(430)
-    static let fullyOpenHold: Duration = .milliseconds(220)
+    static let fullyOpenTransition: Duration = .milliseconds(800)
+    static let fullyOpenHold: Duration = .milliseconds(400)
 
     /// Camera move into the right-hand page of the fully open book.
-    static let rightPageFocus: Duration = .milliseconds(600)
+    static let rightPageFocus: Duration = .milliseconds(800)
 
     /// Resolve from the zoomed book page to the standalone blank paper artwork.
-    static let standalonePaperResolve: Duration = .milliseconds(180)
+    static let standalonePaperResolve: Duration = .milliseconds(300)
 
     /// Only after the standalone paper is established do Hub controls appear.
-    static let hubReveal: Duration = .milliseconds(200)
-    static let completionSettle: Duration = .milliseconds(90)
+    static let hubReveal: Duration = .milliseconds(300)
+    static let completionSettle: Duration = .milliseconds(150)
     static let blueberryHookDelay: Duration = .milliseconds(350)
 
     // Returning launch keeps the same visual language but skips the first-launch
@@ -38,8 +39,13 @@ enum Prompt04IntroConfiguration {
     static let returningStandalonePaperResolve: Duration = .milliseconds(150)
     static let returningHubReveal: Duration = .milliseconds(160)
 
-    static let reducedClosedBookCrossfade: Duration = .milliseconds(250)
-    static let reducedOpenHubCrossfade: Duration = .milliseconds(300)
+    static var signatureSequenceDuration: Duration {
+        [initialStillness, firstLaunchBookArrival, blankBookHold, logoReveal,
+         brandedSettlePulse, brandedBookHold, slightlyOpenTransition,
+         slightlyOpenHold, fullyOpenTransition, fullyOpenHold, rightPageFocus,
+         standalonePaperResolve, hubReveal, completionSettle]
+            .reduce(.zero, +)
+    }
 
     /// Every art asset that can appear during Prompt 04 is preloaded before the
     /// signature animation begins, preventing mid-sequence image flashes.

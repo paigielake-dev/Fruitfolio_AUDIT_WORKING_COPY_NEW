@@ -80,7 +80,13 @@ enum Prompt12DataScope: String, Codable, CaseIterable, Identifiable, Sendable {
     case guideBuilder
     case settings
     case cycleTracker
-    case askCache
+    case askCache // Historical snapshot compatibility; session Ask is not exported.
+    case reportedContext
+    case hormoneMeasurements
+    case fruitBasket
+
+    static let exportedScopes: [Self] = [.account, .savedLibrary, .guideBuilder, .settings,
+                                        .cycleTracker, .reportedContext, .hormoneMeasurements, .fruitBasket]
 
     var id: String { rawValue }
 
@@ -98,6 +104,9 @@ enum Prompt12DataScope: String, Codable, CaseIterable, Identifiable, Sendable {
             return "cycle tracker"
         case .askCache:
             return "ask cache"
+        case .reportedContext: return "personal health context"
+        case .hormoneMeasurements: return "hormone measurements"
+        case .fruitBasket: return "fruit basket progress"
         }
     }
 
@@ -114,7 +123,10 @@ enum Prompt12DataScope: String, Codable, CaseIterable, Identifiable, Sendable {
         case .cycleTracker:
             return "cycle logs, observations, derived estimates, and prediction provenance"
         case .askCache:
-            return "temporary local Ask results when supported"
+            return "session-only Ask conversations are not exported"
+        case .reportedContext: return "your own reported context and health-history text"
+        case .hormoneMeasurements: return "recorded results, original units, dates, sample details, reference ranges, and notes"
+        case .fruitBasket: return "local topic progress and question history"
         }
     }
 }
@@ -165,14 +177,20 @@ struct Prompt12DataExportRecord: Codable, Equatable, Sendable {
 
 enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case blankEmail
+    case accountServiceUnavailable
     case notSignedIn
     case exportFailed
     case deletionFailed
+    case unreadableStoredData
 
     var errorDescription: String? {
         switch self {
+        case .unreadableStoredData:
+            return "your saved account settings could not be read. the original data is preserved. account changes and export are unavailable."
         case .blankEmail:
             return "enter an email before signing in."
+        case .accountServiceUnavailable:
+            return "account connection is unavailable. your information remains on this device."
         case .notSignedIn:
             return "there isn’t a signed-in account to change."
         case .exportFailed:

@@ -3,6 +3,8 @@ import SwiftUI
 /// Fruitfolio's shared tactile button animation.
 /// Gives buttons a visible squish-and-spring response that pairs with the soft bubble-pop SFX.
 struct CutePopButtonStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
     let reduceMotion: Bool
 
     init(reduceMotion: Bool = false) {
@@ -10,7 +12,10 @@ struct CutePopButtonStyle: ButtonStyle {
     }
 
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label
+        let reduceMotion = self.reduceMotion || systemReduceMotion || appReduceMotion
+        return configuration.label
+            .frame(minWidth: 44, minHeight: 44)
+            .contentShape(Rectangle())
             .scaleEffect(
                 reduceMotion
                     ? 1.0
@@ -43,5 +48,16 @@ struct CutePopButtonStyle: ButtonStyle {
                     ),
                 value: configuration.isPressed
             )
+    }
+}
+
+private struct FruitfolioReduceMotionKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var fruitfolioReduceMotion: Bool {
+        get { self[FruitfolioReduceMotionKey.self] }
+        set { self[FruitfolioReduceMotionKey.self] = newValue }
     }
 }

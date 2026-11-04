@@ -162,7 +162,7 @@ struct Prompt18DynamicCycleWheel: View {
                 )
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .accessibilityLabel(accessibilityLabel(for: segment))
         .accessibilityHint("Opens a short cycle biology note.")
     }

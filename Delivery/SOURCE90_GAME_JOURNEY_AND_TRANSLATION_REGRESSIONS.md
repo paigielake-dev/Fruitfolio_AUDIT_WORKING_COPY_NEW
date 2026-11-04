@@ -1,0 +1,15 @@
+# Source 90 verification work
+
+Source 89 compiled in the actual Apple workflow (Run 87); its unit/UI results remain pending. Added a real app journey that enters Fruit Basket through the Hub, retrieves an approved passage, answers actual choices, inspects feedback, starts catch play, pauses, exits, and re-enters for another grounded question. It never substitutes a mock provider or marks a missing game as skipped. Wrong-feedback evidence is captured only if that branch is actually visited. Stable accessibility identifiers expose control identity, not a separate test-only game. The workflow runs this focused journey before long inference verification and retains actual logs/screenshots/xcresult. New unit coverage also checks save attribution against the actual original source snapshots.
+
+Settled-art retention now removes only collected historical star artwork, never a currently landing star whose presentation callback is still pending. No star-pass bank limit is introduced.
+
+Run 85 unit archive 13118500336: SHA256 854a4b3e4c62920b4ac90d12ac0be6767b7f55fb276dac3c98704bfdd5b3400e; full ZIP CRC verified. Actual 555 XCTest executions: 554 passed, one physical-device-only skip, zero failures. All 25 Swift Testing tests passed. All eleven original and eleven edge measurement fixtures executed and preserved exact literals/citations. Forty of forty-five requested language tags executed; tpi, ty, rar, niu and gil were explicitly rejected for exact official tag absence. This is runtime coverage, not clinical or localization acceptance.
+
+The actual Hindi original fixture now reads “यह अनुमान ovulation की पुष्टि नहीं करता है।” and retains the exact original measurement and citation. This prevents ovary substitution but explicitly retains English terminology; full medical Hindi localization remains unaccepted. The Japanese output “排卵は確認できなかった。” still lost the original estimate qualifier and changed a present evidential limit into a past observation. It is not accepted merely because numbers survived.
+
+A new narrow Japanese regression repair protects original English estimate/ovulation anchors outside generation, discloses retained anchors, and rejects the demonstrated past-observation/positive-confirmation/ovary substitutions. It adds unit checks and assertions to the same original eleven-language actual-runtime fixture, with no language excluded. The complete original fixture is unchanged. This deliberately limited English-anchor fallback is not represented as completed Japanese localization or a general medical entailment validator. Actual new model output remains PENDING.
+
+Fruit Basket excludes canonical kaomoji forms using the existing shared approved inventory rather than a separate shortened list. It never edits a quoted scientific passage to remove decoration: an unsuitable excerpt is bypassed for another approved excerpt.
+
+LatestAppleTestResults.json now reflects actual Run 85 unit evidence rather than the superseded failed Run 79 run. Requirement acceptance is unchanged; no blanket promotion from passing related tests.

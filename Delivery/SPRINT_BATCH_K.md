@@ -1,0 +1,3 @@
+# Exact Guide save confirmation (Prompt 1B 5O, extracted line 587)
+
+Replaced the bookmark capsule/alternate first-page banner with one original control_large_card artwork, scaled compactly without changing its proportions, Strawberry, and exact “saved!” directly underneath. Retained first-page cheer, existing persistence and all save callbacks; simultaneous confirmations now share one card. Native announcement reports the actual save, and replacement/disappearance cancels stale hide tasks. The card is nonblocking, not a second modal. Added normal/largest-type render evidence tests; actual Apple execution and visual acceptance pending.

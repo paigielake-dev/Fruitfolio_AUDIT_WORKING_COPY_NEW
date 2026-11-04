@@ -10,6 +10,7 @@ struct Prompt07TourOverlay: View {
     let onFinish: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var targetPulse = false
     @State private var dialogueVisible = false
@@ -23,13 +24,10 @@ struct Prompt07TourOverlay: View {
                 240
             )
 
-            let bubbleWidth = min(
-                max(
-                    availableWidth * 0.47,
-                    166
-                ),
-                184
-            )
+            let normalBubbleWidth = min(max(availableWidth * 0.47, 166), 184)
+            let bubbleWidth = dynamicTypeSize.isAccessibilitySize
+                ? min(340, availableWidth - min(max(availableWidth * 0.15, 52), 62) + 12)
+                : max(normalBubbleWidth, step.rawValue > 1 && step != .ready ? 196 : normalBubbleWidth)
 
             let fruitWidth = min(
                 max(
@@ -100,15 +98,7 @@ struct Prompt07TourOverlay: View {
                 height: proxy.size.height
             )
             .contentShape(Rectangle())
-            .onAppear {
-                animateStepEntrance()
-            }
-            .onChange(of: step) {
-                _,
-                _ in
-
-                animateStepEntrance()
-            }
+            .task(id: step.rawValue) { await animateStepEntrance() }
         }
         .ignoresSafeArea(edges: [])
         .accessibilityElement(
@@ -242,7 +232,7 @@ struct Prompt07TourOverlay: View {
             .font(
                 .custom(
                     "Chalkboard SE",
-                    size: 9.25
+                    size: 9.25, relativeTo: .caption
                 )
             )
             .fontWeight(.bold)
@@ -258,7 +248,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 10.25
+                        size: 10.25, relativeTo: .body
                     )
                 )
                 .foregroundStyle(
@@ -269,9 +259,7 @@ struct Prompt07TourOverlay: View {
                     .center
                 )
                 .lineSpacing(0.35)
-                .minimumScaleFactor(
-                    0.64
-                )
+
                 .fixedSize(
                     horizontal: false,
                     vertical: true
@@ -289,7 +277,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 9.0
+                        size: 9.0, relativeTo: .caption
                     )
                 )
                 .foregroundStyle(
@@ -312,7 +300,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 8.4
+                        size: 8.4, relativeTo: .caption
                     )
                 )
                 .fontWeight(.bold)
@@ -322,18 +310,16 @@ struct Prompt07TourOverlay: View {
                 )
                 .frame(
                     maxWidth: .infinity,
-                    minHeight: 28,
+                    minHeight: 44,
                     alignment: .center
                 )
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
                 .accessibilityLabel(
                     "Start exploring"
                 )
 
             } else {
-                HStack(
-                    spacing: 4
-                ) {
+                tourControlLayout {
                     if step.rawValue > 1 {
                         Button(
                             "← back"
@@ -343,7 +329,7 @@ struct Prompt07TourOverlay: View {
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 8.75
+                                size: 8.75, relativeTo: .caption
                             )
                         )
                         .fontWeight(.bold)
@@ -351,10 +337,8 @@ struct Prompt07TourOverlay: View {
                             DesignTokens.ColorToken
                                 .secondaryBurgundy
                         )
-                        .frame(
-                            minHeight: 28
-                        )
-                        .buttonStyle(.plain)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
                     }
 
                     Spacer(
@@ -373,7 +357,7 @@ struct Prompt07TourOverlay: View {
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size: 8.4
+                            size: 8.4, relativeTo: .caption
                         )
                     )
                     .fontWeight(.bold)
@@ -384,10 +368,8 @@ struct Prompt07TourOverlay: View {
                                 0.82
                             )
                     )
-                    .frame(
-                        minHeight: 28
-                    )
-                    .buttonStyle(.plain)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
 
                     Button(
                         "next →"
@@ -397,7 +379,7 @@ struct Prompt07TourOverlay: View {
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size: 9.0
+                            size: 9.0, relativeTo: .caption
                         )
                     )
                     .fontWeight(.bold)
@@ -405,10 +387,8 @@ struct Prompt07TourOverlay: View {
                         DesignTokens.ColorToken
                             .primaryBurgundy
                     )
-                    .frame(
-                        minHeight: 28
-                    )
-                    .buttonStyle(.plain)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
                 }
                 .frame(
                     maxWidth: .infinity
@@ -422,97 +402,30 @@ struct Prompt07TourOverlay: View {
         )
     }
 
-    private var styledStepMessage: Text {
-        switch step {
-
-        case .ask:
-            var message =
-                AttributedString(
-                    "got a question? start here\u{00A0}(\u{00A0}´﹀`\u{00A0}) i’ll look through the FruitsofLife.xo library for you."
-                )
-
-            if let range =
-                message.range(
-                    of: "FruitsofLife.xo"
-                )
-            {
-                message[range].font =
-                    .custom(
-                        "Chalkboard SE",
-                        size: 10.25
-                    )
-                    .bold()
-            }
-
-            return Text(
-                message
-            )
-
-        case .library:
-            return Text(
-                "anything you love can be tucked into your own little encyclopedia!\u{00A0}♡"
-            )
-
-        case .guideBuilder:
-            return Text(
-                "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you.\u{00A0}:-)"
-            )
-
-        case .cycle:
-            return Text(
-                "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle."
-            )
-
-        case .fruitBasket:
-            return Text(
-                "and when you feel like playing… come fill your fruit basket!\u{00A0}(〃⌒∇⌒)"
-            )
-
-        case .ready:
-            return Text(
-                "that’s it! explore wherever you’d like.\u{00A0}♡"
-            )
-        }
+    private var tourControlLayout: AnyLayout {
+        dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(spacing: 4)) : AnyLayout(HStackLayout(spacing: 4))
     }
 
-    private func animateStepEntrance() {
+    private var styledStepMessage: some View {
+        FruitfolioSemanticText(document: step.semanticMessage,
+            baseFont: .custom("Chalkboard SE", size: 10.25, relativeTo: .body))
+    }
+
+    @MainActor
+    private func animateStepEntrance() async {
         dialogueVisible = false
         targetPulse = false
-
-        Task { @MainActor in
-            if reduceMotion {
-                withAnimation(
-                    .easeOut(
-                        duration: 0.17
-                    )
-                ) {
-                    dialogueVisible = true
-                    targetPulse = true
-                }
-
-                return
+        guard !Task.isCancelled else { return }
+        if reduceMotion {
+            withAnimation(.easeOut(duration: 0.17)) {
+                dialogueVisible = true; targetPulse = true
             }
-
-            try? await Task.sleep(
-                nanoseconds:
-                    80_000_000
-            )
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.24
-                )
-            ) {
-                dialogueVisible = true
-            }
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.36
-                )
-            ) {
-                targetPulse = true
-            }
+            return
         }
+        do { try await Task.sleep(nanoseconds: 80_000_000) } catch { return }
+        guard !Task.isCancelled else { return }
+        withAnimation(.easeOut(duration: 0.24)) { dialogueVisible = true }
+        withAnimation(.easeOut(duration: 0.36)) { targetPulse = true }
     }
 }

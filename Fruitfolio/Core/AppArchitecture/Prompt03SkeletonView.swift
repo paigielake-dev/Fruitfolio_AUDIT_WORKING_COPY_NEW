@@ -77,6 +77,8 @@ struct Prompt03SkeletonView: View {
                 routeView(route)
             }
         }
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .environment(\.fruitfolioReduceMotion, motionPreferences.reduceMotionActive)
         .navigationBarBackButtonHidden(true)
         .toolbar(
             .hidden,
@@ -489,7 +491,7 @@ private struct Prompt03TextButton: View {
                     )
                 )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .accessibilityLabel(title)
     }
 }
@@ -539,7 +541,7 @@ private struct Prompt03BackControl: View {
             )
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .frame(
             maxWidth: .infinity,
             alignment: .leading

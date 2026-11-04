@@ -53,13 +53,17 @@ struct Prompt12RouteHeader: View {
                     Spacer()
                 }
 
-                Text(title)
-                    .font(.custom("Chalkboard SE", size: 25))
+                Text(LocalizedStringKey(title))
+                    .font(.custom("Chalkboard SE", size: 25, relativeTo: .title2))
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("route.header." + title)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .fruitfolioProtectFromDecoration()
                     .padding(.horizontal, 58)
             }
 
@@ -71,12 +75,14 @@ struct Prompt12RouteHeader: View {
                     .accessibilityHidden(true)
             }
 
-            Text(subtitle)
-                .font(.custom("Chalkboard SE", size: 12.5))
+            Text(LocalizedStringKey(subtitle))
+                .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .footnote))
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .fruitfolioProtectFromDecoration()
                 .frame(maxWidth: 300)
         }
         .padding(.top, 10)
@@ -113,11 +119,11 @@ struct Prompt12NavigationRow: View {
                     alignment: .leading,
                     spacing: 2
                 ) {
-                    Text(title)
+                    Text(LocalizedStringKey(title))
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 13
+                                size: 13, relativeTo: .body
                             )
                         )
                         .fontWeight(.bold)
@@ -140,7 +146,7 @@ struct Prompt12NavigationRow: View {
                                     .ColorToken
                                     .secondaryBurgundy
                             )
-                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
 
@@ -170,7 +176,8 @@ struct Prompt12NavigationRow: View {
                         .reduceMotionActive
             )
         )
-        .accessibilityLabel(title)
+        .accessibilityLabel(Text(LocalizedStringKey(title)))
+        .accessibilityIdentifier("settings.navigation." + title)
     }
 }
 
@@ -327,10 +334,7 @@ struct Prompt12VolumeRow: View {
             Text(title)
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
-            Slider(value: $value, in: 0...1)
-                .tint(DesignTokens.ColorToken.primaryBurgundy)
-                .accessibilityLabel(title)
-                .accessibilityValue("\(Int(value * 100)) percent")
+            FruitfolioArtworkVolumeSlider(title: title, value: $value)
         }.frame(minHeight: 44)
     }
 }

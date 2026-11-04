@@ -61,7 +61,15 @@ final class Prompt29To55FinalPhaseTests: XCTestCase {
     @MainActor
     func testAutomaticSymptomUnderliningUsesProductionRenderer() {
         let answer = "Cramps and breast tenderness may occur. Rest can help."
-        let styled = Prompt09MaroonSelectableAnswerText.styledAnswer(answer)
+        // Binding Prompt 1B prohibits word matching. Preserve the positive
+        // symptom assertion using explicit contextual roles instead.
+        let document = FruitfolioSemanticDocument(spans: [
+            .init(text: "Cramps", emphasis: .symptomOrPracticalUnderline),
+            .init(text: " and "),
+            .init(text: "breast tenderness", emphasis: .symptomOrPracticalUnderline),
+            .init(text: " may occur. Rest can help.")
+        ])
+        let styled = Prompt09MaroonSelectableAnswerText.styledAnswer(document)
         let nsText = answer as NSString
 
         for symptom in ["Cramps", "breast tenderness"] {

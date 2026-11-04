@@ -301,7 +301,7 @@ struct Prompt16TodayView: View {
                     )
 
                 FruitfolioControlPillButton(
-                    label: "see what’s happening"
+                    label: "see what’s happening", localizationKey: "see what’s happening"
                 ) {
                     audioManager.play(
                         .buttonSoftPop
@@ -394,7 +394,9 @@ struct Prompt16TodayView: View {
                     .padding(.horizontal, 10)
                     .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle())
+                .accessibilityElement(children: .ignore)
+                .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(
                     "Why is my cycle wheel blank?"
                 )
@@ -417,7 +419,7 @@ struct Prompt16TodayView: View {
             spacing: 14
         ) {
             FruitfolioControlPillButton(
-                label: "log today +"
+                label: "log today +", localizationKey: "log today +"
             ) {
                 audioManager.play(
                     .buttonSoftPop
@@ -1361,7 +1363,7 @@ private struct Prompt16ButterflyFlightDecoration: View {
                     .contentShape(Rectangle())
                     .accessibilityHidden(true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(CutePopButtonStyle())
             .frame(minWidth: 74, minHeight: 74)
             .contentShape(Rectangle())
             .offset(flightOffset)

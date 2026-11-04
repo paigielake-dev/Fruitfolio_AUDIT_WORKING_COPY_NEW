@@ -47,10 +47,35 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
     case tuvaluan = "tvl"
     case kiribati = "gil"
     case bislama = "bi"
+    case thai = "th"
+    case mongolian = "mn"
+    case indonesian = "id"
+    case russian = "ru"
+    case polish = "pl"
+    case dutch = "nl"
+    case swedish = "sv"
+    case ukrainian = "uk"
+    case turkish = "tr"
+    case kurdishKurmanji = "ku"
+    case kurdishSorani = "ckb"
+    case hebrew = "he"
+    case quechua = "qu"
+    case guarani = "gn"
+    case aymara = "ay"
+
 
     var id: String { rawValue }
     var localeIdentifier: String { rawValue }
-    var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu }
+    /// Exact official model tokenizer tags. Script selection is not collapsed
+    /// into a generic Chinese target; absent language tags remain unsupported.
+    var madladTargetCode: String {
+        switch self {
+        case .chineseSimplified: return "zh"
+        case .chineseTraditional: return "zh_Hant"
+        default: return rawValue
+        }
+    }
+    var isRightToLeft: Bool { self == .persian || self == .arabic || self == .urdu || self == .hebrew || self == .kurdishSorani }
 
     /// Native/autonym labels deliberately remain recognizable even when the current UI language changes.
     var nativeDisplayName: String {
@@ -100,6 +125,22 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
         case .tuvaluan: return "Te Gagana Tuuvalu"
         case .kiribati: return "Te Taetae ni Kiribati"
         case .bislama: return "Bislama"
+        case .thai: return "ไทย"
+        case .mongolian: return "Монгол хэл"
+        case .indonesian: return "Bahasa Indonesia"
+        case .russian: return "Русский"
+        case .polish: return "Polski"
+        case .dutch: return "Nederlands"
+        case .swedish: return "Svenska"
+        case .ukrainian: return "Українська"
+        case .turkish: return "Türkçe"
+        case .kurdishKurmanji: return "Kurmancî"
+        case .kurdishSorani: return "کوردی (سۆرانی)"
+        case .hebrew: return "עברית"
+        case .quechua: return "Runasimi"
+        case .guarani: return "Avañe’ẽ"
+        case .aymara: return "Aymar aru"
+
         }
     }
 }
@@ -107,10 +148,14 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
 enum FruitfolioLanguagePreferences {
     static let defaultsKey = "fruitfolio.settings.language"
 
+    static func decodeStoredLanguage(_ value: Any?) -> FruitfolioLanguage? {
+        guard let raw = value as? String else { return nil }
+        return FruitfolioLanguage(rawValue: raw)
+            ?? FruitfolioLanguage(rawValue: raw.replacingOccurrences(of: "_", with: "-"))
+    }
+
     static var current: FruitfolioLanguage {
-        guard let raw = UserDefaults.standard.string(forKey: defaultsKey),
-              let language = FruitfolioLanguage(rawValue: raw) else { return .english }
-        return language
+        decodeStoredLanguage(UserDefaults.standard.object(forKey: defaultsKey)) ?? .english
     }
 }
 
@@ -119,6 +164,7 @@ enum FruitfolioLanguagePreferences {
 @MainActor
 final class SettingsStore: ObservableObject {
     private enum Key {
+        static let allAudioMuted = "fruitfolio.settings.allAudioMuted"
         static let musicEnabled = "fruitfolio.settings.musicEnabled"
         static let rainEnabled = "fruitfolio.settings.rainEnabled"
         static let soundEffectsEnabled = "fruitfolio.settings.soundEffectsEnabled"
@@ -134,22 +180,54 @@ final class SettingsStore: ObservableObject {
 
     private let defaults: UserDefaults
 
+    @Published var allAudioMuted: Bool { didSet { defaults.set(allAudioMuted, forKey: Key.allAudioMuted) } }
     @Published var musicEnabled: Bool { didSet { defaults.set(musicEnabled, forKey: Key.musicEnabled) } }
     @Published var rainEnabled: Bool { didSet { defaults.set(rainEnabled, forKey: Key.rainEnabled) } }
     @Published var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
     @Published var typingASMREnabled: Bool { didSet { defaults.set(typingASMREnabled, forKey: Key.typingASMREnabled) } }
 
-    @Published var musicVolume: Double { didSet { persistClamped(musicVolume, key: Key.musicVolume) } }
-    @Published var rainVolume: Double { didSet { persistClamped(rainVolume, key: Key.rainVolume) } }
-    @Published var soundEffectsVolume: Double { didSet { persistClamped(soundEffectsVolume, key: Key.soundEffectsVolume) } }
-    @Published var typingVolume: Double { didSet { persistClamped(typingVolume, key: Key.typingVolume) } }
+    @Published var musicVolume: Double {
+        didSet {
+            let normalized = Self.clamp(musicVolume)
+            if musicVolume != normalized { musicVolume = normalized }
+            defaults.set(normalized, forKey: Key.musicVolume)
+        }
+    }
+    @Published var rainVolume: Double {
+        didSet {
+            let normalized = Self.clamp(rainVolume)
+            if rainVolume != normalized { rainVolume = normalized }
+            defaults.set(normalized, forKey: Key.rainVolume)
+        }
+    }
+    @Published var soundEffectsVolume: Double {
+        didSet {
+            let normalized = Self.clamp(soundEffectsVolume)
+            if soundEffectsVolume != normalized { soundEffectsVolume = normalized }
+            defaults.set(normalized, forKey: Key.soundEffectsVolume)
+        }
+    }
+    @Published var typingVolume: Double {
+        didSet {
+            let normalized = Self.clamp(typingVolume)
+            if typingVolume != normalized { typingVolume = normalized }
+            defaults.set(normalized, forKey: Key.typingVolume)
+        }
+    }
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
-    @Published var language: FruitfolioLanguage { didSet { defaults.set(language.rawValue, forKey: Key.language) } }
+    @Published private(set) var languagePreferenceWarning: String? = nil
+    @Published var language: FruitfolioLanguage {
+        didSet {
+            defaults.set(language.rawValue, forKey: Key.language)
+            languagePreferenceWarning = nil
+        }
+    }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        self.allAudioMuted = Self.bool(defaults, key: Key.allAudioMuted, fallback: false)
         self.musicEnabled = Self.bool(defaults, key: Key.musicEnabled, fallback: true)
         self.rainEnabled = Self.bool(defaults, key: Key.rainEnabled, fallback: true)
         self.soundEffectsEnabled = Self.bool(defaults, key: Key.soundEffectsEnabled, fallback: true)
@@ -160,7 +238,12 @@ final class SettingsStore: ObservableObject {
         self.typingVolume = Self.double(defaults, key: Key.typingVolume, fallback: 0.08)
         self.reduceAnimationOverride = Self.bool(defaults, key: Key.reduceAnimationOverride, fallback: false)
         self.onboardingCompleted = Self.bool(defaults, key: Key.onboardingCompleted, fallback: false)
-        self.language = defaults.string(forKey: Key.language).flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+        let storedLanguage = defaults.object(forKey: Key.language)
+        let decodedLanguage = FruitfolioLanguagePreferences.decodeStoredLanguage(storedLanguage)
+        self.language = decodedLanguage ?? .english
+        if storedLanguage != nil && decodedLanguage == nil {
+            languagePreferenceWarning = "your saved language setting could not be recognized. English is being used for now, and the original setting is preserved. choose a language to replace it."
+        }
     }
 
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's
@@ -168,10 +251,6 @@ final class SettingsStore: ObservableObject {
     /// helper is for runtime/deterministic strings that are built outside a View.
     func localized(_ key: String, fallback: String? = nil) -> String {
         FruitfolioLocalization.localized(key, language: language, fallback: fallback)
-    }
-
-    private func persistClamped(_ value: Double, key: String) {
-        defaults.set(Self.clamp(value), forKey: key)
     }
 
     private static func bool(_ defaults: UserDefaults, key: String, fallback: Bool) -> Bool {
@@ -185,6 +264,7 @@ final class SettingsStore: ObservableObject {
     }
 
     private static func clamp(_ value: Double) -> Double {
-        min(max(value, 0), 1)
+        guard value.isFinite else { return 0 }
+        return min(max(value, 0), 1)
     }
 }

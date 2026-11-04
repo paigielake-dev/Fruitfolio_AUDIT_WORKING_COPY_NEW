@@ -52,31 +52,12 @@ struct FruitPopupBubbleShell<Content: View>: View {
     let content: () -> Content
 
     var body: some View {
-        ZStack {
-            FruitfolioImage(id: .popup_speech_bubble)
-                .scaledToFit()
-                .frame(width: width, height: width)
-                .scaleEffect(
-                    x: characterSide == .right ? -1 : 1,
-                    y: 1,
-                    anchor: .center
-                )
-                .accessibilityHidden(true)
-
-            content()
-                // Keep live text inside the painted body, not the bubble tail.
-                // Mirroring moves the tail, so mirror the small optical inset too.
-                .frame(
-                    width: width * 0.76,
-                    height: width * 0.68,
-                    alignment: .center
-                )
-                .offset(
-                    x: (characterSide == .left ? 1 : -1) * width * 0.030,
-                    y: -width * 0.040
-                )
-        }
-        .frame(width: width, height: width)
+        FruitfolioPopupArtworkSurface(assetName: "popup_speech_bubble",
+            normalizedWriting: CGRect(x: characterSide == .left ? 0.15 : 0.09,
+                                      y: 0.12, width: 0.76, height: 0.68),
+            maximumWidth: width, mirrorsArtwork: characterSide == .right, edgeClearance: 0,
+            content: content)
+            .frame(width: width, height: width * 499 / 497)
     }
 }
 
@@ -84,9 +65,11 @@ struct FruitPopupView: View {
     let request: FruitPopupRequest
     let availableWidth: CGFloat
     let reduceMotion: Bool
+    @EnvironmentObject private var audioManager: AudioManager
 
     @State
     private var appeared = false
+    @AccessibilityFocusState(for: .voiceOver) private var messageFocused: Bool
 
     init(
         request: FruitPopupRequest,
@@ -108,37 +91,32 @@ struct FruitPopupView: View {
     }
 
     private var characterWidth: CGFloat {
-        min(max(availableWidth * 0.18, 58), 72)
+        composition.characterWidth
     }
 
     private var bubbleWidth: CGFloat {
-        let messageBonus: CGFloat
-        switch request.message.count {
-        case 0...58: messageBonus = 0
-        case 59...105: messageBonus = 18
-        default: messageBonus = 30
-        }
-
-        let desired = max(availableWidth * 0.58, 184) + messageBonus
-        let maximum = max(188, availableWidth - characterWidth + 10)
-        return min(desired, min(246, maximum))
+        composition.bubbleWidth
     }
 
     private var compositionSpacing: CGFloat {
-        -min(14, characterWidth * 0.20)
+        composition.spacing
+    }
+
+    private var composition: FruitPopupCompositionMetrics {
+        .init(availableWidth: availableWidth, messageLength: request.message.count)
     }
 
     var body: some View {
         Group {
             if characterSide == .left {
                 HStack(alignment: .bottom, spacing: compositionSpacing) {
-                    animatedCharacter
+                    if composition.showsCharacter { animatedCharacter }
                     animatedBubble
                 }
             } else {
                 HStack(alignment: .bottom, spacing: compositionSpacing) {
                     animatedBubble
-                    animatedCharacter
+                    if composition.showsCharacter { animatedCharacter }
                 }
             }
         }
@@ -161,6 +139,16 @@ struct FruitPopupView: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .task(id: request.id) {
+            // Focus only this presentation, after its existing entrance. A
+            // replacement/dismissal cancels this view-owned task; streaming or
+            // unrelated body updates must not repeatedly steal reading focus.
+            let delay = reduceMotion ? 0.19 : request.character.entranceDuration + 0.03
+            do { try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000)) }
+            catch { return }
+            guard !Task.isCancelled else { return }
+            messageFocused = true
+        }
     }
 
     private var animatedCharacter: some View {
@@ -189,10 +177,16 @@ struct FruitPopupView: View {
         .zIndex(1)
     }
 
-    private var bubbleContent: some View {
+    private var bubbleContent: some View { messageAndActions }
+
+    // Keep short dialogue optically centered; long and Dynamic Type dialogue
+    // remains inside the painted writing area and is reachable by scrolling.
+    private var messageAndActions: some View {
         VStack(alignment: .center, spacing: 7) {
-            invitationSafeMessage
-                .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+            FruitfolioSemanticText(document: invitationSafeMessage,
+                baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body))
+                .accessibilityIdentifier("popup.message")
+                .accessibilityFocused($messageFocused)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .multilineTextAlignment(.center)
                 .lineSpacing(0.8)
@@ -213,20 +207,15 @@ struct FruitPopupView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
-    private var invitationSafeMessage: Text {
+    private var invitationSafeMessage: FruitfolioSemanticDocument {
         if request.message == "hello there! ♡ want me to show you around?" {
-            return Text("hello there!\u{00A0}♡\nwant me to show you around?")
+            return .init(spans: [.init(text: "hello there!\u{00A0}♡\nwant me to show you around?")])
         }
 
-        return Text(
-            request.message.replacingOccurrences(
-                of: " ♡",
-                with: "\u{00A0}♡"
-            )
-        )
+        return request.semanticMessage
     }
 
     private func popupActionButton(
@@ -234,10 +223,11 @@ struct FruitPopupView: View {
         isPrimary: Bool
     ) -> some View {
         Button {
+            audioManager.play(.buttonSoftPop)
             action.handler()
         } label: {
             Text(action.label)
-                .font(.custom("Chalkboard SE", size: 12.25))
+                .font(.custom("Chalkboard SE", size: 12.25, relativeTo: .body))
                 .fontWeight(isPrimary ? .bold : .regular)
                 .foregroundStyle(
                     isPrimary
@@ -245,12 +235,34 @@ struct FruitPopupView: View {
                         : DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.90)
-                .frame(maxWidth: .infinity, minHeight: 30, alignment: .center)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .center)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
+        .accessibilityIdentifier(isPrimary ? "popup.action.primary" : "popup.action.secondary")
+    }
+}
+
+/// Keep the approved fruit/bubble relationship at ordinary phone widths. If a
+/// constrained container cannot fit both at their usable sizes, omit decorative
+/// fruit rather than force the text column outside its parent or shrink text.
+nonisolated struct FruitPopupCompositionMetrics {
+    let characterWidth: CGFloat
+    let bubbleWidth: CGFloat
+    let spacing: CGFloat
+    let showsCharacter: Bool
+
+    init(availableWidth: CGFloat, messageLength: Int) {
+        let available = availableWidth.isFinite ? max(0, availableWidth) : 0
+        let character = min(max(available * 0.18, 58), 72)
+        let overlap = min(14, character * 0.20)
+        showsCharacter = available >= character + 188 - overlap
+        characterWidth = showsCharacter ? character : 0
+        spacing = showsCharacter ? -overlap : 0
+        let bonus: CGFloat = messageLength <= 58 ? 0 : (messageLength <= 105 ? 18 : 30)
+        let desired = max(available * 0.58, 184) + bonus
+        bubbleWidth = min(desired, 246, max(0, available - characterWidth - spacing))
     }
 }

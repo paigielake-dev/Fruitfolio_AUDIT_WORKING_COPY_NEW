@@ -3,15 +3,54 @@ import Foundation
 
 @MainActor
 final class Prompt28FruitBasketViewModel: ObservableObject {
-    @Published var screen: Prompt28ScreenState = .home
-    @Published var rawTopic = ""
-    @Published var difficulty: Prompt28EducationalDifficulty
+    @Published var screen: Prompt28ScreenState = .home {
+        didSet {
+            if oldValue == .catchActive, screen != .catchActive { stopGameplay() }
+            if oldValue == .loading, screen != .loading { cancelQuestionRequest() }
+            if screen != .catchActive, screen != .paused { showingStormNotice = false }
+        }
+    }
+    @Published private(set) var showingStormNotice = false
+    @Published var rawTopic = "" {
+        didSet {
+            if screen == .loading, engine.normalizeTopic(oldValue) != normalizedTopic { screen = .learningSetup }
+        }
+    }
+    @Published var difficulty: Prompt28EducationalDifficulty {
+        didSet { if oldValue != difficulty, screen == .loading { screen = .learningSetup } }
+    }
+    @Published private(set) var roundCollection = Prompt28RoundCollection()
     @Published var currentQuestion: Prompt28Question?
     @Published var selectedAnswerID: String?
     @Published var session: Prompt28Session?
     @Published var activeFruit: [Prompt28FallingFruit] = []
+    @Published private(set) var vineContactCount = 0
+    @Published private(set) var branchContactCount = 0
+    @Published private(set) var puddleMovementActive = false
+    @Published private(set) var puddleContactActive = false
+    private var branchDeflections: [UUID: Prompt28BranchDeflection] = [:]
+    private var previousVineContacts: Set<UUID> = []
+    private var gameplayFieldSize = CGSize.zero
+    private var catchClock: TimeInterval = 0
+    private var landingOrder = 0
+    private var attemptID = UUID()
+    let obstacleAudioOwnerID = UUID()
+    private var gameplayCleanup: (@MainActor @Sendable () -> Void)?
+    private var pendingLandings: [PendingLanding] = []
+
+    private enum LandingKind { case fruit(Prompt28FruitID, Prompt28FruitClassification), star }
+    private struct PendingLanding {
+        let id: UUID
+        let kind: LandingKind
+        let readyAt: TimeInterval
+        let order: Int
+        var artworkSettled = false
+        var presentationID: UUID?
+    }
+    @Published private(set) var settledCatches: [Prompt28SettledCatch] = []
     @Published var activeStars: [Prompt28FallingStar] = []
     @Published var basketX: Double = 0.5
+    @Published private(set) var basketIsMeetingPuddleResistance = false
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
     @Published var isPaused = false
@@ -23,10 +62,15 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     private let researchProvider: any Prompt28ResearchProviding
     private var gameplayTask: Task<Void, Never>?
+    private var questionTask: Task<Prompt28Question, Error>?
+    private var questionRequestID = UUID()
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
+    private var pendingRoundSuccess: Bool?
+    private var roundResultCommitted = false
+    private var lastStormNoticeKey: String?
 
     init(
         store: Prompt28FruitBasketStore,
@@ -40,8 +84,20 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     deinit {
+        let cleanup = gameplayCleanup
+        Task { @MainActor in cleanup?() }
         gameplayTask?.cancel()
+        questionTask?.cancel()
         roundCompletionTask?.cancel()
+    }
+
+    func installGameplayCleanup(_ cleanup: @escaping @MainActor @Sendable () -> Void) {
+        gameplayCleanup = cleanup
+    }
+
+    var revealFacts: [Prompt28EducationalFactSnapshot] {
+        store.completedRounds.last(where: { $0.id == attemptID })?.educationalFacts
+            ?? currentQuestion?.verifiedEducationalFacts ?? []
     }
 
     var normalizedTopic: String { engine.normalizeTopic(rawTopic) }
@@ -57,6 +113,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
     var basketCount: Int { session?.goodFruitCaughtThisRound ?? 0 }
     var score: Int { session?.score ?? 0 }
+    var availableStarPasses: Int { session?.availableStarPasses ?? 0 }
     var currentRound: Int { session?.currentRound ?? 1 }
     var weather: Prompt28Weather { engine.weather(level: gameLevel, round: currentRound) }
     var levelConfig: Prompt28GameLevelConfig { engine.config(for: gameLevel) }
@@ -69,7 +126,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func openSetup() {
+        completePendingRoundIfNeeded()
         stopGameplay()
+        guard store.loadError == nil else {
+            message = store.loadError; screen = .error; return
+        }
         screen = .learningSetup
         message = nil
     }
@@ -126,36 +187,72 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func loadQuestion() async {
+        cancelQuestionRequest()
+        guard store.loadError == nil else {
+            message = store.loadError; screen = .error; return
+        }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
+        let generation = questionRequestID
+        let expectedSession = session?.id
+        let requestedDifficulty = difficulty
+        let requestedTopic = rawTopic
+        let history = store.questionHistory[normalized] ?? []
+        let provider = researchProvider
         screen = .loading
         message = nil
+        currentQuestion = nil
+        selectedAnswerID = nil
+        let request = Task {
+            try await provider.question(topic: requestedTopic, normalizedTopic: normalized,
+                                        difficulty: requestedDifficulty, excludingQuestionIDs: history)
+        }
+        questionTask = request
+        defer {
+            if questionRequestID == generation {
+                questionTask = nil
+                if Task.isCancelled, screen == .loading { screen = .learningSetup }
+            }
+        }
         do {
-            let q = try await researchProvider.question(
-                topic: rawTopic,
-                normalizedTopic: normalized,
-                difficulty: difficulty,
-                excludingQuestionIDs: store.questionHistory[normalized] ?? []
-            )
-            guard q.isPlayable else { throw Prompt28ResearchError.invalidQuestion }
+            let q = try await withTaskCancellationHandler(operation: { try await request.value },
+                                                         onCancel: { request.cancel() })
+            guard isCurrentQuestionRequest(generation, sessionID: expectedSession,
+                                           topic: normalized, difficulty: requestedDifficulty) else { return }
+            guard q.isPlayable, q.normalizedTopic == normalized,
+                  q.educationalDifficulty == requestedDifficulty else { throw Prompt28ResearchError.invalidQuestion }
+            guard q.hasVerifiedEvidenceSnapshot else { throw Prompt28ResearchError.sourceValidationFailed }
             currentQuestion = q
             selectedAnswerID = nil
             store.recordQuestion(q.id, topic: normalized)
             screen = .question
-        } catch let error as Prompt28ResearchError {
-            switch error {
-            case .topicExhausted:
-                screen = .topicExhausted
-            case .unsupportedTopic, .providerUnavailable:
-                screen = .topicUnsupported
-            default:
-                screen = .error
-            }
-            message = error.localizedDescription
         } catch {
-            screen = .error
-            message = "Fruit Basket couldn’t prepare a sourced question right now."
+            guard isCurrentQuestionRequest(generation, sessionID: expectedSession,
+                                           topic: normalized, difficulty: requestedDifficulty) else { return }
+            if let error = error as? Prompt28ResearchError {
+                switch error {
+                case .topicExhausted: screen = .topicExhausted
+                case .unsupportedTopic, .providerUnavailable: screen = .topicUnsupported
+                default: screen = .error
+                }
+                message = error.localizedDescription
+            } else {
+                screen = .error
+                message = "Fruit Basket couldn’t prepare a sourced question right now."
+            }
         }
+    }
+
+    private func cancelQuestionRequest() {
+        questionRequestID = UUID()
+        questionTask?.cancel()
+        questionTask = nil
+    }
+
+    private func isCurrentQuestionRequest(_ id: UUID, sessionID: UUID?, topic: String,
+                                         difficulty requestedDifficulty: Prompt28EducationalDifficulty) -> Bool {
+        !Task.isCancelled && questionRequestID == id && screen == .loading
+            && session?.id == sessionID && normalizedTopic == topic && difficulty == requestedDifficulty
     }
 
     func answer(_ answerID: String) {
@@ -177,30 +274,75 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func beginCatch() {
+        completePendingRoundIfNeeded()
         guard currentQuestion != nil, var session else { return }
+        attemptID = UUID()
         stopGameplay()
         session.goodFruitCaughtThisRound = 0
+        roundCollection = .init(startingStarPasses: session.availableStarPasses, startingScore: session.score)
         self.session = session
         activeFruit.removeAll()
         activeStars.removeAll()
+        settledCatches.removeAll()
+        pendingLandings.removeAll()
+        catchClock = 0
+        landingOrder = 0
         classificationFruit = nil
         basketX = 0.5
+        basketIsMeetingPuddleResistance = false
+        isPaused = false
+        showingStormNotice = false
         roundResultLocked = false
+        roundResultCommitted = false
+        pendingRoundSuccess = nil
         spawnPlanner.reset()
+        previousVineContacts = []
+        branchDeflections = [:]
         lastSpawnAt = .distantPast
         screen = .catchActive
 
-        if store.controlMode == .classification {
-            spawnClassificationFruit()
+        let noticeKey = "\(session.id.uuidString):\(session.currentRound)"
+        if weather == .softRain, lastStormNoticeKey != noticeKey {
+            lastStormNoticeKey = noticeKey
+            showingStormNotice = true
+            isPaused = true
         } else {
-            startGameplayLoop()
+            startCatchInteraction()
         }
     }
 
+    func dismissStormNotice() {
+        guard showingStormNotice else { return }
+        showingStormNotice = false
+        // Backgrounding already moves active play to the paused menu. Closing
+        // its notice must not silently resume a background-paused round.
+        guard screen == .catchActive else { return }
+        isPaused = false
+        startCatchInteraction()
+    }
+
+    private func startCatchInteraction() {
+        if store.controlMode == .classification { spawnClassificationFruit() }
+        else { startGameplayLoop() }
+    }
+
+    func viewWillDisappear() {
+        completePendingRoundIfNeeded()
+        cancelQuestionRequest()
+        if screen == .loading { screen = .learningSetup }
+        stopGameplay()
+        if screen == .catchActive { isPaused = true; screen = .paused }
+    }
+
     func moveBasket(to normalizedX: Double) {
-        guard screen == .catchActive, !isPaused else { return }
+        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        guard normalizedX.isFinite else { return }
         let target = min(max(normalizedX, 0.10), 0.90)
+        let previousX = basketX
         guard activeObstacles.contains(.puddle) else {
+            basketIsMeetingPuddleResistance = false
+            puddleMovementActive = false
+            puddleContactActive = false
             basketX = target
             return
         }
@@ -213,11 +355,24 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let response = crossingPuddle ? 0.58 : 1.0
         basketX += (target - basketX) * response
         basketX = min(max(basketX, 0.10), 0.90)
+        // Audio follows real displacement inside the physical puddle, not a timer.
+        if gameplayFieldSize.width > 0 {
+            puddleContactActive = Prompt28PuddleContactGeometry(fieldWidth: gameplayFieldSize.width).overlaps(basketX: basketX)
+        } else {
+            // Legacy model-only callers have no rendered field yet. Production
+            // supplies its actual field before accepting basket gestures.
+            puddleContactActive = basketX >= 0.33 && basketX <= 0.67
+        }
+        basketIsMeetingPuddleResistance = crossingPuddle && puddleContactActive
+        puddleMovementActive = abs(basketX - previousX) > 0.000001 && puddleContactActive
     }
+
+    func basketMovementEnded() { puddleMovementActive = false }
 
     func classificationDecision(accept: Bool) {
         guard
             screen == .catchActive,
+            !isPaused,
             store.controlMode == .classification,
             let fruit = classificationFruit,
             !roundResultLocked
@@ -241,7 +396,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func pause() {
-        guard screen == .catchActive else { return }
+        guard screen == .catchActive, !roundResultLocked else { return }
         isPaused = true
         gameplayTask?.cancel()
         gameplayTask = nil
@@ -257,6 +412,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func retryRound() {
+        completePendingRoundIfNeeded()
         guard var session else { return }
         session.goodFruitCaughtThisRound = 0
         self.session = session
@@ -265,6 +421,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func resetGameLevel() {
+        completePendingRoundIfNeeded()
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         stopGameplay()
@@ -278,6 +435,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func continueAfterReveal() async {
+        completePendingRoundIfNeeded()
         guard var session else { return }
         session.currentRound += 1
         session.goodFruitCaughtThisRound = 0
@@ -286,6 +444,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func changeTopic() {
+        completePendingRoundIfNeeded()
         stopGameplay()
         currentQuestion = nil
         selectedAnswerID = nil
@@ -300,19 +459,32 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func sceneBecameInactive() {
-        if screen == .catchActive { pause() }
+        if pendingRoundSuccess != nil {
+            completePendingRoundIfNeeded()
+            stopGameplay()
+        } else if screen == .catchActive {
+            pause()
+        }
     }
 
     func savePendingContent() -> Prompt10PendingSavedContent? {
         guard let question = currentQuestion else { return nil }
-        let revealBody = "basket reveal . ݁₊ ⊹ . ݁˖ . ݁\n\n ☆ \(question.explanation)"
+        let references = question.sourceTitles.joined(separator: "\n")
+        let fruitNames = roundCollection.goodFruit.map(\.displayName).joined(separator: ", ")
+        let outcome = "round results\ngood fruit collected: \(fruitNames)\nunstarred fruit caught: \(roundCollection.badFruit.count)\nstandalone stars collected: \(roundCollection.standaloneStarsCaught)\nstar passes used: \(roundCollection.starPassesConsumed)\nstar passes available: \(session?.availableStarPasses ?? 0)\nscore this round: \((session?.score ?? 0) - roundCollection.startingScore)"
+        let revealBody = "basket reveal\n\n\(question.explanation)\n\n\(references)\n\n\(outcome)"
         return Prompt10PendingSavedContent(
-            question: "basket reveal . ݁₊ ⊹ . ݁˖ . ݁",
+            question: "basket reveal",
             answer: revealBody,
             saveType: .fullAnswer,
             originalAnswerID: "fruitbasket:\(question.id)",
             sourceIDs: question.sourceIDs,
-            sourceVersions: Dictionary(uniqueKeysWithValues: question.sourceIDs.map { ($0, question.contentVersion) }),
+            sourceVersions: Dictionary(uniqueKeysWithValues: (question.evidenceSnapshot?.sources ?? []).map { ($0.sourceID, $0.contentVersion) }),
+            sourceSnapshots: question.evidenceSnapshot?.sources.map { source in
+                AskSourceRecord(id: source.sourceID, title: source.apa7Reference ?? source.title,
+                    sourceText: source.apa7Reference, urlString: source.canonicalURL, doi: source.doi,
+                    publicationData: source.publicationDate, contentVersion: source.contentVersion)
+            },
             knowledgeBaseVersion: question.contentVersion,
             generationTimestamp: question.createdAt
         )
@@ -321,11 +493,14 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func startGameplayLoop() {
         gameplayTask?.cancel()
         gameplayTask = Task { [weak self] in
-            guard let self else { return }
             var previous = Date()
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 33_000_000)
-                guard !Task.isCancelled else { break }
+                // Hold the model only during this synchronous frame. Keeping
+                // a strong self before the loop retains it across every sleep
+                // and prevents deinit's cancellation if a host drops the view
+                // without delivering its ordinary disappearance callback.
+                guard !Task.isCancelled, let self else { break }
                 let now = Date()
                 let delta = min(max(now.timeIntervalSince(previous), 0.001), 0.08)
                 previous = now
@@ -334,34 +509,60 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
     }
 
-    private func tick(delta: TimeInterval, now: Date) {
-        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+    func updateGameplayFieldSize(width: Double, height: Double) {
+        guard width.isFinite, height.isFinite, width > 0, height > 0 else { return }
+        gameplayFieldSize = CGSize(width: width, height: height)
+    }
+
+    func isMeetingVines(x: Double, y: Double, classification: Prompt28FruitClassification = .good) -> Bool {
+        guard classification == .good, activeObstacles.contains(.vines) else { return false }
+        return Prompt28VineContactGeometry(fieldWidth: gameplayFieldSize.width,
+                                          fieldHeight: gameplayFieldSize.height,
+                                          level: gameLevel).contains(x: x, y: y)
+    }
+
+    // Internal frame entry point is also exercised by deterministic physics tests.
+    func tick(delta: TimeInterval, now: Date) {
+        guard screen == .catchActive, !isPaused, !roundResultLocked, delta.isFinite, delta >= 0 else { return }
+        catchClock += delta
         var remaining: [Prompt28FallingFruit] = []
+        var currentVineContacts: Set<UUID> = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
-            let vineMultiplier = activeObstacles.contains(.vines) && fruit.classification == .good && (0.22...0.58).contains(fruit.y) ? 0.56 : 1.0
-            fruit.y += fruit.fallSpeed * vineMultiplier * delta
-
-            var horizontalVelocity = fruit.horizontalDrift
+            let previousY = fruit.y
+            let meetingVines = isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification)
+            if meetingVines { currentVineContacts.insert(fruit.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
+            if activeObstacles.contains(.branch), branchDeflections[fruit.id] == nil {
+                let geometry = Prompt28BranchContactGeometry(fieldWidth: gameplayFieldSize.width,
+                                                              fieldHeight: gameplayFieldSize.height)
+                let radius = min(max(gameplayFieldSize.width * 0.13, 46), 66) * 0.44
+                if geometry.contains(x: fruit.x, y: fruit.y + fruit.fallSpeed * delta, radius: radius) {
+                    branchContactCount += 1
+                    branchDeflections[fruit.id] = Prompt28BranchDeflection(horizontalVelocity: -max(abs(fruit.horizontalDrift), 0.08))
+                }
+            }
+            let bounce = branchDeflections[fruit.id]
+            fruit.y += fruit.fallSpeed * vineMultiplier * (bounce?.verticalMultiplier ?? 1) * delta
+            var horizontalVelocity = bounce?.horizontalVelocity ?? fruit.horizontalDrift
+            if var bounce {
+                bounce.elapsed += delta
+                branchDeflections[fruit.id] = bounce
+            }
             if activeObstacles.contains(.wind) {
                 horizontalVelocity += windDirection * (weather == .softRain ? 0.030 : 0.021)
             }
 
-            // The right-side branch gently redirects fruit before it reaches the basket.
-            // This creates a readable obstacle without turning it into an unavoidable trap.
-            if activeObstacles.contains(.branch),
-               (0.27...0.55).contains(fruit.y),
-               fruit.x > 0.66 {
-                horizontalVelocity -= 0.095
-            }
-
             fruit.x = min(max(fruit.x + horizontalVelocity * delta, laneBounds.lowerBound), laneBounds.upperBound)
 
-            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX) {
-                if fruit.classification == .good { handleGoodCatch(fruit.fruitID) }
-                else { handleBadCatch(fruit.fruitID) }
-                if roundResultLocked { break }
+            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX,
+                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
+                                itemDiameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width),
+                                previousY: previousY) {
+                beginLanding(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification),
+                             previousY: previousY, currentY: fruit.y,
+                             diameter: Prompt28BasketCatchGeometry.fruitDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
                 continue
             }
 
@@ -375,20 +576,33 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
 
         activeFruit = roundResultLocked ? [] : remaining
+        let remainingIDs = Set(activeFruit.map(\.id))
+        branchDeflections = branchDeflections.filter { remainingIDs.contains($0.key) }
         guard !roundResultLocked else { return }
 
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
-            let vineMultiplier = activeObstacles.contains(.vines) && (0.22...0.58).contains(star.y) ? 0.56 : 1.0
+            let previousY = star.y
+            let meetingVines = isMeetingVines(x: star.x, y: star.y)
+            if meetingVines { currentVineContacts.insert(star.id) }
+            let vineMultiplier = meetingVines ? 0.56 : 1.0
             star.y += star.fallSpeed * vineMultiplier * delta
             star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
-            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX) {
-                handleStarCatch()
+            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX,
+                                fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height,
+                                itemDiameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width),
+                                previousY: previousY) {
+                beginLanding(id: star.id, kind: .star, previousY: previousY, currentY: star.y,
+                             diameter: Prompt28BasketCatchGeometry.starDiameter(fieldWidth: gameplayFieldSize.width), delta: delta)
                 continue
             }
             if star.y <= 1.06 { remainingStars.append(star) }
         }
         activeStars = remainingStars
+        collectReadyLandings()
+        guard !roundResultLocked else { return }
+        if !currentVineContacts.subtracting(previousVineContacts).isEmpty { vineContactCount += 1 }
+        previousVineContacts = currentVineContacts
 
         let interval = random(in: levelConfig.spawnIntervalRange)
         if activeFruit.count < levelConfig.maxConcurrentItems,
@@ -421,10 +635,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         let speed = 1.18 / max(duration, 0.5)
         let drift = random(in: levelConfig.driftRange)
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
-        var x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
-        if activeObstacles.contains(.branch), x > 0.72 {
-            x = Double.random(in: max(0.12, laneBounds.lowerBound)...0.70)
-        }
+        let x = Double.random(in: max(0.12, laneBounds.lowerBound)...min(0.88, laneBounds.upperBound))
         let rotation = Double.random(in: -6...6)
         activeFruit.append(
             Prompt28FallingFruit(
@@ -457,13 +668,84 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         )
     }
 
-    private func handleGoodCatch(_ fruit: Prompt28FruitID) {
+    private func beginLanding(id: UUID, kind: LandingKind, previousY: Double, currentY: Double,
+                              diameter: Double, delta: TimeInterval) {
+        guard !pendingLandings.contains(where: { $0.id == id }) else { return }
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: gameplayFieldSize.width, fieldHeight: gameplayFieldSize.height)
+        let threshold = (geometry.mouthY + diameter / 2) / gameplayFieldSize.height
+        let fraction = currentY > previousY ? min(max((threshold - previousY) / (currentY - previousY), 0), 1) : 0
+        let asset: FruitfolioAssetID
+        let isStar: Bool
+        switch kind {
+        case .fruit(let fruit, _): asset = fruit.assetID; isStar = false
+        case .star: asset = .fruitbasket_star; isStar = true
+        }
+        settledCatches.append(.init(id: id, assetID: asset, isStar: isStar))
+        pendingLandings.append(.init(id: id, kind: kind,
+            readyAt: catchClock - delta + fraction * delta + Prompt28BasketCatchGeometry.settlingDuration,
+            order: landingOrder))
+        landingOrder += 1
+    }
+
+    /// A real presentation completion, not a timer-only guess. Repeated/stale
+    /// callbacks cannot collect twice. Paused games retain the acknowledgement
+    /// but never advance scoring until active play resumes.
+    func handleCatchPresentation(id: UUID, event: Prompt28CatchPresentationEvent) {
+        guard let index = pendingLandings.firstIndex(where: { $0.id == id }) else { return }
+        switch event {
+        case .appeared(let token):
+            pendingLandings[index].presentationID = token
+            pendingLandings[index].artworkSettled = false
+        case .settled(let token):
+            guard pendingLandings[index].presentationID == token else { return }
+            pendingLandings[index].artworkSettled = true
+        case .disappeared(let token):
+            guard pendingLandings[index].presentationID == token else { return }
+            pendingLandings[index].presentationID = nil
+            pendingLandings[index].artworkSettled = false
+        }
+        collectReadyLandings()
+    }
+
+    private func collectReadyLandings() {
+        guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        let ready = pendingLandings.filter { $0.presentationID != nil && $0.artworkSettled && $0.readyAt <= catchClock }
+            .sorted { $0.readyAt == $1.readyAt ? $0.order < $1.order : $0.readyAt < $1.readyAt }
+        let readyIDs = Set(ready.map(\.id))
+        pendingLandings.removeAll { readyIDs.contains($0.id) }
+        var collectedIDs: Set<UUID> = []
+        for landing in ready {
+            guard !roundResultLocked else { break }
+            collectedIDs.insert(landing.id)
+            if let index = settledCatches.firstIndex(where: { $0.id == landing.id }) {
+                settledCatches[index].collected = true
+            }
+            switch landing.kind {
+            case .fruit(let fruit, .good): handleGoodCatch(fruit, existingArtworkID: landing.id)
+            case .fruit(let fruit, .bad): handleBadCatch(fruit, existingArtworkID: landing.id)
+            case .star: handleStarCatch(existingArtworkID: landing.id)
+            }
+        }
+        if roundResultLocked {
+            let uncollected = readyIDs.subtracting(collectedIDs).union(pendingLandings.map(\.id))
+            settledCatches.removeAll { uncollected.contains($0.id) }
+            pendingLandings.removeAll()
+        }
+    }
+
+    private func handleGoodCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
+        }
         let outcome = engine.registerGoodCatch(session: &session)
+        roundCollection.goodFruit.append(fruit)
         self.session = session
         if outcome == .success {
             roundResultLocked = true
+            pendingRoundSuccess = true
             stopGameplay()
+            finishSuccessfulRound(presentResult: false)
             roundCompletionTask?.cancel()
             roundCompletionTask = Task { [weak self] in
                 try? await Task.sleep(nanoseconds: 650_000_000)
@@ -485,9 +767,13 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
     }
 
-    private func handleStarCatch() {
+    private func handleStarCatch(existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: .fruitbasket_star, isStar: true, collected: true))
+        }
         _ = engine.registerStarCatch(session: &session)
+        roundCollection.standaloneStarsCaught += 1
         self.session = session
 
         var progress = store.ensureProgress(for: session.normalizedTopicID)
@@ -495,15 +781,22 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         store.updateProgress(progress)
     }
 
-    private func handleBadCatch(_ fruit: Prompt28FruitID) {
+    private func handleBadCatch(_ fruit: Prompt28FruitID, existingArtworkID: UUID? = nil) {
         guard !roundResultLocked, var session else { return }
+        if existingArtworkID == nil {
+            settledCatches.append(.init(id: UUID(), assetID: fruit.assetID, isStar: false, collected: true))
+        }
         let outcome = engine.registerBadCatch(fruit, session: &session)
+        roundCollection.badFruit.append(fruit)
+        if case .badFruitBlockedByStar = outcome { roundCollection.starPassesConsumed += 1 }
         self.session = session
         lastBadFruit = fruit
         if case .badFruitBlockedByStar = outcome { return }
         roundResultLocked = true
+        pendingRoundSuccess = false
         stopGameplay()
         activeFruit.removeAll(); activeStars.removeAll(); classificationFruit = nil
+        finishUnsuccessfulRound(presentResult: false)
         roundCompletionTask?.cancel()
         roundCompletionTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: 280_000_000)
@@ -512,37 +805,80 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         }
     }
 
-    private func finishSuccessfulRound() {
+    private func finishSuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.totalSuccessfulRounds += 1
-        progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
-        let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
-        progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
-        progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
-        didSetPersonalBestThisRound = session.score > progress.bestScore
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        screen = .basketReveal
+        if !roundResultCommitted {
+            var progress = store.progress(for: session.normalizedTopicID)
+                ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
+            progress.totalRoundsCompleted += 1
+            progress.totalSuccessfulRounds += 1
+            progress.totalFruitCaught += Prompt28FruitBasketEngine.goodFruitTarget
+            let newLevel = engine.levelAfterSuccessfulRounds(progress.totalSuccessfulRounds)
+            progress.currentGameLevel = max(progress.currentGameLevel, newLevel)
+            progress.highestGameLevelReached = max(progress.highestGameLevelReached, progress.currentGameLevel)
+            didSetPersonalBestThisRound = session.score > progress.bestScore
+            progress.bestScore = max(progress.bestScore, session.score)
+            progress.bestStreak = max(progress.bestStreak, session.currentStreak)
+            roundResultCommitted = recordCompletedRound(successful: true, updating: progress)
+        }
+        if presentResult {
+            pendingRoundSuccess = nil
+            isPaused = false
+            if let progress = store.progress(for: session.normalizedTopicID) {
+                session.currentGameLevel = progress.currentGameLevel
+                self.session = session
+            }
+            screen = .basketReveal
+        }
     }
 
-    private func finishUnsuccessfulRound() {
+    private func finishUnsuccessfulRound(presentResult: Bool = true) {
         guard var session else { return }
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
-        progress.totalRoundsCompleted += 1
-        progress.bestScore = max(progress.bestScore, session.score)
-        progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        session.currentGameLevel = progress.currentGameLevel
-        self.session = session
-        screen = .catchUnsuccessful
+        if !roundResultCommitted {
+            var progress = store.progress(for: session.normalizedTopicID)
+                ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
+            progress.totalRoundsCompleted += 1
+            progress.bestScore = max(progress.bestScore, session.score)
+            progress.bestStreak = max(progress.bestStreak, session.currentStreak)
+            roundResultCommitted = recordCompletedRound(successful: false, updating: progress)
+        }
+        if presentResult {
+            pendingRoundSuccess = nil
+            isPaused = false
+            if let progress = store.progress(for: session.normalizedTopicID) {
+                session.currentGameLevel = progress.currentGameLevel
+                self.session = session
+            }
+            screen = .catchUnsuccessful
+        }
+    }
+
+    /// Results are persisted at the registered final catch. Navigation or
+    /// inactivity may finish their presentation early without counting twice.
+    private func completePendingRoundIfNeeded() {
+        guard let successful = pendingRoundSuccess else { return }
+        if successful { finishSuccessfulRound() }
+        else { finishUnsuccessfulRound() }
+    }
+
+    private func recordCompletedRound(successful: Bool, updating progress: Prompt28TopicProgress) -> Bool {
+        guard let session, let question = currentQuestion else { return false }
+        let committed = store.commitCompletedRound(.init(id: attemptID, sessionID: session.id,
+            round: session.currentRound, completedAt: Date(), successful: successful,
+            question: question, collection: roundCollection, finalScore: session.score,
+            remainingStarPasses: session.availableStarPasses,
+            personalBest: successful && didSetPersonalBestThisRound,
+            educationalFacts: question.verifiedEducationalFacts), updating: progress)
+        if !committed {
+            message = "your round couldn’t be saved. your previous stored records have been preserved."
+        }
+        return committed
     }
 
     private func stopGameplay() {
+        gameplayCleanup?()
+        puddleMovementActive = false
+        puddleContactActive = false
         gameplayTask?.cancel(); gameplayTask = nil
         roundCompletionTask?.cancel(); roundCompletionTask = nil
     }

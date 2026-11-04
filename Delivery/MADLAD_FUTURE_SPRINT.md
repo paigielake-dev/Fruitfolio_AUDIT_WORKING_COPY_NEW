@@ -1,0 +1,7 @@
+# MADLAD: explicit future-sprint boundary
+
+Status: **EXCLUDED — FOUNDER-HANDLED FUTURE SPRINT**. Sixteen original inference-dependent checklist items and three MADLAD supplemental items are excluded, not PASS. Composite UI-localization requirements remain partial/unverified rather than being silently excluded.
+
+Preserved: original official model-q4k.gguf, tokenizer/configuration resources, model card and Apache2 license text, existing ARM64 device/simulator runtime XCFramework, source build recipes, protected measurement/citation logic, original runtime investigations and actual historical diagnostics. FruitfolioAI, research retrieval, evidence validation and citation architecture remain separate. No new MADLAD inference, quantization change, runtime optimization or cloud/model substitution was performed.
+
+Separate sprint: investigate the preserved exact model/runtime/tokenizer paths, broad target-tag coverage and the previously absent exact tags; eliminate medically incorrect or mixed-language outputs; verify biological terminology, uncertainty/negation, warnings, numbers/compound units/scientific notation and citation markers; verify both Chinese scripts, language persistence and all selected UI states; execute controlled offline tests and physical-iPhone memory/latency/storage/thermal/distribution verification. Earlier bounded fixture passes are not general medical translation or all-language acceptance. Native clinical/language review remains required.

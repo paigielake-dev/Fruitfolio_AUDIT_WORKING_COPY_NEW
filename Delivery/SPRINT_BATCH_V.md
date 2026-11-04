@@ -1,0 +1,3 @@
+# Native editor keyboard localization without content rewriting
+
+The actual UIKit page editor now resolves its keyboard Done action through the selected app locale, exposes a stable keyboard-action identifier, and updates authored accessory chrome independently of document changes. The document, Unicode writing, medical measurements and citation markers remain verbatim. Added a real hosted UITextView/accessory test asserting the compiled Spanish action and exact unchanged mixed-language document. Execution pending; this does not claim system-wide keyboard/context-menu translation or medical localization acceptance.

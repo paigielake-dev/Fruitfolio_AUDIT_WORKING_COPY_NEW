@@ -76,7 +76,7 @@ final class Prompt02DesignSystemTests: XCTestCase {
         XCTAssertTrue(FruitfolioAudioCategory.allCases.contains(.typingASMR))
     }
 
-    func testPrompt01RegistryStillContains265Assets() {
-        XCTAssertEqual(AssetRegistry.all.count, 265)
+    func testPrompt01RegistryStillContains266Assets() {
+        XCTAssertEqual(AssetRegistry.all.count, 266)
     }
 }

@@ -88,4 +88,26 @@ final class Prompt06FruitPopupTests: XCTestCase {
             )
         }
     }
+    func testStaleDismissalCannotClearANewerPopupOrSkipItsGuardedAcknowledgement() {
+        let coordinator = PopupCoordinator()
+        let first = FruitPopupRequest(character: .strawberry, message: "saved", priority: .success)
+        let guarded = FruitPopupRequest(character: .peach, message: "important acknowledgement",
+            dismissBehavior: .persistentUntilAcknowledged, priority: .sensitive)
+        coordinator.request(first); coordinator.markPresented()
+        coordinator.request(guarded)
+        XCTAssertEqual(coordinator.currentPopup?.id, first.id)
+        coordinator.finishDismissal(expectedPopupID: first.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, guarded.id)
+        coordinator.markPresented()
+        coordinator.finishDismissal(expectedPopupID: guarded.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, guarded.id, "A visible guarded popup cannot be finished before dismissal is requested")
+        coordinator.dismissCurrent(reason: .action)
+        coordinator.finishDismissal(expectedPopupID: first.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, guarded.id, "A late callback for the old popup cannot clear the new dismissal")
+        XCTAssertEqual(coordinator.presentationState, .dismissing)
+        coordinator.finishDismissal(expectedPopupID: guarded.id)
+        XCTAssertNil(coordinator.currentPopup)
+        XCTAssertEqual(coordinator.presentationState, .idle)
+    }
+
 }

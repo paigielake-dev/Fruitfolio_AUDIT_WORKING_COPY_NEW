@@ -1,0 +1,3 @@
+# Shared icon interaction lifetime and Reduce Motion
+
+Shared icon identification now respects the system and app Reduce Motion environments, including implicit identification transitions; it removes scale transitions in reduced motion. Delayed hide tasks cancel on disappearance and replacement, so stale tasks cannot hide a newer identification. Disabled controls expose the disabled state and retain guarded actions. Identification and accessibility wording resolves through the app locale. Added an actual contact/back long-hold journey proving a hold does not navigate and a subsequent tap still works. Test and visual execution pending.

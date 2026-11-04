@@ -6,101 +6,19 @@
 //
 
 import SwiftUI
+import UIKit
 
 // MARK: - WatercolorPrimaryButton
 
+/// Compatibility entry point: all existing primary-action call sites now use
+/// the original control-pill artwork and the canonical interaction path.
 struct WatercolorPrimaryButton: View {
     let label: String
+    var localizationKey: String? = nil
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 16,
-                        relativeTo: .headline
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 18)
-                .padding(.vertical, 12)
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(
-                                    red: 1.0,
-                                    green: 0.985,
-                                    blue: 0.95
-                                ),
-                                Color(
-                                    red: 0.79,
-                                    green: 0.76,
-                                    blue: 0.70
-                                )
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .shadow(
-                        color: Color.black.opacity(0.16),
-                        radius: 4,
-                        x: 0,
-                        y: 2
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 2
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, localizationKey: localizationKey, action: action)
     }
 }
 
@@ -108,65 +26,11 @@ struct WatercolorPrimaryButton: View {
 
 struct WatercolorSecondaryButton: View {
     let label: String
+    var localizationKey: String? = nil
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 14,
-                        relativeTo: .body
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .frame(
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 1.6
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, localizationKey: localizationKey, action: action)
     }
 }
 
@@ -177,6 +41,8 @@ struct WatercolorSecondaryButton: View {
 /// shell grows vertically when longer text or Dynamic Type needs more room.
 struct FruitfolioControlPillButton: View {
     let label: String
+    var localizationKey: String? = nil
+    var playsSound = true
     let action: () -> Void
 
     @EnvironmentObject
@@ -185,48 +51,40 @@ struct FruitfolioControlPillButton: View {
     @EnvironmentObject
     private var audioManager: AudioManager
 
+    @Environment(\.locale) private var locale
+    private var resolvedLabel: FruitfolioLocalization.Resolution? {
+        localizationKey.map { FruitfolioLocalization.resolve($0, locale: locale, fallback: label) }
+    }
+    private var visibleLabel: String { resolvedLabel?.text ?? label }
+
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.fruitfolioPopupWritingSize) private var popupWritingSize
+
+    private var usesCompactPopupInsets: Bool {
+        dynamicTypeSize.isAccessibilitySize && popupWritingSize != nil
+    }
+
     var body: some View {
         Button {
-            audioManager.play(.buttonSoftPop)
+            if playsSound { audioManager.play(.buttonSoftPop) }
             action()
         } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 292)
-                    .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 15,
-                            relativeTo: .headline
-                        )
-                    )
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.88)
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                    .frame(
-                        maxWidth: 220,
-                        alignment: .center
-                    )
-                    .padding(.horizontal, 20)
+            // A real multi-child layout keeps the text's intrinsic bounds
+            // separate from the painted shell. Unary wrappers can be flattened
+            // into a full-shell StaticText by SwiftUI accessibility.
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
+                FruitfolioNativeActionLabel(text: visibleLabel,
+                    accessibilityLanguageIdentifier: resolvedLabel?.languageIdentifier,
+                    lineBreakMode: usesCompactPopupInsets ? .byCharWrapping : .byWordWrapping)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             }
-            .frame(
-                maxWidth: 292,
-                minHeight: 82,
-                alignment: .center
-            )
+            .accessibilityElement(children: .contain)
+            .padding(.horizontal, usesCompactPopupInsets ? 8 : 46)
+            .padding(.vertical, usesCompactPopupInsets ? 8 : 20)
+            .frame(maxWidth: 292, minHeight: 82, alignment: .center)
+            .background { FruitfolioControlPillArtwork() }
             .contentShape(Rectangle())
         }
         .buttonStyle(
@@ -235,7 +93,99 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
-        .accessibilityLabel(label)
+        // The contained label keeps its true text bounds, but containment
+        // stops SwiftUI's automatic Button label aggregation. Name the actual
+        // action explicitly without hiding text or suppressing any audit.
+        .accessibilityLabel(Text(visibleLabel))
+    }
+}
+
+/// The visible label itself is a native multiline UILabel. This preserves
+/// intrinsic glyph bounds inside a SwiftUI Button, including when the painted
+/// shell is partly clipped by its owning ScrollView. There is no hidden label,
+/// replacement accessibility frame, or audit suppression.
+struct FruitfolioNativeActionLabel: UIViewRepresentable {
+    let text: String
+    var localizationKey: String? = nil
+    var fontName = "ChalkboardSE-Bold"
+    var pointSize: CGFloat = 15
+    var textStyle: UIFont.TextStyle = .headline
+    var accessibilityLanguageIdentifier: String? = nil
+    var lineBreakMode: NSLineBreakMode = .byWordWrapping
+    var lineSpacing: CGFloat = 0
+    var textColor: Color = DesignTokens.ColorToken.primaryBurgundy
+    var accessibilityText: String? = nil
+    @Environment(\.locale) private var locale
+    private var resolvedText: FruitfolioLocalization.Resolution? {
+        localizationKey.map { FruitfolioLocalization.resolve($0, locale: locale, fallback: text) }
+    }
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    func makeUIView(context: Context) -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.lineBreakMode = lineBreakMode
+        label.adjustsFontForContentSizeCategory = true
+        label.isAccessibilityElement = true
+        label.accessibilityTraits = .staticText
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        return label
+    }
+
+    func updateUIView(_ label: UILabel, context: Context) {
+        let resolution = resolvedText
+        let visibleText = resolution?.text ?? text
+        label.accessibilityLanguage = accessibilityLanguageIdentifier
+            ?? (accessibilityText == nil ? resolution?.languageIdentifier : nil)
+        if label.text != visibleText { label.text = visibleText }
+        label.accessibilityLabel = accessibilityText
+        if label.lineBreakMode != lineBreakMode { label.lineBreakMode = lineBreakMode }
+        label.textColor = UIColor(textColor)
+        let base = UIFont(name: fontName, size: pointSize) ?? UIFont.systemFont(ofSize: pointSize, weight: .semibold)
+        let scaled = UIFontMetrics(forTextStyle: textStyle).scaledFont(for: base,
+            compatibleWith: UITraitCollection(preferredContentSizeCategory: contentSizeCategory))
+        if label.font != scaled { label.font = scaled }
+        if lineSpacing > 0 {
+            let paragraph = NSMutableParagraphStyle()
+            paragraph.alignment = .center
+            paragraph.lineBreakMode = lineBreakMode
+            paragraph.lineSpacing = lineSpacing
+            let attributed = NSAttributedString(string: visibleText, attributes: [
+                .font: scaled, .foregroundColor: UIColor(textColor), .paragraphStyle: paragraph
+            ])
+            if label.attributedText != attributed { label.attributedText = attributed }
+        }
+        // UIKit already invalidates intrinsic size when text/font changes.
+        // Unconditional invalidation during every SwiftUI update can produce
+        // redundant layout work while XCTest cycles Dynamic Type categories.
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UILabel, context: Context) -> CGSize? {
+        let width = max(1, proposal.width ?? uiView.intrinsicContentSize.width)
+        let measured = uiView.sizeThatFits(CGSize(width: width, height: .greatestFiniteMagnitude))
+        // Rendering must use the same width used to measure wrapped height.
+        // Shrinking to measured.width afterwards can introduce another line
+        // without increasing height, clipping long accessibility-size words.
+        return CGSize(width: width, height: ceil(measured.height))
+    }
+
+    private var contentSizeCategory: UIContentSizeCategory {
+        switch dynamicTypeSize {
+        case .xSmall: return .extraSmall
+        case .small: return .small
+        case .medium: return .medium
+        case .large: return .large
+        case .xLarge: return .extraLarge
+        case .xxLarge: return .extraExtraLarge
+        case .xxxLarge: return .extraExtraExtraLarge
+        case .accessibility1: return .accessibilityMedium
+        case .accessibility2: return .accessibilityLarge
+        case .accessibility3: return .accessibilityExtraLarge
+        case .accessibility4: return .accessibilityExtraExtraLarge
+        case .accessibility5: return .accessibilityExtraExtraExtraLarge
+        @unknown default: return .large
+        }
     }
 }
 
@@ -306,114 +256,19 @@ struct FruitfolioLargeCard<Content: View>: View {
 
 // MARK: - FruitfolioTapedPaperPopup
 
-/// Code-built popup inspired by popup_taped_white.png.
-/// The paper body is content-driven, so it expands and contracts naturally
-/// without stretching artwork. The paperclip remains decorative.
+/// Original founder-provided paper with one calibrated, scrollable writing
+/// region. The tape and paper keep their native proportions at every text size.
 struct FruitfolioTapedPaperPopup<Content: View>: View {
     private let content: Content
-
-    init(
-        @ViewBuilder content: () -> Content
-    ) {
-        self.content = content()
-    }
-
+    init(@ViewBuilder content: () -> Content) { self.content = content() }
     var body: some View {
-        VStack(
-            alignment: .center,
-            spacing: 0
-        ) {
-            content
-        }
-        .multilineTextAlignment(.center)
-        .frame(
-            maxWidth: .infinity,
-            alignment: .center
-        )
-        .padding(.horizontal, 30)
-        .padding(.top, 42)
-        .padding(.bottom, 30)
-        .frame(
-            maxWidth: 330,
-            alignment: .center
-        )
-        .background {
-            ZStack {
-                FruitfolioTornPaperShape()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(
-                                    red: 1.0,
-                                    green: 0.995,
-                                    blue: 0.975
-                                ),
-                                Color(
-                                    red: 0.985,
-                                    green: 0.978,
-                                    blue: 0.955
-                                )
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-
-                FruitfolioPaperWrinkleOverlay()
-                    .clipShape(
-                        FruitfolioTornPaperShape()
-                    )
-
-                FruitfolioTornPaperShape()
-                    .stroke(
-                        Color(
-                            red: 0.80,
-                            green: 0.76,
-                            blue: 0.69
-                        )
-                        .opacity(0.28),
-                        lineWidth: 0.85
-                    )
+        FruitfolioPopupArtworkSurface(assetName: "popup_taped_white",
+            normalizedWriting: CGRect(x: 0.13, y: 0.23, width: 0.74, height: 0.64), maximumWidth: 420) {
+                content
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.vertical, 8)
             }
-            .shadow(
-                color: Color.black.opacity(0.075),
-                radius: 7,
-                x: 0,
-                y: 4
-            )
-        }
-        .overlay(alignment: .top) {
-            FruitfolioPaperTape()
-                .frame(
-                    width: 176,
-                    height: 48
-                )
-                .offset(y: -22)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
-        .overlay(alignment: .topTrailing) {
-            Image("popup_paperclip")
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: 30,
-                    height: 43
-                )
-                .rotationEffect(
-                    .degrees(7)
-                )
-                .offset(
-                    x: -18,
-                    y: 19
-                )
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
-        }
-        .padding(.top, 24)
-        .accessibilityElement(
-            children: .contain
-        )
     }
 }
 
@@ -618,6 +473,29 @@ private struct FruitfolioPaperTape: View {
 
 // MARK: - BackControl
 
+enum FruitfolioStandardControl: CaseIterable {
+    case back, close, add, confirm
+
+    var assetID: FruitfolioAssetID {
+        switch self {
+        case .back: return .control_previous
+        case .close: return .control_close
+        case .add: return .control_plus
+        case .confirm: return .control_check
+        }
+    }
+}
+
+private struct FruitfolioStandardControlArtwork: View {
+    let control: FruitfolioStandardControl
+    var body: some View {
+        FruitfolioImage(id: control.assetID)
+            .scaledToFit()
+            .frame(width: 44, height: 44)
+            .accessibilityHidden(true)
+    }
+}
+
 struct BackControl: View {
     let action: () -> Void
 
@@ -636,14 +514,7 @@ struct BackControl: View {
                 action()
             }
         ) {
-            Image(systemName: "chevron.left")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .back)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -651,6 +522,7 @@ struct BackControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.back")
     }
 }
 
@@ -674,14 +546,7 @@ struct CloseControl: View {
                 action()
             }
         ) {
-            Image(systemName: "xmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .close)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -689,6 +554,7 @@ struct CloseControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.close")
     }
 }
 
@@ -712,14 +578,7 @@ struct AddControl: View {
                 action()
             }
         ) {
-            Image(systemName: "plus")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .add)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -727,6 +586,7 @@ struct AddControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.add")
     }
 }
 
@@ -750,14 +610,7 @@ struct ConfirmControl: View {
                 action()
             }
         ) {
-            Image(systemName: "checkmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .confirm)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -765,6 +618,7 @@ struct ConfirmControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.confirm")
     }
 }
 
@@ -799,18 +653,20 @@ struct ChoiceCircle: View {
 
 struct PageTurnTransition: ViewModifier {
     let isActive: Bool
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
 
     func body(content: Content) -> some View {
         content
             .rotation3DEffect(
-                .degrees(isActive ? 0 : 90),
+                .degrees(systemReduceMotion || appReduceMotion ? 0 : (isActive ? 0 : 90)),
                 axis: (x: 0, y: 1, z: 0),
                 anchor: .leading,
                 perspective: 0.6
             )
             .opacity(isActive ? 1 : 0)
             .animation(
-                .easeInOut(duration: 0.5),
+                systemReduceMotion || appReduceMotion ? nil : .easeInOut(duration: 0.5),
                 value: isActive
             )
     }
@@ -825,6 +681,7 @@ struct WatercolorBottomSheet<Content: View>: View {
 
     @EnvironmentObject
     private var motionPreferences: MotionPreferences
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
 
     @State
     private var isVisible = false
@@ -880,11 +737,12 @@ struct WatercolorBottomSheet<Content: View>: View {
         )
         .padding()
         .transition(
-            .move(edge: .bottom)
-                .combined(with: .opacity)
+            motionPreferences.reduceMotionActive || systemReduceMotion
+                ? .opacity
+                : .move(edge: .bottom).combined(with: .opacity)
         )
         .animation(
-            motionPreferences.reduceMotionActive
+            motionPreferences.reduceMotionActive || systemReduceMotion
                 ? .easeOut(duration: 0.2)
                 : .spring(
                     response: 0.4,
@@ -1103,7 +961,7 @@ struct WatercolorToggle: View {
 
     var body: some View {
         Toggle(isOn: $isOn) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -1127,9 +985,9 @@ struct WatercolorToggle: View {
             )
         )
         .disabled(isDisabled)
-        .accessibilityLabel(Text(label))
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
         .accessibilityValue(
-            Text(isOn ? "on" : "off")
+            Text(LocalizedStringKey(isOn ? "on" : "off"))
         )
     }
 }

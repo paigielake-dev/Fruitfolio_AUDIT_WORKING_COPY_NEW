@@ -2,14 +2,14 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt01AssetSystemTests: XCTestCase {
-    func testRegistryContainsExactly265ProductionPNGs() {
-        XCTAssertEqual(AssetRegistry.all.count, 265)
-        XCTAssertEqual(FruitfolioAssetID.allCases.count, 265)
+    func testRegistryContainsExactly266ProductionPNGs() {
+        XCTAssertEqual(AssetRegistry.all.count, 266)
+        XCTAssertEqual(FruitfolioAssetID.allCases.count, 266)
     }
 
     func testCanonicalIDsAndPhysicalPathsAreUnique() {
-        XCTAssertEqual(Set(AssetRegistry.all.map(\.id)).count, 265)
-        XCTAssertEqual(Set(AssetRegistry.all.map(\.physicalPath)).count, 265)
+        XCTAssertEqual(Set(AssetRegistry.all.map(\.id)).count, 266)
+        XCTAssertEqual(Set(AssetRegistry.all.map(\.physicalPath)).count, 266)
     }
 
     func testEducationalVisualsAreNeverDecorative() {

@@ -10,6 +10,13 @@ final class Prompt27AContextStore: ObservableObject {
     @Published private(set) var context: Prompt27AUserReproductiveContext
     @Published private(set) var didRecoverCorruptStoredContext = false
 
+    @Published private(set) var persistenceError: String?
+    var loadError: String? {
+        didRecoverCorruptStoredContext
+            ? "your saved context could not be read. the original data is preserved. clear context explicitly only if you want to discard it."
+            : nil
+    }
+
     private let defaults: UserDefaults
     private let codec: Prompt27AContextCodec
 
@@ -24,67 +31,109 @@ final class Prompt27AContextStore: ObservableObject {
         self.context = migration.context
         if case .corruptStoredValue = migration {
             self.didRecoverCorruptStoredContext = true
-            defaults.removeObject(forKey: Self.storageKey)
+        }
+        if defaults.object(forKey: Self.storageKey) != nil, defaults.data(forKey: Self.storageKey) == nil {
+            self.didRecoverCorruptStoredContext = true
         }
     }
 
     func setTrackingGoal(_ value: Prompt27ATrackingGoal) {
-        context.setTrackingGoal(value)
-        persist()
+        mutate { $0.setTrackingGoal(value) }
     }
 
     func setSexualActivityContext(_ value: Prompt27ASexualActivityContext) {
-        context.setSexualActivityContext(value)
-        persist()
+        mutate { $0.setSexualActivityContext(value) }
     }
 
     func setReproductiveStage(_ value: Prompt27AReproductiveStage) {
-        context.setReproductiveStage(value)
-        persist()
+        mutate { $0.setReproductiveStage(value) }
     }
 
     func setSurrogacyContext(_ value: Prompt27ASurrogacyContext) {
-        context.setSurrogacyContext(value)
-        persist()
+        mutate { $0.setSurrogacyContext(value) }
     }
 
     func setLactationContext(_ value: Prompt27ALactationContext) {
-        context.setLactationContext(value)
-        persist()
+        mutate { $0.setLactationContext(value) }
     }
 
     func setCycleHealthContext(_ value: Prompt27ACycleHealthContext, selected: Bool) {
-        context.setCycleHealthContext(value, selected: selected)
-        persist()
+        mutate { $0.setCycleHealthContext(value, selected: selected) }
     }
 
     func setInfertilityContext(_ value: Prompt27AInfertilityContext) {
-        context.setInfertilityContext(value)
-        persist()
+        mutate { $0.setInfertilityContext(value) }
     }
 
     func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) {
-        context.setFertilityTreatmentContext(value)
-        persist()
+        mutate { $0.setFertilityTreatmentContext(value) }
     }
 
     func setContraceptionContext(_ value: Prompt27AContraceptionContext) {
-        context.setContraceptionContext(value)
-        persist()
+        mutate { $0.setContraceptionContext(value) }
+    }
+
+    func setPersonalHealthField(_ field: Prompt27AHealthField, text: String,
+                                status: Prompt27AHealthEntry.Status = .supplied,
+                                clinicianConfirmedByUser: Bool = false) {
+        mutate { candidate in
+            candidate.personalHealthFields[field] = .init(text: text, status: status,
+                clinicianConfirmedByUser: clinicianConfirmedByUser)
+        }
     }
 
     func clearContext() {
-        context.clear()
-        persist()
+        var cleared = context
+        cleared.clear()
+        save(cleared, explicitlyDiscardCorruptData: true)
     }
 
     /// Synchronizes only exact semantic overlaps from Cycle Onboarding into
     /// My Context. Ambiguous answers (for example “recent pregnancy” or
     /// “recently stopped hormonal birth control”) are deliberately not inferred
     /// into a different present-tense health state.
-    func syncFromCycleOnboarding(_ draft: Prompt14OnboardingDraft) {
+    func syncFromCycleOnboarding(_ draft: Prompt14OnboardingDraft, previous: Prompt14OnboardingDraft? = nil) {
+        guard !didRecoverCorruptStoredContext else { return }
         var updated = context
         let now = Date()
+        // An explicitly removed onboarding answer must stop influencing the
+        // shared context. Initial loading alone never erases independent edits.
+        if let previous {
+            if previous.cycleAffectingContexts.contains(.preferNotToSay), !draft.cycleAffectingContexts.contains(.preferNotToSay) {
+                if updated.contraceptionContext.value == .preferNotToSpecify { updated.setContraceptionContext(.unspecified, at: now) }
+                if updated.fertilityTreatmentContext.value == .preferNotToSpecify { updated.setFertilityTreatmentContext(.unspecified, at: now) }
+            }
+            if previous.cycleAffectingContexts.contains(.none), !draft.cycleAffectingContexts.contains(.none) {
+                if updated.contraceptionContext.value == .none { updated.setContraceptionContext(.unspecified, at: now) }
+                if updated.fertilityTreatmentContext.value == .notCurrentlyUndergoing { updated.setFertilityTreatmentContext(.unspecified, at: now) }
+            }
+            if previous.recentContexts.contains(.preferNotToSay), !draft.recentContexts.contains(.preferNotToSay) {
+                if updated.reproductiveStage.value == .preferNotToSpecify { updated.setReproductiveStage(.unspecified, at: now) }
+                if updated.lactationContext.value == .preferNotToSpecify { updated.setLactationContext(.unspecified, at: now) }
+            }
+            if previous.recentContexts.contains(.none), !draft.recentContexts.contains(.none),
+               updated.lactationContext.value == .notCurrentlyBreastfeedingOrLactating {
+                updated.setLactationContext(.unspecified, at: now)
+            }
+            if previous.cycleAffectingContexts.contains(.hormonalBirthControl),
+               !draft.cycleAffectingContexts.contains(.hormonalBirthControl),
+               updated.contraceptionContext.value == .hormonalContraception {
+                updated.setContraceptionContext(.unspecified, at: now)
+            }
+            if previous.cycleAffectingContexts.contains(.fertilityMedication),
+               !draft.cycleAffectingContexts.contains(.fertilityMedication),
+               updated.fertilityTreatmentContext.value == .currentlyUndergoing {
+                updated.setFertilityTreatmentContext(.unspecified, at: now)
+            }
+            if previous.recentContexts.contains(.postpartum), !draft.recentContexts.contains(.postpartum),
+               updated.reproductiveStage.value == .postpartum {
+                updated.setReproductiveStage(.unspecified, at: now)
+            }
+            if previous.recentContexts.contains(.breastfeeding), !draft.recentContexts.contains(.breastfeeding),
+               updated.lactationContext.value == .breastfeedingOrLactating {
+                updated.setLactationContext(.unspecified, at: now)
+            }
+        }
 
         if draft.cycleContextState == .supplied {
             let choices = draft.cycleAffectingContexts
@@ -124,14 +173,14 @@ final class Prompt27AContextStore: ObservableObject {
         }
 
         guard updated != context else { return }
-        context = updated
-        persist()
+        save(updated)
     }
 
     /// Explicit privacy/export bridge. This exports only the user-reported
     /// context object and never reaches into cycle history or other domains.
     func exportReadableJSON() throws -> Data {
-        try codec.encode(context)
+        guard !didRecoverCorruptStoredContext else { throw CocoaError(.fileReadCorruptFile) }
+        return try codec.encode(context)
     }
 
     /// Explicit local erase for this context domain only. Historical cycle,
@@ -140,11 +189,28 @@ final class Prompt27AContextStore: ObservableObject {
     func eraseLocalContextData() {
         context = .unspecified
         defaults.removeObject(forKey: Self.storageKey)
+        didRecoverCorruptStoredContext = false
+        persistenceError = nil
     }
 
-    private func persist() {
-        guard let data = try? codec.encode(context) else { return }
-        defaults.set(data, forKey: Self.storageKey)
+    private func mutate(_ edit: (inout Prompt27AUserReproductiveContext) -> Void) {
+        guard !didRecoverCorruptStoredContext else { return }
+        var candidate = context
+        edit(&candidate)
+        save(candidate)
+    }
+
+    private func save(_ candidate: Prompt27AUserReproductiveContext, explicitlyDiscardCorruptData: Bool = false) {
+        guard !didRecoverCorruptStoredContext || explicitlyDiscardCorruptData else { return }
+        do {
+            let data = try codec.encode(candidate)
+            defaults.set(data, forKey: Self.storageKey)
+            context = candidate
+            didRecoverCorruptStoredContext = false
+            persistenceError = nil
+        } catch {
+            persistenceError = "your context could not be saved. your previous saved information is unchanged."
+        }
     }
 }
 #endif

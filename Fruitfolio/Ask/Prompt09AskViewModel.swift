@@ -25,12 +25,14 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published var inputText = ""
     @Published private(set) var messages: [AskMessage]
     @Published private(set) var answer: AskAnswer?
+    @Published private(set) var sessionAnswers: [UUID: AskAnswer] = [:]
     @Published private(set) var phase: Phase = .ready
     @Published private(set) var searchStatusText = "looking through the FruitsofLife.xo library…"
     @Published private(set) var displayedAnswerText = ""
     @Published private(set) var selectedEducationalAssets: [EducationalAssetDescriptor] = []
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
+    @Published var selectedExcerptRange: NSRange?
     @Published private(set) var excerptSaved = false
 
     let conversationID: UUID
@@ -40,6 +42,7 @@ final class Prompt09AskViewModel: ObservableObject {
     private var typingTask: Task<Void, Never>?
     private var requestTask: Task<Void, Never>?
     private var requestGeneration = UUID()
+    private var reducedMotion = false
 
     init(
         conversationID: UUID = UUID(),
@@ -81,6 +84,11 @@ final class Prompt09AskViewModel: ObservableObject {
             && phase != .searching
     }
 
+    var visibleMessages: [AskMessage] {
+        let answerIDs = Set(sessionAnswers.values.map(\.id))
+        return messages.filter { !answerIDs.contains($0.id) }
+    }
+
     var isConversationStarted: Bool {
         messages.contains {
             $0.role == .user
@@ -96,12 +104,14 @@ final class Prompt09AskViewModel: ObservableObject {
     func submitCurrentQuestion(
         reduceMotion: Bool
     ) async {
+        guard canSend else { return }
+        setReducedMotion(reduceMotion)
         requestTask?.cancel()
         let generation = UUID()
         requestGeneration = generation
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion)
+            await self.performSubmitCurrentQuestion(generation: generation)
         }
         requestTask = task
         await task.value
@@ -111,7 +121,7 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     private func performSubmitCurrentQuestion(
-        reduceMotion: Bool
+        generation: UUID
     ) async {
         let question = inputText
             .trimmingCharacters(
@@ -125,7 +135,7 @@ final class Prompt09AskViewModel: ObservableObject {
             return
         }
 
-        try? Task.checkCancellation()
+        guard !Task.isCancelled, requestGeneration == generation else { return }
         typingTask?.cancel()
 
         answer = nil
@@ -133,15 +143,12 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         inputText = ""
 
-        messages.append(
-            AskMessage(
-                role: .user,
-                text: question
-            )
-        )
+        let questionMessage = AskMessage(role: .user, text: question)
+        messages.append(questionMessage)
 
         phase = .searching
         searchStatusText = "looking through the FruitsofLife.xo library…"
@@ -155,7 +162,7 @@ final class Prompt09AskViewModel: ObservableObject {
                     conversation: messages,
                     trackerContext: nil
                 ) { [weak self] progress in
-                    guard let self else { return }
+                    guard let self, self.requestGeneration == generation, !Task.isCancelled else { return }
                     switch progress {
                     case .lookingThroughLibrary:
                         self.searchStatusText = "looking through the FruitsofLife.xo library…"
@@ -175,7 +182,10 @@ final class Prompt09AskViewModel: ObservableObject {
             }
 
             try Task.checkCancellation()
+            guard requestGeneration == generation else { return }
+            sessionAnswers[questionMessage.id] = response
             answer = response
+            messages.append(AskMessage(id: response.id, role: .fruitfolio, text: response.answerText))
 
             selectedEducationalAssets =
                 router.assets(
@@ -185,7 +195,7 @@ final class Prompt09AskViewModel: ObservableObject {
 
             phase = .answering
 
-            if reduceMotion {
+            if reducedMotion {
                 displayedAnswerText =
                     response.answerText
 
@@ -196,10 +206,16 @@ final class Prompt09AskViewModel: ObservableObject {
                 )
             }
         } catch {
+            guard !Task.isCancelled, requestGeneration == generation else { return }
             phase = .failed(
                 error.localizedDescription
             )
         }
+    }
+
+    func setReducedMotion(_ enabled: Bool) {
+        reducedMotion = enabled
+        if enabled, phase == .answering { showAll() }
     }
 
     func showAll() {
@@ -208,6 +224,7 @@ final class Prompt09AskViewModel: ObservableObject {
         }
 
         typingTask?.cancel()
+        typingTask = nil
 
         displayedAnswerText =
             answer.answerText
@@ -218,7 +235,8 @@ final class Prompt09AskViewModel: ObservableObject {
 
 
     func resetConversation() {
-        typingTask?.cancel()
+        cancelOutstandingWork()
+        sessionAnswers.removeAll()
 
         inputText = ""
         answer = nil
@@ -226,6 +244,7 @@ final class Prompt09AskViewModel: ObservableObject {
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
+        selectedExcerptRange = nil
         excerptSaved = false
         phase = .ready
 
@@ -274,5 +293,49 @@ final class Prompt09AskViewModel: ObservableObject {
                 phase = .ready
             }
         }
+    }
+}
+
+/// Explicit reading intent, separate from geometry changed by streamed text.
+/// Growing content must not be mistaken for a user's request to stop following.
+nonisolated struct AskConversationScrollPolicy: Equatable, Sendable {
+    private(set) var followsLatest = true
+    private(set) var isUserDragging = false
+    private(set) var isAtLatest = true
+    private var lastContentTop: Double?
+    private var lastViewportHeight: Double?
+    var shouldFollow: Bool { followsLatest && !isUserDragging }
+
+    mutating func updateBottom(_ bottom: Double, viewportHeight: Double) {
+        guard bottom.isFinite, viewportHeight.isFinite, viewportHeight > 0 else { return }
+        isAtLatest = bottom <= viewportHeight + 24
+        if isAtLatest && !isUserDragging { followsLatest = true }
+    }
+    /// VoiceOver paging and native scrollbar scrolling do not necessarily call
+    /// a SwiftUI DragGesture. Track movement of the content's origin as well as
+    /// its bottom: streaming extends the bottom, while reading earlier moves
+    /// the origin toward the viewport. Keyboard/viewport changes are layout,
+    /// not a new reading gesture.
+    mutating func updateGeometry(contentTop: Double, contentBottom: Double, viewportHeight: Double) {
+        guard contentTop.isFinite, contentBottom.isFinite, viewportHeight.isFinite,
+              viewportHeight > 0, contentBottom >= contentTop else { return }
+        let viewportChanged = lastViewportHeight.map { abs($0 - viewportHeight) > 1 } ?? true
+        let movedEarlier = lastContentTop.map { contentTop > $0 + 2 } ?? false
+        updateBottom(contentBottom, viewportHeight: viewportHeight)
+        if !viewportChanged && movedEarlier && !isAtLatest { followsLatest = false }
+        lastContentTop = contentTop
+        lastViewportHeight = viewportHeight
+    }
+    mutating func userDragged(towardEarlier: Bool) {
+        isUserDragging = true
+        if towardEarlier { followsLatest = false }
+    }
+    mutating func userEndedDrag() {
+        isUserDragging = false
+        if isAtLatest { followsLatest = true }
+    }
+    mutating func requestedNewQuestion() {
+        followsLatest = true; isUserDragging = false
+        lastContentTop = nil; lastViewportHeight = nil
     }
 }

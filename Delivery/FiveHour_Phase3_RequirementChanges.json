@@ -1,0 +1,169 @@
+{
+  "phase": 3,
+  "recordedAtUTC": "2026-11-02T16:17:58.542735+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-229",
+      "originalBreakdownItem": "Allow users to create and edit their username alongside their email.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-230",
+      "originalBreakdownItem": "Use the same username for Account and Fruit Basket.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-231",
+      "originalBreakdownItem": "Synchronize username changes automatically.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-232",
+      "originalBreakdownItem": "Apply appropriate username character limits and moderation.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-233",
+      "originalBreakdownItem": "Reject explicit or otherwise prohibited usernames.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-234",
+      "originalBreakdownItem": "Enforce the requirement against using real names for leaderboard identities.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "FruitfolioTests/FruitfolioUsernameStoreTests.swift"
+      ],
+      "changes": "Validate the actual username draft before sanitization. Both entry points now reject overlong/invalid drafts rather than silently saving a truncated or stripped identity. Basket keeps invalid text visible for correction and retains incomplete typing. Failed edits preserve the previous shared/persisted username. No backend identity reservation or new personal data collection was introduced.",
+      "verification": "Extended actual-store restart regression tests and added persistence equality test; runtime execution pending founder Mac. git diff --check passed for changed Swift files.",
+      "remainingIssues": "Public server uniqueness/moderation needs configured backend. Existing deterministic moderation is not comprehensive multilingual moderation. The app cannot establish a user\u2019s actual legal name without a founder-approved privacy-preserving verification policy; no unsupported identity inference or legal-name collection was added."
+    },
+    {
+      "requirementID": "FF1B-249",
+      "originalBreakdownItem": "Store measurements locally.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "FruitfolioTests/HormoneMeasurementTests.swift"
+      ],
+      "changes": "Readable JSON with duplicate measurement identities is now rejected as conflicting storage, with original bytes preserved and writes/deletion disabled. No observation is silently deduplicated or selected. Explicit guarded bulk erase remains the separate recovery action. Export already refuses any hormone store loadError.",
+      "verification": "Added actual encoded-file, restart, byte-equality and explicit recovery XCTest. Runtime pending founder Mac; changed-file git diff --check passed.",
+      "remainingIssues": "New safety path and unaffected save/edit/delete/export journeys require Mac regression verification."
+    },
+    {
+      "requirementID": "FF1B-250",
+      "originalBreakdownItem": "Preserve measurements across app restarts.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "FruitfolioTests/HormoneMeasurementTests.swift"
+      ],
+      "changes": "Readable JSON with duplicate measurement identities is now rejected as conflicting storage, with original bytes preserved and writes/deletion disabled. No observation is silently deduplicated or selected. Explicit guarded bulk erase remains the separate recovery action. Export already refuses any hormone store loadError.",
+      "verification": "Added actual encoded-file, restart, byte-equality and explicit recovery XCTest. Runtime pending founder Mac; changed-file git diff --check passed.",
+      "remainingIssues": "New safety path and unaffected save/edit/delete/export journeys require Mac regression verification."
+    },
+    {
+      "requirementID": "FF1B-251",
+      "originalBreakdownItem": "Allow viewing, filtering, sorting, editing, and deleting records.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "FruitfolioTests/HormoneMeasurementTests.swift"
+      ],
+      "changes": "Readable JSON with duplicate measurement identities is now rejected as conflicting storage, with original bytes preserved and writes/deletion disabled. No observation is silently deduplicated or selected. Explicit guarded bulk erase remains the separate recovery action. Export already refuses any hormone store loadError.",
+      "verification": "Added actual encoded-file, restart, byte-equality and explicit recovery XCTest. Runtime pending founder Mac; changed-file git diff --check passed.",
+      "remainingIssues": "New safety path and unaffected save/edit/delete/export journeys require Mac regression verification."
+    },
+    {
+      "requirementID": "FF1B-265",
+      "originalBreakdownItem": "Ensure deleted measurements are removed from local storage.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "FruitfolioTests/HormoneMeasurementTests.swift"
+      ],
+      "changes": "Readable JSON with duplicate measurement identities is now rejected as conflicting storage, with original bytes preserved and writes/deletion disabled. No observation is silently deduplicated or selected. Explicit guarded bulk erase remains the separate recovery action. Export already refuses any hormone store loadError.",
+      "verification": "Added actual encoded-file, restart, byte-equality and explicit recovery XCTest. Runtime pending founder Mac; changed-file git diff --check passed.",
+      "remainingIssues": "New safety path and unaffected save/edit/delete/export journeys require Mac regression verification."
+    },
+    {
+      "requirementID": "FF1B-248",
+      "originalBreakdownItem": "Support cancellation and unsaved-change protection.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
+    },
+    {
+      "requirementID": "FF1B-261",
+      "originalBreakdownItem": "Ensure the feature supports Dynamic Type, VoiceOver, and accessible graph distinctions.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
+    },
+    {
+      "requirementID": "FF1B-458",
+      "originalBreakdownItem": "Test Hormone Information creation, editing, deletion, and persistence.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "changes": "Preserved measurement behavior and added stable identifiers on actual result/unit inputs, date confirmation, save and cancel controls plus an accessible editor heading. Added normal/largest UI journeys that enter a valid unsaved measurement, Cancel, keep editing, verify exact draft values, Cancel again, explicitly discard and restart to prove no new saved record. Strict full-visibility and accessibility assertions are retained.",
+      "verification": "Two executable UI journeys and screenshots added; not executed on Mac. Existing full create/edit/delete journey remains intact. git diff --check passed.",
+      "remainingIssues": "Actual simulator execution, strict audits and chart/accessibility acceptance remain pending."
+    }
+  ]
+}

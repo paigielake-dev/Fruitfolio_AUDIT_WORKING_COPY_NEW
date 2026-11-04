@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 enum Prompt12DataManagementMode: Equatable {
     case fullPage
@@ -12,13 +13,65 @@ struct Prompt12DataManagementView: View {
     let onBack: () -> Void
 
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var contextStore: Prompt27AContextStore
+    @EnvironmentObject private var motion: MotionPreferences
+    @State private var exportDocument: FruitfolioPersonalDataDocument?
+    @State private var showingExportDestination = false
+    @StateObject private var exportPreparation = FruitfolioExportPreparation()
+    private var preparingExport: Bool { exportPreparation.isPreparing }
 
+    @State private var confirmHormoneErase = false
     @State private var message: String?
     @State private var showLocalDeletionNotice = false
 
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .onDisappear {
+                // Presenting Files may cover this view; that is not leaving
+                // the feature. Preserve the user-requested destination flow.
+                if !showingExportDestination { exportPreparation.cancel() }
+            }
+            .fruitfolioModalBlur(active: confirmHormoneErase, reduceMotion: motion.reduceMotionActive)
+            .overlay {
+                if confirmHormoneErase {
+                    Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete all hormone measurements?",
+                        message: "this removes hormone results only. cycle logs, saved guides, and account information are unchanged.",
+                        primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "delete hormone measurements",
+                        primaryAction: { confirmHormoneErase = false }, secondaryAction: nil,
+                        destructiveAction: {
+                            do {
+                                try HormoneMeasurementStore.shared.eraseAll()
+                                message = "hormone measurements have been deleted from this device."
+                            } catch { message = error.localizedDescription }
+                            confirmHormoneErase = false
+                        })
+                }
+            }
+            .fileExporter(isPresented: $showingExportDestination, document: exportDocument,
+                          contentType: .json, defaultFilename: "Fruitfolio-Personal-Data") { result in
+                let preparedBytes = exportDocument?.data
+                exportDocument = nil
+                switch result {
+                case .success(let destination):
+                    guard let preparedBytes else {
+                        message = "the destination returned, but the prepared JSON could not be verified. please try exporting again."
+                        return
+                    }
+                    Task { @MainActor in
+                        do {
+                            try await Task.detached(priority: .utility) {
+                                try FruitfolioPersonalDataDocument.verifySavedFile(at: destination, expected: preparedBytes)
+                            }.value
+                            message = "your personal data JSON was exported. keep it somewhere private."
+                        } catch {
+                            message = "the destination returned, but the saved JSON could not be read back and verified. please check the file before relying on it."
+                        }
+                    }
+                case .failure(let error): message = error.localizedDescription
+                }
+            }
     }
 
     private var content: some View {
@@ -119,7 +172,7 @@ struct Prompt12DataManagementView: View {
                     assetName:
                         "ask_source_pages",
                     onBack:
-                        onBack
+                        leaveDataManagement
                 )
             } else {
                 Text("data")
@@ -151,6 +204,10 @@ struct Prompt12DataManagementView: View {
             exportCard
             includedAreasCard
             deletionCard
+            FruitfolioControlPillButton(label: "delete local hormone measurements", localizationKey: "delete local hormone measurements") {
+                confirmHormoneErase = true
+            }
+            .accessibilityIdentifier("data.deleteHormones")
 
             if let message {
                 Text(message)
@@ -184,12 +241,12 @@ struct Prompt12DataManagementView: View {
 
             if mode == .popup {
                 WatercolorSecondaryButton(
-                    label: "close"
+                    label: "close", localizationKey: "close"
                 ) {
                     audioManager.play(
                         .popupClose
                     )
-                    onBack()
+                    leaveDataManagement()
                 }
             }
         }
@@ -206,14 +263,16 @@ struct Prompt12DataManagementView: View {
             )
 
             centeredInfoText(
-                "prepare a readable record of supported personal Fruitfolio data. this is separate from exporting a pretty encyclopedia as a PDF."
+                "export readable JSON of your account, saved encyclopedia and guide text, source references, settings, cycle records, reported context, hormone results, and Fruit Basket progress. this file contains sensitive health data. choose a private destination. original imported image files and session-only Ask conversations are not included; this is not a complete media backup."
             )
 
             FruitfolioControlPillButton(
-                label: "prepare export"
+                label: preparingExport ? "preparing your export…" : "prepare export"
             ) {
                 prepareExport()
             }
+            .disabled(preparingExport)
+            .accessibilityIdentifier("data.prepareExport")
             .frame(
                 maxWidth: 260,
                 alignment: .center
@@ -232,8 +291,7 @@ struct Prompt12DataManagementView: View {
                 spacing: 13
             ) {
                 ForEach(
-                    Prompt12DataScope
-                        .allCases
+                    Prompt12DataScope.exportedScopes
                 ) { scope in
                     VStack(
                         alignment: .center,
@@ -348,7 +406,7 @@ struct Prompt12DataManagementView: View {
             )
 
             FruitfolioControlPillButton(
-                label: "review deletion options"
+                label: "review deletion options", localizationKey: "review deletion options"
             ) {
                 showLocalDeletionNotice = true
             }
@@ -417,18 +475,36 @@ struct Prompt12DataManagementView: View {
             )
     }
 
-    private func prepareExport() {
-        do {
-            let export =
-                try store.prepareDataExport()
+    private func leaveDataManagement() {
+        exportPreparation.cancel()
+        exportDocument = nil
+        showingExportDestination = false
+        onBack()
+    }
 
-            message =
-                "your data is ready ♡ · \(export.scopes.count) areas included"
-        } catch {
-            message =
-                error.localizedDescription
+    private func prepareExport() {
+        guard !preparingExport else { return }
+        guard store.loadError == nil else {
+            exportDocument = nil
+            showingExportDestination = false
+            message = Prompt12AccountPrivacyError.unreadableStoredData.localizedDescription
+            return
         }
+        message = nil
+        exportPreparation.start(operation: {
+            try await FruitfolioPersonalDataExport.capture(account: store.account,
+                username: FruitfolioUsernameStore.shared.username, settings: settings,
+                library: .shared, context: contextStore, hormones: .shared)
+        }, completion: { result in
+            switch result {
+            case .success(let data):
+                exportDocument = FruitfolioPersonalDataDocument(data: data)
+                showingExportDestination = true
+                message = "your readable JSON is prepared. choose where to save it; nothing is sent automatically."
+            case .failure(let error):
+                exportDocument = nil
+                message = error.localizedDescription
+            }
+        })
     }
 }
-
-

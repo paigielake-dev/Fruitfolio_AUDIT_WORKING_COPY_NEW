@@ -64,25 +64,9 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
     }
 
     private func applyText(to textView: UITextView) {
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.lineSpacing = 4
-
-        let baseFont = UIFont(name: "ChalkboardSE-Regular", size: 16)
-            ?? UIFont.preferredFont(forTextStyle: .body)
-
-        textView.attributedText = NSAttributedString(
-            string: text,
-            attributes: [
-                .font: UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont),
-                .foregroundColor: UIColor(
-                    red: 128.0 / 255.0,
-                    green: 0,
-                    blue: 0,
-                    alpha: 1
-                ),
-                .paragraphStyle: paragraph
-            ]
-        )
+        textView.attributedText = FruitfolioSemanticAttributedRenderer.render(
+            .init(spans: [.init(text: text)]), traits: textView.traitCollection)
+        textView.accessibilityLabel = text
     }
 
     final class Coordinator: NSObject, UITextViewDelegate {

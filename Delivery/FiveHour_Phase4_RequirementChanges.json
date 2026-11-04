@@ -1,0 +1,211 @@
+{
+  "phase": 4,
+  "recordedAtUTC": "2026-11-02T16:48:36.875250+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-125",
+      "originalBreakdownItem": "Retain citations and attribution for successfully saved content.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-128",
+      "originalBreakdownItem": "Prevent canceled or failed saves from creating persistent copies.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-162",
+      "originalBreakdownItem": "Preserve source titles, publication details, and citation identifiers.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-167",
+      "originalBreakdownItem": "Apply the updated popup system to Ask help and save interactions.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/AskSavedAttributionSnapshot.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Both full-answer and excerpt saves now freeze only original used source snapshots and complete original version locks. Duplicate/conflicting source identities, missing snapshots and absent versions fail with an accessible guarded message instead of crashing Dictionary construction or silently saving incomplete attribution. Existing answer text remains unchanged. No lookup against newer sources is performed.",
+      "verification": "Five new unit tests exercise serialization fidelity, original used-source ordering/version locks, duplicate/conflicting identities, missing snapshots, missing versions and source-free responses. New tests not executed on Mac; changed-file diff check passed.",
+      "evidence": "FruitfolioTests/AskSavedAttributionSnapshotTests.swift",
+      "remainingIssues": "Run unit and actual grounded Ask save/restart journeys on founder Mac. This validates save-boundary integrity, not clinical correctness or APA accuracy independently of the unchanged evidence pipeline."
+    },
+    {
+      "requirementID": "FF1B-136",
+      "originalBreakdownItem": "Preserve research retrieval, claim/evidence mapping, medical safety, and citation validation.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "changes": "Added an identity preflight before evidence-selection and strict-validator dictionary construction. Duplicate note/extract/claim/source identifiers, blank identifiers and overlapping note/extract namespaces fail closed instead of crashing or selecting ambiguous evidence. Every existing claim-boundary and complete-verbatim-quote check remains intact; no medical safety threshold was lowered.",
+      "verification": "Three adversarial XCTest cases added with multiple malformed subcases and positive verbatim/negation/measurement preservation checks. Runtime not executed for new source. Actual bundled JSON identifiers were checked in Python: 5477 unique notes, 295 unique sources, 470 unique source chunks, no blanks and no note/extract ID collisions.",
+      "evidence": "FruitfolioTests/EvidenceIdentitySafetyTests.swift",
+      "remainingIssues": "Run full grounding suites and controlled offline native FruitfolioAI verification on founder Mac. Structural identities do not independently verify clinical accuracy."
+    },
+    {
+      "requirementID": "FF1B-070",
+      "originalBreakdownItem": "Preserve Reduce Motion behavior while eliminating unnecessary lag.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Ask honors live Reduce Motion changes during retrieval, typing and entry/suggestion reveal. Enabling it completes the exact answer and cancels ticks; disabling it does not restart completed typing.",
+      "verification": "Two asynchronous layout-fixture tests added in AskReducedMotionLifecycleTests; not executed. Full app Reduce Motion acceptance is not established by these source changes.",
+      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
+      "remainingIssues": "Actual live system changes, UI recordings and audio stop on founder Mac/device; other screens require independent verification."
+    },
+    {
+      "requirementID": "FF1B-109",
+      "originalBreakdownItem": "Preserve text selection, citation interactions, and accessibility reading order.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
+      ],
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
+    },
+    {
+      "requirementID": "FF1B-137",
+      "originalBreakdownItem": "Preserve Canonical Voice and semantic styling during performance optimization.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
+      ],
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
+    },
+    {
+      "requirementID": "FF1B-141",
+      "originalBreakdownItem": "Preserve selectable text and functional citation controls.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticAttributedRenderer.swift"
+      ],
+      "changes": "Semantic progressive display and excerpt selection now use global grapheme boundaries with UTF16 span intersections. Combining characters and joined emoji split across styled spans no longer shift later text, truncate clusters or corrupt selected measurements/citations. Original span identities and semantic roles remain intact. Invalid/overflowing selections fail safely.",
+      "verification": "Four adversarial Unicode XCTest cases added. Not executed on Mac. Shared eight-role rendering and clinical answer wording are unchanged.",
+      "evidence": "FruitfolioTests/SemanticUnicodeBoundaryTests.swift",
+      "remainingIssues": "Run all existing semantic/selection tests and actual selectable Ask/page-editor UI journeys with screenshots and VoiceOver."
+    },
+    {
+      "requirementID": "FF1B-472",
+      "originalBreakdownItem": "Test Reduce Motion.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "changes": "Ask honors live Reduce Motion changes during retrieval, typing and entry/suggestion reveal. Enabling it completes the exact answer and cancels ticks; disabling it does not restart completed typing.",
+      "verification": "Two asynchronous layout-fixture tests added in AskReducedMotionLifecycleTests; not executed. Full app Reduce Motion acceptance is not established by these source changes.",
+      "evidence": "FruitfolioTests/AskReducedMotionLifecycleTests.swift",
+      "remainingIssues": "Actual live system changes, UI recordings and audio stop on founder Mac/device; other screens require independent verification."
+    },
+    {
+      "requirementID": "FF1B-165",
+      "originalBreakdownItem": "Do not use unsupported-topic fallbacks before the available research architecture has been appropriately searched.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "changes": "Supported two-character hormone identifiers LH and E2 are retained as retrieval tokens instead of being discarded by the ordinary three-character minimum. Short exact-query matching uses whole-word boundaries so unrelated codes do not gain an exact-match bonus. English corpus normalization uses an explicit POSIX locale for stable indexing across device locales. No claim-coverage/source-approval thresholds or answer wording changed.",
+      "verification": "Three XCTest cases added, including actual bundled-note/source retrieval without inference/network and unrelated-code rejection. Not executed on Mac. Actual JSON contains 30 LH notes/6 source extracts and 4 E2 notes/0 source extracts; zero E2 source extracts is not treated as new source evidence.",
+      "evidence": "FruitfolioTests/ResearchAbbreviationRetrievalTests.swift",
+      "remainingIssues": "Run the new and full grounding suites on founder Mac; verify actual grounded questions, citations and fallback behavior. UI localization does not establish translated research support."
+    },
+    {
+      "requirementID": "SUP-RESEARCH-QUOTATION-001",
+      "originalBreakdownItem": "Supplemental scientific-integrity correction: presentation must preserve the actual quoted research, measurements, links and source identifiers.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "changes": "Removed internal punctuation/whitespace rewriting from quoted research presentation. The prior prose-spacing heuristic could change domain names, DOI punctuation, citation markers and compound units after grounding validation. Only enclosing layout whitespace is trimmed; approved source text and package files are unchanged. Joined prose requires a separately reviewed source correction, not a display-time scientific rewrite.",
+      "verification": "Three byte-fidelity unit tests plus an engine-to-save integration case covering selected-evidence and model-failure fixture paths were added. Not executed on Mac. Fixtures verify mechanics only, not clinical evidence or native inference.",
+      "evidence": [
+        "FruitfolioTests/ResearchQuotationFidelityTests.swift",
+        "FruitfolioTests/GroundingAttributionTests.swift"
+      ],
+      "remainingIssues": "Run actual native/fallback regression and independently review any source-corpus formatting corrections before publication."
+    },
+    {
+      "requirementID": "FF1B-142",
+      "originalBreakdownItem": "Default to no educational illustration.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-143",
+      "originalBreakdownItem": "Display scientific artwork only when it materially improves understanding.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-144",
+      "originalBreakdownItem": "Do not select artwork merely because an asset matches a keyword.",
+      "status": "PARTIAL",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    },
+    {
+      "requirementID": "FF1B-145",
+      "originalBreakdownItem": "Generally limit an ordinary answer to one major educational illustration when genuinely appropriate.",
+      "status": "IMPLEMENTED \u2014 VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift"
+      ],
+      "changes": "Ordinary answers now default to at most one major educational visual. A single overlapping tag cannot count simultaneously as the supported topic and specific educational concept: at least two distinct matched anchors are required. All 44 original educational assets and explicit multi-visual limits remain available; unsupported/novel content remains barred.",
+      "verification": "Two router regression tests added; not executed on Mac. The existing specific ovulation/follicle and all-44-asset tests remain.",
+      "evidence": "FruitfolioTests/Prompt09AskTests.swift",
+      "remainingIssues": "Actual per-answer material educational benefit and full visual appropriateness still need curated/runtimed verification; two anchors alone are not a complete scientific illustration review."
+    }
+  ]
+}

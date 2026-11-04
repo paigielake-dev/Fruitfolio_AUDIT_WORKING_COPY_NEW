@@ -75,6 +75,7 @@ struct FruitPopupRequest: Identifiable {
     let id: UUID
     let character: FruitPopupCharacter
     let message: String
+    let semanticMessage: FruitfolioSemanticDocument
     let primaryAction: FruitPopupAction?
     let secondaryAction: FruitPopupAction?
     let positionPreference: FruitPopupPositionPreference
@@ -89,6 +90,7 @@ struct FruitPopupRequest: Identifiable {
         id: UUID = UUID(),
         character: FruitPopupCharacter,
         message: String,
+        semanticMessage: FruitfolioSemanticDocument? = nil,
         primaryAction: FruitPopupAction? = nil,
         secondaryAction: FruitPopupAction? = nil,
         positionPreference: FruitPopupPositionPreference = .automatic,
@@ -102,6 +104,14 @@ struct FruitPopupRequest: Identifiable {
         self.id = id
         self.character = character
         self.message = message
+        // Meaning is supplied by the author/generation pipeline. Never infer
+        // emphasis from a medical keyword, nor display a stale document whose
+        // wording differs from the request's authoritative message.
+        if let semanticMessage, semanticMessage.plainText.utf8.elementsEqual(message.utf8) {
+            self.semanticMessage = semanticMessage
+        } else {
+            self.semanticMessage = .init(spans: [.init(text: message)])
+        }
         self.primaryAction = primaryAction
         self.secondaryAction = secondaryAction
         self.positionPreference = positionPreference

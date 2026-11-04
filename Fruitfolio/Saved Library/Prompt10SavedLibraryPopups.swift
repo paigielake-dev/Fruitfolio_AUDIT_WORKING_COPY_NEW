@@ -10,44 +10,13 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var title = ""
+    @FocusState private var titleFocused: Bool
     @State private var selectedStyle: Prompt10BookStyle = .sage
     @State private var errorMessage: String?
 
     var body: some View {
-        GeometryReader { proxy in
-            popupLayout(in: proxy)
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
-        }
-    }
-
-    private func popupLayout(
-        in proxy: GeometryProxy
-    ) -> some View {
-        let paperWidth = min(
-            max(proxy.size.width - 28, 280),
-            365
-        )
-
-        return ZStack {
-            Color.clear
-
-            Prompt10WatercolorPopup {
-                popupContent
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 30)
-                    .padding(.bottom, 30)
-            }
-            .frame(width: paperWidth)
-            .frame(minHeight: 520)
-        }
-        .frame(
-            width: proxy.size.width,
-            height: proxy.size.height,
-            alignment: .center
-        )
+        Prompt10WatercolorPopup { popupContent }
+            .onAppear { audioManager.play(.popupOpen) }
     }
 
     private var popupContent: some View {
@@ -112,6 +81,9 @@ struct Prompt10CreateEncyclopediaPopup: View {
             DesignTokens.ColorToken.primaryBurgundy
         )
         .textFieldStyle(.plain)
+        .focused($titleFocused)
+        .submitLabel(.done)
+        .onSubmit { titleFocused = false }
         .padding(.horizontal, 14)
         .frame(minHeight: 46)
         .frame(maxWidth: 300)
@@ -129,7 +101,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
     }
 
     private var coverPicker: some View {
-        HStack(spacing: 12) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 54, maximum: 64), spacing: 12)], spacing: 12) {
             ForEach(
                 Prompt10BookStyle.allCases,
                 id: \.self
@@ -256,7 +228,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
 
     private var cancelButton: some View {
         WatercolorSecondaryButton(
-            label: "cancel"
+            label: "cancel", localizationKey: "cancel"
         ) {
             audioManager.play(
                 .popupClose
@@ -380,7 +352,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
 
                 WatercolorPrimaryButton(
-                    label: "save name"
+                    label: "save name", localizationKey: "save name"
                 ) {
                     do {
                         try store.renameEncyclopedia(
@@ -401,7 +373,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                 }
 
                 WatercolorSecondaryButton(
-                    label: "cancel"
+                    label: "cancel", localizationKey: "cancel"
                 ) {
                     audioManager.play(
                         .popupClose
@@ -500,7 +472,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
 
                 WatercolorPrimaryButton(
-                    label: "keep my encyclopedia"
+                    label: "keep my encyclopedia", localizationKey: "keep my encyclopedia"
                 ) {
                     audioManager.play(
                         .popupClose
@@ -510,7 +482,7 @@ struct Prompt10DeleteEncyclopediaPopup: View {
                 }
 
                 WatercolorSecondaryButton(
-                    label: "delete encyclopedia"
+                    label: "delete encyclopedia", localizationKey: "delete encyclopedia"
                 ) {
                     do {
                         try store.deleteEncyclopedia(
@@ -587,7 +559,7 @@ struct Prompt10FullLibraryPopup: View {
                 .multilineTextAlignment(.center)
 
                 WatercolorPrimaryButton(
-                    label: "back to my library"
+                    label: "back to my library", localizationKey: "back to my library"
                 ) {
                     audioManager.play(
                         .popupClose

@@ -81,6 +81,24 @@ struct Prompt28AnswerOption: Identifiable, Hashable, Codable, Sendable {
     let text: String
 }
 
+struct Prompt28QuestionEvidence: Hashable, Codable, Sendable {
+    let evidenceID: String
+    let originalPassage: String
+    let packageVersion: String
+    let sources: [FruitfolioResearchSource]
+}
+
+/// Verbatim educational blocks from the actual question's pinned research.
+/// All paragraphs remain in order; no scientific clause is summarized or omitted.
+struct Prompt28EducationalFactSnapshot: Identifiable, Hashable, Codable, Sendable {
+    let id: String
+    let questionID: String
+    let evidenceID: String
+    let text: String
+    let packageVersion: String
+    let sources: [FruitfolioResearchSource]
+}
+
 struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let id: String
     let topicQuery: String
@@ -100,11 +118,52 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let contentVersion: String
     let reviewStatus: String
     let createdAt: Date
+    var evidenceSnapshot: Prompt28QuestionEvidence? = nil
+
+    var hasVerifiedEvidenceSnapshot: Bool {
+        guard let evidence = evidenceSnapshot,
+              !evidence.evidenceID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              !contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              Set(sourceIDs).count == sourceIDs.count,
+              sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }),
+              evidence.originalPassage == explanation,
+              evidence.packageVersion == contentVersion,
+              !evidence.sources.isEmpty,
+              Set(evidence.sources.map(\.sourceID)).count == evidence.sources.count,
+              Set(evidence.sources.map(\.sourceID)) == Set(sourceIDs),
+              evidence.sources.allSatisfy({ source in
+                  source.isApprovedForDisplay
+                      && !source.sourceVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                      && !source.contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+              }) else { return false }
+        return true
+    }
+
+    var verifiedEducationalFacts: [Prompt28EducationalFactSnapshot]? {
+        guard hasVerifiedEvidenceSnapshot, let evidence = evidenceSnapshot,
+              !FruitfolioEmotionalBeat.allCases.flatMap({ FruitfolioKaomojiSystem.approvedForms(for: $0) }).contains(where: explanation.contains)
+        else { return nil }
+        return explanation.components(separatedBy: "\n\n").enumerated().map { index, paragraph in
+            .init(id: "\(id):fact:\(index)", questionID: id, evidenceID: evidence.evidenceID,
+                  text: paragraph, packageVersion: evidence.packageVersion, sources: evidence.sources)
+        }
+    }
 
     var isPlayable: Bool {
         answerOptions.count >= 2
+            && Set(answerOptions.map(\.id)).count == answerOptions.count
+            && Set(answerOptions.map(\.text)).count == answerOptions.count
+            && answerOptions.allSatisfy({
+                !$0.id.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                    && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            })
             && answerOptions.contains(where: { $0.id == correctAnswerID })
+            && !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !explanation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !contentVersion.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !sourceIDs.isEmpty
+            && Set(sourceIDs).count == sourceIDs.count
+            && sourceIDs.allSatisfy({ !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
             && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !goodFruitIDs.isEmpty
             && !badFruitIDs.isEmpty
@@ -170,6 +229,35 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         lastPlayedAt = try c.decode(Date.self, forKey: .lastPlayedAt)
     }
 
+}
+
+/// Actual registered collectibles for the current attempt, not a decorative
+/// selection reconstructed from the question's allowed fruit pool.
+struct Prompt28RoundCollection: Hashable, Codable, Sendable {
+    var goodFruit: [Prompt28FruitID] = []
+    var badFruit: [Prompt28FruitID] = []
+    var standaloneStarsCaught = 0
+    var starPassesConsumed = 0
+    var startingStarPasses = 0
+    var startingScore = 0
+}
+
+/// Immutable completed-attempt record. Its original question contains the full
+/// approved explanation and exact source records; never resolve it against a newer library.
+struct Prompt28CompletedRound: Identifiable, Hashable, Codable, Sendable {
+    let id: UUID
+    let sessionID: UUID
+    let round: Int
+    let completedAt: Date
+    let successful: Bool
+    let question: Prompt28Question
+    let collection: Prompt28RoundCollection
+    let finalScore: Int
+    let remainingStarPasses: Int
+    let personalBest: Bool
+    var educationalFacts: [Prompt28EducationalFactSnapshot]? = nil
+
+    var roundScore: Int { finalScore - collection.startingScore }
 }
 
 struct Prompt28Session: Hashable, Codable, Sendable {
@@ -424,4 +512,19 @@ struct Prompt28LeaderboardTotals: Equatable, Sendable {
         basketReveals = entries.reduce(0) { $0 + max(0, $1.totalSuccessfulRounds) }
         highestLevel = entries.map(\.highestGameLevelReached).max() ?? 0
     }
+}
+
+/// Transient per-round artwork only. Star-pass accounting remains independent
+/// and uncapped; bounding old decorative star images never removes a pass.
+nonisolated struct Prompt28SettledCatch: Identifiable, Equatable, Sendable {
+    let id: UUID
+    let assetID: FruitfolioAssetID
+    let isStar: Bool
+    var collected = false
+}
+
+nonisolated enum Prompt28CatchPresentationEvent: Sendable {
+    case appeared(UUID)
+    case settled(UUID)
+    case disappeared(UUID)
 }

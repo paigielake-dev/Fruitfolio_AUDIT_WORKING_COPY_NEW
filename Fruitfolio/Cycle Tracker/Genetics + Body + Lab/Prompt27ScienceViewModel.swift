@@ -57,7 +57,7 @@ final class Prompt27ScienceViewModel: ObservableObject {
                     let content = try await provider.approvedContent(for: contentID)
                     guard !Task.isCancelled else { return }
 
-                    guard !content.sourceIDs.isEmpty else {
+                    guard content.hasValidStructure(for: contentID) else {
                         self?.state = .unavailable
                         return
                     }

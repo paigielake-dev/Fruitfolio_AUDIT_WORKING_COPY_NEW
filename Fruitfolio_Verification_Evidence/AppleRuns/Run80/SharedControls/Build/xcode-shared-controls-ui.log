@@ -1,0 +1,871 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/SharedControlUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 03:27:41.372371+0000 FruitfolioUITests-Runner[12762:42890] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 03:27:42.850.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 03:27:42.851.
+Test Suite 'SharedControlUITests' started at 2026-11-02 03:27:42.851.
+2026-11-02 03:27:45.024 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 03:27:45.024 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: no debugger version
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation]' started.
+    t =     0.00s Start Test at 2026-11-02 03:27:42.852
+    t =     0.20s Set Up
+    t =     0.22s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.22s     Launch com.fruitsoflifexo.Fruitfolio
+objc[12762]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10761c310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x106e6c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     6.08s         Setting up automation session
+    t =    12.52s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.88s Waiting 12.0s for "I'll explore" Button to exist
+    t =    17.97s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.97s         Checking existence of `"I'll explore" Button`
+    t =    18.31s         Capturing element debug description
+    t =    18.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.95s         Checking existence of `"I'll explore" Button`
+    t =    19.01s         Capturing element debug description
+    t =    19.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.96s         Checking existence of `"I'll explore" Button`
+    t =    19.99s         Capturing element debug description
+    t =    20.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.93s         Checking existence of `"I'll explore" Button`
+    t =    21.02s         Capturing element debug description
+    t =    21.95s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.95s         Checking existence of `"I'll explore" Button`
+    t =    22.01s         Capturing element debug description
+    t =    22.96s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.96s         Checking existence of `"I'll explore" Button`
+    t =    22.99s         Capturing element debug description
+    t =    23.94s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.95s         Checking existence of `"I'll explore" Button`
+    t =    24.03s         Capturing element debug description
+    t =    24.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    24.89s         Checking existence of `"I'll explore" Button`
+    t =    24.94s         Capturing element debug description
+    t =    25.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    25.89s         Checking existence of `"I'll explore" Button`
+    t =    25.94s         Capturing element debug description
+    t =    26.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    26.89s         Checking existence of `"I'll explore" Button`
+    t =    26.92s         Capturing element debug description
+    t =    27.96s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    27.96s         Checking existence of `"I'll explore" Button`
+    t =    28.00s         Capturing element debug description
+    t =    28.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    28.90s         Checking existence of `"I'll explore" Button`
+    t =    28.92s         Capturing element debug description
+    t =    28.93s     Checking existence of `"I'll explore" Button`
+    t =    28.96s Collecting debug information to assist test failure triage
+    t =    28.96s     Requesting snapshot of accessibility hierarchy for app with pid 13430
+    t =    29.03s Waiting 15.0s for Button (First Match) to exist
+    t =    30.08s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    30.08s         Checking existence of `Button (First Match)`
+    t =    30.23s Waiting 10.0s for Button (First Match) to exist
+    t =    31.26s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.26s         Checking existence of `Button (First Match)`
+    t =    31.32s Find the Button (First Match)
+    t =    31.40s Find the "contact" Button
+    t =    31.48s Checking existence of `"popup.writingArea" Any`
+    t =    31.66s Find the "contact" Button
+    t =    31.71s Checking existence of `ScrollView (First Match)`
+    t =    31.76s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    31.78s Find the ScrollView (First Match)
+    t =    31.88s Find the "contact" Button
+    t =    32.00s Find the "contact" Button
+    t =    32.08s Find the "contact" Button
+    t =    32.17s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    32.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.18s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.28s     Check for interrupting elements affecting ScrollView
+    t =    32.37s     Synthesize event
+    t =    32.38s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.49s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.57s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.65s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.74s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.09s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.09s Find the "contact" Button
+    t =    34.16s Find the "contact" Button
+    t =    34.20s Find the "contact" Button
+    t =    34.26s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    34.26s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.26s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.32s     Check for interrupting elements affecting ScrollView
+    t =    34.36s     Synthesize event
+    t =    34.36s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.43s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.53s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.60s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.65s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.98s Find the "contact" Button
+    t =    36.09s Find the "contact" Button
+    t =    36.28s Find the "contact" Button
+    t =    36.36s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    36.36s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.36s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.44s     Check for interrupting elements affecting ScrollView
+    t =    36.48s     Synthesize event
+    t =    36.48s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.58s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.69s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.80s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.90s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.22s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.23s Find the "contact" Button
+    t =    38.30s Find the "contact" Button
+    t =    38.36s Find the "contact" Button
+    t =    38.42s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    38.42s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.42s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.48s     Check for interrupting elements affecting ScrollView
+    t =    38.52s     Synthesize event
+    t =    38.52s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.58s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.66s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.74s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.85s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.19s Find the "contact" Button
+    t =    40.26s Find the "contact" Button
+    t =    40.33s Find the "contact" Button
+    t =    40.41s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    40.41s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.41s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.49s     Check for interrupting elements affecting ScrollView
+    t =    40.54s     Synthesize event
+    t =    40.55s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.64s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.76s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.83s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.89s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.21s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.22s Find the "contact" Button
+    t =    42.31s Find the "contact" Button
+    t =    42.36s Find the "contact" Button
+    t =    42.41s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    42.41s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    42.41s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.46s     Check for interrupting elements affecting ScrollView
+    t =    42.50s     Synthesize event
+    t =    42.50s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.59s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.66s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.76s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.82s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.16s Find the "contact" Button
+    t =    44.26s Find the "contact" Button
+    t =    44.33s Find the "contact" Button
+    t =    44.39s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    44.39s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.40s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.46s     Check for interrupting elements affecting ScrollView
+    t =    44.50s     Synthesize event
+    t =    44.50s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.60s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.69s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.79s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.95s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.30s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.33s Find the "contact" Button
+    t =    46.39s Find the "contact" Button
+    t =    46.47s Find the "contact" Button
+    t =    46.52s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    46.52s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.53s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.60s     Check for interrupting elements affecting ScrollView
+    t =    46.63s     Synthesize event
+    t =    46.63s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.70s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.76s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.81s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.86s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.17s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.18s Find the "contact" Button
+    t =    48.28s Find the "contact" Button
+    t =    48.33s Find the "contact" Button
+    t =    48.37s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    48.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.38s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.43s     Check for interrupting elements affecting ScrollView
+    t =    48.46s     Synthesize event
+    t =    48.46s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.53s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.59s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.65s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.72s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.03s Find the "contact" Button
+    t =    50.09s Find the "contact" Button
+    t =    50.14s Find the "contact" Button
+    t =    50.18s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    50.18s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.19s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.25s     Check for interrupting elements affecting ScrollView
+    t =    50.27s     Synthesize event
+    t =    50.28s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.34s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.39s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.44s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.54s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    51.84s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    51.85s Find the "contact" Button
+    t =    51.91s Find the "contact" Button
+    t =    51.96s Find the "contact" Button
+    t =    52.02s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    52.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.02s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.07s     Check for interrupting elements affecting ScrollView
+    t =    52.11s     Synthesize event
+    t =    52.11s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.17s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.24s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.30s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.37s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    53.68s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    53.70s Find the "contact" Button
+    t =    53.76s Find the "contact" Button
+    t =    53.81s Find the "contact" Button
+    t =    53.88s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    53.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    53.88s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    53.94s     Check for interrupting elements affecting ScrollView
+    t =    53.97s     Synthesize event
+    t =    53.97s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.05s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.11s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.19s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.26s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    55.58s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    55.63s Find the "contact" Button
+    t =    55.75s Find the "contact" Button
+    t =    55.87s Find the "contact" Button
+    t =    56.02s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    56.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    56.02s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.07s     Check for interrupting elements affecting ScrollView
+    t =    56.10s     Synthesize event
+    t =    56.11s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.17s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.24s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.31s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.39s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    57.72s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.74s Find the "contact" Button
+    t =    57.79s Find the "contact" Button
+    t =    57.84s Find the "contact" Button
+    t =    57.88s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    57.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.89s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    57.93s     Check for interrupting elements affecting ScrollView
+    t =    57.96s     Synthesize event
+    t =    57.97s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    58.02s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    58.07s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    58.13s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    58.19s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    59.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    59.51s Find the "contact" Button
+    t =    59.58s Find the "contact" Button
+    t =    59.63s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    59.96s Find the "contact" Button
+    t =    59.99s Actual unreachable control
+    t =    59.99s Requesting snapshot of accessibility hierarchy for app with pid 13430
+    t =    60.12s Requesting snapshot of accessibility hierarchy for app with pid 13430
+    t =    60.17s Actual owning viewport
+    t =    60.17s Find the "contact" Button
+    t =    60.22s Find the "contact" Button
+/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioUITests/ModalScrollSupport.swift:28: error: -[FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation] : XCTAssertTrue failed - Entire control must fit the actual owning viewport: contact
+    t =    60.97s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactArtworkControlsAndReturnNavigation]' failed (61.814 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping]' started.
+    t =     0.00s Start Test at 2026-11-02 03:28:44.667
+    t =     0.06s Set Up
+    t =     0.06s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.06s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.06s         Terminate com.fruitsoflifexo.Fruitfolio:13430
+2026-11-02 03:28:45.763 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 03:28:45.763 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     4.09s         Setting up automation session
+    t =     6.04s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    10.75s Waiting 12.0s for "I'll explore" Button to exist
+    t =    11.79s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.79s         Checking existence of `"I'll explore" Button`
+    t =    11.90s         Capturing element debug description
+    t =    12.84s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.84s         Checking existence of `"I'll explore" Button`
+    t =    12.88s         Capturing element debug description
+    t =    13.82s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.82s         Checking existence of `"I'll explore" Button`
+    t =    13.88s         Capturing element debug description
+    t =    14.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.83s         Checking existence of `"I'll explore" Button`
+    t =    14.88s         Capturing element debug description
+    t =    15.80s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.80s         Checking existence of `"I'll explore" Button`
+    t =    15.92s         Capturing element debug description
+    t =    16.76s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.76s         Checking existence of `"I'll explore" Button`
+    t =    16.82s         Capturing element debug description
+    t =    17.76s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.76s         Checking existence of `"I'll explore" Button`
+    t =    17.80s         Capturing element debug description
+    t =    18.77s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.77s         Checking existence of `"I'll explore" Button`
+    t =    18.87s         Capturing element debug description
+    t =    19.79s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.79s         Checking existence of `"I'll explore" Button`
+    t =    19.93s         Capturing element debug description
+    t =    20.81s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.81s         Checking existence of `"I'll explore" Button`
+    t =    20.86s         Capturing element debug description
+    t =    21.80s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.80s         Checking existence of `"I'll explore" Button`
+    t =    21.95s         Capturing element debug description
+    t =    22.76s     Checking existence of `"I'll explore" Button`
+    t =    22.87s Collecting debug information to assist test failure triage
+    t =    22.87s     Requesting snapshot of accessibility hierarchy for app with pid 16024
+    t =    22.97s Waiting 15.0s for Button (First Match) to exist
+    t =    24.01s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    24.01s         Checking existence of `Button (First Match)`
+    t =    24.05s Waiting 10.0s for Button (First Match) to exist
+    t =    25.08s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    25.08s         Checking existence of `Button (First Match)`
+    t =    25.20s Find the Button (First Match)
+    t =    25.25s Find the "contact" Button
+    t =    25.30s Checking existence of `"popup.writingArea" Any`
+    t =    25.60s Find the "contact" Button
+    t =    25.66s Checking existence of `ScrollView (First Match)`
+    t =    25.74s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    25.78s Find the ScrollView (First Match)
+    t =    25.93s Find the "contact" Button
+    t =    26.04s Find the "contact" Button
+    t =    26.12s Find the "contact" Button
+    t =    26.25s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    26.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    26.25s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    26.39s     Check for interrupting elements affecting ScrollView
+    t =    26.51s     Synthesize event
+    t =    26.52s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    26.71s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    26.85s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    27.02s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    27.24s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    28.64s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.66s Find the "contact" Button
+    t =    28.76s Find the "contact" Button
+    t =    28.83s Find the "contact" Button
+    t =    28.92s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    28.92s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.92s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    29.01s     Check for interrupting elements affecting ScrollView
+    t =    29.05s     Synthesize event
+    t =    29.06s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    29.13s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    29.26s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    29.34s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    29.41s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    30.72s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    30.73s Find the "contact" Button
+    t =    30.78s Find the "contact" Button
+    t =    30.84s Find the "contact" Button
+    t =    30.88s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    30.88s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    30.89s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    30.96s     Check for interrupting elements affecting ScrollView
+    t =    31.01s     Synthesize event
+    t =    31.01s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    31.08s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    31.14s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    31.21s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    31.27s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    32.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.63s Find the "contact" Button
+    t =    32.80s Find the "contact" Button
+    t =    32.91s Find the "contact" Button
+    t =    32.99s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    32.99s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    32.99s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    33.10s     Check for interrupting elements affecting ScrollView
+    t =    33.16s     Synthesize event
+    t =    33.17s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    33.29s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    33.40s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    33.46s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    33.51s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    34.87s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.88s Find the "contact" Button
+    t =    34.95s Find the "contact" Button
+    t =    35.00s Find the "contact" Button
+    t =    35.05s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    35.05s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.06s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.13s     Check for interrupting elements affecting ScrollView
+    t =    35.18s     Synthesize event
+    t =    35.18s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.25s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.32s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.39s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    35.46s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    36.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.80s Find the "contact" Button
+    t =    36.85s Find the "contact" Button
+    t =    36.89s Find the "contact" Button
+    t =    36.96s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    36.96s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    36.97s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    37.04s     Check for interrupting elements affecting ScrollView
+    t =    37.11s     Synthesize event
+    t =    37.11s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    37.20s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    37.27s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    37.34s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    37.51s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    38.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    38.84s Find the "contact" Button
+    t =    38.89s Find the "contact" Button
+    t =    38.94s Find the "contact" Button
+    t =    38.99s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    38.99s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    39.00s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    39.06s     Check for interrupting elements affecting ScrollView
+    t =    39.10s     Synthesize event
+    t =    39.10s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    39.16s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    39.25s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    39.36s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    39.47s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    40.86s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.88s Find the "contact" Button
+    t =    41.01s Find the "contact" Button
+    t =    41.14s Find the "contact" Button
+    t =    41.25s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    41.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    41.26s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    41.42s     Check for interrupting elements affecting ScrollView
+    t =    41.48s     Synthesize event
+    t =    41.49s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    41.60s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    41.76s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    41.90s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    42.03s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    43.42s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.44s Find the "contact" Button
+    t =    43.61s Find the "contact" Button
+    t =    43.78s Find the "contact" Button
+    t =    43.91s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    43.91s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.92s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.00s     Check for interrupting elements affecting ScrollView
+    t =    44.05s     Synthesize event
+    t =    44.06s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.15s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.23s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.33s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    44.42s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    45.75s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    45.76s Find the "contact" Button
+    t =    45.89s Find the "contact" Button
+    t =    45.95s Find the "contact" Button
+    t =    46.05s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    46.05s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    46.06s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.13s     Check for interrupting elements affecting ScrollView
+    t =    46.17s     Synthesize event
+    t =    46.18s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.26s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.37s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.44s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    46.54s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    47.85s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    47.86s Find the "contact" Button
+    t =    47.99s Find the "contact" Button
+    t =    48.09s Find the "contact" Button
+    t =    48.15s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    48.15s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.16s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.26s     Check for interrupting elements affecting ScrollView
+    t =    48.31s     Synthesize event
+    t =    48.31s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.38s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.48s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.57s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    48.66s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.03s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.05s Find the "contact" Button
+    t =    50.15s Find the "contact" Button
+    t =    50.20s Find the "contact" Button
+    t =    50.25s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    50.25s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    50.25s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.31s     Check for interrupting elements affecting ScrollView
+    t =    50.34s     Synthesize event
+    t =    50.34s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.45s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.55s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.63s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    50.70s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.03s Find the "contact" Button
+    t =    52.14s Find the "contact" Button
+    t =    52.25s Find the "contact" Button
+    t =    52.32s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    52.32s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.32s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.41s     Check for interrupting elements affecting ScrollView
+    t =    52.46s     Synthesize event
+    t =    52.47s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.56s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.73s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.84s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    52.96s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.31s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    54.32s Find the "contact" Button
+    t =    54.46s Find the "contact" Button
+    t =    54.56s Find the "contact" Button
+    t =    54.68s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    54.68s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    54.68s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    54.79s     Check for interrupting elements affecting ScrollView
+    t =    54.86s     Synthesize event
+    t =    54.87s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    55.02s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    55.15s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    55.27s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    55.39s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    56.76s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    56.81s Find the "contact" Button
+    t =    56.91s Find the "contact" Button
+    t =    57.00s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    57.42s Find the "contact" Button
+    t =    57.50s Actual unreachable control
+    t =    57.50s Requesting snapshot of accessibility hierarchy for app with pid 16024
+    t =    57.80s Requesting snapshot of accessibility hierarchy for app with pid 16024
+    t =    57.85s Actual owning viewport
+    t =    57.86s Find the "contact" Button
+    t =    57.96s Find the "contact" Button
+/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioUITests/ModalScrollSupport.swift:28: error: -[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping] : XCTAssertTrue failed - Entire control must fit the actual owning viewport: contact
+    t =    58.05s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping]' failed (58.385 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers]' started.
+    t =     0.00s Start Test at 2026-11-02 03:29:43.053
+    t =     0.06s Set Up
+    t =     0.06s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.06s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.06s         Terminate com.fruitsoflifexo.Fruitfolio:16024
+2026-11-02 03:29:44.244 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 03:29:44.244 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     2.52s         Setting up automation session
+    t =     4.60s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     7.23s Waiting 12.0s for "I'll explore" Button to exist
+    t =     8.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     8.29s         Checking existence of `"I'll explore" Button`
+    t =     8.60s         Capturing element debug description
+    t =     9.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =     9.32s         Checking existence of `"I'll explore" Button`
+    t =     9.41s         Capturing element debug description
+    t =    10.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.25s         Checking existence of `"I'll explore" Button`
+    t =    10.31s         Capturing element debug description
+    t =    11.33s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.33s         Checking existence of `"I'll explore" Button`
+    t =    11.42s         Capturing element debug description
+    t =    12.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.28s         Checking existence of `"I'll explore" Button`
+    t =    12.32s         Capturing element debug description
+    t =    13.24s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.24s         Checking existence of `"I'll explore" Button`
+    t =    13.28s         Capturing element debug description
+    t =    14.32s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.32s         Checking existence of `"I'll explore" Button`
+    t =    14.37s         Capturing element debug description
+    t =    15.31s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.31s         Checking existence of `"I'll explore" Button`
+    t =    15.36s         Capturing element debug description
+    t =    16.29s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.29s         Checking existence of `"I'll explore" Button`
+    t =    16.44s         Capturing element debug description
+    t =    17.29s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.29s         Checking existence of `"I'll explore" Button`
+    t =    17.34s         Capturing element debug description
+    t =    18.28s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.28s         Checking existence of `"I'll explore" Button`
+    t =    18.32s         Capturing element debug description
+    t =    19.25s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.25s         Checking existence of `"I'll explore" Button`
+    t =    19.29s         Capturing element debug description
+    t =    19.30s     Checking existence of `"I'll explore" Button`
+    t =    19.34s Collecting debug information to assist test failure triage
+    t =    19.34s     Requesting snapshot of accessibility hierarchy for app with pid 18712
+    t =    21.47s Waiting 15.0s for Button (First Match) to exist
+    t =    22.49s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    22.49s         Checking existence of `Button (First Match)`
+    t =    22.58s Waiting 10.0s for Button (First Match) to exist
+    t =    23.61s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    23.62s         Checking existence of `Button (First Match)`
+    t =    23.70s Find the Button (First Match)
+    t =    23.80s Find the "hub.action.FAQ" Button
+    t =    23.93s Checking existence of `"popup.writingArea" Any`
+    t =    24.32s Find the "hub.action.FAQ" Button
+    t =    24.39s Checking existence of `ScrollView (First Match)`
+    t =    24.49s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    24.53s Find the ScrollView (First Match)
+    t =    24.67s Find the "hub.action.FAQ" Button
+    t =    24.85s Find the "hub.action.FAQ" Button
+    t =    25.01s Press ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.80] for 0.1 seconds, then drag to ScrollView at {{0.0, 0.0}, {402.0, 874.0}}[0.95, 0.25] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =    25.01s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    25.01s     Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    25.15s     Check for interrupting elements affecting ScrollView
+    t =    25.24s     Synthesize event
+    t =    25.25s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    25.40s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    25.52s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    25.64s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    25.78s         Find the ScrollView at {{0.0, 0.0}, {402.0, 874.0}}
+    t =    27.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.56s Find the "hub.action.FAQ" Button
+    t =    27.72s Find the "hub.action.FAQ" Button
+    t =    27.84s Find the "hub.action.FAQ" Button
+    t =    27.96s Find the "hub.action.FAQ" Button
+    t =    28.06s Find the "hub.action.FAQ" Button
+    t =    28.17s Find the "hub.action.FAQ" Button
+    t =    28.35s Tap "hub.action.FAQ" Button
+    t =    28.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    28.35s     Find the "hub.action.FAQ" Button
+    t =    28.46s     Check for interrupting elements affecting "hub.action.FAQ" Button
+    t =    28.49s     Synthesize event
+    t =    28.81s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    29.53s Waiting 10.0s for "faq.question.about-2" Button to exist
+    t =    30.56s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.question.about-2" Button`
+    t =    30.56s         Checking existence of `"faq.question.about-2" Button`
+    t =    30.66s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    30.70s Find the "faq.question.about-2" Button
+    t =    30.79s Swipe up Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    30.79s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    30.80s     Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    30.83s     Check for interrupting elements affecting "Fruitfolio" Application
+    t =    30.90s     Synthesize event
+    t =    31.34s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.48s Find the "faq.question.about-2" Button
+    t =    33.63s Find the "faq.question.about-2" Button
+    t =    33.71s Find the "faq.question.about-2" Button
+    t =    33.80s Find the "faq.question.about-2" Button
+    t =    33.87s Find the "faq.question.about-2" Button
+    t =    33.98s Find the "faq.question.about-2" Button
+    t =    34.05s Find the "faq.question.about-2" Button
+    t =    34.13s Find the "faq.question.about-2" Button
+    t =    34.20s Find the "faq.question.about-2" Button
+    t =    34.30s Find the "faq.question.about-2" Button
+    t =    34.37s Find the "faq.question.about-2" Button
+    t =    34.49s Find the "faq.question.about-2" Button
+    t =    34.63s Find the "faq.question.about-2" Button
+    t =    34.84s Find the "faq.question.about-2" Button
+    t =    34.93s Find the "faq.question.about-2" Button
+    t =    35.02s Find the "faq.question.about-2" Button
+    t =    35.08s Tap "faq.question.about-2" Button
+    t =    35.08s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.09s     Find the "faq.question.about-2" Button
+    t =    35.15s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    35.21s     Synthesize event
+    t =    35.56s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    35.58s Waiting 8.0s for "faq.answer.about-2" StaticText to exist
+    t =    36.59s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.answer.about-2" StaticText`
+    t =    36.59s         Checking existence of `"faq.answer.about-2" StaticText`
+    t =    36.67s Find the "faq.answer.about-2" StaticText
+    t =    36.75s Find the "faq.answer.about-2" StaticText
+    t =    36.85s Find the "faq.answer.about-2" StaticText
+    t =    36.93s Find the "faq.answer.about-2" StaticText
+    t =    37.01s Find the "faq.answer.about-2" StaticText
+    t =    37.11s Find the "faq.answer.about-2" StaticText
+    t =    37.22s Find the "faq.answer.about-2" StaticText
+    t =    37.35s Find the "faq.answer.about-2" StaticText
+    t =    37.47s Find the "faq.answer.about-2" StaticText
+    t =    37.59s Find the "faq.answer.about-2" StaticText
+    t =    37.67s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    37.93s Added attachment named 'FAQ_Expanded_AccessibilityXXXL'
+    t =    42.65s Find the "faq.question.about-2" Button
+    t =    42.85s Find the "faq.question.about-2" Button
+    t =    42.97s Find the "faq.question.about-2" Button
+    t =    43.06s Find the "faq.question.about-2" Button
+    t =    43.13s Find the "faq.question.about-2" Button
+    t =    43.25s Find the "faq.question.about-2" Button
+    t =    43.33s Find the "faq.question.about-2" Button
+    t =    43.43s Find the "faq.question.about-2" Button
+    t =    43.49s Tap "faq.question.about-2" Button
+    t =    43.49s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.49s     Find the "faq.question.about-2" Button
+    t =    43.56s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    43.59s     Synthesize event
+    t =    43.91s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.91s Checking existence of `"faq.answer.about-2" StaticText`
+    t =    43.99s Find the "faq.question.about-2" Button
+    t =    44.05s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    44.20s Added attachment named 'FAQ_Collapsed_AccessibilityXXXL'
+    t =    44.21s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQAtAccessibilityTypeRetainsReadableAnswers]' passed (44.585 seconds).
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording]' started.
+    t =     0.00s Start Test at 2026-11-02 03:30:27.640
+    t =     0.08s Set Up
+    t =     0.08s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.08s     Launch com.fruitsoflifexo.Fruitfolio
+    t =     0.08s         Terminate com.fruitsoflifexo.Fruitfolio:18712
+2026-11-02 03:30:28.747 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 03:30:28.747 xcodebuild[10537:36987] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     2.31s         Setting up automation session
+    t =     4.50s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =     8.76s Waiting 12.0s for "I'll explore" Button to exist
+    t =     9.93s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    10.03s         Checking existence of `"I'll explore" Button`
+    t =    10.98s         Capturing element debug description
+    t =    11.78s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    11.78s         Checking existence of `"I'll explore" Button`
+    t =    11.94s         Capturing element debug description
+    t =    12.77s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    12.77s         Checking existence of `"I'll explore" Button`
+    t =    12.82s         Capturing element debug description
+    t =    13.84s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    13.84s         Checking existence of `"I'll explore" Button`
+    t =    13.94s         Capturing element debug description
+    t =    14.77s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    14.77s         Checking existence of `"I'll explore" Button`
+    t =    14.82s         Capturing element debug description
+    t =    15.77s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    15.77s         Checking existence of `"I'll explore" Button`
+    t =    15.83s         Capturing element debug description
+    t =    16.85s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    16.85s         Checking existence of `"I'll explore" Button`
+    t =    16.91s         Capturing element debug description
+    t =    17.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.84s         Checking existence of `"I'll explore" Button`
+    t =    17.89s         Capturing element debug description
+    t =    18.84s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.84s         Checking existence of `"I'll explore" Button`
+    t =    18.88s         Capturing element debug description
+    t =    19.79s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.79s         Checking existence of `"I'll explore" Button`
+    t =    19.84s         Capturing element debug description
+    t =    20.76s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.76s         Checking existence of `"I'll explore" Button`
+    t =    20.87s         Capturing element debug description
+    t =    20.87s     Checking existence of `"I'll explore" Button`
+    t =    20.92s Collecting debug information to assist test failure triage
+    t =    20.92s     Requesting snapshot of accessibility hierarchy for app with pid 20653
+    t =    21.01s Waiting 15.0s for Button (First Match) to exist
+    t =    22.06s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    22.06s         Checking existence of `Button (First Match)`
+    t =    22.11s Waiting 10.0s for Button (First Match) to exist
+    t =    23.13s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    23.13s         Checking existence of `Button (First Match)`
+    t =    23.18s Find the Button (First Match)
+    t =    23.22s Find the "hub.action.FAQ" Button
+    t =    23.35s Checking existence of `"popup.writingArea" Any`
+    t =    23.54s Find the "hub.action.FAQ" Button
+    t =    23.58s Checking existence of `ScrollView (First Match)`
+    t =    23.64s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    23.67s Find the ScrollView (First Match)
+    t =    23.72s Find the "hub.action.FAQ" Button
+    t =    23.80s Find the "hub.action.FAQ" Button
+    t =    23.85s Find the "hub.action.FAQ" Button
+    t =    23.92s Find the "hub.action.FAQ" Button
+    t =    23.97s Find the "hub.action.FAQ" Button
+    t =    24.02s Find the "hub.action.FAQ" Button
+    t =    24.08s Tap "hub.action.FAQ" Button
+    t =    24.08s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.09s     Find the "hub.action.FAQ" Button
+    t =    24.13s     Check for interrupting elements affecting "hub.action.FAQ" Button
+    t =    24.19s     Synthesize event
+    t =    24.52s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    24.66s Waiting 10.0s for "faq.question.about-2" Button to exist
+    t =    25.71s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.question.about-2" Button`
+    t =    25.71s         Checking existence of `"faq.question.about-2" Button`
+    t =    25.84s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    25.88s Find the "faq.question.about-2" Button
+    t =    25.96s Find the "faq.question.about-2" Button
+    t =    26.02s Find the "faq.question.about-2" Button
+    t =    26.10s Find the "faq.question.about-2" Button
+    t =    26.16s Find the "faq.question.about-2" Button
+    t =    26.25s Find the "faq.question.about-2" Button
+    t =    26.39s Find the "faq.question.about-2" Button
+    t =    26.53s Find the "faq.question.about-2" Button
+    t =    26.63s Find the "faq.question.about-2" Button
+    t =    26.73s Find the "faq.question.about-2" Button
+    t =    26.82s Find the "faq.question.about-2" Button
+    t =    26.91s Find the "faq.question.about-2" Button
+    t =    26.99s Find the "faq.question.about-2" Button
+    t =    27.06s Find the "faq.question.about-2" Button
+    t =    27.14s Find the "faq.question.about-2" Button
+    t =    27.21s Find the "faq.question.about-2" Button
+    t =    27.28s Find the "faq.question.about-2" Button
+    t =    27.35s Find the "faq.question.about-2" Button
+    t =    27.40s Tap "faq.question.about-2" Button
+    t =    27.40s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.41s     Find the "faq.question.about-2" Button
+    t =    27.45s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    27.48s     Synthesize event
+    t =    27.78s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    27.78s Waiting 8.0s for "faq.answer.about-2" StaticText to exist
+    t =    28.82s     Checking `Expect predicate `existsNoRetry == 1` for object "faq.answer.about-2" StaticText`
+    t =    28.82s         Checking existence of `"faq.answer.about-2" StaticText`
+    t =    28.93s Find the "faq.answer.about-2" StaticText
+    t =    28.97s Find the "faq.answer.about-2" StaticText
+    t =    29.05s Find the "faq.answer.about-2" StaticText
+    t =    29.12s Find the "faq.answer.about-2" StaticText
+    t =    29.17s Find the "faq.answer.about-2" StaticText
+    t =    29.26s Find the "faq.answer.about-2" StaticText
+    t =    29.32s Find the "faq.answer.about-2" StaticText
+    t =    29.37s Find the "faq.answer.about-2" StaticText
+    t =    29.43s Find the "faq.answer.about-2" StaticText
+    t =    29.49s Find the "faq.answer.about-2" StaticText
+    t =    29.53s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    29.71s Added attachment named 'FAQ_Expanded_Default'
+    t =    32.72s Find the "faq.question.about-2" Button
+    t =    32.92s Find the "faq.question.about-2" Button
+    t =    33.03s Find the "faq.question.about-2" Button
+    t =    33.22s Find the "faq.question.about-2" Button
+    t =    33.43s Find the "faq.question.about-2" Button
+    t =    33.65s Find the "faq.question.about-2" Button
+    t =    33.79s Find the "faq.question.about-2" Button
+    t =    33.99s Find the "faq.question.about-2" Button
+    t =    34.11s Tap "faq.question.about-2" Button
+    t =    34.11s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.11s     Find the "faq.question.about-2" Button
+    t =    34.24s     Check for interrupting elements affecting "faq.question.about-2" Button
+    t =    34.33s     Synthesize event
+    t =    34.66s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.67s Checking existence of `"faq.answer.about-2" StaticText`
+    t =    34.81s Find the "faq.question.about-2" Button
+    t =    34.96s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    35.26s Added attachment named 'FAQ_Collapsed_Default'
+    t =    35.27s Tear Down
+Test Case '-[FruitfolioUITests.SharedControlUITests testFAQExpandsAndCollapsesUsingApprovedWording]' passed (35.619 seconds).
+Test Suite 'SharedControlUITests' failed at 2026-11-02 03:31:03.261.
+	 Executed 4 tests, with 2 failures (0 unexpected) in 200.404 (200.410) seconds
+Test Suite 'FruitfolioUITests.xctest' failed at 2026-11-02 03:31:03.262.
+	 Executed 4 tests, with 2 failures (0 unexpected) in 200.404 (200.411) seconds
+Test Suite 'Selected tests' failed at 2026-11-02 03:31:03.262.
+	 Executed 4 tests, with 2 failures (0 unexpected) in 200.404 (200.413) seconds
+2026-11-02 03:31:58.986 xcodebuild[10537:36987] [MT] IDETestOperationsObserverDebug: 280.962 elapsed -- Testing started completed.
+2026-11-02 03:31:58.987 xcodebuild[10537:36987] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 03:31:58.987 xcodebuild[10537:36987] [MT] IDETestOperationsObserverDebug: 280.962 sec, +280.962 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/SharedControls.xcresult
+
+Failing tests:
+	SharedControlUITests.testContactArtworkControlsAndReturnNavigation()
+	SharedControlUITests.testContactLongLabelGrowsAtAccessibilityTypeWithoutClipping()
+
+** TEST EXECUTE FAILED **
+
+Testing started

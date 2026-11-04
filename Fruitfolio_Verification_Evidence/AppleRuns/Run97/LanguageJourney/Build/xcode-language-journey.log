@@ -1,0 +1,370 @@
+Command line invocation:
+    /Applications/Xcode_26.6.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project Fruitfolio.xcodeproj -scheme Fruitfolio -destination "platform=iOS Simulator,id=7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8" -derivedDataPath .ciDerivedData -parallel-testing-enabled NO "-only-testing:FruitfolioUITests/LanguageSelectionJourneyUITests" -resultBundlePath Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES
+
+Build settings from command line:
+    ARCHS = arm64
+    CODE_SIGNING_ALLOWED = NO
+    ONLY_ACTIVE_ARCH = YES
+
+Writing result bundle at path:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+{ platform:iOS Simulator, arch:x86_64, id:7EFC6246-6BDB-4FD4-AE32-9345E3B28BD8, OS:26.4.1, name:iPhone 17 Pro }
+2026-11-02 10:53:51.284642+0000 FruitfolioUITests-Runner[30414:94048] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-02 10:53:52.789.
+Test Suite 'FruitfolioUITests.xctest' started at 2026-11-02 10:53:52.790.
+Test Suite 'LanguageSelectionJourneyUITests' started at 2026-11-02 10:53:52.791.
+Test Case '-[FruitfolioUITests.LanguageSelectionJourneyUITests testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance]' started.
+    t =     0.00s Start Test at 2026-11-02 10:53:52.794
+2026-11-02 10:53:55.909 xcodebuild[29561:91778] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-11-02 10:53:55.910 xcodebuild[29561:91778] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.14s Set Up
+    t =     0.16s Open com.fruitsoflifexo.Fruitfolio
+    t =     0.16s     Launch com.fruitsoflifexo.Fruitfolio
+objc[30414]: Class UIAccessibilityLoaderWebShared is implemented in both /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a570310) and /Library/Developer/CoreSimulator/Volumes/iOS_23E254a/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 26.4.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10b2a0398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     9.47s         Setting up automation session
+    t =    11.79s         Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    16.81s Waiting 12.0s for "I'll explore" Button to exist
+    t =    17.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    17.86s         Checking existence of `"I'll explore" Button`
+    t =    18.02s         Capturing element debug description
+    t =    18.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    18.86s         Checking existence of `"I'll explore" Button`
+    t =    18.92s         Capturing element debug description
+    t =    19.84s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    19.85s         Checking existence of `"I'll explore" Button`
+    t =    19.94s         Capturing element debug description
+    t =    20.86s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    20.86s         Checking existence of `"I'll explore" Button`
+    t =    20.93s         Capturing element debug description
+    t =    21.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    21.89s         Checking existence of `"I'll explore" Button`
+    t =    21.95s         Capturing element debug description
+    t =    22.90s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    22.90s         Checking existence of `"I'll explore" Button`
+    t =    23.05s         Capturing element debug description
+    t =    23.89s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    23.90s         Checking existence of `"I'll explore" Button`
+    t =    24.04s         Capturing element debug description
+    t =    24.90s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    24.90s         Checking existence of `"I'll explore" Button`
+    t =    24.99s         Capturing element debug description
+    t =    25.82s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    25.82s         Checking existence of `"I'll explore" Button`
+    t =    25.88s         Capturing element debug description
+    t =    26.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    26.84s         Checking existence of `"I'll explore" Button`
+    t =    26.96s         Capturing element debug description
+    t =    27.83s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    27.83s         Checking existence of `"I'll explore" Button`
+    t =    27.98s         Capturing element debug description
+    t =    28.82s     Checking `Expect predicate `existsNoRetry == 1` for object "I'll explore" Button`
+    t =    28.83s         Checking existence of `"I'll explore" Button`
+    t =    28.90s         Capturing element debug description
+    t =    28.91s     Checking existence of `"I'll explore" Button`
+    t =    29.00s Collecting debug information to assist test failure triage
+    t =    29.00s     Requesting snapshot of accessibility hierarchy for app with pid 31012
+    t =    29.13s Waiting 15.0s for Button (First Match) to exist
+    t =    30.16s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    30.16s         Checking existence of `Button (First Match)`
+    t =    30.30s Waiting 2.0s for Button (First Match) to exist
+    t =    31.35s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.35s         Checking existence of `Button (First Match)`
+    t =    31.41s Waiting 10.0s for Button (First Match) to exist
+    t =    32.45s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    32.45s         Checking existence of `Button (First Match)`
+    t =    32.53s Find the Button (First Match)
+    t =    32.62s Find the "settings" Button
+    t =    32.68s Checking existence of `"popup.writingArea" Any`
+    t =    32.89s Find the "settings" Button
+    t =    32.96s Checking existence of `ScrollView (First Match)`
+    t =    33.04s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    33.06s Find the ScrollView (First Match)
+    t =    33.13s Find the "settings" Button
+    t =    33.25s Find the "settings" Button
+REACH_CONTROL attempt=0 identifier=settings target=(140.0, 761.6666666666666, 122.0, 58.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=true
+    t =    33.36s Find the "settings" Button
+    t =    33.43s Find the "settings" Button
+    t =    33.49s Find the "settings" Button
+    t =    33.54s Find the "settings" Button
+    t =    33.60s Find the "settings" Button
+    t =    33.67s Tap "settings" Button
+    t =    33.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    33.68s     Find the "settings" Button
+    t =    33.72s     Check for interrupting elements affecting "settings" Button
+    t =    33.83s     Synthesize event
+    t =    34.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    34.95s Waiting 10.0s for "language" Button to exist
+    t =    36.03s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    36.03s         Checking existence of `"language" Button`
+    t =    36.24s Waiting 2.0s for "language" Button to exist
+    t =    37.30s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    37.30s         Checking existence of `"language" Button`
+    t =    37.36s Waiting 10.0s for "language" Button to exist
+    t =    38.43s     Checking `Expect predicate `existsNoRetry == 1` for object "language" Button`
+    t =    38.43s         Checking existence of `"language" Button`
+    t =    38.57s Find the "language" Button
+    t =    38.65s Find the "language" Button
+    t =    38.82s Checking existence of `"popup.writingArea" Any`
+    t =    39.25s Find the "language" Button
+    t =    39.32s Checking existence of `ScrollView (First Match)`
+    t =    39.39s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =    39.48s Find the ScrollView (First Match)
+    t =    39.58s Find the "language" Button
+    t =    39.78s Find the "language" Button
+REACH_CONTROL attempt=0 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    39.87s Find the "language" Button
+    t =    39.98s Find the "settings.mainScroll" ScrollView
+    t =    40.04s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    40.04s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    40.04s     Find the "settings.mainScroll" ScrollView
+    t =    40.11s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    40.18s     Synthesize event
+    t =    40.18s         Find the "settings.mainScroll" ScrollView
+    t =    40.29s         Find the "settings.mainScroll" ScrollView
+    t =    40.41s         Find the "settings.mainScroll" ScrollView
+    t =    40.49s         Find the "settings.mainScroll" ScrollView
+    t =    40.62s         Find the "settings.mainScroll" ScrollView
+    t =    42.95s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    43.71s Find the "language" Button
+    t =    43.84s Find the "language" Button
+REACH_CONTROL attempt=1 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    44.05s Find the "language" Button
+    t =    44.18s Find the "settings.mainScroll" ScrollView
+    t =    44.38s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    44.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    44.39s     Find the "settings.mainScroll" ScrollView
+    t =    44.45s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    44.53s     Synthesize event
+    t =    44.54s         Find the "settings.mainScroll" ScrollView
+    t =    44.65s         Find the "settings.mainScroll" ScrollView
+    t =    44.74s         Find the "settings.mainScroll" ScrollView
+    t =    44.80s         Find the "settings.mainScroll" ScrollView
+    t =    44.94s         Find the "settings.mainScroll" ScrollView
+    t =    47.32s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.06s Find the "language" Button
+    t =    48.18s Find the "language" Button
+REACH_CONTROL attempt=2 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    48.26s Find the "language" Button
+    t =    48.37s Find the "settings.mainScroll" ScrollView
+    t =    48.55s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    48.55s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    48.56s     Find the "settings.mainScroll" ScrollView
+    t =    48.78s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    48.86s     Synthesize event
+    t =    48.88s         Find the "settings.mainScroll" ScrollView
+    t =    49.14s         Find the "settings.mainScroll" ScrollView
+    t =    49.34s         Find the "settings.mainScroll" ScrollView
+    t =    49.50s         Find the "settings.mainScroll" ScrollView
+    t =    49.69s         Find the "settings.mainScroll" ScrollView
+    t =    52.11s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    52.87s Find the "language" Button
+    t =    53.01s Find the "language" Button
+REACH_CONTROL attempt=3 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    53.14s Find the "language" Button
+    t =    53.29s Find the "settings.mainScroll" ScrollView
+    t =    53.44s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    53.44s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    53.44s     Find the "settings.mainScroll" ScrollView
+    t =    53.52s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    53.59s     Synthesize event
+    t =    53.59s         Find the "settings.mainScroll" ScrollView
+    t =    53.71s         Find the "settings.mainScroll" ScrollView
+    t =    53.87s         Find the "settings.mainScroll" ScrollView
+    t =    54.00s         Find the "settings.mainScroll" ScrollView
+    t =    54.11s         Find the "settings.mainScroll" ScrollView
+    t =    56.48s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.23s Find the "language" Button
+    t =    57.33s Find the "language" Button
+REACH_CONTROL attempt=4 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    57.47s Find the "language" Button
+    t =    57.57s Find the "settings.mainScroll" ScrollView
+    t =    57.67s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    57.67s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    57.67s     Find the "settings.mainScroll" ScrollView
+    t =    57.76s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    57.85s     Synthesize event
+    t =    57.86s         Find the "settings.mainScroll" ScrollView
+    t =    58.01s         Find the "settings.mainScroll" ScrollView
+    t =    58.26s         Find the "settings.mainScroll" ScrollView
+    t =    58.66s         Find the "settings.mainScroll" ScrollView
+    t =    58.82s         Find the "settings.mainScroll" ScrollView
+    t =    61.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    61.96s Find the "language" Button
+    t =    62.06s Find the "language" Button
+REACH_CONTROL attempt=5 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    62.20s Find the "language" Button
+    t =    62.32s Find the "settings.mainScroll" ScrollView
+    t =    62.45s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    62.45s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    62.46s     Find the "settings.mainScroll" ScrollView
+    t =    62.54s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    62.64s     Synthesize event
+    t =    62.66s         Find the "settings.mainScroll" ScrollView
+    t =    62.76s         Find the "settings.mainScroll" ScrollView
+    t =    62.85s         Find the "settings.mainScroll" ScrollView
+    t =    62.93s         Find the "settings.mainScroll" ScrollView
+    t =    63.03s         Find the "settings.mainScroll" ScrollView
+    t =    65.38s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    66.14s Find the "language" Button
+    t =    66.23s Find the "language" Button
+REACH_CONTROL attempt=6 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    66.32s Find the "language" Button
+    t =    66.42s Find the "settings.mainScroll" ScrollView
+    t =    66.61s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    66.61s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    66.62s     Find the "settings.mainScroll" ScrollView
+    t =    66.74s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    66.81s     Synthesize event
+    t =    66.81s         Find the "settings.mainScroll" ScrollView
+    t =    66.92s         Find the "settings.mainScroll" ScrollView
+    t =    67.05s         Find the "settings.mainScroll" ScrollView
+    t =    67.16s         Find the "settings.mainScroll" ScrollView
+    t =    67.39s         Find the "settings.mainScroll" ScrollView
+    t =    69.75s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    70.50s Find the "language" Button
+    t =    70.59s Find the "language" Button
+REACH_CONTROL attempt=7 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    70.72s Find the "language" Button
+    t =    70.85s Find the "settings.mainScroll" ScrollView
+    t =    70.97s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    70.97s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    70.98s     Find the "settings.mainScroll" ScrollView
+    t =    71.06s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    71.13s     Synthesize event
+    t =    71.14s         Find the "settings.mainScroll" ScrollView
+    t =    71.23s         Find the "settings.mainScroll" ScrollView
+    t =    71.33s         Find the "settings.mainScroll" ScrollView
+    t =    71.41s         Find the "settings.mainScroll" ScrollView
+    t =    71.50s         Find the "settings.mainScroll" ScrollView
+    t =    73.83s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    74.58s Find the "language" Button
+    t =    74.68s Find the "language" Button
+REACH_CONTROL attempt=8 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    74.77s Find the "language" Button
+    t =    74.88s Find the "settings.mainScroll" ScrollView
+    t =    75.00s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    75.00s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    75.00s     Find the "settings.mainScroll" ScrollView
+    t =    75.14s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    75.26s     Synthesize event
+    t =    75.27s         Find the "settings.mainScroll" ScrollView
+    t =    75.43s         Find the "settings.mainScroll" ScrollView
+    t =    75.61s         Find the "settings.mainScroll" ScrollView
+    t =    75.71s         Find the "settings.mainScroll" ScrollView
+    t =    75.78s         Find the "settings.mainScroll" ScrollView
+    t =    78.12s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    78.88s Find the "language" Button
+    t =    78.98s Find the "language" Button
+REACH_CONTROL attempt=9 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    79.09s Find the "language" Button
+    t =    79.21s Find the "settings.mainScroll" ScrollView
+    t =    79.35s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    79.35s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    79.36s     Find the "settings.mainScroll" ScrollView
+    t =    79.44s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    79.53s     Synthesize event
+    t =    79.53s         Find the "settings.mainScroll" ScrollView
+    t =    79.65s         Find the "settings.mainScroll" ScrollView
+    t =    79.75s         Find the "settings.mainScroll" ScrollView
+    t =    79.82s         Find the "settings.mainScroll" ScrollView
+    t =    79.91s         Find the "settings.mainScroll" ScrollView
+    t =    82.32s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    83.05s Find the "language" Button
+    t =    83.15s Find the "language" Button
+REACH_CONTROL attempt=10 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    83.24s Find the "language" Button
+    t =    83.35s Find the "settings.mainScroll" ScrollView
+    t =    83.43s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    83.43s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    83.44s     Find the "settings.mainScroll" ScrollView
+    t =    83.55s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    83.63s     Synthesize event
+    t =    83.64s         Find the "settings.mainScroll" ScrollView
+    t =    83.74s         Find the "settings.mainScroll" ScrollView
+    t =    83.82s         Find the "settings.mainScroll" ScrollView
+    t =    83.89s         Find the "settings.mainScroll" ScrollView
+    t =    83.96s         Find the "settings.mainScroll" ScrollView
+    t =    86.28s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    87.03s Find the "language" Button
+    t =    87.11s Find the "language" Button
+REACH_CONTROL attempt=11 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    87.22s Find the "language" Button
+    t =    87.37s Find the "settings.mainScroll" ScrollView
+    t =    87.52s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    87.52s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    87.52s     Find the "settings.mainScroll" ScrollView
+    t =    87.74s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    87.82s     Synthesize event
+    t =    87.83s         Find the "settings.mainScroll" ScrollView
+    t =    87.98s         Find the "settings.mainScroll" ScrollView
+    t =    88.11s         Find the "settings.mainScroll" ScrollView
+    t =    88.32s         Find the "settings.mainScroll" ScrollView
+    t =    88.47s         Find the "settings.mainScroll" ScrollView
+    t =    90.82s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    91.57s Find the "language" Button
+    t =    91.68s Find the "language" Button
+REACH_CONTROL attempt=12 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    91.77s Find the "language" Button
+    t =    91.89s Find the "settings.mainScroll" ScrollView
+    t =    92.02s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    92.02s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    92.02s     Find the "settings.mainScroll" ScrollView
+    t =    92.14s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    92.20s     Synthesize event
+    t =    92.21s         Find the "settings.mainScroll" ScrollView
+    t =    92.32s         Find the "settings.mainScroll" ScrollView
+    t =    92.42s         Find the "settings.mainScroll" ScrollView
+    t =    92.54s         Find the "settings.mainScroll" ScrollView
+    t =    92.63s         Find the "settings.mainScroll" ScrollView
+    t =    94.95s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    95.72s Find the "language" Button
+    t =    95.83s Find the "language" Button
+REACH_CONTROL attempt=13 identifier=language target=(36.0, 902.3333333333334, 330.0, 44.0) viewport=(0.0, 0.0, 402.0, 874.0) hittable=false
+    t =    95.95s Find the "language" Button
+    t =    96.04s Find the "settings.mainScroll" ScrollView
+    t =    96.16s Press "settings.mainScroll" ScrollView[0.50, 0.72] for 0.1 seconds, then drag to "settings.mainScroll" ScrollView[0.50, 0.28] with velocity of 250.00 pixels per second, and then hold for 0.3 seconds 
+    t =    96.16s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    96.16s     Find the "settings.mainScroll" ScrollView
+    t =    96.28s     Check for interrupting elements affecting "settings.mainScroll" ScrollView
+    t =    96.36s     Synthesize event
+    t =    96.38s         Find the "settings.mainScroll" ScrollView
+    t =    96.49s         Find the "settings.mainScroll" ScrollView
+    t =    96.60s         Find the "settings.mainScroll" ScrollView
+    t =    96.72s         Find the "settings.mainScroll" ScrollView
+    t =    96.88s         Find the "settings.mainScroll" ScrollView
+    t =    99.20s     Wait for com.fruitsoflifexo.Fruitfolio to idle
+    t =    99.95s Find the "language" Button
+    t =   100.08s Find the Target Application 'com.fruitsoflifexo.Fruitfolio'
+    t =   100.57s Find the "language" Button
+    t =   100.75s Actual unreachable control
+    t =   100.75s Requesting snapshot of accessibility hierarchy for app with pid 31012
+    t =   101.26s Requesting snapshot of accessibility hierarchy for app with pid 31012
+    t =   102.08s Actual owning viewport
+    t =   102.13s Find the "language" Button
+    t =   102.24s Find the "language" Button
+/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/FruitfolioUITests/ModalScrollSupport.swift:63: error: -[FruitfolioUITests.LanguageSelectionJourneyUITests testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance] : XCTAssertTrue failed - Entire control must fit the actual owning viewport: language
+    t =   103.23s Tear Down
+Test Case '-[FruitfolioUITests.LanguageSelectionJourneyUITests testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance]' failed (103.671 seconds).
+Test Suite 'LanguageSelectionJourneyUITests' failed at 2026-11-02 10:55:36.466.
+	 Executed 1 test, with 1 failure (0 unexpected) in 103.671 (103.675) seconds
+Test Suite 'FruitfolioUITests.xctest' failed at 2026-11-02 10:55:36.467.
+	 Executed 1 test, with 1 failure (0 unexpected) in 103.671 (103.676) seconds
+Test Suite 'Selected tests' failed at 2026-11-02 10:55:36.468.
+	 Executed 1 test, with 1 failure (0 unexpected) in 103.671 (103.678) seconds
+2026-11-02 10:56:10.313 xcodebuild[29561:91778] [MT] IDETestOperationsObserverDebug: 155.971 elapsed -- Testing started completed.
+2026-11-02 10:56:10.313 xcodebuild[29561:91778] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-02 10:56:10.313 xcodebuild[29561:91778] [MT] IDETestOperationsObserverDebug: 155.971 sec, +155.971 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_AUDIT_WORKING_COPY_NEW/Fruitfolio_Verification_Evidence/Build/LanguageJourney.xcresult
+
+Failing tests:
+	LanguageSelectionJourneyUITests.testSelectionSurvivesActualRestartAndUnverifiedDisplayIsDisclosedWithoutClaimingTranslationAcceptance()
+
+** TEST EXECUTE FAILED **
+
+Testing started

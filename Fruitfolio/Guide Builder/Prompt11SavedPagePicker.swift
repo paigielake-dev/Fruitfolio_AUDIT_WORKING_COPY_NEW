@@ -186,7 +186,7 @@ struct Prompt11SavedPagePicker: View {
                     selectedSourceKeys.isEmpty || selectedChapterID == nil
                 )
 
-                WatercolorSecondaryButton(label: "not yet") {
+                WatercolorSecondaryButton(label: "not yet", localizationKey: "not yet") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }

@@ -1,0 +1,7 @@
+# Actual guarded-page and hormone follow-up
+
+Run64 Ask passed both actual journeys: saved original-source attribution across restart (167.146 s), and grounded answer/source/return clearing (101.201 s). Guide cover journey passed (31.747 s). The page journey reached its final guarded deletion after photo/save/restart/edit/discard steps, but its helper failed to bring the whole keep-page control into the modal viewport. Actual bounds showed the control's top 5.4 pt above the pane while its midpoint was inside; midpoint-based direction repeatedly tried to scroll past the bottom.
+
+A shared actual-viewport helper now chooses the canonical modal pane when it owns the target, otherwise the same owning scroll view as before. It uses the target's leading edge for partial-clipping direction and retains entire-control containment, hittability and diagnostic screenshots/hierarchy on failure. The page test uses this helper without removing any lifecycle assertions. Hormone and bulk-data deletion tests record initial warnings, reach real modal actions inside the pane and run the same strict audit. No invisible text, audit filtering, fixed-coordinate taps outside the pane, or relaxed bounds assertions are introduced.
+
+The hormone Run64 failure was the same Cancel action outside the clipped writing pane, after measurement creation/restart/edit succeeded. Source74 moved modal ownership to the actual writing ScrollView and removed redundant outer ownership from this confirmation. These combined source/test changes need actual rerun before acceptance.

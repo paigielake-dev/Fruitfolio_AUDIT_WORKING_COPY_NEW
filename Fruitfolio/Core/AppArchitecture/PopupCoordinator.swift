@@ -92,7 +92,9 @@ final class PopupCoordinator: ObservableObject {
         presentationState = .dismissing
     }
 
-    func finishDismissal() {
+    func finishDismissal(expectedPopupID: UUID? = nil) {
+        guard presentationState == .dismissing else { return }
+        if let expectedPopupID, currentPopup?.id != expectedPopupID { return }
         timedDismissTask?.cancel()
         timedDismissTask = nil
 

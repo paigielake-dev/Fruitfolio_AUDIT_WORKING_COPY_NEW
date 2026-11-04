@@ -12,9 +12,12 @@ struct Prompt10EncyclopediaDetailView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var selectedPage: Prompt10SavedPage?
     @State private var expandedChapterIDs: Set<UUID> = []
+    @State private var editingChapterID: UUID?
+    @State private var managingChapters = false
 
     private var encyclopedia: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -53,35 +56,19 @@ struct Prompt10EncyclopediaDetailView: View {
                 )
 
                 ZStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .openBook
-                    )
-                    .frame(maxWidth: 350)
-                    .accessibilityHidden(true)
-
-                    VStack(spacing: 8) {
-                        Prompt10LibraryAssetImage(
-                            asset: .bookOpen
-                        )
-                        .frame(width: 82)
+                    Color.clear
+                        .aspectRatio(1856.0 / 1337.0, contentMode: .fit)
+                        .frame(maxWidth: 350)
+                        .prompt10BookFrame("inside:" + encyclopedia.id.uuidString)
                         .accessibilityHidden(true)
 
-                        Text(encyclopedia.name)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 21
-                                )
-                            )
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .padding(.horizontal, 48)
-                    }
+                    if !dynamicTypeSize.isAccessibilitySize { encyclopediaTitle(encyclopedia) }
                 }
+                // Accessibility text remains full size and fully readable;
+                // it must not be forced into the decorative book's fixed art.
+                if dynamicTypeSize.isAccessibilitySize { encyclopediaTitle(encyclopedia) }
+
+                FruitfolioControlPillButton(label: "manage chapters", localizationKey: "manage chapters") { managingChapters = true }
 
                 if encyclopedia.chapters.isEmpty {
                     Text("this little book is ready for saved pages ♡")
@@ -111,27 +98,22 @@ struct Prompt10EncyclopediaDetailView: View {
                     }
                 }
 
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookmark
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .flower
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 18)
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .sheet(isPresented: $managingChapters) {
+            Prompt10ChapterManagementView(store: store, encyclopediaID: encyclopediaID)
+        }
+        .sheet(isPresented: Binding(get: { editingChapterID != nil }, set: { if !$0 { editingChapterID = nil } })) {
+            if let chapterID = editingChapterID {
+                Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: chapterID,
+                    onSaved: { page in editingChapterID = nil; selectedPage = page },
+                    onCancel: { editingChapterID = nil })
+            }
+        }
         .onAppear {
             // A saved encyclopedia should never open looking empty when it already
             // contains pages. Expand populated chapters by default; the user can
@@ -144,6 +126,17 @@ struct Prompt10EncyclopediaDetailView: View {
                 )
             }
         }
+    }
+
+    private func encyclopediaTitle(_ encyclopedia: Prompt10Encyclopedia) -> some View {
+        Text(encyclopedia.name)
+            .font(.custom("Chalkboard SE", size: 21, relativeTo: .title3)).bold()
+            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, dynamicTypeSize.isAccessibilitySize ? 8 : 48)
+            .accessibilityAddTraits(.isHeader)
+            .accessibilityIdentifier("library.openBookTitle")
     }
 
     private func detailHeader(
@@ -212,7 +205,7 @@ struct Prompt10EncyclopediaDetailView: View {
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
-                .buttonStyle(
+            .buttonStyle(
                     CutePopButtonStyle(
                         reduceMotion:
                             motionPreferences.reduceMotionActive
@@ -233,6 +226,7 @@ struct Prompt10EncyclopediaDetailView: View {
         let expanded = expandedChapterIDs.contains(chapter.id)
 
         return VStack(spacing: 8) {
+
             Button {
                 if expanded {
                     expandedChapterIDs.remove(chapter.id)
@@ -276,7 +270,9 @@ struct Prompt10EncyclopediaDetailView: View {
                     minHeight:
                         DesignTokens.Layout.minimumHitTarget
                 )
+                .contentShape(Rectangle())
             }
+            .accessibilityValue(expanded ? "expanded" : "collapsed")
             .buttonStyle(
                 CutePopButtonStyle(
                     reduceMotion:
@@ -286,6 +282,9 @@ struct Prompt10EncyclopediaDetailView: View {
 
             if expanded {
                 VStack(spacing: 6) {
+                    FruitfolioControlPillButton(label: "add my own page", localizationKey: "add my own page") { editingChapterID = chapter.id }
+                        .accessibilityIdentifier("library.addPage.\(chapter.id)")
+
                     ForEach(
                         chapter.pages.sorted {
                             $0.order < $1.order
@@ -295,12 +294,6 @@ struct Prompt10EncyclopediaDetailView: View {
                             selectedPage = page
                         } label: {
                             HStack(alignment: .top, spacing: 10) {
-                                Image("library_bookmark")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 22)
-                                    .accessibilityHidden(true)
-
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(
                                         page.question.isEmpty
@@ -320,7 +313,7 @@ struct Prompt10EncyclopediaDetailView: View {
                                     .lineLimit(2)
 
                                     Text(
-                                        page.saveType == .excerpt
+                                        page.isUserAuthored == true ? "my own page" : page.saveType == .excerpt
                                             ? "saved excerpt"
                                             : "complete saved answer"
                                     )
@@ -369,15 +362,24 @@ struct Prompt10SavedPageView: View {
     @State private var selectedPhotoItem: PhotosPickerItem?
     @State private var mediaMessage: String?
     @State private var noteDraft = ""
+    @State private var editingPage = false
+    @State private var showUnsavedNotes = false
+    @State private var showDeletePage = false
+    @State private var editAfterNotes = false
+    @FocusState private var notesFocused: Bool
+    @EnvironmentObject private var motion: MotionPreferences
 
     var body: some View {
+        ZStack {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 ZStack {
                     HStack {
                         BackControl {
                             audioManager.play(.buttonSoftPop)
-                            onBack()
+                            editAfterNotes = false
+                            notesFocused = false
+                            if noteDraft != page.notes { showUnsavedNotes = true } else { onBack() }
                         }
 
                         Spacer()
@@ -408,7 +410,8 @@ struct Prompt10SavedPageView: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                Text(page.displayBody)
+                FruitfolioSemanticText(document: page.resolvedSemanticDocument,
+                    baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body))
                     .font(
                         .custom(
                             "Chalkboard SE",
@@ -420,42 +423,21 @@ struct Prompt10SavedPageView: View {
                     )
                     .textSelection(.enabled)
 
+                if page.isUserAuthored == true {
+                    FruitfolioControlPillButton(label: "edit my page", localizationKey: "edit my page") {
+                        editAfterNotes = true; notesFocused = false
+                        if noteDraft != page.notes { showUnsavedNotes = true } else { editingPage = true }
+                    }
+                }
                 notesSection
                 importedImagesSection
+                WatercolorSecondaryButton(label: "delete saved page", localizationKey: "delete saved page") {
+                    notesFocused = false; showDeletePage = true
+                }
 
                 if !page.sourceIDs.isEmpty {
-                    Divider()
-                        .overlay(
-                            DesignTokens.ColorToken.primaryBurgundy.opacity(0.18)
-                        )
-
-                    Text("sources")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13
-                            )
-                        )
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.primaryBurgundy
-                        )
-
-                    ForEach(
-                        Array(page.sourceIDs.enumerated()),
-                        id: \.offset
-                    ) { _, sourceID in
-                        Text(sourceID)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 11
-                                )
-                            )
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.secondaryBurgundy
-                            )
-                    }
+                    Divider().overlay(DesignTokens.ColorToken.primaryBurgundy.opacity(0.18))
+                    Prompt10SavedCitationsView(page: page)
                 }
             }
             .padding(.horizontal, 22)
@@ -463,6 +445,33 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .fruitfolioModalBlur(active: showUnsavedNotes || showDeletePage, reduceMotion: motion.reduceMotionActive)
+        if showDeletePage {
+            Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete saved page?",
+                message: "this removes this page and its notes from this encyclopedia, including any unsaved notes. other saved copies stay in their own books.",
+                primaryLabel: "keep page", secondaryLabel: nil, destructiveLabel: "delete page",
+                primaryAction: { showDeletePage = false }, secondaryAction: nil, destructiveAction: deletePage)
+        }
+        if showUnsavedNotes {
+            Prompt12ConfirmationPopup(assetName: "popup_warning", title: "unsaved changes",
+                message: "would you like to save your notes?", primaryLabel: "save notes",
+                secondaryLabel: "keep editing", destructiveLabel: "discard changes",
+                primaryAction: { if saveNotes() { continueAfterNotes() } },
+                secondaryAction: { showUnsavedNotes = false }, destructiveAction: {
+                    noteDraft = page.notes; showUnsavedNotes = false; continueAfterNotes()
+                })
+        }
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                if notesFocused { Spacer(); Button("done") { notesFocused = false } }
+            }
+        }
+        .sheet(isPresented: $editingPage) {
+            Prompt10UserPageEditor(store: store, encyclopediaID: encyclopediaID, chapterID: page.chapterID,
+                page: page, onSaved: { updated in onPageChanged(updated); editingPage = false },
+                onCancel: { editingPage = false })
+        }
     }
 
     private var notesSection: some View {
@@ -471,24 +480,52 @@ struct Prompt10SavedPageView: View {
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
                 .fontWeight(.bold)
             TextEditor(text: $noteDraft)
+                .focused($notesFocused)
+                .accessibilityIdentifier("savedPage.notes")
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .frame(minHeight: 110)
                 .padding(8)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.75), in: RoundedRectangle(cornerRadius: 12))
-            Button("save notes") {
-                do {
-                    try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: noteDraft)
-                    var updated = page
-                    updated.notes = noteDraft.trimmingCharacters(in: .whitespacesAndNewlines)
-                    onPageChanged(updated)
-                    mediaMessage = "notes saved!"
-                } catch {
-                    mediaMessage = "those notes could not be saved."
-                }
-            }
+            Button("save notes") { _ = saveNotes() }
             .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
         .onAppear { noteDraft = page.notes }
+    }
+
+    private func deletePage() {
+        do {
+            try store.deletePage(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id)
+            for id in page.importedImageIDs ?? [] where !store.imageIsReferenced(id) {
+                try? Prompt10LocalMediaStore.shared.delete(id)
+            }
+            showDeletePage = false
+            onBack()
+        } catch {
+            showDeletePage = false
+            mediaMessage = "that page could not be deleted."
+        }
+    }
+
+    private func continueAfterNotes() {
+        if editAfterNotes { editingPage = true } else { onBack() }
+    }
+
+    @discardableResult
+    private func saveNotes() -> Bool {
+        do {
+            try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: noteDraft)
+            var updated = page
+            updated.notes = noteDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+            noteDraft = updated.notes
+            onPageChanged(updated)
+            mediaMessage = "notes saved!"
+            showUnsavedNotes = false
+            return true
+        } catch {
+            showUnsavedNotes = false
+            mediaMessage = "those notes could not be saved. your writing is still here."
+            return false
+        }
     }
 
     @ViewBuilder
@@ -500,19 +537,13 @@ struct Prompt10SavedPageView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
-                if let data = Prompt10LocalMediaStore.shared.data(for: imageID),
-                   let image = UIImage(data: data) {
-                    VStack(spacing: 6) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            .accessibilityLabel("user imported image")
-
-                        Button("remove image") { removeImage(imageID) }
-                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                    }
+                VStack(spacing: 6) {
+                    Prompt10ImportedImagePreview(imageID: imageID, accessibilityLabel: "user imported image")
+                        .frame(maxWidth: .infinity)
+                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    Button("remove image") { removeImage(imageID) }
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .frame(minHeight: 44)
                 }
             }
 
@@ -559,7 +590,7 @@ struct Prompt10SavedPageView: View {
             var ids = page.importedImageIDs ?? []
             ids.removeAll { $0 == id }
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
-            try Prompt10LocalMediaStore.shared.delete(id)
+            if !store.imageIsReferenced(id) { try Prompt10LocalMediaStore.shared.delete(id) }
             var updated = page
             updated.importedImageIDs = ids
             onPageChanged(updated)

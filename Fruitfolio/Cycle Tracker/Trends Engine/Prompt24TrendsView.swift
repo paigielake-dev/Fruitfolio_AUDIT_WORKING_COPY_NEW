@@ -18,7 +18,7 @@ struct Prompt24TrendsView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     @State private var selectedTab: Prompt24TrendsTab = .cycle
-    @State private var selectedSymptoms: Set<Prompt20SymptomID> = [.cramps]
+    @State private var selectedSymptoms: Set<Prompt20SymptomID>?
     @State private var snapshot: Prompt24TrendsSnapshot?
     @State private var loadState: LoadState = .loading
     @State private var refreshID = UUID()
@@ -287,7 +287,7 @@ struct Prompt24TrendsView: View {
         _ snapshot: Prompt24TrendsSnapshot
     ) -> some View {
         let available = Set(snapshot.symptomOccurrences.map(\.symptomID))
-        let visible = selectedSymptoms.intersection(available)
+        let visible = Prompt24SymptomChartData.selection(selectedSymptoms, available: available)
         let occurrences = snapshot.symptomOccurrences.filter { visible.contains($0.symptomID) }
 
         return VStack(alignment: .leading, spacing: 18) {
@@ -305,6 +305,24 @@ struct Prompt24TrendsView: View {
                 )
             }
 
+            Text("dots are symptoms you recorded on their actual dates, not predicted symptom days. dates without a logged symptom remain blank. a pattern summary needs repeated observations across enough cycles.")
+                .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+            if !occurrences.isEmpty {
+                DisclosureGroup("recorded symptom details") {
+                    ForEach(Prompt24SymptomChartData(occurrences: occurrences, selected: visible).occurrences) { observation in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(observation.symptomID.displayName).fontWeight(.semibold)
+                            Text(observation.date, style: .date)
+                            Text(observation.cycleDay.map { "recorded cycle day \($0)" } ?? "cycle day not assigned")
+                        }
+                        .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .accessibilityElement(children: .combine)
+                        .accessibilityIdentifier("trends.symptomObservation." + observation.id)
+                    }
+                }
+                .accessibilityIdentifier("trends.symptomRecordedDetails")
+            }
+
             ForEach(Array(visible).sorted { $0.displayName < $1.displayName }, id: \.self) { symptom in
                 symptomPatternSummary(snapshot.pattern(for: symptom))
             }
@@ -312,7 +330,8 @@ struct Prompt24TrendsView: View {
     }
 
     private func symptomToggleGrid(available: Set<Prompt20SymptomID>) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        let selected = Prompt24SymptomChartData.selection(selectedSymptoms, available: available)
+        return VStack(alignment: .leading, spacing: 8) {
             Text("show logged symptoms")
                 .font(Font.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
                 .fontWeight(.semibold)
@@ -320,14 +339,13 @@ struct Prompt24TrendsView: View {
             ForEach(Prompt23SymptomTaxonomy.items.filter { available.contains($0.symptomID) }) { item in
                 Button {
                     audioManager.play(.buttonSoftPop)
-                    if selectedSymptoms.contains(item.symptomID) {
-                        selectedSymptoms.remove(item.symptomID)
-                    } else {
-                        selectedSymptoms.insert(item.symptomID)
-                    }
+                    var updated = selected
+                    if updated.contains(item.symptomID) { updated.remove(item.symptomID) }
+                    else { updated.insert(item.symptomID) }
+                    selectedSymptoms = updated
                 } label: {
                     HStack {
-                        Text(selectedSymptoms.contains(item.symptomID) ? "●" : "○")
+                        Text(selected.contains(item.symptomID) ? "●" : "○")
                         Text(item.displayLabel)
                         Spacer()
                     }
@@ -337,7 +355,8 @@ struct Prompt24TrendsView: View {
                 }
                 .buttonStyle(Prompt24SoftPressButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 .accessibilityLabel(item.displayLabel)
-                .accessibilityValue(selectedSymptoms.contains(item.symptomID) ? "shown" : "hidden")
+                .accessibilityValue(selected.contains(item.symptomID) ? "shown" : "hidden")
+                .accessibilityIdentifier("trends.symptomToggle." + item.symptomID.rawValue)
             }
         }
     }
@@ -972,38 +991,58 @@ private struct Prompt24UnifiedSymptomChart: View {
     let occurrences: [Prompt24SymptomOccurrence]
     let selectedSymptoms: Set<Prompt20SymptomID>
     let reduceMotion: Bool
+    @ScaledMetric(relativeTo: .body) private var rowHeight: CGFloat = 44
+    @ScaledMetric(relativeTo: .caption) private var footerHeight: CGFloat = 80
 
     var body: some View {
-        let symptoms = Array(selectedSymptoms).sorted { $0.displayName < $1.displayName }
-        let maxDay = max(occurrences.compactMap(\.cycleDay).max() ?? 1, 1)
+        let data = Prompt24SymptomChartData(occurrences: occurrences, selected: selectedSymptoms)
         GeometryReader { viewport in
-            let plotWidth = max(viewport.size.width, Prompt24LongTermLayout.minimumPlotWidth, CGFloat(max(maxDay - 1, 0)) * 18 + 120)
-            let plotHeight = max(viewport.size.height, CGFloat(max(symptoms.count, 1)) * 44 + 76)
-            ScrollView([.horizontal, .vertical], showsIndicators: false) {
-                ZStack {
+            let labelWidth = max(120, min(viewport.size.width * 0.40, 190))
+            let plotWidth = max(viewport.size.width, Prompt24LongTermLayout.minimumPlotWidth)
+            let plotHeight = max(viewport.size.height, CGFloat(max(data.symptoms.count, 1)) * rowHeight + footerHeight + 32)
+            let plotLeft = labelWidth + 16
+            let plotSpan = max(plotWidth - plotLeft - 24, 1)
+            let rowSpan = max(plotHeight - footerHeight - 32, 1)
+            ScrollView([.horizontal, .vertical], showsIndicators: true) {
+                ZStack(alignment: .topLeading) {
                     Prompt24GraphPaper()
-                    Canvas { context, size in
-                        let frame = Prompt24ChartMath.plotFrame(in: size)
-                        for occurrence in occurrences {
-                            guard let day = occurrence.cycleDay,
-                                  let row = symptoms.firstIndex(of: occurrence.symptomID) else { continue }
-                            let x = frame.minX + CGFloat(max(day - 1, 0)) / CGFloat(max(maxDay - 1, 1)) * frame.width
-                            let y = frame.minY + CGFloat(row + 1) / CGFloat(symptoms.count + 1) * frame.height
-                            let rect = CGRect(x: x - 4.2, y: y - 4.2, width: 8.4, height: 8.4)
-                            context.fill(Path(ellipseIn: rect), with: .color(Prompt24Palette.burgundy.opacity(0.68)))
+                    Canvas { context, _ in
+                        for observation in data.occurrences {
+                            guard let row = data.symptoms.firstIndex(of: observation.symptomID) else { continue }
+                            let x = plotLeft + CGFloat(data.dateFraction(observation)) * plotSpan
+                            let y = 24 + CGFloat(row + 1) / CGFloat(data.symptoms.count + 1) * rowSpan
+                            let dot = CGRect(x: x - 4.2, y: y - 4.2, width: 8.4, height: 8.4)
+                            context.fill(Path(ellipseIn: dot), with: .color(Prompt24Palette.burgundy))
                         }
                     }
-                    ForEach(Array(symptoms.enumerated()), id: \.element) { row, symptom in
+                    ForEach(Array(data.symptoms.enumerated()), id: \.element) { row, symptom in
                         Text(symptom.displayName)
-                            .font(Font.custom("Chalkboard SE", size: 9, relativeTo: .caption2))
-                            .foregroundStyle(Prompt24Palette.burgundy.opacity(0.72))
-                            .position(x: 52, y: 24 + CGFloat(row + 1) / CGFloat(symptoms.count + 1) * max(plotHeight - 48, 1))
+                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                            .foregroundStyle(Prompt24Palette.burgundy)
+                            .multilineTextAlignment(.trailing)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(width: labelWidth, alignment: .trailing)
+                            .position(x: labelWidth / 2, y: 24 + CGFloat(row + 1) / CGFloat(data.symptoms.count + 1) * rowSpan)
                     }
-                    Prompt24AxisLabels(x: "recorded cycle day →", y: "logged symptoms")
+                    VStack(spacing: 4) {
+                        HStack {
+                            if let first = data.occurrences.first { Text(first.date, style: .date) }
+                            Spacer()
+                            if let last = data.occurrences.last { Text(last.date, style: .date) }
+                        }
+                        Text("recorded dates →")
+                    }
+                    .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                    .foregroundStyle(Prompt24Palette.burgundy)
+                    .padding(.leading, plotLeft)
+                    .padding(.trailing, 20)
+                    .frame(width: plotWidth)
+                    .position(x: plotWidth / 2, y: plotHeight - footerHeight / 2)
                 }
                 .frame(width: plotWidth, height: plotHeight)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel("Unified symptom timeline using only logged observations. \(occurrences.count) recorded occurrences are shown.")
+                .accessibilityLabel("Unified symptom timeline. \(data.occurrences.count) recorded observations on their actual dates. Open recorded symptom details for each exact date and symptom. Missing cycle days are not inferred.")
+                .accessibilityIdentifier("trends.symptomGraph")
             }
         }
     }

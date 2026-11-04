@@ -1,0 +1,70 @@
+{
+  "phase": 7,
+  "recordedAtUTC": "2026-11-02T18:21:06.825274+00:00",
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-359",
+      "originalBreakdownItem": "Base progression primarily on successfully completed rounds.",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged. Progress and immutable round evidence/catches are staged and encoded as one snapshot before publication; failed encoding preserves old bytes and progress.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac. Added sixth rejection/idempotence source test; also NOT EXECUTED.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    },
+    {
+      "requirementID": "FF1B-366",
+      "originalBreakdownItem": "Trigger basket reveal after the actual round finishes.",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged. Progress and immutable round evidence/catches are staged and encoded as one snapshot before publication; failed encoding preserves old bytes and progress.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac. Added sixth rejection/idempotence source test; also NOT EXECUTED.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    },
+    {
+      "requirementID": "FF1B-474",
+      "originalBreakdownItem": "Test persistence and data deletion.",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift"
+      ],
+      "changes": "A registered final catch persists its actual round/source/collection/score result immediately, separately from the existing delayed result presentation. Completion is idempotent per attempt. Pause cannot cancel a locked outcome; background/navigation/retry complete its presentation safely without incrementing totals twice. New attempts clear the prior pending state, and basket motion stops after logical round end. Existing scoring/progression rules are unchanged. Progress and immutable round evidence/catches are staged and encoded as one snapshot before publication; failed encoding preserves old bytes and progress.",
+      "verification": "Five new XCTest cases cover immediate persistence before host deallocation, repeated pause/background callbacks, unprotected bad-fruit commit, fresh retry and normal delayed presentation. Not executed on Mac. Added sixth rejection/idempotence source test; also NOT EXECUTED.",
+      "evidence": "FruitfolioTests/RoundCompletionPersistenceTests.swift",
+      "remainingIssues": "Run full gameplay/persistence/UI regressions and process-restart journeys on founder Mac; source fixtures do not establish physical-device kill durability."
+    },
+    {
+      "requirementID": "FF1B-226",
+      "originalBreakdownItem": "Prevent muted or disabled audio from continuing to play.",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "changes": "Suspend all audio on willResignActive as well as background entry; retain eligible loop requests and interruption permissions, never replay transient SFX or typing on activation.",
+      "verification": "New actual-player runtime test source covers all channels and inactive requests/settings; NOT EXECUTED on Mac. Changed-file whitespace check passed.",
+      "evidence": "FruitfolioTests/AudioLifecycleRuntimeTests.swift",
+      "remainingIssues": "Execute on Mac; real device interruptions, route changes and listening quality remain unverified."
+    },
+    {
+      "requirementID": "FF1B-473",
+      "originalBreakdownItem": "Test app backgrounding and foregrounding.",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "implementationFiles": [
+        "Fruitfolio/Core/Assets/AudioManager.swift"
+      ],
+      "changes": "Suspend all audio on willResignActive as well as background entry; retain eligible loop requests and interruption permissions, never replay transient SFX or typing on activation.",
+      "verification": "New actual-player runtime test source covers all channels and inactive requests/settings; NOT EXECUTED on Mac. Changed-file whitespace check passed.",
+      "evidence": "FruitfolioTests/AudioLifecycleRuntimeTests.swift",
+      "remainingIssues": "Execute on Mac; real device interruptions, route changes and listening quality remain unverified."
+    }
+  ]
+}

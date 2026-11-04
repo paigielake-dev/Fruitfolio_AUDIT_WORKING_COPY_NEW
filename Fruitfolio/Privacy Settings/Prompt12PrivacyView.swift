@@ -30,6 +30,10 @@ struct Prompt12PrivacyView: View {
                             .accessibilityHidden(true)
                     }
 
+                    if let error = store.loadError {
+                        Text(error).fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("privacy.storageError")
+                    }
                     Prompt12PaperCard {
                         title("what Fruitfolio stores")
                         Prompt12InfoText(
@@ -63,7 +67,8 @@ struct Prompt12PrivacyView: View {
 
                         WatercolorToggle(
                             label: "private notification wording",
-                            isOn: $store.usePrivacyModeOnLockScreen
+                            isOn: $store.usePrivacyModeOnLockScreen,
+                            isDisabled: store.loadError != nil
                         )
 
                         Prompt12InfoText(

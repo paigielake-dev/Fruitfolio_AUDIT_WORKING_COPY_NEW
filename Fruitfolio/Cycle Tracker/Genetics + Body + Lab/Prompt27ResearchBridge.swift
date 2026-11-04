@@ -30,15 +30,7 @@ struct Prompt27ClosureScienceResearchProvider: Prompt27ScienceResearchProviding 
     ) async throws -> Prompt27ApprovedScienceContent {
         let content = try await loader(contentID)
 
-        guard content.contentID == contentID else {
-            throw Prompt27ScienceLoadFailure.invalidApprovedContent
-        }
-
-        guard !content.body.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            throw Prompt27ScienceLoadFailure.invalidApprovedContent
-        }
-
-        guard !content.sourceIDs.isEmpty else {
+        guard content.hasValidStructure(for: contentID) else {
             throw Prompt27ScienceLoadFailure.invalidApprovedContent
         }
 
@@ -62,5 +54,18 @@ struct Prompt27ScienceActions: Sendable {
         self.saveEducationalContent = saveEducationalContent
         self.openRelatedTopic = openRelatedTopic
         self.openHotspotContent = openHotspotContent
+    }
+}
+
+// This validates request association and displayable structure, not the truth
+// of a claim or the approval/version of its citations.
+extension Prompt27ApprovedScienceContent {
+    func hasValidStructure(for requestedID: String) -> Bool {
+        func nonblank(_ value: String) -> Bool {
+            !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+        return contentID == requestedID && nonblank(requestedID)
+            && nonblank(title) && nonblank(body) && !sourceIDs.isEmpty
+            && sourceIDs.allSatisfy(nonblank) && Set(sourceIDs).count == sourceIDs.count
     }
 }

@@ -54,3 +54,32 @@ final class Prompt05MainHubTests: XCTestCase {
     }
     
 }
+
+extension Prompt05MainHubTests {
+    @MainActor
+    func testTourUsesCanonicalSemanticAnchorsWithoutChangingApprovedDialogue() {
+        for step in Prompt07TourStep.allCases {
+            XCTAssertEqual(step.semanticMessage.plainText, step.message)
+            XCTAssertFalse(step.semanticMessage.spans.isEmpty)
+        }
+        XCTAssertTrue(Prompt07TourStep.fruitBasket.semanticMessage.spans.contains {
+            $0.text == "come fill your fruit basket" && $0.emphasis == .anchorBold
+        })
+        let guide = Prompt07TourStep.guideBuilder.semanticMessage.spans.filter { $0.emphasis == .anchorBold }.map(\.text)
+        XCTAssertEqual(guide, ["chapters", "notes", "study guides", "little handbooks"])
+    }
+
+    @MainActor
+    func testCanonicalAuthoredAnnotationsPreserveUnicodeAndCombineDeclaredMeaning() {
+        let text = "♡ take care: do not skip the next step."
+        let document = FruitfolioSemanticDocument.authored(text, annotations: [
+            .init(phrase: "do not", emphasis: .anchorBold),
+            .init(phrase: "not", emphasis: .spokenItalic),
+            .init(phrase: "not", emphasis: .symptomOrPracticalUnderline)
+        ])
+        XCTAssertEqual(document.plainText, text)
+        XCTAssertTrue(document.spans.contains { $0.text == "not" && $0.emphasis == .absoluteBoldItalicUnderline })
+        XCTAssertEqual(FruitfolioSemanticDocument.authored(text, annotations: []).plainText, text)
+        XCTAssertEqual(FruitfolioSemanticDocument.authored("", annotations: []).spans.count, 0)
+    }
+}

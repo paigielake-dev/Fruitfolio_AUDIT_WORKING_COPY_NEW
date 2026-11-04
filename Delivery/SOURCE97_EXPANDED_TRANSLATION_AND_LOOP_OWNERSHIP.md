@@ -1,0 +1,9 @@
+# Expanded local-model evidence and game loop ownership
+
+All source96 changes and Run93 remain preserved. Added a non-excluding 15-target medical warning/diagnosis-negation fixture, exact original range/percentage/temperature/scientific-notation/citation checks, per-sentence raw diagnostics, and explicit medicalMeaningVerified=false. Original eleven-language fixtures remain unchanged. Added a fifth independent controlled-offline phase and export of its actual attachments. These new tests are NOT VERIFIED pending actual Apple execution.
+
+Inspection found the active 30Hz Task promoted weak self to a strong reference before its entire loop. Ordinary onDisappear cancellation worked and its old runtime test passed, but an abandoned host could retain the model permanently. Acquire weak self only for each synchronous frame, after sleep. Added a real Task/weak-owner lifetime test omitting the ordinary disappearance callback; no fake timer or manual deinit is used. Existing pause/exit/new-attempt tests remain intact. Actual rerun required before PASS.
+
+Recovered original historical evidence referenced by the 478-item tracker from immutable GitHub artifacts after checking SHA256/full ZIP CRC. Two lost derived per-execution indexes are regenerated from original logs with provenance and repetitions retained; no new test run or acceptance is invented. The local complete-project resource preflight succeeds again. No final release or all478 acceptance is claimed.
+
+Extended the real entered-measurement UI journey beyond cancellation/restart: explicitly reach and confirm the separate destructive action, restart, and require the same uniquely identified record to be gone. Added a separate actual file/default-domain isolation check so bulk hormone erase cannot delete sibling cycle bytes or alter account/guide/game/context preference bytes. These new assertions remain NOT VERIFIED until Apple execution.

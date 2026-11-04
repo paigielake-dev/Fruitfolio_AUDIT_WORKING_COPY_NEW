@@ -17,6 +17,7 @@ struct Prompt12AccountView: View {
     @State private var showDataExport = false
     @State private var usernameDraft = ""
     @State private var usernameMessage: String?
+    @FocusState private var usernameFocused: Bool
 
     var body: some View {
         ZStack {
@@ -55,6 +56,10 @@ struct Prompt12AccountView: View {
                             .accessibilityHidden(true)
                     }
 
+                    if let error = store.loadError {
+                        Text(error).fixedSize(horizontal: false, vertical: true)
+                            .accessibilityIdentifier("account.storageError")
+                    }
                     ownershipCard
                     usernameCard
 
@@ -75,12 +80,6 @@ struct Prompt12AccountView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if activeOverlay {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .zIndex(90)
-            }
 
             overlayLayer
                 .zIndex(100)
@@ -124,6 +123,10 @@ struct Prompt12AccountView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             TextField("public username", text: $usernameDraft)
+                .focused($usernameFocused)
+                .submitLabel(.done)
+                .onSubmit { usernameFocused = false }
+                .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
@@ -138,7 +141,8 @@ struct Prompt12AccountView: View {
                     .multilineTextAlignment(.center)
             }
 
-            WatercolorSecondaryButton(label: "save username") {
+            WatercolorSecondaryButton(label: "save username", localizationKey: "save username") {
+                usernameFocused = false
                 audioManager.play(.buttonSoftPop)
                 if let error = usernameStore.setUsername(usernameDraft) {
                     usernameMessage = error
@@ -150,7 +154,7 @@ struct Prompt12AccountView: View {
         }
         .onAppear { usernameDraft = usernameStore.username }
         .onChange(of: usernameStore.username) { _, newValue in
-            if usernameDraft != newValue { usernameDraft = newValue }
+            if !usernameFocused, usernameDraft != newValue { usernameDraft = newValue }
         }
     }
 
@@ -164,7 +168,7 @@ struct Prompt12AccountView: View {
                 )
 
             Prompt12InfoText(
-                "sign in to keep supported Fruitfolio data connected to you across devices. local features can still use local storage when available."
+                "account connection is unavailable. your information stays on this device, and your public username still works."
             )
 
             TextField("email", text: $email)
@@ -190,7 +194,7 @@ struct Prompt12AccountView: View {
                 )
 
             FruitfolioControlPillButton(
-                label: "sign in"
+                label: "sign in", localizationKey: "sign in"
             ) {
                 signIn()
             }
@@ -229,7 +233,7 @@ struct Prompt12AccountView: View {
             )
 
             if store.pendingLocalChanges {
-                WatercolorSecondaryButton(label: "sync now") {
+                WatercolorSecondaryButton(label: "sync now", localizationKey: "sync now") {
                     audioManager.play(.buttonSoftPop)
                     store.syncNow()
                 }
@@ -354,7 +358,7 @@ struct Prompt12AccountView: View {
 
     private func signIn() {
         do {
-            try store.signInForDevelopment(email: email)
+            try store.signIn(email: email)
             message = nil
         } catch {
             message = error.localizedDescription

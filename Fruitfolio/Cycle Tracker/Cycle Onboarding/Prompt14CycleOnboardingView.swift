@@ -20,17 +20,22 @@ struct Prompt14CycleEntryView: View {
 struct Prompt14CycleOnboardingView: View {
     @StateObject private var model: Prompt14CycleOnboardingViewModel
     @State private var trackerReady = false
+    @State private var showPersonalHealth = false
+    @State private var showLeaveAfterSaveFailure = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var contextStore: Prompt27AContextStore
 
     private let onExit: () -> Void
+    private let editingStep: Prompt14OnboardingStep?
 
     init(
         store: Prompt14CycleOnboardingStore = .shared,
+        editingStep: Prompt14OnboardingStep? = nil,
         onExit: @escaping () -> Void
     ) {
         _model = StateObject(wrappedValue: Prompt14CycleOnboardingViewModel(store: store))
         self.onExit = onExit
+        self.editingStep = editingStep
     }
 
     var body: some View {
@@ -41,20 +46,43 @@ struct Prompt14CycleOnboardingView: View {
                 ProgressView()
                     .tint(Prompt14Palette.burgundy)
                     .accessibilityLabel("Loading cycle setup")
-            } else if trackerReady || model.draft.isCompleted {
+            } else if editingStep == nil && (trackerReady || model.draft.isCompleted) {
                 Prompt15CycleTrackerView(onBack: onExit)
                     .transition(.opacity)
             } else {
                 onboardingContent
             }
         }
+        .fullScreenCover(isPresented: $showPersonalHealth) {
+            Prompt27APersonalHealthView(store: contextStore) { showPersonalHealth = false }
+        }
+        .fruitfolioModalBlur(active: showLeaveAfterSaveFailure, reduceMotion: motionPreferences.reduceMotionActive)
+        .overlay {
+            if showLeaveAfterSaveFailure {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "leave without saving these changes?",
+                    message: "Fruitfolio couldn’t save the latest changes. previously saved information remains available.",
+                    primaryLabel: "keep editing", secondaryLabel: nil, destructiveLabel: "leave without saving",
+                    primaryAction: { showLeaveAfterSaveFailure = false }, secondaryAction: nil, destructiveAction: onExit)
+            }
+        }
+        .accessibilityIdentifier("cycle-tracker-entry")
         .task {
+            // Shared health context reflects confirmed local persistence, not
+            // an optimistic draft whose write might subsequently fail.
+            model.onPersistedDraftChange = { [contextStore] saved, previous in
+                contextStore.syncFromCycleOnboarding(saved, previous: previous)
+            }
             await model.load()
             model.mergeSharedContextIfNeeded(contextStore.context)
-            contextStore.syncFromCycleOnboarding(model.draft)
+            if let editingStep { model.beginEditing(editingStep) }
         }
-        .onChange(of: model.draft) { _, newDraft in
-            contextStore.syncFromCycleOnboarding(newDraft)
+        .onChange(of: model.draft) { oldDraft, newDraft in
+            if let editingStep, oldDraft.step == editingStep, newDraft.step != editingStep {
+                Task {
+                    await model.waitForPendingSaves()
+                    if model.errorMessage == nil { onExit() }
+                }
+            }
         }
         .animation(
             motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24),
@@ -68,8 +96,13 @@ struct Prompt14CycleOnboardingView: View {
 
             ScrollView {
                 VStack(spacing: 22) {
-                    Prompt14SeedProgress(step: model.draft.step)
-                        .padding(.top, 4)
+                    if editingStep == nil {
+                        Prompt14SeedProgress(step: model.draft.step).padding(.top, 4)
+                    } else {
+                        Text("edit your cycle setup").font(Prompt14Type.title)
+                        Text("changes are saved as you make them. your other answers and daily logs stay in place.")
+                            .font(Prompt14Type.helper).multilineTextAlignment(.center)
+                    }
 
                     stepContent
                         .id(model.draft.step)
@@ -81,6 +114,9 @@ struct Prompt14CycleOnboardingView: View {
                                 removal: .opacity.combined(with: .move(edge: .leading))
                             )
                         )
+
+                    FruitfolioControlPillButton(label: "personal health context (optional)", localizationKey: "personal health context (optional)") { showPersonalHealth = true }
+                        .accessibilityIdentifier("onboarding.openPersonalHealth")
 
                     if let error = model.errorMessage {
                         Text(error)
@@ -103,7 +139,12 @@ struct Prompt14CycleOnboardingView: View {
     private var topBar: some View {
         HStack {
             BackControl {
-                if !model.goBack() { onExit() }
+                if editingStep != nil {
+                    Task {
+                        await model.waitForPendingSaves()
+                        if model.errorMessage == nil { onExit() } else { showLeaveAfterSaveFailure = true }
+                    }
+                } else if !model.goBack() { onExit() }
             }
             Spacer()
         }
@@ -149,7 +190,7 @@ struct Prompt14CycleOnboardingView: View {
             )
             .padding(.top, 4)
 
-            WatercolorPrimaryButton(label: "get started") {
+            WatercolorPrimaryButton(label: "get started", localizationKey: "get started") {
                 model.getStarted()
             }
             .frame(maxWidth: 300)
@@ -181,9 +222,9 @@ struct Prompt14CycleOnboardingView: View {
                     model.latestPeriodUnknown()
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.latestPeriodState == .unanswered)
-                    .opacity(model.draft.latestPeriodState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.latestPeriodState == .unanswered ? 0.82 : 1)
             }
         }
     }
@@ -197,9 +238,9 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.currentPeriodAnswer == value
                     ) { model.selectCurrentPeriod(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.currentPeriodState == .unanswered)
-                    .opacity(model.draft.currentPeriodState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.currentPeriodState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -224,9 +265,9 @@ struct Prompt14CycleOnboardingView: View {
                     label: "i’m not sure",
                     selected: model.draft.periodEndState == .unknown
                 ) { model.periodEndUnknown() }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.periodEndState == .unanswered)
-                    .opacity(model.draft.periodEndState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.periodEndState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -278,9 +319,9 @@ struct Prompt14CycleOnboardingView: View {
                     }
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.previousHistoryState == .unanswered)
-                    .opacity(model.draft.previousHistoryState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.previousHistoryState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -295,9 +336,9 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.subjectiveRegularity == value
                     ) { model.chooseRegularity(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.regularityState == .unanswered)
-                    .opacity(model.draft.regularityState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.regularityState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -315,9 +356,9 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.cycleAffectingContexts.contains(value)
                     ) { model.toggleCycleContext(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.cycleContextState == .unanswered)
-                    .opacity(model.draft.cycleContextState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.cycleContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -335,9 +376,9 @@ struct Prompt14CycleOnboardingView: View {
                         selected: model.draft.recentContexts.contains(value)
                     ) { model.toggleRecentContext(value) }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.recentContextState == .unanswered)
-                    .opacity(model.draft.recentContextState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.recentContextState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -358,9 +399,9 @@ struct Prompt14CycleOnboardingView: View {
                         ) { model.toggleTrackingPreference(value) }
                     }
                 }
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.trackingPreferencesState == .unanswered)
-                    .opacity(model.draft.trackingPreferencesState == .unanswered ? 0.5 : 1)
+                    .opacity(model.draft.trackingPreferencesState == .unanswered ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -384,9 +425,9 @@ struct Prompt14CycleOnboardingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 2)
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(model.draft.fertilityPreference == nil)
-                    .opacity(model.draft.fertilityPreference == nil ? 0.5 : 1)
+                    .opacity(model.draft.fertilityPreference == nil ? 0.82 : 1)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -458,9 +499,9 @@ struct Prompt14CycleOnboardingView: View {
                     Prompt14BBTInfo()
                 }
 
-                WatercolorPrimaryButton(label: "continue") { model.advance() }
+                WatercolorPrimaryButton(label: "continue", localizationKey: "continue") { model.advance() }
                     .disabled(!bbtCanContinue)
-                    .opacity(bbtCanContinue ? 1 : 0.5)
+                    .opacity(bbtCanContinue ? 1 : 0.82)
                 Prompt14SkipButton { model.skipCurrentStep() }
             }
         }
@@ -486,7 +527,7 @@ struct Prompt14CycleOnboardingView: View {
                     .foregroundStyle(Prompt14Palette.burgundy)
                     .multilineTextAlignment(.center)
 
-                WatercolorPrimaryButton(label: "got it ♡") {
+                WatercolorPrimaryButton(label: "got it ♡", localizationKey: "got it ♡") {
                     model.acknowledgeCervicalFluid()
                 }
                 Prompt14SkipButton { model.skipCurrentStep() }
@@ -502,7 +543,7 @@ struct Prompt14CycleOnboardingView: View {
                 text: "all set! Fruitfolio will start with what you know and adjust as you log more. ♡"
             )
 
-            WatercolorPrimaryButton(label: "open my cycle tracker") {
+            WatercolorPrimaryButton(label: "open my cycle tracker", localizationKey: "open my cycle tracker") {
                 Task {
                     if await model.finish() {
                         withAnimation(motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24)) {
@@ -1031,10 +1072,10 @@ private struct Prompt14CalendarDay: View {
                     .font(Prompt14Type.calendarDay)
                     .foregroundStyle(Prompt14Palette.burgundy.opacity(enabled ? 1 : 0.32))
             }
-            .frame(maxWidth: .infinity, minHeight: 42)
+            .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle())
         .disabled(!enabled)
         .accessibilityLabel(Prompt14DateFormatting.long(value.local))
         .accessibilityAddTraits(selected ? .isSelected : [])

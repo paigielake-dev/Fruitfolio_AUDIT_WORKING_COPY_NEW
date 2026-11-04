@@ -22,7 +22,7 @@ struct EducationalAssetRouter: Sendable {
     func assets(
         for conceptTags: Set<String>,
         support: AskKnowledgeSupport,
-        maximumCount: Int = 2
+        maximumCount: Int = 1
     ) -> [EducationalAssetDescriptor] {
         guard support != .genuinelyNovel, !conceptTags.isEmpty, maximumCount > 0 else {
             return []
@@ -43,10 +43,11 @@ struct EducationalAssetRouter: Sendable {
                 // eligible only when the answer tags identify the educational
                 // topic AND substantially identify the complete concept taught
                 // by the artwork. Default is therefore no artwork.
-                // Require both a supported topic and a specific educational
-                // concept. A second concept tag is not mandatory.
+                // Require distinct topic/concept anchors. One overlapping tag
+                // appearing in both metadata fields is still only one keyword.
                 guard !topicMatches.isEmpty,
-                      !conceptMatches.isEmpty else {
+                      !conceptMatches.isEmpty,
+                      topicMatches.union(conceptMatches).count >= 2 else {
                     return nil
                 }
 

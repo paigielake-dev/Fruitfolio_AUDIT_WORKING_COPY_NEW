@@ -14,7 +14,11 @@ struct Prompt10SavedLibraryView: View {
     @State private var selectedEncyclopediaID: UUID?
     @State private var openingEncyclopediaID: UUID?
     @State private var openingStage: BookOpeningStage = .idle
-    @Namespace private var bookTransitionNamespace
+    @State private var bookContentVisible = false
+    @State private var bookFrames: [String: CGRect] = [:]
+    @State private var lastInsideBookFrame: CGRect?
+    @State private var openingOriginFrame: CGRect?
+    @State private var openingTask: Task<Void, Never>?
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -29,6 +33,7 @@ struct Prompt10SavedLibraryView: View {
             DesignTokens.ColorToken.backgroundCream
                 .ignoresSafeArea()
 
+            ZStack {
             Group {
                 if let selectedEncyclopediaID,
                    let encyclopedia = store.encyclopedia(
@@ -40,7 +45,12 @@ struct Prompt10SavedLibraryView: View {
                         encyclopediaID: encyclopedia.id,
                         onBack: {
                             withAnimation(detailTransition) {
+                                openingTask?.cancel()
+                                openingTask = nil
                                 self.selectedEncyclopediaID = nil
+                                openingEncyclopediaID = nil
+                                openingStage = .idle
+                                bookContentVisible = false
                             }
                         },
                         onRename: {
@@ -55,6 +65,9 @@ struct Prompt10SavedLibraryView: View {
                             )
                         }
                     )
+                    .opacity(bookContentVisible || motionPreferences.reduceMotionActive ? 1 : 0)
+                    .allowsHitTesting(bookContentVisible || motionPreferences.reduceMotionActive)
+                    .accessibilityHidden(!bookContentVisible && !motionPreferences.reduceMotionActive)
                     .transition(
                         motionPreferences.reduceMotionActive
                             ? .opacity
@@ -65,27 +78,53 @@ struct Prompt10SavedLibraryView: View {
 
                 } else {
                     libraryCollection
+                        .fruitfolioModalBlur(active: openingEncyclopediaID != nil,
+                            reduceMotion: motionPreferences.reduceMotionActive)
                 }
+            }
+            .zIndex(selectedEncyclopediaID == nil ? 0 : 2)
+            bookOpeningOverlay.zIndex(1)
             }
             .fruitfolioModalBlur(
                 active: popup != nil,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if popup != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(90)
-            }
-
-            bookOpeningOverlay
-                .zIndex(80)
 
             popupLayer
                 .zIndex(100)
+        }
+        .coordinateSpace(name: "prompt10.bookStage")
+        .onPreferenceChange(Prompt10BookFramePreference.self) { frames in
+            let inside = openingEncyclopediaID.flatMap { frames["inside:" + $0.uuidString] }
+            let settling = inside != nil && lastInsideBookFrame == nil && !bookContentVisible
+            if settling && !motionPreferences.reduceMotionActive {
+                withAnimation(detailTransition) { bookFrames = frames; lastInsideBookFrame = inside }
+            } else {
+                // Scroll geometry follows its actual content immediately; do
+                // not animate the book behind already scrolling live text.
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    bookFrames = frames
+                    if let inside { lastInsideBookFrame = inside }
+                }
+            }
+        }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, reduced in
+            guard reduced, let id = openingEncyclopediaID else { return }
+            openingTask?.cancel()
+            openingTask = nil
+            var transaction = Transaction(); transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                openingStage = .open; selectedEncyclopediaID = id; bookContentVisible = true
+            }
+        }
+        .onDisappear {
+            openingTask?.cancel()
+            openingTask = nil
+            if !bookContentVisible {
+                openingEncyclopediaID = nil; selectedEncyclopediaID = nil; openingStage = .idle
+            }
         }
         .toolbar(
             .hidden,
@@ -102,6 +141,20 @@ struct Prompt10SavedLibraryView: View {
     private var libraryCollection: some View {
         ScrollView {
             VStack(spacing: 18) {
+                if let error = store.loadError {
+                    Text(error).font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    FruitfolioControlPillButton(label: "try opening my library again", localizationKey: "try opening my library again") { store.retryLoad() }
+                }
+
+                if let error = store.mediaRecoveryError {
+                    Text(error).font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                        .fixedSize(horizontal: false, vertical: true)
+                    FruitfolioControlPillButton(label: "try recovering my images again", localizationKey: "try recovering my images again") { store.recoverMedia() }
+                }
+
                 header
 
                 composedLibraryHero
@@ -329,7 +382,7 @@ struct Prompt10SavedLibraryView: View {
                     .multilineTextAlignment(.center)
 
                     WatercolorSecondaryButton(
-                        label: "clear search"
+                        label: "clear search", localizationKey: "clear search"
                     ) {
                         searchText = ""
                     }
@@ -369,13 +422,6 @@ struct Prompt10SavedLibraryView: View {
                                     motionPreferences
                                         .reduceMotionActive
                             )
-                        )
-                        .matchedGeometryEffect(
-                            id: bookGeometryID(
-                                encyclopedia.id
-                            ),
-                            in: bookTransitionNamespace,
-                            isSource: true
                         )
                         .opacity(
                             openingEncyclopediaID ==
@@ -470,7 +516,11 @@ struct Prompt10SavedLibraryView: View {
                     popup = nil
                 },
                 onDeleted: {
+                    openingTask?.cancel()
+                    openingTask = nil
                     selectedEncyclopediaID = nil
+                    openingEncyclopediaID = nil
+                    bookContentVisible = false
                     popup = nil
                 }
             )
@@ -484,39 +534,31 @@ struct Prompt10SavedLibraryView: View {
 
     @ViewBuilder
     private var bookOpeningOverlay: some View {
-        if let openingEncyclopediaID,
-           let encyclopedia = store.encyclopedia(
-                id: openingEncyclopediaID
-           ) {
-
-            ZStack {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(
-                        openingStage == .open
-                            ? 0.08
-                            : 0.18
-                    )
-                    .ignoresSafeArea()
-
-                Prompt10BookOpeningArtwork(
-                    encyclopedia: encyclopedia,
-                    stage: openingStage
-                )
-                .matchedGeometryEffect(
-                    id: bookGeometryID(
-                        encyclopedia.id
-                    ),
-                    in: bookTransitionNamespace,
-                    isSource: false
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity
-                )
+        if let id = openingEncyclopediaID, let encyclopedia = store.encyclopedia(id: id) {
+            GeometryReader { proxy in
+                let width = min(max(1, proxy.size.width - 40), 430)
+                let centered = CGRect(x: (proxy.size.width - width) / 2,
+                    y: (proxy.size.height - width * 0.72) / 2, width: width, height: width * 0.72)
+                let shelf = openingOriginFrame ?? bookFrames["shelf:" + id.uuidString] ?? centered
+                let inside = bookFrames["inside:" + id.uuidString] ?? lastInsideBookFrame ?? centered
+                let target = selectedEncyclopediaID == id ? inside : (openingStage == .spine ? shelf : centered)
+                Prompt10CodedBookArtwork(style: encyclopedia.style, openness: bookOpenness)
+                    .frame(width: max(1, target.width), height: max(1, target.height))
+                    .position(x: target.midX, y: target.midY)
+                    .id(id)
             }
-            .allowsHitTesting(true)
+            .clipped()
+            .allowsHitTesting(false)
             .accessibilityHidden(true)
-            .transition(.opacity)
+        }
+    }
+
+    private var bookOpenness: CGFloat {
+        switch openingStage {
+        case .idle, .spine: return 0
+        case .front: return 0.12
+        case .closed: return 0.22
+        case .open: return 1
         }
     }
 
@@ -530,8 +572,14 @@ struct Prompt10SavedLibraryView: View {
         audioManager.play(
             .buttonSoftPop
         )
+        bookContentVisible = false
+        openingOriginFrame = bookFrames["shelf:" + encyclopedia.id.uuidString]
+        lastInsideBookFrame = nil
 
         if motionPreferences.reduceMotionActive {
+            openingEncyclopediaID = encyclopedia.id
+            openingStage = .open
+            bookContentVisible = true
             audioManager.play(
                 .pageTurn
             )
@@ -558,92 +606,31 @@ struct Prompt10SavedLibraryView: View {
             openingStage = .spine
         }
 
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.18
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                .easeInOut(duration: 0.12)
-            ) {
-                openingStage = .front
-            }
+        openingTask?.cancel()
+        openingTask = nil
+        openingTask = Task { @MainActor in
+            defer { if !Task.isCancelled { openingTask = nil } }
+            do {
+                try await Task.sleep(for: .milliseconds(180))
+                guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }
+                withAnimation(.easeInOut(duration: 0.12)) { openingStage = .front }
+                try await Task.sleep(for: .milliseconds(130))
+                guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }
+                withAnimation(.easeInOut(duration: 0.13)) { openingStage = .closed }
+                try await Task.sleep(for: .milliseconds(140))
+                guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }
+                audioManager.play(.pageTurn)
+                withAnimation(.easeInOut(duration: 0.28)) { openingStage = .open }
+                try await Task.sleep(for: .milliseconds(330))
+                guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }
+                withAnimation(detailTransition) { selectedEncyclopediaID = encyclopedia.id }
+                try await Task.sleep(for: .milliseconds(400))
+                guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }
+                withAnimation(.easeOut(duration: 0.14)) { bookContentVisible = true }
+                // The same coded book remains alive behind the measured inside
+                // slot. No final PNG/book representation replaces it.
+            } catch { return }
         }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.31
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                .easeInOut(duration: 0.13)
-            ) {
-                openingStage = .closed
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.45
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            audioManager.play(
-                .pageTurn
-            )
-
-            withAnimation(
-                .spring(
-                    response: 0.28,
-                    dampingFraction: 0.82,
-                    blendDuration: 0
-                )
-            ) {
-                openingStage = .open
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.67
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                detailTransition
-            ) {
-                selectedEncyclopediaID =
-                    encyclopedia.id
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.82
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            openingEncyclopediaID = nil
-            openingStage = .idle
-        }
-    }
-
-    private func bookGeometryID(
-        _ id: UUID
-    ) -> String {
-        "prompt10-book-\(id.uuidString)"
     }
 
     private var detailTransition: Animation {
@@ -678,85 +665,7 @@ struct Prompt10SavedLibraryView: View {
 
 // MARK: - Prompt 10 Book Opening Transition
 
-private struct Prompt10BookOpeningArtwork: View {
-    let encyclopedia: Prompt10Encyclopedia
-    let stage:
-        Prompt10SavedLibraryView.BookOpeningStage
-
-    var body: some View {
-        ZStack {
-            switch stage {
-            case .idle:
-                Color.clear
-
-            case .spine:
-                Image(
-                    encyclopedia.style.assetName
-                )
-                .resizable()
-                .scaledToFit()
-                .frame(width: 76)
-
-            case .front:
-                tintedArtwork(
-                    assetName:
-                        "library_book_blank",
-                    tintStrength: 0.30
-                )
-                .frame(width: 178)
-
-            case .closed:
-                tintedArtwork(
-                    assetName:
-                        "library_book_closed",
-                    tintStrength: 0.26
-                )
-                .frame(width: 188)
-
-            case .open:
-                tintedArtwork(
-                    assetName:
-                        "library_book_open",
-                    tintStrength: 0.12
-                )
-                .frame(width: 322)
-            }
-        }
-        .frame(
-            width: 340,
-            height: 330
-        )
-        .contentShape(Rectangle())
-    }
-
-    @ViewBuilder
-    private func tintedArtwork(
-        assetName: String,
-        tintStrength: Double
-    ) -> some View {
-        ZStack {
-            Image(assetName)
-                .resizable()
-                .scaledToFit()
-
-            Image(assetName)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(
-                    encyclopedia.style
-                        .openingTint
-                        .opacity(
-                            tintStrength
-                        )
-                )
-                .blendMode(.multiply)
-        }
-        .compositingGroup()
-    }
-}
-
-private extension Prompt10BookStyle {
+extension Prompt10BookStyle {
     var openingTint: Color {
         switch self {
         case .sage:
@@ -799,68 +708,14 @@ private extension Prompt10BookStyle {
 
 // MARK: - Prompt 10 Pill Art Button
 
+/// Legacy entry point retained; sizing, artwork and pop are canonical.
 struct Prompt10PillArtButton: View {
     let label: String
     let reduceMotion: Bool
     let action: () -> Void
 
     var body: some View {
-        Button(
-            action: action
-        ) {
-            ZStack {
-                Image(
-                    "control_pill_outline"
-                )
-                .resizable()
-                .frame(
-                    maxWidth: .infinity
-                )
-                .frame(height: 62)
-                .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 14
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.78)
-                    .padding(
-                        .horizontal,
-                        30
-                    )
-            }
-            .frame(
-                maxWidth: .infinity
-            )
-            .frame(height: 62)
-            .contentShape(
-                RoundedRectangle(
-                    cornerRadius: 31,
-                    style: .continuous
-                )
-            )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    reduceMotion
-            )
-        )
-        .frame(
-            minHeight:
-                DesignTokens.Layout.minimumHitTarget
-        )
-        .accessibilityLabel(
-            label
-        )
+        FruitfolioControlPillButton(label: label, playsSound: false, action: action)
+            .environment(\.fruitfolioReduceMotion, reduceMotion)
     }
 }

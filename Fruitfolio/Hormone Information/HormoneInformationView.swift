@@ -1,0 +1,287 @@
+import SwiftUI
+
+struct HormoneInformationView: View {
+    @ObservedObject var store: HormoneMeasurementStore
+    let onBack: () -> Void
+    @EnvironmentObject private var motion: MotionPreferences
+    @State private var showLibrary = false
+    @State private var showRhythm = false
+    @State private var filter: RecordedHormone?
+    @State private var newestFirst = true
+    @State private var editing: HormoneMeasurement?
+    @State private var pendingDeletion: HormoneMeasurement?
+    @State private var error: String?
+
+    private var records: [HormoneMeasurement] {
+        store.measurements.filter { filter == nil || $0.hormone == filter }
+            .sorted { newestFirst ? $0.testDate > $1.testDate : $0.testDate < $1.testDate }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            BackControl(action: onBack)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    Text("hormone information ♡").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold().accessibilityAddTraits(.isHeader)
+                    Image("hormone_estrogen").resizable().scaledToFit().frame(maxWidth: 120).accessibilityHidden(true)
+                    Text("your measurements stay on this device. they are not sent to Ask or used to change cycle predictions.")
+                    if let loadError = store.loadError {
+                        Text(loadError).accessibilityLabel(loadError)
+                        FruitfolioControlPillButton(label: "try again", localizationKey: "try again", action: store.retryLoad)
+                            .accessibilityIdentifier("hormone.retryLoad")
+                    }
+                    if store.measurements.isEmpty && store.loadError == nil {
+                        Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
+                    }
+                    FruitfolioControlPillButton(label: "add measurement", localizationKey: "add measurement") { editing = HormoneMeasurement() }
+                        .accessibilityIdentifier("hormone.addMeasurement")
+                        .disabled(store.loadError != nil)
+                    FruitfolioControlPillButton(label: "hormone library", localizationKey: "hormone library") { showLibrary = true }
+                    FruitfolioControlPillButton(label: "hormone rhythm", localizationKey: "hormone rhythm") { showRhythm = true }
+                        .accessibilityIdentifier("hormone.openRhythm")
+                    Picker("filter by hormone", selection: $filter) {
+                        Text("all hormones").tag(Optional<RecordedHormone>.none)
+                        ForEach(RecordedHormone.allCases) { hormone in
+                            Text(LocalizedStringKey(hormone.title)).tag(Optional(hormone))
+                        }
+                    }
+                    Toggle("newest results first", isOn: $newestFirst)
+                    ForEach(records) { record in
+                        VStack(alignment: .leading, spacing: 8) {
+                            HormoneMeasurementSummaryView(record: record)
+                            FruitfolioControlPillButton(label: "open / edit measurement", localizationKey: "open / edit measurement") { editing = record }
+                            FruitfolioControlPillButton(label: "delete measurement", localizationKey: "delete measurement") { pendingDeletion = record }
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("hormone.measurement.\(record.id.uuidString)")
+                        Divider()
+                    }
+                    DisclosureGroup("recorded measurement graphs") {
+                        HormoneMeasurementHistoryChart(measurements: records)
+                    }
+                    Text("these are results you recorded, not a diagnosis. timing, sample type, methods, units, and clinical context matter. Fruitfolio does not classify results or recommend treatment.")
+                    Text("hormone rhythm remains a separate educational illustration. these records do not represent a measured curve or confirm ovulation or fertility.")
+                }
+                .frame(maxWidth: 620, alignment: .leading)
+                .frame(maxWidth: .infinity)
+            }
+            .accessibilityIdentifier("hormone.measurementsScroll")
+        }
+        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+        .padding(20)
+        .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .fruitfolioModalBlur(active: pendingDeletion != nil || error != nil, reduceMotion: motion.reduceMotionActive)
+        .overlay {
+            if pendingDeletion != nil {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "delete this measurement?",
+                    message: "only this recorded result will be removed. cycle logs and predictions are unchanged.",
+                    primaryLabel: "cancel", secondaryLabel: nil, destructiveLabel: "delete",
+                    primaryAction: { pendingDeletion = nil }, secondaryAction: nil, destructiveAction: {
+                        guard let record = pendingDeletion else { return }
+                        do { try store.delete(id: record.id) } catch { self.error = error.localizedDescription }
+                        pendingDeletion = nil
+                    })
+            } else if let error {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "measurement could not be changed",
+                    message: error, primaryLabel: "ok", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { self.error = nil }, secondaryAction: nil, destructiveAction: nil)
+            }
+        }
+        .sheet(isPresented: $showLibrary) { HormoneResearchLibraryView() }
+        .sheet(isPresented: $showRhythm) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    BackControl { showRhythm = false }
+                    Prompt22HormoneRhythmView(measurements: store)
+                }
+                .padding(20)
+            }
+            .accessibilityIdentifier("hormoneRhythm.sheetScroll")
+            .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        }
+        .sheet(item: $editing) { record in
+            HormoneMeasurementEditor(store: store, measurement: record)
+        }
+    }
+}
+
+private struct HormoneMeasurementEditor: View {
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var motion: MotionPreferences
+    @ObservedObject var store: HormoneMeasurementStore
+    @State private var draft: HormoneMeasurement
+    private let original: HormoneMeasurement
+    @FocusState private var fieldFocused: Bool
+    @State private var showDiscard = false
+    @State private var error: String?
+
+    init(store: HormoneMeasurementStore, measurement: HormoneMeasurement) {
+        self.store = store
+        self.original = measurement
+        _draft = State(initialValue: measurement)
+    }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                Text("record a measurement").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("hormone.editor.title")
+                Picker("hormone", selection: $draft.hormone) {
+                    ForEach(RecordedHormone.allCases) { Text(LocalizedStringKey($0.title)).tag($0) }
+                }
+                if draft.hormone == .other { field("other hormone name", text: $draft.otherHormoneName) }
+                field("numerical result", text: $draft.result, identifier: "hormone.result").keyboardType(.decimalPad)
+                field("unit (exactly as reported)", text: $draft.unit, identifier: "hormone.unit")
+                DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
+                    .onChange(of: draft.testDate) { _, _ in draft.testDateWasProvided = true }
+                if draft.testDateWasProvided != true {
+                    FruitfolioControlPillButton(label: "confirm test date", localizationKey: "confirm test date") { draft.testDateWasProvided = true }
+                        .accessibilityIdentifier("hormone.confirmTestDate")
+                    Text("the displayed date is not saved until you choose or confirm it.")
+                }
+                field("sample type (optional)", text: $draft.sampleType)
+                field("cycle day (optional)", text: $draft.cycleDay).keyboardType(.numberPad)
+                field("laboratory-provided reference range (optional)", text: $draft.laboratoryReferenceRange)
+                field("notes (optional)", text: $draft.notes, multiline: true)
+                Text("enter a decimal separator only for decimals; do not enter thousands separators. units are saved exactly as entered and are never converted.")
+                if let validation = draft.validationError { Text(LocalizedStringKey(validation)).font(.footnote) }
+                if let error { Text(error).accessibilityLabel(error) }
+                FruitfolioControlPillButton(label: "save measurement", localizationKey: "save measurement") {
+                    do { try store.save(draft); dismiss() } catch { self.error = error.localizedDescription }
+                }.disabled(draft.validationError != nil)
+                    .accessibilityIdentifier("hormone.saveMeasurement")
+                FruitfolioControlPillButton(label: "cancel", localizationKey: "cancel") {
+                    fieldFocused = false
+                    if draft != original { showDiscard = true } else { dismiss() }
+                }
+                .accessibilityIdentifier("hormone.cancelEditing")
+            }
+            .frame(maxWidth: 620, alignment: .leading)
+            .frame(maxWidth: .infinity)
+            .padding(20)
+        }
+        .accessibilityIdentifier("hormoneLibrary.content")
+        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+        .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .accessibilityIdentifier("hormone.entryScroll")
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) {
+            if fieldFocused {
+                HStack {
+                    Spacer()
+                    Button("done") { fieldFocused = false }
+                        .accessibilityIdentifier("hormone.keyboardDone")
+                        .frame(minWidth: 44, minHeight: 44)
+                }
+                .padding(.horizontal, 20)
+                .background(DesignTokens.ColorToken.backgroundCream)
+            }
+        }
+        .interactiveDismissDisabled(draft != original)
+        .fruitfolioModalBlur(active: showDiscard, reduceMotion: motion.reduceMotionActive)
+        .overlay {
+            if showDiscard {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "discard unsaved measurement?",
+                    message: "your saved measurements stay unchanged.", primaryLabel: "keep editing",
+                    secondaryLabel: nil, destructiveLabel: "discard", primaryAction: { showDiscard = false },
+                    secondaryAction: nil, destructiveAction: { dismiss() })
+            }
+        }
+    }
+
+    private func field(_ label: String, text: Binding<String>, multiline: Bool = false, identifier: String? = nil) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            Text(LocalizedStringKey(label))
+            TextField(LocalizedStringKey(label), text: text, axis: multiline ? .vertical : .horizontal)
+                .textFieldStyle(.roundedBorder)
+                .focused($fieldFocused)
+                .submitLabel(.done)
+                .onSubmit { fieldFocused = false }
+                .accessibilityLabel(LocalizedStringKey(label))
+                .accessibilityIdentifier(identifier ?? label)
+                .autocorrectionDisabled()
+        }
+    }
+}
+
+/// Queries approved research only. No recorded measurement enters this request.
+private struct HormoneResearchLibraryView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var selected: RecordedHormone = .estradiol
+    @State private var answer: AskAnswer?
+    @State private var error: String?
+    @State private var loading = true
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 18) {
+                FruitfolioControlPillButton(label: "back", localizationKey: "back") { dismiss() }
+                Text("hormone library").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold()
+                Picker("hormone", selection: $selected) {
+                    ForEach(RecordedHormone.allCases.filter { $0 != .other }) {
+                        Text(LocalizedStringKey($0.title)).tag($0)
+                    }
+                }
+                Text("these explanations use the approved research library. your recorded results are not included.")
+                if loading { ProgressView("looking through the library…") }
+                if let answer {
+                    FruitfolioSemanticText(document: answer.resolvedSemanticDocument,
+                        baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
+                        .textSelection(.enabled)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .accessibilityIdentifier("hormoneLibrary.answer")
+                    ForEach(answer.sources) { source in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(source.title).bold()
+                            if let publication = source.publicationData { Text(publication) }
+                            if let text = source.sourceText, text != source.title { Text(text) }
+                            if let version = source.contentVersion {
+                                Text("source version: \(version)")
+                                    .font(.custom("Chalkboard SE", size: 12, relativeTo: .footnote))
+                            }
+                            Text("source identifier: \(source.id)")
+                                .font(.custom("Chalkboard SE", size: 12, relativeTo: .footnote))
+                        }
+                        .fixedSize(horizontal: false, vertical: true)
+                        .textSelection(.enabled)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .accessibilityIdentifier("hormoneLibrary.source." + source.id)
+                    }
+                }
+                if let error { Text(error) }
+                Text("an isolated result does not establish a diagnosis. discuss personal interpretation with a qualified clinician.")
+            }
+            .frame(maxWidth: 620, alignment: .leading)
+            .frame(maxWidth: .infinity)
+            .padding(20)
+        }
+        .accessibilityIdentifier("hormoneLibrary.content")
+        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+        .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .task(id: selected) {
+            let requested = selected
+            answer = nil
+            error = nil
+            loading = true
+            do {
+                let response = try await FruitfolioResearchIntelligenceEngine.shared.answer(
+                    question: "explain \(requested.title): biological functions, reproductive physiology, factors affecting measurements, timing and testing methods, limitations of an isolated result, and when professional guidance is appropriate. use only approved research; say when evidence is missing.",
+                    conversation: []
+                )
+                try Task.checkCancellation()
+                guard selected == requested else { return }
+                answer = response
+                loading = false
+            } catch {
+                guard !Task.isCancelled, selected == requested else { return }
+                self.error = error.localizedDescription
+                loading = false
+            }
+        }
+    }
+}

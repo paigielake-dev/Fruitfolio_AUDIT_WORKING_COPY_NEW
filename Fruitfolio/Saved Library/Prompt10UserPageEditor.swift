@@ -1,0 +1,313 @@
+import SwiftUI
+import PhotosUI
+import UIKit
+import ImageIO
+
+struct Prompt10UserPageEditor: View {
+    @ObservedObject var store: Prompt10SavedLibraryStore
+    let encyclopediaID: UUID
+    let chapterID: UUID
+    let page: Prompt10SavedPage?
+    let onSaved: (Prompt10SavedPage) -> Void
+    let onCancel: () -> Void
+
+    private let initialDocument: FruitfolioSemanticDocument
+    @EnvironmentObject private var motion: MotionPreferences
+    @ScaledMetric(relativeTo: .body) private var formatControlWidth: CGFloat = 82
+    @State private var title: String
+    @State private var document: FruitfolioSemanticDocument
+    @State private var imageIDs: [String]
+    @State private var importedDuringEdit: Set<String> = []
+    @State private var selection = NSRange(location: 0, length: 0)
+    @State private var photo: PhotosPickerItem?
+    @State private var showingPhotoPicker = false
+    @State private var showUnsaved = false
+    @State private var error: String?
+    @State private var saved = false
+    @State private var photoTask: Task<Void, Never>?
+    @State private var importOwnership = Prompt10ImportOwnership()
+
+    init(store: Prompt10SavedLibraryStore, encyclopediaID: UUID, chapterID: UUID,
+         page: Prompt10SavedPage? = nil, onSaved: @escaping (Prompt10SavedPage) -> Void,
+         onCancel: @escaping () -> Void) {
+        self.store = store; self.encyclopediaID = encyclopediaID; self.chapterID = chapterID
+        self.page = page; self.onSaved = onSaved; self.onCancel = onCancel
+        let initial = page?.resolvedSemanticDocument ?? .init(spans: [])
+        self.initialDocument = initial
+        _title = State(initialValue: page?.question ?? "")
+        _document = State(initialValue: initial)
+        _imageIDs = State(initialValue: page?.importedImageIDs ?? [])
+    }
+
+    private var dirty: Bool {
+        !title.utf8.elementsEqual((page?.question ?? "").utf8)
+        || !document.plainText.utf8.elementsEqual((page?.displayBody ?? "").utf8)
+        || document.spans.map(\.text) != initialDocument.spans.map(\.text)
+        || document.spans.map(\.emphasis) != initialDocument.spans.map(\.emphasis)
+        || imageIDs != (page?.importedImageIDs ?? [])
+    }
+
+    var body: some View {
+        ZStack {
+            DesignTokens.ColorToken.backgroundCream.ignoresSafeArea()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 18) {
+                    BackControl { if dirty || importOwnership.isImporting { showUnsaved = true } else { cancel() } }
+                    Text(page == nil ? "my own page" : "edit my page")
+                        .font(.custom("Chalkboard SE", size: 22, relativeTo: .title2)).bold()
+                    TextField("page title", text: $title)
+                        .textFieldStyle(.roundedBorder)
+                        .submitLabel(.done)
+                        .accessibilityIdentifier("userPage.title")
+                    Text("my writing").font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: min(formatControlWidth, 320)), spacing: 10)], spacing: 10) {
+                        formatButton("bold", .anchorBold)
+                        formatButton("italic", .spokenItalic)
+                        formatButton("underline", .symptomOrPracticalUnderline)
+                        formatButton("plain", .plain)
+                    }
+                    Prompt10SemanticTextEditor(document: $document, selection: $selection)
+                        .frame(minHeight: 240)
+                        .padding(10)
+                        .background(.white.opacity(0.55), in: RoundedRectangle(cornerRadius: 16))
+                    ForEach(imageIDs, id: \.self) { id in
+                        Prompt10ImportedImagePreview(imageID: id, accessibilityLabel: "my imported image")
+                        Button("remove image") { imageIDs.removeAll { $0 == id } }
+                            .frame(minHeight: 44)
+                    }
+                    Button("add image") { showingPhotoPicker = true }
+                        .frame(minHeight: 44)
+                    .disabled(importOwnership.isImporting)
+                    if let error { Text(error).accessibilityIdentifier("userPage.error") }
+                    FruitfolioControlPillButton(label: "save changes", localizationKey: "save changes", action: save)
+                        .disabled(importOwnership.isImporting)
+                    WatercolorSecondaryButton(label: "discard changes", localizationKey: "discard changes") {
+                        if dirty || importOwnership.isImporting { showUnsaved = true } else { cancel() }
+                    }
+                }
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+                .padding(20).padding(.bottom, 60).frame(maxWidth: 580).frame(maxWidth: .infinity)
+            }
+            .fruitfolioModalBlur(active: showUnsaved, reduceMotion: motion.reduceMotionActive)
+            if showUnsaved {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "unsaved changes",
+                    message: "would you like to save your changes?", primaryLabel: "save changes",
+                    secondaryLabel: "keep editing", destructiveLabel: "discard changes",
+                    primaryAction: save, secondaryAction: { showUnsaved = false },
+                    destructiveAction: cancel)
+            }
+        }
+        .photosPicker(isPresented: $showingPhotoPicker, selection: $photo, matching: .images)
+        .interactiveDismissDisabled(dirty || importOwnership.isImporting || showingPhotoPicker)
+        .onDisappear {
+            // A covering system photo picker is still part of this editing
+            // visit, not cancellation. Keep earlier imported draft images.
+            guard !showingPhotoPicker else { return }
+            importOwnership.invalidate()
+            photoTask?.cancel()
+            photoTask = nil
+            if !saved { discardDraftImages() }
+        }
+        .onChange(of: photo) { _, value in
+            guard let value else { return }
+            photoTask?.cancel()
+            let generation = importOwnership.begin()
+            photoTask = Task {
+                await importPhoto(value, generation: generation)
+                guard importOwnership.finish(generation) else { return }
+                photoTask = nil
+                photo = nil
+            }
+        }
+    }
+
+    private func cancel() {
+        importOwnership.invalidate()
+        photoTask?.cancel()
+        photoTask = nil
+        discardDraftImages()
+        onCancel()
+    }
+
+    private func discardDraftImages() {
+        // An unrelated navigation/dismissal can end an editor as well as its
+        // explicit Cancel button. Only this editor's uncommitted bytes belong
+        // to its cleanup; never delete an image referenced by a saved page.
+        for id in importedDuringEdit where !store.imageIsReferenced(id) {
+            try? Prompt10LocalMediaStore.shared.delete(id)
+        }
+    }
+
+    private func formatButton(_ label: String, _ emphasis: FruitfolioSemanticEmphasis) -> some View {
+        Button(label) {
+            if let updated = document.toggling(emphasis, utf16Range: selection) { document = updated }
+        }
+        .frame(minHeight: 44)
+        .disabled(selection.length == 0)
+        .accessibilityHint("Formats the selected text")
+    }
+
+    private func save() {
+        guard !importOwnership.isImporting else { error = "please wait for your image to finish importing."; showUnsaved = false; return }
+        do {
+            let result = try store.saveUserPage(pageID: page?.id, encyclopediaID: encyclopediaID,
+                chapterID: chapterID, title: title, document: document, imageIDs: imageIDs)
+            saved = true
+            for id in importedDuringEdit where !imageIDs.contains(id) { try? Prompt10LocalMediaStore.shared.delete(id) }
+            onSaved(result)
+        } catch { self.error = error.localizedDescription; showUnsaved = false }
+    }
+
+    private func importPhoto(_ item: PhotosPickerItem, generation: UUID) async {
+        do {
+            guard let data = try await item.loadTransferable(type: Data.self) else {
+                guard importOwnership.owns(generation), !Task.isCancelled else { return }
+                error = "that image could not be imported."; return
+            }
+            try Task.checkCancellation()
+            guard importOwnership.owns(generation) else { return }
+            let media = Prompt10LocalMediaStore.shared
+            let staging = Task.detached(priority: .userInitiated) {
+                // Validate the encoded image without decoding a full-resolution
+                // bitmap on the UI thread; preserve the original imported bytes.
+                guard let source = CGImageSourceCreateWithData(data as CFData,
+                    [kCGImageSourceShouldCache: false] as CFDictionary),
+                    CGImageSourceGetCount(source) > 0,
+                    CGImageSourceGetStatus(source) == .statusComplete else {
+                    throw CocoaError(.fileReadCorruptFile)
+                }
+                try Task.checkCancellation()
+                let id = try media.stageImageData(data)
+                if Task.isCancelled {
+                    try? media.delete(id)
+                    throw CancellationError()
+                }
+                return id
+            }
+            let id = try await withTaskCancellationHandler(operation: { try await staging.value },
+                onCancel: { staging.cancel() })
+            guard !Task.isCancelled, importOwnership.owns(generation) else {
+                try? media.delete(id)
+                return
+            }
+            importedDuringEdit.insert(id); imageIDs.append(id)
+        } catch is CancellationError {
+            // Dismissal is intentional, and must not surface a stale import
+            // error or commit image bytes after the editor has gone away.
+        } catch {
+            guard importOwnership.owns(generation), !Task.isCancelled else { return }
+            self.error = "that image could not be saved."
+        }
+    }
+}
+
+struct Prompt10SemanticTextEditor: UIViewRepresentable {
+    @Binding var document: FruitfolioSemanticDocument
+    @Binding var selection: NSRange
+    @Environment(\.locale) private var locale
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+    func makeUIView(context: Context) -> UITextView {
+        let view = UITextView()
+        view.delegate = context.coordinator
+        context.coordinator.textView = view
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
+        toolbar.tintColor = UIColor(red: 128.0 / 255, green: 0, blue: 0, alpha: 1)
+        let done = UIBarButtonItem(title: FruitfolioLocalization.localized("done", locale: locale),
+            style: .done, target: context.coordinator, action: #selector(Coordinator.finishEditing))
+        done.accessibilityIdentifier = "userPage.keyboardDone"
+        toolbar.items = [UIBarButtonItem(systemItem: .flexibleSpace), done]
+        view.inputAccessoryView = toolbar
+        view.backgroundColor = .clear
+        view.adjustsFontForContentSizeCategory = true
+        view.accessibilityLabel = FruitfolioLocalization.localized("page content", locale: locale)
+        view.accessibilityIdentifier = "userPage.content"
+        view.attributedText = FruitfolioSemanticAttributedRenderer.render(document, traits: view.traitCollection)
+        context.coordinator.lastAppliedDocument = document
+        context.coordinator.lastContentSizeCategory = view.traitCollection.preferredContentSizeCategory
+        view.typingAttributes = FruitfolioSemanticAttributedRenderer.render(
+            .init(spans: [.init(text: " ")]), traits: view.traitCollection).attributes(at: 0, effectiveRange: nil)
+        return view
+    }
+    func updateUIView(_ view: UITextView, context: Context) {
+        context.coordinator.parent = self
+        // UIKit accessories do not consume SwiftUI LocalizedStringKey. Update
+        // authored UI chrome separately, before the unchanged-document guard.
+        (view.inputAccessoryView as? UIToolbar)?.items?.last?.title = FruitfolioLocalization.localized("done", locale: locale)
+        view.accessibilityLabel = FruitfolioLocalization.localized("page content", locale: locale)
+        // UIKit already contains edits emitted by its delegate. Reapplying the
+        // attributed string for each SwiftUI echo can move the insertion point
+        // between keystrokes and interleave the user's text.
+        guard context.coordinator.lastAppliedDocument != document
+                || context.coordinator.lastContentSizeCategory != view.traitCollection.preferredContentSizeCategory else { return }
+        let rendered = FruitfolioSemanticAttributedRenderer.render(document, traits: view.traitCollection)
+        context.coordinator.lastAppliedDocument = document
+        context.coordinator.lastContentSizeCategory = view.traitCollection.preferredContentSizeCategory
+        if !view.attributedText.isEqual(to: rendered) {
+            let range = view.selectedRange
+            context.coordinator.isApplying = true
+            view.attributedText = rendered
+            if NSMaxRange(range) <= rendered.length { view.selectedRange = range }
+            context.coordinator.isApplying = false
+        }
+    }
+    final class Coordinator: NSObject, UITextViewDelegate {
+        var isApplying = false
+        var lastAppliedDocument: FruitfolioSemanticDocument?
+        var lastContentSizeCategory: UIContentSizeCategory?
+        weak var textView: UITextView?
+        @objc func finishEditing() { textView?.resignFirstResponder() }
+        var parent: Prompt10SemanticTextEditor
+        init(_ parent: Prompt10SemanticTextEditor) { self.parent = parent }
+        func textViewDidChange(_ view: UITextView) {
+            guard !isApplying else { return }
+            let updated = FruitfolioSemanticAttributedRenderer.document(from: view.attributedText)
+            lastAppliedDocument = updated
+            parent.document = updated
+        }
+        func textViewDidChangeSelection(_ view: UITextView) { if !isApplying { parent.selection = view.selectedRange } }
+    }
+}
+
+
+/// Decode once per immutable imported image, away from typing/layout updates.
+/// This renders existing user content; it never generates or substitutes art.
+struct Prompt10ImportedImagePreview: View {
+    let imageID: String
+    let accessibilityLabel: String
+    @State private var image: UIImage?
+    @State private var loadedImageID: String?
+    @State private var finishedLoading = false
+
+    var body: some View {
+        Group {
+            if let image {
+                Image(uiImage: image).resizable().scaledToFit()
+                    .accessibilityLabel(accessibilityLabel)
+            } else if finishedLoading {
+                Text("this imported image could not be opened. its saved original has not been replaced.")
+                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("userImage.unreadable")
+            } else {
+                ProgressView("opening your image…")
+            }
+        }
+        .task(id: imageID) {
+            if image != nil && loadedImageID == imageID { return }
+            image = nil; finishedLoading = false
+            let requested = imageID
+            let media = Prompt10LocalMediaStore.shared
+            let decoding = Task.detached(priority: .userInitiated) {
+                media.previewPNGData(for: requested)
+            }
+            let data = await withTaskCancellationHandler(operation: { await decoding.value },
+                onCancel: { decoding.cancel() })
+            guard !Task.isCancelled else { return }
+            image = data.flatMap { UIImage(data: $0) }
+            loadedImageID = requested
+            finishedLoading = true
+        }
+    }
+}

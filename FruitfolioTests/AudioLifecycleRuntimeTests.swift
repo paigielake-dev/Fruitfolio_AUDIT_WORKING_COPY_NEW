@@ -1,0 +1,491 @@
+import XCTest
+import UIKit
+import AVFoundation
+@testable import Fruitfolio
+
+@MainActor
+final class AudioLifecycleRuntimeTests: XCTestCase {
+    func testInterruptionWithoutResumePermissionSurvivesForegroundAndVolumeChanges() async throws {
+        let suite = "AudioInterruption-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        let center = NotificationCenter.default
+        func post(_ type: AVAudioSession.InterruptionType, options: UInt = 0) {
+            center.post(name: AVAudioSession.interruptionNotification,
+                        object: AVAudioSession.sharedInstance(), userInfo: [
+                            AVAudioSessionInterruptionTypeKey: type.rawValue,
+                            AVAudioSessionInterruptionOptionKey: options])
+        }
+        post(.began)
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        post(.ended)
+        try await Task.sleep(for: .milliseconds(150))
+        center.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        settings.musicVolume = 0.31
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "A new rain request must not release music's interruption hold")
+        post(.began)
+        try await Task.sleep(for: .milliseconds(150))
+        post(.ended, options: AVAudioSession.InterruptionOptions.shouldResume.rawValue)
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+    }
+
+    func testNonfiniteFadeInDurationsProduceFiniteAudibleVolume() throws {
+        let suite = "AudioFade-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.musicVolume = 0.23
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        for duration in [Double.nan, Double.infinity, -Double.infinity, -1] {
+            manager.fadeIn(.fruitBasketMusicbox, duration: duration)
+            let observation = manager.playbackObservation(for: .music)
+            XCTAssertTrue(observation.isPlaying)
+            XCTAssertEqual(try XCTUnwrap(observation.volumes.first), 0.23, accuracy: 0.001)
+            manager.stopAll()
+        }
+    }
+
+    func testRepeatedSharedButtonFeedbackDoesNotStackButGameCuesRemainIndependent() throws {
+        let suite = "AudioFeedback-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        for _ in 0..<12 { manager.play(.buttonSoftPop) }
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 1)
+        manager.play(.fruitCatch)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 2,
+                       "Collision feedback must not be suppressed by UI cue coalescing")
+        settings.soundEffectsEnabled = false
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        settings.soundEffectsEnabled = true
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying,
+                       "Unmuting must not replay a stale button or collision sound")
+    }
+
+    func testMediaServiceResetRebuildsEligibleLoopsWithoutReplayingEffects() async throws {
+        let suite = "AudioService-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.buttonSoftPop)
+        NotificationCenter.default.post(name: AVAudioSession.mediaServicesWereLostNotification,
+                                        object: AVAudioSession.sharedInstance())
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        NotificationCenter.default.post(name: AVAudioSession.mediaServicesWereResetNotification,
+                                        object: AVAudioSession.sharedInstance())
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertEqual(manager.playbackObservation(for: .music).playerCount, 1)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+    }
+
+    func testExplicitLoopReplacesTheRequestedResourceWithinItsChannel() throws {
+        let suite = "AudioLoopResource-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.buttonSoftPop, loop: true)
+        XCTAssertEqual(manager.activeLoopID(for: .soundEffects), .buttonSoftPop)
+        manager.play(.popupOpen, loop: true)
+        XCTAssertEqual(manager.activeLoopID(for: .soundEffects), .popupOpen)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 1)
+        manager.stop(category: .soundEffects)
+        XCTAssertNil(manager.activeLoopID(for: .soundEffects))
+    }
+
+    func testActualMusicAndRainPlayersRemainIndependentAndSettingsMuteOnlyTheirCategory() async throws {
+        let suite = "AudioLoops-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.musicVolume = 0.21; settings.rainVolume = 0.18
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        for _ in 0..<10 { manager.play(.fruitBasketMusicbox, loop: true) }
+        let music = manager.playbackObservation(for: .music)
+        let rain = manager.playbackObservation(for: .rainAmbience)
+        XCTAssertEqual(music.playerCount, 1); XCTAssertEqual(rain.playerCount, 1)
+        XCTAssertTrue(music.isPlaying); XCTAssertTrue(rain.isPlaying)
+        XCTAssertGreaterThan(try XCTUnwrap(music.durations.first), 0)
+        XCTAssertGreaterThan(try XCTUnwrap(rain.durations.first), 0)
+        XCTAssertEqual(try XCTUnwrap(rain.volumes.first), 0.18, accuracy: 0.001)
+        settings.musicVolume = 0.09
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0.09, accuracy: 0.001,
+                       "A live volume change must apply the newly published value, not the previous setting")
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0.18, accuracy: 0.001)
+        settings.musicEnabled = false
+        try await Task.sleep(for: .milliseconds(400))
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0, accuracy: 0.001)
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying, "Disabled music must actually pause")
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        settings.rainEnabled = false
+        try await Task.sleep(for: .milliseconds(400))
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0, accuracy: 0.001)
+        XCTAssertFalse(manager.playbackObservation(for: .rainAmbience).isPlaying, "Disabled rain must actually pause")
+        let evidence = XCTAttachment(string: "Bundled AVAudioPlayer music/rain loaded and played independently; repeated start retained one music player; category settings muted only their own player. API observation, not an audible-quality recording.")
+        evidence.name = "MusicRain_RuntimePlayers"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+
+    func testInactiveInterfaceStopsEveryChannelAndNeverReplaysTransientSounds() async throws {
+        let suite = "AudioInactive-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.soundEffectsEnabled = true; settings.typingASMREnabled = true
+        let manager = AudioManager(settings: settings)
+        defer {
+            manager.resetAllAudio()
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(150))
+        manager.play(.gentleCheer); manager.playTypingTick()
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertFalse(manager.playbackObservation(for: category).isPlaying,
+                           "Inactive playback requests must stay silent before background notification")
+        }
+        // A settings change while inactive must not restart a requested loop.
+        settings.musicVolume = 0.17
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .typingASMR).isPlaying)
+    }
+
+    func testActualLoopStopsAndRestoresAcrossApplicationLifecycleNotifications() async throws {
+        let suite = "AudioLifecycle-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer {
+            manager.resetAllAudio()
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        NotificationCenter.default.post(name: UIApplication.didEnterBackgroundNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertEqual(manager.playbackObservation(for: .music).playerCount, 1)
+        let evidence = XCTAttachment(string: "Real AVAudioPlayer stopped/restored in response to posted UIKit application lifecycle notifications. This verifies the manager handlers; physical-device interruption and audible quality remain NOT VERIFIED.")
+        evidence.name = "AudioLifecycle_RuntimeObservation"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}
+
+extension AudioLifecycleRuntimeTests {
+    func testMasterMuteStopsActualPlayersAndOnlyResumesEnabledRequestedLoops() async throws {
+        let suite = "AudioMasterMute-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.soundEffectsEnabled = true; settings.typingASMREnabled = true
+        settings.musicVolume = 0.21; settings.rainVolume = 0.18
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        let started = FruitfolioAudioCategory.allCases.map { "\($0): \(manager.playbackObservation(for: $0))" }.joined(separator: "\n")
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .soundEffects).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .typingASMR).isPlaying)
+        settings.soundEffectsVolume = 0.06; settings.typingVolume = 0.04
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .soundEffects).volumes.first), 0.06, accuracy: 0.001)
+        XCTAssertEqual(manager.typingPlaybackState.volume, 0.04, accuracy: 0.001)
+        settings.allAudioMuted = true
+        let muted = FruitfolioAudioCategory.allCases.map { "\($0): \(manager.playbackObservation(for: $0))" }.joined(separator: "\n")
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertFalse(manager.playbackObservation(for: category).isPlaying,
+                "Master mute must stop actual playback in \(category), not merely hide a preference")
+        }
+        XCTAssertTrue(settings.musicEnabled && settings.rainEnabled && settings.soundEffectsEnabled && settings.typingASMREnabled)
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertFalse(manager.playbackObservation(for: category).isPlaying, "Muted playback requests must remain silent")
+        }
+        settings.musicEnabled = false
+        settings.musicVolume = 0.07
+        settings.allAudioMuted = false
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertFalse(manager.playbackObservation(for: .soundEffects).isPlaying, "Unmute must never replay old one-shot effects")
+        XCTAssertFalse(manager.playbackObservation(for: .typingASMR).isPlaying, "Unmute must never replay old typing cues")
+        settings.musicEnabled = true
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0.07, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0.18, accuracy: 0.001)
+        let resumed = FruitfolioAudioCategory.allCases.map { "\($0): \(manager.playbackObservation(for: $0))" }.joined(separator: "\n")
+        let attachment = XCTAttachment(string: "Actual bundled AVAudioPlayer observations. Started:\n\(started)\nMaster muted:\n\(muted)\nResumed after category checks:\n\(resumed)\nAPI observations; audible quality remains unverified.")
+        attachment.name = "MasterMute_ActualPlayerObservation"; attachment.lifetime = .keepAlways; add(attachment)
+    }
+
+    func testPersistedMasterMutePreventsPlaybackAfterStoreAndManagerRestart() throws {
+        let suite = "AudioMasterMuteRestart-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = false
+        settings.allAudioMuted = true
+        let reopened = SettingsStore(defaults: defaults)
+        XCTAssertTrue(reopened.allAudioMuted)
+        XCTAssertTrue(reopened.musicEnabled); XCTAssertFalse(reopened.rainEnabled)
+        let manager = AudioManager(settings: reopened)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        for category in FruitfolioAudioCategory.allCases {
+            XCTAssertEqual(manager.playbackObservation(for: category).playerCount, 0,
+                "A muted restart must not initialize or start an audio player")
+        }
+    }
+}
+
+extension AudioLifecycleRuntimeTests {
+    func testCompletedFadeActuallyPausesTheLoopAndZeroDurationPausesImmediately() async throws {
+        let suite = "AudioFadePause-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeOut(category: .music, duration: 0.03)
+        try await Task.sleep(for: .milliseconds(150))
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "A completed fade must pause its decoder, not keep a silent infinite loop running")
+        settings.musicVolume = 0.19
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeIn(.fruitBasketMusicbox, duration: 0)
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        manager.fadeOut(category: .music, duration: 0)
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+    }
+
+    func testRapidReentryCancelsThePreviousFadePauseWithoutStoppingTheNewRequest() async throws {
+        let suite = "AudioFadeReentry-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.musicVolume = 0.19
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.fadeOut(category: .music, duration: 0.08)
+        try await Task.sleep(for: .milliseconds(20))
+        manager.fadeIn(.fruitBasketMusicbox, duration: 0)
+        try await Task.sleep(for: .milliseconds(150))
+        let observation = manager.playbackObservation(for: .music)
+        XCTAssertTrue(observation.isPlaying, "An obsolete delayed pause must not stop a newly requested loop")
+        XCTAssertEqual(observation.playerCount, 1)
+        XCTAssertEqual(try XCTUnwrap(observation.volumes.first), 0.19, accuracy: 0.001)
+        let evidence = XCTAttachment(string: "Actual bundled AVAudioPlayer survived rapid fade-out/reentry; pending pause cancelled; one loop at volume0.19. API observation, not audible-quality verification.")
+        evidence.name = "AudioFade_RapidReentryActualPlayer"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}
+
+extension AudioLifecycleRuntimeTests {
+    func testZeroVolumeActuallyStopsPlayersAndOnlyResumesRequestedEnabledLoops() async throws {
+        let suite = "AudioZeroVolume-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicEnabled = true; settings.rainEnabled = true
+        settings.soundEffectsEnabled = true; settings.typingASMREnabled = true
+        settings.musicVolume = 0.21; settings.rainVolume = 0.18
+        settings.soundEffectsVolume = 0.15; settings.typingVolume = 0.08
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        manager.play(.fruitBasketMusicbox, loop: true)
+        manager.play(.fruitBasketRainAmbience, loop: true)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        settings.musicVolume = 0
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying,
+                      "A zero music slider must not mute rain")
+        settings.rainVolume = 0; settings.soundEffectsVolume = 0; settings.typingVolume = 0
+        XCTAssertFalse(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        manager.play(.gentleCheer); manager.playTypingTick()
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        XCTAssertEqual(manager.playbackObservation(for: .typingASMR).playerCount, 0)
+        settings.musicEnabled = false
+        settings.musicVolume = 0.11
+        XCTAssertFalse(manager.playbackObservation(for: .music).isPlaying,
+                       "Raising a disabled category's volume must not start it")
+        settings.musicEnabled = true
+        settings.rainVolume = 0.13
+        settings.soundEffectsVolume = 0.07; settings.typingVolume = 0.04
+        try await Task.sleep(for: .milliseconds(200))
+        XCTAssertTrue(manager.playbackObservation(for: .music).isPlaying)
+        XCTAssertTrue(manager.playbackObservation(for: .rainAmbience).isPlaying)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .music).volumes.first), 0.11, accuracy: 0.001)
+        XCTAssertEqual(try XCTUnwrap(manager.playbackObservation(for: .rainAmbience).volumes.first), 0.13, accuracy: 0.001)
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        XCTAssertEqual(manager.playbackObservation(for: .typingASMR).playerCount, 0)
+        let evidence = XCTAttachment(string: "Actual AVAudioPlayer zero-volume category pause/resume; independent music/rain; no old effects/typing replay. API observation, not audible-quality verification.")
+        evidence.name = "AudioZeroVolume_ActualPlayerObservation"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testMissingApprovedObstacleAssetsAreExplicitAndDoNotBorrowOtherSoundEffects() throws {
+        let suite = "AudioObstacleMissing-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true; settings.soundEffectsVolume = 0.2
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        // This deliberately resource-free bundle verifies fail-closed resource handling.
+        let empty = Bundle(for: AudioLifecycleRuntimeTests.self)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, bundle: empty)
+        manager.playBasketBranchImpact(bundle: empty)
+        XCTAssertEqual(manager.missingBasketObstacleAssets, ["audio_puddle_entry", "audio_puddle_movement", "audio_branch_impact"])
+        XCTAssertEqual(manager.playbackObservation(for: .soundEffects).playerCount, 0)
+        manager.setBasketPuddleInteraction(overlapping: false, moving: false, bundle: empty)
+        manager.stopBasketObstacleAudio()
+        let evidence = XCTAttachment(string: "Missing named obstacle assets were explicitly reported; no unrelated rain, vine, pop or fruit-catch asset was substituted. This is not proof of audible collision SFX acceptance.")
+        evidence.name = "ObstacleAudio_MissingApprovedAssets"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testActualBundledWaterAndWoodAssetsPlayWithoutStackingAndRespectSFXMuteVolumeAndOwnerCleanup() async throws {
+        let suite = "CollisionFoley-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = true; settings.soundEffectsVolume = 0.22
+        let manager = AudioManager(settings: settings)
+        defer { manager.resetAllAudio() }
+        let owner = UUID(); manager.claimBasketObstacleAudioOwner(owner)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        let initial = manager.obstaclePlaybackObservation()
+        XCTAssertTrue(initial.isPlaying)
+        let identity = try XCTUnwrap(initial.puddlePlayer)
+        XCTAssertEqual(initial.entryStarts, 1)
+        XCTAssertTrue(initial.durations.contains { abs($0 - 1.8) < 0.01 })
+        XCTAssertTrue(initial.durations.contains { abs($0 - 0.44) < 0.01 })
+        for _ in 0..<30 { manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner) }
+        XCTAssertEqual(manager.obstaclePlaybackObservation().puddlePlayer, identity)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1, "Continuous contact cannot replay entry")
+        settings.soundEffectsVolume = 0.07
+        XCTAssertTrue(manager.obstaclePlaybackObservation().volumes.allSatisfy { abs($0 - 0.07) < 0.001 })
+        manager.setBasketPuddleInteraction(overlapping: true, moving: false, owner: owner)
+        try await Task.sleep(for: .milliseconds(40))
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().puddlePlayer, identity, "Rapid resumed movement reuses the fading loop")
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1)
+        settings.soundEffectsVolume = 0
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertNil(manager.obstaclePlaybackObservation().puddlePlayer)
+        settings.soundEffectsVolume = 0.12
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 1, "Unmuting continuous physical contact does not invent entry")
+        manager.playBasketBranchImpact(owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().branchStarts, 1)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().durations.contains { abs($0 - 0.24) < 0.01 })
+        manager.setBasketPuddleInteraction(overlapping: false, moving: false, owner: owner)
+        try await Task.sleep(for: .milliseconds(220))
+        XCTAssertNil(manager.obstaclePlaybackObservation().puddlePlayer, "Exit release finishes; no retained water loop")
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: owner)
+        XCTAssertEqual(manager.obstaclePlaybackObservation().entryStarts, 2)
+        settings.soundEffectsEnabled = false
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        settings.soundEffectsEnabled = true
+        let newOwner = UUID(); manager.claimBasketObstacleAudioOwner(newOwner)
+        manager.setBasketPuddleInteraction(overlapping: true, moving: true, owner: newOwner)
+        manager.stopBasketObstacleAudio(owner: owner)
+        XCTAssertTrue(manager.obstaclePlaybackObservation().isPlaying, "Late old-owner cleanup cannot stop a new game")
+        manager.stopBasketObstacleAudio(owner: newOwner)
+        XCTAssertFalse(manager.obstaclePlaybackObservation().isPlaying)
+        XCTAssertTrue(manager.missingBasketObstacleAssets.isEmpty)
+        let evidence = XCTAttachment(string: "Actual bundled original WAV entry0.44s/movement1.8s/wood0.24s loaded through NSDataAsset and AVAudioPlayer; one live loop identity, continuous-contact event count, natural release, actual SFX volume/zero mute, re-entry and owner cleanup verified. API playback evidence; acoustic realism and physical silent-switch quality remain separate verification.")
+        evidence.name = "CollisionFoley_ActualBundledPlayersAndGates"; evidence.lifetime = .keepAlways; add(evidence)
+    }
+}
+
+@MainActor
+extension AudioLifecycleRuntimeTests {
+    func testInvalidAudioPreferencesCannotLeakNonfiniteOrOutOfRangeValuesIntoLiveStateOrExports() throws {
+        let suite = "AudioFinite-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.musicVolume = .nan
+        settings.rainVolume = .infinity
+        settings.soundEffectsVolume = -.infinity
+        settings.typingVolume = 1.5
+        XCTAssertEqual(settings.musicVolume, 0)
+        XCTAssertEqual(settings.rainVolume, 0)
+        XCTAssertEqual(settings.soundEffectsVolume, 0)
+        XCTAssertEqual(settings.typingVolume, 1)
+        XCTAssertEqual(defaults.double(forKey: "fruitfolio.settings.musicVolume"), 0)
+        let restored = SettingsStore(defaults: defaults)
+        XCTAssertEqual(restored.musicVolume, settings.musicVolume)
+        XCTAssertEqual(restored.rainVolume, settings.rainVolume)
+        XCTAssertEqual(restored.soundEffectsVolume, settings.soundEffectsVolume)
+        XCTAssertEqual(restored.typingVolume, settings.typingVolume)
+        settings.soundEffectsVolume = 0.43
+        XCTAssertEqual(settings.musicVolume, 0)
+        XCTAssertEqual(settings.rainVolume, 0)
+        XCTAssertEqual(settings.typingVolume, 1, "Each audio slider keeps independent state")
+        let preferences = FruitfolioPersonalDataExport.Preferences(settings)
+        XCTAssertNoThrow(try JSONEncoder().encode(preferences), "Audio preferences must not cause an otherwise valid personal-data export to fail on NaN")
+    }
+}

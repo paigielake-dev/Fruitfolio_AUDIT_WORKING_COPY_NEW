@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 private enum Prompt28TextRole {
     case screenTitle
@@ -53,11 +54,15 @@ struct Prompt28FruitBasketView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @State private var showingSaveDestination = false
     @State private var showTour = false
     @State private var tourStep = 0
+    @AccessibilityFocusState private var tourHeadingFocused: Bool
     @State private var leaderboardValidationMessage: String?
+    @State private var leaderboardUsernameDraft = ""
+    @FocusState private var leaderboardUsernameFocused: Bool
     @State private var selectedLeaderboardCategory: Prompt28LeaderboardCategory = .fruit
 
     init(
@@ -71,13 +76,14 @@ struct Prompt28FruitBasketView: View {
         _viewModel = StateObject(
             wrappedValue: Prompt28FruitBasketViewModel(
                 store: store,
-                researchProvider: researchProvider ?? Prompt28UnavailableResearchProvider()
+                researchProvider: researchProvider ?? Prompt28CanonicalResearchProvider()
             )
         )
     }
 
     var body: some View {
         ZStack {
+            ZStack {
             GeometryReader { proxy in
                 Image("fruitbasket_background")
                     .resizable()
@@ -104,30 +110,50 @@ struct Prompt28FruitBasketView: View {
                 .frame(maxWidth: 620)
                 .frame(maxWidth: .infinity)
 
-            if showTour {
+            }
+            .accessibilityElement(children: showTour || viewModel.showingStormNotice ? .ignore : .contain)
+            .fruitfolioModalBlur(active: showTour || viewModel.showingStormNotice,
+                                reduceMotion: motionPreferences.reduceMotionActive)
+
+            if showTour && !viewModel.showingStormNotice {
                 tourOverlay
                     .zIndex(100)
+            }
+            if viewModel.showingStormNotice {
+                Prompt28StormNoticeView(onContinue: { viewModel.dismissStormNotice() })
+                    .zIndex(200)
             }
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            let audioOwner = viewModel.obstacleAudioOwnerID
+            audioManager.claimBasketObstacleAudioOwner(audioOwner)
+            viewModel.installGameplayCleanup { [weak manager = audioManager] in
+                manager?.stopBasketObstacleAudio(owner: audioOwner)
+            }
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
-            if !store.tourState.hasCompletedTour {
+            if let error = store.loadError {
+                viewModel.message = error
+                viewModel.screen = .error
+            } else if !store.tourState.hasCompletedTour {
                 showTour = true
                 tourStep = 0
             }
         }
         .onDisappear {
+            viewModel.viewWillDisappear()
+            audioManager.stopBasketObstacleAudio(owner: viewModel.obstacleAudioOwnerID)
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
                 viewModel.sceneBecameInactive()
+                audioManager.stopBasketObstacleAudio(owner: viewModel.obstacleAudioOwnerID)
             }
         }
         .sheet(isPresented: $showingSaveDestination) {
@@ -190,6 +216,7 @@ struct Prompt28FruitBasketView: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     @ViewBuilder
@@ -311,6 +338,8 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var home: some View {
+        GeometryReader { proxy in
+        ScrollView {
         VStack(spacing: 10) {
             topBar
 
@@ -388,6 +417,9 @@ struct Prompt28FruitBasketView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 20)
+        .frame(minHeight: proxy.size.height)
+        }
+        }
     }
 
     private var howItWorks: some View {
@@ -427,11 +459,9 @@ struct Prompt28FruitBasketView: View {
                 }
                 .frame(maxWidth: 330)
 
-                Text(
-                    "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆"
-                )
-                .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                FruitfolioNativeActionLabel(
+                    text: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆", localizationKey: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆",
+                    fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .subheadline)
                 .multilineTextAlignment(.center)
                 .fixedSize(
                     horizontal: false,
@@ -540,14 +570,12 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.sectionHeading)
                             .multilineTextAlignment(.center)
 
-                        HStack(spacing: 6) {
-                            ForEach(
-                                Prompt28EducationalDifficulty.allCases
-                            ) { option in
-                                Prompt28MiniControlPill(
-                                    title: option.displayName,
-                                    isSelected: viewModel.difficulty == option
-                                ) {
+                        let difficultyLayout = dynamicTypeSize.isAccessibilitySize
+                            ? AnyLayout(VStackLayout(spacing: 6)) : AnyLayout(HStackLayout(spacing: 6))
+                        difficultyLayout {
+                            ForEach(Prompt28EducationalDifficulty.allCases) { option in
+                                Prompt28MiniControlPill(title: option.displayName,
+                                    isSelected: viewModel.difficulty == option) {
                                     viewModel.updateDifficulty(option)
                                 }
                             }
@@ -708,6 +736,8 @@ struct Prompt28FruitBasketView: View {
 
     @ViewBuilder
     private var questionFlow: some View {
+        GeometryReader { proxy in
+        ScrollView {
         VStack(spacing: 14) {
             topBar
 
@@ -734,6 +764,7 @@ struct Prompt28FruitBasketView: View {
                         }
 
                         Text(question.questionText)
+                            .accessibilityIdentifier("fruitBasket.researchQuestion")
                             .prompt28Text(.screenTitle)
                             .fixedSize(
                                 horizontal: false,
@@ -776,6 +807,7 @@ struct Prompt28FruitBasketView: View {
                                     )
                                 )
                             }
+                            .accessibilityIdentifier("fruitBasket.answer.\(question.answerOptions.firstIndex(of: answer) ?? 0)")
                             .prompt28Text(.body)
                             .buttonStyle(
                                 CutePopButtonStyle(
@@ -859,7 +891,7 @@ struct Prompt28FruitBasketView: View {
                                 .prompt28Text(.body)
 
                             Text(
-                                "starred = catch it · no star = let it pass"
+                                "starred fruit = catch it · unstarred fruit = let it pass. standalone stars bank one star pass each. a bad-fruit catch uses one pass; with none, the round ends."
                             )
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
@@ -877,6 +909,9 @@ struct Prompt28FruitBasketView: View {
             }
 
             Spacer(minLength: 12)
+        }
+        .frame(minHeight: proxy.size.height)
+        }
         }
     }
 
@@ -967,6 +1002,13 @@ struct Prompt28FruitBasketView: View {
                             )
                         )
                         .fontWeight(.bold)
+                    Text("star passes: \(viewModel.session?.availableStarPasses ?? 0)")
+                        .font(.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("fruitBasket.availableStarPasses")
+                        .accessibilityValue((viewModel.session?.availableStarPasses ?? 0) > 0
+                            ? "one pass will be used if you catch a bad fruit; the round will continue"
+                            : "with no star pass, a bad-fruit catch ends this round")
                 }
                 .frame(width: width)
                 .offset(
@@ -974,9 +1016,22 @@ struct Prompt28FruitBasketView: View {
                     y: 8
                 )
                 .zIndex(20)
+                .fruitfolioModalBlur(active: viewModel.screen == .paused,
+                    reduceMotion: motionPreferences.reduceMotionActive)
 
                 if viewModel.screen == .paused {
-                    pausePanel
+                    ScrollView(.vertical) {
+                        VStack(spacing: 0) {
+                            Spacer(minLength: 0)
+                            pausePanel
+                            Spacer(minLength: 0)
+                        }
+                        .frame(minHeight: max(44, proxy.size.height - 32))
+                    }
+                        .scrollBounceBehavior(.basedOnSize)
+                        .frame(maxHeight: max(44, proxy.size.height - 32))
+                        .accessibilityIdentifier("fruitBasket.pauseMenu")
+                        .accessibilityAddTraits(.isModal)
                         .frame(
                             width: min(
                                 width - 40,
@@ -1011,6 +1066,29 @@ struct Prompt28FruitBasketView: View {
                 audioManager.play(.fruitCatch)
             }
         }
+        .onChange(of: viewModel.basketX) { _, _ in
+            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: viewModel.puddleMovementActive, owner: viewModel.obstacleAudioOwnerID)
+        }
+        .onChange(of: viewModel.puddleContactActive) { _, contact in
+            audioManager.setBasketPuddleInteraction(overlapping: contact, moving: viewModel.puddleMovementActive, owner: viewModel.obstacleAudioOwnerID)
+        }
+        .onChange(of: viewModel.puddleMovementActive) { _, moving in
+            audioManager.setBasketPuddleInteraction(overlapping: viewModel.puddleContactActive, moving: moving, owner: viewModel.obstacleAudioOwnerID)
+        }
+        .onChange(of: viewModel.branchContactCount) { oldValue, newValue in
+            for _ in 0..<max(0, newValue - oldValue) { audioManager.playBasketBranchImpact(owner: viewModel.obstacleAudioOwnerID) }
+        }
+        .onChange(of: viewModel.vineContactCount) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.vineRustle) }
+        }
+        .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.starChime) }
+            else if newValue < oldValue { audioManager.play(.notificationSoftSparkle) }
+            if UIAccessibility.isVoiceOverRunning {
+                let change = newValue > oldValue ? "star pass banked" : "one star pass used"
+                UIAccessibility.post(notification: .announcement, argument: "\(change). star passes: \(newValue).")
+            }
+        }
     }
 
     @ViewBuilder
@@ -1040,12 +1118,14 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.branch) {
+            let branchGeometry = Prompt28BranchContactGeometry(fieldWidth: width, fieldHeight: height)
             FruitfolioImage(
                 id: .fruitbasket_branch
             )
-            .frame(width: min(width * 0.30, 176))
+            .frame(width: branchGeometry.artworkWidth)
+            .scaleEffect(x: -1, y: 1)
             .position(
-                x: xOffset + width * 0.84,
+                x: xOffset + branchGeometry.artworkCenterX,
                 y: height * 0.40
             )
             .opacity(0.78)
@@ -1059,9 +1139,7 @@ struct Prompt28FruitBasketView: View {
         }
 
         if viewModel.activeObstacles.contains(.puddle) {
-            FruitfolioImage(
-                id: .fruitbasket_puddle
-            )
+            Prompt28PuddleArtwork(reduceMotion: motionPreferences.reduceMotionActive)
             .frame(width: min(width * 0.34, 190))
             .position(
                 x: xOffset + width * 0.50,
@@ -1083,7 +1161,17 @@ struct Prompt28FruitBasketView: View {
         height: CGFloat,
         xOffset: CGFloat
     ) -> some View {
-        ZStack(alignment: .topLeading) {
+        let geometry = Prompt28BasketCatchGeometry(fieldWidth: width, fieldHeight: height)
+        return ZStack(alignment: .topLeading) {
+            // Original handle/back rim behind moving items; original front rim
+            // above them. Complementary masks preserve every artwork pixel.
+            Prompt28BasketProgressView(count: viewModel.basketCount,
+                settledCatches: viewModel.settledCatches, layer: .back)
+                .frame(width: geometry.containerWidth, height: Prompt28BasketCatchGeometry.containerHeight)
+                .rotationEffect(.degrees(motionPreferences.reduceMotionActive || !viewModel.basketIsMeetingPuddleResistance ? 0 : -3))
+                .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
+                .position(x: xOffset + width * viewModel.basketX, y: height * Prompt28BasketCatchGeometry.centerYFraction)
+                .zIndex(5).accessibilityHidden(true)
             ForEach(
                 viewModel.activeFruit
             ) { fruit in
@@ -1108,6 +1196,9 @@ struct Prompt28FruitBasketView: View {
                         66
                     )
                 )
+                .modifier(Prompt28VineResistanceVisual(
+                    active: viewModel.isMeetingVines(x: fruit.x, y: fruit.y, classification: fruit.classification),
+                    reduceMotion: motionPreferences.reduceMotionActive, phase: fruit.y))
                 .position(
                     x: xOffset + width * fruit.x,
                     y: height * fruit.y
@@ -1124,6 +1215,9 @@ struct Prompt28FruitBasketView: View {
                 FruitfolioImage(id: .fruitbasket_star)
                     .frame(width: min(max(width * 0.10, 34), 52), height: min(max(width * 0.10, 34), 52))
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees))
+                    .modifier(Prompt28VineResistanceVisual(
+                        active: viewModel.isMeetingVines(x: star.x, y: star.y),
+                        reduceMotion: motionPreferences.reduceMotionActive, phase: star.y))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
                     .accessibilityLabel("star pass")
@@ -1131,7 +1225,9 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.currentGoodFruitIDs
+                settledCatches: viewModel.settledCatches,
+                layer: .front,
+                onPresentation: { [weak model = viewModel] id, event in model?.handleCatchPresentation(id: id, event: event) }
             )
             .frame(
                 width: min(
@@ -1140,9 +1236,11 @@ struct Prompt28FruitBasketView: View {
                 ),
                 height: 132
             )
+            .rotationEffect(.degrees(motionPreferences.reduceMotionActive || !viewModel.basketIsMeetingPuddleResistance ? 0 : -3))
+            .animation(motionPreferences.reduceMotionActive ? nil : .easeOut(duration: 0.12), value: viewModel.basketX)
             .position(
                 x: xOffset + width * viewModel.basketX,
-                y: height * 0.89
+                y: height * Prompt28BasketCatchGeometry.centerYFraction
             )
             .gesture(
                 DragGesture(
@@ -1159,14 +1257,28 @@ struct Prompt28FruitBasketView: View {
                         to: normalized
                     )
                 }
+                .onEnded { _ in viewModel.basketMovementEnded() }
             )
             .zIndex(30)
             .accessibilityLabel(
                 "Basket, \(viewModel.basketCount) of 10"
             )
+            .accessibilityValue("position \(Int((viewModel.basketX * 100).rounded())) percent; " + (viewModel.basketIsMeetingPuddleResistance ? "moving through a puddle with resistance" : "normal movement"))
+            .accessibilityAdjustableAction { direction in
+                switch direction {
+                case .increment: viewModel.moveBasket(to: viewModel.basketX + 0.08)
+                case .decrement: viewModel.moveBasket(to: viewModel.basketX - 0.08)
+                @unknown default: break
+                }
+                viewModel.basketMovementEnded()
+            }
         }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
+        .onAppear { viewModel.updateGameplayFieldSize(width: width, height: height) }
+        .onChange(of: CGSize(width: width, height: height)) { _, size in
+            viewModel.updateGameplayFieldSize(width: size.width, height: size.height)
+        }
     }
 
     @ViewBuilder
@@ -1222,7 +1334,7 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.currentGoodFruitIDs
+                settledCatches: viewModel.settledCatches
             )
             .frame(
                 width: 150,
@@ -1269,6 +1381,7 @@ struct Prompt28FruitBasketView: View {
                 ) {
                     viewModel.resume()
                 }
+                .accessibilityValue("score \(viewModel.score), caught \(viewModel.basketCount) of 10, star passes \(viewModel.availableStarPasses), round \(viewModel.currentRound)")
 
                 Prompt28WatercolorButton(
                     title: "change topic",
@@ -1404,7 +1517,7 @@ struct Prompt28FruitBasketView: View {
 
                     Prompt28BasketProgressView(
                         count: 10,
-                        fruitIDs: viewModel.currentGoodFruitIDs
+                        settledCatches: viewModel.settledCatches.filter(\.collected)
                     )
                     .frame(width: 210, height: 180)
                     .accessibilityHidden(true)
@@ -1435,21 +1548,54 @@ struct Prompt28FruitBasketView: View {
                         spacing: 11
                     ) {
                         Text(
-                            "your basket reveal! ♡"
+                            "your basket reveal!"
                         )
                         .prompt28Text(.screenTitle)
+
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("good fruit collected: \(viewModel.roundCollection.goodFruit.count)")
+                            Text("unstarred fruit caught: \(viewModel.roundCollection.badFruit.count)")
+                            Text("standalone stars collected: \(viewModel.roundCollection.standaloneStarsCaught)")
+                            Text("star passes used: \(viewModel.roundCollection.starPassesConsumed)")
+                            Text("star passes available: \(viewModel.availableStarPasses)")
+                            Text("score this round: \(viewModel.score - viewModel.roundCollection.startingScore)")
+                        }
+                        .prompt28Text(.body)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("fruitBasket.actualRoundResults")
 
                         if let question =
                             viewModel.currentQuestion {
 
                             Text(
-                                "these fit the basket because…"
+                                "here’s the research behind your question."
                             )
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                            Text(question.explanation)
-                                .prompt28Text(.body)
+                            if !viewModel.revealFacts.isEmpty {
+                                ForEach(Array(viewModel.revealFacts.enumerated()), id: \.element.id) { index, fact in
+                                    VStack(alignment: .leading, spacing: 5) {
+                                        if viewModel.revealFacts.count > 1 {
+                                            Text("\(index + 1) of \(viewModel.revealFacts.count)")
+                                                .prompt28Text(.metadata)
+                                        }
+                                        FruitfolioSemanticText(document: .init(spans: [.init(text: fact.text)]),
+                                            baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                    }
+                                    .accessibilityElement(children: .contain)
+                                    .accessibilityIdentifier("fruitBasket.fact." + fact.id)
+                                }
+                            } else {
+                                Text(question.explanation).prompt28Text(.body)
+                                Text("the original evidence snapshot for these notes could not be verified.")
+                                    .prompt28Text(.secondary)
+                            }
+                            ForEach(question.sourceTitles, id: \.self) { reference in
+                                Text(reference).prompt28Text(.secondary)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
 
                             Text(
                                 "sources · \(question.sourceIDs.count)"
@@ -1539,7 +1685,7 @@ struct Prompt28FruitBasketView: View {
                                         .lineLimit(1)
                                         .minimumScaleFactor(0.75)
                                 }
-                                .buttonStyle(.plain)
+                                .buttonStyle(CutePopButtonStyle())
                                 .accessibilityAddTraits(
                                     selectedLeaderboardCategory == category ? .isSelected : []
                                 )
@@ -1581,11 +1727,18 @@ struct Prompt28FruitBasketView: View {
                         TextField(
                             "public username",
                             text: Binding(
-                                get: { usernameStore.username },
+                                get: { leaderboardUsernameDraft },
                                 set: { raw in
-                                    let sanitized = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
-                                    leaderboardValidationMessage = usernameStore.setUsername(sanitized) ?? Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw)
-                                    if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(sanitized) {
+                                    // Preserve the actual draft, including invalid input,
+                                    // so validation can explain it without silently changing
+                                    // the identity the user intended to enter.
+                                    leaderboardUsernameDraft = raw
+                                    if let error = Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw) {
+                                        leaderboardValidationMessage = error
+                                    } else {
+                                        leaderboardValidationMessage = usernameStore.setUsername(raw)
+                                    }
+                                    if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(raw) {
                                         store.appearOnLeaderboard = false
                                     }
                                     store.persistPreferences()
@@ -1594,6 +1747,10 @@ struct Prompt28FruitBasketView: View {
                         )
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                        .focused($leaderboardUsernameFocused)
+                        .submitLabel(.done)
+                        .onSubmit { leaderboardUsernameFocused = false }
+                        .accessibilityIdentifier("fruitBasket.publicUsername")
                         .prompt28Text(.body)
                         .padding(.horizontal, 14)
                         .frame(minHeight: 46)
@@ -1612,7 +1769,7 @@ struct Prompt28FruitBasketView: View {
                         HStack {
                             Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
                             Spacer()
-                            Text("\(usernameStore.username.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
+                            Text("\(leaderboardUsernameDraft.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
                                 .monospacedDigit()
                         }
                         .prompt28Text(.metadata)
@@ -1660,7 +1817,16 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .onChange(of: usernameStore.username) { _, newValue in
+            // The authority publishes valid intermediate edits. Reflecting a
+            // delayed echo while focused can reinsert the last valid prefix
+            // after the user deletes below the minimum length.
+            if !leaderboardUsernameFocused, leaderboardUsernameDraft != newValue {
+                leaderboardUsernameDraft = newValue
+            }
+        }
         .onAppear {
+            leaderboardUsernameDraft = usernameStore.username
             leaderboardValidationMessage = usernameStore.username.isEmpty
                 ? nil
                 : Prompt28LeaderboardUsernamePolicy.validationMessage(for: usernameStore.username)
@@ -1678,9 +1844,7 @@ struct Prompt28FruitBasketView: View {
                     return
                 }
 
-                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(usernameStore.username)
-                _ = usernameStore.setUsername(cleaned)
-                if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
+                if let message = usernameStore.setUsername(leaderboardUsernameDraft) {
                     store.appearOnLeaderboard = false
                     leaderboardValidationMessage = message
                 } else {
@@ -1755,14 +1919,10 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var tourOverlay: some View {
+        GeometryReader { viewport in
         ZStack {
-            DesignTokens
-                .ColorToken
-                .backgroundCream
-                .opacity(0.72)
-                .ignoresSafeArea()
-
-            Prompt28CompactPopupCard {
+            Prompt28CompactPopupCard(maximumHeight: dynamicTypeSize.isAccessibilitySize
+                ? max(44, viewport.size.height - viewport.safeAreaInsets.top - viewport.safeAreaInsets.bottom - 32) : nil) {
                 VStack(spacing: 8) {
                     FruitfolioImage(
                         id: .fruit_strawberry_silly
@@ -1773,11 +1933,13 @@ struct Prompt28FruitBasketView: View {
                     )
                     .accessibilityLabel("Strawberry")
 
-                    Text("\(tourStep + 1) of 10")
-                        .prompt28Text(.metadata)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                    FruitfolioNativeActionLabel(text: "\(tourStep + 1) of 10",
+                        fontName: "ChalkboardSE-Regular", pointSize: 11, textStyle: .caption)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     Text(tourTitle)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityFocused($tourHeadingFocused)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -1792,26 +1954,10 @@ struct Prompt28FruitBasketView: View {
                             vertical: true
                         )
 
-                    Text(tourBody)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13,
-                                relativeTo: .body
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                                .opacity(0.84)
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(2)
-                        .fixedSize(
-                            horizontal: false,
-                            vertical: true
-                        )
+                    FruitfolioNativeActionLabel(text: tourBody,
+                        fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .body,
+                        lineSpacing: 2)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     if tourStep == 4 {
                         HStack(spacing: 16) {
@@ -1846,20 +1992,52 @@ struct Prompt28FruitBasketView: View {
                     .frame(maxWidth: 242)
 
                     if tourStep == 0 {
-                        Button("skip tour") {
-                            viewModel.screen = .howItWorks
-                            store.skipTourAfterRules()
-                            showTour = false
+                        Button {
+                            skipTourToRules()
+                        } label: {
+                            HStack(spacing: 0) {
+                                Spacer(minLength: 0)
+                                FruitfolioNativeActionLabel(text: "skip tour", localizationKey: "skip tour", fontName: "ChalkboardSE-Regular",
+                                    pointSize: 13, textStyle: .subheadline)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                Spacer(minLength: 0)
+                            }
+                            .accessibilityElement(children: .contain)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                         }
-                        .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                        .frame(minHeight: 44)
+                        .accessibilityLabel(Text("skip tour"))
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                     }
                 }
             }
             .frame(maxWidth: 292)
             .padding(.horizontal, 20)
         }
+        .frame(width: viewport.size.width, height: viewport.size.height)
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .onAppear {
+            audioManager.play(.popupOpen)
+            tourHeadingFocused = true
+        }
+        .onDisappear { audioManager.play(.popupClose) }
+        .accessibilityAction(.escape) { skipTourToRules() }
+        .onChange(of: tourStep) { _, _ in
+            tourHeadingFocused = false
+            Task { @MainActor in
+                await Task.yield()
+                tourHeadingFocused = true
+            }
+        }
+    }
+
+    private func skipTourToRules() {
+        audioManager.play(.buttonSoftPop)
+        viewModel.screen = .howItWorks
+        store.skipTourAfterRules()
+        showTour = false
     }
 
     private var tourTitle: String {
@@ -1910,6 +2088,11 @@ private struct Prompt28MovingFruit: View {
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
+                if fruit.classification == .good {
+                    FruitfolioImage(id: .fruitbasket_star)
+                        .frame(width: starSize, height: starSize)
+                        .accessibilityHidden(true)
+                }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
@@ -1920,9 +2103,57 @@ private struct Prompt28MovingFruit: View {
     }
 }
 
+private enum Prompt28BasketArtworkLayer { case complete, back, front }
+
+struct Prompt28SettledCatchArtwork: View {
+    let caught: Prompt28SettledCatch
+    let reduceMotion: Bool
+    var onPresentation: (Prompt28CatchPresentationEvent) -> Void = { _ in }
+    @State private var settled = false
+    @State private var presentationID = UUID()
+
+    init(caught: Prompt28SettledCatch, reduceMotion: Bool,
+         onPresentation: @escaping (Prompt28CatchPresentationEvent) -> Void = { _ in }) {
+        self.caught = caught
+        self.reduceMotion = reduceMotion
+        self.onPresentation = onPresentation
+    }
+
+    var body: some View {
+        FruitfolioImage(id: caught.assetID)
+            .scaleEffect(x: settled ? 1.08 : 1, y: settled ? 0.55 : 1, anchor: .bottom)
+            .offset(y: settled ? 0 : -5)
+            .onAppear {
+                guard !caught.collected else { settled = true; return }
+                onPresentation(.appeared(presentationID))
+                if reduceMotion { settled = true; onPresentation(.settled(presentationID)) }
+                else {
+                    withAnimation(.easeOut(duration: Prompt28BasketCatchGeometry.settlingDuration),
+                                  completionCriteria: .logicallyComplete) {
+                        settled = true
+                    } completion: {
+                        onPresentation(.settled(presentationID))
+                    }
+                }
+            }
+            .onChange(of: reduceMotion) { _, enabled in
+                guard enabled, !caught.collected else { return }
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { settled = true }
+                onPresentation(.settled(presentationID))
+            }
+            .transaction { transaction in
+                if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
+            }
+            .onDisappear { onPresentation(.disappeared(presentationID)) }
+    }
+}
+
 private struct Prompt28BasketProgressView: View {
     let count: Int
-    let fruitIDs: [Prompt28FruitID]
+    let settledCatches: [Prompt28SettledCatch]
+    let layer: Prompt28BasketArtworkLayer
+    let onPresentation: (UUID, Prompt28CatchPresentationEvent) -> Void
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
@@ -1930,50 +2161,72 @@ private struct Prompt28BasketProgressView: View {
 
     init(
         count: Int,
-        fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases
+        settledCatches: [Prompt28SettledCatch] = [],
+        layer: Prompt28BasketArtworkLayer = .complete,
+        onPresentation: @escaping (UUID, Prompt28CatchPresentationEvent) -> Void = { _, _ in }
     ) {
+        self.settledCatches = settledCatches
+        self.layer = layer
+        self.onPresentation = onPresentation
         self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
-        self.fruitIDs = fruitIDs.isEmpty ? Prompt28FruitID.allCases : fruitIDs
     }
 
     var body: some View {
+        let projection = Prompt28BasketArtworkProjection(catches: settledCatches)
         GeometryReader { proxy in
             let width = max(proxy.size.width, 1)
             let height = max(proxy.size.height, 1)
+            let imageWidth = width * Prompt28BasketCatchGeometry.imageWidthFraction
+            let imageHeight = imageWidth * 380 / 398
+            let imageTop = height - imageHeight
             let fruitSize = min(max(width * 0.19, 22), 38)
-            let visibleCount = min(count, Prompt28FruitBasketEngine.goodFruitTarget)
+            let visibleCatches = projection.visibleCatches
 
             ZStack(alignment: .bottom) {
-                // Collected fruit lives inside the basket opening. The basket artwork
-                // renders above it so fruit reads as physically inside, not pasted on top.
-                ZStack {
-                    ForEach(0..<visibleCount, id: \.self) { index in
-                        let row = index / 5
-                        let column = index % 5
-                        let xFractions: [CGFloat] = [0.28, 0.39, 0.50, 0.61, 0.72]
-                        let yFraction: CGFloat = row == 0 ? 0.48 : 0.36
-                        FruitfolioImage(
-                            id: fruitIDs[index % fruitIDs.count].assetID
-                        )
-                        .frame(width: fruitSize, height: fruitSize)
-                        .rotationEffect(.degrees(Double((index % 5) - 2) * 2.0))
-                        .position(
-                            x: width * xFractions[column],
-                            y: height * yFraction
-                        )
-                        .accessibilityHidden(true)
+                if layer != .back {
+                    ForEach(Array(visibleCatches.enumerated()), id: \.element.id) { index, caught in
+                        Prompt28SettledCatchArtwork(caught: caught, reduceMotion: motionPreferences.reduceMotionActive,
+                            onPresentation: { onPresentation(caught.id, $0) })
+                            .frame(width: fruitSize, height: fruitSize)
+                            .position(x: width * (0.30 + Double(index % 5) * 0.10),
+                                      y: imageTop + imageHeight * (0.60 - Double(index / 5) * 0.055))
+                            .accessibilityHidden(true)
                     }
                 }
-                .frame(width: width, height: height)
 
                 FruitfolioImage(id: .fruitbasket_basket)
-                    .frame(width: width * 0.90)
-                    .scaleEffect(basketBounce ? 0.975 : 1.0, anchor: .bottom)
-                    .onAppear {
-                        Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket)
+                    .frame(width: imageWidth, height: imageHeight)
+                    .mask(alignment: .top) {
+                        switch layer {
+                        case .complete, .front:
+                            VStack(spacing: 0) {
+                                Color.clear.frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                                Rectangle()
+                            }
+                        case .back:
+                            Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction)
+                        }
                     }
+                    .scaleEffect(motionPreferences.reduceMotionActive ? 1 : (basketBounce ? 0.975 : 1.0), anchor: .bottom)
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket) }
 
-                Text("\(count) / 10")
+                if layer == .complete {
+                    // Non-gameplay progress cards still retain the entire
+                    // original handle and back rim behind their collected fruit.
+                    FruitfolioImage(id: .fruitbasket_basket)
+                        .frame(width: imageWidth, height: imageHeight)
+                        .mask(alignment: .top) { Rectangle().frame(height: imageHeight * Prompt28BasketCatchGeometry.frontRimFraction) }
+                        .zIndex(-1)
+                }
+
+                if layer != .back {
+                VStack(spacing: 2) {
+                    Text("\(count) / 10")
+                    if projection.additionalCollectedStars > 0 {
+                        Text("+\(projection.additionalCollectedStars) more caught stars")
+                            .font(.custom("Chalkboard SE", size: 10, relativeTo: .caption2))
+                    }
+                }
                     .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption))
                     .fontWeight(.bold)
                     .monospacedDigit()
@@ -1984,6 +2237,7 @@ private struct Prompt28BasketProgressView: View {
                         in: Capsule()
                     )
                     .offset(y: -2)
+                }
             }
             .frame(width: width, height: height)
         }
@@ -1994,8 +2248,17 @@ private struct Prompt28BasketProgressView: View {
                 basketBounce = false
             }
         }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, enabled in
+            if enabled {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { basketBounce = false }
+            }
+        }
+        .transaction { transaction in
+            if motionPreferences.reduceMotionActive { transaction.animation = nil; transaction.disablesAnimations = true }
+        }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Basket \(count) of 10")
+        .accessibilityLabel("Basket \(count) of 10; registered stars: \(projection.registeredStars)")
     }
 }
 
@@ -2107,17 +2370,27 @@ private struct Prompt28PaperPanel<Content: View>: View {
 
 private struct Prompt28CompactPopupCard<Content: View>: View {
     let content: Content
+    let maximumHeight: CGFloat?
 
-    init(
+    init(maximumHeight: CGFloat? = nil,
         @ViewBuilder content: () -> Content
     ) {
         self.content = content()
+        self.maximumHeight = maximumHeight
     }
 
     var body: some View {
-        content
-            .padding(.horizontal, 22)
-            .padding(.vertical, 20)
+        Group {
+            if let maximumHeight {
+                ScrollView {
+                    content.padding(.horizontal, 22).padding(.vertical, 20)
+                }
+                .frame(maxHeight: maximumHeight)
+                .accessibilityIdentifier("fruitBasket.tourWritingArea")
+            } else {
+                content.padding(.horizontal, 22).padding(.vertical, 20)
+            }
+        }
             .frame(maxWidth: 292)
             .background {
                 Prompt28CodedLargeCardBackground(cornerRadius: 28)
@@ -2212,7 +2485,7 @@ private struct Prompt28CodedLargeCardBackground: View {
     }
 }
 
-private struct Prompt28CompactRuleCard: View {
+struct Prompt28CompactRuleCard: View {
     let title: String
     let artID: FruitfolioAssetID?
     let ruleBody: String
@@ -2248,20 +2521,8 @@ private struct Prompt28CompactRuleCard: View {
                 }
                 .multilineTextAlignment(.center)
 
-                Text(ruleBody)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 13,
-                            relativeTo: .body
-                        )
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                            .opacity(0.78)
-                    )
+                FruitfolioNativeActionLabel(text: ruleBody,
+                    fontName: "ChalkboardSE-Regular", pointSize: 13, textStyle: .body)
                     .multilineTextAlignment(.center)
                     .fixedSize(
                         horizontal: false,
@@ -2288,7 +2549,7 @@ private struct Prompt28WatercolorButton: View {
 
     var body: some View {
         FruitfolioControlPillButton(
-            label: title,
+            label: title, localizationKey: title,
             action: action
         )
         .frame(maxWidth: 292)
@@ -2298,153 +2559,71 @@ private struct Prompt28WatercolorButton: View {
 private struct Prompt28MiniControlPill: View {
     let title: String
     let isSelected: Bool
-    var width: CGFloat = 88
+    var width: CGFloat? = 88
+    var minimumHeight: CGFloat = 52
+    var pointSize: CGFloat = 12
+    var textStyle: UIFont.TextStyle = .subheadline
+    var artworkOpacity: Double? = nil
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         Button {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .opacity(
-                        isSelected
-                        ? 1
-                        : 0.56
-                    )
-                    .accessibilityHidden(true)
-
-                Text(title)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 12,
-                            relativeTo: .subheadline
-                        )
-                    )
-                    .fontWeight(
-                        isSelected
-                        ? .bold
-                        : .semibold
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.76)
-                    .padding(.horizontal, 8)
+            HStack(spacing: 0) {
+                Spacer(minLength: 0)
+                FruitfolioNativeActionLabel(text: title, pointSize: pointSize, textStyle: textStyle)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
             }
-            .frame(
-                width: width,
-                height: 52
-            )
+            .accessibilityElement(children: .contain)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .frame(width: dynamicTypeSize.isAccessibilitySize ? nil : width)
+            .frame(maxWidth: dynamicTypeSize.isAccessibilitySize || width == nil ? .infinity : nil,
+                   minHeight: minimumHeight)
+            .background {
+                if dynamicTypeSize.isAccessibilitySize {
+                    // The existing canonical painted control geometry grows
+                    // with its label; do not stretch the original PNG or shrink
+                    // accessibility text into a fixed52pt shell.
+                    FruitfolioControlPillArtwork()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                } else {
+                    Image("control_pill_outline").resizable().scaledToFit()
+                        .opacity(artworkOpacity ?? (isSelected ? 1 : 0.56))
+                }
+            }
             .contentShape(Rectangle())
         }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityAddTraits(
-            isSelected
-            ? .isSelected
-            : []
-        )
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+        .accessibilityLabel(Text(title))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
 private struct Prompt28ChipWrap: View {
     let titles: [String]
     let onSelect: (String) -> Void
-
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                ),
-                GridItem(
-                    .flexible(),
-                    spacing: 6
-                )
-            ],
-            spacing: 6
-        ) {
-            ForEach(
-                titles,
-                id: \.self
-            ) { title in
-                Button {
-                    audioManager.play(.buttonSoftPop)
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6),
+                                count: dynamicTypeSize.isAccessibilitySize ? 1 : 2), spacing: 6) {
+            ForEach(titles, id: \.self) { title in
+                Prompt28MiniControlPill(title: title, isSelected: false,
+                    width: nil, minimumHeight: 48, pointSize: 11, textStyle: .caption1, artworkOpacity: 0.72) {
                     onSelect(title)
-                } label: {
-                    ZStack {
-                        Image("control_pill_outline")
-                            .resizable()
-                            .scaledToFit()
-                            .opacity(0.72)
-                            .accessibilityHidden(true)
-
-                        Text(title)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 11,
-                                    relativeTo: .caption
-                                )
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.76)
-                            .padding(.horizontal, 10)
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        minHeight: 48
-                    )
                 }
-                .buttonStyle(
-                    CutePopButtonStyle(
-                        reduceMotion:
-                            motionPreferences.reduceMotionActive
-                    )
-                )
             }
         }
     }
 }
-
-
-
-
-
-
-
 
 private struct Prompt28WindGust: View {
     let reduceMotion: Bool
@@ -2469,7 +2648,11 @@ private struct Prompt28WindGust: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
-        .onAppear { drift = true }
+        .onAppear { drift = !reduceMotion }
+        .onChange(of: reduceMotion) { _, enabled in drift = !enabled }
+        .transaction { transaction in
+            if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
+        }
         .accessibilityHidden(true)
     }
 }
@@ -2498,10 +2681,13 @@ private struct Prompt28WatercolorConfettiBurst: View {
                     )
                     .opacity(burst ? (reduceMotion ? 0.48 : 0.0) : 0.72)
                     .animation(
-                        .easeOut(duration: reduceMotion ? 0.35 : 0.9).delay(piece.3),
+                        reduceMotion ? nil : .easeOut(duration: 0.9).delay(piece.3),
                         value: burst
                     )
             }
+        }
+        .transaction { transaction in
+            if reduceMotion { transaction.animation = nil; transaction.disablesAnimations = true }
         }
         .onAppear { burst = true }
         .allowsHitTesting(false)
@@ -2515,5 +2701,18 @@ private struct Prompt28WatercolorConfettiBurst: View {
         case 3: return DesignTokens.ColorToken.lavender
         default: return DesignTokens.ColorToken.mint
         }
+    }
+}
+
+private struct Prompt28VineResistanceVisual: ViewModifier {
+    let active: Bool
+    let reduceMotion: Bool
+    let phase: Double
+
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.degrees(active && !reduceMotion ? sin(phase * 70) * 6 : 0))
+            .offset(x: active && !reduceMotion ? sin(phase * 70) * 3 : 0)
+            .scaleEffect(x: active && !reduceMotion ? 1.03 : 1, y: active && !reduceMotion ? 0.97 : 1)
     }
 }

@@ -1,0 +1,34 @@
+{
+  "phase": 8,
+  "completionClaim": false,
+  "requirements": [
+    {
+      "requirementID": "FF1B-476",
+      "status": "PARTIAL",
+      "originalBreakdownItem": "Produce logs and evidence for completed corrections.",
+      "implementationFiles": [
+        "Tools/verify_integrated_source_on_mac.py",
+        "Tools/reconcile_five_hour_tracker.py",
+        "Tools/package_final_delivery.py"
+      ],
+      "changes": "Preserved and byte-verified recovered source; prepared actual Mac batches and conservative status reconciliation; retained build/test failures and unexecuted limitations.",
+      "verification": "23 actual Python tooling tests passed in an overlapping cohort. Source/configuration byte inventory316 matched. Model/runtime/configuration/catalog/resource checks passed. No new Apple execution.",
+      "evidence": "Fruitfolio_Verification_Evidence/FiveHourSprint/Phase8Integration",
+      "remainingIssues": "Run actual integrated Mac build/test/visual/accessibility/device verification. Do not treat structural checks or proposed tracker counts as full application acceptance."
+    },
+    {
+      "requirementID": "FF1B-477",
+      "status": "IMPLEMENTED — VERIFICATION PENDING",
+      "originalBreakdownItem": "Identify remaining failures rather than declaring unverified requirements complete.",
+      "implementationFiles": [
+        "Tools/verify_integrated_source_on_mac.py",
+        "Tools/reconcile_five_hour_tracker.py",
+        "Tools/package_final_delivery.py"
+      ],
+      "changes": "Preserved and byte-verified recovered source; prepared actual Mac batches and conservative status reconciliation; retained build/test failures and unexecuted limitations.",
+      "verification": "23 actual Python tooling tests passed in an overlapping cohort. Source/configuration byte inventory316 matched. Model/runtime/configuration/catalog/resource checks passed. No new Apple execution.",
+      "evidence": "Fruitfolio_Verification_Evidence/FiveHourSprint/Phase8Integration",
+      "remainingIssues": "Run actual integrated Mac build/test/visual/accessibility/device verification. Do not treat structural checks or proposed tracker counts as full application acceptance."
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import Combine
 import UIKit
 
 struct Prompt09AskView: View {
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var navigation: NavigationCoordinator
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -10,8 +11,11 @@ struct Prompt09AskView: View {
 
     @StateObject private var viewModel: Prompt09AskViewModel
 
+    @State private var conversationScrollPolicy = AskConversationScrollPolicy()
+    @State private var conversationViewportHeight: CGFloat = 0
     @State private var suggestionRevealCount = 0
     @State private var showingHelp = false
+    @State private var showingLifeBridge = false
     @State private var showingEntryPageTurn = true
 
     // MARK: Prompt 10 Save Integration
@@ -19,7 +23,11 @@ struct Prompt09AskView: View {
     @State private var pendingLibrarySave:
         Prompt10PendingSavedContent?
 
-    @State private var savedExcerptText: String?
+    @State private var savedAnswerIDs: Set<String> = []
+    @State private var savedExcerpts: Set<AskExcerptIdentity> = []
+    @State private var archivedSelections: [UUID: AskExcerptSelection] = [:]
+    @State private var pendingExcerptIdentity: AskExcerptIdentity?
+    @State private var librarySaveError: String?
 
     @FocusState private var inputFocused: Bool
 
@@ -68,11 +76,28 @@ struct Prompt09AskView: View {
                                     .transition(.opacity)
                             }
 
+                            if LifeBridgeInformation.isDiscoveryQuery(viewModel.inputText) ||
+                                LifeBridgeInformation.isDiscoveryQuery(viewModel.messages.last(where: { $0.role == .user })?.text ?? "") {
+                                FruitfolioControlPillButton(label: "LifeBridge information", localizationKey: "LifeBridge information") {
+                                    inputFocused = false
+                                    showingLifeBridge = true
+                                }
+                                .accessibilityIdentifier("ask.lifebridge")
+                            }
+
+                            openingArtwork
+
                             ForEach(
-                                viewModel.messages
+                                viewModel.visibleMessages
                             ) { message in
                                 messageView(message)
                                     .id(message.id)
+                                if let priorAnswer = viewModel.sessionAnswers[message.id],
+                                   priorAnswer.id != viewModel.answer?.id {
+                                    archivedAnswerView(priorAnswer)
+                                        .environment(\.layoutDirection, .leftToRight)
+                                        .id(priorAnswer.id)
+                                }
                             }
 
                             if viewModel.phase ==
@@ -86,8 +111,11 @@ struct Prompt09AskView: View {
                             if let answer =
                                 viewModel.answer {
                                 answerView(answer)
+                                    .environment(\.layoutDirection, .leftToRight)
                                     .id(answer.id)
                             }
+
+                            Color.clear.frame(height: 1).id("askConversationBottom")
 
                             if case .failed(
                                 let message
@@ -95,17 +123,47 @@ struct Prompt09AskView: View {
                                 failureView(message)
                             }
                         }
+                        .padding(.top, 14)
+                        .padding(.bottom, 28)
+                        .frame(minHeight: conversationViewportHeight, alignment: .top)
+                        .background { AskContinuousJournalPaper(viewportHeight: conversationViewportHeight) }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("ask.journalContent")
+                        .background {
+                            GeometryReader { geometry in
+                                Color.clear.preference(key: AskConversationFrameKey.self,
+                                    value: geometry.frame(in: .named("askConversationViewport")))
+                            }
+                        }
                         .frame(maxWidth: 680)
                         .containerRelativeFrame(.horizontal) { length, _ in
-                            min(length, 680)
+                            min(max(1, length - 40), 680)
                         }
                         .frame(maxWidth: .infinity)
                         .padding(
                             .horizontal,
                             20
                         )
-                        .padding(.top, 14)
-                        .padding(.bottom, 28)
+                    }
+                    .coordinateSpace(name: "askConversationViewport")
+                    .accessibilityIdentifier("ask.conversationScroll")
+                    .simultaneousGesture(DragGesture(minimumDistance: 6)
+                        .onChanged { value in conversationScrollPolicy.userDragged(towardEarlier: value.translation.height > 0) }
+                        .onEnded { _ in conversationScrollPolicy.userEndedDrag() })
+                    .background {
+                        GeometryReader { geometry in
+                            Color.clear
+                                .onAppear { conversationViewportHeight = geometry.size.height }
+                                .onChange(of: geometry.size.height) { _, value in conversationViewportHeight = value }
+                        }
+                    }
+                    .onPreferenceChange(AskConversationFrameKey.self) { frame in
+                        conversationScrollPolicy.updateGeometry(contentTop: Double(frame.minY),
+                            contentBottom: Double(frame.maxY), viewportHeight: Double(conversationViewportHeight))
+                    }
+                    .onChange(of: viewModel.displayedAnswerText.count) {
+                        if viewModel.phase == .answering { audioManager.playTypingTick() }
+                        if conversationScrollPolicy.shouldFollow { proxy.scrollTo("askConversationBottom", anchor: .bottom) }
                     }
                     .scrollDismissesKeyboard(
                         .interactively
@@ -116,7 +174,7 @@ struct Prompt09AskView: View {
                                 .messages
                                 .count
                     ) {
-                        if let last =
+                        if conversationScrollPolicy.shouldFollow, let last =
                             viewModel
                                 .messages
                                 .last {
@@ -142,7 +200,7 @@ struct Prompt09AskView: View {
                                 .answer?
                                 .id
                     ) {
-                        if let id =
+                        if conversationScrollPolicy.shouldFollow, let id =
                             viewModel
                                 .answer?
                                 .id {
@@ -165,18 +223,10 @@ struct Prompt09AskView: View {
                 }
             }
             .fruitfolioModalBlur(
-                active: pendingLibrarySave != nil,
+                active: pendingLibrarySave != nil || showingHelp || librarySaveError != nil,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if pendingLibrarySave != nil {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea()
-                    .allowsHitTesting(false)
-                    .transition(.opacity)
-                    .zIndex(150)
-            }
 
             // Prompt 09 decides WHAT gets saved.
             // Prompt 10 decides WHERE it goes.
@@ -191,21 +241,27 @@ struct Prompt09AskView: View {
                                 .saveType {
 
                         case .fullAnswer:
-                            viewModel.isSaved =
-                                true
+                            if let id = pendingLibrarySave.originalAnswerID { savedAnswerIDs.insert(id) }
+                            if pendingLibrarySave.originalAnswerID == viewModel.answer.map({ String(describing: $0.id) }) {
+                                viewModel.isSaved = true
+                            }
 
                         case .excerpt:
-                            savedExcerptText =
-                                pendingLibrarySave
-                                    .excerptText
+                            if let identity = pendingExcerptIdentity,
+                               UUID(uuidString: pendingLibrarySave.originalAnswerID ?? "") == identity.answerID,
+                               pendingLibrarySave.excerptText == identity.text {
+                                savedExcerpts.insert(identity)
+                            }
                         }
 
                         self.pendingLibrarySave =
                             nil
+                        pendingExcerptIdentity = nil
                     },
                     onCancel: {
                         self.pendingLibrarySave =
                             nil
+                        pendingExcerptIdentity = nil
                     }
                 )
                 .zIndex(200)
@@ -217,7 +273,7 @@ struct Prompt09AskView: View {
         ) {
             inputBar
                 .fruitfolioModalBlur(
-                    active: pendingLibrarySave != nil,
+                    active: pendingLibrarySave != nil || showingHelp || librarySaveError != nil,
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
         }
@@ -234,26 +290,25 @@ struct Prompt09AskView: View {
                 .zIndex(100)
             }
         }
-        .overlay(
-            alignment: .topTrailing
-        ) {
-            if showingHelp {
-                InfoTooltip(
-                    message:
-                        "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used."
-                )
-                .padding(.top, 74)
-                .padding(.trailing, 18)
-                .transition(
-                    .opacity.combined(
-                        with:
-                            .scale(
-                                scale: 0.98
-                            )
-                    )
-                )
-                .zIndex(20)
+        .overlay {
+            if let librarySaveError {
+                Prompt12ConfirmationPopup(assetName: "popup_warning", title: "answer could not be saved",
+                    message: librarySaveError, primaryLabel: "keep reading", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { audioManager.play(.popupClose); self.librarySaveError = nil }, secondaryAction: nil, destructiveAction: nil)
+                    .accessibilityIdentifier("ask.saveAttributionError")
+                    .zIndex(20)
+            } else if showingHelp {
+                Prompt12ConfirmationPopup(assetName: "popup_info", title: "ask Fruitfolio",
+                    message: "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used.",
+                    primaryLabel: "got it", secondaryLabel: nil, destructiveLabel: nil,
+                    primaryAction: { audioManager.play(.popupClose); showingHelp = false },
+                    secondaryAction: nil, destructiveAction: nil)
+                    .accessibilityAction(.escape) { audioManager.play(.popupClose); showingHelp = false }
+                    .zIndex(20)
             }
+        }
+        .sheet(isPresented: $showingLifeBridge) {
+            LifeBridgeInformationView(onBack: { showingLifeBridge = false })
         }
         .task {
             await runEntryTransition()
@@ -261,9 +316,22 @@ struct Prompt09AskView: View {
         .task {
             await revealSuggestions()
         }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, enabled in
+            viewModel.setReducedMotion(enabled)
+            if enabled {
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                withTransaction(transaction) {
+                    showingEntryPageTurn = false
+                    suggestionRevealCount = discoverySuggestions.count
+                }
+            }
+        }
+        .onChange(of: viewModel.phase) { _, phase in
+            if phase != .answering { audioManager.stop(category: .typingASMR) }
+        }
         .onDisappear {
-            inputFocused = false
-            viewModel.cancelOutstandingWork()
+            clearActiveConversation()
         }
         .toolbar(
             .hidden,
@@ -288,6 +356,7 @@ struct Prompt09AskView: View {
 
                             navigation.back()
                         }
+                        .accessibilityIdentifier("ask.back")
                     }
 
                     Spacer()
@@ -313,8 +382,8 @@ struct Prompt09AskView: View {
                                             0.18
                                     )
                                 ) {
-                                    showingHelp
-                                        .toggle()
+                                    inputFocused = false
+                                    showingHelp.toggle()
                                 }
                             }
                         ) {
@@ -351,8 +420,8 @@ struct Prompt09AskView: View {
                         .ColorToken
                         .primaryBurgundy
                 )
-                .lineLimit(1)
-                .minimumScaleFactor(0.72)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(
                     .horizontal,
                     58
@@ -381,6 +450,8 @@ struct Prompt09AskView: View {
             .multilineTextAlignment(
                 .center
             )
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.vertical, 2)
         }
         .padding(.horizontal, 18)
         .padding(.top, 8)
@@ -397,273 +468,55 @@ struct Prompt09AskView: View {
     // MARK: - Discovery
 
     private var discoveryCard: some View {
-        ZStack(
-            alignment: .topTrailing
-        ) {
-            FruitfolioImage(
-                id: .ask_answer_paper
-            )
-            .scaledToFill()
-            .accessibilityHidden(true)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_glow"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150)
-                    .offset(
-                        x: 18,
-                        y: 18
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-                }
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                FruitfolioImage(id: .ask_magnifying_glass)
+                    .scaledToFit().frame(width: 52, height: 52).accessibilityHidden(true)
+                Text(Prompt09AskViewModel.greeting)
+                    .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            .allowsHitTesting(false)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_slice"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 132)
-                    .rotationEffect(
-                        .degrees(29)
-                    )
-                    .offset(
-                        x: -5,
-                        y: 8
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    Spacer()
-                }
-            }
-            .allowsHitTesting(false)
-
-            VStack(spacing: 14) {
-                HStack(
-                    alignment: .top,
-                    spacing: 12
-                ) {
-                    FruitfolioImage(
-                        id:
-                            .ask_magnifying_glass
-                    )
-                    .scaledToFit()
-                    .frame(
-                        width: 52,
-                        height: 52
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    Text(
-                        Prompt09AskViewModel
-                            .greeting
-                    )
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 16,
-                            relativeTo:
-                                .body
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .frame(
-                        maxWidth:
-                            .infinity,
-                        alignment:
-                            .leading
-                    )
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                }
-
-                VStack(spacing: 8) {
-                    ForEach(
-                        Array(
-                            discoverySuggestions
-                                .enumerated()
-                        ),
-                        id: \.offset
-                    ) {
-                        index,
-                        suggestion in
-
-                        if index <
-                            suggestionRevealCount {
-                            Button {
-                                audioManager
-                                    .play(
-                                        .buttonSoftPop
-                                    )
-
-                                viewModel
-                                    .useSuggestion(
-                                        suggestion
-                                    )
-
-                                inputFocused =
-                                    true
-
-                            } label: {
-                                Text(
-                                    suggestion
-                                )
-                                .font(
-                                    .custom(
-                                        "Chalkboard SE",
-                                        size:
-                                            13.5,
-                                        relativeTo:
-                                            .body
-                                    )
-                                )
-                                .foregroundStyle(
-                                    DesignTokens
-                                        .ColorToken
-                                        .primaryBurgundy
-                                )
-                                .multilineTextAlignment(
-                                    .leading
-                                )
-                                .frame(
-                                    maxWidth:
-                                        .infinity,
-                                    alignment:
-                                        .leading
-                                )
-                                .padding(
-                                    .horizontal,
-                                    13
-                                )
-                                .padding(
-                                    .vertical,
-                                    9
-                                )
-                                .background(
-                                    DesignTokens
-                                        .ColorToken
-                                        .backgroundCream
-                                        .opacity(
-                                            0.72
-                                        ),
-                                    in:
-                                        RoundedRectangle(
-                                            cornerRadius:
-                                                16,
-                                            style:
-                                                .continuous
-                                        )
-                                )
-                            }
-                            .buttonStyle(
-                                CutePopButtonStyle(
-                                    reduceMotion:
-                                        motionPreferences
-                                            .reduceMotionActive
-                                )
-                            )
-                            .frame(
-                                minHeight:
-                                    DesignTokens
-                                        .Layout
-                                        .minimumHitTarget
-                            )
-                            .transition(
-                                motionPreferences
-                                    .reduceMotionActive
-                                    ? .opacity
-                                    : .move(
-                                        edge:
-                                            .top
-                                    )
-                                    .combined(
-                                        with:
-                                            .opacity
-                                    )
-                            )
-                        }
+            ForEach(Array(discoverySuggestions.enumerated()), id: \.offset) { index, suggestion in
+                if index < suggestionRevealCount {
+                    Button {
+                        audioManager.play(.buttonSoftPop)
+                        viewModel.useSuggestion(suggestion)
+                        inputFocused = true
+                    } label: {
+                        Text(suggestion)
+                            .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                            .padding(.horizontal, 12)
                     }
-                }
-
-                VStack {
-                    Spacer()
-
-                    HStack {
-                        Image(
-                            "decor_pear"
-                        )
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 118)
-                        .offset(
-                            x: -34,
-                            y: 38
-                        )
-                        .allowsHitTesting(
-                            false
-                        )
-                        .accessibilityHidden(
-                            true
-                        )
-
-                        Spacer()
-                    }
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    .transition(.opacity)
                 }
             }
-            .padding(
-                .horizontal,
-                22
-            )
-            .padding(
-                .vertical,
-                24
-            )
         }
-        .frame(maxWidth: .infinity)
-        .frame(minHeight: 300)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 28,
-                style: .continuous
-            )
-        )
-        .accessibilityElement(
-            children: .contain
-        )
+        .padding(22)
+        .accessibilityElement(children: .contain)
+    }
+
+    private var openingArtwork: some View {
+        GeometryReader { geometry in
+            HStack(alignment: .center, spacing: 0) {
+                FruitfolioImage(id: .decor_pear).scaledToFit()
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+                FruitfolioImage(id: .decor_orange_slice).scaledToFit()
+                    .rotationEffect(.degrees(29))
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+                FruitfolioImage(id: .decor_orange_glow).scaledToFit()
+                    .frame(width: geometry.size.width / 3, height: geometry.size.height)
+            }
+        }
+        .frame(height: 120)
+        .padding(.horizontal, 22)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 
     // MARK: - Messages
@@ -810,7 +663,7 @@ struct Prompt09AskView: View {
             )
             .accessibilityHidden(true)
 
-            Text(viewModel.searchStatusText)
+            Text(LocalizedStringKey(viewModel.searchStatusText))
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -833,26 +686,55 @@ struct Prompt09AskView: View {
         .accessibilityElement(
             children: .combine
         )
-        .accessibilityLabel(
-            "Looking through the FruitsofLife.xo library"
-        )
+        .accessibilityLabel(Text(LocalizedStringKey(viewModel.searchStatusText)))
+        .accessibilityIdentifier("ask.researchProgress")
     }
 
     // MARK: - Answer
+
+    private func archivedAnswerView(_ answer: AskAnswer) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Prompt09MaroonSelectableAnswerText(text: answer.answerText,
+                selectedText: archivedTextBinding(for: answer.id), semanticDocument: answer.resolvedSemanticDocument,
+                selectedRange: archivedRangeBinding(for: answer.id),
+                accessibilityIdentifier: "ask.archivedAnswer." + answer.id.uuidString)
+            if let selection = archivedSelections[answer.id], let validated = selection.validated(for: answer) {
+                FruitfolioControlPillButton(
+                    label: savedExcerpts.contains(validated.identity) ? "selection saved ♡" : "save selection ♡",
+                    localizationKey: savedExcerpts.contains(validated.identity) ? "selection saved ♡" : "save selection ♡") {
+                    prepareExcerptForLibrarySave(answer, selection: selection)
+                }
+                .disabled(savedExcerpts.contains(validated.identity))
+                .accessibilityIdentifier("ask.saveArchivedSelection." + answer.id.uuidString)
+            }
+            if !answer.sources.isEmpty { sourceSection(answer.sources) }
+            FruitfolioControlPillButton(label: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡",
+                localizationKey: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡") {
+                prepareFullAnswerForLibrarySave(answer)
+            }
+            .disabled(savedAnswerIDs.contains(String(describing: answer.id)))
+            Text(Prompt09AskViewModel.educationDisclaimer)
+                .font(.footnote)
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .contain)
+    }
 
     private func answerView(
         _ answer: AskAnswer
     ) -> some View {
         VStack(spacing: 12) {
+            if let notice = FruitfolioLocalization.untranslatedContentNotice(for: settings.language) {
+                Text(notice)
+                    .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 22)
+                    .accessibilityIdentifier("ask.translationUnavailable")
+            }
             ZStack {
-                FruitfolioImage(
-                    id: .ask_answer_paper
-                )
-                .scaledToFill()
-                .accessibilityHidden(
-                    true
-                )
-
                 VStack(
                     alignment: .leading,
                     spacing: 14
@@ -884,10 +766,9 @@ struct Prompt09AskView: View {
                     if viewModel.phase ==
                         .answering {
 
-                        Text(
-                            viewModel
-                                .displayedAnswerText
-                        )
+                        Prompt09MaroonSelectableAnswerText(text: viewModel.displayedAnswerText,
+                            selectedText: .constant(nil), semanticDocument: answer.resolvedSemanticDocument,
+                            accessibilityIdentifier: "ask.progressiveAnswer", isSelectable: false)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -916,7 +797,9 @@ struct Prompt09AskView: View {
                                     .displayedAnswerText,
                             selectedText:
                                 $viewModel
-                                    .selectedExcerptText
+                                    .selectedExcerptText,
+                            semanticDocument: viewModel.answer?.resolvedSemanticDocument,
+                            selectedRange: $viewModel.selectedExcerptRange
                         )
                         .frame(
                             maxWidth:
@@ -934,11 +817,11 @@ struct Prompt09AskView: View {
                             ) {
                                 WatercolorSecondaryButton(
                                     label:
-                                        savedExcerptText ==
-                                        viewModel
-                                            .selectedExcerptText
+                                        isCurrentExcerptSaved
                                         ? "selection saved ♡"
                                         : "save selection ♡",
+                                    localizationKey: isCurrentExcerptSaved
+                                        ? "selection saved ♡" : "save selection ♡",
                                     action: {
                                         prepareExcerptForLibrarySave(
                                             answer
@@ -946,9 +829,7 @@ struct Prompt09AskView: View {
                                     }
                                 )
                                 .disabled(
-                                    savedExcerptText ==
-                                        viewModel
-                                            .selectedExcerptText
+                                    isCurrentExcerptSaved
                                 )
                             }
                         }
@@ -1148,18 +1029,21 @@ struct Prompt09AskView: View {
     private func prepareFullAnswerForLibrarySave(
         _ answer: AskAnswer
     ) {
-        guard viewModel.phase !=
-            .answering else {
+        guard viewModel.phase != .answering || viewModel.answer?.id != answer.id else {
             return
         }
+        pendingExcerptIdentity = nil
+
+        let attribution: AskSavedAttributionSnapshot
+        do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
+        catch { librarySaveError = error.localizedDescription; return }
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
-                    currentQuestionForSaving,
+                    answer.originalQuestion,
                 answer:
-                    viewModel
-                        .displayedAnswerText,
+                    answer.answerText,
                 saveType:
                     .fullAnswer,
                 originalAnswerID:
@@ -1170,42 +1054,40 @@ struct Prompt09AskView: View {
                 originalConversationID:
                     String(describing: viewModel.conversationID),
                 sourceIDs:
-                    answer.sourceIDs,
+                    attribution.sourceIDs,
                 sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
+                    attribution.sourceVersions,
+                sourceSnapshots: attribution.sources,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
-                    answer.generationTimestamp
+                    answer.generationTimestamp,
+                semanticDocument: answer.resolvedSemanticDocument
             )
     }
 
     private func prepareExcerptForLibrarySave(
-        _ answer: AskAnswer
+        _ answer: AskAnswer,
+        selection: AskExcerptSelection? = nil
     ) {
-        guard
-            viewModel.phase !=
-                .answering,
-            let excerpt =
-                viewModel
-                    .selectedExcerptText,
-            !excerpt.isEmpty
-        else {
-            return
-        }
+        guard viewModel.phase != .answering || viewModel.answer?.id != answer.id else { return }
+        let selection = selection ?? AskExcerptSelection(text: viewModel.selectedExcerptText,
+                                                        range: viewModel.selectedExcerptRange)
+        guard let validated = selection.validated(for: answer) else { return }
+        let excerpt = validated.identity.text
+        pendingExcerptIdentity = nil
+
+        let attribution: AskSavedAttributionSnapshot
+        do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
+        catch { librarySaveError = error.localizedDescription; return }
+        pendingExcerptIdentity = validated.identity
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
-                    currentQuestionForSaving,
+                    answer.originalQuestion,
                 answer:
-                    viewModel
-                        .displayedAnswerText,
+                    answer.answerText,
                 saveType:
                     .excerpt,
                 excerptText:
@@ -1218,31 +1100,41 @@ struct Prompt09AskView: View {
                 originalConversationID:
                     String(describing: viewModel.conversationID),
                 sourceIDs:
-                    answer.sourceIDs,
+                    attribution.sourceIDs,
                 sourceVersions:
-                    Dictionary(
-                        uniqueKeysWithValues: answer.sources.compactMap { source in
-                            guard let version = source.contentVersion else { return nil }
-                            return (source.id, version)
-                        }
-                    ),
+                    attribution.sourceVersions,
+                sourceSnapshots: attribution.sources,
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
-                    answer.generationTimestamp
+                    answer.generationTimestamp,
+                semanticDocument: validated.document
             )
     }
 
-    private var currentQuestionForSaving:
-        String {
+    private var isCurrentExcerptSaved: Bool {
+        guard let answer = viewModel.answer,
+              let selected = AskExcerptSelection(text: viewModel.selectedExcerptText,
+                  range: viewModel.selectedExcerptRange).validated(for: answer) else { return false }
+        return savedExcerpts.contains(selected.identity)
+    }
 
-        viewModel.messages
-            .last(
-                where: {
-                    $0.role == .user
-                }
-            )?
-            .text ?? ""
+    private func archivedTextBinding(for id: UUID) -> Binding<String?> {
+        Binding(get: { archivedSelections[id]?.text }, set: { value in
+            var selection = archivedSelections[id] ?? .init()
+            guard selection.text != value else { return }
+            selection.text = value
+            archivedSelections[id] = selection
+        })
+    }
+
+    private func archivedRangeBinding(for id: UUID) -> Binding<NSRange?> {
+        Binding(get: { archivedSelections[id]?.range }, set: { value in
+            var selection = archivedSelections[id] ?? .init()
+            guard selection.range != value else { return }
+            selection.range = value
+            archivedSelections[id] = selection
+        })
     }
 
     // MARK: - Sources
@@ -1290,10 +1182,7 @@ struct Prompt09AskView: View {
                     )
                     .bold()
                 )
-                .lineLimit(1)
-                .minimumScaleFactor(
-                    0.80
-                )
+                .fixedSize(horizontal: false, vertical: true)
                 .accessibilityLabel(
                     "sources"
                 )
@@ -1376,6 +1265,8 @@ struct Prompt09AskView: View {
                             .leading
                     )
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("ask.source." + source.id)
             }
         }
     }
@@ -1411,10 +1302,9 @@ struct Prompt09AskView: View {
             ) {
                 WatercolorSecondaryButton(
                     label:
-                        "ask something else"
+                        "ask something else", localizationKey: "ask something else"
                 ) {
-                    viewModel
-                        .resetConversation()
+                    clearActiveConversation()
                 }
             }
         }
@@ -1448,6 +1338,7 @@ struct Prompt09AskView: View {
                     .primaryBurgundy
             )
             .lineLimit(1...6)
+            .accessibilityIdentifier("ask.questionInput")
             .focused($inputFocused)
             .submitLabel(.send)
             .onSubmit {
@@ -1534,12 +1425,26 @@ struct Prompt09AskView: View {
 
     // MARK: - Send
 
+    private func clearActiveConversation() {
+        audioManager.stop(category: .typingASMR)
+        inputFocused = false
+        viewModel.resetConversation()
+        savedAnswerIDs.removeAll()
+        savedExcerpts.removeAll()
+        archivedSelections.removeAll()
+        pendingExcerptIdentity = nil
+        pendingLibrarySave = nil
+        librarySaveError = nil
+        conversationScrollPolicy = AskConversationScrollPolicy()
+    }
+
     private func sendCurrentQuestion() {
         guard viewModel.canSend else {
             return
         }
 
         inputFocused = false
+        conversationScrollPolicy.requestedNewQuestion()
 
         audioManager.play(
             .buttonSoftPop
@@ -1576,10 +1481,8 @@ struct Prompt09AskView: View {
         if motionPreferences
             .reduceMotionActive {
 
-            try? await Task.sleep(
-                nanoseconds:
-                    120_000_000
-            )
+            do { try await Task.sleep(nanoseconds: 120_000_000) }
+            catch { return }
 
             showingEntryPageTurn =
                 false
@@ -1587,10 +1490,14 @@ struct Prompt09AskView: View {
             return
         }
 
-        try? await Task.sleep(
-            nanoseconds:
-                90_000_000
-        )
+        do { try await Task.sleep(nanoseconds: 90_000_000) }
+        catch { return }
+        guard !Task.isCancelled else { return }
+        if motionPreferences.reduceMotionActive {
+            var transaction = Transaction(); transaction.disablesAnimations = true
+            withTransaction(transaction) { showingEntryPageTurn = false }
+            return
+        }
 
         withAnimation(
             .easeInOut(
@@ -1630,7 +1537,10 @@ struct Prompt09AskView: View {
 
         for count in 1...totalSuggestions {
 
-            if Task.isCancelled {
+            if Task.isCancelled { return }
+            if motionPreferences.reduceMotionActive {
+                var transaction = Transaction(); transaction.disablesAnimations = true
+                withTransaction(transaction) { suggestionRevealCount = totalSuggestions }
                 return
             }
 
@@ -1643,10 +1553,8 @@ struct Prompt09AskView: View {
                     count
             }
 
-            try? await Task.sleep(
-                nanoseconds:
-                    115_000_000
-            )
+            do { try await Task.sleep(nanoseconds: 115_000_000) }
+            catch { return }
         }
     }
 }
@@ -1654,84 +1562,13 @@ struct Prompt09AskView: View {
 
 // MARK: - Bounce Wrapper for Existing Custom Controls
 
-private struct FruitfolioPressBounce<
-    Content: View
->: View {
+/// Existing call sites contain native buttons already using CutePopButtonStyle.
+/// A second zero-distance drag recognizer shrank their hit frames and competed
+/// with taps during navigation. Keep one shared animation and native gesture.
+private struct FruitfolioPressBounce<Content: View>: View {
     let reduceMotion: Bool
-
-    @ViewBuilder
-    let content: () -> Content
-
-    @GestureState
-    private var isPressed = false
-
-    var body: some View {
-        content()
-            .scaleEffect(
-                reduceMotion
-                    ? 1.0
-                    : (
-                        isPressed
-                            ? 0.88
-                            : 1.0
-                    )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        isPressed
-                            ? 5
-                            : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                        ? 0
-                        : (
-                            isPressed
-                                ? -1.2
-                                : 0
-                        )
-                )
-            )
-            .brightness(
-                isPressed
-                    ? -0.04
-                    : 0
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(
-                        duration: 0.08
-                    )
-                    : .spring(
-                        response:
-                            0.20,
-                        dampingFraction:
-                            0.38,
-                        blendDuration:
-                            0
-                    ),
-                value: isPressed
-            )
-            .simultaneousGesture(
-                DragGesture(
-                    minimumDistance: 0
-                )
-                .updating(
-                    $isPressed
-                ) {
-                    _,
-                    state,
-                    _ in
-
-                    state = true
-                }
-            )
-    }
+    @ViewBuilder let content: () -> Content
+    var body: some View { content() }
 }
 
 // MARK: - Prompt 09 Maroon Selection Surface
@@ -1742,6 +1579,22 @@ private struct FruitfolioPressBounce<
 struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
+    var semanticDocument: FruitfolioSemanticDocument? = nil
+    @Binding var selectedRange: NSRange?
+    var accessibilityIdentifier = "ask.completedAnswer"
+    var isSelectable = true
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    init(text: String, selectedText: Binding<String?>, semanticDocument: FruitfolioSemanticDocument? = nil,
+         selectedRange: Binding<NSRange?> = .constant(nil),
+         accessibilityIdentifier: String = "ask.completedAnswer", isSelectable: Bool = true) {
+        self.text = text
+        self._selectedText = selectedText
+        self.semanticDocument = semanticDocument
+        self._selectedRange = selectedRange
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.isSelectable = isSelectable
+    }
 
     private static let maroon = UIColor(
         red: 128.0 / 255.0,
@@ -1758,7 +1611,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     )
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(selectedText: $selectedText)
+        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange)
     }
 
     func makeUIView(context: Context) -> UITextView {
@@ -1767,10 +1620,12 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         textView.delegate = context.coordinator
         textView.backgroundColor = .clear
         textView.isEditable = false
-        textView.isSelectable = true
+        textView.isSelectable = isSelectable
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
         textView.adjustsFontForContentSizeCategory = true
         textView.setContentCompressionResistancePriority(
             .defaultLow,
@@ -1778,8 +1633,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         )
         textView.tintColor = Self.selectionHighlight
         textView.accessibilityLabel = "Fruitfolio answer"
+        textView.accessibilityIdentifier = accessibilityIdentifier
 
-        applyTextStyle(to: textView)
+        applyTextStyle(to: textView, session: context.coordinator.renderSession)
 
         return textView
     }
@@ -1788,10 +1644,19 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         _ textView: UITextView,
         context: Context
     ) {
+        context.coordinator.updateBindings(selectedText: $selectedText, selectedRange: $selectedRange)
         textView.tintColor = Self.selectionHighlight
+        if textView.isSelectable != isSelectable { textView.isSelectable = isSelectable }
+        textView.accessibilityIdentifier = accessibilityIdentifier
 
-        if textView.text != text {
-            applyTextStyle(to: textView)
+        _ = dynamicTypeSize
+        let styled = context.coordinator.renderSession.prefix(text, document: semanticDocument,
+            traits: textView.traitCollection)
+        if !textView.attributedText.isEqual(to: styled) {
+            let selection = textView.selectedRange
+            textView.attributedText = styled
+            textView.accessibilityLabel = styled.string
+            if NSMaxRange(selection) <= styled.length { textView.selectedRange = selection }
         }
     }
 
@@ -1804,93 +1669,60 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
             return nil
         }
 
+        let safeWidth = max(1, width)
         let fittingSize = uiView.sizeThatFits(
             CGSize(
-                width: width,
+                width: safeWidth,
                 height: .greatestFiniteMagnitude
             )
         )
 
         return CGSize(
-            width: width,
+            width: safeWidth,
             height: ceil(fittingSize.height)
         )
     }
 
     private func applyTextStyle(
-        to textView: UITextView
+        to textView: UITextView,
+        session: FruitfolioSemanticRenderSession
     ) {
-        textView.attributedText = Self.styledAnswer(text)
+        textView.attributedText = session.prefix(text, document: semanticDocument, traits: textView.traitCollection)
+        textView.accessibilityLabel = text
+    }
+
+    static func dismantleUIView(_ view: UITextView, coordinator: Coordinator) {
+        view.delegate = nil
+        view.attributedText = nil
+        coordinator.renderSession.reset()
     }
 
     static func styledAnswer(_ text: String) -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-
-        let baseFont =
-            UIFont(
-                name: "ChalkboardSE-Regular",
-                size: 16
-            )
-            ?? UIFont.systemFont(ofSize: 16)
-
-        let styledText = NSMutableAttributedString(
-            string: text,
-            attributes: [
-                .font: UIFontMetrics(forTextStyle: .body)
-                    .scaledFont(for: baseFont),
-                .foregroundColor: Self.maroon,
-                .paragraphStyle: paragraphStyle
-            ]
-        )
-
-        // Prompt 48: underline recognized symptom phrases.
-        let symptoms = [
-            "cramps", "bloating", "headache", "headaches",
-            "nausea", "fatigue", "breast tenderness",
-            "back pain", "brain fog", "mood changes",
-            "digestive changes"
-        ]
-
-        let nsText = text as NSString
-
-        for symptom in symptoms {
-            let pattern = "(?<![\\p{L}\\p{N}])"
-                + NSRegularExpression.escapedPattern(for: symptom)
-                + "(?![\\p{L}\\p{N}])"
-
-            guard let regex = try? NSRegularExpression(
-                pattern: pattern,
-                options: [.caseInsensitive]
-            ) else {
-                continue
-            }
-
-            for match in regex.matches(
-                in: text,
-                range: NSRange(location: 0, length: nsText.length)
-            ) {
-                styledText.addAttribute(
-                    .underlineStyle,
-                    value: NSUnderlineStyle.single.rawValue,
-                    range: match.range
-                )
-            }
-        }
-
-        return styledText
+        FruitfolioSemanticAttributedRenderer.render(.init(spans: [.init(text: text)]))
     }
 
+    static func styledAnswer(_ document: FruitfolioSemanticDocument) -> NSAttributedString {
+        FruitfolioSemanticAttributedRenderer.render(document)
+    }
+
+    @MainActor
     final class Coordinator:
         NSObject,
         UITextViewDelegate
     {
+        let renderSession = FruitfolioSemanticRenderSession()
         @Binding private var selectedText: String?
+        @Binding private var selectedRange: NSRange?
 
         init(
-            selectedText: Binding<String?>
+            selectedText: Binding<String?>, selectedRange: Binding<NSRange?>
         ) {
             _selectedText = selectedText
+            _selectedRange = selectedRange
+        }
+
+        func updateBindings(selectedText: Binding<String?>, selectedRange: Binding<NSRange?>) {
+            _selectedText = selectedText; _selectedRange = selectedRange
         }
 
         func textViewDidChangeSelection(
@@ -1908,12 +1740,12 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
                     in: currentText
                 )
             else {
-                if selectedText != nil {
-                    selectedText = nil
-                }
+                if selectedText != nil { selectedText = nil }
+                selectedRange = nil
                 return
             }
 
+            selectedRange = range
             let selection = String(
                 currentText[swiftRange]
             )
@@ -1943,3 +1775,24 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 
 
 
+
+private struct AskConversationFrameKey: PreferenceKey {
+    static var defaultValue = CGRect.zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
+}
+
+private struct AskContinuousJournalPaper: View {
+    let viewportHeight: CGFloat
+    var body: some View {
+        GeometryReader { geometry in
+            Image("ask_answer_paper")
+                .resizable(capInsets: EdgeInsets(top: 140, leading: 80, bottom: 140, trailing: 80), resizingMode: .stretch)
+                .frame(width: geometry.size.width, height: geometry.size.height + max(viewportHeight * 2, 400), alignment: .top)
+        }
+        // Continue the same approved paper beyond the final content bounds.
+        // The ScrollView clips its viewport; no artificial sheet bottom is
+        // revealed while reading the final answer or elastically overscrolling.
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}

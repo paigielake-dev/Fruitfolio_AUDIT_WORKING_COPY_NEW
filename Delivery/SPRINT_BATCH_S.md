@@ -1,0 +1,3 @@
+# Authored Canonical Voice bridge emphasis through the shared authority
+
+The common evidence bridge now carries explicitly authored spoken-stress metadata through the existing universal semantic authority. The serious bridge stresses its stated limits; the ordinary bridge stresses what the library supports. These roles apply only to those authored phrases in that context. Scientific source bodies, quantities, qualifiers and citation identifiers remain byte-for-byte original and receive no keyword-based styling. Added exact-text/context-isolation tests. This improves the actual native/fallback presentation path; comprehensive semantic classification of every scientific passage remains PARTIAL, not automatically accepted.

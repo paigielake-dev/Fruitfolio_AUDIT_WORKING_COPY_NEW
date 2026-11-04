@@ -1,0 +1,238 @@
+name: Fruitfolio six-hour sprint focused verification
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: fruitfolio-sprint-${{ github.event.pull_request.number || github.ref }}-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
+jobs:
+  recover-original-sprint-evidence:
+    needs: plan
+    if: needs.plan.outputs.run_recovery == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        original-run: [2, 9]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: Verify the selected original immutable artifact and recover unchanged exports
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/recover_sprint_run2_exports.py ${{ matrix.original-run }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Original_Sprint_Run${{ matrix.original-run }}_Exports
+          path: recovered-sprint-run${{ matrix.original-run }}
+          retention-days: 90
+  plan:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    outputs:
+      run_verification: ${{ steps.plan.outputs.run_verification }}
+      run_recovery: ${{ steps.plan.outputs.run_recovery }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Record sprint plan and preserve previous runs
+        id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/sprint_ci_plan.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Sprint_Previous_Run_Inventory
+          path: Fruitfolio_Verification_Evidence/Sprint
+      - name: Stop excluded pre-sprint verification after preserving its inventory
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 Tools/cancel_pre_sprint_runs.py
+  apple-focused:
+    needs: plan
+    if: needs.plan.outputs.run_verification == 'true'
+    runs-on: macos-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Capture Apple tool versions
+        id: apple-tools
+        run: |
+          mkdir -p Fruitfolio_Verification_Evidence/Build
+          xcodebuild -version | tee Fruitfolio_Verification_Evidence/Build/xcode-version.txt
+          swift --version | tee Fruitfolio_Verification_Evidence/Build/swift-version.txt
+          xcrun simctl list devices available > Fruitfolio_Verification_Evidence/Build/simulators.txt
+          echo "xcode=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache/restore@v4
+        id: runtime-cache
+        with:
+          path: Vendor/llama.xcframework
+          key: llama-ios-v1-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('llama.cpp/**', 'Tools/build_ios_llama.sh') }}
+      - name: Build vendored iOS runtime
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_llama.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/llama.xcframework
+          key: ${{ steps.runtime-cache.outputs.cache-primary-key }}
+      - name: Preserve built Apple runtime before app tests
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_Apple_Runtime
+          path: |
+            Vendor/llama.xcframework
+            Fruitfolio_Verification_Evidence/Build/apple-runtime-build.log
+            Fruitfolio_Verification_Evidence/Build/xcode-version.txt
+            Fruitfolio_Verification_Evidence/Build/swift-version.txt
+      - uses: actions/cache/restore@v4
+        id: madlad-runtime-cache
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: madlad-runtime-${{ runner.arch }}-${{ steps.apple-tools.outputs.xcode }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/src/lib.rs', 'TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/include/**', 'Tools/build_ios_madlad.sh', 'Tools/prepare_candle_madlad.py') }}
+      - uses: actions/cache/restore@v4
+        id: madlad-cargo-cache
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: madlad-apple-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('TranslationInvestigation/madlad-candle-probe/Cargo.lock', 'TranslationInvestigation/madlad-candle-probe/Cargo.toml') }}
+      - name: Build linked MADLAD Apple runtime
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          set -o pipefail
+          bash Tools/build_ios_madlad.sh 2>&1 | tee Fruitfolio_Verification_Evidence/Build/madlad-runtime-build.log
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true'
+        with:
+          path: Vendor/FruitfolioMADLAD.xcframework
+          key: ${{ steps.madlad-runtime-cache.outputs.cache-primary-key }}
+      - uses: actions/cache/save@v4
+        if: steps.madlad-runtime-cache.outputs.cache-hit != 'true' && steps.madlad-cargo-cache.outputs.cache-hit != 'true'
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            TranslationInvestigation/madlad-candle-probe/target
+          key: ${{ steps.madlad-cargo-cache.outputs.cache-primary-key }}
+      - name: Preserve compiled translation runtime before app tests
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Fruitfolio_MADLAD_Apple_Runtime
+          path: Vendor/FruitfolioMADLAD.xcframework
+          if-no-files-found: warn
+      - uses: actions/cache/restore@v4
+        id: madlad-model-cache
+        with:
+          path: Models/MADLAD
+          key: madlad-official-resources-ea6e5531a3e95213-v1
+      - name: Acquire and verify approved translation resources
+        run: python3 Tools/prepare_madlad_resources.py
+      - uses: actions/cache/save@v4
+        if: steps.madlad-model-cache.outputs.cache-hit != 'true'
+        with:
+          path: Models/MADLAD
+          key: ${{ steps.madlad-model-cache.outputs.cache-primary-key }}
+      - name: Choose installed iPhone simulator
+        run: |
+          xcrun simctl list devices available -j > /tmp/fruitfolio-devices.json
+          python3 - <<'PY'
+          import json,os
+          devices=json.load(open('/tmp/fruitfolio-devices.json'))['devices']
+          iphones=[d for key, group in devices.items() if 'iOS' in key for d in group if d.get('isAvailable') and 'iPhone' in d['name']]
+          if not iphones: raise SystemExit('No available iPhone simulator')
+          with open(os.environ['GITHUB_ENV'],'a') as f: f.write('FRUITFOLIO_SIMULATOR_ID='+iphones[0]['udid']+'\n')
+          PY
+      - name: Build application and test targets
+        id: app-build
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing -project Fruitfolio.xcodeproj -scheme Fruitfolio \
+            -destination "platform=iOS Simulator,id=$FRUITFOLIO_SIMULATOR_ID" \
+            -derivedDataPath .ciDerivedData \
+            -resultBundlePath Fruitfolio_Verification_Evidence/Build/Build.xcresult \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+            2>&1 | tee Fruitfolio_Verification_Evidence/Build/xcode-build.log
+      - name: Reject obsolete dynamic runtime autolink
+        run: |
+          app=.ciDerivedData/Build/Products/Debug-iphonesimulator/Fruitfolio.app
+          for binary in "$app/Fruitfolio" "$app/Fruitfolio.debug.dylib"; do
+            if [ -f "$binary" ]; then
+              otool -L "$binary" >> Fruitfolio_Verification_Evidence/Build/linked-libraries.txt
+            fi
+          done
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          text=Path('Fruitfolio_Verification_Evidence/Build/linked-libraries.txt').read_text()
+          if '@rpath/llama.framework/llama' in text:
+              raise SystemExit('Obsolete dynamic llama framework is still autolinked')
+          PYCODE
+      - name: Seed the real simulator Photos library when page-import tests are selected
+        run: |
+          python3 - <<'PYCODE'
+          import json, os, subprocess
+          plan=json.load(open('Delivery/SprintVerificationPlan.json'))
+          if any('UserAuthoredPageUITests' in item for item in plan.get('onlyTesting', [])):
+              simulator=os.environ['FRUITFOLIO_SIMULATOR_ID']
+              devices=json.loads(subprocess.check_output(['xcrun','simctl','list','devices','available','--json']))['devices']
+              device=next(d for group in devices.values() for d in group if d['udid']==simulator)
+              if device['state']!='Booted': subprocess.run(['xcrun','simctl','boot',simulator],check=True)
+              subprocess.run(['xcrun','simctl','bootstatus',simulator,'-b'],check=True)
+              subprocess.run(['xcrun','simctl','addmedia',simulator,'Fruitfolio/Assets.xcassets/Art/Decor/decor_fluffy_cloud.imageset/decor_fluffy_cloud.png'],check=True)
+          PYCODE
+      - name: Run the selected coherent sprint test batch without MADLAD inference
+        run: python3 Tools/run_sprint_xcode_tests.py
+      - name: Verify native FruitfolioAI and Ask while external connections are blocked
+        if: always() && steps.app-build.outcome == 'success'
+        run: |
+          if python3 -c "import json,sys;sys.exit(0 if json.load(open('Delivery/SprintVerificationPlan.json')).get('offlineNativeGrounding') else 1)"; then
+            bash Tools/verify_offline_madlad_ci.sh native-grounding
+          fi
+      - name: Export actual focused screenshots and test evidence
+        if: always()
+        run: |
+          if [ -f Fruitfolio_Verification_Evidence/Build/SprintFocused.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/SprintFocused
+            xcrun xcresulttool export attachments --path Fruitfolio_Verification_Evidence/Build/SprintFocused.xcresult --output-path Fruitfolio_Verification_Evidence/Visual/SprintFocused
+          fi
+          if [ -f Fruitfolio_Verification_Evidence/Build/OfflineNativeGrounding.xcresult/Info.plist ]; then
+            mkdir -p Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
+            xcrun xcresulttool export attachments --path Fruitfolio_Verification_Evidence/Build/OfflineNativeGrounding.xcresult --output-path Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_Sprint_Focused_Verification
+          path: |
+            Fruitfolio_Verification_Evidence/Build
+            Fruitfolio_Verification_Evidence/Visual/SprintFocused
+            Fruitfolio_Verification_Evidence/Visual/OfflineNativeGrounding
+            Fruitfolio_Verification_Evidence/AI/OfflineNativeGrounding
+            !Fruitfolio_Verification_Evidence/Build/**/*.xcresult/**
+          retention-days: 90
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Fruitfolio_Sprint_Original_XCResults
+          path: Fruitfolio_Verification_Evidence/Build/*.xcresult
+          retention-days: 90

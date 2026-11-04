@@ -45,6 +45,27 @@ final class Prompt09AskTests: XCTestCase {
         XCTAssertEqual(result.first?.assetID, .ovarian_cycle_follicle_development_stages)
     }
 
+    func testOneOverlappingKeywordCannotStandInForBothTopicAndEducationalConcept() {
+        let descriptor = EducationalAssetDescriptor(assetID: .ovarian_cycle_follicle_development_stages,
+            topicTags: ["ovulation"], conceptTags: ["ovulation"],
+            accessibilityDescription: "Fixture only", requiresResearchSupport: true)
+        let router = EducationalAssetRouter(descriptors: [descriptor])
+        XCTAssertTrue(router.assets(for: ["ovulation"], support: .supported).isEmpty)
+    }
+
+    func testOrdinaryAnswerDefaultsToOneMajorVisualWhileExplicitComparisonLimitRemainsAvailable() {
+        let first = EducationalAssetDescriptor(assetID: .ovarian_cycle_follicle_development_stages,
+            topicTags: ["ovulation"], conceptTags: ["follicle"],
+            accessibilityDescription: "First fixture", requiresResearchSupport: true)
+        let second = EducationalAssetDescriptor(assetID: EducationalAssetRouter.canonicalDescriptors[1].assetID,
+            topicTags: ["ovulation"], conceptTags: ["follicle"],
+            accessibilityDescription: "Second fixture", requiresResearchSupport: true)
+        let router = EducationalAssetRouter(descriptors: [first, second])
+        XCTAssertEqual(router.assets(for: ["ovulation", "follicle"], support: .supported).count, 1)
+        XCTAssertEqual(router.assets(for: ["ovulation", "follicle"], support: .supported, maximumCount: 2).count, 2)
+        XCTAssertTrue(router.assets(for: ["ovulation", "follicle"], support: .genuinelyNovel).isEmpty)
+    }
+
     func testPrompt09DevelopmentEngineDoesNotFabricateSources() async throws {
         let engine = Prompt09DevelopmentAskEngine()
         let answer = try await engine.answer(

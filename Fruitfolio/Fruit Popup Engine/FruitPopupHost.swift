@@ -21,6 +21,14 @@ struct FruitPopupHost<Content: View>: View {
                         width: proxy.size.width,
                         height: proxy.size.height
                     )
+                    .fruitfolioModalBlur(
+                        active: popupCoordinator.currentPopup != nil && !usesHubTourTreatment,
+                        reduceMotion: motionPreferences.reduceMotionActive
+                    )
+                    // The tour keeps its own approved appearance, but its
+                    // invitation must still guard the underlying Hub controls.
+                    .allowsHitTesting(popupCoordinator.currentPopup == nil)
+                    .accessibilityHidden(popupCoordinator.currentPopup != nil)
 
                 if let request =
                     popupCoordinator.currentPopup {
@@ -34,6 +42,7 @@ struct FruitPopupHost<Content: View>: View {
                         request: request,
                         proxy: proxy
                     )
+                    .accessibilityAddTraits(.isModal)
                     .zIndex(999)
                 }
             }
@@ -83,30 +92,20 @@ struct FruitPopupHost<Content: View>: View {
                 .popupClose
             )
 
-            Task { @MainActor in
-                let delay: UInt64 =
-                    motionPreferences.reduceMotionActive
-                    ? 150_000_000
-                    : 175_000_000
-
-                try? await Task.sleep(
-                    nanoseconds: delay
-                )
-
-                /*
-                 Do not finish an unrelated future popup dismissal if the
-                 coordinator changed state while this task was sleeping.
-                */
-                guard
-                    popupCoordinator.presentationState
-                        == .dismissing
-                else {
-                    return
-                }
-
-                popupCoordinator.finishDismissal()
-            }
         }
+        .task(id: popupCoordinator.presentationState == .dismissing ? popupCoordinator.currentPopup?.id : nil) {
+            guard popupCoordinator.presentationState == .dismissing,
+                  let expectedID = popupCoordinator.currentPopup?.id else { return }
+            let delay: UInt64 = motionPreferences.reduceMotionActive ? 150_000_000 : 175_000_000
+            do { try await Task.sleep(nanoseconds: delay) } catch { return }
+            guard !Task.isCancelled else { return }
+            // State alone is insufficient: a newer popup can also be dismissing.
+            popupCoordinator.finishDismissal(expectedPopupID: expectedID)
+        }
+    }
+
+    private var usesHubTourTreatment: Bool {
+        popupCoordinator.currentPopup?.source?.hasPrefix("prompt07.") == true
     }
 
     // MARK: - Outside Tap Layer
@@ -148,12 +147,7 @@ struct FruitPopupHost<Content: View>: View {
         let horizontalInset:
             CGFloat = 16
 
-        let usableWidth =
-            max(
-                proxy.size.width
-                    - (horizontalInset * 2),
-                240
-            )
+        let usableWidth = max(0, proxy.size.width - (horizontalInset * 2))
 
         return VStack(
             spacing: 0

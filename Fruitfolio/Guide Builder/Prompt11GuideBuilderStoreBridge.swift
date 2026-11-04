@@ -103,10 +103,14 @@ extension Prompt10SavedLibraryStore {
             originalConversationID: sourcePage.originalConversationID,
             sourceIDs: sourcePage.sourceIDs,
             sourceVersions: sourcePage.sourceVersions,
+            sourceSnapshots: sourcePage.sourceSnapshots,
             knowledgeBaseVersion: sourcePage.knowledgeBaseVersion,
             generationTimestamp: sourcePage.generationTimestamp,
             notes: "",
-            sourceSavedPageID: sourceKey
+            sourceSavedPageID: sourceKey,
+            importedImageIDs: sourcePage.importedImageIDs,
+            semanticDocument: sourcePage.semanticDocument,
+            isUserAuthored: sourcePage.isUserAuthored
         )
 
         return try savePage(

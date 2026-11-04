@@ -13,6 +13,10 @@ actor Prompt14CycleOnboardingStore {
     private let cycleStore: Prompt13CycleStore
     private var draft: Prompt14OnboardingDraft
     private var isLoaded: Bool
+    // Actor methods can re-enter while persistence suspends. Serialize store
+    // access so snapshots never expose a draft that has not been saved.
+    private var accessInProgress = false
+    private var accessWaiters: [CheckedContinuation<Void, Never>] = []
 
     init(
         draft: Prompt14OnboardingDraft = Prompt14OnboardingDraft(),
@@ -39,12 +43,19 @@ actor Prompt14CycleOnboardingStore {
     }
 
     func snapshot() async throws -> Prompt14OnboardingDraft {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
         return draft
     }
 
     func replaceDraft(_ newDraft: Prompt14OnboardingDraft) async throws {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
+        let previous = draft
+        var persisted = false
+        defer { if !persisted { draft = previous } }
         let wasCommitted = draft.didCommitCycleStarts
         draft = newDraft
         draft.markUpdated()
@@ -53,28 +64,46 @@ actor Prompt14CycleOnboardingStore {
             draft.didCommitCycleStarts = true
         }
         try await persistence.save(draft)
+        persisted = true
     }
 
     func update(_ mutate: @Sendable (inout Prompt14OnboardingDraft) -> Void) async throws -> Prompt14OnboardingDraft {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
+        let previous = draft
+        var persisted = false
+        defer { if !persisted { draft = previous } }
         mutate(&draft)
         draft.markUpdated()
         try await persistence.save(draft)
+        persisted = true
         return draft
     }
 
     func markStarted(now: Date = Date()) async throws -> Prompt14OnboardingDraft {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
+        let previous = draft
+        var persisted = false
+        defer { if !persisted { draft = previous } }
         if draft.startedAt == nil { draft.startedAt = now }
         draft.markUpdated(at: now)
         try await persistence.save(draft)
+        persisted = true
         return draft
     }
 
     /// Commits only user-supplied period starts into Prompt 13.
     /// Existing active starts on the same date are reused so resume/retry cannot create duplicates.
     func complete(now: Date = Date(), calendar: Calendar = .autoupdatingCurrent) async throws -> Prompt14OnboardingDraft {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
+        let previous = draft
+        var persisted = false
+        defer { if !persisted { draft = previous } }
 
         let today = try Prompt13LocalDate(now, calendar: calendar)
         let existing = try await cycleStore.snapshot().cycleStarts.filter { !$0.metadata.isDeleted }
@@ -90,6 +119,7 @@ actor Prompt14CycleOnboardingStore {
         draft.completedAt = draft.completedAt ?? now
         draft.markUpdated(at: now)
         try await persistence.save(draft)
+        persisted = true
         return draft
     }
 
@@ -98,7 +128,12 @@ actor Prompt14CycleOnboardingStore {
         today: Prompt13LocalDate,
         now: Date = Date()
     ) async throws -> Prompt14OnboardingDraft {
+        try await beginAccess()
+        defer { endAccess() }
         try await loadIfNeeded()
+        let previous = draft
+        var persisted = false
+        defer { if !persisted { draft = previous } }
 
         guard
             draft.latestPeriodState == .supplied,
@@ -123,6 +158,7 @@ actor Prompt14CycleOnboardingStore {
         draft.periodEnd = endDate
         draft.markUpdated(at: now)
         try await persistence.save(draft)
+        persisted = true
         return draft
     }
 
@@ -167,9 +203,34 @@ actor Prompt14CycleOnboardingStore {
     }
 
     func eraseOnboardingOnly() async throws {
+        try await beginAccess()
+        defer { endAccess() }
+        // Keep the visible saved answers intact if storage refuses deletion.
+        try await persistence.erase()
         draft = Prompt14OnboardingDraft()
         isLoaded = true
-        try await persistence.erase()
+    }
+
+    private func beginAccess() async throws {
+        if accessInProgress {
+            await withCheckedContinuation { continuation in
+                accessWaiters.append(continuation)
+            }
+        } else {
+            accessInProgress = true
+        }
+        if Task.isCancelled {
+            endAccess()
+            throw CancellationError()
+        }
+    }
+
+    private func endAccess() {
+        if accessWaiters.isEmpty {
+            accessInProgress = false
+        } else {
+            accessWaiters.removeFirst().resume()
+        }
     }
 
     private func loadIfNeeded() async throws {

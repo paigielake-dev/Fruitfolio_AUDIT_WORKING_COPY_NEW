@@ -1,0 +1,5 @@
+# Actual Run50 personal-health visual review
+
+Source 7ac5a9e, actual iPhone 17 Pro Simulator. Reviewed exported Categories (4388A1CE...) and PersistedOriginalText (29B4413A...) screenshots. Original watercolor heart, thyroid, liver, stomach, gut and kidney artwork is present beside the intended category. Text wraps without overlap in these captured default-size states; Back remains clear. The stored exact user-entered fixture text is visibly retained after restart. The provenance disclaimer does not claim independent clinical verification. The original painted save/decline controls remain visible, with lower actions reached by scrolling.
+
+The header currently uses SwiftUI system title typography while body/control text uses Chalkboard SE; exact typography alignment remains to be checked against the approved system. Category/editor screenshots are not strict accessibility acceptance. The later source changes natural label exposure and confirmation popups and requires its own simulator evidence. No all-device, accessibility-size, VoiceOver, full category or modal visual acceptance is claimed from these two screenshots.

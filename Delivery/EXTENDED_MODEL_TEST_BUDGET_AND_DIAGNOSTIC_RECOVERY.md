@@ -1,0 +1,7 @@
+# Extended model test budget and diagnostic recovery
+
+Actual Run72 compiled successfully and executed all eleven official model fixture targets, rejecting the same seven invariants as earlier attempts. Its first three runtime tests consumed405.983 seconds (multilingual case324.266s), and the overall unit stage did not finalize the result bundle before the original12-minute stage bound. Later native grounding had started; no complete unit-count PASS is inferred, and xcresult attachment export failed. The163,311-byte artifact was SHA/CRC verified and its partial logs retained.
+
+The full unit-stage budget is now25minutes. Every test/assertion remains enabled. Each hard-coded synthetic multilingual result is also serialized immediately to the actual test log so diagnostics survive a later unfinished result bundle. The app does not log user translations; this output exists only inside the hard-coded XCTest fixture.
+
+Controlled offline verification still includes the entire expanded MADLAD test class, actual strict native Ask and actual Ask UI journey. Its step budget is20minutes, with an independent18-minute restoration watchdog for the ephemeral CI runner. Packet-filter rules, positive precheck, before/after blocked probes, restoration trap and fail-on-watchdog rule are unchanged. This allows the larger measured test workload; it does not accept a failed candidate, suppress a test, remove a language, or weaken validation. A watchdog firing or any assertion failure prevents offline PASS.

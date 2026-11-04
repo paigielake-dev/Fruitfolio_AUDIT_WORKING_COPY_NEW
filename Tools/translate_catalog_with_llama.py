@@ -56,4 +56,5 @@ def main():
     a.catalog.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n')
     report=a.catalog.with_name('LOCALIZATION_LLAMA_FAILURES.json'); report.write_text(json.dumps(failures,ensure_ascii=False,indent=2)+'\n')
     print(f'Completed {done}; failures {len(failures)}; report {report}')
-if __name__=='__main__': main()
+if __name__=='__main__':
+    raise SystemExit('Inactive legacy investigation: FruitfolioAI must not substitute for approved MADLAD translation. No catalog changes were made.')
