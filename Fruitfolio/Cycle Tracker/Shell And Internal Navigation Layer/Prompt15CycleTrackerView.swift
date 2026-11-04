@@ -64,6 +64,8 @@ struct Prompt15CycleTrackerView: View {
                 }
                 .scrollBounceBehavior(.basedOnSize)
             }
+            .fruitfolioModalBlur(active: predictionLearningInfo != nil,
+                                reduceMotion: motionPreferences.reduceMotionActive)
 
             if let predictionLearningInfo {
                 Prompt15PredictionInfoOverlay(
@@ -116,9 +118,15 @@ struct Prompt15CycleTrackerView: View {
         .fullScreenCover(isPresented: $showMyContext) {
             Prompt27AMyContextView(store: contextStore) {
                 showMyContext = false
-                contextRevision = UUID()
-                calendarRefreshID = UUID()
             }
+        }
+        .onChange(of: contextStore.context) { _, _ in
+            // Refresh derived presentations from every shared-context entry
+            // point. The daily-log sheet/draft belongs to this outer shell and
+            // is not reset or rewritten by a context-only change.
+            predictionLearningInfo = nil
+            contextRevision = UUID()
+            calendarRefreshID = UUID()
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -187,6 +195,7 @@ struct Prompt15CycleTrackerView: View {
                         )
                     },
                     onPredictionInfoRequested: { info in
+                        if predictionLearningInfo == nil { audioManager.play(.popupOpen) }
                         predictionLearningInfo = info
                     }
                 )
@@ -285,7 +294,8 @@ struct Prompt15CycleTrackerView: View {
     }
 
     private func dismissPredictionInfo() {
-        audioManager.play(.buttonSoftPop)
+        guard predictionLearningInfo != nil else { return }
+        audioManager.play(.popupClose)
 
         if motionPreferences.reduceMotionActive {
             predictionLearningInfo = nil
@@ -322,133 +332,50 @@ private struct Prompt15PredictionInfoOverlay: View {
     let onDismiss: () -> Void
 
     var body: some View {
-        ZStack {
-            Prompt15Palette.paper
-                .opacity(0.82)
-                .ignoresSafeArea()
-
-            Prompt15Palette.burgundy
-                .opacity(0.055)
-                .ignoresSafeArea()
-
-            Prompt15WoodenPredictionPopup(
-                info: info,
-                onDismiss: onDismiss
-            )
-            .padding(.horizontal, 18)
-        }
-        .ignoresSafeArea()
+        Prompt15WoodenPredictionPopup(info: info, onDismiss: onDismiss)
+            .accessibilityAction(.escape, onDismiss)
     }
 }
 
-private struct Prompt15WoodenPredictionPopup: View {
+struct Prompt15WoodenPredictionPopup: View {
     let info: Prompt16PredictionLearningInfo
     let onDismiss: () -> Void
+    @AccessibilityFocusState(for: .voiceOver) private var titleFocused: Bool
 
     var body: some View {
-        GeometryReader { proxy in
-            let signWidth = min(
-                356,
-                max(
-                    292,
-                    proxy.size.width - 44
-                )
-            )
-
-            let signHeight =
-                signWidth * (517.0 / 594.0)
-
-            ZStack {
-                Image("popup_wooden_sign")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(
-                        width: signWidth,
-                        height: signHeight
-                    )
-                    .accessibilityHidden(true)
-
-                VStack(spacing: 5) {
-                    FruitfolioImage(
-                        id: .fruit_peach_soft
-                    )
-                    .frame(
-                        width: 42,
-                        height: 42
-                    )
-                    .accessibilityHidden(true)
-
-                    Text(info.title)
-                        .font(
-                            Prompt15Type.popupTitle
-                        )
-                        .fontWeight(.semibold)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.82)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Text(info.body)
-                        .font(
-                            Prompt15Type.popupBody
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.78)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Text(info.progress)
-                        .font(
-                            Prompt15Type.popupProgress
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.76)
-                        .foregroundStyle(Prompt15Palette.burgundy)
-
-                    Button {
-                        onDismiss()
-                    } label: {
-                        Text("got it ♡")
-                            .font(
-                                Prompt15Type.popupButton
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundStyle(Prompt15Palette.burgundy)
-                            .padding(.horizontal, 12)
-                            .frame(minHeight: 30)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(
-                        Prompt15SoftPressButtonStyle()
-                    )
-                    .accessibilityHint(
-                        "Closes this explanation."
-                    )
-                }
-                .frame(
-                    width: signWidth * 0.70,
-                    height: signHeight * 0.61,
-                    alignment: .center
-                )
-                .offset(
-                    y: signHeight * 0.105
-                )
+        // Original sign canvas594x517: this is the existing centered70%-wide
+        // writing region, below its hanging rope and within its wooden boards.
+        FruitfolioPopupArtworkSurface(assetName: "popup_wooden_sign",
+            normalizedWriting: CGRect(x: 0.15, y: 0.30, width: 0.70, height: 0.61), maximumWidth: 356) {
+            VStack(spacing: 8) {
+                FruitfolioImage(id: .fruit_peach_soft)
+                    .scaledToFit().frame(width: 42, height: 42).accessibilityHidden(true)
+                Text(info.title)
+                    .font(Prompt15Type.popupTitle).fontWeight(.semibold)
+                    .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("cycle.predictionInfo.title")
+                    .accessibilityFocused($titleFocused)
+                FruitfolioSemanticText(document: .init(spans: [.init(text: info.body)]),
+                    baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body))
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("cycle.predictionInfo.body")
+                Text(info.progress)
+                    .font(Prompt15Type.popupProgress)
+                    .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("cycle.predictionInfo.progress")
+                FruitfolioControlPillButton(label: "got it ♡", localizationKey: "got it ♡", action: onDismiss)
+                    .accessibilityIdentifier("cycle.predictionInfo.close")
+                    .accessibilityHint("Closes this explanation.")
             }
-            .frame(
-                width: signWidth,
-                height: signHeight
-            )
-            .position(
-                x: proxy.size.width / 2,
-                y: proxy.size.height / 2
-            )
-            .accessibilityElement(
-                children: .contain
-            )
-            .accessibilityLabel(
-                "\(info.title). \(info.body) \(info.progress)"
-            )
+            .foregroundStyle(Prompt15Palette.burgundy)
+            .padding(.vertical, 8)
+        }
+        .accessibilityIdentifier("cycle.predictionInfo.popup")
+        .task {
+            do { try await Task.sleep(nanoseconds: 200_000_000) } catch { return }
+            guard !Task.isCancelled else { return }
+            titleFocused = true
         }
     }
 }

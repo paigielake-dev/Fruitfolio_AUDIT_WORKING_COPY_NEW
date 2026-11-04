@@ -17,6 +17,10 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 MADLAD_SKIP = 'FruitfolioTests/AAAA_MADLADRuntimeIntegrationTests'
 GROUPS = {
+    'cycle': ['FruitfolioTests/CyclePredictionPopupRuntimeTests',
+              'FruitfolioTests/PersonalHealthContextTests',
+              'FruitfolioTests/CycleSetupPersistenceSafetyTests',
+              'FruitfolioUITests/PersonalHealthContextUITests'],
     'health': ['FruitfolioTests/HormoneMeasurementTests',
                'FruitfolioTests/PersonalHealthContextTests',
                'FruitfolioTests/CycleSetupPersistenceSafetyTests',
