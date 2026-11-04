@@ -123,6 +123,58 @@ final class HormoneMeasurementTests: XCTestCase {
 }
 
 extension HormoneMeasurementTests {
+    func testRetryReadsTheRecoveredSnapshotWithoutOverwritingUnreadableBytesOrInventingEmptyRecords() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let file = directory.appendingPathComponent("measurements.json")
+        let originalStore = HormoneMeasurementStore(fileURL: file)
+        let original = record()
+        try originalStore.save(original)
+        let goodBytes = try Data(contentsOf: file)
+        let badBytes = Data("unreadable original fixture".utf8)
+        try badBytes.write(to: file)
+        let failed = HormoneMeasurementStore(fileURL: file)
+        failed.retryLoad()
+        XCTAssertNotNil(failed.loadError)
+        XCTAssertThrowsError(try failed.save(record()))
+        XCTAssertEqual(try Data(contentsOf: file), badBytes)
+        try goodBytes.write(to: file) // Simulates the original snapshot becoming readable again.
+        failed.retryLoad()
+        XCTAssertNil(failed.loadError)
+        XCTAssertEqual(try Data(contentsOf: file), goodBytes, "Retry must not rewrite metadata or timestamps")
+        XCTAssertEqual(failed.measurements, originalStore.measurements)
+        XCTAssertEqual(failed.measurements.first?.unit, " ng/mL ")
+    }
+
+    func testRetryDoesNotTreatADisappearedUnreadableFileAsASuccessfulEmptyReset() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let file = directory.appendingPathComponent("measurements.json")
+        try Data("unreadable fixture".utf8).write(to: file)
+        let failed = HormoneMeasurementStore(fileURL: file)
+        try FileManager.default.removeItem(at: file)
+        failed.retryLoad()
+        XCTAssertNotNil(failed.loadError)
+        XCTAssertThrowsError(try failed.save(record()))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file.path))
+        try failed.eraseAll() // Existing separate explicit deletion/recovery path.
+        try failed.save(record())
+        XCTAssertEqual(HormoneMeasurementStore(fileURL: file).measurements.count, 1)
+    }
+
+    func testHistoryGroupsPreserveExactUnitAndSampleBytesRatherThanUnicodeNormalization() {
+        var first = record(), second = record()
+        first.unit = "\u{212B}"
+        second.unit = "\u{00C5}"
+        XCTAssertEqual(first.unit, second.unit, "Canonical String equality is insufficient for exact entered-unit grouping")
+        let groups = HormoneMeasurementSeries.groups([first, second])
+        XCTAssertEqual(groups.count, 2)
+        XCTAssertEqual(Set(groups.map { Data($0.id.unit.utf8) }), Set([Data(first.unit.utf8), Data(second.unit.utf8)]))
+        XCTAssertEqual(groups.flatMap(\.records).count, 2)
+        XCTAssertTrue(groups.allSatisfy { $0.records.count == 1 })
+    }
+
     func testRepeatedResultsRetainTheirOwnDatesOptionalFieldsAndExactStrings() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         defer { try? FileManager.default.removeItem(at: directory) }

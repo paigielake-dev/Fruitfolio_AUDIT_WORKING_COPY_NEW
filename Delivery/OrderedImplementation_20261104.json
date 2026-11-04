@@ -1,6 +1,6 @@
 {
   "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
-  "currentPart": 4,
+  "currentPart": 5,
   "part1Complete": false,
   "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
   "actualVerification": {
@@ -722,9 +722,61 @@
         "FruitfolioUITests/UserAuthoredPageUITests.swift"
       ],
       "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-193",
+      "originalReference": "Part 4 / 4B. Book-opening animation / 193",
+      "originalRequirement": "Prevent book duplication, disappearance, jumps, and color resets.",
+      "change": "Cancelled book-opening tasks no longer clear a newer opening-task handle; cancellation drops the old handle immediately.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-249",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 15",
+      "originalRequirement": "Store measurements locally.",
+      "change": "Unreadable hormone storage now has an explicit read-only retry path; only a fully validated original snapshot re-enables writes.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-250",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 16",
+      "originalRequirement": "Preserve measurements across app restarts.",
+      "change": "Recovery does not rewrite dates, units or record bytes and does not treat a disappeared unreadable file as empty.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
+    },
+    {
+      "requirementID": "FF1B-254",
+      "originalReference": "Part 5 / 5C. Hormone Information — new section / 20",
+      "originalRequirement": "Restrict measurement graphs to actual recorded values.",
+      "change": "History groups distinguish exact unit/sample/name bytes, preserving independently recorded categories even when Unicode strings compare canonically equal.",
+      "requirementStatus": "PARTIAL — implemented targeted lifecycle/recovery correction; full requirement verification pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/HormoneMeasurementTests.swift",
+        "FruitfolioUITests/HormoneMeasurementUITests.swift"
+      ],
+      "remaining": "Execute the focused health/library groups and actual reopen/edit/graph/recovery journeys on Mac."
     }
   ],
-  "nextAction": "Continue Part 4 book/Guide source integration, then Part 5 settings/account/hormones. Parts 5–10 and residual checks remain outstanding.",
+  "nextAction": "Continue Part 5 remaining feasible source checks, then Part 6 context/cycle/science. Preserve explicitly blocked service/calibration dependencies; continue unrelated work.",
   "allTenPartsComplete": false,
   "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
   "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",
@@ -736,5 +788,19 @@
     "1": "Shared source batches committed; runtime, full visual adoption and residual feature-specific checks remain pending. Not a full acceptance claim.",
     "2": "Hub invitation lifecycle repair implemented; intro source and existing clock/interruption tests preserved.",
     "3-10": "Existing cumulative implementations preserved; remaining ordered implementation work not completed in this batch."
-  }
+  },
+  "specificDependencies": [
+    {
+      "scope": "Production account authentication/remote deletion/global username reservation",
+      "status": "BLOCKED — authenticated service contract/configuration not present; local shared pseudonym is preserved.",
+      "evidence": "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift signIn(email:) and deleteAccountAndAssociatedRemoteData()",
+      "noFakeAuthentication": true
+    },
+    {
+      "scope": "Research-supported Adjusted Hormone Rhythm calibration",
+      "status": "BLOCKED — no approved cited mapping from assay/units/timing/context to adjusted educational curves. Existing actual measurements/typical rhythm remain preserved; functioning adjustment not claimed.",
+      "evidence": "Delivery/ADJUSTED_RHYTHM_DEPENDENCY.md; Prompt22MeasurementPresentationPolicy.swift",
+      "requiredResolution": "Approved, scientifically defensible calibration/sufficiency contract with its supporting evidence; no invented curves."
+    }
+  ]
 }

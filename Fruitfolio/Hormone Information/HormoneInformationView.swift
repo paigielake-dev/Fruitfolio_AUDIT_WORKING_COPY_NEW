@@ -25,7 +25,11 @@ struct HormoneInformationView: View {
                     Text("hormone information ♡").font(.custom("Chalkboard SE", size: 24, relativeTo: .title2)).bold().accessibilityAddTraits(.isHeader)
                     Image("hormone_estrogen").resizable().scaledToFit().frame(maxWidth: 120).accessibilityHidden(true)
                     Text("your measurements stay on this device. they are not sent to Ask or used to change cycle predictions.")
-                    if let loadError = store.loadError { Text(loadError).accessibilityLabel(loadError) }
+                    if let loadError = store.loadError {
+                        Text(loadError).accessibilityLabel(loadError)
+                        FruitfolioControlPillButton(label: "try again", localizationKey: "try again", action: store.retryLoad)
+                            .accessibilityIdentifier("hormone.retryLoad")
+                    }
                     if store.measurements.isEmpty && store.loadError == nil {
                         Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                     }

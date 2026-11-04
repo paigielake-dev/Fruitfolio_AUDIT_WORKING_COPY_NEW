@@ -46,6 +46,7 @@ struct Prompt10SavedLibraryView: View {
                         onBack: {
                             withAnimation(detailTransition) {
                                 openingTask?.cancel()
+                                openingTask = nil
                                 self.selectedEncyclopediaID = nil
                                 openingEncyclopediaID = nil
                                 openingStage = .idle
@@ -112,6 +113,7 @@ struct Prompt10SavedLibraryView: View {
         .onChange(of: motionPreferences.reduceMotionActive) { _, reduced in
             guard reduced, let id = openingEncyclopediaID else { return }
             openingTask?.cancel()
+            openingTask = nil
             var transaction = Transaction(); transaction.disablesAnimations = true
             withTransaction(transaction) {
                 openingStage = .open; selectedEncyclopediaID = id; bookContentVisible = true
@@ -119,6 +121,7 @@ struct Prompt10SavedLibraryView: View {
         }
         .onDisappear {
             openingTask?.cancel()
+            openingTask = nil
             if !bookContentVisible {
                 openingEncyclopediaID = nil; selectedEncyclopediaID = nil; openingStage = .idle
             }
@@ -514,6 +517,7 @@ struct Prompt10SavedLibraryView: View {
                 },
                 onDeleted: {
                     openingTask?.cancel()
+                    openingTask = nil
                     selectedEncyclopediaID = nil
                     openingEncyclopediaID = nil
                     bookContentVisible = false
@@ -603,8 +607,9 @@ struct Prompt10SavedLibraryView: View {
         }
 
         openingTask?.cancel()
+        openingTask = nil
         openingTask = Task { @MainActor in
-            defer { openingTask = nil }
+            defer { if !Task.isCancelled { openingTask = nil } }
             do {
                 try await Task.sleep(for: .milliseconds(180))
                 guard !Task.isCancelled, openingEncyclopediaID == encyclopedia.id else { return }

@@ -15,19 +15,37 @@ final class HormoneMeasurementStore: ObservableObject {
             .appendingPathComponent("hormone-measurements-v1.json")
         guard FileManager.default.fileExists(atPath: self.fileURL.path) else { return }
         do {
-            let snapshot = try JSONDecoder().decode(Snapshot.self, from: Data(contentsOf: self.fileURL))
-            guard snapshot.version == 1 else { throw StoreError.unsupportedVersion }
-            // Duplicate identities make edit/delete ambiguous. Preserve the
-            // complete file and fail explicitly instead of dropping a result.
-            guard Set(snapshot.measurements.map(\.id)).count == snapshot.measurements.count else {
-                throw StoreError.duplicateRecordIdentity
-            }
-            measurements = snapshot.measurements
+            measurements = try readRecords()
         } catch {
             // Never replace unreadable health records with an empty snapshot.
             canWrite = false
             loadError = "your stored measurements could not be opened. the original file has been preserved."
         }
+    }
+
+    /// A temporarily protected/unavailable file may become readable after
+    /// unlock. Retry is read-only until the entire original snapshot validates;
+    /// a missing or still-invalid file never becomes an empty writable store.
+    func retryLoad() {
+        guard loadError != nil else { return }
+        do {
+            let recovered = try readRecords()
+            measurements = recovered
+            canWrite = true
+            loadError = nil
+        } catch {
+            canWrite = false
+            loadError = "your stored measurements could not be opened. the original file has been preserved."
+        }
+    }
+
+    private func readRecords() throws -> [HormoneMeasurement] {
+        let snapshot = try JSONDecoder().decode(Snapshot.self, from: Data(contentsOf: fileURL))
+        guard snapshot.version == 1 else { throw StoreError.unsupportedVersion }
+        guard Set(snapshot.measurements.map(\.id)).count == snapshot.measurements.count else {
+            throw StoreError.duplicateRecordIdentity
+        }
+        return snapshot.measurements
     }
 
     func save(_ measurement: HormoneMeasurement) throws {

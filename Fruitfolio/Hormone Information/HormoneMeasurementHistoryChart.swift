@@ -9,6 +9,19 @@ struct HormoneMeasurementSeries: Identifiable {
         let otherName: String
         let unit: String
         let sampleType: String
+
+        static func == (lhs: Key, rhs: Key) -> Bool {
+            lhs.hormone == rhs.hormone && lhs.otherName.utf8.elementsEqual(rhs.otherName.utf8)
+                && lhs.unit.utf8.elementsEqual(rhs.unit.utf8)
+                && lhs.sampleType.utf8.elementsEqual(rhs.sampleType.utf8)
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(hormone)
+            hasher.combine(Data(otherName.utf8))
+            hasher.combine(Data(unit.utf8))
+            hasher.combine(Data(sampleType.utf8))
+        }
     }
     let id: Key
     let records: [HormoneMeasurement]
