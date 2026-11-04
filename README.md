@@ -1,3 +1,9 @@
+# Current continuation — November 4, 2026
+
+See [current recovery, changes and pending Mac verification](Delivery/CONTINUATION_2026-11-04.md). Round finalization was already committed and now has10 regression cases; no new iOS runtime pass is claimed. Python tooling:27 executed and passed, including restored catalog regressions. The original November2 deadline is historical and was not reset. MADLAD inference remains excluded.
+
+The following source-sprint report is historical; current archive provenance is supplied by the generated packaged manifest.
+
 # Fruitfolio — integrated source handoff
 
 This is the existing Fruitfolio application continued from its preserved development checkpoint, with original artwork, audio, research, models and saved-data formats retained. It is **not a FINAL_COMPLETE release**. No merge into main occurred.
