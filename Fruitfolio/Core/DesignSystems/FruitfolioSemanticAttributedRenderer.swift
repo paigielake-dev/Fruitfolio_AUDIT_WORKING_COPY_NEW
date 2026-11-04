@@ -59,6 +59,66 @@ enum FruitfolioSemanticAttributedRenderer {
     }
 }
 
+/// A single visible answer's transient rendering work. Retained by its native
+/// view coordinator only, never shared across sessions or written to storage.
+/// UIFont construction and semantic interpretation happen once per document /
+/// requested content size rather than once for every typewriter character.
+@MainActor
+final class FruitfolioSemanticRenderSession {
+    private var source: FruitfolioSemanticDocument?
+    private var boundaries = Set<Int>()
+    private var category: UIContentSizeCategory?
+    private var rendered: NSAttributedString?
+    private(set) var renderCount = 0
+
+    func prefix(_ text: String, document: FruitfolioSemanticDocument?, traits: UITraitCollection) -> NSAttributedString {
+        guard let document else {
+            reset()
+            return FruitfolioSemanticAttributedRenderer.render(.init(spans: [.init(text: text)]), traits: traits)
+        }
+        if !hasSameRenderedMeaning(document) || category != traits.preferredContentSizeCategory || rendered == nil {
+            source = document
+            let sourceText = document.plainText
+            category = traits.preferredContentSizeCategory
+            var offset = 0
+            boundaries = [0]
+            for character in sourceText {
+                offset += character.utf16.count
+                boundaries.insert(offset)
+            }
+            rendered = FruitfolioSemanticAttributedRenderer.render(document, traits: traits)
+            renderCount += 1
+        }
+        let length = text.utf16.count
+        guard boundaries.contains(length), let rendered, length <= rendered.length else {
+            return plainFallback(text, traits: traits)
+        }
+        let result = rendered.attributedSubstring(from: NSRange(location: 0, length: length))
+        guard result.string.utf8.elementsEqual(text.utf8) else {
+            return plainFallback(text, traits: traits)
+        }
+        return result
+    }
+
+    func reset() {
+        source = nil; boundaries.removeAll(); category = nil; rendered = nil
+    }
+
+    private func plainFallback(_ text: String, traits: UITraitCollection) -> NSAttributedString {
+        reset()
+        return FruitfolioSemanticAttributedRenderer.render(.init(spans: [.init(text: text)]), traits: traits)
+    }
+
+    private func hasSameRenderedMeaning(_ document: FruitfolioSemanticDocument) -> Bool {
+        guard let source, source.spans.count == document.spans.count else { return false }
+        // Reconstructed legacy/plain spans may have fresh identity UUIDs on a
+        // view update. IDs do not change rendering; text bytes and meaning do.
+        return zip(source.spans, document.spans).allSatisfy { pair in
+            pair.0.emphasis == pair.1.emphasis && pair.0.text.utf8.elementsEqual(pair.1.text.utf8)
+        }
+    }
+}
+
 extension NSAttributedString.Key {
     static let fruitfolioSemanticRole = NSAttributedString.Key("FruitfolioSemanticRole")
 }

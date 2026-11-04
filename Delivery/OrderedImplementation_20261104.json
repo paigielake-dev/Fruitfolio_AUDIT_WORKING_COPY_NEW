@@ -5,7 +5,9 @@
   "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
   "actualVerification": {
     "gitDiffCheck": "PASS — whitespace only",
-    "SwiftXcodeSimulator": "NOT RUN — unavailable on this Linux host"
+    "SwiftXcodeSimulator": "NOT RUN — unavailable on this Linux host",
+    "PythonTooling": "PASS — 27 tests; tooling only, not SwiftUI runtime",
+    "log": "Fruitfolio_Verification_Evidence/OrderedImplementation20261104/PythonToolingTests.log"
   },
   "requirements": [
     {
@@ -163,8 +165,166 @@
         "FruitfolioTests/SharedPopupCompositionTests.swift"
       ],
       "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-028",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 1",
+      "originalRequirement": "Create a separate shared Swift system for decorative artwork.",
+      "change": "Retained the canonical decorative-art geometry; invalid/nonfinite dimensions fail closed.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-029",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 2",
+      "originalRequirement": "Preserve each screen’s founder-approved artwork selection.",
+      "change": "Existing asset selections remain unchanged.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-035",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 8",
+      "originalRequirement": "Preserve watercolor proportions, visual weight, and orientation.",
+      "change": "Measured painted bounds are validated inside their original PNG canvas.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-036",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 9",
+      "originalRequirement": "Prevent artwork from overlapping headings, text, controls, citations, or scientific illustrations.",
+      "change": "Height-constrained art retains aspect ratio and its screen-approved size interval.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-039",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 12",
+      "originalRequirement": "Recalculate placement when content expands.",
+      "change": "Shorter containers reuse only approved role sizes, rather than omitting art that still fits.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-040",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 13",
+      "originalRequirement": "Recalculate placement when the keyboard appears.",
+      "change": "Geometry responds to the current container, including keyboard-adjusted height.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-043",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 16",
+      "originalRequirement": "Resize, reposition, or temporarily omit artwork when necessary.",
+      "change": "Decorations are omitted if their minimum approved size cannot fit.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-044",
+      "originalReference": "Part 1 / Universal decorative artwork layout system / 17",
+      "originalRequirement": "Do not indiscriminately shrink artwork to make it fit.",
+      "change": "No below-minimum blanket shrinking is introduced.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-060",
+      "originalReference": "Part 1 / Universal semantic text stylization / 60",
+      "originalRequirement": "Preserve formatting during progressive rendering.",
+      "change": "Added a transient semantic render session that preserves Unicode, roles and quantities across streaming prefixes.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-063",
+      "originalReference": "Part 1 / Universal semantic text stylization / 63",
+      "originalRequirement": "Preserve readable VoiceOver output.",
+      "change": "The rendered visible prefix retains coherent full-text accessibility output.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-066",
+      "originalReference": "Part 1 / Performance and responsiveness / 66",
+      "originalRequirement": "Remove avoidable UI-thread blocking.",
+      "change": "Per-view semantic rendering avoids repeating font/role construction for each streamed character.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-067",
+      "originalReference": "Part 1 / Performance and responsiveness / 67",
+      "originalRequirement": "Reduce redundant calculations and processing.",
+      "change": "Equivalent reconstructed span identities reuse rendering; byte or role changes invalidate it.",
+      "requirementStatus": "PARTIAL — shared implementation improved; screen-wide acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedDecorationLayoutTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift"
+      ],
+      "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
     }
   ],
   "nextAction": "Continue Part 1 decorative artwork/semantic adoption/performance inspection and integration before advancing to Part 2.",
-  "allTenPartsComplete": false
+  "allTenPartsComplete": false,
+  "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
+  "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b"
 }

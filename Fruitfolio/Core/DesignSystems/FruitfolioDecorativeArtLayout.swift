@@ -17,6 +17,9 @@ struct FruitfolioDecorativePlacement {
 /// side, rotation and semantic relationship remain founder-owned at call sites.
 enum FruitfolioDecorativeArtLayout {
     static func isCollisionFree(paintedFrame: CGRect, protectedRegions: [FruitfolioProtectedRegion], minimumGap: CGFloat = 12) -> Bool {
+        guard isFinite(paintedFrame), !paintedFrame.isEmpty,
+              minimumGap.isFinite, minimumGap >= 0,
+              protectedRegions.allSatisfy({ isFinite($0.rect) }) else { return false }
         let protectedFootprint = paintedFrame.insetBy(dx: -minimumGap, dy: -minimumGap)
         return !protectedRegions.contains { $0.rect.intersects(protectedFootprint) }
     }
@@ -31,8 +34,12 @@ enum FruitfolioDecorativeArtLayout {
         protectedRegions: [FruitfolioProtectedRegion],
         minimumGap: CGFloat = 12
     ) -> FruitfolioDecorativePlacement {
-        guard intrinsicSize.width > 0, intrinsicSize.height > 0,
-              container.width > 0, container.height > 0 else {
+        guard intrinsicSize.width.isFinite, intrinsicSize.height.isFinite,
+              intrinsicSize.width > 0, intrinsicSize.height > 0,
+              isFinite(container), container.width > 0, container.height > 0,
+              [safeInsets.leading, safeInsets.trailing, safeInsets.top, safeInsets.bottom,
+               roleFraction.lowerBound, roleFraction.upperBound, minimumGap].allSatisfy({ $0.isFinite }),
+              roleFraction.lowerBound > 0, roleFraction.upperBound <= 1, minimumGap >= 0 else {
             return .init(frame: .zero, isVisible: false)
         }
 
@@ -47,9 +54,13 @@ enum FruitfolioDecorativeArtLayout {
         let aspect = intrinsicSize.width / intrinsicSize.height
         let preferred = safe.width * roleFraction.upperBound
         let minimum = safe.width * roleFraction.lowerBound
-        let targetWidth = min(safe.width, max(minimum, preferred))
+        // Fit within this screen's approved role range. A shorter landscape or
+        // keyboard-adjusted container may still fit the artwork at the lower
+        // approved size; never shrink below that size merely to keep it visible.
+        let targetWidth = min(safe.width, preferred, safe.height * aspect)
         let targetHeight = targetWidth / aspect
-        guard targetHeight <= safe.height else { return .init(frame: .zero, isVisible: false) }
+        guard targetWidth >= minimum, targetHeight.isFinite, targetHeight > 0,
+              targetHeight <= safe.height else { return .init(frame: .zero, isVisible: false) }
 
         func origin(for anchor: FruitfolioDecorativeAnchor) -> CGPoint {
             switch anchor {
@@ -64,6 +75,10 @@ enum FruitfolioDecorativeArtLayout {
 
         let candidate = CGRect(origin: origin(for: anchor), size: .init(width: targetWidth, height: targetHeight))
         let alpha = visibleAlphaBounds ?? CGRect(origin: .zero, size: intrinsicSize)
+        guard isFinite(alpha), !alpha.isEmpty,
+              CGRect(origin: .zero, size: intrinsicSize).contains(alpha) else {
+            return .init(frame: candidate, isVisible: false)
+        }
         let sx = targetWidth / intrinsicSize.width
         let sy = targetHeight / intrinsicSize.height
         let visibleFrame = CGRect(
@@ -74,5 +89,9 @@ enum FruitfolioDecorativeArtLayout {
         )
         return .init(frame: candidate, isVisible: isCollisionFree(paintedFrame: visibleFrame,
             protectedRegions: protectedRegions, minimumGap: minimumGap) && safe.contains(visibleFrame))
+    }
+
+    private static func isFinite(_ rect: CGRect) -> Bool {
+        [rect.origin.x, rect.origin.y, rect.size.width, rect.size.height].allSatisfy { $0.isFinite }
     }
 }

@@ -1589,7 +1589,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         textView.accessibilityLabel = "Fruitfolio answer"
         textView.accessibilityIdentifier = "ask.completedAnswer"
 
-        applyTextStyle(to: textView)
+        applyTextStyle(to: textView, session: context.coordinator.renderSession)
 
         return textView
     }
@@ -1601,7 +1601,8 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         textView.tintColor = Self.selectionHighlight
 
         _ = dynamicTypeSize
-        let styled = attributedContent(traits: textView.traitCollection)
+        let styled = context.coordinator.renderSession.prefix(text, document: semanticDocument,
+            traits: textView.traitCollection)
         if !textView.attributedText.isEqual(to: styled) {
             let selection = textView.selectedRange
             textView.attributedText = styled
@@ -1633,20 +1634,17 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     }
 
     private func applyTextStyle(
-        to textView: UITextView
+        to textView: UITextView,
+        session: FruitfolioSemanticRenderSession
     ) {
-        textView.attributedText = attributedContent(traits: textView.traitCollection)
+        textView.attributedText = session.prefix(text, document: semanticDocument, traits: textView.traitCollection)
         textView.accessibilityLabel = text
     }
 
-    private func attributedContent(traits: UITraitCollection) -> NSAttributedString {
-        let document: FruitfolioSemanticDocument
-        if let semanticDocument, semanticDocument.plainText.hasPrefix(text) {
-            document = semanticDocument.prefix(characters: text.count)
-        } else {
-            document = .init(spans: [.init(text: text)])
-        }
-        return FruitfolioSemanticAttributedRenderer.render(document, traits: traits)
+    static func dismantleUIView(_ view: UITextView, coordinator: Coordinator) {
+        view.delegate = nil
+        view.attributedText = nil
+        coordinator.renderSession.reset()
     }
 
     static func styledAnswer(_ text: String) -> NSAttributedString {
@@ -1661,6 +1659,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         NSObject,
         UITextViewDelegate
     {
+        let renderSession = FruitfolioSemanticRenderSession()
         @Binding private var selectedText: String?
         @Binding private var selectedRange: NSRange?
 
