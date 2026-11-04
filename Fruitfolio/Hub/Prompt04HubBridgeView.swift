@@ -5,6 +5,8 @@ struct Prompt04HubBridgeView: View {
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @EnvironmentObject private var appState: AppState
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.scenePhase) private var scenePhase
+    @StateObject private var invitationScheduler = Prompt07TourInvitationScheduler()
 
     @StateObject
     private var tour =
@@ -13,9 +15,6 @@ struct Prompt04HubBridgeView: View {
     @State
     private var targetFrames:
         [Prompt07TourTarget: CGRect] = [:]
-
-    @State
-    private var invitationScheduled = false
 
     @State
     private var hubBrandingAnimationCompleted = false
@@ -84,6 +83,7 @@ struct Prompt04HubBridgeView: View {
         ) { _, isReady in
 
             guard isReady else {
+                invitationScheduler.cancel()
                 return
             }
 
@@ -101,6 +101,14 @@ struct Prompt04HubBridgeView: View {
 
             beginManualReplayIfNeeded()
         }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { scheduleInvitationIfNeeded() }
+            else { invitationScheduler.cancel() }
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, id in
+            if id == nil { scheduleInvitationIfNeeded() }
+        }
+        .onDisappear { invitationScheduler.cancel() }
     }
 
     private var shouldOfferFirstLaunchTour: Bool {
@@ -113,7 +121,9 @@ struct Prompt04HubBridgeView: View {
 
     private func scheduleInvitationIfNeeded() {
         guard
-            !invitationScheduled,
+            scenePhase == .active,
+            !tour.isTourActive,
+            !appState.tourWasManuallyReplayed,
             hubBrandingAnimationCompleted,
             onboardingHookAllowsInvitation,
             shouldOfferFirstLaunchTour
@@ -121,22 +131,10 @@ struct Prompt04HubBridgeView: View {
             return
         }
 
-        invitationScheduled = true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    600_000_000
-            )
-
-            guard
-                shouldOfferFirstLaunchTour,
-                popupCoordinator
-                    .currentPopup == nil
-            else {
-                return
-            }
-
+        invitationScheduler.schedule(eligible: {
+            shouldOfferFirstLaunchTour && onboardingHookAllowsInvitation && hubBrandingAnimationCompleted &&
+                !tour.isTourActive && !appState.tourWasManuallyReplayed && popupCoordinator.currentPopup == nil
+        }) {
             popupCoordinator.request(
                 .init(
                     character: .blueberry,
@@ -195,6 +193,7 @@ struct Prompt04HubBridgeView: View {
 
     private func beginManualReplayIfNeeded() {
         guard appState.tourWasManuallyReplayed else { return }
+        invitationScheduler.cancel()
 
         popupCoordinator.dismissCurrent(
             reason: .programmatic

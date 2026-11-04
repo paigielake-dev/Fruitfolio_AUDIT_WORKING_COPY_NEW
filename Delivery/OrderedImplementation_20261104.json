@@ -1,6 +1,6 @@
 {
   "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
-  "currentPart": 1,
+  "currentPart": 2,
   "part1Complete": false,
   "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
   "actualVerification": {
@@ -425,14 +425,58 @@
         "FruitfolioUITests/SharedModalGuardUITests.swift"
       ],
       "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-088",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 88",
+      "originalRequirement": "Optimize Hub loading and navigation responsiveness.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-090",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 90",
+      "originalRequirement": "Play popup-opening audio when the tour invitation appears.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-091",
+      "originalReference": "Part 2 / 2B. Hub and guided tour / 91",
+      "originalRequirement": "Play popup-closing audio when the tour is dismissed or skipped.",
+      "change": "Hub invitation scheduling is owned/cancellable; departure, backgrounding, manual replay and invalidated onboarding hooks cancel pending work. Eligibility is rechecked after waiting. Old cancelled completions cannot affect a new visit.",
+      "requirementStatus": "PARTIAL — focused lifecycle repair implemented; whole requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/TourInvitationLifecycleTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
     }
   ],
-  "nextAction": "Continue Part 1 decorative artwork/semantic adoption/performance inspection and integration before advancing to Part 2.",
+  "nextAction": "Complete remaining Hub source checks, then continue Part 3 Ask. Preserve pending shared-system Mac verification and full app-wide adoption review.",
   "allTenPartsComplete": false,
   "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
   "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",
   "latestLocalVerification": {
     "gitDiffCheck": "PASS — whitespace only",
     "SwiftRuntime": "NOT RUN — MAC EXECUTION REQUIRED"
+  },
+  "partProgress": {
+    "1": "Shared source batches committed; runtime, full visual adoption and residual feature-specific checks remain pending. Not a full acceptance claim.",
+    "2": "Hub invitation lifecycle repair implemented; intro source and existing clock/interruption tests preserved.",
+    "3-10": "Existing cumulative implementations preserved; remaining ordered implementation work not completed in this batch."
   }
 }
