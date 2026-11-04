@@ -158,6 +158,75 @@ final class RoundCompletionPersistenceTests: XCTestCase {
         game.viewWillDisappear()
     }
 
+    func testAbandonedNineCatchRoundNeverBecomesACompletedSuccessAfterOwnerRelease() async throws {
+        let suite = "RoundAbandoned-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var game: Prompt28FruitBasketViewModel? = try await model(defaults: defaults)
+        let fruit = try XCTUnwrap(game?.currentQuestion?.goodFruitIDs.first)
+        for _ in 0..<9 { accept(fruit, classification: .good, in: try XCTUnwrap(game)) }
+        XCTAssertEqual(game?.basketCount, 9)
+        game?.sceneBecameInactive(); game?.viewWillDisappear(); game?.viewWillDisappear()
+        XCTAssertTrue(try XCTUnwrap(game).store.completedRounds.isEmpty)
+        weak var owner = game
+        game = nil
+        try await Task.sleep(for: .milliseconds(750))
+        XCTAssertNil(owner)
+        let reopened = Prompt28FruitBasketStore(defaults: defaults)
+        XCTAssertTrue(reopened.completedRounds.isEmpty)
+        XCTAssertEqual(reopened.progress(for: "nutrition")?.totalRoundsCompleted ?? 0, 0)
+        XCTAssertEqual(reopened.progress(for: "nutrition")?.totalSuccessfulRounds ?? 0, 0)
+    }
+
+    func testInterruptionBeforeFinalCatchResumesSameAttemptAndCommitsOnlyAtTheTenthCatch() async throws {
+        let suite = "RoundBeforeLock-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let game = try await model(defaults: defaults)
+        let fruit = try XCTUnwrap(game.currentQuestion?.goodFruitIDs.first)
+        for _ in 0..<9 { accept(fruit, classification: .good, in: game) }
+        for _ in 0..<3 {
+            game.sceneBecameInactive(); game.viewWillDisappear()
+            XCTAssertTrue(game.store.completedRounds.isEmpty)
+            game.resume()
+            XCTAssertEqual(game.screen, .catchActive)
+            XCTAssertEqual(game.basketCount, 9)
+        }
+        accept(fruit, classification: .good, in: game)
+        game.viewWillDisappear(); game.sceneBecameInactive(); game.viewWillDisappear()
+        try await Task.sleep(for: .milliseconds(750))
+        XCTAssertEqual(game.store.completedRounds.count, 1)
+        XCTAssertTrue(try XCTUnwrap(game.store.completedRounds.first).successful)
+        XCTAssertEqual(game.store.progress(for: "nutrition")?.totalFruitCaught, 10)
+        XCTAssertEqual(game.store.progress(for: "nutrition")?.totalSuccessfulRounds, 1)
+    }
+
+    func testProtectedBadCatchAndFinalizationPreserveExactPassConsumptionAndRoundReward() async throws {
+        let suite = "RoundRewardCommit-\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let game = try await model(defaults: defaults)
+        var session = try XCTUnwrap(game.session)
+        session.availableStarPasses = 2 // Existing earned passes; acquisition is covered by frame tests.
+        game.session = session
+        let bad = try XCTUnwrap(game.currentQuestion?.badFruitIDs.first)
+        accept(bad, classification: .bad, in: game)
+        XCTAssertEqual(game.availableStarPasses, 1)
+        XCTAssertTrue(game.store.completedRounds.isEmpty)
+        try finishGoodBasket(game)
+        game.sceneBecameInactive(); game.viewWillDisappear(); game.viewWillDisappear()
+        try await Task.sleep(for: .milliseconds(750))
+        let record = try XCTUnwrap(game.store.completedRounds.first)
+        XCTAssertEqual(record.remainingStarPasses, 1)
+        XCTAssertEqual(record.collection.starPassesConsumed, 1)
+        XCTAssertEqual(record.collection.badFruit, [bad])
+        XCTAssertEqual(record.collection.goodFruit.count, 10)
+        XCTAssertEqual(record.finalScore, 10 * game.engine.rules.goodFruitCatchScore)
+        XCTAssertEqual(game.store.completedRounds.count, 1)
+        XCTAssertEqual(game.store.progress(for: "nutrition")?.totalFruitCaught, 10)
+        XCTAssertEqual(Prompt28FruitBasketStore(defaults: defaults).completedRounds, [record])
+    }
+
     func testOrdinaryDelayedRevealPresentsAlreadyCommittedResultWithoutCountingItAgain() async throws {
         let suite = "RoundNormalCommit-\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

@@ -57,3 +57,11 @@ Use Xcode's test result attachments for screenshots. Use `xcrun simctl io "$FRUI
 Listen to the four independent audio channels and master mute. Verify splash only on puddle entry, movement only while moving in water, branch impact only on branch contact, all respecting SFX volume/mute; test background/inactive/app-switcher, interruptions and route changes. The new Foley is synthesized, not a field recording, and its subjective realism is not accepted. Simulator player observations do not establish audible quality, Bluetooth/headphone behavior or physical-device interruption behavior.
 
 Run on supported physical iPhones to measure startup, memory/thermal pressure, inference latency, offline cold launch, storage use, accessibility, recordings/audio routes, protected-data behavior and app restarts. Do not promote hardware-only skips to PASS. Reconcile each requirement with its exact evidence and remaining discrepancy before release. No merge into main is authorized.
+
+## One-command continuation verification
+
+```bash
+python3 Tools/verify_continuation_on_mac.py --simulator-id "<actual available iPhone simulator UDID>" --source-commit "<full delivered Git commit>"
+```
+
+This executes the five existing batches in order and records every exit/result. Build or preflight failure blocks subsequent batches explicitly; later test failures are retained while other runnable batches continue. MADLAD inference remains excluded. No run of this command has occurred on a local Mac here.
