@@ -129,7 +129,7 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
         self.isDevelopmentPreview = isDevelopmentPreview
     }
     var resolvedSemanticDocument: FruitfolioSemanticDocument {
-        guard let semanticDocument, semanticDocument.plainText == answerText else {
+        guard let semanticDocument, semanticDocument.plainText.utf8.elementsEqual(answerText.utf8) else {
             return .init(spans: [.init(text: answerText)])
         }
         return semanticDocument

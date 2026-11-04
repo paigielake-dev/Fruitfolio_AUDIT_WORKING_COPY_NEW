@@ -302,12 +302,29 @@ nonisolated struct AskConversationScrollPolicy: Equatable, Sendable {
     private(set) var followsLatest = true
     private(set) var isUserDragging = false
     private(set) var isAtLatest = true
+    private var lastContentTop: Double?
+    private var lastViewportHeight: Double?
     var shouldFollow: Bool { followsLatest && !isUserDragging }
 
     mutating func updateBottom(_ bottom: Double, viewportHeight: Double) {
         guard bottom.isFinite, viewportHeight.isFinite, viewportHeight > 0 else { return }
         isAtLatest = bottom <= viewportHeight + 24
         if isAtLatest && !isUserDragging { followsLatest = true }
+    }
+    /// VoiceOver paging and native scrollbar scrolling do not necessarily call
+    /// a SwiftUI DragGesture. Track movement of the content's origin as well as
+    /// its bottom: streaming extends the bottom, while reading earlier moves
+    /// the origin toward the viewport. Keyboard/viewport changes are layout,
+    /// not a new reading gesture.
+    mutating func updateGeometry(contentTop: Double, contentBottom: Double, viewportHeight: Double) {
+        guard contentTop.isFinite, contentBottom.isFinite, viewportHeight.isFinite,
+              viewportHeight > 0, contentBottom >= contentTop else { return }
+        let viewportChanged = lastViewportHeight.map { abs($0 - viewportHeight) > 1 } ?? true
+        let movedEarlier = lastContentTop.map { contentTop > $0 + 2 } ?? false
+        updateBottom(contentBottom, viewportHeight: viewportHeight)
+        if !viewportChanged && movedEarlier && !isAtLatest { followsLatest = false }
+        lastContentTop = contentTop
+        lastViewportHeight = viewportHeight
     }
     mutating func userDragged(towardEarlier: Bool) {
         isUserDragging = true
@@ -317,5 +334,8 @@ nonisolated struct AskConversationScrollPolicy: Equatable, Sendable {
         isUserDragging = false
         if isAtLatest { followsLatest = true }
     }
-    mutating func requestedNewQuestion() { followsLatest = true; isUserDragging = false }
+    mutating func requestedNewQuestion() {
+        followsLatest = true; isUserDragging = false
+        lastContentTop = nil; lastViewportHeight = nil
+    }
 }

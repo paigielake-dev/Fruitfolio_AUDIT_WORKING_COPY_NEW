@@ -24,7 +24,9 @@ struct Prompt09AskView: View {
         Prompt10PendingSavedContent?
 
     @State private var savedAnswerIDs: Set<String> = []
-    @State private var savedExcerptText: String?
+    @State private var savedExcerpts: Set<AskExcerptIdentity> = []
+    @State private var archivedSelections: [UUID: AskExcerptSelection] = [:]
+    @State private var pendingExcerptIdentity: AskExcerptIdentity?
     @State private var librarySaveError: String?
 
     @FocusState private var inputFocused: Bool
@@ -129,8 +131,8 @@ struct Prompt09AskView: View {
                         .accessibilityIdentifier("ask.journalContent")
                         .background {
                             GeometryReader { geometry in
-                                Color.clear.preference(key: AskConversationBottomKey.self,
-                                    value: geometry.frame(in: .named("askConversationViewport")).maxY)
+                                Color.clear.preference(key: AskConversationFrameKey.self,
+                                    value: geometry.frame(in: .named("askConversationViewport")))
                             }
                         }
                         .frame(maxWidth: 680)
@@ -155,8 +157,9 @@ struct Prompt09AskView: View {
                                 .onChange(of: geometry.size.height) { _, value in conversationViewportHeight = value }
                         }
                     }
-                    .onPreferenceChange(AskConversationBottomKey.self) { bottom in
-                        conversationScrollPolicy.updateBottom(Double(bottom), viewportHeight: Double(conversationViewportHeight))
+                    .onPreferenceChange(AskConversationFrameKey.self) { frame in
+                        conversationScrollPolicy.updateGeometry(contentTop: Double(frame.minY),
+                            contentBottom: Double(frame.maxY), viewportHeight: Double(conversationViewportHeight))
                     }
                     .onChange(of: viewModel.displayedAnswerText.count) {
                         if viewModel.phase == .answering { audioManager.playTypingTick() }
@@ -244,17 +247,21 @@ struct Prompt09AskView: View {
                             }
 
                         case .excerpt:
-                            savedExcerptText =
-                                pendingLibrarySave
-                                    .excerptText
+                            if let identity = pendingExcerptIdentity,
+                               UUID(uuidString: pendingLibrarySave.originalAnswerID ?? "") == identity.answerID,
+                               pendingLibrarySave.excerptText == identity.text {
+                                savedExcerpts.insert(identity)
+                            }
                         }
 
                         self.pendingLibrarySave =
                             nil
+                        pendingExcerptIdentity = nil
                     },
                     onCancel: {
                         self.pendingLibrarySave =
                             nil
+                        pendingExcerptIdentity = nil
                     }
                 )
                 .zIndex(200)
@@ -324,12 +331,7 @@ struct Prompt09AskView: View {
             if phase != .answering { audioManager.stop(category: .typingASMR) }
         }
         .onDisappear {
-            audioManager.stop(category: .typingASMR)
-            inputFocused = false
-            viewModel.resetConversation()
-            savedAnswerIDs.removeAll()
-            savedExcerptText = nil
-            librarySaveError = nil
+            clearActiveConversation()
         }
         .toolbar(
             .hidden,
@@ -692,12 +694,19 @@ struct Prompt09AskView: View {
 
     private func archivedAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            FruitfolioSemanticText(document: answer.resolvedSemanticDocument,
-                baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
-                .font(.custom("Chalkboard SE", size: 16, relativeTo: .body))
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
-                .textSelection(.enabled)
-                .fixedSize(horizontal: false, vertical: true)
+            Prompt09MaroonSelectableAnswerText(text: answer.answerText,
+                selectedText: archivedTextBinding(for: answer.id), semanticDocument: answer.resolvedSemanticDocument,
+                selectedRange: archivedRangeBinding(for: answer.id),
+                accessibilityIdentifier: "ask.archivedAnswer." + answer.id.uuidString)
+            if let selection = archivedSelections[answer.id], let validated = selection.validated(for: answer) {
+                FruitfolioControlPillButton(
+                    label: savedExcerpts.contains(validated.identity) ? "selection saved ♡" : "save selection ♡",
+                    localizationKey: savedExcerpts.contains(validated.identity) ? "selection saved ♡" : "save selection ♡") {
+                    prepareExcerptForLibrarySave(answer, selection: selection)
+                }
+                .disabled(savedExcerpts.contains(validated.identity))
+                .accessibilityIdentifier("ask.saveArchivedSelection." + answer.id.uuidString)
+            }
             if !answer.sources.isEmpty { sourceSection(answer.sources) }
             FruitfolioControlPillButton(label: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡",
                 localizationKey: savedAnswerIDs.contains(String(describing: answer.id)) ? "answer saved ♡" : "save answer ♡") {
@@ -757,10 +766,9 @@ struct Prompt09AskView: View {
                     if viewModel.phase ==
                         .answering {
 
-                        FruitfolioSemanticText(document: answer.resolvedSemanticDocument.prefix(
-                            characters: viewModel.displayedAnswerText.count),
-                            baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body))
-                        .accessibilityIdentifier("ask.progressiveAnswer")
+                        Prompt09MaroonSelectableAnswerText(text: viewModel.displayedAnswerText,
+                            selectedText: .constant(nil), semanticDocument: answer.resolvedSemanticDocument,
+                            accessibilityIdentifier: "ask.progressiveAnswer", isSelectable: false)
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -809,12 +817,10 @@ struct Prompt09AskView: View {
                             ) {
                                 WatercolorSecondaryButton(
                                     label:
-                                        savedExcerptText ==
-                                        viewModel
-                                            .selectedExcerptText
+                                        isCurrentExcerptSaved
                                         ? "selection saved ♡"
                                         : "save selection ♡",
-                                    localizationKey: savedExcerptText == viewModel.selectedExcerptText
+                                    localizationKey: isCurrentExcerptSaved
                                         ? "selection saved ♡" : "save selection ♡",
                                     action: {
                                         prepareExcerptForLibrarySave(
@@ -823,9 +829,7 @@ struct Prompt09AskView: View {
                                     }
                                 )
                                 .disabled(
-                                    savedExcerptText ==
-                                        viewModel
-                                            .selectedExcerptText
+                                    isCurrentExcerptSaved
                                 )
                             }
                         }
@@ -1028,6 +1032,7 @@ struct Prompt09AskView: View {
         guard viewModel.phase != .answering || viewModel.answer?.id != answer.id else {
             return
         }
+        pendingExcerptIdentity = nil
 
         let attribution: AskSavedAttributionSnapshot
         do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
@@ -1062,22 +1067,20 @@ struct Prompt09AskView: View {
     }
 
     private func prepareExcerptForLibrarySave(
-        _ answer: AskAnswer
+        _ answer: AskAnswer,
+        selection: AskExcerptSelection? = nil
     ) {
-        guard
-            viewModel.phase !=
-                .answering,
-            let excerpt =
-                viewModel
-                    .selectedExcerptText,
-            !excerpt.isEmpty
-        else {
-            return
-        }
+        guard viewModel.phase != .answering || viewModel.answer?.id != answer.id else { return }
+        let selection = selection ?? AskExcerptSelection(text: viewModel.selectedExcerptText,
+                                                        range: viewModel.selectedExcerptRange)
+        guard let validated = selection.validated(for: answer) else { return }
+        let excerpt = validated.identity.text
+        pendingExcerptIdentity = nil
 
         let attribution: AskSavedAttributionSnapshot
         do { attribution = try AskSavedAttributionSnapshot(answer: answer) }
         catch { librarySaveError = error.localizedDescription; return }
+        pendingExcerptIdentity = validated.identity
 
         pendingLibrarySave =
             Prompt10PendingSavedContent(
@@ -1105,10 +1108,33 @@ struct Prompt09AskView: View {
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
                     answer.generationTimestamp,
-                semanticDocument: viewModel.selectedExcerptRange.flatMap {
-                    answer.resolvedSemanticDocument.slice(utf16Range: $0)
-                }.flatMap { $0.plainText == excerpt ? $0 : nil }
+                semanticDocument: validated.document
             )
+    }
+
+    private var isCurrentExcerptSaved: Bool {
+        guard let answer = viewModel.answer,
+              let selected = AskExcerptSelection(text: viewModel.selectedExcerptText,
+                  range: viewModel.selectedExcerptRange).validated(for: answer) else { return false }
+        return savedExcerpts.contains(selected.identity)
+    }
+
+    private func archivedTextBinding(for id: UUID) -> Binding<String?> {
+        Binding(get: { archivedSelections[id]?.text }, set: { value in
+            var selection = archivedSelections[id] ?? .init()
+            guard selection.text != value else { return }
+            selection.text = value
+            archivedSelections[id] = selection
+        })
+    }
+
+    private func archivedRangeBinding(for id: UUID) -> Binding<NSRange?> {
+        Binding(get: { archivedSelections[id]?.range }, set: { value in
+            var selection = archivedSelections[id] ?? .init()
+            guard selection.range != value else { return }
+            selection.range = value
+            archivedSelections[id] = selection
+        })
     }
 
     // MARK: - Sources
@@ -1278,8 +1304,7 @@ struct Prompt09AskView: View {
                     label:
                         "ask something else", localizationKey: "ask something else"
                 ) {
-                    viewModel
-                        .resetConversation()
+                    clearActiveConversation()
                 }
             }
         }
@@ -1399,6 +1424,19 @@ struct Prompt09AskView: View {
     }
 
     // MARK: - Send
+
+    private func clearActiveConversation() {
+        audioManager.stop(category: .typingASMR)
+        inputFocused = false
+        viewModel.resetConversation()
+        savedAnswerIDs.removeAll()
+        savedExcerpts.removeAll()
+        archivedSelections.removeAll()
+        pendingExcerptIdentity = nil
+        pendingLibrarySave = nil
+        librarySaveError = nil
+        conversationScrollPolicy = AskConversationScrollPolicy()
+    }
 
     private func sendCurrentQuestion() {
         guard viewModel.canSend else {
@@ -1543,13 +1581,19 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     @Binding var selectedText: String?
     var semanticDocument: FruitfolioSemanticDocument? = nil
     @Binding var selectedRange: NSRange?
+    var accessibilityIdentifier = "ask.completedAnswer"
+    var isSelectable = true
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
-    init(text: String, selectedText: Binding<String?>, semanticDocument: FruitfolioSemanticDocument? = nil, selectedRange: Binding<NSRange?> = .constant(nil)) {
+    init(text: String, selectedText: Binding<String?>, semanticDocument: FruitfolioSemanticDocument? = nil,
+         selectedRange: Binding<NSRange?> = .constant(nil),
+         accessibilityIdentifier: String = "ask.completedAnswer", isSelectable: Bool = true) {
         self.text = text
         self._selectedText = selectedText
         self.semanticDocument = semanticDocument
         self._selectedRange = selectedRange
+        self.accessibilityIdentifier = accessibilityIdentifier
+        self.isSelectable = isSelectable
     }
 
     private static let maroon = UIColor(
@@ -1576,10 +1620,12 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         textView.delegate = context.coordinator
         textView.backgroundColor = .clear
         textView.isEditable = false
-        textView.isSelectable = true
+        textView.isSelectable = isSelectable
         textView.isScrollEnabled = false
         textView.textContainerInset = .zero
         textView.textContainer.lineFragmentPadding = 0
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
         textView.adjustsFontForContentSizeCategory = true
         textView.setContentCompressionResistancePriority(
             .defaultLow,
@@ -1587,7 +1633,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         )
         textView.tintColor = Self.selectionHighlight
         textView.accessibilityLabel = "Fruitfolio answer"
-        textView.accessibilityIdentifier = "ask.completedAnswer"
+        textView.accessibilityIdentifier = accessibilityIdentifier
 
         applyTextStyle(to: textView, session: context.coordinator.renderSession)
 
@@ -1598,7 +1644,10 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         _ textView: UITextView,
         context: Context
     ) {
+        context.coordinator.updateBindings(selectedText: $selectedText, selectedRange: $selectedRange)
         textView.tintColor = Self.selectionHighlight
+        if textView.isSelectable != isSelectable { textView.isSelectable = isSelectable }
+        textView.accessibilityIdentifier = accessibilityIdentifier
 
         _ = dynamicTypeSize
         let styled = context.coordinator.renderSession.prefix(text, document: semanticDocument,
@@ -1620,15 +1669,16 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
             return nil
         }
 
+        let safeWidth = max(1, width)
         let fittingSize = uiView.sizeThatFits(
             CGSize(
-                width: width,
+                width: safeWidth,
                 height: .greatestFiniteMagnitude
             )
         )
 
         return CGSize(
-            width: width,
+            width: safeWidth,
             height: ceil(fittingSize.height)
         )
     }
@@ -1669,6 +1719,10 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         ) {
             _selectedText = selectedText
             _selectedRange = selectedRange
+        }
+
+        func updateBindings(selectedText: Binding<String?>, selectedRange: Binding<NSRange?>) {
+            _selectedText = selectedText; _selectedRange = selectedRange
         }
 
         func textViewDidChangeSelection(
@@ -1722,9 +1776,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 
 
 
-private struct AskConversationBottomKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
+private struct AskConversationFrameKey: PreferenceKey {
+    static var defaultValue = CGRect.zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
 }
 
 private struct AskContinuousJournalPaper: View {

@@ -1,6 +1,6 @@
 {
   "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
-  "currentPart": 2,
+  "currentPart": 3,
   "part1Complete": false,
   "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
   "actualVerification": {
@@ -464,9 +464,189 @@
         "FruitfolioUITests/SharedModalGuardUITests.swift"
       ],
       "remaining": "Execute Hub/intro focused group, inspect actual spotlight geometry and audio behavior on Mac."
+    },
+    {
+      "requirementID": "FF1B-096",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 96",
+      "originalRequirement": "Replace the limited answer presentation with a continuous vertically scrollable paper experience.",
+      "change": "The existing continuous paper is retained; streaming and completed answers now share the native semantic rendering surface.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-097",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 97",
+      "originalRequirement": "Keep previous questions and answers visible throughout the active Ask session.",
+      "change": "Earlier answers retain independently scoped native text selection and excerpt-saving actions.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-107",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 107",
+      "originalRequirement": "Automatically follow new streamed text only when the user is near the bottom.",
+      "change": "Geometry distinguishes content growth from movement toward earlier answers, including VoiceOver and scrollbar movement.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-108",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 108",
+      "originalRequirement": "Do not force scrolling to the bottom while the user is reading older content.",
+      "change": "Earlier-reader intent is preserved without relying solely on finger-drag callbacks.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-109",
+      "originalReference": "Part 3 / 3A. Continuous paper and conversation behavior / 109",
+      "originalRequirement": "Preserve text selection, citation interactions, and accessibility reading order.",
+      "change": "Earlier/native answer selection uses exact UTF-16 ranges, distinct accessibility identifiers, and unchanged source references.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-118",
+      "originalReference": "Part 3 / 3C. Session-only history / 118",
+      "originalRequirement": "Keep Ask conversation history only while the user remains in the active Ask session.",
+      "change": "Selection and save-badge UI state remains active-session-only.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-119",
+      "originalReference": "Part 3 / 3C. Session-only history / 119",
+      "originalRequirement": "Clear unsaved questions and answers when the user exits Ask.",
+      "change": "Exit and explicit conversation reset clear current and archived selection state and pending save references.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-124",
+      "originalReference": "Part 3 / 3C. Session-only history / 124",
+      "originalRequirement": "Preserve only explicitly selected content saved through the Guide workflow.",
+      "change": "Saved excerpt feedback is keyed by answer identity, exact occurrence and bytes instead of shared text alone.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-125",
+      "originalReference": "Part 3 / 3C. Session-only history / 125",
+      "originalRequirement": "Retain citations and attribution for successfully saved content.",
+      "change": "Archived excerpts reuse immutable original-answer attribution and semantic range validation.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-128",
+      "originalReference": "Part 3 / 3C. Session-only history / 128",
+      "originalRequirement": "Prevent canceled or failed saves from creating persistent copies.",
+      "change": "Cancelled saves do not mark excerpts saved; successful destination callbacks mark only the matching pending identity.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-133",
+      "originalReference": "Part 3 / 3D. Ask AI performance / 133",
+      "originalRequirement": "Cache appropriate reusable results.",
+      "change": "Progressive answers now actually use the view-owned semantic render cache; it is cleared on native-view dismantling.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-136",
+      "originalReference": "Part 3 / 3D. Ask AI performance / 136",
+      "originalRequirement": "Preserve research retrieval, claim/evidence mapping, medical safety, and citation validation.",
+      "change": "Strict research validator and retrieval code were not modified; semantic output now also rejects byte-mismatched annotation text.",
+      "requirementStatus": "PARTIAL — targeted source repair implemented; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/AskExcerptSelectionTests.swift",
+        "FruitfolioTests/AskSessionLifetimeTests.swift",
+        "FruitfolioTests/SemanticRenderSessionTests.swift",
+        "FruitfolioUITests/AskContinuousPaperUITests.swift"
+      ],
+      "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
     }
   ],
-  "nextAction": "Complete remaining Hub source checks, then continue Part 3 Ask. Preserve pending shared-system Mac verification and full app-wide adoption review.",
+  "nextAction": "Finish Ask source integration review; then continue Part 4 library and Guide editing/data integration. Parts 4–10 remain unfinished.",
   "allTenPartsComplete": false,
   "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
   "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",

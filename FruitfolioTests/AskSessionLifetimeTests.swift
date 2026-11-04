@@ -70,6 +70,34 @@ final class AskSessionLifetimeTests: XCTestCase {
 }
 
 extension AskSessionLifetimeTests {
+    func testVoiceOverOrScrollbarMovementStopsFollowingEvenWithoutFingerDragCallbacks() {
+        var policy = AskConversationScrollPolicy()
+        policy.updateGeometry(contentTop: -1000, contentBottom: 700, viewportHeight: 700)
+        XCTAssertTrue(policy.shouldFollow)
+        policy.updateGeometry(contentTop: -500, contentBottom: 1200, viewportHeight: 700)
+        XCTAssertFalse(policy.shouldFollow, "Native accessibility/scrollbar movement must preserve reading intent")
+        policy.updateGeometry(contentTop: -500, contentBottom: 1500, viewportHeight: 700)
+        XCTAssertFalse(policy.shouldFollow, "Streaming growth must not yank an earlier reader back down")
+        policy.updateGeometry(contentTop: -1300, contentBottom: 700, viewportHeight: 700)
+        XCTAssertTrue(policy.shouldFollow, "Returning to the latest content intentionally enables following")
+    }
+
+    func testGrowingTextKeyboardResizeAndExplicitNewQuestionDoNotInventAnEarlierReadingGesture() {
+        var policy = AskConversationScrollPolicy()
+        policy.updateGeometry(contentTop: -100, contentBottom: 700, viewportHeight: 700)
+        policy.updateGeometry(contentTop: -100, contentBottom: 1100, viewportHeight: 700)
+        XCTAssertTrue(policy.shouldFollow)
+        policy.updateGeometry(contentTop: -50, contentBottom: 1150, viewportHeight: 400)
+        XCTAssertTrue(policy.shouldFollow, "Keyboard resize is layout, not a user's scroll toward earlier answers")
+        policy.updateGeometry(contentTop: 0, contentBottom: 1200, viewportHeight: 400)
+        XCTAssertFalse(policy.shouldFollow)
+        policy.requestedNewQuestion()
+        policy.updateGeometry(contentTop: 0, contentBottom: 1400, viewportHeight: 400)
+        XCTAssertTrue(policy.shouldFollow)
+        policy.updateGeometry(contentTop: .nan, contentBottom: 1600, viewportHeight: 400)
+        XCTAssertTrue(policy.shouldFollow, "Nonfinite intermediate geometry must not change reading intent")
+    }
+
     func testContinuousPaperAutoFollowDistinguishesGrowingAnswersFromReadingEarlierContent() {
         var policy = AskConversationScrollPolicy()
         policy.updateBottom(700, viewportHeight: 700)
