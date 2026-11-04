@@ -21,11 +21,21 @@ nonisolated enum FruitfolioPopupLayout {
     /// writing stays to the right of its red margin and torn binding holes.
     static func geometry(assetSize: CGSize, normalizedWriting: CGRect,
                          available: CGSize, maximumWidth: CGFloat = 420, edgeClearance: CGFloat = 16) -> FruitfolioPopupGeometry {
-        guard assetSize.width > 0, assetSize.height > 0, available.width > 0, available.height > 0 else {
+        guard [assetSize.width, assetSize.height, available.width, available.height,
+               maximumWidth, edgeClearance, normalizedWriting.minX, normalizedWriting.minY,
+               normalizedWriting.width, normalizedWriting.height].allSatisfy({ $0.isFinite }),
+              assetSize.width > 0, assetSize.height > 0, available.width > 0, available.height > 0,
+              maximumWidth > 0, edgeClearance >= 0,
+              normalizedWriting.minX >= 0, normalizedWriting.minY >= 0,
+              normalizedWriting.width > 0, normalizedWriting.height > 0,
+              normalizedWriting.maxX <= 1, normalizedWriting.maxY <= 1 else {
             return .init(artwork: .zero, writing: .zero)
         }
         let width = min(maximumWidth, max(0, available.width - edgeClearance * 2), max(0, available.height - edgeClearance * 2) * assetSize.width / assetSize.height)
         let height = width * assetSize.height / assetSize.width
+        guard width > 0, height.isFinite, height > 0 else {
+            return .init(artwork: .zero, writing: .zero)
+        }
         let artwork = CGRect(x: (available.width - width) / 2, y: (available.height - height) / 2, width: width, height: height)
         let writing = CGRect(x: artwork.minX + normalizedWriting.minX * width,
                              y: artwork.minY + normalizedWriting.minY * height,

@@ -21,6 +21,14 @@ struct FruitPopupHost<Content: View>: View {
                         width: proxy.size.width,
                         height: proxy.size.height
                     )
+                    .fruitfolioModalBlur(
+                        active: popupCoordinator.currentPopup != nil && !usesHubTourTreatment,
+                        reduceMotion: motionPreferences.reduceMotionActive
+                    )
+                    // The tour keeps its own approved appearance, but its
+                    // invitation must still guard the underlying Hub controls.
+                    .allowsHitTesting(popupCoordinator.currentPopup == nil)
+                    .accessibilityHidden(popupCoordinator.currentPopup != nil)
 
                 if let request =
                     popupCoordinator.currentPopup {
@@ -34,6 +42,7 @@ struct FruitPopupHost<Content: View>: View {
                         request: request,
                         proxy: proxy
                     )
+                    .accessibilityAddTraits(.isModal)
                     .zIndex(999)
                 }
             }
@@ -95,6 +104,10 @@ struct FruitPopupHost<Content: View>: View {
         }
     }
 
+    private var usesHubTourTreatment: Bool {
+        popupCoordinator.currentPopup?.source?.hasPrefix("prompt07.") == true
+    }
+
     // MARK: - Outside Tap Layer
 
     @ViewBuilder
@@ -134,12 +147,7 @@ struct FruitPopupHost<Content: View>: View {
         let horizontalInset:
             CGFloat = 16
 
-        let usableWidth =
-            max(
-                proxy.size.width
-                    - (horizontalInset * 2),
-                240
-            )
+        let usableWidth = max(0, proxy.size.width - (horizontalInset * 2))
 
         return VStack(
             spacing: 0

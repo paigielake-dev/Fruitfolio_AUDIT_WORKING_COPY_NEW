@@ -89,37 +89,32 @@ struct FruitPopupView: View {
     }
 
     private var characterWidth: CGFloat {
-        min(max(availableWidth * 0.18, 58), 72)
+        composition.characterWidth
     }
 
     private var bubbleWidth: CGFloat {
-        let messageBonus: CGFloat
-        switch request.message.count {
-        case 0...58: messageBonus = 0
-        case 59...105: messageBonus = 18
-        default: messageBonus = 30
-        }
-
-        let desired = max(availableWidth * 0.58, 184) + messageBonus
-        let maximum = max(188, availableWidth - characterWidth + 10)
-        return min(desired, min(246, maximum))
+        composition.bubbleWidth
     }
 
     private var compositionSpacing: CGFloat {
-        -min(14, characterWidth * 0.20)
+        composition.spacing
+    }
+
+    private var composition: FruitPopupCompositionMetrics {
+        .init(availableWidth: availableWidth, messageLength: request.message.count)
     }
 
     var body: some View {
         Group {
             if characterSide == .left {
                 HStack(alignment: .bottom, spacing: compositionSpacing) {
-                    animatedCharacter
+                    if composition.showsCharacter { animatedCharacter }
                     animatedBubble
                 }
             } else {
                 HStack(alignment: .bottom, spacing: compositionSpacing) {
                     animatedBubble
-                    animatedCharacter
+                    if composition.showsCharacter { animatedCharacter }
                 }
             }
         }
@@ -176,8 +171,8 @@ struct FruitPopupView: View {
     // remains inside the painted writing area and is reachable by scrolling.
     private var messageAndActions: some View {
         VStack(alignment: .center, spacing: 7) {
-            invitationSafeMessage
-                .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+            FruitfolioSemanticText(document: invitationSafeMessage,
+                baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .multilineTextAlignment(.center)
                 .lineSpacing(0.8)
@@ -201,17 +196,12 @@ struct FruitPopupView: View {
         .frame(maxWidth: .infinity, alignment: .center)
     }
 
-    private var invitationSafeMessage: Text {
+    private var invitationSafeMessage: FruitfolioSemanticDocument {
         if request.message == "hello there! ♡ want me to show you around?" {
-            return Text("hello there!\u{00A0}♡\nwant me to show you around?")
+            return .init(spans: [.init(text: "hello there!\u{00A0}♡\nwant me to show you around?")])
         }
 
-        return Text(
-            request.message.replacingOccurrences(
-                of: " ♡",
-                with: "\u{00A0}♡"
-            )
-        )
+        return request.semanticMessage
     }
 
     private func popupActionButton(
@@ -236,5 +226,27 @@ struct FruitPopupView: View {
         }
         .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
+    }
+}
+
+/// Keep the approved fruit/bubble relationship at ordinary phone widths. If a
+/// constrained container cannot fit both at their usable sizes, omit decorative
+/// fruit rather than force the text column outside its parent or shrink text.
+nonisolated struct FruitPopupCompositionMetrics {
+    let characterWidth: CGFloat
+    let bubbleWidth: CGFloat
+    let spacing: CGFloat
+    let showsCharacter: Bool
+
+    init(availableWidth: CGFloat, messageLength: Int) {
+        let available = availableWidth.isFinite ? max(0, availableWidth) : 0
+        let character = min(max(available * 0.18, 58), 72)
+        let overlap = min(14, character * 0.20)
+        showsCharacter = available >= character + 188 - overlap
+        characterWidth = showsCharacter ? character : 0
+        spacing = showsCharacter ? -overlap : 0
+        let bonus: CGFloat = messageLength <= 58 ? 0 : (messageLength <= 105 ? 18 : 30)
+        let desired = max(available * 0.58, 184) + bonus
+        bubbleWidth = min(desired, 246, max(0, available - characterWidth - spacing))
     }
 }

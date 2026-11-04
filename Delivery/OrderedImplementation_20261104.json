@@ -1,0 +1,170 @@
+{
+  "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
+  "currentPart": 1,
+  "part1Complete": false,
+  "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
+  "actualVerification": {
+    "gitDiffCheck": "PASS — whitespace only",
+    "SwiftXcodeSimulator": "NOT RUN — unavailable on this Linux host"
+  },
+  "requirements": [
+    {
+      "requirementID": "FF1B-001",
+      "originalReference": "Part 1 / Universal blur system / 1",
+      "originalRequirement": "Create one canonical blur treatment used throughout Fruitfolio.",
+      "change": "The existing shared blur is retained; nested active hosts no longer compound its appearance.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-002",
+      "originalReference": "Part 1 / Universal blur system / 2",
+      "originalRequirement": "Apply identical blur appearance, intensity, opacity, and behavior wherever blur is required.",
+      "change": "Canonical treatment respects inherited active modal ownership and system Reduce Motion.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-003",
+      "originalReference": "Part 1 / Universal blur system / 3",
+      "originalRequirement": "Remove inconsistent feature-specific blur implementations.",
+      "change": "Generic fruit popups now use the canonical background treatment.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-005",
+      "originalReference": "Part 1 / Universal blur system / 5",
+      "originalRequirement": "Exception: retain the Hub’s existing tour-specific blur treatment.",
+      "change": "Hub first-launch tour source retains its existing visual-treatment exception.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-006",
+      "originalReference": "Part 1 / Universal blur system / 6",
+      "originalRequirement": "Ensure blur responds correctly to popup opening, closing, navigation, and other state changes.",
+      "change": "Generic popup hosts block hit testing/VoiceOver for their lifetime; inherited ownership survives inner dismissal.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-018",
+      "originalReference": "Part 1 / Universal popup layout system / 18",
+      "originalRequirement": "Ensure text wraps without clipping, overflowing, or truncating with ellipses.",
+      "change": "Invalid/out-of-art/nonfinite writing regions fail closed instead of yielding unsafe frames.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-019",
+      "originalReference": "Part 1 / Universal popup layout system / 19",
+      "originalRequirement": "Support different popup artwork sizes, text lengths, and screen sizes.",
+      "change": "Narrow popup compositions fit their actual available width; decorative fruit is omitted only when it cannot fit at usable size.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-021",
+      "originalReference": "Part 1 / Universal popup layout system / 21",
+      "originalRequirement": "Account for Strawberry, Blueberry, and Peach artwork.",
+      "change": "Existing strawberry/blueberry/peach assets retained; no replacement art introduced.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-022",
+      "originalReference": "Part 1 / Universal popup layout system / 22",
+      "originalRequirement": "Preserve character proportions and prevent characters from overlapping text.",
+      "change": "Existing fruit proportions retained; constrained layout does not shrink fruit below its existing minimum.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-047",
+      "originalReference": "Part 1 / Universal semantic text stylization / 47",
+      "originalRequirement": "Apply it across all eligible app-generated and dynamically presented text.",
+      "change": "Generic popup rendering accepts author-declared semantic spans through the shared renderer.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-048",
+      "originalReference": "Part 1 / Universal semantic text stylization / 48",
+      "originalRequirement": "Include Ask answers, fallbacks, Cycle Tracker, Fruit Basket, tutorials, popups, character dialogue, saved content, and guides.",
+      "change": "Fruit-character popup request transport preserves explicitly supplied semantic roles.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    },
+    {
+      "requirementID": "FF1B-064",
+      "originalReference": "Part 1 / Universal semantic text stylization / 64",
+      "originalRequirement": "Ensure styling never causes text overflow or popup collisions.",
+      "change": "Text remains inside a validated writing region and the popup fits its available width.",
+      "requirementStatus": "PARTIAL — bounded shared-host corrections; full app-wide adoption/acceptance not claimed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/ModalBackgroundRuntimeTests.swift",
+        "FruitfolioTests/SharedPopupCompositionTests.swift"
+      ],
+      "remaining": "Run new tests and existing modal/popup/large-text journeys on Mac; review remaining per-screen adoption before accepting the complete requirement."
+    }
+  ],
+  "nextAction": "Continue Part 1 decorative artwork/semantic adoption/performance inspection and integration before advancing to Part 2.",
+  "allTenPartsComplete": false
+}

@@ -13,29 +13,48 @@ enum FruitfolioModalBlurSpec {
 struct FruitfolioModalBlurModifier: ViewModifier {
     let isActive: Bool
     let reduceMotion: Bool
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioModalBackgroundBlocked) private var ancestorBlocksBackground
 
     func body(content: Content) -> some View {
+        // Nested editors may both own a confirmation. Only the outer active
+        // host paints the treatment: otherwise radius, scale and tint compound.
+        let paintsTreatment = isActive && !ancestorBlocksBackground
+        let blocksBackground = isActive || ancestorBlocksBackground
+        let motionReduced = reduceMotion || systemReduceMotion
         content
-            .blur(radius: isActive ? FruitfolioModalBlurSpec.radius : 0)
-            .scaleEffect(isActive && !reduceMotion ? FruitfolioModalBlurSpec.contentScale : 1.0)
+            .environment(\.fruitfolioModalBackgroundBlocked, blocksBackground)
+            .blur(radius: paintsTreatment ? FruitfolioModalBlurSpec.radius : 0)
+            .scaleEffect(paintsTreatment && !motionReduced ? FruitfolioModalBlurSpec.contentScale : 1.0)
             .overlay {
-                if isActive {
+                if paintsTreatment {
                     DesignTokens.ColorToken.backgroundCream
                         .opacity(FruitfolioModalBlurSpec.dimOpacity)
                         .ignoresSafeArea().allowsHitTesting(false).accessibilityHidden(true)
                 }
             }
-            .allowsHitTesting(!isActive)
+            .allowsHitTesting(!blocksBackground)
             // Blurred modal backgrounds must not remain reachable by VoiceOver.
-            .accessibilityHidden(isActive)
+            .accessibilityHidden(blocksBackground)
             .animation(
                 .easeOut(
-                    duration: reduceMotion
+                    duration: motionReduced
                         ? FruitfolioModalBlurSpec.reducedMotionDuration
                         : FruitfolioModalBlurSpec.animationDuration
                 ),
                 value: isActive
             )
+    }
+}
+
+private struct FruitfolioModalBackgroundBlockedKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
+extension EnvironmentValues {
+    var fruitfolioModalBackgroundBlocked: Bool {
+        get { self[FruitfolioModalBackgroundBlockedKey.self] }
+        set { self[FruitfolioModalBackgroundBlockedKey.self] = newValue }
     }
 }
 
