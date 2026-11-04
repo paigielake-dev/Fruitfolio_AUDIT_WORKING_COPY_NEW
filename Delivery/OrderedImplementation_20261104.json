@@ -321,10 +321,118 @@
         "FruitfolioTests/SemanticRenderSessionTests.swift"
       ],
       "remaining": "Execute focused shared tests and complete remaining universal-system screen integration."
+    },
+    {
+      "requirementID": "FF1B-007",
+      "originalReference": "Part 1 / Universal button system / 1",
+      "originalRequirement": "Remove every gray button with a red outline.",
+      "change": "Retained watercolor pill replacements; canonical icon controls now use original control_previous/close/plus/check artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-008",
+      "originalReference": "Part 1 / Universal button system / 2",
+      "originalRequirement": "Replace those buttons with the appropriate existing control-pill artwork.",
+      "change": "Shared Back/Close/Add/Confirm wrappers retain existing native actions and adopt the bundled approved artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-009",
+      "originalReference": "Part 1 / Universal button system / 3",
+      "originalRequirement": "Apply the same cute button-pop animation across the entire application.",
+      "change": "Shared icon wrappers retain CutePopButtonStyle; no second gesture recognizer or artificial action delay.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-010",
+      "originalReference": "Part 1 / Universal button system / 4",
+      "originalRequirement": "Include Cycle Tracker buttons, which were specifically identified as inconsistent.",
+      "change": "Cycle onboarding, daily logging and hormone/context screens inherit the canonical shared Back/Close artwork.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-011",
+      "originalReference": "Part 1 / Universal button system / 5",
+      "originalRequirement": "Keep button interaction, sound, and navigation synchronized.",
+      "change": "Generic popup actions now play the shared button sound before their immediate handler, respecting existing SFX preferences.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-012",
+      "originalReference": "Part 1 / Universal button system / 6",
+      "originalRequirement": "Prevent animations from introducing noticeable input lag.",
+      "change": "Actions remain immediate; animation and focus timing never delay handlers.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-026",
+      "originalReference": "Part 1 / Universal popup layout system / 26",
+      "originalRequirement": "Apply this system to all applicable confirmations, errors, help popups, character dialogue, and feature-specific overlays.",
+      "change": "Generic fruit dialog messages gain per-presentation VoiceOver focus and stable accessibility identifiers.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-070",
+      "originalReference": "Part 1 / Performance and responsiveness / 70",
+      "originalRequirement": "Preserve Reduce Motion behavior while eliminating unnecessary lag.",
+      "change": "Generic page turns disable 3D rotation under system/app Reduce Motion; bottom sheets use an opacity-only transition under reduced motion.",
+      "requirementStatus": "PARTIAL — remaining per-screen verification and adoption not presumed",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/SharedControlArtworkTests.swift",
+        "FruitfolioUITests/SharedModalGuardUITests.swift"
+      ],
+      "remaining": "Run focused shared tests, screenshot review and VoiceOver/reduced-motion checks on the founder Mac."
     }
   ],
   "nextAction": "Continue Part 1 decorative artwork/semantic adoption/performance inspection and integration before advancing to Part 2.",
   "allTenPartsComplete": false,
   "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
-  "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b"
+  "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",
+  "latestLocalVerification": {
+    "gitDiffCheck": "PASS — whitespace only",
+    "SwiftRuntime": "NOT RUN — MAC EXECUTION REQUIRED"
+  }
 }

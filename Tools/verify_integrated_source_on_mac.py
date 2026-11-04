@@ -20,6 +20,7 @@ GROUPS = {
     'shared': ['FruitfolioTests/ModalBackgroundRuntimeTests',
                'FruitfolioTests/SharedPopupCompositionTests',
                'FruitfolioTests/SharedDecorationLayoutTests',
+               'FruitfolioTests/SharedControlArtworkTests',
                'FruitfolioTests/SemanticRenderSessionTests',
                'FruitfolioTests/PopupLayoutTests',
                'FruitfolioTests/SemanticUnicodeBoundaryTests',

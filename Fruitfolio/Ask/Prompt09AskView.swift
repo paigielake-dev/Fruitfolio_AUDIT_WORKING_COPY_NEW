@@ -1655,6 +1655,7 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         FruitfolioSemanticAttributedRenderer.render(document)
     }
 
+    @MainActor
     final class Coordinator:
         NSObject,
         UITextViewDelegate

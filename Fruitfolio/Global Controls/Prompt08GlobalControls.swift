@@ -473,6 +473,29 @@ private struct FruitfolioPaperTape: View {
 
 // MARK: - BackControl
 
+enum FruitfolioStandardControl: CaseIterable {
+    case back, close, add, confirm
+
+    var assetID: FruitfolioAssetID {
+        switch self {
+        case .back: return .control_previous
+        case .close: return .control_close
+        case .add: return .control_plus
+        case .confirm: return .control_check
+        }
+    }
+}
+
+private struct FruitfolioStandardControlArtwork: View {
+    let control: FruitfolioStandardControl
+    var body: some View {
+        FruitfolioImage(id: control.assetID)
+            .scaledToFit()
+            .frame(width: 44, height: 44)
+            .accessibilityHidden(true)
+    }
+}
+
 struct BackControl: View {
     let action: () -> Void
 
@@ -491,14 +514,7 @@ struct BackControl: View {
                 action()
             }
         ) {
-            Image(systemName: "chevron.backward")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .back)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -506,6 +522,7 @@ struct BackControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.back")
     }
 }
 
@@ -529,14 +546,7 @@ struct CloseControl: View {
                 action()
             }
         ) {
-            Image(systemName: "xmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .close)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -544,6 +554,7 @@ struct CloseControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.close")
     }
 }
 
@@ -567,14 +578,7 @@ struct AddControl: View {
                 action()
             }
         ) {
-            Image(systemName: "plus")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .add)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -582,6 +586,7 @@ struct AddControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.add")
     }
 }
 
@@ -605,14 +610,7 @@ struct ConfirmControl: View {
                 action()
             }
         ) {
-            Image(systemName: "checkmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .frame(width: 44, height: 44)
-                .contentShape(Rectangle())
-                .accessibilityHidden(true)
+            FruitfolioStandardControlArtwork(control: .confirm)
         }
         .buttonStyle(
             CutePopButtonStyle(
@@ -620,6 +618,7 @@ struct ConfirmControl: View {
                     motionPreferences.reduceMotionActive
             )
         )
+        .accessibilityIdentifier("control.confirm")
     }
 }
 
@@ -654,18 +653,20 @@ struct ChoiceCircle: View {
 
 struct PageTurnTransition: ViewModifier {
     let isActive: Bool
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+    @Environment(\.fruitfolioReduceMotion) private var appReduceMotion
 
     func body(content: Content) -> some View {
         content
             .rotation3DEffect(
-                .degrees(isActive ? 0 : 90),
+                .degrees(systemReduceMotion || appReduceMotion ? 0 : (isActive ? 0 : 90)),
                 axis: (x: 0, y: 1, z: 0),
                 anchor: .leading,
                 perspective: 0.6
             )
             .opacity(isActive ? 1 : 0)
             .animation(
-                .easeInOut(duration: 0.5),
+                systemReduceMotion || appReduceMotion ? nil : .easeInOut(duration: 0.5),
                 value: isActive
             )
     }
@@ -680,6 +681,7 @@ struct WatercolorBottomSheet<Content: View>: View {
 
     @EnvironmentObject
     private var motionPreferences: MotionPreferences
+    @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
 
     @State
     private var isVisible = false
@@ -735,11 +737,12 @@ struct WatercolorBottomSheet<Content: View>: View {
         )
         .padding()
         .transition(
-            .move(edge: .bottom)
-                .combined(with: .opacity)
+            motionPreferences.reduceMotionActive || systemReduceMotion
+                ? .opacity
+                : .move(edge: .bottom).combined(with: .opacity)
         )
         .animation(
-            motionPreferences.reduceMotionActive
+            motionPreferences.reduceMotionActive || systemReduceMotion
                 ? .easeOut(duration: 0.2)
                 : .spring(
                     response: 0.4,

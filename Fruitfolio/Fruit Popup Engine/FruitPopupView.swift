@@ -65,9 +65,11 @@ struct FruitPopupView: View {
     let request: FruitPopupRequest
     let availableWidth: CGFloat
     let reduceMotion: Bool
+    @EnvironmentObject private var audioManager: AudioManager
 
     @State
     private var appeared = false
+    @AccessibilityFocusState(for: .voiceOver) private var messageFocused: Bool
 
     init(
         request: FruitPopupRequest,
@@ -137,6 +139,16 @@ struct FruitPopupView: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .task(id: request.id) {
+            // Focus only this presentation, after its existing entrance. A
+            // replacement/dismissal cancels this view-owned task; streaming or
+            // unrelated body updates must not repeatedly steal reading focus.
+            let delay = reduceMotion ? 0.19 : request.character.entranceDuration + 0.03
+            do { try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000)) }
+            catch { return }
+            guard !Task.isCancelled else { return }
+            messageFocused = true
+        }
     }
 
     private var animatedCharacter: some View {
@@ -173,6 +185,8 @@ struct FruitPopupView: View {
         VStack(alignment: .center, spacing: 7) {
             FruitfolioSemanticText(document: invitationSafeMessage,
                 baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body))
+                .accessibilityIdentifier("popup.message")
+                .accessibilityFocused($messageFocused)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                 .multilineTextAlignment(.center)
                 .lineSpacing(0.8)
@@ -209,6 +223,7 @@ struct FruitPopupView: View {
         isPrimary: Bool
     ) -> some View {
         Button {
+            audioManager.play(.buttonSoftPop)
             action.handler()
         } label: {
             Text(action.label)
@@ -226,6 +241,7 @@ struct FruitPopupView: View {
         }
         .buttonStyle(CutePopButtonStyle(reduceMotion: reduceMotion))
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
+        .accessibilityIdentifier(isPrimary ? "popup.action.primary" : "popup.action.secondary")
     }
 }
 

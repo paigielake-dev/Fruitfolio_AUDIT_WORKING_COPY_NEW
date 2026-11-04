@@ -4,6 +4,18 @@ import UIKit
 
 @MainActor
 final class SharedControlArtworkTests: XCTestCase {
+    func testStandardControlsLoadTheOriginalApprovedWatercolorRatherThanSystemSymbols() throws {
+        for control in FruitfolioStandardControl.allCases {
+            let image = try FruitfolioAssetLoader.uiImage(control.assetID)
+            XCTAssertNotNil(image.cgImage)
+            XCTAssertGreaterThan(image.size.width, 0)
+            XCTAssertGreaterThan(image.size.height, 0)
+            let record = AssetRegistry.record(for: control.assetID)
+            let measured = try XCTUnwrap(FruitfolioArtworkGeometryStore.geometry(named: record.resourceStem))
+            XCTAssertEqual(CGFloat(measured.width), CGFloat(try XCTUnwrap(image.cgImage).width), accuracy: 0.001)
+            XCTAssertEqual(CGFloat(measured.height), CGFloat(try XCTUnwrap(image.cgImage).height), accuracy: 0.001)
+        }
+    }
     func testPreparedPillUsesOriginalAspectRatioAndReusesRaster() throws {
         let original = try FruitfolioAssetLoader.uiImage(.control_pill_outline)
         let first = try XCTUnwrap(FruitfolioControlArtwork.pill(width: 292, displayScale: 3))
