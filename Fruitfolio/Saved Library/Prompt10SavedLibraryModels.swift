@@ -111,7 +111,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     }
 
     var resolvedSemanticDocument: FruitfolioSemanticDocument {
-        guard let semanticDocument, semanticDocument.plainText == displayBody else {
+        guard let semanticDocument, semanticDocument.plainText.utf8.elementsEqual(displayBody.utf8) else {
             return .init(spans: [.init(text: displayBody)])
         }
         return semanticDocument

@@ -1,6 +1,6 @@
 {
   "baselineCommit": "92597e293b73c35eba0a18de261f0af233568e11",
-  "currentPart": 3,
+  "currentPart": 4,
   "part1Complete": false,
   "MADLADInference": "EXCLUDED — FOUNDER-HANDLED",
   "actualVerification": {
@@ -644,9 +644,87 @@
         "FruitfolioUITests/AskContinuousPaperUITests.swift"
       ],
       "remaining": "Run the focused Ask group and the full real-model selection/save/navigation journeys on Mac; no runtime/clinical acceptance claimed."
+    },
+    {
+      "requirementID": "FF1B-197",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 197",
+      "originalRequirement": "Allow users to add their own notes.",
+      "change": "User-note edits retain original bytes even when Unicode strings compare canonically equal.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-198",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 198",
+      "originalRequirement": "Allow users to import their own images from their device or photo library.",
+      "change": "Photo import uses generation ownership; old completions cannot clear replacement-import busy state. Image validation and staging move off the UI thread.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-202",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 202",
+      "originalRequirement": "Allow imported images to be removed or replaced.",
+      "change": "Replacement/cancelled imports clean up only their own undelivered staged bytes.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-203",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 203",
+      "originalRequirement": "Provide save and discard behavior.",
+      "change": "Save stays disabled until the current import owner finishes; stale cancelled tasks cannot report completion.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-204",
+      "originalReference": "Part 4 / 4C. Encyclopedia editing / 204",
+      "originalRequirement": "Protect unsaved edits.",
+      "change": "Discard/navigation invalidates import ownership; byte-only user text/title edits trigger unsaved protection.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
+    },
+    {
+      "requirementID": "FF1B-209",
+      "originalReference": "Part 4 / 4D. Shared Guide data / 209",
+      "originalRequirement": "Preserve guide title, cover style, contents, ordering, and edits.",
+      "change": "Saved semantic rendering preserves original content bytes rather than normalizing through canonically equivalent annotation text.",
+      "requirementStatus": "PARTIAL — targeted editor/data-integrity repair; full requirement acceptance pending",
+      "testStatus": "PENDING — MAC EXECUTION REQUIRED",
+      "tests": [
+        "FruitfolioTests/PhotoImportOwnershipTests.swift",
+        "FruitfolioUITests/UserAuthoredPageUITests.swift"
+      ],
+      "remaining": "Execute real Photos picker/save/discard/edit/restart journeys and media recovery tests on the founder Mac."
     }
   ],
-  "nextAction": "Finish Ask source integration review; then continue Part 4 library and Guide editing/data integration. Parts 4–10 remain unfinished.",
+  "nextAction": "Continue Part 4 book/Guide source integration, then Part 5 settings/account/hormones. Parts 5–10 and residual checks remain outstanding.",
   "allTenPartsComplete": false,
   "focusedMacCommand": "python3 Tools/verify_integrated_source_on_mac.py --group shared --simulator-id <ACTUAL_IPHONE_SIMULATOR_UDID> --source-commit <FINAL_FULL_COMMIT_SHA>",
   "preservedRemoteCheckpoint": "d15f75d606e6a4d1e6f21e00696841d7eaba7a6b",

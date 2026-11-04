@@ -1,6 +1,7 @@
 import SwiftUI
 import PhotosUI
 import UIKit
+import ImageIO
 
 struct Prompt10UserPageEditor: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
@@ -24,6 +25,7 @@ struct Prompt10UserPageEditor: View {
     @State private var error: String?
     @State private var saved = false
     @State private var photoTask: Task<Void, Never>?
+    @State private var importOwnership = Prompt10ImportOwnership()
 
     init(store: Prompt10SavedLibraryStore, encyclopediaID: UUID, chapterID: UUID,
          page: Prompt10SavedPage? = nil, onSaved: @escaping (Prompt10SavedPage) -> Void,
@@ -38,7 +40,8 @@ struct Prompt10UserPageEditor: View {
     }
 
     private var dirty: Bool {
-        title != (page?.question ?? "") || document.plainText != (page?.displayBody ?? "")
+        !title.utf8.elementsEqual((page?.question ?? "").utf8)
+        || !document.plainText.utf8.elementsEqual((page?.displayBody ?? "").utf8)
         || document.spans.map(\.text) != initialDocument.spans.map(\.text)
         || document.spans.map(\.emphasis) != initialDocument.spans.map(\.emphasis)
         || imageIDs != (page?.importedImageIDs ?? [])
@@ -49,7 +52,7 @@ struct Prompt10UserPageEditor: View {
             DesignTokens.ColorToken.backgroundCream.ignoresSafeArea()
             ScrollView {
                 VStack(alignment: .leading, spacing: 18) {
-                    BackControl { if dirty || photoTask != nil { showUnsaved = true } else { cancel() } }
+                    BackControl { if dirty || importOwnership.isImporting { showUnsaved = true } else { cancel() } }
                     Text(page == nil ? "my own page" : "edit my page")
                         .font(.custom("Chalkboard SE", size: 22, relativeTo: .title2)).bold()
                     TextField("page title", text: $title)
@@ -74,12 +77,12 @@ struct Prompt10UserPageEditor: View {
                     }
                     Button("add image") { showingPhotoPicker = true }
                         .frame(minHeight: 44)
-                    .disabled(photoTask != nil)
+                    .disabled(importOwnership.isImporting)
                     if let error { Text(error).accessibilityIdentifier("userPage.error") }
                     FruitfolioControlPillButton(label: "save changes", localizationKey: "save changes", action: save)
-                        .disabled(photoTask != nil)
+                        .disabled(importOwnership.isImporting)
                     WatercolorSecondaryButton(label: "discard changes", localizationKey: "discard changes") {
-                        if dirty || photoTask != nil { showUnsaved = true } else { cancel() }
+                        if dirty || importOwnership.isImporting { showUnsaved = true } else { cancel() }
                     }
                 }
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
@@ -96,11 +99,12 @@ struct Prompt10UserPageEditor: View {
             }
         }
         .photosPicker(isPresented: $showingPhotoPicker, selection: $photo, matching: .images)
-        .interactiveDismissDisabled(dirty || photoTask != nil || showingPhotoPicker)
+        .interactiveDismissDisabled(dirty || importOwnership.isImporting || showingPhotoPicker)
         .onDisappear {
             // A covering system photo picker is still part of this editing
             // visit, not cancellation. Keep earlier imported draft images.
             guard !showingPhotoPicker else { return }
+            importOwnership.invalidate()
             photoTask?.cancel()
             photoTask = nil
             if !saved { discardDraftImages() }
@@ -108,12 +112,20 @@ struct Prompt10UserPageEditor: View {
         .onChange(of: photo) { _, value in
             guard let value else { return }
             photoTask?.cancel()
-            photoTask = Task { await importPhoto(value); photoTask = nil }
+            let generation = importOwnership.begin()
+            photoTask = Task {
+                await importPhoto(value, generation: generation)
+                guard importOwnership.finish(generation) else { return }
+                photoTask = nil
+                photo = nil
+            }
         }
     }
 
     private func cancel() {
+        importOwnership.invalidate()
         photoTask?.cancel()
+        photoTask = nil
         discardDraftImages()
         onCancel()
     }
@@ -137,7 +149,7 @@ struct Prompt10UserPageEditor: View {
     }
 
     private func save() {
-        guard photoTask == nil else { error = "please wait for your image to finish importing."; showUnsaved = false; return }
+        guard !importOwnership.isImporting else { error = "please wait for your image to finish importing."; showUnsaved = false; return }
         do {
             let result = try store.saveUserPage(pageID: page?.id, encyclopediaID: encyclopediaID,
                 chapterID: chapterID, title: title, document: document, imageIDs: imageIDs)
@@ -147,19 +159,46 @@ struct Prompt10UserPageEditor: View {
         } catch { self.error = error.localizedDescription; showUnsaved = false }
     }
 
-    private func importPhoto(_ item: PhotosPickerItem) async {
-        defer { photo = nil }
+    private func importPhoto(_ item: PhotosPickerItem, generation: UUID) async {
         do {
-            guard let data = try await item.loadTransferable(type: Data.self), UIImage(data: data) != nil else {
+            guard let data = try await item.loadTransferable(type: Data.self) else {
+                guard importOwnership.owns(generation), !Task.isCancelled else { return }
                 error = "that image could not be imported."; return
             }
             try Task.checkCancellation()
-            let id = try Prompt10LocalMediaStore.shared.stageImageData(data)
+            guard importOwnership.owns(generation) else { return }
+            let media = Prompt10LocalMediaStore.shared
+            let staging = Task.detached(priority: .userInitiated) {
+                // Validate the encoded image without decoding a full-resolution
+                // bitmap on the UI thread; preserve the original imported bytes.
+                guard let source = CGImageSourceCreateWithData(data as CFData,
+                    [kCGImageSourceShouldCache: false] as CFDictionary),
+                    CGImageSourceGetCount(source) > 0,
+                    CGImageSourceGetStatus(source) == .statusComplete else {
+                    throw CocoaError(.fileReadCorruptFile)
+                }
+                try Task.checkCancellation()
+                let id = try media.stageImageData(data)
+                if Task.isCancelled {
+                    try? media.delete(id)
+                    throw CancellationError()
+                }
+                return id
+            }
+            let id = try await withTaskCancellationHandler(operation: { try await staging.value },
+                onCancel: { staging.cancel() })
+            guard !Task.isCancelled, importOwnership.owns(generation) else {
+                try? media.delete(id)
+                return
+            }
             importedDuringEdit.insert(id); imageIDs.append(id)
         } catch is CancellationError {
             // Dismissal is intentional, and must not surface a stale import
             // error or commit image bytes after the editor has gone away.
-        } catch { self.error = "that image could not be saved." }
+        } catch {
+            guard importOwnership.owns(generation), !Task.isCancelled else { return }
+            self.error = "that image could not be saved."
+        }
     }
 }
 
