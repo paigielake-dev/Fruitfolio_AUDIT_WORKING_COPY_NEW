@@ -9743,20 +9743,27 @@
       "original_section": null,
       "description": "Connect optional My Context information to the relevant Cycle Tracker interpretation systems.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 282,
@@ -9764,15 +9771,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Make context adaptation evidence-informed.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 283,
@@ -9780,15 +9797,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Apply relevant context to predictions and educational explanations only where justified.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 284,
@@ -9796,15 +9823,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Distinguish altered-cycle contexts from ordinary cycle estimates.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 285,
@@ -9813,20 +9850,27 @@
       "original_section": null,
       "description": "Avoid treating context entries as diagnostic proof.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 286,
@@ -9835,20 +9879,27 @@
       "original_section": null,
       "description": "Preserve uncertainty when available information is insufficient.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 287,
@@ -9857,20 +9908,27 @@
       "original_section": null,
       "description": "Ensure context changes do not corrupt previous logs.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 288,
@@ -9884,7 +9942,11 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9900,14 +9962,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 289,
@@ -9916,20 +9981,27 @@
       "original_section": null,
       "description": "Ensure context-dependent changes appear consistently in the Today presentation.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 290,
@@ -9937,15 +10009,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Preserve distinctions between predicted and confirmed biological events.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 291,
@@ -9953,15 +10035,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Avoid displaying unsupported fertility or ovulation certainty.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:18:38.019405+00:00"
     },
     {
       "sequence": 292,

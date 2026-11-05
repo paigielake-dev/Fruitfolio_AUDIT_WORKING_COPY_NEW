@@ -10,73 +10,26 @@ final class Prompt27AContextStore: ObservableObject {
     @Published private(set) var context: Prompt27AUserReproductiveContext
     @Published private(set) var didRecoverCorruptStoredContext = false
 
-    private let defaults: UserDefaults
-    private let codec: Prompt27AContextCodec
+    @Published private(set) var persistenceMessage: String?
+    private let persistence: Prompt27ALocalContextPersistence
 
-    init(
-        defaults: UserDefaults = .standard,
-        codec: Prompt27AContextCodec = Prompt27AContextCodec()
-    ) {
-        self.defaults = defaults
-        self.codec = codec
-
-        let migration = codec.migrationResult(data: defaults.data(forKey: Self.storageKey))
-        self.context = migration.context
-        if case .corruptStoredValue = migration {
-            self.didRecoverCorruptStoredContext = true
-            defaults.removeObject(forKey: Self.storageKey)
-        }
+    init(defaults: UserDefaults = .standard, codec: Prompt27AContextCodec = Prompt27AContextCodec()) {
+        let persistence = Prompt27ALocalContextPersistence(defaults: defaults, key: Self.storageKey, codec: codec)
+        self.persistence = persistence
+        context = persistence.context
+        didRecoverCorruptStoredContext = persistence.storageUnreadable
     }
 
-    func setTrackingGoal(_ value: Prompt27ATrackingGoal) {
-        context.setTrackingGoal(value)
-        persist()
-    }
-
-    func setSexualActivityContext(_ value: Prompt27ASexualActivityContext) {
-        context.setSexualActivityContext(value)
-        persist()
-    }
-
-    func setReproductiveStage(_ value: Prompt27AReproductiveStage) {
-        context.setReproductiveStage(value)
-        persist()
-    }
-
-    func setSurrogacyContext(_ value: Prompt27ASurrogacyContext) {
-        context.setSurrogacyContext(value)
-        persist()
-    }
-
-    func setLactationContext(_ value: Prompt27ALactationContext) {
-        context.setLactationContext(value)
-        persist()
-    }
-
-    func setCycleHealthContext(_ value: Prompt27ACycleHealthContext, selected: Bool) {
-        context.setCycleHealthContext(value, selected: selected)
-        persist()
-    }
-
-    func setInfertilityContext(_ value: Prompt27AInfertilityContext) {
-        context.setInfertilityContext(value)
-        persist()
-    }
-
-    func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) {
-        context.setFertilityTreatmentContext(value)
-        persist()
-    }
-
-    func setContraceptionContext(_ value: Prompt27AContraceptionContext) {
-        context.setContraceptionContext(value)
-        persist()
-    }
-
-    func clearContext() {
-        context.clear()
-        persist()
-    }
+    func setTrackingGoal(_ value: Prompt27ATrackingGoal) { update { $0.setTrackingGoal(value) } }
+    func setSexualActivityContext(_ value: Prompt27ASexualActivityContext) { update { $0.setSexualActivityContext(value) } }
+    func setReproductiveStage(_ value: Prompt27AReproductiveStage) { update { $0.setReproductiveStage(value) } }
+    func setSurrogacyContext(_ value: Prompt27ASurrogacyContext) { update { $0.setSurrogacyContext(value) } }
+    func setLactationContext(_ value: Prompt27ALactationContext) { update { $0.setLactationContext(value) } }
+    func setCycleHealthContext(_ value: Prompt27ACycleHealthContext, selected: Bool) { update { $0.setCycleHealthContext(value, selected: selected) } }
+    func setInfertilityContext(_ value: Prompt27AInfertilityContext) { update { $0.setInfertilityContext(value) } }
+    func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) { update { $0.setFertilityTreatmentContext(value) } }
+    func setContraceptionContext(_ value: Prompt27AContraceptionContext) { update { $0.setContraceptionContext(value) } }
+    func clearContext() { eraseLocalContextData() }
 
     /// Synchronizes only exact semantic overlaps from Cycle Onboarding into
     /// My Context. Ambiguous answers (for example “recent pregnancy” or
@@ -124,27 +77,26 @@ final class Prompt27AContextStore: ObservableObject {
         }
 
         guard updated != context else { return }
-        context = updated
-        persist()
+        update { $0 = updated }
     }
 
     /// Explicit privacy/export bridge. This exports only the user-reported
     /// context object and never reaches into cycle history or other domains.
-    func exportReadableJSON() throws -> Data {
-        try codec.encode(context)
-    }
+    func exportReadableJSON() throws -> Data { try persistence.exportJSON() }
 
-    /// Explicit local erase for this context domain only. Historical cycle,
-    /// Daily Log, Trends, BBT, symptom, note, and prediction records are not
-    /// rewritten or deleted by this operation.
+    /// Explicit local erase does not rewrite cycle history, logs or predictions.
     func eraseLocalContextData() {
-        context = .unspecified
-        defaults.removeObject(forKey: Self.storageKey)
+        persistence.erase()
+        refresh()
     }
-
-    private func persist() {
-        guard let data = try? codec.encode(context) else { return }
-        defaults.set(data, forKey: Self.storageKey)
+    private func update(_ mutation: (inout Prompt27AUserReproductiveContext) -> Void) {
+        do { try persistence.apply(mutation); refresh() }
+        catch { persistenceMessage = "your context could not be saved. the original local data has been kept." }
+    }
+    private func refresh() {
+        context = persistence.context
+        didRecoverCorruptStoredContext = persistence.storageUnreadable
+        persistenceMessage = nil
     }
 }
 #endif

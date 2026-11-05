@@ -14,6 +14,12 @@ import tempfile
 
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextModels.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextPersistence.swift',
+    'Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextPolicyEngine.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextSafety.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift',
     'Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift',
     'Fruitfolio/Hormone Information/HormoneLibraryProvider.swift',
     'Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift',
@@ -64,7 +70,7 @@ TESTS = [
     'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',
     'Prompt1BGGUFResourceTests.swift', 'Prompt1BLogoRevealTests.swift', 'Prompt1BSpotlightGeometryTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift', 'Prompt1BAskPaperLayoutTests.swift', 'Prompt1BEducationalArtworkTests.swift', 'Prompt1BCitationDestinationTests.swift', 'Prompt1BPendingSavePrivacyTests.swift', 'Prompt1BLibraryPersistenceTests.swift', 'Prompt1BResearchRetrievalTests.swift', 'Prompt1BResearchPackageTests.swift', 'Prompt1BEvidenceBoundaryTests.swift', 'Prompt1BResearchEngineIntegrationTests.swift', 'Prompt1BEvidenceBudgetTests.swift',
-    'Prompt1BHormoneAdjustmentTests.swift', 'Prompt22HormoneRhythmCoreTests.swift', 'Prompt1BHormoneLibraryTests.swift', 'Prompt1BHormonePersistenceTests.swift', 'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
+    'Prompt1BContextPersistenceTests.swift', 'Prompt27AContextPersonalizationTests.swift', 'Prompt1BHormoneAdjustmentTests.swift', 'Prompt22HormoneRhythmCoreTests.swift', 'Prompt1BHormoneLibraryTests.swift', 'Prompt1BHormonePersistenceTests.swift', 'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
     'Prompt56ResearchIntelligenceTests.swift', 'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
 ]
 

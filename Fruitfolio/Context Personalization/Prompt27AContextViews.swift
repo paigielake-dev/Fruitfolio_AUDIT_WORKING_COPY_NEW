@@ -4,6 +4,8 @@ import SwiftUI
 @MainActor
 struct Prompt27AMyContextView: View {
     @StateObject private var viewModel: Prompt27AContextViewModel
+    @ObservedObject private var observedStore: Prompt27AContextStore
+    @State private var confirmClearContext = false
     @State private var showHormoneInformation = false
 
     let onBack: () -> Void
@@ -15,6 +17,7 @@ struct Prompt27AMyContextView: View {
         store: Prompt27AContextStore,
         onBack: @escaping () -> Void = {}
     ) {
+        _observedStore = ObservedObject(wrappedValue: store)
         _viewModel = StateObject(
             wrappedValue: Prompt27AContextViewModel(store: store)
         )
@@ -40,6 +43,11 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+                        if viewModel.store.didRecoverCorruptStoredContext {
+                            Text("your saved context could not be read. the original data has been preserved; changes are paused until you explicitly clear it.")
+                                .font(Prompt27AType.body)
+                        }
+                        if let message = viewModel.store.persistenceMessage { Text(message).font(Prompt27AType.body) }
                         WatercolorPrimaryButton(label: "Hormone Information") {
                             showHormoneInformation = true
                         }
@@ -132,7 +140,7 @@ struct Prompt27AMyContextView: View {
                         FruitfolioControlPillButton(
                             label: "clear my context"
                         ) {
-                            viewModel.store.clearContext()
+                            confirmClearContext = true
                         }
                         .frame(maxWidth: 280, alignment: .leading)
                         .accessibilityHint(
@@ -157,6 +165,10 @@ struct Prompt27AMyContextView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .confirmationDialog("clear all My Context information from this device?", isPresented: $confirmClearContext, titleVisibility: .visible) {
+            Button("clear my context", role: .destructive) { viewModel.store.clearContext() }
+            Button("cancel", role: .cancel) {}
+        }
         .sheet(isPresented: $showHormoneInformation) {
             FruitfolioHormoneInformationView(onBack: { showHormoneInformation = false })
         }
@@ -287,6 +299,7 @@ struct Prompt27AMyContextView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
         )
+        .disabled(viewModel.store.didRecoverCorruptStoredContext)
         .accessibilityLabel(title)
         .accessibilityValue(selected ? "selected" : "not selected")
         .accessibilityHint("Double tap to select")

@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-11-05T22:18:38.019405+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "206 XCTest + 21 Swift Testing passed (227 total)",
+    "Swift_5_native": "209 XCTest + 21 Swift Testing passed (230 total)",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "156 files, zero parser errors",
+    "project_integrity": "Foundation OpenStep/project references validated; no Apple build/link",
+    "Apple_UI": "NOT_RUN: corruption warning/clear confirmation/Combine observation await Apple runtime"
+  }
+}

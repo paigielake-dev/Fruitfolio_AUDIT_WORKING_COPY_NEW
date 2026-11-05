@@ -24,7 +24,7 @@ final class Prompt27AContextViewModel: ObservableObject {
             .dropFirst()
             .sink { [weak self] context in
                 Task { @MainActor [weak self] in
-                    guard let self else { return }
+                    guard let self, self.store.context == context else { return }
                     self.policy = self.policyEngine.policy(for: context)
                 }
             }

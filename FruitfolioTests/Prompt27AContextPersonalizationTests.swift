@@ -2,7 +2,6 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
-@MainActor
 final class Prompt27AContextPersonalizationTests: XCTestCase {
     private let engine = Prompt27AContextPolicyEngine()
     private let safety = Prompt27AContextSafety()
