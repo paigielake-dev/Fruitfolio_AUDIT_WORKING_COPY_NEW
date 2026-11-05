@@ -26,6 +26,7 @@ nonisolated struct FruitfolioResearchNoteChunk:
     let semanticTags: [String]
     let domainTags: [String]
     var retrievalEligibility: Bool? = nil
+    var sourceParagraphID: String? = nil
 
     var id: String {
         chunkID
@@ -109,6 +110,7 @@ nonisolated struct FruitfolioResearchPackage:
     let researchNoteChunks: [FruitfolioResearchNoteChunk]
     let sources: [FruitfolioResearchSource]
     let sourceChunks: [FruitfolioSourceChunk]
+    var sourceParagraphs: [String: String]? = nil
 }
 
 nonisolated struct FruitfolioClaimNeed:
@@ -452,6 +454,26 @@ nonisolated struct FruitfolioLocalResearchRetriever:
             .map {
                 $0
             }
+    }
+
+    /// Ranking uses compact slices; scientific presentation restores the complete
+    /// original paragraph so a chunk boundary cannot remove a qualifier.
+    func contextualizedNotes(_ ranked: [FruitfolioRankedNote]) -> [FruitfolioResearchNoteChunk] {
+        var seen: Set<String> = []
+        return ranked.compactMap { result in
+            let chunk = result.chunk
+            let key = chunk.sourceParagraphID ?? chunk.chunkID
+            guard seen.insert(key).inserted else { return nil }
+            let text: String
+            if let paragraphID = chunk.sourceParagraphID {
+                guard let original = package.sourceParagraphs?[paragraphID] else { return nil }
+                text = original
+            } else { text = chunk.text }
+            return FruitfolioResearchNoteChunk(chunkID: chunk.chunkID, researchTopicID: chunk.researchTopicID,
+                heading: chunk.heading, subheading: chunk.subheading, text: text, sourceIDs: chunk.sourceIDs,
+                semanticTags: chunk.semanticTags, domainTags: chunk.domainTags,
+                retrievalEligibility: chunk.retrievalEligibility, sourceParagraphID: chunk.sourceParagraphID)
+        }
     }
 
     func coverage(

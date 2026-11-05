@@ -1603,7 +1603,15 @@
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Core/Assets/AudioManager.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1619,17 +1627,21 @@
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
         "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
         "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
-        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:21:39.756409+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 47,
@@ -1658,7 +1670,15 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1671,16 +1691,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 48,
@@ -1711,7 +1735,15 @@
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Core/Assets/AudioManager.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1727,17 +1759,21 @@
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
         "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
         "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
-        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:21:39.756409+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 49,
@@ -1766,7 +1802,15 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1779,16 +1823,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 50,
@@ -1805,7 +1853,15 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1816,15 +1872,19 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 51,
@@ -1894,7 +1954,15 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1903,13 +1971,17 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt1BSemanticTextTests",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 54,
@@ -1924,7 +1996,15 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1933,14 +2013,18 @@
       "related_tests": [
         "Prompt1BSemanticTextTests",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 55,
@@ -1952,7 +2036,15 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1961,13 +2053,17 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt1BSemanticTextTests",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 56,
@@ -1982,7 +2078,15 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1991,14 +2095,18 @@
       "related_tests": [
         "Prompt1BSemanticTextTests",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 57,
@@ -2010,7 +2118,15 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2019,13 +2135,17 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt1BSemanticTextTests",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 58,
@@ -2037,7 +2157,15 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2046,13 +2174,17 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt1BSemanticTextTests",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 59,
@@ -2064,7 +2196,15 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2073,13 +2213,17 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt1BSemanticTextTests",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 60,
@@ -2156,7 +2300,15 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
-        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift"
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2179,9 +2331,12 @@
         "Prompt1BCitationDestinationTests",
         "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
         "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
-        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -2191,9 +2346,10 @@
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
         "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
-        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:31:13.865162+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 62,
@@ -2222,7 +2378,15 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2235,16 +2399,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 63,
@@ -2275,7 +2443,15 @@
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
-        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift"
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2291,17 +2467,21 @@
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 64,
@@ -4683,7 +4863,12 @@
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4697,16 +4882,19 @@
         "Prompt1BResearchRetrievalTests",
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 137,
@@ -4722,7 +4910,12 @@
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4734,15 +4927,18 @@
         "Prompt1BResearchRetrievalTests",
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 138,
@@ -5085,7 +5281,13 @@
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5094,13 +5296,16 @@
       "related_tests": [
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 149,
@@ -5112,7 +5317,13 @@
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5121,13 +5332,16 @@
       "related_tests": [
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 150,
@@ -5139,7 +5353,13 @@
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5148,13 +5368,16 @@
       "related_tests": [
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 151,
@@ -5162,15 +5385,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Remove any separate simplified fallback voice.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 152,
@@ -5178,15 +5417,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Make fallback responses answer the user\u2019s question before presenting supporting research.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 153,
@@ -5194,15 +5449,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Preserve the human-bridge-to-evidence response structure.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 154,
@@ -5210,15 +5481,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Use \u2606 for main points and - for supporting points where appropriate.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 155,
@@ -5226,15 +5513,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Follow lowercase and approved capitalization rules.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 156,
@@ -5258,7 +5561,16 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5272,17 +5584,21 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 157,
@@ -5306,7 +5622,16 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5320,17 +5645,21 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 158,
@@ -5354,7 +5683,16 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5368,17 +5706,21 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 159,
@@ -5402,7 +5744,16 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5416,17 +5767,21 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 160,
@@ -5434,15 +5789,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply the universal semantic styling system to every substantive answer pathway.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation",
+        "ResearchCompilationTests"
+      ],
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
+      ],
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 161,
@@ -5581,7 +5952,12 @@
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
-        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
+        "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5591,14 +5967,17 @@
         "Prompt1BResearchRetrievalTests",
         "ResearchCompilationTests",
         "Prompt1BResearchPackageTests",
-        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle",
+        "Prompt1BEvidenceBoundaryTests",
+        "Prompt1BResearchPackageTests/testRankingRestoresWholeParagraphsBeforeScientificPresentation"
       ],
-      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-complete-evidence-context-and-shared-canonical-voice (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
-        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.",
+        "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun."
       ],
-      "last_updated": "2026-11-05T20:45:57.887318+00:00"
+      "last_updated": "2026-11-05T20:54:43.922060+00:00"
     },
     {
       "sequence": 165,

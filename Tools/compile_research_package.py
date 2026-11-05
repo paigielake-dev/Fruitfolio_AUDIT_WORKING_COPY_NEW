@@ -88,7 +88,7 @@ def compile_package(corpus, voice_pdf=None):
             groups.append(dict(title=paragraph['text'], start=paragraph['ordinal'], rows=[]))
         elif groups:
             groups[-1]['rows'].append(paragraph)
-    notes, sources, provenance, quarantine = [], {}, [], []
+    notes, sources, provenance, quarantine, original_paragraphs = [], {}, [], [], {}
     for group in groups:
         if group['title'].strip() == 'FruitsofLife.xo Research Corpus': continue
         rows = group['rows']
@@ -116,11 +116,13 @@ def compile_package(corpus, voice_pdf=None):
             text = row['text']
             if row['style'] == 'Heading1' and text.strip().upper() == 'RESEARCH': continue
             if text.startswith('Evidence-based compiled research notes on '): continue
+            paragraph_id = 'docx_p_' + str(row['ordinal'])
+            original_paragraphs[paragraph_id] = text
             for part, piece in enumerate(split_exact(text)):
                 chunk_id = 'note_' + digest((topic_id + ':' + str(row['ordinal']) + ':' + str(part) + ':' + piece).encode())[:24]
                 notes.append(dict(chunkID=chunk_id, researchTopicID=topic_id, heading=group['title'],
                                   subheading=None, text=piece, sourceIDs=source_ids, semanticTags=[], domainTags=[],
-                                  retrievalEligibility=eligible))
+                                  retrievalEligibility=eligible, sourceParagraphID=paragraph_id))
                 provenance.append(dict(chunkID=chunk_id, paragraph=row['ordinal'], part=part,
                                        text_sha256=digest(piece.encode()), retrievalEligibility=eligible))
     assets = [dict(path=str(corpus.relative_to(ROOT)) if corpus.is_relative_to(ROOT) else corpus.name,
@@ -131,7 +133,7 @@ def compile_package(corpus, voice_pdf=None):
                            role='preserved founder voice reference; not automatically compiled as scientific evidence'))
     package = dict(schemaVersion=1, contentVersion=version, generatedFrom=corpus.name,
                    generationNote='Exact DOCX paragraph slices. APA7 metadata is founder-corpus attribution, not independent source verification. Quarantined notes cannot be retrieved. No downloaded full-source text is fabricated from references.',
-                   researchNoteChunks=notes, sources=list(sources.values()), sourceChunks=[])
+                   researchNoteChunks=notes, sources=list(sources.values()), sourceChunks=[], sourceParagraphs=original_paragraphs)
     report = dict(schemaVersion=1, compiler_sha256=compiler_hash, sourceAssets=assets, contentVersion=version,
                   topics=len(groups) - 1, noteChunks=len(notes), eligibleNoteChunks=sum(n['retrievalEligibility'] for n in notes),
                   sourceRecords=len(sources), eligibleSourceRecords=sum(source['retrievalEligibility'] for source in sources.values()), fullSourceChunks=0, quarantinedTopics=quarantine, provenance=provenance,

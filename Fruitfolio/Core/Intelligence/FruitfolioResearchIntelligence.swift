@@ -5,116 +5,6 @@ import llama
 
 // MARK: - Prompt 56 canonical local research architecture
 
-nonisolated struct FruitfolioEvidencePacket:
-    Sendable
-{
-    let normalizedQuestion: String
-    let researchNoteChunks: [FruitfolioResearchNoteChunk]
-    let sourceChunks: [FruitfolioSourceChunk]
-    let claimEvidenceMap: [FruitfolioClaimEvidence]
-    let sourceRecords: [FruitfolioResearchSource]
-    let safetyClassification: Prompt34SafetyClassification
-    let permittedContext: FruitfolioBoundedTrackerContext?
-    let contentVersion: String
-}
-
-/// The local model never gets to hand arbitrary prose directly to the UI.
-/// It must return a small evidence-linked draft that deterministic code can
-/// validate before rendering. This keeps the model downstream of Research.
-nonisolated struct FruitfolioGeneratedClaim:
-    Codable,
-    Hashable,
-    Sendable
-{
-    let text: String
-    let evidenceIDs: [String]
-}
-
-nonisolated struct FruitfolioGeneratedDraft:
-    Codable,
-    Hashable,
-    Sendable
-{
-    let bridge: String?
-    let claims: [FruitfolioGeneratedClaim]
-    let limitation: String?
-}
-
-nonisolated enum FruitfolioResearchProgress:
-    Sendable
-{
-    case lookingThroughLibrary
-    case searchingApprovedSources
-    case synthesizing
-    case validating
-}
-
-nonisolated struct FruitfolioRetrievalDiagnostics:
-    Sendable
-{
-    let noteCount: Int
-    let sourceChunkCount: Int
-    let didExpandSources: Bool
-    let coverage: FruitfolioEvidenceCoverage
-}
-
-nonisolated struct FruitfolioBoundedTrackerContext:
-    Codable,
-    Hashable,
-    Sendable
-{
-    let predictionConfidence: String?
-    let reasonCode: String?
-    let trackingGoal: String?
-    let reproductiveStage: String?
-    let cycleHealthContext: String?
-
-    static let none = FruitfolioBoundedTrackerContext(
-        predictionConfidence: nil,
-        reasonCode: nil,
-        trackingGoal: nil,
-        reproductiveStage: nil,
-        cycleHealthContext: nil
-    )
-}
-
-
-nonisolated enum FruitfolioAnswerPresentationSanitizer {
-    /// Research-note compilation occasionally removes a space after punctuation.
-    /// Repair only obvious prose joins; do not rewrite scientific content, URLs,
-    /// abbreviations such as e.g., or numeric notation.
-    static func clean(_ raw: String) -> String {
-        var value = raw
-            .replacingOccurrences(of: "\r\n", with: "\n")
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-
-        let patterns: [(String, String)] = [
-            (#"(?<=[A-Za-z]{3})\.(?=[A-Za-z])"#, ". "),
-            (#",(?=[A-Za-z])"#, ", "),
-            (#";(?=[A-Za-z])"#, "; "),
-            (#":(?=[A-Za-z])"#, ": ")
-        ]
-
-        for (pattern, replacement) in patterns {
-            value = value.replacingOccurrences(
-                of: pattern,
-                with: replacement,
-                options: .regularExpression
-            )
-        }
-
-        value = value.replacingOccurrences(
-            of: #"[ \t]{2,}"#,
-            with: " ",
-            options: .regularExpression
-        )
-
-        return value
-    }
-}
-
-// MARK: - Deterministic local retrieval
-
 // MARK: - Package loading
 
 actor FruitfolioResearchPackageStore {
@@ -714,169 +604,6 @@ actor LlamaFruitfolioLanguageModel: FruitfolioLanguageModel {
 }
 #endif
 
-nonisolated enum FruitfolioEvidencePromptBuilder {
-    static func prompt(
-        question: String,
-        evidence: FruitfolioEvidencePacket
-    ) -> String {
-        let noteText =
-            evidence
-                .researchNoteChunks
-                .prefix(6)
-                .map {
-                    """
-                    [NOTE \($0.chunkID)]
-                    \($0.text)
-                    """
-                }
-                .joined(
-                    separator: "\n\n"
-                )
-
-        let sourceText =
-            evidence
-                .sourceChunks
-                .prefix(4)
-                .map {
-                    """
-                    [SOURCE \($0.sourceChunkID)]
-                    \($0.text)
-                    """
-                }
-                .joined(
-                    separator: "\n\n"
-                )
-
-        let claimMapText = evidence.claimEvidenceMap
-            .map { item in
-                let ids = item.noteChunkIDs + item.sourceChunkIDs
-                return "[CLAIM \(item.claim.id)] \(item.claim.text)\nPERMITTED EVIDENCE IDS: \(ids.joined(separator: ", "))"
-            }
-            .joined(separator: "\n\n")
-
-        let trackerContext: String
-        if let context = evidence.permittedContext {
-            trackerContext = """
-            predictionConfidence=\(context.predictionConfidence ?? "unknown")
-            reasonCode=\(context.reasonCode ?? "unknown")
-            trackingGoal=\(context.trackingGoal ?? "unknown")
-            reproductiveStage=\(context.reproductiveStage ?? "unknown")
-            cycleHealthContext=\(context.cycleHealthContext ?? "unknown")
-            """
-        } else {
-            trackerContext = "[none supplied]"
-        }
-
-        // The evidence validator and stored scientific source use English.
-        // MADLAD owns display localization after validation; UI language must not
-        // silently relabel already-translated model output as English source.
-        let outputLanguage = "English"
-
-        return """
-        You are Fruitfolio's local synthesis layer. Write all user-facing bridge, claim, and limitation text in \(outputLanguage), while preserving the exact scientific meaning of the approved evidence and leaving evidence IDs unchanged. Use ONLY the supplied approved evidence for substantive health or scientific claims. Do not supplement from pretrained knowledge. Do not invent facts, user biology, diagnoses, citations, authors, dates, URLs, or study details. If evidence supports only part of the question, answer only that part and state the limitation. Keep recorded, calculated, estimated, predicted, educational, and user-reported information distinct. Classify emphasis by meaning and emit only the canonical annotations described below. Serious health content must be calm and non-playful.
-
-        \(FruitfolioSemanticPolicy.generationInstructions)
-
-        Return ONLY valid JSON matching this exact shape:
-        {"bridge":"optional short human bridge or null","claims":[{"text":"one evidence-bounded claim","evidenceIDs":["NOTE_OR_SOURCE_ID"]}],"limitation":"optional honest limitation or null"}
-
-        Every substantive claim MUST include one or more evidenceIDs copied exactly from the permitted evidence IDs below. Never create an evidence ID. If a requested part is unsupported, omit that claim and put the limitation in limitation. Do not include a Sources section; Fruitfolio renders verified sources deterministically.
-
-        USER QUESTION:
-        \(question)
-
-        SAFETY CLASSIFICATION:
-        \(evidence.safetyClassification.level.rawValue)
-
-        PERMITTED BOUNDED TRACKER CONTEXT:
-        \(trackerContext)
-
-        CLAIM / EVIDENCE BOUNDARY:
-        \(claimMapText)
-
-        APPROVED RESEARCH NOTES:
-        \(noteText)
-
-        APPROVED SOURCE EXCERPTS:
-        \(sourceText.isEmpty ? "[none supplied]" : sourceText)
-
-        Produce concise Fruitfolio-language content inside the JSON fields only.
-        """
-    }
-}
-
-// MARK: - Deterministic generated-claim validation
-
-nonisolated enum FruitfolioGeneratedDraftValidator {
-    static func validatedText(
-        draft: FruitfolioGeneratedDraft,
-        evidence: FruitfolioEvidencePacket
-    ) -> String? {
-        let noteByID = Dictionary(
-            uniqueKeysWithValues: evidence.researchNoteChunks.map { ($0.chunkID, $0.text) }
-        )
-        let sourceByID = Dictionary(
-            uniqueKeysWithValues: evidence.sourceChunks.map { ($0.sourceChunkID, $0.text) }
-        )
-
-        let allowedByClaim = Dictionary(
-            uniqueKeysWithValues: evidence.claimEvidenceMap.map {
-                ($0.claim.id, Set($0.noteChunkIDs + $0.sourceChunkIDs))
-            }
-        )
-
-        let supportedClaimTokens: [(Set<String>, Set<String>)] = evidence.claimEvidenceMap.map {
-            (FruitfolioQueryNormalizer.tokens($0.claim.text), allowedByClaim[$0.claim.id] ?? [])
-        }
-
-        let surviving = draft.claims.compactMap { generated -> String? in
-            let generatedTokens = FruitfolioQueryNormalizer.tokens(generated.text)
-            guard !generatedTokens.isEmpty else { return nil }
-
-            let cited = Set(generated.evidenceIDs)
-            guard !cited.isEmpty else { return nil }
-
-            let allIDsExist = cited.allSatisfy { noteByID[$0] != nil || sourceByID[$0] != nil }
-            guard allIDsExist else { return nil }
-
-            // A generated claim must correspond to a requested claim need and may
-            // cite only evidence that retrieval already mapped to that need.
-            let boundaryMatch = supportedClaimTokens.contains { needTokens, allowedIDs in
-                !generatedTokens.intersection(needTokens).isEmpty
-                    && cited.isSubset(of: allowedIDs)
-            }
-            guard boundaryMatch else { return nil }
-
-            // Last deterministic sanity check: at least one meaningful generated
-            // term must also occur in the cited evidence text. This is deliberately
-            // conservative; unsupported prose is removed rather than trusted.
-            let citedEvidenceText = cited.compactMap { noteByID[$0] ?? sourceByID[$0] }.joined(separator: " ")
-            let evidenceTokens = FruitfolioQueryNormalizer.tokens(citedEvidenceText)
-            guard !generatedTokens.intersection(evidenceTokens).isEmpty else { return nil }
-
-            return generated.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-
-        guard !surviving.isEmpty else { return nil }
-
-        var sections: [String] = []
-        if let bridge = cleaned(draft.bridge) {
-            sections.append(bridge)
-        }
-        sections.append(surviving.map { "• \($0)" }.joined(separator: "\n"))
-        if let limitation = cleaned(draft.limitation) {
-            sections.append(limitation)
-        }
-        return sections.joined(separator: "\n\n")
-    }
-
-    private static func cleaned(_ value: String?) -> String? {
-        guard let value else { return nil }
-        let result = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        return result.isEmpty ? nil : result
-    }
-}
-
 // MARK: - Research intelligence engine
 
 nonisolated enum FruitfolioResearchIntelligenceError:
@@ -899,7 +626,7 @@ nonisolated enum FruitfolioResearchIntelligenceError:
 
         case .unsupported:
             return
-                "i don’t have this one in the library yet."
+                FruitfolioCanonicalAnswerVoice.unsupportedMessage
         }
     }
 }
@@ -1076,11 +803,7 @@ final class FruitfolioResearchIntelligenceEngine:
         }
 
         let noteChunks =
-            deduplicateNotes(
-                rankedNotes.map {
-                    $0.chunk
-                }
-            )
+            deduplicateNotes(retriever.contextualizedNotes(rankedNotes))
 
         let sourceChunks =
             deduplicateSources(
@@ -1318,7 +1041,7 @@ final class FruitfolioResearchIntelligenceEngine:
             originalQuestion:
                 question,
             answerText:
-                "i don’t have this one in the library yet.",
+                FruitfolioCanonicalAnswerVoice.unsupportedMessage,
             support:
                 .genuinelyNovel,
             supportMap:
@@ -1347,80 +1070,12 @@ final class FruitfolioResearchIntelligenceEngine:
         safety:
             Prompt34SafetyClassification
     ) -> String {
-        let excerpts =
-            notes
-                .prefix(3)
-                .map {
-                    chunk -> String in
-
-                    let clean =
-                        FruitfolioAnswerPresentationSanitizer.clean(
-                            chunk.text
-                        )
-
-                    let offset =
-                        min(
-                            clean.count,
-                            680
-                        )
-
-                    let limit =
-                        clean.index(
-                            clean.startIndex,
-                            offsetBy: offset
-                        )
-
-                    let clipped =
-                        String(
-                            clean[..<limit]
-                        )
-
-                    let suffix =
-                        clean.count > 680
-                        ? "…"
-                        : ""
-
-                    return
-                        "• \(clipped)\(suffix)"
-                }
-
-        var parts: [String] = []
-
-        if safety.level != .normal {
-            parts.append(
-                "this deserves a quieter, more careful answer. if you may be in immediate danger or have severe symptoms, seek urgent medical care rather than relying on an educational app."
-            )
-        }
-
-        let excerptText =
-            excerpts.joined(
-                separator: "\n\n"
-            )
-
-        if !excerptText.isEmpty {
-            parts.append(
-                excerptText
-            )
-        }
-
-        if
-            !coverage.unsupportedClaims.isEmpty
-            || !coverage
-                .partiallySupportedClaims
-                .isEmpty
-        {
-            parts.append(
-                "the local library does not fully support every part of that question yet, so Fruitfolio is leaving the unsupported part unanswered rather than filling it from model memory."
-            )
-        }
-
-        return parts
-            .filter {
-                !$0.isEmpty
-            }
-            .joined(
-                separator: "\n\n"
-            )
+        // Context has already been restored from the original paragraph table.
+        // Do not clip at a character limit and accidentally remove a qualifier.
+        let excerpts = notes.prefix(3).map { FruitfolioSemanticMarkup.markdown([.init(text: $0.text)]) }.filter { !$0.isEmpty }
+        return FruitfolioCanonicalAnswerVoice.compose(excerpts: excerpts,
+            hasUnansweredParts: !coverage.unsupportedClaims.isEmpty || !coverage.partiallySupportedClaims.isEmpty,
+            safety: safety)
     }
 
     private func deduplicateNotes(

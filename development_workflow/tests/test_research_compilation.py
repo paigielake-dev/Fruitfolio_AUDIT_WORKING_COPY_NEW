@@ -41,6 +41,8 @@ class ResearchCompilationTests(unittest.TestCase):
         self.assertEqual(package['sources'][0]['verificationStatus'], 'founderCorpusAPA7')
         self.assertIsNone(package['sources'][0]['verifiedAt'])
         self.assertEqual(package['sourceChunks'], [])
+        for chunk in package['researchNoteChunks']:
+            self.assertEqual(package['sourceParagraphs'][chunk['sourceParagraphID']], original)
         self.assertEqual(report['quarantinedTopics'], [])
 
     def test_ambiguous_references_and_lifebridge_are_preserved_but_not_retrievable(self):

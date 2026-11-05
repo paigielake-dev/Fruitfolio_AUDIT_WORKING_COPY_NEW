@@ -13,3 +13,7 @@ The runtime's missing `FruitfolioResearchPackage.json` is now generated from the
 Actual Foundation Swift tests decoded the full package, verified all eligible note/source associations, excluded LifeBridge notes and exercised repeated retrieval. Latest Linux sample: index construction 1.259 seconds; 50 cached searches 1.284 seconds. This is not a before/after speedup claim or iPhone performance result.
 
 Remaining acceptance: resolve quarantined references against original material, independently review clinical/citation accuracy, integrate approved full-source text, verify application-bundle loading and normal/fallback generation, then physical-device responsiveness/memory and MADLAD language accuracy. Compilation is not acceptance of runtime medical behavior.
+
+## Complete-context presentation
+
+The compiled resource now preserves the original paragraph table alongside compact ranking slices. Retrieval restores/deduplicates complete paragraphs before synthesis and fallback presentation, preventing a slice boundary or the old 680-character display cap from dropping a qualifier. Generated facts must match a complete supplied paragraph (semantic markup may vary); arbitrary bridge/limitation fields are ignored in favor of shared deterministic framing. This is a conservative source-copy boundary, not a validated medical paraphrase/entailment engine. Clinical correctness and passage relevance still need review.

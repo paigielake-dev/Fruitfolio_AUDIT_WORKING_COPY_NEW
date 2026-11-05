@@ -29,6 +29,20 @@ final class Prompt1BResearchPackageTests: XCTestCase {
             XCTAssertTrue(Set(result.chunk.sourceIDs).isSubset(of: approvedIDs))
         }
     }
+    func testRankingRestoresWholeParagraphsBeforeScientificPresentation() throws {
+        let package = try package()
+        let retriever = FruitfolioLocalResearchRetriever(package: package)
+        let ranked = retriever.searchNotes(question: "progesterone temperature")
+        let restored = retriever.contextualizedNotes(ranked)
+        XCTAssertFalse(restored.isEmpty)
+        let keys = restored.compactMap(\.sourceParagraphID)
+        XCTAssertEqual(keys.count, Set(keys).count)
+        for note in restored {
+            let key = try XCTUnwrap(note.sourceParagraphID)
+            XCTAssertEqual(note.text, package.sourceParagraphs?[key])
+        }
+    }
+
     func testActualStaticIndexCanServeRepeatedIndependentQueriesWithoutChangingPackage() throws {
         let package = try package()
         let start = Date()
