@@ -33,6 +33,16 @@ class WorkflowIntegrityTests(unittest.TestCase):
         self.assertIsNotNone(declared)
         self.assertEqual(tuple(map(int, declared.groups())), dimensions)
 
+    def test_header_art_dimensions_match_all_bundled_assets(self):
+        import struct
+        repo = ROOT.parent
+        source = (repo / 'Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift').read_text()
+        entries = re.findall(r'Item\(id: \.(\w+), pixels: CGSize\(width: (\d+), height: (\d+)\)', source)
+        self.assertGreaterEqual(len(entries), 7)
+        for name, width, height in entries:
+            asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob(name + '.png'))
+            self.assertEqual(tuple(map(int, (width, height))), struct.unpack('>II', asset.read_bytes()[16:24]), name)
+
     def test_statuses_do_not_claim_unexecuted_ios_verification(self):
         rows = json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']
         for row in rows:

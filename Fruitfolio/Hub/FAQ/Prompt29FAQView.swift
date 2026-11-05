@@ -127,42 +127,6 @@ struct Prompt29FAQView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
-                        Prompt12RouteHeader(
-                            title: "FAQ",
-                            subtitle: "you’ve got questions. we’ve got answers. ♡",
-                            assetName: nil,
-                            onBack: onBack
-                        )
-
-                        HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_orange)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_pear)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_lemon)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
-                        }
-                        .padding(.top, 2)
-                        .padding(.trailing, 2)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-
-                        FruitfolioImage(id: .decor_sparkles_1)
-                            .frame(width: 54, height: 54)
-                            .rotationEffect(.degrees(-18))
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                            .offset(x: 111, y: 5)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    }
-
                     ForEach(Prompt29FAQCatalog.sections) { section in
                         Prompt29FAQSectionCard(
                             section: section,
@@ -176,6 +140,15 @@ struct Prompt29FAQView: View {
                 .frame(maxWidth: .infinity)
             }
             .scrollIndicators(.hidden)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                FruitfolioDecoratedRouteHeader(palette: .faq) {
+                    Prompt12RouteHeader(title: "FAQ", subtitle: "you’ve got questions. we’ve got answers. ♡",
+                                        assetName: nil, onBack: onBack)
+                }
+                .padding(.horizontal, 20)
+                .background(DesignTokens.ColorToken.backgroundCream)
+            }
+
         }
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)

@@ -247,3 +247,13 @@
 - Verification: {"portable_swift": "PASS; see complete current-run log for separate XCTest and Swift Testing counts", "workflow_and_packaging": "5 passed", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: model/tokenizer absent, proxy 403"}.
 - Next action: Implement actual shared decorative-header adoption with the approved Contact/Settings asset matrix; document missing tulip explicitly. Continue the remaining original checklist requirements after each batch.
 - Commit: containing commit for batch P10-compiled-portable-regressions.
+
+## P1-responsive-approved-header-art
+
+- Parent checkpoint: 9aa3e44e623eaaa855fb76e1a50fde484589b444.
+- Source-order requirements: [28, 29, 30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 374, 375, 376, 377, 378, 379, 380, 381, 382, 383, 385, 386].
+- Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.
+- Tests added/updated: Prompt1BDecorativeLayoutTests, WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets.
+- Verification: {"portable_swift": "19 XCTest + 21 Swift Testing cases passed (40 total)", "workflow_and_packaging": "6 passed", "Swift_syntax": "72 changed files parsed, no errors; not an iOS build", "diff": "passed after removing trailing blank line in prior batch", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
+- Next action: Implement the missing LifeBridge information destination and source slots with founder-provided official URLs, transparent missing-approved-content fallback and Ask discovery; then continue remaining shared/feature requirements.
+- Commit: containing commit for batch P1-responsive-approved-header-art.

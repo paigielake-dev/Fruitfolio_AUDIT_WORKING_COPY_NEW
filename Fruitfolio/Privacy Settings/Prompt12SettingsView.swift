@@ -25,38 +25,6 @@ struct Prompt12SettingsView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    ZStack(alignment: .topTrailing) {
-                        Prompt12RouteHeader(
-                            title: "settings",
-                            subtitle: "small controls for how Fruitfolio feels",
-                            assetName: "hub_settings",
-                            onBack: onBack
-                        )
-
-                        HStack(spacing: -7) {
-                            FruitfolioImage(id: .fruitbasket_blueberry)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_plum)
-                                .frame(width: 46, height: 46)
-
-                            FruitfolioImage(id: .fruitbasket_star)
-                                .frame(width: 22, height: 22)
-                                .offset(y: -13)
-                        }
-                        .padding(.top, 2)
-                        .padding(.trailing, 2)
-                         .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-
-                        FruitfolioImage(id: .decor_sparkles_2)
-                            .frame(width: 88, height: 88)
-                            .frame(maxWidth: .infinity, alignment: .topLeading)
-                            .offset(x: 74, y: -12)
-                            .allowsHitTesting(false)
-                            .accessibilityHidden(true)
-                    }
-
                     experienceSection
                     languageSection
                     accessibilitySection
@@ -67,6 +35,15 @@ struct Prompt12SettingsView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+
+            .safeAreaInset(edge: .top, spacing: 0) {
+                FruitfolioDecoratedRouteHeader(palette: .settings) {
+                    Prompt12RouteHeader(title: "settings", subtitle: "small controls for how Fruitfolio feels",
+                                        assetName: "hub_settings", onBack: onBack)
+                }
+                .padding(.horizontal, 20)
+                .background(DesignTokens.ColorToken.backgroundCream)
+            }
             .fruitfolioModalBlur(
                 active:
                     showDataManagement ||

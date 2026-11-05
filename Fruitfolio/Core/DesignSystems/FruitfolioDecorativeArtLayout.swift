@@ -1,4 +1,11 @@
-import SwiftUI
+import Foundation
+
+struct FruitfolioArtInsets {
+    var top: CGFloat = 0
+    var leading: CGFloat = 0
+    var bottom: CGFloat = 0
+    var trailing: CGFloat = 0
+}
 
 struct FruitfolioProtectedRegion: Hashable {
     let rect: CGRect
@@ -22,7 +29,7 @@ enum FruitfolioDecorativeArtLayout {
         roleFraction: ClosedRange<CGFloat>,
         anchor: FruitfolioDecorativeAnchor,
         container: CGRect,
-        safeInsets: EdgeInsets,
+        safeInsets: FruitfolioArtInsets,
         protectedRegions: [FruitfolioProtectedRegion],
         minimumGap: CGFloat = 12
     ) -> FruitfolioDecorativePlacement {

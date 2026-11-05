@@ -686,20 +686,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Create a separate shared Swift system for decorative artwork.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 29,
@@ -707,15 +713,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Preserve each screen\u2019s founder-approved artwork selection.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 30,
@@ -723,15 +740,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Preserve the intended location and relationship of each asset.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 31,
@@ -740,20 +768,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Replace brittle absolute coordinates, negative padding, and fixed offsets where necessary.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 32,
@@ -761,15 +795,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Position artwork relative to its actual parent container, paper, book, or other intended anchor.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 33,
@@ -778,20 +823,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Account for actual image dimensions and aspect ratios.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 34,
@@ -822,20 +873,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Preserve watercolor proportions, visual weight, and orientation.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 36,
@@ -844,20 +901,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Prevent artwork from overlapping headings, text, controls, citations, or scientific illustrations.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 37,
@@ -866,20 +929,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Prevent decorative assets from colliding with one another.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 38,
@@ -887,15 +956,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Respect safe areas and screen boundaries.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 39,
@@ -903,15 +983,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Recalculate placement when content expands.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 40,
@@ -919,15 +1010,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Recalculate placement when the keyboard appears.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 41,
@@ -935,15 +1037,26 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal decorative artwork layout system",
       "description": "Recalculate placement when a popup appears.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 42,
@@ -952,20 +1065,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Support different iPhone sizes and Dynamic Type settings.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 43,
@@ -974,20 +1093,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Resize, reposition, or temporarily omit artwork when necessary.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 44,
@@ -996,20 +1121,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Do not indiscriminately shrink artwork to make it fit.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 45,
@@ -1018,20 +1149,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Do not randomly redistribute, substitute, or redesign the founder\u2019s compositions.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 46,
@@ -7491,20 +7628,26 @@
       "description": "Use the existing approved tulip artwork.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 375,
@@ -7514,20 +7657,26 @@
       "description": "Use the existing sparkle artwork.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 376,
@@ -7537,20 +7686,26 @@
       "description": "Add an approved cloud only if a suitable asset already exists.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 377,
@@ -7560,20 +7715,26 @@
       "description": "Do not substitute an unrelated rain cloud simply because it is available.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 378,
@@ -7583,20 +7744,26 @@
       "description": "Apply universal popup and decorative artwork rules.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 379,
@@ -7606,20 +7773,26 @@
       "description": "Use the existing green flecks artwork.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 380,
@@ -7629,20 +7802,26 @@
       "description": "Use the existing plum artwork.",
       "relevant_source_files": [
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BFAQSafetyTests"
+        "Prompt1BFAQSafetyTests",
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
       ],
-      "commit_reference": "batch:P8-faq-and-contact-interaction (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically."
+        "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
       ],
-      "last_updated": "2026-11-05T18:58:34.684889+00:00"
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 381,
@@ -7650,15 +7829,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Use the existing sparkles.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 382,
@@ -7666,15 +7856,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Correct any conflicting older artwork assignments.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 383,
@@ -7682,15 +7883,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Preserve the intended composition through responsive placement.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 384,
@@ -7721,15 +7933,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Remove duplicated or incorrectly layered decorative artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 386,
@@ -7737,15 +7960,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Correct text that clips or overlaps artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDecorativeLayoutTests",
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+      ],
+      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+      ],
+      "last_updated": "2026-11-05T19:24:10.061533+00:00"
     },
     {
       "sequence": 387,

@@ -14,6 +14,7 @@ import tempfile
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift',
+    'Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift',
     'Fruitfolio/Ask/Prompt09ConversationPolicies.swift',
     'Fruitfolio/Hormone Information/HormoneMeasurement.swift',
@@ -28,6 +29,7 @@ SOURCES = [
 ]
 TESTS = [
     'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
+    'Prompt1BDecorativeLayoutTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift',
     'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
     'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
