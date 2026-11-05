@@ -15,6 +15,8 @@ struct Prompt10EncyclopediaDetailView: View {
 
     @State private var selectedPage: Prompt10SavedPage?
     @State private var expandedChapterIDs: Set<UUID> = []
+    @State private var showingMaterialEditor = false
+    @State private var materialToEdit: Prompt10SavedPage?
 
     private var encyclopedia: Prompt10Encyclopedia? {
         store.encyclopedia(id: encyclopediaID)
@@ -35,7 +37,8 @@ struct Prompt10EncyclopediaDetailView: View {
                             if let selectedPage {
                                 Prompt10SavedPageView(store: store, encyclopediaID: encyclopediaID, page: selectedPage,
                                     onPageChanged: { updated in self.selectedPage = updated },
-                                    onBack: { self.selectedPage = nil })
+                                    onBack: { self.selectedPage = nil },
+                                    onEditUserMaterial: { page in materialToEdit = page; showingMaterialEditor = true })
                             } else {
                                 ScrollView {
                                     Text("choose a saved page from the contents to read it here.")
@@ -49,6 +52,17 @@ struct Prompt10EncyclopediaDetailView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityLabel("saved content, right book page")
                     }
+                }
+            }
+        }
+        .fruitfolioModalBlur(active: showingMaterialEditor, reduceMotion: motionPreferences.reduceMotionActive)
+        .overlay {
+            if showingMaterialEditor {
+                ZStack {
+                DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity).ignoresSafeArea().allowsHitTesting(false)
+                Prompt10UserMaterialEditor(store: store, encyclopediaID: encyclopediaID, existing: materialToEdit,
+                    onSaved: { page in selectedPage = page; showingMaterialEditor = false; materialToEdit = nil },
+                    onCancel: { showingMaterialEditor = false; materialToEdit = nil })
                 }
             }
         }
@@ -68,6 +82,13 @@ struct Prompt10EncyclopediaDetailView: View {
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
+
+                Button("add my own page") {
+                    materialToEdit = nil
+                    showingMaterialEditor = true
+                }
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                .disabled(encyclopedia.chapters.isEmpty)
 
                 if encyclopedia.chapters.isEmpty {
                     Text("this little book is ready for saved pages ♡")
@@ -335,6 +356,7 @@ struct Prompt10SavedPageView: View {
     let page: Prompt10SavedPage
     let onPageChanged: (Prompt10SavedPage) -> Void
     let onBack: () -> Void
+    var onEditUserMaterial: ((Prompt10SavedPage) -> Void)? = nil
 
     @EnvironmentObject private var audioManager: AudioManager
     @State private var selectedPhotoItem: PhotosPickerItem?
@@ -406,6 +428,20 @@ struct Prompt10SavedPageView: View {
                 }
 
                 FruitfolioSavedScientificIllustrations(assetIDs: page.educationalAssetIDs ?? [])
+                if let provenance = page.userMaterial {
+                    Text("your own material · not verified research")
+                        .font(.caption).bold()
+                    if let address = provenance.sourceURL {
+                        Text(verbatim: address).font(.caption).textSelection(.enabled)
+                    }
+                    if let onEditUserMaterial {
+                        Button("edit my page") {
+                            if hasUnsavedNotes { mediaMessage = "save or discard your note changes before editing this page." }
+                            else { onEditUserMaterial(page) }
+                        }
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                    }
+                }
                 notesSection
                 importedImagesSection
 
@@ -457,6 +493,7 @@ struct Prompt10SavedPageView: View {
             loadNotesIfNeeded()
         }
         .onAppear { loadNotesIfNeeded() }
+        .onChange(of: page.notes) { _, _ in loadNotesIfNeeded() }
         .interactiveDismissDisabled(hasUnsavedNotes)
         .confirmationDialog("save your note changes?", isPresented: $confirmDiscardNotes, titleVisibility: .visible) {
             Button("save and go back") { if saveNotes() { onBack() } }
@@ -518,6 +555,9 @@ struct Prompt10SavedPageView: View {
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
                 VStack(spacing: 6) {
                     Prompt10ImportedImage(imageID: imageID)
+                    Prompt10ReplaceImagePicker(imageID: imageID) { item, target in
+                        beginImageImport(item, replacing: target)
+                    }
                     Button("remove image") { removeImage(imageID) }
                         .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
                         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
@@ -530,11 +570,8 @@ struct Prompt10SavedPageView: View {
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
             }
             .onChange(of: selectedPhotoItem) { _, item in
-                imageImportTask?.cancel()
-                imageImportGeneration = UUID()
                 guard let item else { return }
-                let generation = imageImportGeneration
-                imageImportTask = Task { await importImage(item, generation: generation) }
+                beginImageImport(item, replacing: nil)
             }
 
             if let mediaMessage {
@@ -552,7 +589,14 @@ struct Prompt10SavedPageView: View {
         selectedPhotoItem = nil
     }
 
-    private func importImage(_ item: PhotosPickerItem, generation: UUID) async {
+    private func beginImageImport(_ item: PhotosPickerItem, replacing imageID: String?) {
+        imageImportTask?.cancel()
+        imageImportGeneration = UUID()
+        let generation = imageImportGeneration
+        imageImportTask = Task { await importImage(item, generation: generation, replacing: imageID) }
+    }
+
+    private func importImage(_ item: PhotosPickerItem, generation: UUID, replacing replacedID: String?) async {
         defer {
             if imageImportGeneration == generation {
                 selectedPhotoItem = nil
@@ -581,14 +625,18 @@ struct Prompt10SavedPageView: View {
                 .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) else {
                 throw Prompt10LibraryError.pageNotFound
             }
-            var ids = latest.importedImageIDs ?? []
-            ids.append(id)
+            let ids = try Prompt10ImageAttachmentMutation.attaching(id, replacing: replacedID, to: latest.importedImageIDs ?? [])
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
             writtenID = nil
             var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
-            mediaMessage = "image added!"
+            mediaMessage = replacedID == nil ? "image added!" : "image replaced!"
+            if let replacedID, !Prompt10MediaReferences.contains(replacedID, in: store.encyclopedias) {
+                // Persist and refresh first; file cleanup must not turn a saved
+                // attachment change into an apparent rollback.
+                _ = await Task.detached(priority: .utility) { try? Prompt10LocalMediaStore.shared.delete(replacedID) }.value
+            }
         } catch {
             if let orphan = writtenID {
                 _ = await Task.detached(priority: .utility) { try? Prompt10LocalMediaStore.shared.delete(orphan) }.value
@@ -607,14 +655,15 @@ struct Prompt10SavedPageView: View {
             var ids = latest.importedImageIDs ?? []
             ids.removeAll { $0 == id }
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
-            // A guide retains its own snapshot even after the source detaches it.
-            if !Prompt10MediaReferences.contains(id, in: store.encyclopedias) {
-                try Prompt10LocalMediaStore.shared.delete(id)
-            }
             var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
             mediaMessage = "image removed."
+            // Detaching is already committed. Cleanup failures must not leave
+            // the screen displaying the removed image as if persistence failed.
+            if !Prompt10MediaReferences.contains(id, in: store.encyclopedias) {
+                try? Prompt10LocalMediaStore.shared.delete(id)
+            }
         } catch {
             mediaMessage = "that image could not be removed."
         }

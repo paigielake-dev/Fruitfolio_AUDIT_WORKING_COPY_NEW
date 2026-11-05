@@ -34,6 +34,29 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookReduceMotion"]
+        app.launch()
+        let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
+        for _ in 0..<8 { if book.isHittable { break }; app.swipeUp() }
+        book.tap()
+        let add = app.buttons["add my own page"]
+        XCTAssertTrue(add.waitForExistence(timeout: 5))
+        add.tap()
+        let title = app.textFields["page title"]
+        XCTAssertTrue(title.waitForExistence(timeout: 3))
+        title.tap(); title.typeText("my reminder")
+        let body = app.textViews["my page text"]
+        body.tap(); body.typeText("my independently collected material")
+        app.swipeUp()
+        let save = app.buttons["save my page"]
+        for _ in 0..<10 { if save.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+        save.tap()
+        XCTAssertTrue(app.staticTexts["your own material · not verified research"].waitForExistence(timeout: 3))
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

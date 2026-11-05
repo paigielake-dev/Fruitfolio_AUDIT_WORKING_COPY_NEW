@@ -15,6 +15,7 @@ import tempfile
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
     'Fruitfolio/Saved Library/Prompt10BookMotion.swift',
+    'Fruitfolio/Saved Library/Prompt10UserMaterial.swift',
     'Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift',
     'Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift',
     'Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift',
@@ -50,7 +51,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
-    'Prompt1BBookMotionTests.swift', 'Prompt1BBookLabelTests.swift', 'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
+    'Prompt1BUserMaterialTests.swift', 'Prompt1BBookMotionTests.swift', 'Prompt1BBookLabelTests.swift', 'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',
     'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',
     'Prompt1BGGUFResourceTests.swift', 'Prompt1BLogoRevealTests.swift', 'Prompt1BSpotlightGeometryTests.swift',

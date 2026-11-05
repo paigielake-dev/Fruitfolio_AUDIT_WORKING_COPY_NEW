@@ -66,6 +66,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var excerptSelectionLocation: Int?
     var excerptSelectionLength: Int?
     var excerptLanguage: String?
+    var userMaterial: Prompt10UserMaterialProvenance?
 
     init(
         id: UUID = UUID(),
@@ -91,7 +92,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         excerptSelectionLength: Int? = nil,
         excerptLanguage: String? = nil,
         sourceRecords: [AskSourceRecord]? = nil,
-        educationalAssetIDs: [FruitfolioAssetID]? = nil
+        educationalAssetIDs: [FruitfolioAssetID]? = nil,
+        userMaterial: Prompt10UserMaterialProvenance? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -117,6 +119,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.excerptSelectionLocation = excerptSelectionLocation
         self.excerptSelectionLength = excerptSelectionLength
         self.excerptLanguage = excerptLanguage
+        self.userMaterial = userMaterial
     }
 
     func isDuplicateSave(of candidate: Prompt10SavedPage) -> Bool {
@@ -276,7 +279,10 @@ struct Prompt10NoteDraft: Equatable {
     var hasChanges: Bool { text != baseline }
 
     mutating func load(pageID: UUID, notes: String) {
-        guard self.pageID != pageID else { return }
+        if self.pageID == pageID {
+            if !hasChanges { baseline = notes; text = notes }
+            return
+        }
         self.pageID = pageID
         baseline = notes
         text = notes

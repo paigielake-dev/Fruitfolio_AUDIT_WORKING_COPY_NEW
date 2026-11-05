@@ -105,7 +105,7 @@ extension Prompt10SavedLibraryStore {
             sourceVersions: sourcePage.sourceVersions,
             knowledgeBaseVersion: sourcePage.knowledgeBaseVersion,
             generationTimestamp: sourcePage.generationTimestamp,
-            notes: "",
+            notes: sourcePage.userMaterial == nil ? "" : sourcePage.notes,
             sourceSavedPageID: sourceKey,
             importedImageIDs: sourcePage.importedImageIDs,
             excerptSemanticSpans: sourcePage.excerptSemanticSpans,
@@ -113,7 +113,8 @@ extension Prompt10SavedLibraryStore {
             excerptSelectionLength: sourcePage.excerptSelectionLength,
             excerptLanguage: sourcePage.excerptLanguage,
             sourceRecords: sourcePage.sourceRecords,
-            educationalAssetIDs: sourcePage.educationalAssetIDs
+            educationalAssetIDs: sourcePage.educationalAssetIDs,
+            userMaterial: sourcePage.userMaterial
         )
 
         return try savePage(

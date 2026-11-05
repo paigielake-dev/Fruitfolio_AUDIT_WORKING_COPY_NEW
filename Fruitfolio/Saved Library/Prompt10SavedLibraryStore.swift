@@ -189,6 +189,37 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         return savedPage
     }
 
+    @discardableResult
+    func saveUserMaterial(_ draft: Prompt10UserMaterialDraft, to encyclopediaID: UUID,
+                          chapterID: UUID, existingPageID: UUID? = nil) throws -> Prompt10SavedPage {
+        guard let bookIndex = encyclopedias.firstIndex(where: { $0.id == encyclopediaID }) else {
+            throw Prompt10LibraryError.encyclopediaNotFound
+        }
+        guard let targetIndex = encyclopedias[bookIndex].chapters.firstIndex(where: { $0.id == chapterID }) else {
+            throw Prompt10LibraryError.chapterNotFound
+        }
+        if let existingPageID {
+            guard let originalChapter = encyclopedias[bookIndex].chapters.firstIndex(where: { $0.pages.contains { $0.id == existingPageID } }),
+                  let pageIndex = encyclopedias[bookIndex].chapters[originalChapter].pages.firstIndex(where: { $0.id == existingPageID }) else {
+                throw Prompt10LibraryError.pageNotFound
+            }
+            let original = encyclopedias[bookIndex].chapters[originalChapter].pages[pageIndex]
+            var updated = try draft.page(chapterID: chapterID, existing: original)
+            if originalChapter == targetIndex {
+                encyclopedias[bookIndex].chapters[targetIndex].pages[pageIndex] = updated
+            } else {
+                encyclopedias[bookIndex].chapters[originalChapter].pages.remove(at: pageIndex)
+                normalizePageOrder(encyclopediaIndex: bookIndex, chapterIndex: originalChapter)
+                updated.order = encyclopedias[bookIndex].chapters[targetIndex].pages.count
+                encyclopedias[bookIndex].chapters[targetIndex].pages.append(updated)
+            }
+            encyclopedias[bookIndex].updatedAt = Date()
+            try persist()
+            return updated
+        }
+        return try savePage(draft.page(chapterID: chapterID), to: encyclopediaID, chapterID: chapterID)
+    }
+
     func deletePage(
         encyclopediaID: UUID,
         chapterID: UUID,

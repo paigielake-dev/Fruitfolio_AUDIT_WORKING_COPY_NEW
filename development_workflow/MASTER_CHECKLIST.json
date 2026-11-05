@@ -7146,15 +7146,26 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Allow users to add their own notes.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
+      ],
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
+      ],
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 198,
@@ -7170,7 +7181,10 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7179,14 +7193,17 @@
       "related_tests": [
         "Prompt1BImagePreparationTests",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 199,
@@ -7200,7 +7217,11 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7208,13 +7229,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 200,
@@ -7228,7 +7252,11 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7236,13 +7264,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 201,
@@ -7258,7 +7289,10 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7267,14 +7301,17 @@
       "related_tests": [
         "Prompt1BImagePreparationTests",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 202,
@@ -7290,7 +7327,10 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7299,14 +7339,17 @@
       "related_tests": [
         "Prompt1BImagePreparationTests",
         "Prompt1BLibraryPersistenceTests",
-        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes"
+        "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-library-commit-rollback-and-corruption-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
-        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated."
+        "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T20:34:04.869511+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 203,
@@ -7316,20 +7359,27 @@
       "description": "Provide save and discard behavior.",
       "relevant_source_files": [
         "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BImagePreparationTests"
+        "Prompt1BImagePreparationTests",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T18:48:51.342795+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 204,
@@ -7339,20 +7389,27 @@
       "description": "Protect unsaved edits.",
       "relevant_source_files": [
         "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BImagePreparationTests"
+        "Prompt1BImagePreparationTests",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T18:48:51.342795+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 205,
@@ -7362,20 +7419,27 @@
       "description": "Do not generate images on the user\u2019s behalf.",
       "relevant_source_files": [
         "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterial.swift",
+        "Fruitfolio/Saved Library/Prompt10UserMaterialEditor.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BImagePreparationTests"
+        "Prompt1BImagePreparationTests",
+        "Prompt1BUserMaterialTests",
+        "Prompt1BModalAccessibilityTests.testOwnMaterialSavesIntoChosenBookWithoutBecomingVerifiedResearch"
       ],
-      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "commit_reference": "batch:Library-user-material-provenance-editing-and-image-replacement (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.",
+        "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open."
       ],
-      "last_updated": "2026-11-05T18:48:51.342795+00:00"
+      "last_updated": "2026-11-05T21:56:21.751307+00:00"
     },
     {
       "sequence": 206,
