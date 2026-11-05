@@ -13,6 +13,7 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    'Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift',
     'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift',
     'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift',
     'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift',
@@ -97,6 +98,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BFruitBasketResearchTests.swift', 'Prompt1BHealthSafetyBoundaryTests.swift',
     'Prompt21BodyBiologyCoreTests.swift',
     'Prompt1BScientificArtSizingTests.swift',
     'Prompt1BSymptomTimelineTests.swift', 'Prompt24TrendsCoreTests.swift',

@@ -100,11 +100,19 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let contentVersion: String
     let reviewStatus: String
     let createdAt: Date
+    var sourceRecords: [AskSourceRecord]? = nil
+    var sourceExcerpt: String? = nil
 
     var isPlayable: Bool {
         answerOptions.count >= 2
-            && answerOptions.contains(where: { $0.id == correctAnswerID })
+            && Set(answerOptions.map(\.id)).count == answerOptions.count
+            && Set(answerOptions.map { $0.text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() }).count == answerOptions.count
+            && answerOptions.allSatisfy({ !$0.id.isEmpty && !$0.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
+            && answerOptions.filter({ $0.id == correctAnswerID }).count == 1
+            && !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !sourceIDs.isEmpty
+            && Set(sourceIDs).count == sourceIDs.count
+            && (sourceRecords.map { Set($0.map(\.id)) == Set(sourceIDs) && $0.count == sourceIDs.count } ?? true)
             && !catchRule.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !goodFruitIDs.isEmpty
             && !badFruitIDs.isEmpty

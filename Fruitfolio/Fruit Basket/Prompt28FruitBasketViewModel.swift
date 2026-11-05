@@ -22,6 +22,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     let engine: Prompt28FruitBasketEngine
 
     private let researchProvider: any Prompt28ResearchProviding
+    private var questionGeneration = UUID()
     private var gameplayTask: Task<Void, Never>?
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
@@ -131,31 +132,43 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     func loadQuestion() async {
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
+        let request = UUID()
+        questionGeneration = request
+        let requestedTopic = rawTopic
+        let requestedDifficulty = difficulty
+        func isCurrent() -> Bool {
+            !Task.isCancelled && questionGeneration == request && screen == .loading
+                && rawTopic == requestedTopic && difficulty == requestedDifficulty
+        }
         screen = .loading
+        defer { if questionGeneration == request && screen == .loading { screen = .learningSetup } }
         message = nil
         do {
             let q = try await researchProvider.question(
-                topic: rawTopic,
+                topic: requestedTopic,
                 normalizedTopic: normalized,
-                difficulty: difficulty,
+                difficulty: requestedDifficulty,
                 excludingQuestionIDs: store.questionHistory[normalized] ?? []
             )
-            guard q.isPlayable else { throw Prompt28ResearchError.invalidQuestion }
+            guard isCurrent() else { return }
+            guard q.isPlayable, q.normalizedTopic == normalized, q.educationalDifficulty == requestedDifficulty else { throw Prompt28ResearchError.invalidQuestion }
             currentQuestion = q
             selectedAnswerID = nil
             store.recordQuestion(q.id, topic: normalized)
             screen = .question
         } catch let error as Prompt28ResearchError {
+            guard isCurrent() else { return }
             switch error {
             case .topicExhausted:
                 screen = .topicExhausted
-            case .unsupportedTopic, .providerUnavailable:
+            case .unsupportedTopic, .providerUnavailable, .urgentTopic, .sensitiveTopic:
                 screen = .topicUnsupported
             default:
                 screen = .error
             }
             message = error.localizedDescription
         } catch {
+            guard isCurrent() else { return }
             screen = .error
             message = "Fruit Basket couldn’t prepare a sourced question right now."
         }
@@ -293,6 +306,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func changeTopic() {
+        questionGeneration = UUID()
         stopGameplay()
         currentQuestion = nil
         selectedAnswerID = nil
@@ -312,6 +326,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func leaveScreen() {
+        questionGeneration = UUID()
+        if screen == .loading { screen = .learningSetup }
         sceneBecameInactive()
         stopGameplay()
     }
@@ -334,7 +350,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             sourceIDs: question.sourceIDs,
             sourceVersions: Dictionary(uniqueKeysWithValues: question.sourceIDs.map { ($0, question.contentVersion) }),
             knowledgeBaseVersion: question.contentVersion,
-            generationTimestamp: question.createdAt
+            generationTimestamp: question.createdAt,
+            sourceRecords: question.sourceRecords
         )
     }
 

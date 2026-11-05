@@ -100,10 +100,15 @@ enum Prompt34LocalSafetyRouter {
                 locale: .current
             )
             .lowercased()
+            .replacingOccurrences(of: "’", with: "'")
 
+        func containsPhrase(_ pattern: String) -> Bool {
+            let phrase = pattern.split(separator: " ").map { NSRegularExpression.escapedPattern(for: String($0)) }.joined(separator: "\\s+")
+            return normalized.range(of: "(?<![\\p{L}\\p{N}])(?:" + phrase + ")(?![\\p{L}\\p{N}])", options: .regularExpression) != nil
+        }
         let urgentMatches =
             urgentPatterns.filter {
-                normalized.contains($0)
+                containsPhrase($0)
             }
 
         if !urgentMatches.isEmpty {
@@ -115,7 +120,7 @@ enum Prompt34LocalSafetyRouter {
 
         let sensitiveMatches =
             sensitivePatterns.filter {
-                normalized.contains($0)
+                containsPhrase($0)
             }
 
         if !sensitiveMatches.isEmpty {

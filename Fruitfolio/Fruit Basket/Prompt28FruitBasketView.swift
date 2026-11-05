@@ -54,6 +54,7 @@ struct Prompt28FruitBasketView: View {
     @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
     @Environment(\.scenePhase) private var scenePhase
 
+    @State private var questionOperationTask: Task<Void, Never>?
     @State private var showingSaveDestination = false
     @State private var showTour = false
     @State private var tourStep = 0
@@ -73,7 +74,7 @@ struct Prompt28FruitBasketView: View {
         _viewModel = StateObject(
             wrappedValue: Prompt28FruitBasketViewModel(
                 store: store,
-                researchProvider: researchProvider ?? Prompt28UnavailableResearchProvider()
+                researchProvider: researchProvider ?? Prompt28BundledResearchProvider.shared
             )
         )
     }
@@ -103,6 +104,7 @@ struct Prompt28FruitBasketView: View {
             weatherLayer
 
             content
+                .fruitfolioModalBlur(active: showTour, reduceMotion: motionPreferences.reduceMotionActive)
                 .frame(maxWidth: 620)
                 .frame(maxWidth: .infinity)
 
@@ -124,6 +126,7 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            questionOperationTask?.cancel()
             viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
@@ -313,6 +316,27 @@ struct Prompt28FruitBasketView: View {
         .padding(.top, 8)
     }
 
+    private func performQuestionOperation(_ operation: @MainActor @escaping () async -> Void) {
+        questionOperationTask?.cancel()
+        questionOperationTask = Task { @MainActor in await operation() }
+    }
+
+    private func questionSources(_ question: Prompt28Question) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            if let records = question.sourceRecords, !records.isEmpty {
+                FruitfolioSourceCitationList(sources: records)
+            } else {
+                ForEach(Array(question.sourceTitles.enumerated()), id: \.offset) { _, title in
+                    Text(verbatim: title).textSelection(.enabled)
+                }
+            }
+            if question.category == "source-excerpt practice" {
+                Text("exact-excerpt practice; vocabulary difficulty is separate from catching level. source citations reflect the founder library attribution, not independent clinical review.")
+                    .font(.footnote)
+            }
+        }
+    }
+
     private var home: some View {
         VStack(spacing: 10) {
             topBar
@@ -398,7 +422,7 @@ struct Prompt28FruitBasketView: View {
             VStack(spacing: 14) {
                 topBar
 
-                Text("how it works ♡")
+                Text("how it works!")
                     .prompt28Text(.screenTitle)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
@@ -406,7 +430,7 @@ struct Prompt28FruitBasketView: View {
 
                 VStack(spacing: 10) {
                     Prompt28CompactRuleCard(
-                        title: "1. pick what you wanna learn",
+                        title: "1. pick what you want to learn",
                         body: "type a topic + choose how deep you wanna go."
                     )
 
@@ -419,13 +443,13 @@ struct Prompt28FruitBasketView: View {
                     Prompt28CompactRuleCard(
                         title: "3. catch",
                         artID: .fruitbasket_basket,
-                        body: "catch the GOOD fruit that fits the rule. standalone stars are bonus passes and do not fill the basket."
+                        body: "catch 10 starred fruits that fit the rule. no star? let it pass. standalone stars are rare bonus drops; each banks one star pass without filling the basket."
                     )
 
                     Prompt28CompactRuleCard(
                         title: "4. fill your basket",
                         artID: .fruitbasket_strawberry,
-                        body: "a BAD fruit ends the round unless you have a star pass — then exactly one pass is used and you keep going."
+                        body: "miss a starred fruit? that’s okay! another one will come along. catching unstarred fruit uses exactly one available star pass; without a pass, only that catch attempt ends and you can retry."
                     )
                 }
                 .frame(maxWidth: 330)
@@ -478,7 +502,7 @@ struct Prompt28FruitBasketView: View {
                         alignment: .center,
                         spacing: 14
                     ) {
-                        Text("what do you wanna learn about? ♡")
+                        Text("what do you want to learn about? ♡")
                             .prompt28Text(.screenTitle)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
@@ -529,7 +553,7 @@ struct Prompt28FruitBasketView: View {
                             )
                         )
 
-                        Text("or pick something ✿")
+                        Text("or pick something!")
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
@@ -624,7 +648,7 @@ struct Prompt28FruitBasketView: View {
                                     title: "keep my level",
                                     accent: .paleYellow
                                 ) {
-                                    Task {
+                                    performQuestionOperation {
                                         await viewModel.continueReturningTopic(
                                             resetLevel: false
                                         )
@@ -635,7 +659,7 @@ struct Prompt28FruitBasketView: View {
                                     title: "start catching easy again",
                                     accent: .mint
                                 ) {
-                                    Task {
+                                    performQuestionOperation {
                                         await viewModel.continueReturningTopic(
                                             resetLevel: true
                                         )
@@ -658,7 +682,7 @@ struct Prompt28FruitBasketView: View {
                                 title: "let’s play!",
                                 accent: .paleYellow
                             ) {
-                                Task {
+                                performQuestionOperation {
                                     await viewModel.startTopic()
                                 }
                             }
@@ -736,8 +760,8 @@ struct Prompt28FruitBasketView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         }
 
-                        Text(question.questionText)
-                            .prompt28Text(.screenTitle)
+                        Text(verbatim: question.questionText)
+                            .prompt28Text(question.category == "source-excerpt practice" ? .body : .screenTitle)
                             .fixedSize(
                                 horizontal: false,
                                 vertical: true
@@ -814,13 +838,11 @@ struct Prompt28FruitBasketView: View {
                                     )
                                     .prompt28Text(.body)
 
-                                    FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font)
+                                    FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true)
                                         .prompt28Text(.body)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                                    Text(
-                                        "sources · \(question.sourceIDs.count)"
-                                    )
+                                    questionSources(question)
                                     .prompt28Text(.metadata)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                                 }
@@ -1355,7 +1377,7 @@ struct Prompt28FruitBasketView: View {
                         title: "next question",
                         accent: .mint
                     ) {
-                        Task {
+                        performQuestionOperation {
                             await viewModel.loadQuestion()
                         }
                     }
@@ -1451,12 +1473,10 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                            FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font)
+                            FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true)
                                 .prompt28Text(.body)
 
-                            Text(
-                                "sources · \(question.sourceIDs.count)"
-                            )
+                            questionSources(question)
                             .prompt28Text(.metadata)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         }
@@ -1472,7 +1492,7 @@ struct Prompt28FruitBasketView: View {
                             title: "keep playing",
                             accent: .paleYellow
                         ) {
-                            Task {
+                            performQuestionOperation {
                                 await viewModel.continueAfterReveal()
                             }
                         }
@@ -1774,7 +1794,7 @@ struct Prompt28FruitBasketView: View {
                 .opacity(0.72)
                 .ignoresSafeArea()
 
-            Prompt28CompactPopupCard {
+            FruitfolioTapedWhitePopup {
                 VStack(spacing: 8) {
                     FruitfolioImage(
                         id: .fruit_strawberry_silly
@@ -1869,8 +1889,6 @@ struct Prompt28FruitBasketView: View {
                     }
                 }
             }
-            .frame(maxWidth: 292)
-            .padding(.horizontal, 20)
         }
     }
 
