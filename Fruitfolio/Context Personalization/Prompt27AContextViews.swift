@@ -4,6 +4,7 @@ import SwiftUI
 @MainActor
 struct Prompt27AMyContextView: View {
     @StateObject private var viewModel: Prompt27AContextViewModel
+    @State private var showHormoneInformation = false
 
     let onBack: () -> Void
 
@@ -39,6 +40,10 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
+                        WatercolorPrimaryButton(label: "Hormone Information") {
+                            showHormoneInformation = true
+                        }
+                        .accessibilityIdentifier("myContext.hormoneInformation")
 
                         Prompt27AContextCard {
                             singleChoiceSection(
@@ -152,6 +157,9 @@ struct Prompt27AMyContextView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .sheet(isPresented: $showHormoneInformation) {
+            FruitfolioHormoneInformationView(onBack: { showHormoneInformation = false })
+        }
         .accessibilityIdentifier("prompt27a.myContext")
     }
 

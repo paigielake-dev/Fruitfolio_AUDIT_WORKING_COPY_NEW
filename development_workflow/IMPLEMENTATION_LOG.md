@@ -147,3 +147,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Implement optional Hormone Information records, validation, local CRUD/history, and a My Context entry while keeping educational curves and predictions separate.
 - Commit: containing commit for batch P5-honest-account-service-boundaries.
+
+## P5-hormone-measurement-local-workflow
+
+- Parent checkpoint: a878007b19b0c9bb89288971f7a941f8798e3dc2.
+- Source-order requirements: [235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 262, 263, 265, 266, 270, 272, 273, 276, 278, 279, 280].
+- Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.
+- Tests added/updated: Prompt1BHormoneMeasurementTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "new_hormone_syntax": "2 files parsed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Add explicit measurement export/erase controls and artwork, then repair cycle confidence boundary tiers and Fruit Basket interruption/finalization independently.
+- Commit: containing commit for batch P5-hormone-measurement-local-workflow.

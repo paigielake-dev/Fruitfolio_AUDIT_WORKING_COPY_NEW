@@ -1,0 +1,44 @@
+import XCTest
+@testable import Fruitfolio
+
+@MainActor
+final class Prompt1BHormoneMeasurementTests: XCTestCase {
+    func testCreateEditDeletePreservesExactUnitsAndPersists() throws {
+        let suite = "Prompt1BHormone.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12.50"
+        record.unit = "pg/mL"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        record.notes = "reported by laboratory"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let restored = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        XCTAssertEqual(restored.records.count, 1)
+        XCTAssertEqual(restored.records.first?.result, "12.50")
+        XCTAssertEqual(restored.records.first?.unit, "pg/mL")
+        XCTAssertEqual(restored.records.first?.notes, record.notes)
+        try restored.delete(id: record.id)
+        XCTAssertTrue(FruitfolioHormoneMeasurementStore(defaults: defaults).records.isEmpty)
+    }
+    func testIncompleteOrMalformedMeasurementsAreRejected() {
+        var record = FruitfolioHormoneMeasurement()
+        for value in ["", "NaN", "12invalid", "-2"] {
+            record.result = value
+            record.unit = "ng/mL"
+            XCTAssertThrowsError(try record.validate(locale: Locale(identifier: "en_US")))
+        }
+    }
+    func testCorruptStorageIsPreservedInsteadOfOverwritten() throws {
+        let suite = "Prompt1BHormoneCorrupt.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let original = Data([0, 1, 2])
+        defaults.set(original, forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        XCTAssertTrue(store.storageUnreadable)
+        XCTAssertThrowsError(try store.save(FruitfolioHormoneMeasurement()))
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), original)
+    }
+}
