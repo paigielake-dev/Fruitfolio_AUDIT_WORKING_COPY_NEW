@@ -47,3 +47,13 @@
 - Verification: {"workflow": "3 passed", "shell_syntax": "passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Continue Part 1 decorative layout: handle collision avoidance using approved anchors and painted bounds without random repositioning; then reconcile semantic text paths.
 - Commit: containing commit for batch P1-notebook-popup-geometry.
+
+## P1-decorative-safe-resizing
+
+- Parent checkpoint: 91449cdd12ae709639a02da853be5f7ddbf38548.
+- Source-order requirements: [28, 31, 33, 34, 35, 36, 37, 42, 43, 44, 45].
+- Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.
+- Tests added/updated: Prompt1BDecorativeLayoutTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Consolidate semantic rendering and remove Ask keyword-underlining while preserving explicit contextual emphasis and saved content.
+- Commit: containing commit for batch P1-decorative-safe-resizing.

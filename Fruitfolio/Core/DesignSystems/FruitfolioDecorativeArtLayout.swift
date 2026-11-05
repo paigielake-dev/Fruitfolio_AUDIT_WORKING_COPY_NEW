@@ -26,8 +26,13 @@ enum FruitfolioDecorativeArtLayout {
         protectedRegions: [FruitfolioProtectedRegion],
         minimumGap: CGFloat = 12
     ) -> FruitfolioDecorativePlacement {
-        guard intrinsicSize.width > 0, intrinsicSize.height > 0,
-              container.width > 0, container.height > 0 else {
+        let values = [intrinsicSize.width, intrinsicSize.height, container.minX, container.minY,
+                      container.width, container.height, roleFraction.lowerBound, roleFraction.upperBound,
+                      safeInsets.leading, safeInsets.trailing, safeInsets.top, safeInsets.bottom, minimumGap]
+        guard values.allSatisfy({ $0.isFinite }),
+              intrinsicSize.width > 0, intrinsicSize.height > 0,
+              container.width > 0, container.height > 0,
+              roleFraction.lowerBound > 0, roleFraction.upperBound <= 1 else {
             return .init(frame: .zero, isVisible: false)
         }
 
@@ -39,36 +44,43 @@ enum FruitfolioDecorativeArtLayout {
         )
         guard safe.width > 0, safe.height > 0 else { return .init(frame: .zero, isVisible: false) }
 
+        let intrinsicBounds = CGRect(origin: .zero, size: intrinsicSize)
+        let alpha = (visibleAlphaBounds ?? intrinsicBounds).intersection(intrinsicBounds)
+        guard !alpha.isNull, !alpha.isEmpty,
+              [alpha.minX, alpha.minY, alpha.width, alpha.height].allSatisfy({ $0.isFinite }) else {
+            return .init(frame: .zero, isVisible: false)
+        }
         let aspect = intrinsicSize.width / intrinsicSize.height
-        let preferred = safe.width * roleFraction.upperBound
-        let minimum = safe.width * roleFraction.lowerBound
-        let targetWidth = min(safe.width, max(minimum, preferred))
-        let targetHeight = targetWidth / aspect
-        guard targetHeight <= safe.height else { return .init(frame: .zero, isVisible: false) }
-
-        func origin(for anchor: FruitfolioDecorativeAnchor) -> CGPoint {
+        let minimumWidth = safe.width * roleFraction.lowerBound
+        let preferredWidth = safe.width * roleFraction.upperBound
+        // Only resize within the approved role, at the original anchor. Never
+        // move art to an unrelated corner or shrink it indefinitely to fit.
+        let heightConstrainedWidth = min(preferredWidth, safe.height * aspect)
+        guard heightConstrainedWidth >= minimumWidth else {
+            return .init(frame: .zero, isVisible: false)
+        }
+        let widths = [heightConstrainedWidth, (heightConstrainedWidth + minimumWidth) / 2, minimumWidth]
+        for width in widths {
+            let height = width / aspect
+            let origin: CGPoint
             switch anchor {
-            case .topLeading: return .init(x: safe.minX, y: safe.minY)
-            case .topTrailing: return .init(x: safe.maxX - targetWidth, y: safe.minY)
-            case .bottomLeading: return .init(x: safe.minX, y: safe.maxY - targetHeight)
-            case .bottomTrailing: return .init(x: safe.maxX - targetWidth, y: safe.maxY - targetHeight)
-            case .bottomCenter: return .init(x: safe.midX - targetWidth / 2, y: safe.maxY - targetHeight)
-            case .center: return .init(x: safe.midX - targetWidth / 2, y: safe.midY - targetHeight / 2)
+            case .topLeading: origin = .init(x: safe.minX, y: safe.minY)
+            case .topTrailing: origin = .init(x: safe.maxX - width, y: safe.minY)
+            case .bottomLeading: origin = .init(x: safe.minX, y: safe.maxY - height)
+            case .bottomTrailing: origin = .init(x: safe.maxX - width, y: safe.maxY - height)
+            case .bottomCenter: origin = .init(x: safe.midX - width / 2, y: safe.maxY - height)
+            case .center: origin = .init(x: safe.midX - width / 2, y: safe.midY - height / 2)
+            }
+            let frame = CGRect(origin: origin, size: CGSize(width: width, height: height))
+            let scale = width / intrinsicSize.width
+            let painted = CGRect(x: frame.minX + alpha.minX * scale,
+                                 y: frame.minY + alpha.minY * scale,
+                                 width: alpha.width * scale, height: alpha.height * scale)
+            let collision = painted.insetBy(dx: -max(0, minimumGap), dy: -max(0, minimumGap))
+            if safe.contains(painted), !protectedRegions.contains(where: { $0.rect.intersects(collision) }) {
+                return .init(frame: frame, isVisible: true)
             }
         }
-
-        let candidate = CGRect(origin: origin(for: anchor), size: .init(width: targetWidth, height: targetHeight))
-        let alpha = visibleAlphaBounds ?? CGRect(origin: .zero, size: intrinsicSize)
-        let sx = targetWidth / intrinsicSize.width
-        let sy = targetHeight / intrinsicSize.height
-        let visibleFrame = CGRect(
-            x: candidate.minX + alpha.minX * sx,
-            y: candidate.minY + alpha.minY * sy,
-            width: alpha.width * sx,
-            height: alpha.height * sy
-        )
-        let collisionFrame = visibleFrame.insetBy(dx: -minimumGap, dy: -minimumGap)
-        let collides = protectedRegions.contains { $0.rect.intersects(collisionFrame) }
-        return .init(frame: candidate, isVisible: !collides && safe.contains(visibleFrame))
+        return .init(frame: .zero, isVisible: false)
     }
 }
