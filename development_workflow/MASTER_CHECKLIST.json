@@ -8374,20 +8374,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 236,
@@ -8398,20 +8403,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 237,
@@ -8422,20 +8432,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 238,
@@ -8446,20 +8461,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 239,
@@ -8470,20 +8490,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 240,
@@ -8494,20 +8519,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 241,
@@ -8518,20 +8548,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 242,
@@ -8542,20 +8577,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 243,
@@ -8566,20 +8606,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 244,
@@ -8595,7 +8640,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8611,14 +8657,16 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BHormonePersistenceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 245,
@@ -8634,7 +8682,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8650,14 +8699,16 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BHormonePersistenceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 246,
@@ -8673,7 +8724,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8689,14 +8741,16 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BHormonePersistenceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 247,
@@ -8712,7 +8766,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8728,14 +8783,16 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BHormonePersistenceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 248,
@@ -8749,7 +8806,9 @@
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8757,14 +8816,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 249,
@@ -8775,7 +8837,9 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8783,14 +8847,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
-        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:55:12.087582+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 250,
@@ -8801,20 +8868,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 251,
@@ -8825,20 +8897,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 252,
@@ -8852,7 +8929,9 @@
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8861,15 +8940,18 @@
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 253,
@@ -8880,20 +8962,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 254,
@@ -8904,20 +8991,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 255,
@@ -8933,7 +9025,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8949,14 +9042,16 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BHormonePersistenceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 256,
@@ -9077,20 +9172,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 263,
@@ -9101,7 +9201,9 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9109,14 +9211,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
-        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:55:12.087582+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 264,
@@ -9146,7 +9251,9 @@
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9155,15 +9262,18 @@
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 266,
@@ -9174,20 +9284,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 267,
@@ -9406,20 +9521,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 279,
@@ -9430,20 +9550,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BHormoneValidationTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:07:23.342395+00:00"
     },
     {
       "sequence": 280,

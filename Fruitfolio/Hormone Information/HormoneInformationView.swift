@@ -138,6 +138,7 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 }
                 if draft.hormone == .other { TextField("other hormone name", text: $draft.otherHormoneName) }
                 TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
+                    .onChange(of: draft.result) { _, _ in draft.resultLocaleIdentifier = Locale.current.identifier }
                 TextField("unit, exactly as reported", text: $draft.unit)
                 DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
                 TextField("sample type (optional)", text: $draft.sampleType)

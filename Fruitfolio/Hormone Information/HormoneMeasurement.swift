@@ -22,6 +22,7 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
     var hormone: FruitfolioMeasuredHormone = .estradiol
     var otherHormoneName = ""
     var result = ""
+    var resultLocaleIdentifier: String?
     var unit = ""
     var testDate = Date()
     var sampleType = ""
@@ -33,11 +34,21 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
 
     func validate(locale: Locale = .current) throws {
         let input = result.trimmingCharacters(in: .whitespacesAndNewlines)
-        let scanner = Scanner(string: input)
-        scanner.locale = locale
-        var value = Decimal()
-        guard !input.isEmpty, scanner.scanDecimal(&value), scanner.isAtEnd,
-              !value.isNaN, value >= 0,
+        let parsingLocale = resultLocaleIdentifier.map { Locale(identifier: $0) } ?? locale
+        let separator = parsingLocale.decimalSeparator ?? "."
+        let digitNormalized = input.unicodeScalars.map { scalar -> String in
+            if CharacterSet.decimalDigits.contains(scalar), let digit = Character(String(scalar)).wholeNumberValue {
+                return String(digit)
+            }
+            return String(scalar)
+        }.joined()
+        let escapedSeparator = NSRegularExpression.escapedPattern(for: separator)
+        let pattern = "^[+]?(?:[0-9]+(?:" + escapedSeparator + "[0-9]*)?|" + escapedSeparator + "[0-9]+)(?:[eE][+-]?[0-9]+)?$"
+        let fullNumber = digitNormalized.range(of: pattern, options: .regularExpression) != nil
+        let normalized = digitNormalized.replacingOccurrences(of: separator, with: ".")
+        guard !input.isEmpty, fullNumber,
+              let value = Decimal(string: normalized, locale: Locale(identifier: "en_US_POSIX")),
+              !value.isNaN, value >= 0, testDate.timeIntervalSinceReferenceDate.isFinite,
               !unit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw FruitfolioHormoneMeasurementError.invalidRequiredFields
         }
