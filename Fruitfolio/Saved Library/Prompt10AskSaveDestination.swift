@@ -8,6 +8,7 @@ struct Prompt10PendingSavedContent: Equatable {
     let answer: String
     let saveType: Prompt10SavedPageType
     let excerptText: String?
+    let selectedRenderedRange: NSRange?
 
     let originalAnswerID: String?
     let originalConversationID: String?
@@ -27,12 +28,14 @@ struct Prompt10PendingSavedContent: Equatable {
         sourceIDs: [String] = [],
         sourceVersions: [String: String] = [:],
         knowledgeBaseVersion: String? = nil,
-        generationTimestamp: Date? = nil
+        generationTimestamp: Date? = nil,
+        selectedRenderedRange: NSRange? = nil
     ) {
         self.question = question
         self.answer = answer
         self.saveType = saveType
         self.excerptText = excerptText
+        self.selectedRenderedRange = selectedRenderedRange
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs

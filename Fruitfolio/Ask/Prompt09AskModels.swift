@@ -216,3 +216,19 @@ enum Prompt09ScrollFollowPolicy {
         bottom.isFinite && viewportHeight.isFinite && viewportHeight > 0 && bottom <= viewportHeight + max(0, tolerance)
     }
 }
+
+/// Session-only save badge identity. Equal text at two positions or in two
+/// answers is not the same selection. Ranges are UTF-16, matching UITextView.
+struct Prompt09ExcerptIdentity: Hashable, Sendable {
+    let answerID: UUID
+    let location: Int
+    let length: Int
+
+    init?(answerID: UUID, renderedRange: NSRange?) {
+        guard let range = renderedRange, range.location != NSNotFound,
+              range.location >= 0, range.length > 0 else { return nil }
+        self.answerID = answerID
+        location = range.location
+        length = range.length
+    }
+}

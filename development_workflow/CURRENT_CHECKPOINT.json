@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "5722a4ec39da9e04896e4e507d83561b438fc560",
+  "current_HEAD": "ca1f030e19db752073f25383449e665b70131564",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
-  "current_requirement": 109,
-  "current_implementation_batch": "P3-ordered-history-and-scroll-policy",
+  "current_requirement": 170,
+  "current_implementation_batch": "P3-exact-excerpt-save-identity",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Ask/Prompt09AskModels.swift",
+    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
     "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Ask/Prompt09AskModels.swift"
+    "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+    "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -508,9 +511,8 @@
   "last_test_results": {
     "workflow": "3 passed",
     "diff": "passed",
-    "Swift_iOS": "NOT_RUN: Xcode unavailable",
-    "founder_spec_extraction": "antiword built from HTTPS Git source; full UTF-8 output saved"
+    "Swift_iOS": "NOT_RUN: Xcode unavailable"
   },
-  "next_exact_implementation_action": "Track excerpt saves by answer ID and exact rendered selection range; then continue image-import cancellation and persistence correctness in Part 4.",
-  "updated_at": "2026-11-05T18:46:05.098253+00:00"
+  "next_exact_implementation_action": "Inspect Part 4 image import ownership, cancellation, validation and off-main-thread processing; repair the next source defect.",
+  "updated_at": "2026-11-05T18:47:29.293267+00:00"
 }

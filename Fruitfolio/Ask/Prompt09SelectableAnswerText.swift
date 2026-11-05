@@ -7,9 +7,16 @@ import UIKit
 struct Prompt09SelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
+    @Binding var selectedRange: NSRange?
+
+    init(text: String, selectedText: Binding<String?>, selectedRange: Binding<NSRange?> = .constant(nil)) {
+        self.text = text
+        self._selectedText = selectedText
+        self._selectedRange = selectedRange
+    }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(selectedText: $selectedText)
+        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange)
     }
 
     func makeUIView(context: Context) -> UITextView {
@@ -41,6 +48,7 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
 
     func updateUIView(_ textView: UITextView, context: Context) {
         context.coordinator.selectedText = $selectedText
+        context.coordinator.selectedRange = $selectedRange
 
         if context.coordinator.renderedSource != text ||
             context.coordinator.renderedSize != context.environment.dynamicTypeSize {
@@ -79,26 +87,31 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
     }
 
     final class Coordinator: NSObject, UITextViewDelegate {
+        var selectedRange: Binding<NSRange?>
         var renderedSource: String?
         var renderedSize: DynamicTypeSize?
         var selectedText: Binding<String?>
 
-        init(selectedText: Binding<String?>) {
+        init(selectedText: Binding<String?>, selectedRange: Binding<NSRange?>) {
+            self.selectedRange = selectedRange
             self.selectedText = selectedText
         }
 
         func textViewDidChangeSelection(_ textView: UITextView) {
             let range = textView.selectedRange
             guard range.location != NSNotFound, range.length > 0 else {
+                selectedRange.wrappedValue = nil
                 selectedText.wrappedValue = nil
                 return
             }
 
             guard let swiftRange = Range(range, in: textView.text) else {
+                selectedRange.wrappedValue = nil
                 selectedText.wrappedValue = nil
                 return
             }
 
+            selectedRange.wrappedValue = range
             let value = String(textView.text[swiftRange])
                 .trimmingCharacters(in: .whitespacesAndNewlines)
             selectedText.wrappedValue = value.isEmpty ? nil : value

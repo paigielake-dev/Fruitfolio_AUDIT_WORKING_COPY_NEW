@@ -2332,7 +2332,10 @@
       "description": "Preserve text selection, citation interactions, and accessibility reading order.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2340,13 +2343,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BExcerptIdentityTests"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 110,
@@ -2623,7 +2628,9 @@
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2632,14 +2639,16 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests",
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BExcerptIdentityTests"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 125,
@@ -2649,7 +2658,10 @@
       "description": "Retain citations and attribution for successfully saved content.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2657,13 +2669,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BExcerptIdentityTests"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 126,
@@ -2696,7 +2710,10 @@
       "description": "Confirm successful saves.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2704,13 +2721,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BExcerptIdentityTests"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 128,
@@ -2718,15 +2737,25 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Prevent canceled or failed saves from creating persistent copies.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BExcerptIdentityTests"
+      ],
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+      ],
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 129,
@@ -3173,15 +3202,25 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply approved punctuation, contractions, rhythm, and warmth.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BExcerptIdentityTests"
+      ],
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+      ],
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 157,
@@ -3189,15 +3228,25 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Use kaomojis sparingly according to the canonical frequency rules.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BExcerptIdentityTests"
+      ],
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+      ],
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 158,
@@ -3205,15 +3254,25 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Suppress kaomojis in serious medical, safety-critical, abuse/consent, and laboratory-interpretation contexts.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BExcerptIdentityTests"
+      ],
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+      ],
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 159,
@@ -3221,15 +3280,25 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Adapt tone to reasonably evident conversational cues without diagnosing the user\u2019s emotional state.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BExcerptIdentityTests"
+      ],
+      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+      ],
+      "last_updated": "2026-11-05T18:47:29.293267+00:00"
     },
     {
       "sequence": 160,

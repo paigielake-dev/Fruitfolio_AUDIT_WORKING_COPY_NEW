@@ -107,3 +107,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "founder_spec_extraction": "antiword built from HTTPS Git source; full UTF-8 output saved"}.
 - Next action: Track excerpt saves by answer ID and exact rendered selection range; then continue image-import cancellation and persistence correctness in Part 4.
 - Commit: containing commit for batch P3-ordered-history-and-scroll-policy.
+
+## P3-exact-excerpt-save-identity
+
+- Parent checkpoint: ca1f030e19db752073f25383449e665b70131564.
+- Source-order requirements: [109, 124, 125, 127, 128, 156, 157, 158, 159].
+- Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.
+- Tests added/updated: Prompt1BExcerptIdentityTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Inspect Part 4 image import ownership, cancellation, validation and off-main-thread processing; repair the next source defect.
+- Commit: containing commit for batch P3-exact-excerpt-save-identity.
