@@ -9747,7 +9747,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9756,14 +9760,17 @@
       "related_tests": [
         "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 282,
@@ -9775,7 +9782,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9783,13 +9794,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 283,
@@ -9801,7 +9815,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9809,13 +9827,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 284,
@@ -9827,7 +9848,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9835,13 +9860,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 285,
@@ -9854,7 +9882,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9863,14 +9895,17 @@
       "related_tests": [
         "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 286,
@@ -9883,7 +9918,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9892,14 +9931,17 @@
       "related_tests": [
         "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 287,
@@ -9912,7 +9954,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9921,14 +9967,17 @@
       "related_tests": [
         "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 288,
@@ -9946,7 +9995,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9964,15 +10017,18 @@
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 289,
@@ -9985,7 +10041,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9994,14 +10054,17 @@
       "related_tests": [
         "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 290,
@@ -10013,7 +10076,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10021,13 +10088,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 291,
@@ -10039,7 +10109,11 @@
         "Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViewModel.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10047,13 +10121,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BContextPersistenceTests",
-        "Prompt27AContextPersonalizationTests"
+        "Prompt27AContextPersonalizationTests",
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
       ],
-      "commit_reference": "batch:My-Context-preserved-corruption-and-atomic-local-updates (resolve containing commit with git log)",
+      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun."
+        "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
       ],
-      "last_updated": "2026-11-05T22:18:38.019405+00:00"
+      "last_updated": "2026-11-05T22:24:41.787011+00:00"
     },
     {
       "sequence": 292,

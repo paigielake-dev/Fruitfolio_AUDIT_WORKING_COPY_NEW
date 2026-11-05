@@ -13,8 +13,8 @@ final class Prompt27AContextStore: ObservableObject {
     @Published private(set) var persistenceMessage: String?
     private let persistence: Prompt27ALocalContextPersistence
 
-    init(defaults: UserDefaults = .standard, codec: Prompt27AContextCodec = Prompt27AContextCodec()) {
-        let persistence = Prompt27ALocalContextPersistence(defaults: defaults, key: Self.storageKey, codec: codec)
+    init(defaults: UserDefaults = .standard, codec: Prompt27AContextCodec = Prompt27AContextCodec(), key: String? = nil) {
+        let persistence = Prompt27ALocalContextPersistence(defaults: defaults, key: key ?? Self.storageKey, codec: codec)
         self.persistence = persistence
         context = persistence.context
         didRecoverCorruptStoredContext = persistence.storageUnreadable
@@ -30,6 +30,13 @@ final class Prompt27AContextStore: ObservableObject {
     func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) { update { $0.setFertilityTreatmentContext(value) } }
     func setContraceptionContext(_ value: Prompt27AContraceptionContext) { update { $0.setContraceptionContext(value) } }
     func clearContext() { eraseLocalContextData() }
+
+    func savePersonalHealth(_ category: FruitfolioPersonalHealthCategory, text: String,
+        status: FruitfolioPersonalHealthStatus = .provided,
+        provenance: FruitfolioPersonalHealthProvenance = .userProvided) throws {
+        try persistence.apply { try $0.setPersonalHealth(category, text: text, status: status, provenance: provenance) }
+        refresh()
+    }
 
     /// Synchronizes only exact semantic overlaps from Cycle Onboarding into
     /// My Context. Ambiguous answers (for example “recent pregnancy” or

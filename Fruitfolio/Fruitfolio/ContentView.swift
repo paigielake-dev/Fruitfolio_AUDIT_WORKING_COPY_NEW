@@ -10,7 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
+            FruitfolioPersonalHealthRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryQA") {
             FruitfolioHormoneLibraryView(onBack: {})
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookQA") {
             Prompt1BBookRegressionHarness()

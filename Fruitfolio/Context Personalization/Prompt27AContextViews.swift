@@ -7,6 +7,7 @@ struct Prompt27AMyContextView: View {
     @ObservedObject private var observedStore: Prompt27AContextStore
     @State private var confirmClearContext = false
     @State private var showHormoneInformation = false
+    @State private var showPersonalHealthContext = false
 
     let onBack: () -> Void
 
@@ -48,6 +49,7 @@ struct Prompt27AMyContextView: View {
                                 .font(Prompt27AType.body)
                         }
                         if let message = viewModel.store.persistenceMessage { Text(message).font(Prompt27AType.body) }
+                        WatercolorPrimaryButton(label: "optional personal health context") { showPersonalHealthContext = true }
                         WatercolorPrimaryButton(label: "Hormone Information") {
                             showHormoneInformation = true
                         }
@@ -168,6 +170,9 @@ struct Prompt27AMyContextView: View {
         .confirmationDialog("clear all My Context information from this device?", isPresented: $confirmClearContext, titleVisibility: .visible) {
             Button("clear my context", role: .destructive) { viewModel.store.clearContext() }
             Button("cancel", role: .cancel) {}
+        }
+        .sheet(isPresented: $showPersonalHealthContext) {
+            FruitfolioPersonalHealthContextView(store: viewModel.store, onBack: { showPersonalHealthContext = false })
         }
         .sheet(isPresented: $showHormoneInformation) {
             FruitfolioHormoneInformationView(onBack: { showHormoneInformation = false })

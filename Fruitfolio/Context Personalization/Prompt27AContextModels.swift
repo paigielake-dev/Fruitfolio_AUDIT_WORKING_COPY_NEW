@@ -189,6 +189,9 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
     var fertilityTreatmentContext: Prompt27AReportedValue<Prompt27AFertilityTreatmentContext>
     var contraceptionContext: Prompt27AReportedValue<Prompt27AContraceptionContext>
 
+    var personalHealthEntries: [String: FruitfolioPersonalHealthEntry] = [:]
+    var personalHealthRevision: UUID?
+
     init(
         trackingGoal: Prompt27ATrackingGoal = .unspecified,
         sexualActivityContext: Prompt27ASexualActivityContext = .unspecified,
@@ -224,7 +227,8 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
         cycleHealthContexts.isEmpty &&
         infertilityContext.value == .unspecified &&
         fertilityTreatmentContext.value == .unspecified &&
-        contraceptionContext.value == .unspecified
+        contraceptionContext.value == .unspecified &&
+        !personalHealthEntries.values.contains(where: \.isActive)
     }
 
     mutating func setTrackingGoal(_ value: Prompt27ATrackingGoal, at date: Date = Date()) {
@@ -270,6 +274,8 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
     }
 
     private enum CodingKeys: String, CodingKey {
+        case personalHealthEntries
+        case personalHealthRevision
         case trackingGoal
         case sexualActivityContext
         case reproductiveStage
@@ -284,7 +290,8 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-
+        personalHealthEntries = try container.decodeIfPresent([String: FruitfolioPersonalHealthEntry].self, forKey: .personalHealthEntries) ?? [:]
+        personalHealthRevision = try container.decodeIfPresent(UUID.self, forKey: .personalHealthRevision)
         trackingGoal = try container.decode(
             Prompt27AReportedValue<Prompt27ATrackingGoal>.self,
             forKey: .trackingGoal
@@ -338,10 +345,14 @@ nonisolated struct Prompt27AUserReproductiveContext: Codable, Equatable, Sendabl
             Prompt27AReportedValue<Prompt27AContraceptionContext>.self,
             forKey: .contraceptionContext
         )
+        try validatePersonalHealthEntries()
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        try validatePersonalHealthEntries()
+        if !personalHealthEntries.isEmpty { try container.encode(personalHealthEntries, forKey: .personalHealthEntries) }
+        try container.encodeIfPresent(personalHealthRevision, forKey: .personalHealthRevision)
         try container.encode(trackingGoal, forKey: .trackingGoal)
         try container.encode(sexualActivityContext, forKey: .sexualActivityContext)
         try container.encode(reproductiveStage, forKey: .reproductiveStage)

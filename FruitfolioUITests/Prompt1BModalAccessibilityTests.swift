@@ -99,6 +99,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertLessThanOrEqual(source.frame.maxX, app.frame.maxX)
     }
 
+    func testOptionalPersonalContextCanBeAddedEditedAndRemoved() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioPersonalHealthQA"]
+        app.launch()
+        let group = app.buttons["family, genetic and biological context"]
+        XCTAssertTrue(group.waitForExistence(timeout: 5))
+        group.tap()
+        let dna = app.buttons["known DNA / genetic findings"]
+        for _ in 0..<10 { if dna.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(dna.isHittable)
+        dna.tap()
+        let text = app.textViews["optional personal health context"]
+        XCTAssertTrue(text.waitForExistence(timeout: 3))
+        text.tap(); text.typeText("only my explicitly supplied finding")
+        let save = app.buttons["save my context"]
+        for _ in 0..<10 { if save.isHittable { break }; app.swipeUp() }
+        save.tap()
+        XCTAssertTrue(dna.waitForExistence(timeout: 3))
+        dna.tap()
+        XCTAssertTrue(text.waitForExistence(timeout: 3))
+        XCTAssertTrue((text.value as? String)?.contains("explicitly supplied") == true)
+        let remove = app.buttons["remove this context"]
+        for _ in 0..<10 { if remove.isHittable { break }; app.swipeUp() }
+        remove.tap()
+        app.buttons["remove context"].tap()
+        XCTAssertTrue(dna.waitForExistence(timeout: 3))
+        XCTAssertEqual(dna.value as? String, "removed · add again")
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

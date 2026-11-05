@@ -146,14 +146,22 @@
       "source_end_line": 113,
       "description": "4.9.7 \u2014 Hormone Library\nInclude an educational Hormone Library covering the supported hormones.\nEach entry should explain:\n    \u2022 What the hormone is.\n    \u2022 Its primary biological functions.\n    \u2022 Its role in reproductive physiology, when relevant.\n    \u2022 Factors that influence measured levels.\n    \u2022 Why test timing and measurement methods matter.\n    \u2022 Important limitations of interpreting an isolated result.\n    \u2022 When professional medical guidance may be appropriate.\nEducational information must follow Fruitfolio\u2019s existing approved-source, research-grounding, and citation requirements.\nDo not invent references or unsupported medical claims.",
       "description_sha256": "3dd78bfe5a5d1a7327de30a8a64265ffbe52ab56b2d1ee9376365cc6072c9bf7",
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
-      "relevant_source_files": [],
-      "related_tests": [],
-      "blockers": [
-        "Approved, cited hormone-library coverage is not yet connected; no clinical content is fabricated."
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "FOUNDATION_TESTS_PASSED_APP_UI_NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
       ],
-      "evidence": []
+      "related_tests": [
+        "Prompt1BHormoneLibraryTests"
+      ],
+      "blockers": [
+        "Approved, cited hormone-library coverage is not yet connected; no clinical content is fabricated.",
+        "Apple UI and comprehensive clinical educational completeness remain unverified."
+      ],
+      "evidence": [
+        "Batch Hormone-Library-real-approved-paragraphs-and-source-trails connects seven hormones to complete eligible corpus paragraphs and own citation metadata. Coverage is partial retrieved excerpts; source/clinical completeness review remains open."
+      ]
     },
     {
       "id": "SPEC-4.9.8",
@@ -699,12 +707,25 @@
       "source_end_line": 1215,
       "description": "OPTIONAL PERSONAL HEALTH + MEDICAL HISTORY (MUSTTTT BE IN SYNC WITH THE \u2018MY CONTEXT\u2019 IN SETTINGS - both the answers there AND in this part of onboarding determine [in the same way] what can be seen w/ the cycle tracker): Expand Cycle Onboarding with an entirely optional, user-controlled Personal Health Context section that uses the existing Cycle Tracker artwork as visual entry points for information the user may choose to give Fruitfolio; every artwork used here must correspond to a specific editable data field rather than functioning as decoration. Use body_heart for cardiovascular/heart history; body_thyroid for thyroid/endocrine history; body_liver for liver/metabolic history; body_stomach for stomach/digestive history; body_gut_microbiome for gastrointestinal/gut or microbiome history; body_kidneys for kidney/urinary history; body_skin for dermatologic/skin history; body_bone for bone/skeletal history; and body_muscle for muscular/musculoskeletal history, with each opening an optional \u201canything you want Fruitfolio to know?\u201d free-text field. Include all canonical Genetics artwork as optional family/genetic/biological-context entry points: genetics_dna for known genetic conditions, variants, or other DNA/genetic information the user wants to record; genetics_chromosome for known chromosomal conditions/findings; genetics_mitochondrion for known mitochondrial conditions/findings; genetics_cell and genetics_cells for other known cellular/medical history that does not fit a more specific category; genetics_rna for known RNA-related genetic/molecular findings; genetics_protein for known protein-related genetic/molecular findings; genetics_receptor for known receptor-related conditions/findings; and genetics_nucleus as an other genetics/genomics information entry point. These genetics fields must remain optional and may store only information the user explicitly supplies; Fruitfolio must never infer a genotype, mutation, carrier status, inheritance pattern, disease risk, or diagnosis from another answer. Use symptom_medication for an optional medication-history field where users may enter medications and any details they choose; retain the separate structured hormonal-birth-control/fertility-medication questions for prediction logic. Use lab_agar_plate, lab_centrifuge, lab_microscope, lab_collection_swab, lab_microcentrifuge_tube, lab_test_tube, lab_transfer_pipette, and lab_specimen_cup as specific optional laboratory/testing-history entry points only when their depicted testing/sample concept legitimately applies\u2014for example, cultures/microbiology, microscopy, swab/sample collection, specimen collection, or user-entered laboratory/testing information\u2014and never imply that a particular laboratory technique was performed merely because the user reports having a test; provide an other labs/testing field so users are never forced into an inaccurate artwork category. Reproductive artwork may also provide specific optional history fields where semantically appropriate: use applicable menstruation/fertility artwork for menstrual, cervical, and fertility history and relevant ovulation artwork for known ovulation/fertility history or clinically/user-confirmed ovulation information, but do not use follicle-stage or ovulation artwork to ask users to guess internal biological events they could not reasonably know; predicted ovulation remains the responsibility of the Cycle Prediction Engine and must stay distinct from user-reported or clinically confirmed information. Pregnancy/fertilization artwork should remain in its existing educational/contextual systems unless a specific asset corresponds truthfully to information the user can report; never make the user supply biological details merely to achieve asset coverage. Every Personal Health Context category must support add, edit, remove, skip, and \u201cprefer not to say\u201d where appropriate, plus a general \u201canything else you want Fruitfolio to know?\u201d field for information that fits nowhere else. All information entered here must be explicitly labeled and stored as user-provided context, remain distinct from calculated/predicted/AI-derived information, feed one shared health-context model available to Cycle Tracker and Ask where relevant, and be usable only to contextualize Research-Library-supported information\u2014not to independently diagnose, establish causation, fabricate medical facts, or override the Research Library. The interface should use progressive disclosure so users explore whichever illustrated categories are relevant to them rather than being forced through every medical-history category during onboarding, and the complete Personal Health Context profile must remain reopenable and editable after onboarding with changes immediately propagated to applicable personalization and AI context.",
       "description_sha256": "1d578a7ca6cd36b95aed2d6c20e609b426eb69ef9d508c7c2f5fa6b5aebe9fcb",
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
-      "relevant_source_files": [],
-      "related_tests": [],
-      "blockers": [],
-      "evidence": []
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "FOUNDATION_TESTS_PASSED_APP_UI_NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+      ],
+      "related_tests": [
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "blockers": [
+        "Apple UI/VoiceOver/onboarding runtime not run; relevant evidence-informed free-text personalization and explicit Ask sharing are not yet implemented. No unreviewed clinical rules inferred from free text."
+      ],
+      "evidence": [
+        "33 optional categories extend the existing shared locally persisted context model with exact canonical asset mapping, explicit user provenance, created/updated timestamps, text-free removal/decline states and revision invalidation. Settings and optional onboarding open the same profile. New fields never infer biology or enter minimized AI context automatically. Existing context/prediction safety regressions pass. Batch Illustrated-personal-health-shared-model-and-entry-points."
+      ]
     },
     {
       "id": "SPEC-BINDING-CONTEXT-ADAPTATION",
@@ -713,12 +734,25 @@
       "source_end_line": 1218,
       "description": "PROMPT 1B ADDITION \u2014 EVIDENCE-INFORMED MY CONTEXT \u2192 CYCLE TRACKER ADAPTATION (2026-10-16; binding requirement). Every optional item the user explicitly supplies in Cycle Onboarding, Settings \u2192 My Context, or the illustrated Personal Health Context entry points must be stored in one shared, locally persisted health-context model with field provenance (user-reported vs.\u00a0clinician-confirmed only when the user says so), update/removal status, and appropriate timestamps. Changes must propagate to Cycle Tracker, Ask personalization when relevant, and relevant educational content without duplicate or conflicting profiles. All categories remain optional, editable, removable, and subject to \u2018prefer not to say\u2019 where appropriate. Deleting context removes its influence on future interpretation; do not keep deleted medical details in AI caches, derived notes, or ordinary analytics.",
       "description_sha256": "37588fa7e3c82c581693f3ca97febb39f61df70fac9aa9363dc7a50777c3f3e7",
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
-      "relevant_source_files": [],
-      "related_tests": [],
-      "blockers": [],
-      "evidence": []
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "FOUNDATION_TESTS_PASSED_APP_UI_NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
+        "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
+        "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+      ],
+      "related_tests": [
+        "Prompt1BPersonalHealthContextTests",
+        "Prompt1BContextPersistenceTests",
+        "Prompt27AContextPersonalizationTests"
+      ],
+      "blockers": [
+        "Apple UI/VoiceOver/onboarding runtime not run; relevant evidence-informed free-text personalization and explicit Ask sharing are not yet implemented. No unreviewed clinical rules inferred from free text."
+      ],
+      "evidence": [
+        "33 optional categories extend the existing shared locally persisted context model with exact canonical asset mapping, explicit user provenance, created/updated timestamps, text-free removal/decline states and revision invalidation. Settings and optional onboarding open the same profile. New fields never infer biology or enter minimized AI context automatically. Existing context/prediction safety regressions pass. Batch Illustrated-personal-health-shared-model-and-entry-points."
+      ]
     },
     {
       "id": "SPEC-BINDING-LIFEBRIDGE",

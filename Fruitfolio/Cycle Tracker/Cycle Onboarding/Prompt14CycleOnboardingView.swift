@@ -20,6 +20,7 @@ struct Prompt14CycleEntryView: View {
 struct Prompt14CycleOnboardingView: View {
     @StateObject private var model: Prompt14CycleOnboardingViewModel
     @State private var trackerReady = false
+    @State private var showingPersonalHealthContext = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var contextStore: Prompt27AContextStore
 
@@ -56,6 +57,9 @@ struct Prompt14CycleOnboardingView: View {
         .onChange(of: model.draft) { _, newDraft in
             contextStore.syncFromCycleOnboarding(newDraft)
         }
+        .sheet(isPresented: $showingPersonalHealthContext) {
+            FruitfolioPersonalHealthContextView(store: contextStore, onBack: { showingPersonalHealthContext = false })
+        }
         .animation(
             motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24),
             value: model.draft.step
@@ -81,6 +85,13 @@ struct Prompt14CycleOnboardingView: View {
                                 removal: .opacity.combined(with: .move(edge: .leading))
                             )
                         )
+
+                    if model.draft.step == .cycleAffectingContext || model.draft.step == .complete {
+                        WatercolorSecondaryButton(label: "optional personal health context") { showingPersonalHealthContext = true }
+                        Text("add only what you choose. you can skip this and reopen it later in Settings → My Context.")
+                            .font(Prompt14Type.helper)
+                            .multilineTextAlignment(.center)
+                    }
 
                     if let error = model.errorMessage {
                         Text(error)
