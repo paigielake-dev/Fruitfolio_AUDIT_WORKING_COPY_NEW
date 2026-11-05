@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "f32842ab8b475e2a8ba2497f5e5381cb077e19bd",
+  "current_HEAD": "e8dda227cd2b22ee5b646cea21b55f07ad445545",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
-  "current_requirement": 295,
-  "current_implementation_batch": "Today-coherent-cycle-read-and-actual-loader-regressions",
+  "current_requirement": 247,
+  "current_implementation_batch": "Canonical-civil-date-boundaries-and-invalid-record-protection",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,22 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingViewModel.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+    "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
     "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
-    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
     "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-    "FruitfolioTests/Prompt1BTodaySnapshotTests.swift",
+    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
+    "FruitfolioTests/Prompt1BCanonicalCalendarTests.swift",
     "Tools/run_portable_swift_tests.py",
+    "development_workflow/BLOCKERS.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -517,14 +527,14 @@
     "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
   ],
   "last_test_results": {
-    "Swift_6_headless": "296 XCTest + 21 Swift Testing passed (317 total)",
-    "Swift_5_native": "300 XCTest + 21 Swift Testing passed (321 total)",
+    "Swift_6_headless": "304 XCTest + 21 Swift Testing passed (325 total)",
+    "Swift_5_native": "308 XCTest + 21 Swift Testing passed (329 total)",
     "workflow": "16 Python tests passed",
-    "Swift_syntax": "179 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors",
-    "actual_loaders": "Real Foundation Cycle/Onboarding/Today/Calendar implementations compiled and tested; no prediction-math changes",
-    "Apple_UI": "NOT_RUN: Today scene refresh/reveal and device performance remain unverified"
+    "Swift_syntax": "189 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors",
+    "date_safety": "Five calendar identifiers, leap/travel boundaries, actual Calendar loader and corrupted real cycle file exercised; old valid stored years remain unchanged",
+    "Apple_UI": "NOT_RUN: date picker/display and full Hormone/Trends UI behavior await Apple runtime"
   },
-  "next_exact_implementation_action": "Refresh the local recovery bundle, then correct canonical cycle LocalDate versus non-Gregorian device-calendar conversion boundaries with timezone/locale regression tests, preserving all existing stored logs rather than guessing legacy calendar identity. Continue source-order controls afterward.",
-  "updated_at": "2026-11-05T22:58:43.464026+00:00",
+  "next_exact_implementation_action": "Refresh recovery bundle, then preserve date-only hormone test days for new records and keep uncollected time-of-day out of explicit Ask context; retain legacy records without guessing original time zones. Resume original logging/control backlog afterward.",
+  "updated_at": "2026-11-05T23:10:03.932755+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

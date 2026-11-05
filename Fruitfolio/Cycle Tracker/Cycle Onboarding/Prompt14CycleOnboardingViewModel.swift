@@ -379,12 +379,7 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
     }
 
     func systemDate(from local: Prompt13LocalDate) -> Date? {
-        var components = DateComponents()
-        components.year = local.year
-        components.month = local.month
-        components.day = local.day
-        components.hour = 12
-        return calendar.date(from: components)
+        try? local.foundationDate(in: calendar)
     }
 
     func localDate(from date: Date) -> Prompt13LocalDate? {

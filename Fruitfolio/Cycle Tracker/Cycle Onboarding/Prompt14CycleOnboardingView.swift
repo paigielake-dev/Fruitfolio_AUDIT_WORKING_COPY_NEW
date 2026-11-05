@@ -1054,16 +1054,8 @@ private struct Prompt14CalendarDay: View {
 
 private enum Prompt14DateFormatting {
     static func long(_ date: Prompt13LocalDate) -> String {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = calendar.timeZone
-        components.year = date.year
-        components.month = date.month
-        components.day = date.day
-        components.hour = 12
-        guard let value = calendar.date(from: components) else { return date.description }
+        let calendar = Calendar.autoupdatingCurrent
+        guard let value = try? date.foundationDate(in: calendar) else { return date.description }
         let formatter = DateFormatter()
         formatter.calendar = calendar
         formatter.timeZone = calendar.timeZone

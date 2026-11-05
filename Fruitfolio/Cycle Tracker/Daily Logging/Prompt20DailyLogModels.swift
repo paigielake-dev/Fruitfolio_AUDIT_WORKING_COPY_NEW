@@ -43,21 +43,26 @@ public nonisolated struct Prompt20LocalDay: Hashable, Codable, Comparable, Senda
     }
 
     public init(date: Date, calendar: Calendar) {
-        let components = calendar.dateComponents([.year, .month, .day], from: date)
-        self.year = components.year ?? 1970
-        self.month = components.month ?? 1
-        self.day = components.day ?? 1
+        let components = FruitfolioCanonicalCalendar.components(of: date, calendar: calendar)
+        // Invalid dates remain invalid, never invented as 1970-01-01.
+        self.year = components.year ?? 0
+        self.month = components.month ?? 0
+        self.day = components.day ?? 0
     }
 
     public func date(in calendar: Calendar) -> Date? {
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = calendar.timeZone
-        components.year = year
-        components.month = month
-        components.day = day
-        components.hour = 12
-        return calendar.date(from: components)
+        FruitfolioCanonicalCalendar.date(year: year, month: month, day: day, calendar: calendar)
+    }
+    private enum CodingKeys: String, CodingKey { case year, month, day }
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(year: try c.decode(Int.self, forKey: .year), month: try c.decode(Int.self, forKey: .month), day: try c.decode(Int.self, forKey: .day))
+        let utc = FruitfolioCanonicalCalendar.gregorian(timeZone: TimeZone(secondsFromGMT: 0)!)
+        guard date(in: utc) != nil else { throw DecodingError.dataCorruptedError(forKey: .day, in: c, debugDescription: "invalid Gregorian local day") }
+    }
+    public func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(year, forKey: .year); try c.encode(month, forKey: .month); try c.encode(day, forKey: .day)
     }
 
     public static func < (lhs: Self, rhs: Self) -> Bool {

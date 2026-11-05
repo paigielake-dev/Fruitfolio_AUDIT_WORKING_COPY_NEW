@@ -168,38 +168,7 @@ private enum Prompt24LocalDateBridge {
         from localDate: Prompt13LocalDate,
         calendar: Calendar
     ) throws -> Date {
-        let data = try JSONEncoder().encode(localDate)
-        let object = try JSONSerialization.jsonObject(with: data)
-
-        guard let components = extractComponents(from: object) else {
-            throw Prompt24LocalDateBridgeError.unsupportedEncoding
-        }
-
-        var dateComponents = DateComponents()
-        dateComponents.calendar = calendar
-        dateComponents.timeZone = calendar.timeZone
-        dateComponents.year = components.year
-        dateComponents.month = components.month
-        dateComponents.day = components.day
-        dateComponents.hour = 12
-
-        guard let date = calendar.date(from: dateComponents) else {
-            throw Prompt24LocalDateBridgeError.invalidCalendarDate
-        }
-
-        let roundTrip = calendar.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
-
-        guard roundTrip.year == components.year,
-              roundTrip.month == components.month,
-              roundTrip.day == components.day
-        else {
-            throw Prompt24LocalDateBridgeError.invalidCalendarDate
-        }
-
-        return date
+        try localDate.foundationDate(in: calendar)
     }
 
     private static func extractComponents(

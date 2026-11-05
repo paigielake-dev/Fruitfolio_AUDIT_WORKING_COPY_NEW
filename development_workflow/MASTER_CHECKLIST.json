@@ -5081,7 +5081,16 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5106,9 +5115,13 @@
         "Prompt1BScientificTranslationTests",
         "Prompt1BAskUserContextTests",
         "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
-        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare",
+        "Prompt1BCanonicalCalendarTests",
+        "Prompt13CycleEngineTests",
+        "Prompt14CycleOnboardingTests",
+        "Prompt1BTodaySnapshotTests"
       ],
-      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -5119,9 +5132,10 @@
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
         "Fixed a clinical translation-protection gap: leading signs/comparators and units outside the old limited numeric regex could remain unprotected. Complete signed/comparison quantities, ratios/ranges/uncertainties, scientific powers, broader laboratory units and invariant labels are now protected atomically without interpreting/converting values. Post-restoration signatures also reject added unit/numeric claims and introduced structured references/URLs. Tests preserve escaped Markdown operators and avoid misclassifying ordinary translated contractions/words as bare units. All feasible protection/native regressions pass. These checks cannot prove non-numerical medical meaning or real language quality; official MADLAD weights/T5 inference and clinical review remain blocked/unrun.",
         "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
-        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:38:24.244012+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 137,
@@ -8779,7 +8793,16 @@
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
         "Tools/run_portable_swift_tests.py",
-        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8796,15 +8819,20 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "Prompt1BHormonePersistenceTests"
+        "Prompt1BHormonePersistenceTests",
+        "Prompt1BCanonicalCalendarTests",
+        "Prompt13CycleEngineTests",
+        "Prompt14CycleOnboardingTests",
+        "Prompt1BTodaySnapshotTests"
       ],
-      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
-        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:07:23.342395+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 248,
@@ -9918,7 +9946,13 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9940,17 +9974,19 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt1BCanonicalCalendarTests"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 284,
@@ -10134,7 +10170,13 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10157,18 +10199,20 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt1BCanonicalCalendarTests"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 288,
@@ -10343,7 +10387,13 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10365,17 +10415,19 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt1BCanonicalCalendarTests"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
         "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
         "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim.",
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 291,
@@ -10556,7 +10608,13 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10571,14 +10629,16 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt1BCanonicalCalendarTests"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Wheel contextual notes now use shared taped-white layout/scrolling, true 497x499 art bounds, clamped placement and explicit close; shared press behavior respects Reduce Motion. Accessibility sizes expose full region/day-range controls and inline readable notes instead of overlapping ring labels; stale selections clear on model change. Calendar month loads capture month+context identity and reject stale results. Fixed incoming context policy not reaching the loader, and added immediate pure view-time suppression of only inapplicable estimate flags while preserving recorded periods, symptoms, BBT and notes. Independent supplemental loading begins alongside existing snapshots. Added original wheel/calendar core tests to portable coverage. Switched available syntax checking to actual Swift compiler parse phase after optional Tree-sitter reported false errors in valid pre-existing calendar expressions. No prediction math, source logs or artwork changed; Apple UI/rendering/loader typecheck remain unrun.",
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 296,
@@ -10647,15 +10707,32 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Preserve correct daily-log state when moving between Calendar and Today.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCanonicalCalendarTests",
+        "Prompt13CycleEngineTests",
+        "Prompt14CycleOnboardingTests",
+        "Prompt1BTodaySnapshotTests"
+      ],
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+      ],
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 299,
@@ -10663,15 +10740,32 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Prevent lag during date selection and log opening.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
+        "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCanonicalCalendarTests",
+        "Prompt13CycleEngineTests",
+        "Prompt14CycleOnboardingTests",
+        "Prompt1BTodaySnapshotTests"
+      ],
+      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+      ],
+      "last_updated": "2026-11-05T23:10:03.932755+00:00"
     },
     {
       "sequence": 300,

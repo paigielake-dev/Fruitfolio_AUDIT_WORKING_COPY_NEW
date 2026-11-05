@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T22:58:43.464026+00:00",
+  "updated_at": "2026-11-05T23:10:03.932755+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1068,6 +1068,23 @@
         "Apple_UI": "NOT_RUN: Today scene refresh/reveal and device performance remain unverified"
       },
       "timestamp": "2026-11-05T22:58:43.464026+00:00"
+    },
+    {
+      "batch": "Canonical-civil-date-boundaries-and-invalid-record-protection",
+      "commands": [
+        "python3 -m unittest discover -s development_workflow/tests -q",
+        "git diff --check",
+        "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
+      ],
+      "results": {
+        "Swift_6_headless": "304 XCTest + 21 Swift Testing passed (325 total)",
+        "Swift_5_native": "308 XCTest + 21 Swift Testing passed (329 total)",
+        "workflow": "16 Python tests passed",
+        "Swift_syntax": "189 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors",
+        "date_safety": "Five calendar identifiers, leap/travel boundaries, actual Calendar loader and corrupted real cycle file exercised; old valid stored years remain unchanged",
+        "Apple_UI": "NOT_RUN: date picker/display and full Hormone/Trends UI behavior await Apple runtime"
+      },
+      "timestamp": "2026-11-05T23:10:03.932755+00:00"
     }
   ]
 }

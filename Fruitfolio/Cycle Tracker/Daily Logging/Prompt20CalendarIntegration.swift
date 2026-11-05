@@ -24,13 +24,7 @@ enum Prompt20CalendarIntegration {
                     ownerID: resolvedOwnerID
                 )
 
-            return await MainActor.run {
-                annotations(
-                    for: logs,
-                    month: month,
-                    calendar: calendar
-                )
-            }
+            return Prompt20CalendarProjection.annotations(for: logs, month: month, calendar: calendar)
         }
     }
 
@@ -39,54 +33,6 @@ enum Prompt20CalendarIntegration {
         month: Prompt19CalendarMonth,
         calendar: Calendar
     ) -> [Prompt19CalendarDayAnnotation] {
-        logs.compactMap { log in
-            guard !log.isDeleted,
-                  log.date.year == month.year,
-                  log.date.month == month.month
-            else {
-                return nil
-            }
-
-            let summary =
-                Prompt20DailyLogRules.summary(
-                    for: log
-                )
-
-            let key =
-                Prompt19CalendarDateKey(
-                    year: log.date.year,
-                    month: log.date.month,
-                    day: log.date.day
-                )
-
-            let bbtRecorded =
-                summary.hasBasalTemperature
-
-            let noteAdded =
-                summary.hasGeneralNote
-
-            return Prompt19CalendarDayAnnotation(
-                key: key,
-                recordedPeriod: false,
-                predictedPeriod: false,
-                fertileEstimated: false,
-                ovulationEstimated: false,
-                symptomsLogged: summary.hasSymptoms,
-                bbtRecorded: bbtRecorded,
-                noteAdded: noteAdded,
-                symptomSummary: summary.symptomNames,
-                temperatureDisplay:
-                    bbtRecorded
-                    ? summary.temperatureDisplay
-                    : nil,
-                noteText:
-                    noteAdded
-                    ? summary.notePreview
-                    : nil
-            )
-        }
-        .sorted {
-            $0.key < $1.key
-        }
+        Prompt20CalendarProjection.annotations(for: logs, month: month, calendar: calendar)
     }
 }

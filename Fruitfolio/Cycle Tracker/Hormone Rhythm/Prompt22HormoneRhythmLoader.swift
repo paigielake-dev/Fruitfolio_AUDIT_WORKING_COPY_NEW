@@ -175,30 +175,7 @@ struct Prompt22HormoneRhythmLoader {
         from local: Prompt13LocalDate,
         calendar: Calendar
     ) throws -> Date {
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = calendar.timeZone
-        components.year = local.year
-        components.month = local.month
-        components.day = local.day
-        components.hour = 12
-
-        guard let date = calendar.date(from: components) else {
-            throw Prompt13CycleError.invalidDate
-        }
-
-        let check = calendar.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
-
-        guard check.year == local.year,
-              check.month == local.month,
-              check.day == local.day else {
-            throw Prompt13CycleError.invalidDate
-        }
-
-        return date
+        try local.foundationDate(in: calendar)
     }
 
     private func resolvedPersonalizationPermission(

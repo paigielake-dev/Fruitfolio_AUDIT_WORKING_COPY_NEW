@@ -1,6 +1,7 @@
 import Foundation
 
 public enum Prompt20DailyLogValidationIssue: Error, Equatable, Sendable {
+    case invalidDate
     case bleedingLevelRequiredForNote
     case invalidTemperatureFormat
     case implausibleTemperature
@@ -48,7 +49,7 @@ public enum Prompt20DailyLogRules {
         }
 
         if !trimmedTemperature.isEmpty {
-            if let value = Double(trimmedTemperature.replacingOccurrences(of: ",", with: ".")) {
+            if let value = Double(trimmedTemperature.replacingOccurrences(of: ",", with: ".")), value.isFinite {
                 let celsius: Double
                 switch draft.temperatureUnit {
                 case .celsius:
@@ -89,6 +90,8 @@ public enum Prompt20DailyLogRules {
         existing: Prompt20DailyLog?,
         now: Date
     ) throws -> Prompt20DailyLog {
+        let utc = FruitfolioCanonicalCalendar.gregorian(timeZone: TimeZone(secondsFromGMT: 0)!)
+        guard date.date(in: utc) != nil else { throw Prompt20DailyLogDomainError.validation([.invalidDate]) }
         let validation = validate(draft)
         guard validation.isValid else {
             throw Prompt20DailyLogDomainError.validation(validation.issues)

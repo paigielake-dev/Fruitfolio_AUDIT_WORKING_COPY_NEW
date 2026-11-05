@@ -48,31 +48,8 @@ nonisolated struct Prompt13LocalDate: Codable, Hashable, Comparable, Sendable, C
         month: Int,
         day: Int
     ) throws {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
-
-        var components = DateComponents()
-        components.calendar = calendar
-        components.timeZone = calendar.timeZone
-        components.year = year
-        components.month = month
-        components.day = day
-        components.hour = 12
-
-        guard let date = calendar.date(from: components) else {
-            throw Prompt13CycleError.invalidDate
-        }
-
-        let check = calendar.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
-
-        guard
-            check.year == year,
-            check.month == month,
-            check.day == day
-        else {
+        let calendar = FruitfolioCanonicalCalendar.gregorian(timeZone: TimeZone(secondsFromGMT: 0)!)
+        guard FruitfolioCanonicalCalendar.date(year: year, month: month, day: day, calendar: calendar) != nil else {
             throw Prompt13CycleError.invalidDate
         }
 
@@ -85,10 +62,7 @@ nonisolated struct Prompt13LocalDate: Codable, Hashable, Comparable, Sendable, C
         _ date: Date,
         calendar: Calendar
     ) throws {
-        let components = calendar.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
+        let components = FruitfolioCanonicalCalendar.components(of: date, calendar: calendar)
 
         guard
             let year = components.year,
@@ -103,6 +77,24 @@ nonisolated struct Prompt13LocalDate: Codable, Hashable, Comparable, Sendable, C
             month: month,
             day: day
         )
+    }
+
+    /// Interpret stored components as Gregorian in the caller's time zone,
+    /// never as a Buddhist/Hebrew/Islamic calendar year.
+    func foundationDate(in calendar: Calendar) throws -> Date {
+        guard let date = FruitfolioCanonicalCalendar.date(year: year, month: month, day: day, calendar: calendar) else {
+            throw Prompt13CycleError.invalidDate
+        }
+        return date
+    }
+    private enum CodingKeys: String, CodingKey { case year, month, day }
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(year: c.decode(Int.self, forKey: .year), month: c.decode(Int.self, forKey: .month), day: c.decode(Int.self, forKey: .day))
+    }
+    func encode(to encoder: Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(year, forKey: .year); try c.encode(month, forKey: .month); try c.encode(day, forKey: .day)
     }
 
     var description: String {

@@ -383,6 +383,7 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
             Prompt20DailyLogValidationIssue
     ) -> String {
         switch issue {
+        case .invalidDate: return "choose a valid calendar date before saving."
         case .bleedingLevelRequiredForNote:
             "choose the bleeding option that goes with this note"
 
