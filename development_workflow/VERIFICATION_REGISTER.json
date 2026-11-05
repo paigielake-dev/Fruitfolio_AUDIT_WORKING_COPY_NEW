@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T21:09:21.211007+00:00",
+  "updated_at": "2026-11-05T21:19:43.429166+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -735,6 +735,21 @@
         "Apple_and_MADLAD_inference": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
       },
       "timestamp": "2026-11-05T21:09:21.211007+00:00"
+    },
+    {
+      "batch": "P3-native-whole-paragraph-token-budgets",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "git diff --check"
+      ],
+      "results": {
+        "Swift_6_headless": "81 XCTest + 21 Swift Testing passed (102 total)",
+        "Swift_5_native": "84 XCTest + 21 Swift Testing passed (105 total); real full-corpus engine path generated, 30.335 seconds",
+        "Swift_syntax": "127 files, zero parser errors",
+        "Apple_and_MADLAD": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
+      },
+      "timestamp": "2026-11-05T21:19:43.429166+00:00"
     }
   ]
 }

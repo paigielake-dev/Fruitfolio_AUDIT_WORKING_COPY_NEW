@@ -27,3 +27,11 @@ Final native result: **80 XCTest + 21 Swift Testing = 101 passed**. The actual G
 Regular result: **78 XCTest + 21 Swift Testing = 99 passed**. Full headless production-engine tests use the actual compiled founder corpus to verify cited deterministic fallback after model unavailability, unsupported classification only after search, and local urgent guidance without package/model availability. These tests do not exercise SwiftUI or application-bundle copying.
 
 Remaining: native generation against the complete retrieved corpus under real prompt/output budgets; full Apple build/link, UI, physical-device behavior and clinical interpretation. **This model is Qwen, not MADLAD.** The MADLAD Swift/C branch compiles/links in the native run, but T5 inference, official weights/tokenizer, translation accuracy, compatibility and offline device behavior remain unverified because the official resource host is blocked.
+
+## Actual corpus-backed native engine
+
+The native engine now admits complete paragraphs using its actual GGUF tokenizer for both prompt and encoded output costs. Oversized paragraphs are omitted without truncation; claim/evidence IDs are restricted to the admitted set. A conservative grammar claim limit keeps even repeated longest alternatives within the output budget.
+
+An optional in-memory answer-path field distinguishes real generation, deterministic fallback, local safety and unsupported content for verification; it does not persist transcripts. The real-model/real-corpus integration test requires `generated` and passed in 30.335 seconds on this Linux CPU. Fallback cannot pass this test. This demonstrates functional bounded inference, not acceptable iPhone latency or clinical interpretation. Redundant autoregressive source copying remains a measured optimization target.
+
+Latest results: Swift 6 headless 81 XCTest + 21 Swift Testing = 102 passed; native Swift 5/C 84 XCTest + 21 Swift Testing = 105 passed. No MADLAD weight/inference claim is implied.

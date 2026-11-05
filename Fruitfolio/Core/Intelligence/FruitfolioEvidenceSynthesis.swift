@@ -1,6 +1,9 @@
 import Foundation
 
 nonisolated enum FruitfolioEvidencePromptBuilder {
+    static let maximumNoteParagraphs = 6
+    static let maximumSourceParagraphs = 4
+
     static func prompt(
         question: String,
         evidence: FruitfolioEvidencePacket
@@ -8,7 +11,7 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
         let noteText =
             evidence
                 .researchNoteChunks
-                .prefix(6)
+                .prefix(maximumNoteParagraphs)
                 .map {
                     """
                     [NOTE \($0.chunkID)]
@@ -22,7 +25,7 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
         let sourceText =
             evidence
                 .sourceChunks
-                .prefix(4)
+                .prefix(maximumSourceParagraphs)
                 .map {
                     """
                     [SOURCE \($0.sourceChunkID)]
@@ -132,22 +135,32 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
 /// Constrained native selection of complete permitted evidence. JSON grammar
 /// cannot introduce a new factual sentence or an invented evidence identifier.
 nonisolated enum FruitfolioEvidenceDecodingGrammar {
-    static func make(evidence: FruitfolioEvidencePacket) throws -> String {
-        let permitted = Set(evidence.claimEvidenceMap.flatMap { $0.noteChunkIDs + $0.sourceChunkIDs })
-        let entries = evidence.researchNoteChunks.map { ($0.chunkID, $0.text) } + evidence.sourceChunks.map { ($0.sourceChunkID, $0.text) }
+    private static func jsonString(_ value: String) throws -> String {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.withoutEscapingSlashes]
-        func jsonString(_ value: String) throws -> String { String(decoding: try encoder.encode(value), as: UTF8.self) }
+        return String(decoding: try encoder.encode(value), as: UTF8.self)
+    }
+
+    private static func claimObject(id: String, text: String) throws -> String {
+        "{\"text\":" + (try jsonString(text)) + ",\"evidenceIDs\":[" + (try jsonString(id)) + "]}"
+    }
+
+    static func singleClaimDraftJSON(id: String, text: String) throws -> String {
+        "{\"bridge\":null,\"claims\":[" + (try claimObject(id: id, text: text)) + "],\"limitation\":null}"
+    }
+
+    static func make(evidence: FruitfolioEvidencePacket, maximumClaims: Int = 3) throws -> String {
+        let permitted = Set(evidence.claimEvidenceMap.flatMap { $0.noteChunkIDs + $0.sourceChunkIDs })
+        let entries = evidence.researchNoteChunks.map { ($0.chunkID, $0.text) } + evidence.sourceChunks.map { ($0.sourceChunkID, $0.text) }
         var literals: [String] = []
         for (id, text) in entries where permitted.contains(id) && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            let object = "{\"text\":" + (try jsonString(text)) + ",\"evidenceIDs\":[" + (try jsonString(id)) + "]}"
-            literals.append(try jsonString(object))
+            literals.append(try jsonString(claimObject(id: id, text: text)))
         }
         let emptyRoot = try jsonString("{\"bridge\":null,\"claims\":[],\"limitation\":null}")
-        guard !literals.isEmpty else { return "root ::= " + emptyRoot + "\n" }
+        guard !literals.isEmpty, maximumClaims > 0 else { return "root ::= " + emptyRoot + "\n" }
         let prefix = try jsonString("{\"bridge\":null,\"claims\":[")
         let suffix = try jsonString("],\"limitation\":null}")
-        let repeatLimit = min(3, literals.count) - 1
+        let repeatLimit = min(3, maximumClaims, literals.count) - 1
         return "root ::= " + prefix + " (claim (\",\" claim){0," + String(repeatLimit) + "})? " + suffix + "\nclaim ::= " + literals.joined(separator: " | ") + "\n"
     }
 }

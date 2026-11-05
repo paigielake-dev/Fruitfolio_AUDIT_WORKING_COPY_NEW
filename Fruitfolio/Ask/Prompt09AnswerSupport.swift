@@ -60,3 +60,8 @@ enum Prompt09CitationDestination {
         return destination.url
     }
 }
+
+/// In-memory verification metadata, never an implicit transcript store.
+enum FruitfolioAnswerPath: String, Codable, Sendable {
+    case generated, retrievalFallback, localSafety, unsupported, unavailableContent
+}

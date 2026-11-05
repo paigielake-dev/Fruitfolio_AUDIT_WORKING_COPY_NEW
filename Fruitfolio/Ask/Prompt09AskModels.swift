@@ -64,6 +64,7 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
     let conceptTags: Set<String>
     let researchGap: AskResearchGap?
     let isDevelopmentPreview: Bool
+    let answerPath: FruitfolioAnswerPath?
 
     init(
         id: UUID = UUID(),
@@ -77,7 +78,8 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
         generationTimestamp: Date = Date(),
         conceptTags: Set<String> = [],
         researchGap: AskResearchGap? = nil,
-        isDevelopmentPreview: Bool = false
+        isDevelopmentPreview: Bool = false,
+        answerPath: FruitfolioAnswerPath? = nil
     ) {
         self.id = id
         self.originalQuestion = originalQuestion
@@ -91,6 +93,7 @@ struct AskAnswer: Identifiable, Hashable, Codable, Sendable {
         self.conceptTags = conceptTags
         self.researchGap = researchGap
         self.isDevelopmentPreview = isDevelopmentPreview
+        self.answerPath = answerPath
     }
 }
 

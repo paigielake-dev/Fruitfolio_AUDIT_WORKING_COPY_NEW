@@ -237,23 +237,20 @@ actor LlamaFruitfolioLanguageModel:
 
         llama_memory_clear(llama_get_memory(context), true)
         defer { llama_memory_clear(llama_get_memory(context), true) }
-        let sampler = try makeSampler(vocab: vocab, evidence: evidence)
-        defer { llama_sampler_free(sampler) }
-
-        let evidencePrompt =
-            FruitfolioEvidencePromptBuilder.prompt(
-                question: question,
-                evidence: evidence
-            )
-
-        let prompt = qwenPrompt(evidencePrompt)
-        let promptTokens = try tokenize(prompt, vocab: vocab)
-
         let contextCapacity = Int(llama_n_ctx(context))
-        guard
-            promptTokens.count + Int(maximumGeneratedTokens)
-                < contextCapacity
-        else {
+        guard let selection = try FruitfolioEvidenceBudget.fit(
+            evidence: evidence, maximumPromptTokens: contextCapacity - Int(maximumGeneratedTokens) - 1,
+            maximumOutputTokens: Int(maximumGeneratedTokens),
+            promptTokenCount: { packet in
+                try tokenize(qwenPrompt(FruitfolioEvidencePromptBuilder.prompt(question: question, evidence: packet)), vocab: vocab).count
+            }, outputTokenCount: { json in try tokenize(json, vocab: vocab).count }) else {
+            throw FruitfolioLlamaError.promptTooLong
+        }
+        let sampler = try makeSampler(vocab: vocab, evidence: selection.evidence, maximumClaims: selection.maximumClaims)
+        defer { llama_sampler_free(sampler) }
+        let prompt = qwenPrompt(FruitfolioEvidencePromptBuilder.prompt(question: question, evidence: selection.evidence))
+        let promptTokens = try tokenize(prompt, vocab: vocab)
+        guard promptTokens.count + Int(maximumGeneratedTokens) < contextCapacity else {
             throw FruitfolioLlamaError.promptTooLong
         }
 
@@ -412,8 +409,8 @@ actor LlamaFruitfolioLanguageModel:
         vocab = loadedVocab
     }
 
-    private func makeSampler(vocab: OpaquePointer, evidence: FruitfolioEvidencePacket) throws -> UnsafeMutablePointer<llama_sampler> {
-        let grammar = try FruitfolioEvidenceDecodingGrammar.make(evidence: evidence)
+    private func makeSampler(vocab: OpaquePointer, evidence: FruitfolioEvidencePacket, maximumClaims: Int) throws -> UnsafeMutablePointer<llama_sampler> {
+        let grammar = try FruitfolioEvidenceDecodingGrammar.make(evidence: evidence, maximumClaims: maximumClaims)
         guard let chain = llama_sampler_chain_init(llama_sampler_chain_default_params()) else {
             throw FruitfolioLlamaError.couldNotCreateSampler
         }
@@ -712,7 +709,7 @@ final class FruitfolioResearchIntelligenceEngine:
             // guidance. No diagnosis or invented source attribution is added.
             return AskAnswer(originalQuestion: trimmed,
                 answerText: Prompt34LocalSafetyRouter.urgentResponseText(), support: .partiallySupported,
-                knowledgeBaseVersion: "local-safety-guidance-v1")
+                knowledgeBaseVersion: "local-safety-guidance-v1", answerPath: .localSafety)
         }
 
         if safety.level == .normal,
@@ -721,7 +718,7 @@ final class FruitfolioResearchIntelligenceEngine:
             return AskAnswer(
                 originalQuestion: trimmed,
                 answerText: "details not available in the approved library yet. open LifeBridge information for the founder-specified official websites. current organization-specific claims require reviewed snapshots from both LifeBridge and FruitsofLife.xo.",
-                support: .genuinelyNovel, knowledgeBaseVersion: FruitfolioLifeBridgeInformation.awaitingStatus)
+                support: .genuinelyNovel, knowledgeBaseVersion: FruitfolioLifeBridgeInformation.awaitingStatus, answerPath: .unavailableContent)
         }
 
         let normalized =
@@ -891,6 +888,7 @@ final class FruitfolioResearchIntelligenceEngine:
             )
 
         let answerText: String
+        let answerPath: FruitfolioAnswerPath
 
         do {
             progress?(.synthesizing)
@@ -903,19 +901,18 @@ final class FruitfolioResearchIntelligenceEngine:
 
             progress?(.validating)
 
-            answerText =
-                FruitfolioGeneratedDraftValidator.validatedText(
-                    draft: draft,
-                    evidence: packet
-                )
-                ?? retrievalOnlyAnswer(
-                    question: trimmed,
-                    coverage: coverage,
-                    notes: packet.researchNoteChunks,
-                    safety: safety
-                )
+            if let validated = FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: packet) {
+                answerText = validated
+                answerPath = .generated
+            } else {
+                answerText = retrievalOnlyAnswer(question: trimmed, coverage: coverage,
+                    notes: packet.researchNoteChunks, safety: safety)
+                answerPath = .retrievalFallback
+            }
 
         } catch {
+            if Task.isCancelled || error is CancellationError { throw CancellationError() }
+            answerPath = .retrievalFallback
             answerText =
                 retrievalOnlyAnswer(
                     question: trimmed,
@@ -1030,7 +1027,8 @@ final class FruitfolioResearchIntelligenceEngine:
             researchGap:
                 researchGap,
             isDevelopmentPreview:
-                false
+                false,
+            answerPath: answerPath
         )
     }
 
@@ -1058,7 +1056,8 @@ final class FruitfolioResearchIntelligenceEngine:
             researchGap:
                 nil,
             isDevelopmentPreview:
-                false
+                false,
+            answerPath: .unsupported
         )
     }
 

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "5274726f31b17f5b47479c2fe22c9836d807c3c5",
+  "current_HEAD": "1f4b7b05d41e415757124e3302bdde2fe873b9a1",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
-  "current_requirement": 129,
-  "current_implementation_batch": "P3-real-Swift-native-inference-and-headless-engine",
+  "current_requirement": 136,
+  "current_implementation_batch": "P3-native-whole-paragraph-token-budgets",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,19 +493,18 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
     "Fruitfolio/Ask/Prompt09AskModels.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
     "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
     "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
-    "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
+    "FruitfolioTests/Prompt1BEvidenceBudgetTests.swift",
     "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
-    "FruitfolioTests/Prompt56ResearchIntelligenceTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/BLOCKERS.md",
     "development_workflow/MASTER_CHECKLIST.json",
     "development_workflow/NATIVE_RUNTIME_VERIFICATION.md",
-    "development_workflow/RUN_LOGS/Swift-headless-research-engine.log",
-    "development_workflow/RUN_LOGS/Swift-native-Qwen-source-bound-inference.log"
+    "development_workflow/PERFORMANCE_LOG.md",
+    "development_workflow/RUN_LOGS/Swift-native-full-corpus-budget.log"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -520,18 +519,15 @@
   "last_executed_tests": [
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
-    "python3 -m unittest discover -s development_workflow/tests -q",
-    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_6_headless": "78 XCTest + 21 Swift Testing passed (99 total)",
-    "Swift_5_real_native": "80 XCTest + 21 Swift Testing passed (101 total), including real Qwen structured generation and Unicode/units/evidence validation",
-    "workflow": "15 Python tests passed",
-    "Swift_syntax": "125 files, zero parser errors",
-    "Apple_and_MADLAD_inference": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
+    "Swift_6_headless": "81 XCTest + 21 Swift Testing passed (102 total)",
+    "Swift_5_native": "84 XCTest + 21 Swift Testing passed (105 total); real full-corpus engine path generated, 30.335 seconds",
+    "Swift_syntax": "127 files, zero parser errors",
+    "Apple_and_MADLAD": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
   },
-  "next_exact_implementation_action": "Budget complete retrieved paragraphs for real native context/output capacity and verify full-corpus native engine behavior, then grounded feature-provider fallbacks and remaining source-order requirements.",
-  "updated_at": "2026-11-05T21:09:21.211007+00:00",
+  "next_exact_implementation_action": "Strengthen MADLAD scientific quantity protection for signs, comparisons and unsupported unit forms, then optimize redundant native evidence copying and continue grounded feature providers/source-order backlog.",
+  "updated_at": "2026-11-05T21:19:43.429166+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

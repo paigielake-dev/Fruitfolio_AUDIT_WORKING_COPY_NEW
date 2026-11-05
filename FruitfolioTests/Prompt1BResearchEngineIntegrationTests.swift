@@ -25,6 +25,7 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         XCTAssertEqual(answer.sourceIDs, answer.sources.map(\.id))
         XCTAssertTrue(answer.sources.allSatisfy { !$0.title.isEmpty })
         XCTAssertFalse(answer.isDevelopmentPreview)
+        XCTAssertEqual(answer.answerPath, .retrievalFallback)
         XCTAssertGreaterThan(engine.lastDiagnostics?.noteCount ?? 0, 0)
     }
     func testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability() async throws {
@@ -33,14 +34,30 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         let answer = try await engine.answer(question: "I cannot breathe", conversation: [])
         XCTAssertTrue(answer.answerText.contains("seek emergency medical care now"))
         XCTAssertEqual(answer.knowledgeBaseVersion, "local-safety-guidance-v1")
+        XCTAssertEqual(answer.answerPath, .localSafety)
         XCTAssertTrue(answer.sources.isEmpty)
     }
     func testUnsupportedQuestionIsReportedAfterTheActualLibrarySearch() async throws {
         let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: Prompt1BUnavailableSynthesis())
         let answer = try await engine.answer(question: "zxqvplmkgtrn", conversation: [])
         XCTAssertEqual(answer.support, .genuinelyNovel)
+        XCTAssertEqual(answer.answerPath, .unsupported)
         XCTAssertEqual(answer.answerText, FruitfolioCanonicalAnswerVoice.unsupportedMessage)
         XCTAssertNotNil(engine.lastDiagnostics)
         XCTAssertTrue(answer.sources.isEmpty)
     }
+    #if canImport(llama)
+    func testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets() async throws {
+        let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"].map { URL(fileURLWithPath: $0) }
+        let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
+        let model = LlamaFruitfolioLanguageModel(modelURL: url)
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: model)
+        let answer = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])
+        XCTAssertEqual(answer.answerPath, .generated, "A fallback must not count as successful integrated native inference")
+        XCTAssertFalse(answer.sourceIDs.isEmpty)
+        XCTAssertTrue(answer.answerText.contains("☆"))
+        XCTAssertFalse(answer.isDevelopmentPreview)
+    }
+    #endif
+
 }
