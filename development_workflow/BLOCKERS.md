@@ -1,6 +1,6 @@
 # Confirmed blockers and prerequisites
 
-- This Linux executor has no Swift compiler or Xcode. Swift tests, simulator geometry/VoiceOver, and device inference/performance have not run. Use Tools/verify_prompt1b_mac.sh on a Mac; physical-device measurements remain separate.
+- Swift 6.2.1 is now installed at /workspace/toolchains/swift-6.2.1 (official archive signature verified). Portable Foundation algorithms and tests compile/run through Tools/run_portable_swift_tests.py. Xcode/SwiftUI/UIKit/Apple llama linking, simulator geometry/VoiceOver and device inference/performance remain unavailable on Linux. Use Tools/verify_prompt1b_mac.sh on a Mac; physical-device measurements remain separate.
 - FruitfolioAI.gguf is a Git LFS pointer for a 491400032-byte asset, not an executable model in this checkout. Retrieve and verify its declared SHA-256 before claiming local AI generation.
 - No verified MADLAD checkpoint/tokenizer resources are installed. A T5 runtime and conversion/manifest pipeline are now in source, but real inference, device compatibility and quality remain unverified. The proxy denies huggingface.co (403 CONNECT); the domain draft update failed with draft_not_editable. Add the domain in environment Internet access settings before the official resources can be retrieved. See MADLAD_VERIFICATION.md.
 - The supplied checklist is present and contains exactly 478 requirements after excluding six numbered Part 1 headings. Its original printed IDs restart within Part 1. Keep printed IDs plus source-order sequence.

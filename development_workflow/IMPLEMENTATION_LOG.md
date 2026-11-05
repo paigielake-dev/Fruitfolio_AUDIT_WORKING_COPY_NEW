@@ -237,3 +237,13 @@
 - Verification: {"workflow_and_packaging": "5 passed", "Swift_syntax": "zero parser errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Adopt shared decorative layout on FAQ/contact headers using measured assets and protected regions; keep missing tulip/cloud artwork as a precise resource blocker instead of substituting unrelated illustrations.
 - Commit: containing commit for batch P1-shared-icon-artwork-and-disabled-actions.
+
+## P10-compiled-portable-regressions
+
+- Parent checkpoint: 308067e81304e7491fe0742fb8382df182eed5f1.
+- Source-order requirements: [244, 245, 246, 247, 255, 288, 332, 333, 409, 422, 424, 426, 443, 444, 447, 448, 454, 458, 460, 462, 466, 467, 476, 477].
+- Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.
+- Tests added/updated: Prompt17CyclePredictionEngineTests, Prompt1BPopupLayoutTests, Prompt1BExcerptIdentityTests, Prompt1BAskScrollTests, Prompt1BHormoneValidationTests, Prompt1BFruitBasketRulesTests, Prompt1BMADLADManifestTests, Prompt1BScientificTranslationTests, Prompt1BTranslationPipelineTests.
+- Verification: {"portable_swift": "PASS; see complete current-run log for separate XCTest and Swift Testing counts", "workflow_and_packaging": "5 passed", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: model/tokenizer absent, proxy 403"}.
+- Next action: Implement actual shared decorative-header adoption with the approved Contact/Settings asset matrix; document missing tulip explicitly. Continue the remaining original checklist requirements after each batch.
+- Commit: containing commit for batch P10-compiled-portable-regressions.

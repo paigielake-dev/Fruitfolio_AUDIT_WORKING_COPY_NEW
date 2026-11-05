@@ -17,10 +17,10 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
 
     func testInvalidOrCollapsedViewportNeverProducesNegativeOrNonfiniteFrames() {
         for size in [CGSize.zero, CGSize(width: 12, height: 10),
-                     CGSize(width: -1, height: 100), CGSize(width: .infinity, height: 100)] {
+                     CGSize(width: -1, height: 100), CGSize(width: CGFloat.infinity, height: 100)] {
             let metrics = FruitfolioPopupLayout.notebook(available: size)
-            XCTAssertEqual(metrics.paperSize, .zero)
-            XCTAssertEqual(metrics.writingSize, .zero)
+            XCTAssertEqual(metrics.paperSize, CGSize.zero)
+            XCTAssertEqual(metrics.writingSize, CGSize.zero)
         }
     }
 }
