@@ -7,16 +7,16 @@ enum Prompt04IntroConfiguration {
     static let initialStillness: Duration = .milliseconds(250)
 
     static let firstLaunchBookArrival: Duration = .milliseconds(650)
-    static let blankBookHold: Duration = .milliseconds(250)
+    static let blankBookHold: Duration = .milliseconds(650)
 
     static let logoReveal: Duration = .milliseconds(780)
-    static let brandedBookHold: Duration = .milliseconds(300)
+    static let brandedBookHold: Duration = .milliseconds(800)
 
     static let slightlyOpenTransition: Duration = .milliseconds(420)
-    static let slightlyOpenHold: Duration = .milliseconds(180)
+    static let slightlyOpenHold: Duration = .milliseconds(550)
 
     static let fullyOpenTransition: Duration = .milliseconds(430)
-    static let fullyOpenHold: Duration = .milliseconds(220)
+    static let fullyOpenHold: Duration = .milliseconds(650)
 
     /// Camera move into the right-hand page of the fully open book.
     static let rightPageFocus: Duration = .milliseconds(600)
@@ -25,9 +25,18 @@ enum Prompt04IntroConfiguration {
     static let standalonePaperResolve: Duration = .milliseconds(180)
 
     /// Only after the standalone paper is established do Hub controls appear.
-    static let hubReveal: Duration = .milliseconds(200)
+    static let hubReveal: Duration = .milliseconds(500)
     static let completionSettle: Duration = .milliseconds(90)
+    static let logoSparkleSettle: Duration = .milliseconds(180)
     static let blueberryHookDelay: Duration = .milliseconds(350)
+
+    /// Scheduled first-launch duration, excluding preload time and suspension.
+    static var firstLaunchDuration: Duration {
+        [initialStillness, firstLaunchBookArrival, blankBookHold, logoReveal,
+         logoSparkleSettle, brandedBookHold, slightlyOpenTransition, slightlyOpenHold,
+         fullyOpenTransition, fullyOpenHold, rightPageFocus, standalonePaperResolve,
+         hubReveal, completionSettle].reduce(.zero, +)
+    }
 
     // Returning launch keeps the same visual language but skips the first-launch
     // blank-cover/logo-puddle beats and is intentionally much shorter.

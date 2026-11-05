@@ -2,6 +2,35 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt04IntroTests: XCTestCase {
+    func testFirstLaunchScheduledDurationIsSixToEightSeconds() {
+        XCTAssertGreaterThanOrEqual(Prompt04IntroConfiguration.firstLaunchDuration, .seconds(6))
+        XCTAssertLessThanOrEqual(Prompt04IntroConfiguration.firstLaunchDuration, .seconds(8))
+    }
+
+    @MainActor
+    func testReducedMotionRemainsReducedAfterInterruption() async throws {
+        let suite = "Prompt1BIntroResume.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let machine = Prompt04IntroStateMachine()
+        let resumed = expectation(description: "Reduced-motion resume completes using crossfades")
+        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings) { _ in
+            XCTFail("The cancelled original sequence must not complete")
+        }
+        machine.handleBackgrounding(audioManager: audio)
+        machine.resolveAfterInterruption(audioManager: audio, completion: { firstLaunch in
+            XCTAssertTrue(firstLaunch)
+            resumed.fulfill()
+        }, wasFirstLaunch: true)
+        await fulfillment(of: [resumed], timeout: 2)
+        XCTAssertEqual(machine.stage, .introComplete)
+        XCTAssertTrue(machine.hubInteractionEnabled)
+        audio.stop(category: .music)
+        audio.stop(category: .rainAmbience)
+    }
+
     func testLaunchStorePersistsSignatureCompletionSeparately() async throws {
         let suiteName = "Prompt04IntroTests.\(UUID().uuidString)"
 

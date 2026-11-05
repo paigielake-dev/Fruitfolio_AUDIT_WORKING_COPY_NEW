@@ -179,7 +179,8 @@ struct Prompt04IntroView: View {
         guard let launchMode else { return }
 
         switch newPhase {
-        case .background:
+        case .background, .inactive:
+            guard !wasInterrupted else { return }
             wasInterrupted = machine.stage != .introComplete
             machine.handleBackgrounding(audioManager: audioManager)
         case .active:
@@ -190,8 +191,6 @@ struct Prompt04IntroView: View {
                 completion: completeIntro(wasFirstLaunch:),
                 wasFirstLaunch: launchMode.isFirstLaunch
             )
-        case .inactive:
-            break
         @unknown default:
             break
         }

@@ -67,3 +67,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Inspect Part 1 lifecycle work, then implement Part 2 intro pacing and reduced-motion foreground resumption without restarting or introducing spatial motion.
 - Commit: containing commit for batch P1-semantic-rendering-consolidation.
+
+## P2-intro-pacing-and-resumption
+
+- Parent checkpoint: b81f8f2e42be6465991d7285aa3484ce8c03b908.
+- Source-order requirements: [71, 72, 73, 80, 83, 84, 85, 86, 87].
+- First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.
+- Tests added/updated: Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds, Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Cancel stale Hub invitation and navigation work; then continue Ask session/scroll correctness independently of Xcode.
+- Commit: containing commit for batch P2-intro-pacing-and-resumption.

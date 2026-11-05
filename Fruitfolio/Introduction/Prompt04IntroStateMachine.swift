@@ -38,6 +38,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
     @Published private(set) var hubInteractionEnabled = false
     @Published private(set) var hasStarted = false
 
+    private var activeLaunchMode: Prompt04LaunchMode?
     private var sequenceTask: Task<Void, Never>?
     private var sequenceGeneration: UInt = 0
 
@@ -54,16 +55,14 @@ final class Prompt04IntroStateMachine: ObservableObject {
         guard !hasStarted else { return }
 
         hasStarted = true
+        activeLaunchMode = mode
         sequenceGeneration &+= 1
 
         let generation = sequenceGeneration
 
         resetVisualState()
 
-        startAmbience(
-            audioManager: audioManager,
-            settings: settings
-        )
+        startAmbience(audioManager: audioManager)
 
         sequenceTask = Task { @MainActor [weak self] in
             guard let self else { return }
@@ -140,6 +139,8 @@ final class Prompt04IntroStateMachine: ObservableObject {
     ) {
         guard hasStarted, stage != .introComplete else { return }
 
+        startAmbience(audioManager: audioManager)
+
         sequenceGeneration &+= 1
 
         let generation = sequenceGeneration
@@ -148,6 +149,17 @@ final class Prompt04IntroStateMachine: ObservableObject {
 
         sequenceTask = Task { @MainActor [weak self] in
             guard let self else { return }
+
+            if let mode = self.activeLaunchMode, mode.usesReducedMotion {
+                if self.stage == .hubRevealing {
+                    await self.complete(generation: generation, audioManager: audioManager,
+                                        completion: completion, wasFirstLaunch: wasFirstLaunch)
+                } else {
+                    await self.runReducedMotionSequence(mode: mode, generation: generation,
+                                                        audioManager: audioManager, completion: completion)
+                }
+                return
+            }
 
             switch self.stage {
             case .blankBookSettled:
@@ -290,7 +302,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
         audioManager.play(.starChime)
 
         guard await sleep(
-            .milliseconds(180),
+            Prompt04IntroConfiguration.logoSparkleSettle,
             generation: generation
         ) else {
             return
@@ -668,8 +680,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
     }
 
     private func startAmbience(
-        audioManager: AudioManager,
-        settings _: SettingsStore
+        audioManager: AudioManager
     ) {
         // Always register both continuous ambience requests.
         //
