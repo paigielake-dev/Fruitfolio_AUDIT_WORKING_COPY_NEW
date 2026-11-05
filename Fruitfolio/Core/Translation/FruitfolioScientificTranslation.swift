@@ -12,12 +12,10 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         let literalPatterns = protectedLiterals.filter { !$0.isEmpty }
             .sorted { $0.count > $1.count }.map { NSRegularExpression.escapedPattern(for: $0) }
         let patterns = literalPatterns + [
+            FruitfolioScientificQuantityProtection.protectionPattern,
             #"\\[\\*_`\[\]<>]"#,
             #"</?u>"#,
-            #"https?://[^\s<>]+"#,
-            #"\[[^\]\n]{1,200}\]"#,
-            #"\([^\)\n]*\b(?:19|20)\d{2}[a-z]?[^\)\n]*\)"#,
-            #"\p{N}+(?:[.,:/−–-]\p{N}+)*(?:\s?(?:pg/mL|ng/mL|nmol/L|pmol/L|mIU/mL|IU/L|mg|mcg|µg|μg|g|mL|L|%|°C|°F))?"#,
+            FruitfolioScientificQuantityProtection.referencePattern,
             #"\*\*|__|(?<!\*)\*(?!\*)"#
         ]
         let regex = try NSRegularExpression(pattern: patterns.map { "(?:\($0))" }.joined(separator: "|"))
@@ -47,17 +45,14 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         }
         var output = translated
         for (marker, original) in replacements { output = output.replacingOccurrences(of: marker, with: original) }
-        guard Self.numbers(output) == Self.numbers(original) else {
+        guard try FruitfolioScientificQuantityProtection.quantitySignature(output) == FruitfolioScientificQuantityProtection.quantitySignature(original),
+              try FruitfolioScientificQuantityProtection.referenceSignature(output) == FruitfolioScientificQuantityProtection.referenceSignature(original) else {
             throw FruitfolioTranslationError.protectedContentChanged
         }
         return output
     }
 
-    private static func numbers(_ text: String) -> [String] {
-        guard let regex = try? NSRegularExpression(pattern: #"\p{N}+(?:[.,:/−–-]\p{N}+)*"#) else { return [] }
-        let ns = text as NSString
-        return regex.matches(in: text, range: NSRange(location: 0, length: ns.length)).map { ns.substring(with: $0.range) }
-    }
+
 }
 
 actor FruitfolioTranslationService {

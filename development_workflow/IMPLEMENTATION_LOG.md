@@ -541,3 +541,14 @@
 - Verification: {"Swift_6_headless": "81 XCTest + 21 Swift Testing passed (102 total)", "Swift_5_native": "84 XCTest + 21 Swift Testing passed (105 total); real full-corpus engine path generated, 30.335 seconds", "Swift_syntax": "127 files, zero parser errors", "Apple_and_MADLAD": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"}.
 - Next action: Strengthen MADLAD scientific quantity protection for signs, comparisons and unsupported unit forms, then optimize redundant native evidence copying and continue grounded feature providers/source-order backlog.
 - Commit: containing commit for batch P3-native-whole-paragraph-token-budgets.
+
+## MADLAD-signed-quantities-units-and-reference-protection
+
+- Parent checkpoint: 7e11028ccdf5dd8322b8f0bfb1c9a0cea5cb64df.
+- Source-order requirements: [136, 418, 419, 420, 421, 422, 423, 424, 425, 426, 431, 432, 433, 434].
+- Source files: Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- Fixed a clinical translation-protection gap: leading signs/comparators and units outside the old limited numeric regex could remain unprotected. Complete signed/comparison quantities, ratios/ranges/uncertainties, scientific powers, broader laboratory units and invariant labels are now protected atomically without interpreting/converting values. Post-restoration signatures also reject added unit/numeric claims and introduced structured references/URLs. Tests preserve escaped Markdown operators and avoid misclassifying ordinary translated contractions/words as bare units. All feasible protection/native regressions pass. These checks cannot prove non-numerical medical meaning or real language quality; official MADLAD weights/T5 inference and clinical review remain blocked/unrun.
+- Tests added/updated: Prompt1BScientificTranslationTests.
+- Verification: {"Swift_6_headless": "85 XCTest + 21 Swift Testing passed (106 total)", "Swift_5_native": "88 XCTest + 21 Swift Testing passed (109 total)", "workflow": "15 Python tests passed", "Swift_syntax": "128 files, zero parser errors", "MADLAD_inference": "NOT_RUN: official weights/tokenizer blocked; no translation-quality claim"}.
+- Next action: Reduce measured native generation latency by selecting permitted evidence IDs and reconstructing exact paragraphs deterministically; verify actual corpus-backed generated path, then remaining feature providers and original backlog.
+- Commit: containing commit for batch MADLAD-signed-quantities-units-and-reference-protection.

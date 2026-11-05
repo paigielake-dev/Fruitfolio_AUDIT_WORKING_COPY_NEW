@@ -46,6 +46,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift',
     'Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift',
     'Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift',
+    'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
     'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',

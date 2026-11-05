@@ -26,3 +26,9 @@ Full on-device inference remains required. A local T5 encoder/decoder implementa
 5. The manifest tool extracts target tags from the converted GGUF vocabulary, validates T5 metadata and hashes the actual model. It does not assert model quality or independently attest a caller-supplied snapshot's origin.
 6. Add MADLAD400.gguf and MADLAD400.manifest.json to app bundle resources. Do not commit large artifacts as plain Git blobs. Verify resource membership, build/link and execute translation on supported hardware in airplane mode.
 7. Test scientific token/citation invariants, language coverage, unsupported tags, long inputs, cancellation, foreground/background changes and quality with qualified language reviewers. Keep the F16 model until quantized quality/inference is accepted.
+
+## Scientific quantity/reference guards
+
+The display-translation envelope now protects complete signed/comparison quantities, ranges, ratios, uncertainties, scientific powers, extended hormone/laboratory units and selected invariant assay/genetic labels. It preserves the original case, spelling and spacing rather than converting units. Escaped Markdown comparison/power operators remain attached to their quantities. After placeholder restoration, quantity and structured-reference signatures reject added numerical/unit claims or invented URLs/bracket citations. Bare grammatical words such as Norwegian `min` are not treated as newly introduced measured units.
+
+Regressions cover negative temperature changes, `ng/dL`, `µIU/mL`, `HbA1c`, `<`/`≤`, `±`, scientific notation, source-format escaping and injected references. These are executed protection-policy/fixture tests, not real T5 translation or proof of medical semantics in another language. Non-numerical meaning, negation, uncertainty and language quality still require actual MADLAD resources and acceptance review.
