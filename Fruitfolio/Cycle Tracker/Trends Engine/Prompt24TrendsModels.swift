@@ -164,3 +164,43 @@ nonisolated struct Prompt24TrendsSnapshot: Equatable, Sendable {
             )
     }
 }
+
+/// A dated observation timeline, independent of whether cycle-day assignment exists.
+/// Missing observations are not zero values, and no connecting trend is inferred.
+nonisolated struct Prompt24SymptomTimeline: Equatable, Sendable {
+    struct Point: Equatable, Sendable {
+        let occurrence: Prompt24SymptomOccurrence
+        let dayOffset: Int
+        let row: Int
+    }
+    let symptoms: [Prompt20SymptomID]
+    let points: [Point]
+    let firstDate: Date?
+    let lastDate: Date?
+    let spanDays: Int
+    let omittedInvalidDateCount: Int
+
+    init(occurrences: [Prompt24SymptomOccurrence], selected: Set<Prompt20SymptomID>, calendar: Calendar = .current) {
+        let calendar = FruitfolioCanonicalCalendar.gregorian(timeZone: calendar.timeZone)
+        symptoms = selected.sorted { $0.displayName < $1.displayName }
+        let selectedOccurrences = occurrences.filter { selected.contains($0.symptomID) }
+        let valid = selectedOccurrences.filter { $0.date.timeIntervalSinceReferenceDate.isFinite }.sorted {
+            if $0.date != $1.date { return $0.date < $1.date }
+            return $0.symptomID.rawValue < $1.symptomID.rawValue
+        }
+        firstDate = valid.first.map { calendar.startOfDay(for: $0.date) }
+        lastDate = valid.last.map { calendar.startOfDay(for: $0.date) }
+        if let firstDate, let lastDate {
+            spanDays = max(0, calendar.dateComponents([.day], from: firstDate, to: lastDate).day ?? 0)
+        } else { spanDays = 0 }
+        let origin = firstDate
+        let rows = Dictionary(uniqueKeysWithValues: symptoms.enumerated().map { ($0.element, $0.offset) })
+        points = valid.compactMap { occurrence in
+            guard let origin, let row = rows[occurrence.symptomID],
+                  let offset = calendar.dateComponents([.day], from: origin, to: calendar.startOfDay(for: occurrence.date)).day
+            else { return nil }
+            return Point(occurrence: occurrence, dayOffset: offset, row: row)
+        }
+        omittedInvalidDateCount = selectedOccurrences.count - points.count
+    }
+}

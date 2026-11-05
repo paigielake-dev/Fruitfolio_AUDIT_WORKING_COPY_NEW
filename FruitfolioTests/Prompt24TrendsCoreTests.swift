@@ -22,7 +22,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         )!
     }
 
-    func testCycleLengthsRemainActualCompletedHistoryOnly() {
+    func testCycleLengthsRemainActualCompletedHistoryOnly() async {
         let starts = [
             date(2026, 1, 1),
             date(2026, 1, 30),
@@ -50,7 +50,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         XCTAssertEqual(snapshot.predictionMarker?.estimatedCycleLength, 31)
     }
 
-    func testPredictionNeverContaminatesHistoricalMedian() {
+    func testPredictionNeverContaminatesHistoricalMedian() async {
         let starts = [
             date(2026, 1, 1),
             date(2026, 1, 29),
@@ -74,7 +74,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         XCTAssertEqual(snapshot.cycleMedianDays, 28.5)
     }
 
-    func testIncompletePeriodNeverBecomesDefinitiveDuration() {
+    func testIncompletePeriodNeverBecomesDefinitiveDuration() async {
         let complete = Prompt17RecordedPeriod(
             startDate: date(2026, 1, 1),
             endDate: date(2026, 1, 5)
@@ -98,7 +98,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         XCTAssertEqual(snapshot.periodLengths.map(\.days), [5])
     }
 
-    func testBBTUsesOnlyBasalWakingMeasurements() {
+    func testBBTUsesOnlyBasalWakingMeasurements() async {
         let owner = Prompt20DailyLogOwnerID(rawValue: "test")
         let basal = Prompt20DailyLog(
             ownerID: owner,
@@ -134,14 +134,14 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         XCTAssertEqual(snapshot.bbtPoints.first?.cycleDay, 5)
     }
 
-    func testBinarySymptomsStayBinaryAndUsePhase23Taxonomy() {
+    func testBinarySymptomsStayBinaryAndUsePhase23Taxonomy() async {
         XCTAssertEqual(
             Set(Prompt23SymptomTaxonomy.items.map(\.symptomID)),
             Set(Prompt20SymptomID.allCases)
         )
     }
 
-    func testSupportedPatternRequiresThreeCyclesAndTwoThirds() {
+    func testSupportedPatternRequiresThreeCyclesAndTwoThirds() async {
         let owner = Prompt20DailyLogOwnerID(rawValue: "test")
         let starts = [
             date(2026, 1, 1),
@@ -181,7 +181,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         XCTAssertEqual(pattern.cyclesMatched, 3)
     }
 
-    func testTwoCyclesCannotBecomeSupportedPattern() {
+    func testTwoCyclesCannotBecomeSupportedPattern() async {
         let owner = Prompt20DailyLogOwnerID(rawValue: "test")
         let starts = [
             date(2026, 1, 1),
@@ -223,7 +223,7 @@ final class Prompt24TrendsCoreTests: XCTestCase {
         )
     }
 
-    func testCurrentIncompleteCycleDoesNotEnterPatternEligibility() {
+    func testCurrentIncompleteCycleDoesNotEnterPatternEligibility() async {
         let owner = Prompt20DailyLogOwnerID(rawValue: "test")
         let starts = [
             date(2026, 1, 1),

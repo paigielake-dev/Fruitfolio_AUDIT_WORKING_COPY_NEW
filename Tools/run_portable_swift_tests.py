@@ -15,6 +15,9 @@ import tempfile
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift',
+    'Fruitfolio/Cycle Tracker/Symptoms/Prompt23SymptomsModels.swift',
+    'Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift',
+    'Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsEngine.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogStore.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift',
@@ -90,6 +93,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BSymptomTimelineTests.swift', 'Prompt24TrendsCoreTests.swift',
     'Prompt1BDailyLogWriteTests.swift', 'Prompt20DailyLogCoreTests.swift',
     'Prompt1BUsernamePersistenceTests.swift', 'Prompt1BPseudonymPolicyTests.swift', 'Prompt1BSharedLibraryCatalogTests.swift', 'Prompt1BUserMaterialTests.swift', 'Prompt1BBookMotionTests.swift', 'Prompt1BBookLabelTests.swift', 'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',

@@ -10932,15 +10932,24 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Replace separate symptom-specific trend presentations with the requested unified symptom-pattern graph.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests"
+      ],
+      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
+      ],
+      "last_updated": "2026-11-05T23:30:16.516482+00:00"
     },
     {
       "sequence": 306,
@@ -10948,15 +10957,24 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Ensure the graph presents recorded symptom information accurately.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests"
+      ],
+      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
+      ],
+      "last_updated": "2026-11-05T23:30:16.516482+00:00"
     },
     {
       "sequence": 307,
@@ -10964,15 +10982,24 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Preserve distinctions between actual observations and interpretations.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests"
+      ],
+      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
+      ],
+      "last_updated": "2026-11-05T23:30:16.516482+00:00"
     },
     {
       "sequence": 308,
@@ -10980,15 +11007,24 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Do not manufacture trends when insufficient data exists.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests"
+      ],
+      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
+      ],
+      "last_updated": "2026-11-05T23:30:16.516482+00:00"
     },
     {
       "sequence": 309,
@@ -10996,15 +11032,24 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Make the graph responsive and accessible.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests"
+      ],
+      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
+      ],
+      "last_updated": "2026-11-05T23:30:16.516482+00:00"
     },
     {
       "sequence": 310,
