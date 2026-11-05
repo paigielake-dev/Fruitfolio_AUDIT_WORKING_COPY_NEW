@@ -16,6 +16,7 @@ struct Prompt12AccountView: View {
     @State private var showDeleteConfirmation = false
     @State private var showDataExport = false
     @State private var usernameDraft = ""
+    @State private var usernameNonIdentifying = false
     @State private var usernameMessage: String?
 
     var body: some View {
@@ -131,7 +132,10 @@ struct Prompt12AccountView: View {
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.8), in: RoundedRectangle(cornerRadius: 14))
 
-            Prompt12InfoText("this is your pseudonymous Fruit Basket name. it is shared with the leaderboard and is never derived from your email or legal name.")
+            Prompt12InfoText("this is your pseudonymous Fruit Basket name. Account and Fruit Basket use the same locally saved name. public registration and global uniqueness are unavailable until the secure service is configured.")
+
+            Toggle("this is not my real or legal name and contains no identifying details", isOn: $usernameNonIdentifying)
+                .font(.caption)
 
             if let usernameMessage {
                 Prompt12InfoText(usernameMessage)
@@ -140,7 +144,7 @@ struct Prompt12AccountView: View {
 
             WatercolorSecondaryButton(label: "save username") {
                 audioManager.play(.buttonSoftPop)
-                if let error = usernameStore.setUsername(usernameDraft) {
+                if let error = usernameStore.setUsername(usernameDraft, confirmedNonIdentifying: usernameNonIdentifying, identifyingText: [email, store.account?.email ?? ""]) {
                     usernameMessage = error
                 } else {
                     usernameDraft = usernameStore.username
@@ -148,9 +152,13 @@ struct Prompt12AccountView: View {
                 }
             }
         }
-        .onAppear { usernameDraft = usernameStore.username }
+        .onAppear { usernameDraft = usernameStore.username; usernameNonIdentifying = usernameStore.confirmedNonIdentifying }
+        .onChange(of: usernameDraft) { _, newValue in
+            usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
+        }
         .onChange(of: usernameStore.username) { _, newValue in
             if usernameDraft != newValue { usernameDraft = newValue }
+            usernameNonIdentifying = usernameStore.confirmedNonIdentifying
         }
     }
 

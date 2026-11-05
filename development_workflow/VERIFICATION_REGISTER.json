@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T21:59:02.765920+00:00",
+  "updated_at": "2026-11-05T22:03:36.295060+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -873,6 +873,25 @@
         "Apple_UI": "NOT_RUN: cross-entry rename, selected folder and popup acceptance await Apple runtime"
       },
       "timestamp": "2026-11-05T21:59:02.765920+00:00"
+    },
+    {
+      "batch": "Account-shared-pseudonym-drafts-and-identity-guards",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "python3 -m unittest discover -s development_workflow/tests -q",
+        "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+        "git diff --check"
+      ],
+      "results": {
+        "Swift_6_headless": "105 XCTest + 21 Swift Testing passed (126 total)",
+        "Swift_5_native": "108 XCTest + 21 Swift Testing passed (129 total)",
+        "workflow": "15 Python tests passed",
+        "Swift_syntax": "144 files, zero parser errors",
+        "Apple_UI": "NOT_RUN: Combine store tests and Account/Fruit Basket UI acceptance await Apple runtime",
+        "identity": "Unknown legal names cannot be proved from pseudonyms; public uniqueness/reservation blocked on secure backend"
+      },
+      "timestamp": "2026-11-05T22:03:36.295060+00:00"
     }
   ]
 }

@@ -58,6 +58,8 @@ struct Prompt28FruitBasketView: View {
     @State private var showTour = false
     @State private var tourStep = 0
     @State private var leaderboardValidationMessage: String?
+    @State private var leaderboardUsernameDraft = ""
+    @State private var usernameNonIdentifying = false
     @State private var selectedLeaderboardCategory: Prompt28LeaderboardCategory = .fruit
 
     init(
@@ -1581,17 +1583,7 @@ struct Prompt28FruitBasketView: View {
 
                         TextField(
                             "public username",
-                            text: Binding(
-                                get: { usernameStore.username },
-                                set: { raw in
-                                    let sanitized = Prompt28LeaderboardUsernamePolicy.sanitized(raw)
-                                    leaderboardValidationMessage = usernameStore.setUsername(sanitized) ?? Prompt28LeaderboardUsernamePolicy.validationMessage(for: raw)
-                                    if store.appearOnLeaderboard, !Prompt28LeaderboardUsernamePolicy.isValid(sanitized) {
-                                        store.appearOnLeaderboard = false
-                                    }
-                                    store.persistPreferences()
-                                }
-                            )
+                            text: $leaderboardUsernameDraft
                         )
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
@@ -1610,10 +1602,19 @@ struct Prompt28FruitBasketView: View {
                             "Three to sixteen characters. Letters, numbers, periods, and underscores only. Public usernames cannot be explicit."
                         )
 
+                        Toggle("this is not my real or legal name and contains no identifying details", isOn: $usernameNonIdentifying)
+                            .prompt28Text(.metadata)
+                        Button("save username") {
+                            leaderboardValidationMessage = usernameStore.setUsername(leaderboardUsernameDraft,
+                                confirmedNonIdentifying: usernameNonIdentifying)
+                            if leaderboardValidationMessage == nil { leaderboardValidationMessage = "saved on this device only." }
+                        }
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+
                         HStack {
                             Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
                             Spacer()
-                            Text("\(usernameStore.username.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
+                            Text("\(leaderboardUsernameDraft.count)/\(Prompt28LeaderboardUsernamePolicy.maximumLength)")
                                 .monospacedDigit()
                         }
                         .prompt28Text(.metadata)
@@ -1661,7 +1662,18 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .onChange(of: leaderboardUsernameDraft) { _, newValue in
+            usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
+        }
+        .onChange(of: usernameStore.username) { oldValue, newValue in
+            if leaderboardUsernameDraft == oldValue {
+                leaderboardUsernameDraft = newValue
+                usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+            }
+        }
         .onAppear {
+            leaderboardUsernameDraft = usernameStore.username
+            usernameNonIdentifying = usernameStore.confirmedNonIdentifying
             leaderboardValidationMessage = usernameStore.username.isEmpty
                 ? nil
                 : Prompt28LeaderboardUsernamePolicy.validationMessage(for: usernameStore.username)
@@ -1679,9 +1691,8 @@ struct Prompt28FruitBasketView: View {
                     return
                 }
 
-                let cleaned = Prompt28LeaderboardUsernamePolicy.sanitized(usernameStore.username)
-                _ = usernameStore.setUsername(cleaned)
-                if let message = Prompt28LeaderboardUsernamePolicy.validationMessage(for: cleaned) {
+                if let message = FruitfolioPseudonymPolicy.validationMessage(for: usernameStore.username,
+                    confirmedNonIdentifying: usernameStore.confirmedNonIdentifying) {
                     store.appearOnLeaderboard = false
                     leaderboardValidationMessage = message
                 } else {

@@ -8181,7 +8181,11 @@
       "relevant_source_files": [
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8189,13 +8193,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
-        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
       ],
-      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:51:55.833977+00:00"
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 230,
@@ -8206,7 +8214,11 @@
       "relevant_source_files": [
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8214,13 +8226,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
-        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
       ],
-      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:51:55.833977+00:00"
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 231,
@@ -8231,7 +8247,11 @@
       "relevant_source_files": [
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8239,13 +8259,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
-        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
       ],
-      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:51:55.833977+00:00"
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 232,
@@ -8256,7 +8280,11 @@
       "relevant_source_files": [
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8264,13 +8292,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
-        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
       ],
-      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:51:55.833977+00:00"
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 233,
@@ -8281,7 +8313,11 @@
       "relevant_source_files": [
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
         "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8289,13 +8325,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
-        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
       ],
-      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:51:55.833977+00:00"
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 234,
@@ -8303,15 +8343,27 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Enforce the requirement against using real names for leaderboard identities.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPseudonymPolicyTests",
+        "Prompt1BUsernamePersistenceTests",
+        "FruitfolioUsernameStoreTests"
+      ],
+      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T22:03:36.295060+00:00"
     },
     {
       "sequence": 235,
