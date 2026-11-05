@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "e0c0d3949a073e6e97481c9aa112fedf228bef78",
+  "current_HEAD": "f32842ab8b475e2a8ba2497f5e5381cb077e19bd",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
   "current_requirement": 295,
-  "current_implementation_batch": "Verified-local-Git-bundle-recovery-workflow",
+  "current_implementation_batch": "Today-coherent-cycle-read-and-actual-loader-regressions",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,9 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Tools/create_local_recovery_bundle.py",
-    "development_workflow/RECOVERY_PROTOCOL.md",
-    "development_workflow/tests/test_recovery_bundle.py"
+    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
+    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
+    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
+    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+    "FruitfolioTests/Prompt1BTodaySnapshotTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -513,12 +517,14 @@
     "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
   ],
   "last_test_results": {
-    "workflow": "16 Python tests passed, including independent Git fixture recovery and dirty-state refusal",
-    "Swift": "unchanged; prior 265 headless / 269 native checks remain latest verified",
-    "real_bundle": "created after this clean checkpoint; inspect external SHA-256 manifest",
-    "limits": "Local Git artifact only; retain/download it, restore prerequisite/LFS separately; no cloud persistence guarantee"
+    "Swift_6_headless": "296 XCTest + 21 Swift Testing passed (317 total)",
+    "Swift_5_native": "300 XCTest + 21 Swift Testing passed (321 total)",
+    "workflow": "16 Python tests passed",
+    "Swift_syntax": "179 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors",
+    "actual_loaders": "Real Foundation Cycle/Onboarding/Today/Calendar implementations compiled and tested; no prediction-math changes",
+    "Apple_UI": "NOT_RUN: Today scene refresh/reveal and device performance remain unverified"
   },
-  "next_exact_implementation_action": "Create verified /workspace/recovery/Fruitfolio-prompt-1b.bundle from the containing commit, then implement one coherent Today snapshot to remove redundant reads and retain deterministic context/prediction semantics.",
-  "updated_at": "2026-11-05T22:52:07.952575+00:00",
+  "next_exact_implementation_action": "Refresh the local recovery bundle, then correct canonical cycle LocalDate versus non-Gregorian device-calendar conversion boundaries with timezone/locale regression tests, preserving all existing stored logs rather than guessing legacy calendar identity. Continue source-order controls afterward.",
+  "updated_at": "2026-11-05T22:58:43.464026+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

@@ -14,6 +14,9 @@ struct Prompt16TodayView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
 
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var loadGeneration = UUID()
+    @State private var revealTask: Task<Void, Never>?
     @State private var state: Prompt16TodayState = .empty
     @State private var predictionResult: Prompt17CyclePredictionResult?
     @State private var estimatedIntervals: Prompt18EstimatedIntervals = .none
@@ -145,9 +148,12 @@ struct Prompt16TodayView: View {
             maxWidth: .infinity,
             alignment: .leading
         )
-        .task {
-            await load()
+        .task(id: loadGeneration) { await load() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { loadGeneration = UUID() }
+            else { revealTask?.cancel() }
         }
+        .onDisappear { revealTask?.cancel(); revealTask = nil }
         .accessibilityIdentifier("prompt16.today")
     }
 
@@ -483,17 +489,14 @@ struct Prompt16TodayView: View {
     }
 
     private func load() async {
+        let generation = loadGeneration
+        revealTask?.cancel()
+        showMarker = false
+        loadState = .loading
         do {
             let now = Date()
 
-            async let stateTask =
-                loader.load(now: now)
-
-            async let archiveTask =
-                loader.cycleStore.snapshot()
-
-            async let onboardingTask =
-                loader.onboardingStore.snapshot()
+            async let snapshotTask = loader.loadSnapshot(now: now)
 
             async let dailyLogsTask =
                 Prompt20CycleDailyLogStore
@@ -502,14 +505,10 @@ struct Prompt16TodayView: View {
                         ownerID: .localDevice
                     )
 
-            let loadedState =
-                try await stateTask
-
-            let archive =
-                try await archiveTask
-
-            let onboarding =
-                try await onboardingTask
+            let snapshot = try await snapshotTask
+            let loadedState = snapshot.state
+            let archive = snapshot.archive
+            let onboarding = snapshot.onboarding
 
             let dailyLogs =
                 try await dailyLogsTask
@@ -524,7 +523,7 @@ struct Prompt16TodayView: View {
                         calendar: loader.calendar
                     )
 
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, generation == loadGeneration else {
                 return
             }
 
@@ -539,7 +538,7 @@ struct Prompt16TodayView: View {
 
             startRevealAnimation()
         } catch {
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, generation == loadGeneration else {
                 return
             }
 
@@ -552,14 +551,15 @@ struct Prompt16TodayView: View {
 
             #if DEBUG
             print(
-                "Prompt16TodayView failed to load Prompt 17/18 data:",
-                error
+                "Prompt16TodayView could not load local cycle presentation data."
             )
             #endif
         }
     }
 
     private func startRevealAnimation() {
+        revealTask?.cancel()
+        revealTask = nil
         guard loadState == .loaded else {
             return
         }
@@ -582,14 +582,15 @@ struct Prompt16TodayView: View {
             revealProgress = 1
         }
 
-        Task { @MainActor in
+        let generation = loadGeneration
+        revealTask = Task { @MainActor in
             try? await Task.sleep(
                 for: .milliseconds(
                     600
                 )
             )
 
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, generation == loadGeneration else {
                 return
             }
 

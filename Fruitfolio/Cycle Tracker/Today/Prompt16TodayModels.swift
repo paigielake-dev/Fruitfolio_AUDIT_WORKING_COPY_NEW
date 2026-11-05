@@ -111,15 +111,27 @@ nonisolated struct Prompt16TodayLoader: Sendable {
     }
 
     func load(now: Date = Date()) async throws -> Prompt16TodayState {
-        let today = try Prompt13LocalDate(now, calendar: calendar)
-        async let archive = cycleStore.snapshot()
-        async let derived = cycleStore.derivedState(on: today, generatedAt: now)
-        async let onboarding = onboardingStore.snapshot()
-
-        return try Prompt16TodayStateBuilder().makeState(
-            archive: await archive,
-            derivedState: await derived,
-            onboarding: await onboarding
-        )
+        try await loadSnapshot(now: now).state
     }
+
+    func loadSnapshot(now: Date = Date()) async throws -> Prompt16TodayLoadSnapshot {
+        let today = try Prompt13LocalDate(now, calendar: calendar)
+        async let cycleTask = cycleStore.snapshotWithDerivedState(on: today, generatedAt: now)
+        async let onboardingTask = onboardingStore.snapshot()
+        let cycle = try await cycleTask
+        let onboarding = try await onboardingTask
+        try Task.checkCancellation()
+        let state = Prompt16TodayStateBuilder().makeState(archive: cycle.archive,
+            derivedState: cycle.derivedState, onboarding: onboarding)
+        return Prompt16TodayLoadSnapshot(state: state, archive: cycle.archive,
+            derivedState: cycle.derivedState, onboarding: onboarding, asOfDate: now)
+    }
+}
+
+nonisolated struct Prompt16TodayLoadSnapshot: Sendable {
+    let state: Prompt16TodayState
+    let archive: Prompt13CycleArchive
+    let derivedState: Prompt13DerivedState
+    let onboarding: Prompt14OnboardingDraft
+    let asOfDate: Date
 }

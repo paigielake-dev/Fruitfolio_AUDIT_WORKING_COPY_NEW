@@ -89,6 +89,16 @@ actor Prompt13CycleStore {
         return archive
     }
 
+    /// Archive and derived values come from the same actor-isolated snapshot.
+    /// No suspension occurs between capturing records and deriving state.
+    func snapshotWithDerivedState(on currentDate: Prompt13LocalDate, generatedAt: Date = Date()) async throws -> Prompt13CoherentCycleSnapshot {
+        try await loadIfNeeded()
+        try Task.checkCancellation()
+        let captured = archive
+        let derived = try engine.rebuildDerivedState(from: captured, currentDate: currentDate, generatedAt: generatedAt)
+        return Prompt13CoherentCycleSnapshot(archive: captured, derivedState: derived)
+    }
+
     func derivedState(
         on currentDate:
             Prompt13LocalDate,

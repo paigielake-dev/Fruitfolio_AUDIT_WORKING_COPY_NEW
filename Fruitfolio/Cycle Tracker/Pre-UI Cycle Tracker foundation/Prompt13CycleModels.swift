@@ -946,3 +946,9 @@ nonisolated enum Prompt13CycleError: Error, LocalizedError, Equatable {
         }
     }
 }
+
+/// Immutable read pair; does not persist a second archive or derived profile.
+nonisolated struct Prompt13CoherentCycleSnapshot: Sendable {
+    let archive: Prompt13CycleArchive
+    let derivedState: Prompt13DerivedState
+}
