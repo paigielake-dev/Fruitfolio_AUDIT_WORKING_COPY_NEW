@@ -13,6 +13,7 @@ struct Prompt09AskView: View {
 
     @State private var suggestionRevealCount = 0
     @State private var showingHelp = false
+    @State private var showLifeBridge = false
     @State private var showingEntryPageTurn = true
 
     // MARK: Prompt 10 Save Integration
@@ -65,6 +66,10 @@ struct Prompt09AskView: View {
 
             VStack(spacing: 0) {
                 header
+                if FruitfolioLifeBridgeInformation.isDiscoverable(for:
+                    viewModel.inputText + " " + (viewModel.messages.last(where: { $0.role == .user })?.text ?? "")) {
+                    WatercolorSecondaryButton(label: "LifeBridge information") { showLifeBridge = true }
+                }
 
                 ScrollViewReader { proxy in
                     ScrollView {
@@ -204,6 +209,9 @@ struct Prompt09AskView: View {
                 )
                 .zIndex(200)
             }
+        }
+        .sheet(isPresented: $showLifeBridge) {
+            FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
         }
         .safeAreaInset(
             edge: .bottom,

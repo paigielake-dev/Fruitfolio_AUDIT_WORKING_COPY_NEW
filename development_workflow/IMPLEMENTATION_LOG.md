@@ -257,3 +257,13 @@
 - Verification: {"portable_swift": "19 XCTest + 21 Swift Testing cases passed (40 total)", "workflow_and_packaging": "6 passed", "Swift_syntax": "72 changed files parsed, no errors; not an iOS build", "diff": "passed after removing trailing blank line in prior batch", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
 - Next action: Implement the missing LifeBridge information destination and source slots with founder-provided official URLs, transparent missing-approved-content fallback and Ask discovery; then continue remaining shared/feature requirements.
 - Commit: containing commit for batch P1-responsive-approved-header-art.
+
+## P6-lifebridge-information-access
+
+- Parent checkpoint: 588f20ce4d9ceaa91277200bbe6131c0a2ccb706.
+- Source-order requirements: [315, 316, 317, 318, 319].
+- Added a LifeBridge destination through FAQ and relevant Ask questions without adding a Hub button. Founder-specified official and Carrd URLs are exact, user-initiated and carry no health data. Approved-content slots require snapshots from both named sources with titles, URLs, retrieval/review dates and versions. Missing snapshots yield awaiting_verified_lifebridge_content and no organization-specific claims; normal-safety LifeBridge questions receive transparent missing-library fallback before unrelated research can be used as company evidence. Approved snapshots/application/disclosure are not invented and remain an external content dependency.
+- Tests added/updated: Prompt1BLifeBridgeTests.
+- Verification: {"portable_swift": "21 XCTest + 21 Swift Testing cases passed (42 total)", "workflow_and_packaging": "6 passed", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
+- Next action: Correct Guide save confirmation artwork/Strawberry composition and own its cancellation lifecycle, then continue remaining original requirements.
+- Commit: containing commit for batch P6-lifebridge-information-access.

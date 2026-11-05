@@ -48,6 +48,11 @@ enum Prompt29FAQCatalog {
             ]
         ),
 
+        .init(id: "lifebridge", title: "LifeBridge information", items: [
+            .init(id: "lifebridge-information", question: "where can I find LifeBridge information?",
+                  answer: "details not available in the approved library yet. open LifeBridge information for the founder-specified official destinations and reviewed source status.")
+        ]),
+
         .init(
             id: "cycle",
             title: "cycle tracker",
@@ -159,6 +164,7 @@ struct Prompt29FAQView: View {
 private struct Prompt29FAQSectionCard: View {
     let section: Prompt29FAQSection
     @Binding var expanded: Set<String>
+    @State private var showLifeBridge = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
 
@@ -200,8 +206,14 @@ private struct Prompt29FAQSectionCard: View {
                         .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
+                    if item.id == "lifebridge-information" {
+                        WatercolorSecondaryButton(label: "open LifeBridge information") { showLifeBridge = true }
+                    }
                 }
             }
+        }
+        .sheet(isPresented: $showLifeBridge) {
+            FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
         }
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .padding(16)

@@ -1493,6 +1493,15 @@ final class FruitfolioResearchIntelligenceEngine:
                 trimmed
             )
 
+        if safety.level == .normal,
+           FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed),
+           FruitfolioLifeBridgeInformation.load() == nil {
+            return AskAnswer(
+                originalQuestion: trimmed,
+                answerText: "details not available in the approved library yet. open LifeBridge information for the founder-specified official websites. current organization-specific claims require reviewed snapshots from both LifeBridge and FruitsofLife.xo.",
+                support: .genuinelyNovel, knowledgeBaseVersion: FruitfolioLifeBridgeInformation.awaitingStatus)
+        }
+
         let normalized =
             FruitfolioQueryNormalizer.normalize(
                 trimmed

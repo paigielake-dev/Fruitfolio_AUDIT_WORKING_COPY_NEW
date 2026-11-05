@@ -9,3 +9,5 @@
 - Production authentication/cloud sync: no approved backend/provider implementation is configured. Sign-in now reports unavailable; sync preserves pending local changes rather than simulating success. StoreKit ownership checking also reports unavailable until actual receipt verification is integrated. No credentials are requested or fabricated.
 
 - FAQ artwork: no named/registered tulip or decor_fluffy_cloud asset exists in the supplied 265-asset registry. Inspected generic flower/stem/library flower assets are different flowers. FAQ keeps approved sparkles and omits conflicting fruit/rain-cloud substitutions pending the canonical tulip; Contact and Settings use the actual approved matrix.
+
+- LifeBridge destination and founder-specified official links are implemented. Approved local snapshots of BOTH lifebridgesurrogacy.com and fruitsoflifexo.carrd.co, including review/version metadata and any relationship disclosure, are not bundled. The UI and organization-specific Ask response show awaiting_verified_lifebridge_content; no operational/referral claims or application URL are invented.

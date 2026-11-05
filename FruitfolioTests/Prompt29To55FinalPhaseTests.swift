@@ -4,7 +4,7 @@ import XCTest
 final class Prompt29To55FinalPhaseTests: XCTestCase {
     func testFAQContainsAllCanonicalSections() {
         let ids = Set(Prompt29FAQCatalog.sections.map(\.id))
-        XCTAssertEqual(ids, ["about", "encyclopedia", "cycle", "basket", "privacy", "purchase", "brand"])
+        XCTAssertEqual(ids, ["about", "encyclopedia", "lifebridge", "cycle", "basket", "privacy", "purchase", "brand"])
     }
 
     func testSeriousHealthRouterIsDeterministic() {

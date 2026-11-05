@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-11-05T19:26:31.456771+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "21 XCTest + 21 Swift Testing cases passed (42 total)",
+    "workflow_and_packaging": "6 passed",
+    "Swift_syntax": "zero parser errors; not an iOS build",
+    "diff": "passed",
+    "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"
+  }
+}
