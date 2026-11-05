@@ -25,6 +25,7 @@ nonisolated struct FruitfolioResearchNoteChunk:
     let sourceIDs: [String]
     let semanticTags: [String]
     let domainTags: [String]
+    var retrievalEligibility: Bool? = nil
 
     var id: String {
         chunkID
@@ -328,7 +329,7 @@ nonisolated struct FruitfolioLocalResearchRetriever:
 
     init(package: FruitfolioResearchPackage) {
         self.package = package
-        indexedNotes = package.researchNoteChunks.map { chunk in
+        indexedNotes = package.researchNoteChunks.filter { $0.retrievalEligibility != false }.map { chunk in
             IndexedNote(chunk: chunk,
                         headingTokens: FruitfolioQueryNormalizer.tokens(chunk.heading),
                         bodyTokens: chunk.semanticTags.isEmpty ? FruitfolioQueryNormalizer.tokens(chunk.text) : Set(chunk.semanticTags),

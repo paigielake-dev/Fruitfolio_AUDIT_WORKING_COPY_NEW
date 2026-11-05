@@ -4486,7 +4486,10 @@
         "Tools/verify_apple_runtime.py",
         "Tools/validate_xcode_project.swift",
         "Tools/run_portable_swift_tests.py",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4496,14 +4499,18 @@
         "Prompt1BGGUFResourceTests",
         "AppleRuntimePackagingTests",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 130,
@@ -4582,20 +4589,27 @@
       "description": "Cache appropriate reusable results.",
       "relevant_source_files": [
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 134,
@@ -4666,7 +4680,10 @@
         "Tools/verify_apple_runtime.py",
         "Tools/validate_xcode_project.swift",
         "Tools/run_portable_swift_tests.py",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4677,15 +4694,19 @@
         "Prompt1BGGUFResourceTests",
         "AppleRuntimePackagingTests",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 137,
@@ -4698,7 +4719,10 @@
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4707,14 +4731,18 @@
       "related_tests": [
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 138,
@@ -5053,15 +5081,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply FruitsofLife.xo\u2019s canonical writing style to normal Ask responses.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+      ],
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+      ],
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 149,
@@ -5069,15 +5108,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply the same style to retrieval-only fallbacks.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+      ],
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+      ],
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 150,
@@ -5085,15 +5135,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply it to model-failure and other substantive fallback responses.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
+      ],
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
+      ],
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 151,
@@ -5400,7 +5461,10 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5410,14 +5474,18 @@
         "Prompt1BCitationDestinationTests",
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 162,
@@ -5434,7 +5502,11 @@
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5443,13 +5515,17 @@
       "related_tests": [
         "Prompt1BCitationDestinationTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 163,
@@ -5468,7 +5544,10 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5478,14 +5557,18 @@
         "Prompt1BCitationDestinationTests",
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 164,
@@ -5495,20 +5578,27 @@
       "description": "Preserve distinctions between supported, partially supported, and unsupported questions.",
       "relevant_source_files": [
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 165,
@@ -5518,20 +5608,27 @@
       "description": "Do not use unsupported-topic fallbacks before the available research architecture has been appropriately searched.",
       "relevant_source_files": [
         "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BResearchRetrievalTests"
+        "Prompt1BResearchRetrievalTests",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-static-research-token-index-and-approved-source-gate (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations."
+        "Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:38:44.461021+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 166,
@@ -11964,7 +12061,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11980,17 +12081,21 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BCitationDestinationTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 432,
@@ -12022,7 +12127,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12038,17 +12147,21 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BCitationDestinationTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 433,
@@ -12080,7 +12193,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12096,17 +12213,21 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BCitationDestinationTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 434,
@@ -12134,7 +12255,11 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Tools/compile_research_package.py",
+        "Fruitfolio/FruitfolioResearchPackage.json",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+        "development_workflow/RESEARCH_PACKAGE_REPORT.json"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -12150,16 +12275,20 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BCitationDestinationTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "ResearchCompilationTests",
+        "Prompt1BResearchPackageTests",
+        "Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-reproducible-founder-research-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:45:57.887318+00:00"
     },
     {
       "sequence": 435,

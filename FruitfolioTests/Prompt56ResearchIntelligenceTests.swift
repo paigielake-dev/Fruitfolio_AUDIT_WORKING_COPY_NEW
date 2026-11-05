@@ -2,6 +2,12 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt56ResearchIntelligenceTests: XCTestCase {
+    func testCompiledResearchPackageIsIncludedInTheApplicationBundle() async throws {
+        let package = try await FruitfolioResearchPackageStore.shared.load()
+        XCTAssertGreaterThan(package.researchNoteChunks.count, 4000)
+        XCTAssertFalse(package.sources.isEmpty)
+    }
+
 #if canImport(llama)
     /// Directly exercises the native GGUF path, never the research fallback.
     /// Run separately: loading a ~469 MB model may take time and memory.

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-11-05T20:45:57.887318+00:00",
+  "commands": [
+    "python3 Tools/compile_research_package.py --check",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "62 XCTest + 21 Swift Testing passed (83 total)",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "118 files, zero parser errors",
+    "resource_provenance": "Generated package and report reproducible; original source asset hashes preserved",
+    "Apple_integrated_AI": "NOT_RUN: Xcode unavailable"
+  }
+}

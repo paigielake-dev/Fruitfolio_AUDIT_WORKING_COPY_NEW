@@ -497,3 +497,14 @@
 - Verification: {"portable_swift": "60 XCTest + 21 Swift Testing passed (81 total)", "workflow": "12 Python tests passed", "Swift_syntax": "117 files, zero parser errors", "Apple_retrieval_UI": "NOT_RUN: Apple SDK unavailable", "research_resource": "Missing generated package identified; preserved source DOCX 1090803 bytes, PDF 70763509 bytes; implementation continues"}.
 - Next action: Compile and validate the missing local research package from preserved founder DOCX/PDF with exact text/provenance, connect runtime loading, then canonical normal/fallback voice and remaining requirements.
 - Commit: containing commit for batch P3-static-research-token-index-and-approved-source-gate.
+
+## P3-reproducible-founder-research-package
+
+- Parent checkpoint: 35ba5a5292739042506b2840bb3cdfc073af5665.
+- Source-order requirements: [129, 133, 136, 137, 148, 149, 150, 161, 162, 163, 164, 165, 431, 432, 433, 434].
+- Source files: Tools/compile_research_package.py, Fruitfolio/FruitfolioResearchPackage.json, Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift, development_workflow/RESEARCH_PACKAGE_REPORT.json.
+- Resolved the missing local package resource by compiling the preserved founder DOCX into exact, reproducible paragraph slices with original reference metadata and per-chunk provenance. Retained 4458 note chunks; 2722 are retrievable, with 144 topic groups explicitly quarantined for missing/ambiguous references or binding LifeBridge review. Quarantined notes cannot enter the Swift index. 715 APA-style metadata records retain original text and founderCorpusAPA7 attribution without claiming independent verification. No source text, clinical claim, author/date/DOI or full-source expansion is invented; full-source chunks remain empty. Original DOCX/PDF bytes are unchanged. Actual Swift decoded/searched the complete generated package; source-language/clinical interpretation and Xcode bundle inclusion remain external verification work. Latest Linux index sample 1.259s, 50 cached searches 1.284s; not an iPhone benchmark.
+- Tests added/updated: ResearchCompilationTests, Prompt1BResearchPackageTests, Prompt56ResearchIntelligenceTests/testCompiledResearchPackageIsIncludedInTheApplicationBundle.
+- Verification: {"portable_swift": "62 XCTest + 21 Swift Testing passed (83 total)", "workflow": "15 Python tests passed", "Swift_syntax": "118 files, zero parser errors", "resource_provenance": "Generated package and report reproducible; original source asset hashes preserved", "Apple_integrated_AI": "NOT_RUN: Xcode unavailable"}.
+- Next action: Strengthen source-backed generated-claim/bridge validation and unify canonical normal/fallback voice, then continue library and remaining requirements.
+- Commit: containing commit for batch P3-reproducible-founder-research-package.
