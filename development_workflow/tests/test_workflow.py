@@ -69,6 +69,18 @@ class WorkflowIntegrityTests(unittest.TestCase):
         asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob('ask_answer_paper.png'))
         self.assertEqual(tuple(map(int, paper.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
 
+    def test_supplemental_additions_preserve_exact_source_and_do_not_replace_478(self):
+        import subprocess
+        import sys
+        result = subprocess.run([sys.executable, str(ROOT.parent / 'Tools/sync_supplemental_spec.py'), '--check'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        entries = json.loads((ROOT / 'SUPPLEMENTAL_SPEC_CHECKLIST.json').read_text())['requirements']
+        identifiers = {row['original_requirement_id'] for row in entries if row['original_requirement_id']}
+        self.assertEqual(identifiers, {f'{prefix}.{index}' for prefix in ['4.9', '7.9'] for index in range(1, 13)})
+        self.assertEqual(len(entries), 36)
+        self.assertEqual(len(json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']), 478)
+
     def test_statuses_do_not_claim_unexecuted_ios_verification(self):
         rows = json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']
         for row in rows:

@@ -475,3 +475,14 @@
 - Verification: {"portable_swift": "58 XCTest + 21 Swift Testing passed (79 total)", "workflow": "11 Python tests passed", "Swift_syntax": "115 files, zero parser errors", "Apple_store_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Index supplemental founder requirements without changing original 478 entries; continue retrieval/generation performance and canonical voice, then library requirements.
 - Commit: containing commit for batch P4-library-commit-rollback-and-corruption-protection.
+
+## workflow-exact-supplemental-founder-spec-index
+
+- Parent checkpoint: d887ef16eb3bd9d1a2866e2d98d98b5972fe7c96.
+- Source-order requirements: [].
+- Source files: Tools/sync_supplemental_spec.py, development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json, development_workflow/RECOVERY_PROTOCOL.md, development_workflow/BLOCKERS.md.
+- Created a separate persistent index for all 24 numbered hormone/MADLAD additions plus 12 explicit binding founder additions, preserving exact source text, IDs, line locations and SHA-256. Original 478 labels/descriptions/sequences remain unchanged. Seeded conservative partial evidence and exact blockers, never acceptance completion. Added a lossless regeneration/check tool and recovery instructions. Corrected the extraction encoding note: the original contains a small number of undecodable legacy bytes, now read with surrogateescape without rewriting the source. Remaining unnumbered founder paragraphs are explicitly not yet fully reconciled. No application/source verification is inferred from this indexing batch.
+- Tests added/updated: WorkflowIntegrityTests/test_supplemental_additions_preserve_exact_source_and_do_not_replace_478.
+- Verification: {"supplemental": "36 exact additions indexed; original 478 unchanged", "workflow": "12 Python tests passed", "application": "No application changes in this indexing-only batch; next implementation starts immediately"}.
+- Next action: Continue retrieval/generation performance and canonical normal/fallback voice, then library requirements; consult both persistent trackers and continue implementation batches.
+- Commit: containing commit for batch workflow-exact-supplemental-founder-spec-index.
