@@ -486,3 +486,14 @@
 - Verification: {"supplemental": "36 exact additions indexed; original 478 unchanged", "workflow": "12 Python tests passed", "application": "No application changes in this indexing-only batch; next implementation starts immediately"}.
 - Next action: Continue retrieval/generation performance and canonical normal/fallback voice, then library requirements; consult both persistent trackers and continue implementation batches.
 - Commit: containing commit for batch workflow-exact-supplemental-founder-spec-index.
+
+## P3-static-research-token-index-and-approved-source-gate
+
+- Parent checkpoint: 67ea452f3f61f2a281d7549c857242a7f8677107.
+- Source-order requirements: [65, 66, 67, 68, 129, 130, 131, 132, 133, 134, 135, 136, 137, 161, 163, 164, 165].
+- Source files: Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift.
+- Extracted existing Foundation research models/retrieval into a reusable source file and pre-indexed static heading/body tokens and lowercased text once per package/locale, eliminating repeated full-corpus tokenization and per-chunk query normalization. Package actor caches only this static index; no user question/transcript cache is introduced. Indexing and rank searches now execute on that actor instead of the main actor; source expansion remains sequential because it depends on note-linked source IDs and coverage. Added cancellation checks around actor work and guards for nonpositive limits. Source indexes now exclude unapproved/unresolved/missing source records even when an expansion search has no restricted IDs. Golden ranking/coverage and approval-boundary tests pass. No device speed claim is made. Inspection also found the runtime expects FruitfolioResearchPackage.json but no generated package/compiler is present; the original approved DOCX/PDF are intact. Next batch must create a reproducible strict local package from those resources without fabricating claims or citations.
+- Tests added/updated: Prompt1BResearchRetrievalTests.
+- Verification: {"portable_swift": "60 XCTest + 21 Swift Testing passed (81 total)", "workflow": "12 Python tests passed", "Swift_syntax": "117 files, zero parser errors", "Apple_retrieval_UI": "NOT_RUN: Apple SDK unavailable", "research_resource": "Missing generated package identified; preserved source DOCX 1090803 bytes, PDF 70763509 bytes; implementation continues"}.
+- Next action: Compile and validate the missing local research package from preserved founder DOCX/PDF with exact text/provenance, connect runtime loading, then canonical normal/fallback voice and remaining requirements.
+- Commit: containing commit for batch P3-static-research-token-index-and-approved-source-gate.

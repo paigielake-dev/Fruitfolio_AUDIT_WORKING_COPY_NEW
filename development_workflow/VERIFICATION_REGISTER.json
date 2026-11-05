@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T20:35:35.256788+00:00",
+  "updated_at": "2026-11-05T20:38:44.461021+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -666,6 +666,22 @@
         "application": "No application changes in this indexing-only batch; next implementation starts immediately"
       },
       "timestamp": "2026-11-05T20:35:35.256788+00:00"
+    },
+    {
+      "batch": "P3-static-research-token-index-and-approved-source-gate",
+      "commands": [
+        "python3 Tools/sync_supplemental_spec.py --check",
+        "python3 -m unittest discover -s development_workflow/tests -q",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_swift": "60 XCTest + 21 Swift Testing passed (81 total)",
+        "workflow": "12 Python tests passed",
+        "Swift_syntax": "117 files, zero parser errors",
+        "Apple_retrieval_UI": "NOT_RUN: Apple SDK unavailable",
+        "research_resource": "Missing generated package identified; preserved source DOCX 1090803 bytes, PDF 70763509 bytes; implementation continues"
+      },
+      "timestamp": "2026-11-05T20:38:44.461021+00:00"
     }
   ]
 }

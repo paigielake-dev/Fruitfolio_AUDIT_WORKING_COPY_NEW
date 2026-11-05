@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "d887ef16eb3bd9d1a2866e2d98d98b5972fe7c96",
+  "current_HEAD": "67ea452f3f61f2a281d7549c857242a7f8677107",
   "latest_verified_commit": null,
-  "current_checklist_part": 4,
-  "current_requirement": 129,
-  "current_implementation_batch": "workflow-exact-supplemental-founder-spec-index",
+  "current_checklist_part": 3,
+  "current_requirement": 136,
+  "current_implementation_batch": "P3-static-research-token-index-and-approved-source-gate",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,11 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Tools/sync_supplemental_spec.py",
-    "development_workflow/BLOCKERS.md",
-    "development_workflow/RECOVERY_PROTOCOL.md",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json",
-    "development_workflow/tests/test_workflow.py"
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
+    "FruitfolioTests/Prompt1BResearchRetrievalTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Xcode/Apple SDK and iOS UI tests unavailable on Linux",
@@ -513,10 +513,12 @@
     "git diff --check"
   ],
   "last_test_results": {
-    "supplemental": "36 exact additions indexed; original 478 unchanged",
+    "portable_swift": "60 XCTest + 21 Swift Testing passed (81 total)",
     "workflow": "12 Python tests passed",
-    "application": "No application changes in this indexing-only batch; next implementation starts immediately"
+    "Swift_syntax": "117 files, zero parser errors",
+    "Apple_retrieval_UI": "NOT_RUN: Apple SDK unavailable",
+    "research_resource": "Missing generated package identified; preserved source DOCX 1090803 bytes, PDF 70763509 bytes; implementation continues"
   },
-  "next_exact_implementation_action": "Continue retrieval/generation performance and canonical normal/fallback voice, then library requirements; consult both persistent trackers and continue implementation batches.",
-  "updated_at": "2026-11-05T20:35:35.256788+00:00"
+  "next_exact_implementation_action": "Compile and validate the missing local research package from preserved founder DOCX/PDF with exact text/provenance, connect runtime loading, then canonical normal/fallback voice and remaining requirements.",
+  "updated_at": "2026-11-05T20:38:44.461021+00:00"
 }

@@ -5,170 +5,6 @@ import llama
 
 // MARK: - Prompt 56 canonical local research architecture
 
-nonisolated enum FruitfolioSourceVerificationStatus:
-    String,
-    Codable,
-    Sendable
-{
-    case founderCorpusAPA7
-    case verified
-    case unresolved
-    case conflicted
-}
-
-nonisolated struct FruitfolioResearchNoteChunk:
-    Codable,
-    Hashable,
-    Identifiable,
-    Sendable
-{
-    let chunkID: String
-    let researchTopicID: String
-    let heading: String
-    let subheading: String?
-    let text: String
-    let sourceIDs: [String]
-    let semanticTags: [String]
-    let domainTags: [String]
-
-    var id: String {
-        chunkID
-    }
-}
-
-nonisolated struct FruitfolioResearchSource:
-    Codable,
-    Hashable,
-    Identifiable,
-    Sendable
-{
-    let sourceID: String
-    let title: String
-    let authors: String?
-    let organization: String?
-    let publicationDate: String?
-    let publicationType: String?
-    let canonicalURL: String?
-    let doi: String?
-    let apa7Reference: String?
-    let verificationStatus: String
-    let retrievalEligibility: Bool
-    let sourceVersion: String
-    let verifiedAt: String?
-    let contentVersion: String
-
-    var id: String {
-        sourceID
-    }
-
-    var isApprovedForDisplay: Bool {
-        retrievalEligibility
-            && (
-                verificationStatus
-                    == FruitfolioSourceVerificationStatus
-                        .founderCorpusAPA7
-                        .rawValue
-                || verificationStatus
-                    == FruitfolioSourceVerificationStatus
-                        .verified
-                        .rawValue
-            )
-            && !(
-                apa7Reference?
-                    .trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    )
-                    .isEmpty
-                ?? true
-            )
-    }
-}
-
-nonisolated struct FruitfolioSourceChunk:
-    Codable,
-    Hashable,
-    Identifiable,
-    Sendable
-{
-    let sourceChunkID: String
-    let sourceID: String
-    let section: String?
-    let text: String
-    let locationMetadata: String?
-    let claimCategories: [String]
-
-    var id: String {
-        sourceChunkID
-    }
-}
-
-nonisolated struct FruitfolioResearchPackage:
-    Codable,
-    Sendable
-{
-    let schemaVersion: Int
-    let contentVersion: String
-    let generatedFrom: String
-    let generationNote: String
-    let researchNoteChunks: [FruitfolioResearchNoteChunk]
-    let sources: [FruitfolioResearchSource]
-    let sourceChunks: [FruitfolioSourceChunk]
-}
-
-nonisolated struct FruitfolioClaimNeed:
-    Hashable,
-    Codable,
-    Sendable
-{
-    let id: String
-    let text: String
-}
-
-nonisolated struct FruitfolioRankedNote:
-    Hashable,
-    Sendable
-{
-    let chunk: FruitfolioResearchNoteChunk
-    let score: Double
-}
-
-nonisolated struct FruitfolioRankedSourceChunk:
-    Hashable,
-    Sendable
-{
-    let chunk: FruitfolioSourceChunk
-    let score: Double
-}
-
-nonisolated struct FruitfolioEvidenceCoverage:
-    Hashable,
-    Sendable
-{
-    let requestedClaims: [FruitfolioClaimNeed]
-    let supportedClaims: [FruitfolioClaimNeed]
-    let partiallySupportedClaims: [FruitfolioClaimNeed]
-    let unsupportedClaims: [FruitfolioClaimNeed]
-
-    var isSufficient: Bool {
-        unsupportedClaims.isEmpty
-            && partiallySupportedClaims.isEmpty
-    }
-
-    var hasAnySupport: Bool {
-        !supportedClaims.isEmpty
-            || !partiallySupportedClaims.isEmpty
-    }
-}
-
-nonisolated struct FruitfolioClaimEvidence:
-    Hashable,
-    Sendable
-{
-    let claim: FruitfolioClaimNeed
-    let noteChunkIDs: [String]
-    let sourceChunkIDs: [String]
-}
-
 nonisolated struct FruitfolioEvidencePacket:
     Sendable
 {
@@ -279,381 +115,6 @@ nonisolated enum FruitfolioAnswerPresentationSanitizer {
 
 // MARK: - Deterministic local retrieval
 
-nonisolated enum FruitfolioQueryNormalizer {
-    private static let synonymMap: [String: String] = [
-        "period": "menstruation",
-        "periods": "menstruation",
-        "discharge": "cervical fluid",
-        "mucus": "cervical fluid",
-        "temp": "temperature",
-        "temps": "temperature",
-        "preggo": "pregnancy",
-        "pcos": "polycystic ovary syndrome pcos",
-        "endo": "endometriosis",
-        "ttc": "trying to conceive ttc"
-    ]
-
-    static func normalize(
-        _ question: String
-    ) -> String {
-        var value = question.folding(
-            options: [
-                .caseInsensitive,
-                .diacriticInsensitive
-            ],
-            locale: .current
-        )
-        .lowercased()
-
-        value = value.replacingOccurrences(
-            of: "’",
-            with: "'"
-        )
-
-        for (from, to) in synonymMap {
-            value = value.replacingOccurrences(
-                of: "\\b\(from)\\b",
-                with: to,
-                options: .regularExpression
-            )
-        }
-
-        return value
-            .replacingOccurrences(
-                of: "[^a-z0-9' ]",
-                with: " ",
-                options: .regularExpression
-            )
-            .replacingOccurrences(
-                of: "\\s+",
-                with: " ",
-                options: .regularExpression
-            )
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
-    }
-
-    static func tokens(
-        _ text: String
-    ) -> Set<String> {
-        let stop: Set<String> = [
-            "a",
-            "an",
-            "and",
-            "are",
-            "as",
-            "at",
-            "be",
-            "because",
-            "can",
-            "do",
-            "does",
-            "for",
-            "from",
-            "how",
-            "i",
-            "in",
-            "is",
-            "it",
-            "me",
-            "my",
-            "of",
-            "on",
-            "or",
-            "the",
-            "this",
-            "to",
-            "what",
-            "when",
-            "why",
-            "with",
-            "you"
-        ]
-
-        return Set(
-            normalize(text)
-                .split(separator: " ")
-                .map(String.init)
-                .filter {
-                    $0.count > 2
-                        && !stop.contains($0)
-                }
-        )
-    }
-}
-
-nonisolated enum FruitfolioQuestionDecomposer {
-    static func claims(
-        from normalizedQuestion: String
-    ) -> [FruitfolioClaimNeed] {
-        let pieces = normalizedQuestion
-            .replacingOccurrences(
-                of: "?",
-                with: " and "
-            )
-            .components(
-                separatedBy: " and "
-            )
-            .map {
-                $0.trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-            }
-            .filter {
-                !$0.isEmpty
-            }
-
-        var seen = Set<String>()
-
-        let unique = pieces.filter {
-            seen.insert($0).inserted
-        }
-
-        return unique.enumerated().map {
-            index,
-            text in
-
-            FruitfolioClaimNeed(
-                id: "claim_\(index)",
-                text: text
-            )
-        }
-    }
-}
-
-nonisolated struct FruitfolioLocalResearchRetriever:
-    Sendable
-{
-    let package: FruitfolioResearchPackage
-
-    func searchNotes(
-        question: String,
-        limit: Int = 8
-    ) -> [FruitfolioRankedNote] {
-        let queryTokens =
-            FruitfolioQueryNormalizer.tokens(
-                question
-            )
-
-        guard !queryTokens.isEmpty else {
-            return []
-        }
-
-        return package
-            .researchNoteChunks
-            .compactMap {
-                chunk in
-
-                let headingTokens =
-                    FruitfolioQueryNormalizer.tokens(
-                        chunk.heading
-                    )
-
-                let bodyTokens: Set<String>
-
-                if chunk.semanticTags.isEmpty {
-                    bodyTokens =
-                        FruitfolioQueryNormalizer.tokens(
-                            chunk.text
-                        )
-                } else {
-                    bodyTokens = Set(
-                        chunk.semanticTags
-                    )
-                }
-
-                let headingHits = Double(
-                    queryTokens
-                        .intersection(
-                            headingTokens
-                        )
-                        .count
-                )
-
-                let bodyHits = Double(
-                    queryTokens
-                        .intersection(
-                            bodyTokens
-                        )
-                        .count
-                )
-
-                let normalizedQuestion =
-                    FruitfolioQueryNormalizer.normalize(
-                        question
-                    )
-
-                let exactBonus =
-                    chunk.text
-                        .lowercased()
-                        .contains(
-                            normalizedQuestion
-                        )
-                    ? 3.0
-                    : 0.0
-
-                let score =
-                    (headingHits * 3.0)
-                    + bodyHits
-                    + exactBonus
-
-                guard score > 0 else {
-                    return nil
-                }
-
-                return FruitfolioRankedNote(
-                    chunk: chunk,
-                    score: score
-                )
-            }
-            .sorted {
-                lhs,
-                rhs in
-
-                if lhs.score == rhs.score {
-                    return lhs.chunk.chunkID
-                        < rhs.chunk.chunkID
-                }
-
-                return lhs.score > rhs.score
-            }
-            .prefix(limit)
-            .map {
-                $0
-            }
-    }
-
-    func searchSources(
-        question: String,
-        approvedSourceIDs: Set<String>,
-        limit: Int = 6
-    ) -> [FruitfolioRankedSourceChunk] {
-        guard !package.sourceChunks.isEmpty else {
-            return []
-        }
-
-        let queryTokens =
-            FruitfolioQueryNormalizer.tokens(
-                question
-            )
-
-        return package
-            .sourceChunks
-            .compactMap {
-                chunk in
-
-                guard
-                    approvedSourceIDs.isEmpty
-                    || approvedSourceIDs
-                        .contains(chunk.sourceID)
-                else {
-                    return nil
-                }
-
-                let bodyTokens =
-                    FruitfolioQueryNormalizer.tokens(
-                        chunk.text
-                    )
-
-                let score = Double(
-                    queryTokens
-                        .intersection(
-                            bodyTokens
-                        )
-                        .count
-                )
-
-                guard score > 0 else {
-                    return nil
-                }
-
-                return FruitfolioRankedSourceChunk(
-                    chunk: chunk,
-                    score: score
-                )
-            }
-            .sorted {
-                $0.score > $1.score
-            }
-            .prefix(limit)
-            .map {
-                $0
-            }
-    }
-
-    func coverage(
-        claims: [FruitfolioClaimNeed],
-        notes: [FruitfolioRankedNote],
-        sourceChunks: [FruitfolioRankedSourceChunk] = []
-    ) -> FruitfolioEvidenceCoverage {
-        var supported: [FruitfolioClaimNeed] = []
-        var partial: [FruitfolioClaimNeed] = []
-        var unsupported: [FruitfolioClaimNeed] = []
-
-        let evidenceTexts =
-            notes.map {
-                $0.chunk.text
-            }
-            + sourceChunks.map {
-                $0.chunk.text
-            }
-
-        let evidenceTokens = Set(
-            evidenceTexts.flatMap {
-                FruitfolioQueryNormalizer.tokens(
-                    $0
-                )
-            }
-        )
-
-        for claim in claims {
-            let needed =
-                FruitfolioQueryNormalizer.tokens(
-                    claim.text
-                )
-
-            guard !needed.isEmpty else {
-                unsupported.append(claim)
-                continue
-            }
-
-            let matchingCount =
-                needed
-                    .intersection(
-                        evidenceTokens
-                    )
-                    .count
-
-            let ratio =
-                Double(matchingCount)
-                / Double(
-                    max(
-                        needed.count,
-                        1
-                    )
-                )
-
-            if ratio >= 0.72 {
-                supported.append(claim)
-
-            } else if ratio >= 0.34 {
-                partial.append(claim)
-
-            } else {
-                unsupported.append(claim)
-            }
-        }
-
-        return FruitfolioEvidenceCoverage(
-            requestedClaims: claims,
-            supportedClaims: supported,
-            partiallySupportedClaims: partial,
-            unsupportedClaims: unsupported
-        )
-    }
-}
-
 // MARK: - Package loading
 
 actor FruitfolioResearchPackageStore {
@@ -662,6 +123,34 @@ actor FruitfolioResearchPackageStore {
 
     private var cached:
         FruitfolioResearchPackage?
+
+    private var cachedRetriever: FruitfolioLocalResearchRetriever?
+    private var indexedLocale: String?
+
+    func retriever() throws -> FruitfolioLocalResearchRetriever {
+        let locale = Locale.current.identifier
+        if let cachedRetriever, indexedLocale == locale { return cachedRetriever }
+        try Task.checkCancellation()
+        let indexed = FruitfolioLocalResearchRetriever(package: try load())
+        cachedRetriever = indexed
+        indexedLocale = locale
+        try Task.checkCancellation()
+        return indexed
+    }
+
+    func searchNotes(question: String) throws -> [FruitfolioRankedNote] {
+        try Task.checkCancellation()
+        let result = try retriever().searchNotes(question: question)
+        try Task.checkCancellation()
+        return result
+    }
+
+    func searchSources(question: String, approvedSourceIDs: Set<String>) throws -> [FruitfolioRankedSourceChunk] {
+        try Task.checkCancellation()
+        let result = try retriever().searchSources(question: question, approvedSourceIDs: approvedSourceIDs)
+        try Task.checkCancellation()
+        return result
+    }
 
     func load() throws
         -> FruitfolioResearchPackage
@@ -1517,20 +1006,13 @@ final class FruitfolioResearchIntelligenceEngine:
                 from: normalized
             )
 
-        let package =
-            try await packageStore.load()
-
         progress?(.lookingThroughLibrary)
-
-        let retriever =
-            FruitfolioLocalResearchRetriever(
-                package: package
-            )
-
-        let rankedNotes =
-            retriever.searchNotes(
-                question: normalized
-            )
+        // Only static approved-library indexes are cached; no question or
+        // conversation is retained. Tokenization and ranking run on the actor,
+        // leaving the main actor available for typing, scrolling and controls.
+        let retriever = try await packageStore.retriever()
+        let package = retriever.package
+        let rankedNotes = try await packageStore.searchNotes(question: normalized)
 
         var coverage =
             retriever.coverage(
@@ -1555,7 +1037,7 @@ final class FruitfolioResearchIntelligenceEngine:
             )
 
             rankedSources =
-                retriever.searchSources(
+                try await packageStore.searchSources(
                     question: normalized,
                     approvedSourceIDs:
                         sourceIDs
