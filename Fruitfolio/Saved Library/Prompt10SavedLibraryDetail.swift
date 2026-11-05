@@ -434,7 +434,9 @@ struct Prompt10SavedPageView: View {
                 notesSection
                 importedImagesSection
 
-                if !page.sourceIDs.isEmpty {
+                if let records = page.sourceRecords, !records.isEmpty {
+                    FruitfolioSourceCitationList(sources: records)
+                } else if !page.sourceIDs.isEmpty {
                     Divider()
                         .overlay(
                             DesignTokens.ColorToken.primaryBurgundy.opacity(0.18)

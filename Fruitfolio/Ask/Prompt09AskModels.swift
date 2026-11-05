@@ -26,33 +26,6 @@ struct AskMessage: Identifiable, Hashable, Codable, Sendable {
     }
 }
 
-struct AskSourceRecord: Identifiable, Hashable, Codable, Sendable {
-    let id: String
-    let title: String
-    let sourceText: String?
-    let urlString: String?
-    let doi: String?
-    let publicationData: String?
-    let contentVersion: String?
-
-    init(
-        id: String,
-        title: String,
-        sourceText: String? = nil,
-        urlString: String? = nil,
-        doi: String? = nil,
-        publicationData: String? = nil,
-        contentVersion: String? = nil
-    ) {
-        self.id = id
-        self.title = title
-        self.sourceText = sourceText
-        self.urlString = urlString
-        self.doi = doi
-        self.publicationData = publicationData
-        self.contentVersion = contentVersion
-    }
-}
 
 struct AskSupportMapEntry: Identifiable, Hashable, Codable, Sendable {
     let id: UUID

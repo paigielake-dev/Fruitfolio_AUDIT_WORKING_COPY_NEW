@@ -234,7 +234,9 @@ struct Prompt11SavedPagePaper: View {
                 Prompt10ImportedImage(imageID: imageID)
             }
 
-            if !page.sourceIDs.isEmpty {
+            if let records = page.sourceRecords, !records.isEmpty {
+                FruitfolioSourceCitationList(sources: records)
+            } else if !page.sourceIDs.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("sources")
                         .font(.custom("Chalkboard SE", size: 11))

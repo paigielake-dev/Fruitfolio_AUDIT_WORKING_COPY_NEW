@@ -1115,7 +1115,7 @@ struct Prompt09AskView: View {
             knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
             selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
             selectedDisplayLanguage: historicalSelectionLanguages[answer.id] ?? "en",
-            selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id])
+            selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id], sourceRecords: answer.sources)
     }
 
     // MARK: - Prompt 10 Save Preparation
@@ -1155,7 +1155,8 @@ struct Prompt09AskView: View {
                 knowledgeBaseVersion:
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
-                    answer.generationTimestamp
+                    answer.generationTimestamp,
+                sourceRecords: answer.sources
             )
     }
 
@@ -1205,7 +1206,8 @@ struct Prompt09AskView: View {
                     answer.generationTimestamp,
                 selectedRenderedRange: viewModel.selectedExcerptRange,
                 selectedDisplayLanguage: viewModel.selectedExcerptLanguage ?? "en",
-                selectedSemanticSpans: viewModel.selectedExcerptSemanticSpans
+                selectedSemanticSpans: viewModel.selectedExcerptSemanticSpans,
+                sourceRecords: answer.sources
             )
     }
 
@@ -1223,137 +1225,8 @@ struct Prompt09AskView: View {
 
     // MARK: - Sources
 
-    private func sourceSection(
-        _ sources: [AskSourceRecord]
-    ) -> some View {
-        VStack(
-            alignment: .leading,
-            spacing: 10
-        ) {
-            Rectangle()
-                .fill(
-                    DesignTokens
-                        .ColorToken
-                        .secondaryBurgundy
-                        .opacity(0.16)
-                )
-                .frame(height: 1)
-
-            HStack(spacing: 8) {
-                FruitfolioImage(
-                    id:
-                        .ask_source_pages
-                )
-                .scaledToFit()
-                .frame(
-                    width: 28,
-                    height: 28
-                )
-                .accessibilityHidden(
-                    true
-                )
-
-                Text(
-                    Prompt09AskViewModel
-                        .sourcesHeading
-                )
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 15,
-                        relativeTo:
-                            .headline
-                    )
-                    .bold()
-                )
-                .lineLimit(1)
-                .minimumScaleFactor(
-                    0.80
-                )
-                .accessibilityLabel(
-                    "sources"
-                )
-                .foregroundStyle(
-                    DesignTokens
-                        .ColorToken
-                        .primaryBurgundy
-                )
-                .accessibilityAddTraits(
-                    .isHeader
-                )
-            }
-
-            ForEach(sources) {
-                source in
-
-                HStack(
-                    alignment: .top,
-                    spacing: 8
-                ) {
-                    FruitfolioImage(
-                        id:
-                            .ask_source_marker
-                    )
-                    .scaledToFit()
-                    .frame(
-                        width: 20,
-                        height: 20
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    VStack(
-                        alignment:
-                            .leading,
-                        spacing: 4
-                    ) {
-                        Text(
-                            source.title
-                        )
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 13,
-                                relativeTo:
-                                    .callout
-                            )
-                            .bold()
-                        )
-                        .foregroundStyle(
-                            DesignTokens
-                                .ColorToken
-                                .primaryBurgundy
-                        )
-
-                        if let publicationData =
-                            source
-                                .publicationData,
-                           !publicationData
-                            .isEmpty {
-
-                            Text(
-                                publicationData
-                            )
-                            .font(
-                                .caption
-                            )
-                            .foregroundStyle(
-                                DesignTokens
-                                    .ColorToken
-                                    .secondaryBurgundy
-                            )
-                        }
-                    }
-                    .frame(
-                        maxWidth:
-                            .infinity,
-                        alignment:
-                            .leading
-                    )
-                }
-            }
-        }
+    private func sourceSection(_ sources: [AskSourceRecord]) -> some View {
+        FruitfolioSourceCitationList(sources: sources)
     }
 
     // MARK: - Failure

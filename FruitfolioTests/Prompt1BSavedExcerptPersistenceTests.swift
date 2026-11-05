@@ -41,7 +41,8 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
         Prompt10SavedPage(chapterID: UUID(), question: "fixture", answer: "E2 and E2 [source-1]",
                          saveType: saveType, excerptText: "E2", originalAnswerID: "answer-1", sourceIDs: ["source-1"],
                          excerptSemanticSpans: [.init(text: "E2", emphasis: .anchorBold)],
-                         excerptSelectionLocation: location, excerptSelectionLength: 2, excerptLanguage: language)
+                         excerptSelectionLocation: location, excerptSelectionLength: 2, excerptLanguage: language,
+                         sourceRecords: [.init(id: "source-1", title: "Original verified reference", urlString: "https://example.org/source", doi: "10.1000/fixture", publicationData: "2024", contentVersion: "v1")])
     }
     func testSemanticExcerptRoundTripPreservesProvenanceAndExactOccurrence() throws {
         let original = page(location: 7, language: "es")
@@ -49,15 +50,17 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
         XCTAssertEqual(decoded, original)
         XCTAssertEqual(decoded.excerptSemanticSpans?.first?.emphasis, .anchorBold)
         XCTAssertEqual(decoded.sourceIDs, ["source-1"])
+        XCTAssertEqual(decoded.sourceRecords, original.sourceRecords)
         XCTAssertEqual(decoded.answer, "E2 and E2 [source-1]")
     }
     func testLegacyPagesDecodeWithoutNewOptionalFields() throws {
         let original = page()
         var object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(original)) as? [String: Any])
-        for field in ["excerptSemanticSpans", "excerptSelectionLocation", "excerptSelectionLength", "excerptLanguage"] {
+        for field in ["excerptSemanticSpans", "excerptSelectionLocation", "excerptSelectionLength", "excerptLanguage", "sourceRecords"] {
             object.removeValue(forKey: field)
         }
         let restored = try JSONDecoder().decode(Prompt10SavedPage.self, from: JSONSerialization.data(withJSONObject: object))
+        XCTAssertNil(restored.sourceRecords)
         XCTAssertNil(restored.excerptSemanticSpans)
         XCTAssertNil(restored.excerptSelectionLocation)
         XCTAssertEqual(restored.id, original.id)

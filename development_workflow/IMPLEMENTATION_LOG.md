@@ -431,3 +431,14 @@
 - Verification: {"portable_swift": "49 XCTest + 21 Swift Testing passed (70 total)", "workflow": "11 Python tests passed", "Swift_syntax": "106 files, zero parser errors", "Apple_illustration_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Add functional links and preserved identifiers to verified citation records, then continue source-grounded voice and remaining requirements.
 - Commit: containing commit for batch P3-default-text-only-and-single-educational-art.
+
+## P3-persisted-citation-records-and-source-actions
+
+- Parent checkpoint: 2f26f8ed07a871103dab3b9b3367f0a2ba358d03.
+- Source-order requirements: [61, 109, 125, 141, 161, 162, 163, 206, 207, 209, 210, 431, 432, 433, 434].
+- Source files: Fruitfolio/Ask/Prompt09AskModels.swift, Fruitfolio/Ask/Prompt09AnswerSupport.swift, Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift.
+- Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.
+- Tests added/updated: Prompt1BCitationDestinationTests, Prompt1BSavedExcerptPersistenceTests, Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate.
+- Verification: {"portable_swift": "51 XCTest + 21 Swift Testing passed (72 total)", "workflow": "11 Python tests passed", "Swift_syntax": "108 files, zero parser errors", "Apple_citation_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Restrict excerpt saves to explicit selected payloads, support optional scientific-image saves and supplemental founder requirements; continue canonical voice and original source-order backlog.
+- Commit: containing commit for batch P3-persisted-citation-records-and-source-actions.

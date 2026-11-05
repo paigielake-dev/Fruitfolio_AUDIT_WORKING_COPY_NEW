@@ -2151,7 +2151,10 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
-        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift"
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2170,9 +2173,10 @@
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -2180,9 +2184,10 @@
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 62,
@@ -3725,7 +3730,9 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3741,17 +3748,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
-        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
+        "Prompt1BCitationDestinationTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T20:16:24.923982+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 110,
@@ -4159,7 +4169,9 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4175,18 +4187,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 126,
@@ -4589,15 +4603,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Preserve selectable text and functional citation controls.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+      ],
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+      ],
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 142,
@@ -5103,15 +5133,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Ensure source displays use verified source information.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+      ],
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+      ],
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 162,
@@ -5119,15 +5165,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Preserve source titles, publication details, and citation identifiers.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+      ],
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+      ],
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 163,
@@ -5135,15 +5197,31 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply the document\u2019s approved-source access rules without weakening the local research architecture.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+      ],
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+      ],
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 164,
@@ -5901,7 +5979,10 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5913,15 +5994,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 207,
@@ -5943,7 +6026,10 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5955,15 +6041,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 208,
@@ -6001,7 +6089,10 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6013,15 +6104,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 210,
@@ -6043,7 +6136,10 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6055,15 +6151,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BCitationDestinationTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 211,
@@ -11479,7 +11577,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11493,16 +11593,19 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BCitationDestinationTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 432,
@@ -11532,7 +11635,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11546,16 +11651,19 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BCitationDestinationTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 433,
@@ -11585,7 +11693,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11599,16 +11709,19 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BCitationDestinationTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 434,
@@ -11634,7 +11747,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11648,15 +11763,18 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BCitationDestinationTests",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:25:58.107159+00:00"
     },
     {
       "sequence": 435,

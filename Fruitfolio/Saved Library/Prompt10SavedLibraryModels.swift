@@ -49,6 +49,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var originalConversationID: String?
 
     var sourceIDs: [String]
+    var sourceRecords: [AskSourceRecord]?
     var sourceVersions: [String: String]
     var knowledgeBaseVersion: String?
     var generationTimestamp: Date?
@@ -87,7 +88,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         excerptSemanticSpans: [FruitfolioSemanticSpan]? = nil,
         excerptSelectionLocation: Int? = nil,
         excerptSelectionLength: Int? = nil,
-        excerptLanguage: String? = nil
+        excerptLanguage: String? = nil,
+        sourceRecords: [AskSourceRecord]? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -98,6 +100,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
+        self.sourceRecords = sourceRecords
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp

@@ -16,6 +16,7 @@ struct Prompt10PendingSavedContent: Equatable {
     let originalConversationID: String?
 
     let sourceIDs: [String]
+    let sourceRecords: [AskSourceRecord]?
     let sourceVersions: [String: String]
     let knowledgeBaseVersion: String?
     let generationTimestamp: Date?
@@ -33,7 +34,8 @@ struct Prompt10PendingSavedContent: Equatable {
         generationTimestamp: Date? = nil,
         selectedRenderedRange: NSRange? = nil,
         selectedDisplayLanguage: String = "en",
-        selectedSemanticSpans: [FruitfolioSemanticSpan]? = nil
+        selectedSemanticSpans: [FruitfolioSemanticSpan]? = nil,
+        sourceRecords: [AskSourceRecord]? = nil
     ) {
         self.question = question
         self.answer = answer
@@ -45,6 +47,7 @@ struct Prompt10PendingSavedContent: Equatable {
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
+        self.sourceRecords = sourceRecords
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion
         self.generationTimestamp = generationTimestamp
@@ -439,7 +442,8 @@ struct Prompt10AskSaveDestination: View {
                 excerptSemanticSpans: pending.selectedSemanticSpans,
                 excerptSelectionLocation: pending.selectedRenderedRange?.location,
                 excerptSelectionLength: pending.selectedRenderedRange?.length,
-                excerptLanguage: pending.saveType == .excerpt ? pending.selectedDisplayLanguage : nil
+                excerptLanguage: pending.saveType == .excerpt ? pending.selectedDisplayLanguage : nil,
+                sourceRecords: pending.sourceRecords
             )
 
             if let selected = store.encyclopedia(id: encyclopediaID),
