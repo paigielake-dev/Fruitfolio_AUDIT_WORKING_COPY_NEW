@@ -84,6 +84,21 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(renamed.isHittable)
     }
 
+    func testHormoneLibraryOriginalSourcesRemainReachableAtAccessibilitySize() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioHormoneLibraryQA", "-UIPreferredContentSizeCategoryName",
+                                "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let scroll = app.scrollViews["hormoneLibrary.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let source = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "open source:")).firstMatch
+        for _ in 0..<35 { if source.exists && source.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(source.isHittable)
+        XCTAssertGreaterThanOrEqual(source.frame.height, 44)
+        XCTAssertGreaterThanOrEqual(source.frame.minX, app.frame.minX)
+        XCTAssertLessThanOrEqual(source.frame.maxX, app.frame.maxX)
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

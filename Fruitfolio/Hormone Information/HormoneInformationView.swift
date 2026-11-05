@@ -4,6 +4,7 @@ import UniformTypeIdentifiers
 struct FruitfolioHormoneInformationView: View {
     let onBack: () -> Void
     @ObservedObject private var store = FruitfolioHormoneMeasurementStore.shared
+    @State private var showingLibrary = false
     @State private var filter: FruitfolioMeasuredHormone?
     @State private var editing: FruitfolioHormoneMeasurement?
     @State private var deleting: FruitfolioHormoneMeasurement?
@@ -23,6 +24,7 @@ struct FruitfolioHormoneInformationView: View {
                         .scaledToFit().frame(width: 56, height: 56)
                         .accessibilityHidden(true)
                 }
+                WatercolorSecondaryButton(label: "explore the hormone library") { showingLibrary = true }
                 Text("my measurements").font(.headline)
                 if store.storageUnreadable {
                     Text(FruitfolioHormoneMeasurementError.unreadableStorage.localizedDescription)
@@ -80,6 +82,9 @@ struct FruitfolioHormoneInformationView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .sheet(isPresented: $showingLibrary) {
+            FruitfolioHormoneLibraryView(onBack: { showingLibrary = false })
+        }
         .sheet(item: $editing) { record in
             FruitfolioHormoneMeasurementEditor(original: record, onCancel: { editing = nil }) { updated in
                 try store.save(updated)
