@@ -984,7 +984,7 @@ struct Prompt28FruitBasketView: View {
                     }
                     .padding(.horizontal, 20)
 
-                    Text("\(viewModel.basketCount) / 10")
+                    Text("\(viewModel.basketCount) / 10 · star passes: \(viewModel.session?.availableStarPasses ?? 0)")
                         .font(
                             .custom(
                                 "Chalkboard SE",
@@ -1032,9 +1032,10 @@ struct Prompt28FruitBasketView: View {
         }
         .ignoresSafeArea(edges: .bottom)
         .onChange(of: viewModel.basketCount) { oldValue, newValue in
-            if newValue > oldValue {
-                audioManager.play(.fruitCatch)
-            }
+            if newValue > oldValue { audioManager.play(.fruitCatch) }
+        }
+        .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
+            if newValue > oldValue { audioManager.play(.starChime) }
         }
     }
 
@@ -1108,7 +1109,8 @@ struct Prompt28FruitBasketView: View {
         height: CGFloat,
         xOffset: CGFloat
     ) -> some View {
-        ZStack(alignment: .topLeading) {
+        let geometry = Prompt28CatchGeometry(playfield: CGSize(width: width, height: height))
+        return ZStack(alignment: .topLeading) {
             ForEach(
                 viewModel.activeFruit
             ) { fruit in
@@ -1117,22 +1119,7 @@ struct Prompt28FruitBasketView: View {
                     reduceMotion:
                         motionPreferences.reduceMotionActive
                 )
-                .frame(
-                    width: min(
-                        max(
-                            width * 0.13,
-                            46
-                        ),
-                        66
-                    ),
-                    height: min(
-                        max(
-                            width * 0.13,
-                            46
-                        ),
-                        66
-                    )
-                )
+                .frame(width: geometry.fruitSize, height: geometry.fruitSize)
                 .position(
                     x: xOffset + width * fruit.x,
                     y: height * fruit.y
@@ -1147,7 +1134,7 @@ struct Prompt28FruitBasketView: View {
 
             ForEach(viewModel.activeStars) { star in
                 FruitfolioImage(id: .fruitbasket_star)
-                    .frame(width: min(max(width * 0.10, 34), 52), height: min(max(width * 0.10, 34), 52))
+                    .frame(width: geometry.starSize, height: geometry.starSize)
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
@@ -1156,15 +1143,12 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.currentGoodFruitIDs
+                fruitIDs: viewModel.collectedFruit,
+                transits: viewModel.catchTransits,
+                playfield: geometry.playfield,
+                basketX: viewModel.basketX
             )
-            .frame(
-                width: min(
-                    width * 0.36,
-                    150
-                ),
-                height: 132
-            )
+            .frame(width: geometry.basketWidth, height: 132)
             .position(
                 x: xOffset + width * viewModel.basketX,
                 y: height * 0.89
@@ -1190,6 +1174,8 @@ struct Prompt28FruitBasketView: View {
                 "Basket, \(viewModel.basketCount) of 10"
             )
         }
+        .onAppear { viewModel.updatePlayfield(size: geometry.playfield) }
+        .onChange(of: geometry.playfield) { _, size in viewModel.updatePlayfield(size: size) }
         .coordinateSpace(name: "prompt28Playfield")
         .contentShape(Rectangle())
     }
@@ -1247,7 +1233,7 @@ struct Prompt28FruitBasketView: View {
 
             Prompt28BasketProgressView(
                 count: viewModel.basketCount,
-                fruitIDs: viewModel.currentGoodFruitIDs
+                fruitIDs: viewModel.collectedFruit
             )
             .frame(
                 width: 150,
@@ -1429,7 +1415,7 @@ struct Prompt28FruitBasketView: View {
 
                     Prompt28BasketProgressView(
                         count: 10,
-                        fruitIDs: viewModel.currentGoodFruitIDs
+                        fruitIDs: viewModel.collectedFruit
                     )
                     .frame(width: 210, height: 180)
                     .accessibilityHidden(true)
@@ -1953,76 +1939,78 @@ private struct Prompt28MovingFruit: View {
 private struct Prompt28BasketProgressView: View {
     let count: Int
     let fruitIDs: [Prompt28FruitID]
-
+    var transits: [Prompt28CatchTransit] = []
+    var playfield: CGSize = .zero
+    var basketX: Double = 0.5
     @EnvironmentObject private var motionPreferences: MotionPreferences
-    @ObservedObject private var usernameStore = FruitfolioUsernameStore.shared
-    @State private var basketBounce = false
-
-    init(
-        count: Int,
-        fruitIDs: [Prompt28FruitID] = Prompt28FruitID.allCases
-    ) {
-        self.count = min(max(count, 0), Prompt28FruitBasketEngine.goodFruitTarget)
-        self.fruitIDs = fruitIDs.isEmpty ? Prompt28FruitID.allCases : fruitIDs
-    }
 
     var body: some View {
         GeometryReader { proxy in
             let width = max(proxy.size.width, 1)
             let height = max(proxy.size.height, 1)
-            let fruitSize = min(max(width * 0.19, 22), 38)
-            let visibleCount = min(count, Prompt28FruitBasketEngine.goodFruitTarget)
-
+            let artWidth = width * 0.90
+            let artHeight = artWidth * 380 / 398
+            let artLeft = (width - artWidth) / 2
+            let artTop = height - artHeight
+            let fruitSize = min(max(width * 0.16, 18), 28)
+            let geometry = Prompt28CatchGeometry(playfield: playfield)
             ZStack(alignment: .bottom) {
-                // Collected fruit lives inside the basket opening. The basket artwork
-                // renders above it so fruit reads as physically inside, not pasted on top.
+                // Original source canvas behind the actual collected objects.
+                FruitfolioImage(id: .fruitbasket_basket)
+                    .frame(width: artWidth, height: artHeight)
+
                 ZStack {
-                    ForEach(0..<visibleCount, id: \.self) { index in
+                    ForEach(0..<min(max(count, 0), fruitIDs.count), id: \.self) { index in
                         let row = index / 5
                         let column = index % 5
-                        let xFractions: [CGFloat] = [0.28, 0.39, 0.50, 0.61, 0.72]
-                        let yFraction: CGFloat = row == 0 ? 0.48 : 0.36
-                        FruitfolioImage(
-                            id: fruitIDs[index % fruitIDs.count].assetID
-                        )
-                        .frame(width: fruitSize, height: fruitSize)
-                        .rotationEffect(.degrees(Double((index % 5) - 2) * 2.0))
-                        .position(
-                            x: width * xFractions[column],
-                            y: height * yFraction
-                        )
-                        .accessibilityHidden(true)
+                        FruitfolioImage(id: fruitIDs[index].assetID)
+                            .frame(width: fruitSize, height: fruitSize)
+                            .scaleEffect(x: 1, y: 0.62)
+                            .position(x: artLeft + artWidth * (0.27 + CGFloat(column) * 0.105),
+                                      y: artTop + artHeight * (row == 0 ? 0.57 : 0.51))
+                            .accessibilityHidden(true)
+                    }
+                    if geometry.isValid {
+                        ForEach(transits) { transit in
+                            let pose = geometry.pose(for: transit, basketX: basketX, reducedMotion: motionPreferences.reduceMotionActive)
+                            let asset: FruitfolioAssetID = {
+                                switch transit.kind {
+                                case .star: return .fruitbasket_star
+                                case .fruit(let fruit, _): return fruit.assetID
+                                }
+                            }()
+                            FruitfolioImage(id: asset)
+                                .frame(width: pose.size.width, height: pose.size.height)
+                                .position(x: pose.center.x - playfield.width * basketX + width / 2,
+                                          y: pose.center.y - playfield.height * 0.89 + height / 2)
+                                .accessibilityHidden(true)
+                        }
                     }
                 }
                 .frame(width: width, height: height)
+                .allowsHitTesting(false)
 
+                // Reuse the untouched lower front rim/body to occlude the settled
+                // objects. The full original source remains visible behind them.
                 FruitfolioImage(id: .fruitbasket_basket)
-                    .frame(width: width * 0.90)
-                    .scaleEffect(basketBounce ? 0.975 : 1.0, anchor: .bottom)
-                    .onAppear {
-                        Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_basket)
+                    .frame(width: artWidth, height: artHeight)
+                    .mask {
+                        GeometryReader { image in
+                            Rectangle().frame(width: image.size.width, height: image.size.height * 0.38)
+                                .position(x: image.size.width / 2, y: image.size.height * 0.81)
+                        }
                     }
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 Text("\(count) / 10")
-                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption))
-                    .fontWeight(.bold)
+                    .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption).bold())
                     .monospacedDigit()
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(
-                        DesignTokens.ColorToken.backgroundCream.opacity(0.90),
-                        in: Capsule()
-                    )
+                    .padding(.horizontal, 8).padding(.vertical, 3)
+                    .background(DesignTokens.ColorToken.backgroundCream.opacity(0.90), in: Capsule())
                     .offset(y: -2)
             }
             .frame(width: width, height: height)
-        }
-        .onChange(of: count) { oldValue, newValue in
-            guard newValue > oldValue, !motionPreferences.reduceMotionActive else { return }
-            basketBounce = true
-            withAnimation(.easeOut(duration: 0.18)) {
-                basketBounce = false
-            }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Basket \(count) of 10")

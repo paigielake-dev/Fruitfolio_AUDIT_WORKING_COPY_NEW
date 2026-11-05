@@ -11598,15 +11598,25 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Introduce standalone stars as rare beneficial drops.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
+      ],
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
+      ],
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 329,
@@ -11614,15 +11624,25 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Allow players to catch standalone stars independently of fruit.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
+      ],
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
+      ],
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 330,
@@ -11632,7 +11652,8 @@
       "description": "Make each collected star grant one star pass.",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11640,13 +11661,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
-        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T18:57:53.164725+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 331,
@@ -11656,7 +11681,8 @@
       "description": "Allow star passes to accumulate without a fixed maximum.",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11664,13 +11690,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
-        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T18:57:53.164725+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 332,
@@ -11685,7 +11715,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11702,14 +11733,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 333,
@@ -11724,7 +11758,8 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11741,14 +11776,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 334,
@@ -11758,7 +11796,8 @@
       "description": "Do not count standalone stars toward the good-fruit basket target.",
       "relevant_source_files": [
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11766,13 +11805,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
-        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T18:57:53.164725+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 335,
@@ -11780,15 +11823,25 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Require stars to fully enter the basket before being counted.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
+      ],
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
+      ],
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 336,
@@ -11796,15 +11849,25 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Apply the same convincing flattened/settled catch treatment to stars and fruit.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
+      ],
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
+      ],
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 337,
@@ -11812,15 +11875,25 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Ensure star drops remain genuinely rare.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
+      ],
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
+      ],
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 338,
@@ -11833,7 +11906,8 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
+        "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -11844,14 +11918,18 @@
         "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume",
         "Prompt1BFruitBasketResearchTests",
         "Prompt1BHealthSafetyBoundaryTests",
-        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)"
+        "Prompt1BFruitBasketQuestionOwnershipTests (Apple NOT_RUN)",
+        "Prompt1BCatchPresentationTests",
+        "Prompt1BCatchViewModelTests (Apple NOT_RUN)",
+        "Prompt1BFruitBasketRulesTests"
       ],
-      "commit_reference": "batch:Fruit-Basket-offline-excerpt-practice-and-source-trails (resolve containing commit with git log)",
+      "commit_reference": "batch:Measured-fruit-and-star-entry-before-awards (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
-        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun."
+        "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
+        "Active catch now starts a shared transit only when leading edge crosses the visible basket mouth, rather than awarding at y0.82 above the basket. Fruit/stars enter and visibly flatten/hold before exactly-once completion applies existing count/pass/consequence rules. Shared source-registered geometry used by physics/rendering; complete transformed bounds below rim before count. Original398x380PNG preserved; full back and lower source overlay occlude collected objects. Basket stores actual caught fruit IDs instead of cycling through possible good fruits. Pass bank visible and completion star chime uses existing audio. All fruit/stars/transits count toward concurrency limit; 8-fruit minimum star spacing plus5% draw, no pass quota, spawn intervals sampled once. Invalid/large frame deltas guarded; reduced motion static settled pose. Eight actual production Foundation regressions pass; two actual view-model frame tests Apple-only unrun. Visual registration/convincing animation and classification-mode star/settlement parity remain unfinished, not marked verified."
       ],
-      "last_updated": "2026-11-05T23:48:48.355913+00:00"
+      "last_updated": "2026-11-05T23:57:25.445057+00:00"
     },
     {
       "sequence": 339,

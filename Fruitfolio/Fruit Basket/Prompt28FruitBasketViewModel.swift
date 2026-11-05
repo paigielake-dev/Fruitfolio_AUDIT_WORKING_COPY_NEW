@@ -11,6 +11,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     @Published var session: Prompt28Session?
     @Published var activeFruit: [Prompt28FallingFruit] = []
     @Published var activeStars: [Prompt28FallingStar] = []
+    @Published private(set) var catchTransits: [Prompt28CatchTransit] = []
+    @Published private(set) var collectedFruit: [Prompt28FruitID] = []
     @Published var basketX: Double = 0.5
     @Published var lastBadFruit: Prompt28FruitID?
     @Published var message: String?
@@ -26,6 +28,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var gameplayTask: Task<Void, Never>?
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
+    private var starPlanner = Prompt28RareStarPlanner()
+    private var playfieldSize: CGSize = .zero
+    private var nextSpawnInterval: TimeInterval = 2
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
     private var roundID = UUID()
@@ -199,6 +204,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
         activeFruit.removeAll()
         activeStars.removeAll()
+        catchTransits.removeAll()
+        collectedFruit.removeAll()
         classificationFruit = nil
         basketX = 0.5
         roundResultLocked = false
@@ -206,6 +213,8 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         roundID = UUID()
         pendingRoundSuccess = nil
         spawnPlanner.reset()
+        starPlanner = Prompt28RareStarPlanner()
+        nextSpawnInterval = random(in: levelConfig.spawnIntervalRange)
         lastSpawnAt = .distantPast
         screen = .catchActive
 
@@ -214,6 +223,10 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         } else {
             startGameplayLoop()
         }
+    }
+
+    func updatePlayfield(size: CGSize) {
+        playfieldSize = size
     }
 
     func moveBasket(to normalizedX: Double) {
@@ -366,19 +379,37 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                 let now = Date()
                 let delta = min(max(now.timeIntervalSince(previous), 0.001), 0.08)
                 previous = now
-                self.tick(delta: delta, now: now)
+                self.advanceGameplayFrame(delta: delta, now: now)
             }
         }
     }
 
-    private func tick(delta: TimeInterval, now: Date) {
+    /// Shared frame entry for the owned clock and deterministic regression driving.
+    func advanceGameplayFrame(delta: TimeInterval, now: Date) {
+        guard delta.isFinite, delta > 0 else { return }
+        let frameDelta = min(delta, 0.08)
         guard screen == .catchActive, !isPaused, !roundResultLocked else { return }
+        let geometry = Prompt28CatchGeometry(playfield: playfieldSize)
+        var pending: [Prompt28CatchTransit] = []
+        for var transit in catchTransits {
+            if transit.advance(by: frameDelta) {
+                switch transit.kind {
+                case .star: handleStarCatch()
+                case .fruit(let fruit, .good): handleGoodCatch(fruit)
+                case .fruit(let fruit, .bad): handleBadCatch(fruit)
+                }
+            } else { pending.append(transit) }
+            if roundResultLocked { break }
+        }
+        catchTransits = roundResultLocked ? [] : pending
+        guard !roundResultLocked else { return }
         var remaining: [Prompt28FallingFruit] = []
 
         let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
         for var fruit in activeFruit {
+            let previousY = fruit.y
             let vineMultiplier = activeObstacles.contains(.vines) && fruit.classification == .good && (0.22...0.58).contains(fruit.y) ? 0.56 : 1.0
-            fruit.y += fruit.fallSpeed * vineMultiplier * delta
+            fruit.y += fruit.fallSpeed * vineMultiplier * frameDelta
 
             var horizontalVelocity = fruit.horizontalDrift
             if activeObstacles.contains(.wind) {
@@ -393,12 +424,10 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
                 horizontalVelocity -= 0.095
             }
 
-            fruit.x = min(max(fruit.x + horizontalVelocity * delta, laneBounds.lowerBound), laneBounds.upperBound)
+            fruit.x = min(max(fruit.x + horizontalVelocity * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
 
-            if engine.collision(fruitX: fruit.x, fruitY: fruit.y, basketX: basketX) {
-                if fruit.classification == .good { handleGoodCatch(fruit.fruitID) }
-                else { handleBadCatch(fruit.fruitID) }
-                if roundResultLocked { break }
+            if geometry.crossedMouth(x: fruit.x, previousY: previousY, currentY: fruit.y, basketX: basketX, objectSize: geometry.fruitSize) {
+                catchTransits.append(.init(id: fruit.id, kind: .fruit(fruit.fruitID, fruit.classification), relativeX: fruit.x - basketX))
                 continue
             }
 
@@ -416,28 +445,29 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
 
         var remainingStars: [Prompt28FallingStar] = []
         for var star in activeStars {
+            let previousY = star.y
             let vineMultiplier = activeObstacles.contains(.vines) && (0.22...0.58).contains(star.y) ? 0.56 : 1.0
-            star.y += star.fallSpeed * vineMultiplier * delta
-            star.x = min(max(star.x + star.horizontalDrift * delta, laneBounds.lowerBound), laneBounds.upperBound)
-            if engine.collision(fruitX: star.x, fruitY: star.y, basketX: basketX) {
-                handleStarCatch()
+            star.y += star.fallSpeed * vineMultiplier * frameDelta
+            star.x = min(max(star.x + star.horizontalDrift * frameDelta, laneBounds.lowerBound), laneBounds.upperBound)
+            if geometry.crossedMouth(x: star.x, previousY: previousY, currentY: star.y, basketX: basketX, objectSize: geometry.starSize) {
+                catchTransits.append(.init(id: star.id, kind: .star, relativeX: star.x - basketX))
                 continue
             }
             if star.y <= 1.06 { remainingStars.append(star) }
         }
         activeStars = remainingStars
 
-        let interval = random(in: levelConfig.spawnIntervalRange)
-        if activeFruit.count < levelConfig.maxConcurrentItems,
-           now.timeIntervalSince(lastSpawnAt) >= interval {
+        if activeFruit.count + activeStars.count + catchTransits.count < levelConfig.maxConcurrentItems,
+           now.timeIntervalSince(lastSpawnAt) >= nextSpawnInterval {
             spawnFruit()
             lastSpawnAt = now
+            nextSpawnInterval = random(in: levelConfig.spawnIntervalRange)
         }
     }
 
     private func spawnFruit() {
         guard let question = currentQuestion else { return }
-        if Double.random(in: 0...1) < 0.06 {
+        if starPlanner.shouldDropStar(randomUnit: Double.random(in: 0...1)) {
             let duration = random(in: levelConfig.fallDurationRange)
             let laneBounds = engine.fruitLaneBounds(level: gameLevel, round: currentRound)
             activeStars.append(Prompt28FallingStar(
@@ -497,6 +527,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private func handleGoodCatch(_ fruit: Prompt28FruitID) {
         guard !roundResultLocked, var session else { return }
         let outcome = engine.registerGoodCatch(session: &session)
+        collectedFruit.append(fruit)
         self.session = session
         if outcome == .success {
             roundResultLocked = true
@@ -544,7 +575,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         pendingRoundSuccess = false
         let completedRoundID = roundID
         stopGameplay()
-        activeFruit.removeAll(); activeStars.removeAll(); classificationFruit = nil
+        activeFruit.removeAll(); activeStars.removeAll(); catchTransits.removeAll(); classificationFruit = nil
         roundCompletionTask?.cancel()
         roundCompletionTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: 280_000_000)
