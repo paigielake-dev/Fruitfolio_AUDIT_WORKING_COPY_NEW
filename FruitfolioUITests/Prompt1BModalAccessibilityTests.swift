@@ -153,6 +153,24 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertFalse(app.staticTexts["1 selected for one question"].exists)
     }
 
+    func testWheelNoteActionsStayReachableAtAccessibilitySize() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioWheelQA", "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let region = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "menstruation, cycle days")).firstMatch
+        for _ in 0..<15 { if region.exists && region.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(region.isHittable)
+        region.tap()
+        let learn = app.buttons["learn why →"]
+        for _ in 0..<25 { if learn.exists && learn.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(learn.isHittable)
+        XCTAssertGreaterThanOrEqual(learn.frame.height, 44)
+        learn.tap()
+        let result = app.staticTexts["wheelQA.biology"]
+        for _ in 0..<12 { if result.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(result.exists)
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

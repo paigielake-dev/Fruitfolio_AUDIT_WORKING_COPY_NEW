@@ -8,9 +8,47 @@ struct Prompt18DynamicCycleWheel: View {
     var onLearnWhy: (Prompt18WheelRegionKind) -> Void = { _ in }
     var onInteraction: () -> Void = {}
 
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var selectedRegion: Prompt18WheelRegionKind?
 
     var body: some View {
+        VStack(spacing: 12) {
+            drawing
+            if dynamicTypeSize.isAccessibilitySize {
+                Text(centerSummary).font(.body).multilineTextAlignment(.center)
+                ForEach(accessibleSegments) { segment in
+                    Button(accessibilityLabel(for: segment)) { select(segment.kind) }
+                        .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget)
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    if selectedRegion == segment.kind {
+                        Prompt18TapedNote(kind: segment.kind,
+                            onLearnWhy: { onInteraction(); onLearnWhy(segment.kind) },
+                            onClose: { onInteraction(); selectedRegion = nil })
+                            .frame(maxWidth: 340).frame(height: 340)
+                    }
+                }
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(accessibilitySummary)
+        .onChange(of: model) { _, _ in selectedRegion = nil }
+    }
+
+    private var accessibleSegments: [Prompt18WheelSegment] {
+        model.baseSegments + (model.fertileOverlay.map { [$0] } ?? [])
+    }
+    private var centerSummary: String {
+        let day = model.currentCycleDay.map { "cycle day \($0)" } ?? "cycle day not available"
+        let length = model.representedCycleLength.map { "estimated cycle length \($0) days" } ?? "estimated length not available"
+        return day + "; " + length
+    }
+    private func select(_ kind: Prompt18WheelRegionKind) {
+        onInteraction()
+        withAnimation(.easeOut(duration: motionPreferences.reduceMotionActive ? 0.1 : 0.18)) { selectedRegion = kind }
+    }
+
+    private var drawing: some View {
         GeometryReader { proxy in
             let side = min(proxy.size.width, proxy.size.height)
             let center = CGPoint(x: proxy.size.width / 2, y: proxy.size.height / 2)
@@ -33,12 +71,14 @@ struct Prompt18DynamicCycleWheel: View {
                         Prompt18ClockwiseRevealMask(progress: revealProgress)
                     }
                     .allowsHitTesting(revealProgress >= 0.98)
+                    .accessibilityHidden(dynamicTypeSize.isAccessibilitySize)
 
                 labelLayer(center: center, side: ringSide)
-                    .opacity(labelOpacity)
+                    .opacity(dynamicTypeSize.isAccessibilitySize ? 0 : labelOpacity)
                     .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
-                centerContent
+                centerContent.opacity(dynamicTypeSize.isAccessibilitySize ? 0 : 1)
 
                 if showCurrentMarker,
                    let fraction = model.currentPositionFraction {
@@ -54,32 +94,22 @@ struct Prompt18DynamicCycleWheel: View {
                         .allowsHitTesting(false)
                 }
 
-                if let selectedRegion,
+                if !dynamicTypeSize.isAccessibilitySize, let selectedRegion,
                    let selectedSegment = segment(for: selectedRegion) {
-                    Prompt18TapedNote(
-                        kind: selectedRegion,
-                        onLearnWhy: {
-                            onInteraction()
-                            onLearnWhy(selectedRegion)
-                        }
-                    )
-                    .frame(width: noteWidth(for: side))
-                    .position(
-                        notePosition(
-                            for: selectedSegment,
-                            side: side,
-                            center: center
-                        )
-                    )
-                    .transition(.opacity.combined(with: .scale(scale: 0.96)))
+                    let noteFrame = Prompt18WheelNoteLayout.frame(in: proxy.size,
+                        fraction: selectedSegment.midFraction, idealWidth: dynamicTypeSize.isAccessibilitySize ? 340 : 205)
+                    Prompt18TapedNote(kind: selectedRegion,
+                        onLearnWhy: { onInteraction(); onLearnWhy(selectedRegion) },
+                        onClose: { onInteraction(); self.selectedRegion = nil })
+                    .frame(width: noteFrame.width, height: noteFrame.height)
+                    .position(x: noteFrame.midX, y: noteFrame.midY)
+                    .transition(.opacity)
                     .zIndex(20)
                 }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .aspectRatio(1, contentMode: .fit)
-        .accessibilityElement(children: .contain)
-        .accessibilityLabel(accessibilitySummary)
         .onDisappear {
             selectedRegion = nil
         }
@@ -139,11 +169,7 @@ struct Prompt18DynamicCycleWheel: View {
         let current = model.currentRegion == segment.kind
 
         return Button {
-            onInteraction()
-
-            withAnimation(.easeOut(duration: 0.18)) {
-                selectedRegion = segment.kind
-            }
+            select(segment.kind)
         } label: {
             Prompt18PaintedSegment(
                 segment: segment,
@@ -162,7 +188,7 @@ struct Prompt18DynamicCycleWheel: View {
                 )
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
         .accessibilityLabel(accessibilityLabel(for: segment))
         .accessibilityHint("Opens a short cycle biology note.")
     }
@@ -323,32 +349,6 @@ struct Prompt18DynamicCycleWheel: View {
         return CGPoint(
             x: center.x + CGFloat(Foundation.cos(radians)) * radius,
             y: center.y + CGFloat(Foundation.sin(radians)) * radius
-        )
-    }
-
-    private func noteWidth(for side: CGFloat) -> CGFloat {
-        min(205, max(166, side * 0.68))
-    }
-
-    private func notePosition(
-        for segment: Prompt18WheelSegment,
-        side: CGFloat,
-        center: CGPoint
-    ) -> CGPoint {
-        let width = noteWidth(for: side)
-        let height = width * 0.62
-        let radians = Angle.degrees(angle(for: segment.midFraction)).radians
-        let desiredRadius = side * 0.26
-
-        let rawX = center.x + CGFloat(Foundation.cos(radians)) * desiredRadius
-        let rawY = center.y + CGFloat(Foundation.sin(radians)) * desiredRadius
-
-        let horizontalInset = width / 2 + 6
-        let verticalInset = height / 2 + 6
-
-        return CGPoint(
-            x: min(max(rawX, horizontalInset), side - horizontalInset),
-            y: min(max(rawY, verticalInset), side - verticalInset)
         )
     }
 
@@ -543,45 +543,26 @@ private struct Prompt18CurrentMarker: View {
 private struct Prompt18TapedNote: View {
     let kind: Prompt18WheelRegionKind
     let onLearnWhy: () -> Void
-
+    let onClose: () -> Void
+    @EnvironmentObject private var motionPreferences: MotionPreferences
     var body: some View {
-        ZStack {
-            Image("popup_taped_white")
-                .resizable()
-                .scaledToFit()
-                .accessibilityHidden(true)
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text(kind.title)
-                    .font(Prompt18Type.noteTitle)
-                    .foregroundStyle(Prompt18Palette.burgundy)
-                    .lineLimit(2)
-
-                Text(kind.noteBody)
-                    .font(Prompt18Type.noteBody)
-                    .foregroundStyle(Prompt18Palette.burgundy.opacity(0.83))
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Button("learn why →") {
-                    onLearnWhy()
-                }
-                .font(Prompt18Type.noteLink)
-                .foregroundStyle(Prompt18Palette.burgundy)
-                .buttonStyle(Prompt18SoftPressButtonStyle())
-                .accessibilityHint("Opens the deeper biology explanation.")
+        FruitfolioTapedWhitePopup {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(kind.title).font(Prompt18Type.noteTitle).accessibilityAddTraits(.isHeader)
+                Text(kind.noteBody).font(Prompt18Type.noteBody).fixedSize(horizontal: false, vertical: true)
+                Button("learn why →", action: onLearnWhy)
+                    .font(Prompt18Type.noteLink)
+                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    .accessibilityHint("opens the deeper biology explanation")
+                Button("close note", action: onClose)
+                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 18)
+            .foregroundStyle(Prompt18Palette.burgundy)
         }
         .accessibilityElement(children: .contain)
-    }
-}
-
-private struct Prompt18SoftPressButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(configuration.isPressed ? 0.965 : 1)
-            .animation(.easeOut(duration: 0.10), value: configuration.isPressed)
+        .accessibilityIdentifier("wheel.note")
     }
 }
 
@@ -622,3 +603,31 @@ private enum Prompt18Type {
     static let noteBody = Font.custom("Chalkboard SE", size: 11.5, relativeTo: .caption)
     static let noteLink = Font.custom("Chalkboard SE", size: 11.5, relativeTo: .caption).weight(.semibold)
 }
+
+#if DEBUG
+struct Prompt18WheelRegressionHarness: View {
+    @State private var openedBiology = false
+    private let model: Prompt18WheelModel
+    init() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let first = calendar.date(from: DateComponents(year: 2026, month: 1, day: 1))!
+        let starts = (0...5).compactMap { calendar.date(byAdding: .day, value: $0 * 28, to: first) }
+        let now = calendar.date(byAdding: .day, value: 8, to: starts.last!)!
+        let end = calendar.date(byAdding: .day, value: 4, to: starts.last!)!
+        let prediction = Prompt17CyclePredictionEngine(calendar: calendar).calculate(from: .init(cycleStartDates: starts,
+            periodRecords: [.init(startDate: starts.last!, endDate: end)], asOfDate: now))
+        model = Prompt18CycleWheelBuilder().build(prediction: prediction)
+    }
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                Prompt18DynamicCycleWheel(model: model, revealProgress: 1, showCurrentMarker: false,
+                    onLearnWhy: { _ in openedBiology = true })
+                if openedBiology { Text("QA biology opened").accessibilityIdentifier("wheelQA.biology") }
+            }
+            .frame(maxWidth: 430).padding(20).frame(maxWidth: .infinity)
+        }
+    }
+}
+#endif

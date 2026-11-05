@@ -394,7 +394,8 @@ struct Prompt16TodayView: View {
                     .padding(.horizontal, 10)
                     .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 .accessibilityLabel(
                     "Why is my cycle wheel blank?"
                 )

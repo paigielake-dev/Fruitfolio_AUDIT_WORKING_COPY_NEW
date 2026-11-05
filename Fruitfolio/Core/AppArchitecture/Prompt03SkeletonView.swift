@@ -120,7 +120,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelQA") {
+            Prompt18WheelRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
             FruitfolioPersonalHealthRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryQA") {
             FruitfolioHormoneLibraryView(onBack: {})

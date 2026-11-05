@@ -1,6 +1,6 @@
 import Foundation
 
-struct Prompt19CalendarLoader {
+nonisolated struct Prompt19CalendarLoader: Sendable {
     var todayLoader: Prompt16TodayLoader
     var supplementalProvider: Prompt19CalendarSupplementalProvider
     var contextPolicy: Prompt27AContextPolicyResult
@@ -21,11 +21,12 @@ struct Prompt19CalendarLoader {
     ) async throws -> Prompt19CalendarSnapshot {
         async let archiveTask = todayLoader.cycleStore.snapshot()
         async let onboardingTask = todayLoader.onboardingStore.snapshot()
+        let calendar = todayLoader.calendar
+        async let supplementalTask = supplementalProvider.load(month, calendar)
 
         let archive = try await archiveTask
         let onboarding = try await onboardingTask
 
-        let calendar = todayLoader.calendar
         let engine = Prompt19CalendarEngine(calendar: calendar)
 
         let storedStarts = archive
@@ -163,7 +164,7 @@ struct Prompt19CalendarLoader {
 
         // Prompt 17 currently does not emit validated fertile/ovulation windows.
         // Those states stay absent unless a deterministic upstream provider supplies them.
-        let supplemental = try await supplementalProvider.load(month, calendar)
+        let supplemental = try await supplementalTask
         for incoming in supplemental {
             var presentationAnnotation = incoming
 

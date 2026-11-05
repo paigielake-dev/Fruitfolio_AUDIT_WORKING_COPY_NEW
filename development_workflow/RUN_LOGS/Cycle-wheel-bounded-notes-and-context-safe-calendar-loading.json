@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-11-05T22:51:01.206021+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "244 XCTest + 21 Swift Testing passed (265 total)",
+    "Swift_5_native": "248 XCTest + 21 Swift Testing passed (269 total)",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "175 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors; no Apple typecheck/link",
+    "Apple_UI": "NOT_RUN: isolated wheel accessibility harness/test added; note rendering, month interaction and scene behavior remain unverified"
+  }
+}

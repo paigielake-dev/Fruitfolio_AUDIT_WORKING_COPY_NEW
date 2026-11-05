@@ -1,7 +1,6 @@
 import XCTest
 @testable import Fruitfolio
 
-@MainActor
 final class Prompt19CalendarEngineTests: XCTestCase {
     private var calendar: Calendar {
         var c = Calendar(identifier: .gregorian)

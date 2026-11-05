@@ -2,7 +2,6 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
-@MainActor
 final class Prompt18CycleWheelTests: XCTestCase {
     private func result(
         cycleLength: Int? = 30,

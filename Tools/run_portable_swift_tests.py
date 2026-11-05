@@ -14,6 +14,13 @@ import tempfile
 
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
+    'Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelModels.swift',
+    'Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18CycleWheelBuilder.swift',
+    'Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18EstimatedIntervalAdapter.swift',
+    'Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift',
+    'Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarModels.swift',
+    'Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarEngine.swift',
+    'Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextModels.swift',
     'Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextPersistence.swift',
@@ -72,7 +79,7 @@ TESTS = [
     'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',
     'Prompt1BGGUFResourceTests.swift', 'Prompt1BLogoRevealTests.swift', 'Prompt1BSpotlightGeometryTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift', 'Prompt1BAskPaperLayoutTests.swift', 'Prompt1BEducationalArtworkTests.swift', 'Prompt1BCitationDestinationTests.swift', 'Prompt1BPendingSavePrivacyTests.swift', 'Prompt1BLibraryPersistenceTests.swift', 'Prompt1BResearchRetrievalTests.swift', 'Prompt1BResearchPackageTests.swift', 'Prompt1BEvidenceBoundaryTests.swift', 'Prompt1BResearchEngineIntegrationTests.swift', 'Prompt1BEvidenceBudgetTests.swift',
-    'Prompt1BAskUserContextTests.swift', 'Prompt1BPersonalHealthContextTests.swift', 'Prompt1BContextPersistenceTests.swift', 'Prompt27AContextPersonalizationTests.swift', 'Prompt1BHormoneAdjustmentTests.swift', 'Prompt22HormoneRhythmCoreTests.swift', 'Prompt1BHormoneLibraryTests.swift', 'Prompt1BHormonePersistenceTests.swift', 'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
+    'Prompt1BCalendarPresentationPolicyTests.swift', 'Prompt1BWheelNoteLayoutTests.swift', 'Prompt18CycleWheelTests.swift', 'Prompt19CalendarEngineTests.swift', 'Prompt1BAskUserContextTests.swift', 'Prompt1BPersonalHealthContextTests.swift', 'Prompt1BContextPersistenceTests.swift', 'Prompt27AContextPersonalizationTests.swift', 'Prompt1BHormoneAdjustmentTests.swift', 'Prompt22HormoneRhythmCoreTests.swift', 'Prompt1BHormoneLibraryTests.swift', 'Prompt1BHormonePersistenceTests.swift', 'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
     'Prompt56ResearchIntelligenceTests.swift', 'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
 ]
 

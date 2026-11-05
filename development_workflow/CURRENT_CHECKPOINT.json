@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "51380bfaf1ed35ae0c02ce92f4e383ffc261ec61",
+  "current_HEAD": "ea910a620c79475dc7b8d40b3a608e2f1a7a9fc7",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
-  "current_requirement": 292,
-  "current_implementation_batch": "Ask-explicit-one-question-context-and-native-evidence-boundaries",
+  "current_requirement": 295,
+  "current_implementation_batch": "Cycle-wheel-bounded-notes-and-context-safe-calendar-loading",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,22 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
-    "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-    "Fruitfolio/Ask/Prompt09AskModels.swift",
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
     "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-    "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
-    "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
+    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+    "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
+    "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
+    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "FruitfolioTests/Prompt18CycleWheelTests.swift",
+    "FruitfolioTests/Prompt19CalendarEngineTests.swift",
+    "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
+    "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "Tools/check_swift_syntax.py",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -521,19 +521,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "python3 -m unittest discover -s development_workflow/tests -q",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_6_headless": "215 XCTest + 21 Swift Testing passed (236 total)",
-    "Swift_5_native": "219 XCTest + 21 Swift Testing passed (240 total)",
-    "native_context": "Actual Swift/Qwen + actual corpus generated-path test passed in 12.372s; private fixture marker absent from answer/citations",
+    "Swift_6_headless": "244 XCTest + 21 Swift Testing passed (265 total)",
+    "Swift_5_native": "248 XCTest + 21 Swift Testing passed (269 total)",
     "workflow": "15 Python tests passed",
-    "Swift_syntax": "165 files, zero parser errors",
-    "Apple_UI": "NOT_RUN: explicit picker, cancellation and shared-store observation require Apple runtime"
+    "Swift_syntax": "175 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors; no Apple typecheck/link",
+    "Apple_UI": "NOT_RUN: isolated wheel accessibility harness/test added; note rendering, month interaction and scene behavior remain unverified"
   },
-  "next_exact_implementation_action": "Continue independent original-order Cycle Tracker wheel/Today responsive layout and calendar loading/transition interaction fixes; clinically reviewed free-text adaptation, adjusted-curve method, Apple runtime and MADLAD model blockers remain explicit.",
-  "updated_at": "2026-11-05T22:38:24.244012+00:00",
+  "next_exact_implementation_action": "Reduce duplicate Today archive/onboarding reads using one coherent actor snapshot and derived state, verify actual Foundation loaders where possible, then remaining calendar/logging controls and source-order backlog.",
+  "updated_at": "2026-11-05T22:51:01.206021+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

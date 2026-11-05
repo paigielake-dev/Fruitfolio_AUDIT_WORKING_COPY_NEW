@@ -22,14 +22,16 @@ struct Prompt19CalendarView: View {
     init(
         loader: Prompt19CalendarLoader? = nil,
         context: Prompt27AUserReproductiveContext = .unspecified,
-        contextPolicy: Prompt27AContextPolicyResult = Prompt27AContextPolicyResult(),
+        contextPolicy: Prompt27AContextPolicyResult? = nil,
         initialDate: Date = Date(),
         onAction: @escaping (Prompt19CalendarAction) -> Void
     ) {
-        let resolvedLoader = loader ?? Prompt19CalendarLoader()
+        var resolvedLoader = loader ?? Prompt19CalendarLoader()
+        let effectivePolicy = contextPolicy ?? resolvedLoader.contextPolicy
+        resolvedLoader.contextPolicy = effectivePolicy
         self.loader = resolvedLoader
         self.context = context
-        self.contextPolicy = contextPolicy
+        self.contextPolicy = effectivePolicy
         self.onAction = onAction
 
         var calendar = resolvedLoader.todayLoader.calendar
@@ -49,10 +51,17 @@ struct Prompt19CalendarView: View {
         Prompt19CalendarEngine(calendar: calendar)
     }
 
+    private var loadIdentity: Prompt19CalendarLoadIdentity {
+        .init(month: displayedMonth, context: contextPolicy)
+    }
+    private var presentationAnnotations: [Prompt19CalendarDateKey: Prompt19CalendarDayAnnotation] {
+        guard snapshot.month == displayedMonth else { return [:] }
+        return Prompt19CalendarPresentationPolicy.annotations(snapshot.annotations, context: contextPolicy)
+    }
     private var model: Prompt19CalendarMonthModel {
         engine.buildMonth(
             month: displayedMonth,
-            annotations: snapshot.annotations,
+            annotations: presentationAnnotations,
             today: Date(),
             selected: selectedKey
         )
@@ -104,7 +113,7 @@ struct Prompt19CalendarView: View {
                         failureMessage
                             .padding(.leading, 104)
                             .padding(.trailing, 18)
-                    } else if snapshot.annotations.isEmpty {
+                    } else if presentationAnnotations.isEmpty {
                         earlyStateMessage
                             .padding(.leading, 104)
                             .padding(.trailing, 18)
@@ -128,7 +137,7 @@ struct Prompt19CalendarView: View {
         }
         .padding(.horizontal, 2)
         .frame(maxWidth: .infinity)
-        .task(id: displayedMonth) {
+        .task(id: loadIdentity) {
             await loadMonth()
         }
         .sheet(
@@ -154,7 +163,7 @@ struct Prompt19CalendarView: View {
             if let selectedDateKey = selectedKey {
                 Prompt19DateSheet(
                     key: selectedDateKey,
-                    annotation: snapshot.annotations[selectedDateKey],
+                    annotation: presentationAnnotations[selectedDateKey],
                     calendar: calendar,
                     showPredictionNote: showPredictionNote,
                     onDismiss: {
@@ -445,22 +454,24 @@ struct Prompt19CalendarView: View {
 
     @MainActor
     private func loadMonth() async {
+        let requested = loadIdentity
+        let requestedMonth = requested.month
         loadState = .loading
 
         do {
             let loaded =
                 try await loader.load(
-                    month: displayedMonth
+                    month: requestedMonth
                 )
 
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, requested.accepts(loaded, current: loadIdentity) else {
                 return
             }
 
             snapshot = loaded
             loadState = .loaded
         } catch {
-            guard !Task.isCancelled else {
+            guard !Task.isCancelled, requested == loadIdentity else {
                 return
             }
 
@@ -1254,7 +1265,7 @@ private struct Prompt19SheetActionButton:
             )
         }
         .buttonStyle(
-            Prompt19GentlePressStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     motionPreferences
                         .reduceMotionActive
@@ -1432,7 +1443,7 @@ private struct Prompt19MonthControl:
             )
         }
         .buttonStyle(
-            Prompt19GentlePressStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     motionPreferences
                         .reduceMotionActive
