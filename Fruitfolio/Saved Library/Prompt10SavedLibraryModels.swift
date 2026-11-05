@@ -237,6 +237,7 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
     case chapterNotFound
     case pageNotFound
     case persistenceFailure
+    case unreadableStorage
 
     var errorDescription: String? {
         switch self {
@@ -252,6 +253,8 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
             return "that saved page could not be found."
         case .persistenceFailure:
             return "that change didn’t settle properly."
+        case .unreadableStorage:
+            return "your saved library couldn’t be opened. the original data has been kept, and changes are paused."
         }
     }
 }

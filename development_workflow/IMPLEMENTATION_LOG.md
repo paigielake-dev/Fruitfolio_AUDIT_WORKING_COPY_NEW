@@ -464,3 +464,14 @@
 - Verification: {"portable_swift": "56 XCTest + 21 Swift Testing passed (77 total)", "workflow": "11 Python tests passed", "Swift_syntax": "111 files, zero parser errors", "Apple_selection_and_save_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Protect library persistence from failed saves/corrupt loads, index supplemental founder requirements, then continue original source-order backlog.
 - Commit: containing commit for batch P3-explicit-scientific-illustration-save-payloads.
+
+## P4-library-commit-rollback-and-corruption-protection
+
+- Parent checkpoint: 4afefc67b102dde2755d185902c7661ee56ed0ad.
+- Source-order requirements: [119, 124, 125, 126, 127, 128, 198, 199, 200, 201, 202, 206, 207, 209, 210].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift, Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift.
+- Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.
+- Tests added/updated: Prompt1BLibraryPersistenceTests, Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes.
+- Verification: {"portable_swift": "58 XCTest + 21 Swift Testing passed (79 total)", "workflow": "11 Python tests passed", "Swift_syntax": "115 files, zero parser errors", "Apple_store_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Index supplemental founder requirements without changing original 478 entries; continue retrieval/generation performance and canonical voice, then library requirements.
+- Commit: containing commit for batch P4-library-commit-rollback-and-corruption-protection.

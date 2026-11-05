@@ -95,12 +95,17 @@ struct Prompt11GuideBuilderView: View {
             VStack(spacing: 18) {
                 homeHeader
 
-                homeEnvironment
-
-                if store.prompt11Guides.isEmpty {
-                    emptyState
+                if store.storageUnreadable {
+                    FruitfolioSemanticText(markdown: Prompt10LibraryError.unreadableStorage.localizedDescription,
+                                           baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body))
                 } else {
-                    guideGrid
+                    homeEnvironment
+
+                    if store.prompt11Guides.isEmpty {
+                        emptyState
+                    } else {
+                        guideGrid
+                    }
                 }
             }
             .padding(.horizontal, 20)

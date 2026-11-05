@@ -10,16 +10,16 @@ final class Prompt10SavedLibraryStore: ObservableObject {
 
     @Published private(set) var encyclopedias: [Prompt10Encyclopedia] = []
 
-    private let defaults: UserDefaults
-    private let persistenceKey: String
+    @Published private(set) var storageUnreadable = false
+    private var persistence: Prompt10SavedLibraryPersistence
 
     init(
         defaults: UserDefaults = .standard,
         persistenceKey: String = "fruitfolio.prompt10.savedLibrary.v2"
     ) {
-        self.defaults = defaults
-        self.persistenceKey = persistenceKey
-        load()
+        self.persistence = Prompt10SavedLibraryPersistence(defaults: defaults, key: persistenceKey)
+        self.encyclopedias = persistence.committed
+        self.storageUnreadable = persistence.storageUnreadable
     }
 
     var count: Int {
@@ -546,41 +546,11 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         try persist()
     }
 
-    private func load() {
-        guard let data =
-                defaults.data(
-                    forKey: persistenceKey
-                )
-        else {
-            encyclopedias = []
-            return
-        }
-
-        do {
-            encyclopedias =
-                try JSONDecoder().decode(
-                    [Prompt10Encyclopedia].self,
-                    from: data
-                )
-        } catch {
-            encyclopedias = []
-        }
-    }
-
     private func persist() throws {
-        do {
-            let data =
-                try JSONEncoder().encode(
-                    encyclopedias
-                )
-
-            defaults.set(
-                data,
-                forKey: persistenceKey
-            )
-        } catch {
-            throw Prompt10LibraryError
-                .persistenceFailure
+        do { try persistence.commit(encyclopedias) }
+        catch {
+            encyclopedias = persistence.committed
+            throw error
         }
     }
 

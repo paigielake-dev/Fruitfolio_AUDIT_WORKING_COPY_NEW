@@ -17,6 +17,7 @@ SOURCES = [
     'Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift',
     'Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift',
     'Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift',
+    'Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift',
     'Fruitfolio/LifeBridge/LifeBridgeInformation.swift',
@@ -41,7 +42,7 @@ TESTS = [
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',
     'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',
     'Prompt1BGGUFResourceTests.swift', 'Prompt1BLogoRevealTests.swift', 'Prompt1BSpotlightGeometryTests.swift',
-    'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift', 'Prompt1BAskPaperLayoutTests.swift', 'Prompt1BEducationalArtworkTests.swift', 'Prompt1BCitationDestinationTests.swift', 'Prompt1BPendingSavePrivacyTests.swift',
+    'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift', 'Prompt1BAskPaperLayoutTests.swift', 'Prompt1BEducationalArtworkTests.swift', 'Prompt1BCitationDestinationTests.swift', 'Prompt1BPendingSavePrivacyTests.swift', 'Prompt1BLibraryPersistenceTests.swift',
     'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
     'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
 ]

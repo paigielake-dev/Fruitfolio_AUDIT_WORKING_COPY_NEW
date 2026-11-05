@@ -36,7 +36,10 @@ struct Prompt10AskSaveDestination: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                if store.encyclopedias.isEmpty {
+                if store.storageUnreadable {
+                    FruitfolioSemanticText(markdown: Prompt10LibraryError.unreadableStorage.localizedDescription,
+                                           baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body))
+                } else if store.encyclopedias.isEmpty {
                     Text(
                         "make your first little encyclopedia ♡"
                     )

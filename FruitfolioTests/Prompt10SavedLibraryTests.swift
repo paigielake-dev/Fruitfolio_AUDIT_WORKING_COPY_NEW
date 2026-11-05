@@ -89,6 +89,18 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
+    func testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes() throws {
+        let book = try store.createEncyclopedia(name: "existing", style: .sage)
+        let chapter = try XCTUnwrap(book.chapters.first)
+        let before = store.encyclopedias
+        let bytes = defaults.data(forKey: key)
+        let invalid = Prompt10SavedPage(chapterID: chapter.id, question: "question", answer: "unsaved",
+            saveType: .fullAnswer, generationTimestamp: Date(timeIntervalSinceReferenceDate: .infinity))
+        XCTAssertThrowsError(try store.savePage(invalid, to: book.id, chapterID: chapter.id))
+        XCTAssertEqual(store.encyclopedias, before)
+        XCTAssertEqual(defaults.data(forKey: key), bytes)
+    }
+
     func testBlankTitleIsRejected() {
         XCTAssertThrowsError(
             try store.createEncyclopedia(
