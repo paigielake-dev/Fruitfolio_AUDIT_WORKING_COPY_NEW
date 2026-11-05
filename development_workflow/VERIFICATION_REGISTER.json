@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T22:51:01.206021+00:00",
+  "updated_at": "2026-11-05T22:52:07.952575+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1036,6 +1036,21 @@
         "Apple_UI": "NOT_RUN: isolated wheel accessibility harness/test added; note rendering, month interaction and scene behavior remain unverified"
       },
       "timestamp": "2026-11-05T22:51:01.206021+00:00"
+    },
+    {
+      "batch": "Verified-local-Git-bundle-recovery-workflow",
+      "commands": [
+        "python3 -m unittest discover -s development_workflow/tests -q",
+        "git diff --check",
+        "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
+      ],
+      "results": {
+        "workflow": "16 Python tests passed, including independent Git fixture recovery and dirty-state refusal",
+        "Swift": "unchanged; prior 265 headless / 269 native checks remain latest verified",
+        "real_bundle": "created after this clean checkpoint; inspect external SHA-256 manifest",
+        "limits": "Local Git artifact only; retain/download it, restore prerequisite/LFS separately; no cloud persistence guarantee"
+      },
+      "timestamp": "2026-11-05T22:52:07.952575+00:00"
     }
   ]
 }

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "ea910a620c79475dc7b8d40b3a608e2f1a7a9fc7",
+  "current_HEAD": "e0c0d3949a073e6e97481c9aa112fedf228bef78",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
   "current_requirement": 295,
-  "current_implementation_batch": "Cycle-wheel-bounded-notes-and-context-safe-calendar-loading",
+  "current_implementation_batch": "Verified-local-Git-bundle-recovery-workflow",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,9 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
-    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarPresentationPolicy.swift",
-    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18DynamicCycleWheel.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Wheel/Prompt18WheelNoteLayout.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift",
-    "FruitfolioTests/Prompt18CycleWheelTests.swift",
-    "FruitfolioTests/Prompt19CalendarEngineTests.swift",
-    "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
-    "FruitfolioTests/Prompt1BWheelNoteLayoutTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/check_swift_syntax.py",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Tools/create_local_recovery_bundle.py",
+    "development_workflow/RECOVERY_PROTOCOL.md",
+    "development_workflow/tests/test_recovery_bundle.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -521,20 +508,17 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
-    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "python3 -m unittest discover -s development_workflow/tests -q",
-    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "git diff --check"
+    "git diff --check",
+    "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
   ],
   "last_test_results": {
-    "Swift_6_headless": "244 XCTest + 21 Swift Testing passed (265 total)",
-    "Swift_5_native": "248 XCTest + 21 Swift Testing passed (269 total)",
-    "workflow": "15 Python tests passed",
-    "Swift_syntax": "175 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors; no Apple typecheck/link",
-    "Apple_UI": "NOT_RUN: isolated wheel accessibility harness/test added; note rendering, month interaction and scene behavior remain unverified"
+    "workflow": "16 Python tests passed, including independent Git fixture recovery and dirty-state refusal",
+    "Swift": "unchanged; prior 265 headless / 269 native checks remain latest verified",
+    "real_bundle": "created after this clean checkpoint; inspect external SHA-256 manifest",
+    "limits": "Local Git artifact only; retain/download it, restore prerequisite/LFS separately; no cloud persistence guarantee"
   },
-  "next_exact_implementation_action": "Reduce duplicate Today archive/onboarding reads using one coherent actor snapshot and derived state, verify actual Foundation loaders where possible, then remaining calendar/logging controls and source-order backlog.",
-  "updated_at": "2026-11-05T22:51:01.206021+00:00",
+  "next_exact_implementation_action": "Create verified /workspace/recovery/Fruitfolio-prompt-1b.bundle from the containing commit, then implement one coherent Today snapshot to remove redundant reads and retain deterministic context/prediction semantics.",
+  "updated_at": "2026-11-05T22:52:07.952575+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

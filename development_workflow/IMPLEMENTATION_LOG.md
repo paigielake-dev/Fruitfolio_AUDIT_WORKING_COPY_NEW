@@ -717,3 +717,14 @@
 - Verification: {"Swift_6_headless": "244 XCTest + 21 Swift Testing passed (265 total)", "Swift_5_native": "248 XCTest + 21 Swift Testing passed (269 total)", "workflow": "15 Python tests passed", "Swift_syntax": "175 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors; no Apple typecheck/link", "Apple_UI": "NOT_RUN: isolated wheel accessibility harness/test added; note rendering, month interaction and scene behavior remain unverified"}.
 - Next action: Reduce duplicate Today archive/onboarding reads using one coherent actor snapshot and derived state, verify actual Foundation loaders where possible, then remaining calendar/logging controls and source-order backlog.
 - Commit: containing commit for batch Cycle-wheel-bounded-notes-and-context-safe-calendar-loading.
+
+## Verified-local-Git-bundle-recovery-workflow
+
+- Parent checkpoint: e0c0d3949a073e6e97481c9aa112fedf228bef78.
+- Source-order requirements: [].
+- Source files: Tools/create_local_recovery_bundle.py, development_workflow/RECOVERY_PROTOCOL.md.
+- Added a local-only recovery bundle command that refuses dirty/different-branch state, uses a verified common prerequisite, validates the expected tip and writes SHA-256/restore metadata outside the checkout. A real Git fixture test restores into another repository verified to lack the checkpoint commit before bundle fetch, and verifies dirty changes are preserved on refusal. No network, push, merge or credential changes. Bundles contain Git objects only, not fetched LFS assets, and local files do not establish remote/cloud durability. Actual environment bundle is created immediately after this clean checkpoint.
+- Tests added/updated: RecoveryBundleTests.
+- Verification: {"workflow": "16 Python tests passed, including independent Git fixture recovery and dirty-state refusal", "Swift": "unchanged; prior 265 headless / 269 native checks remain latest verified", "real_bundle": "created after this clean checkpoint; inspect external SHA-256 manifest", "limits": "Local Git artifact only; retain/download it, restore prerequisite/LFS separately; no cloud persistence guarantee"}.
+- Next action: Create verified /workspace/recovery/Fruitfolio-prompt-1b.bundle from the containing commit, then implement one coherent Today snapshot to remove redundant reads and retain deterministic context/prediction semantics.
+- Commit: containing commit for batch Verified-local-Git-bundle-recovery-workflow.
