@@ -177,3 +177,13 @@
 - Verification: {"workflow": "3 passed", "shell_syntax": "passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Make Fruit Basket finalization idempotent and ensure interruptions cannot resume a round that has already ended; preserve exact bad-fruit star-pass behavior.
 - Commit: containing commit for batch P6-period-count-confidence-boundaries.
+
+## P7-owned-round-finalization
+
+- Parent checkpoint: e1b17aa66cf812b4b2942d292297da56809a344b.
+- Source-order requirements: [326, 327, 330, 331, 332, 333, 334, 338, 365, 366, 367].
+- Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.
+- Tests added/updated: Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice, Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Review remaining FAQ/contact interactions, then implement MADLAD encoder-decoder inference and localization support validation with actual model/runtime constraints.
+- Commit: containing commit for batch P7-owned-round-finalization.

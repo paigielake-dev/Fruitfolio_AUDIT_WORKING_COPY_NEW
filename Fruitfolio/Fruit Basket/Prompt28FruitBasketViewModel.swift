@@ -27,6 +27,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     private var spawnPlanner = Prompt28SpawnPlanner()
     private var lastSpawnAt = Date.distantPast
     private var roundResultLocked = false
+    private var roundID = UUID()
+    private var finalizedRoundID: UUID?
+    private var pendingRoundSuccess: Bool?
 
     init(
         store: Prompt28FruitBasketStore,
@@ -186,6 +189,9 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         classificationFruit = nil
         basketX = 0.5
         roundResultLocked = false
+        isPaused = false
+        roundID = UUID()
+        pendingRoundSuccess = nil
         spawnPlanner.reset()
         lastSpawnAt = .distantPast
         screen = .catchActive
@@ -241,6 +247,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func pause() {
+        if roundResultLocked { resolvePendingRound(); return }
         guard screen == .catchActive else { return }
         isPaused = true
         gameplayTask?.cancel()
@@ -249,7 +256,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func resume() {
-        guard screen == .paused else { return }
+        guard screen == .paused, !roundResultLocked else { return }
         isPaused = false
         screen = .catchActive
         if store.controlMode == .catchMode { startGameplayLoop() }
@@ -300,7 +307,20 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
     }
 
     func sceneBecameInactive() {
-        if screen == .catchActive { pause() }
+        if roundResultLocked { resolvePendingRound() }
+        else if screen == .catchActive { pause() }
+    }
+
+    func leaveScreen() {
+        sceneBecameInactive()
+        stopGameplay()
+    }
+
+    private func resolvePendingRound() {
+        guard let success = pendingRoundSuccess else { return }
+        roundCompletionTask?.cancel()
+        if success { finishSuccessfulRound(expectedRoundID: roundID) }
+        else { finishUnsuccessfulRound(expectedRoundID: roundID) }
     }
 
     func savePendingContent() -> Prompt10PendingSavedContent? {
@@ -463,12 +483,14 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         self.session = session
         if outcome == .success {
             roundResultLocked = true
+            pendingRoundSuccess = true
+            let completedRoundID = roundID
             stopGameplay()
             roundCompletionTask?.cancel()
             roundCompletionTask = Task { [weak self] in
                 try? await Task.sleep(nanoseconds: 650_000_000)
                 guard !Task.isCancelled, let self else { return }
-                self.finishSuccessfulRound()
+                self.finishSuccessfulRound(expectedRoundID: completedRoundID)
             }
         }
     }
@@ -502,18 +524,23 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         lastBadFruit = fruit
         if case .badFruitBlockedByStar = outcome { return }
         roundResultLocked = true
+        pendingRoundSuccess = false
+        let completedRoundID = roundID
         stopGameplay()
         activeFruit.removeAll(); activeStars.removeAll(); classificationFruit = nil
         roundCompletionTask?.cancel()
         roundCompletionTask = Task { [weak self] in
             try? await Task.sleep(nanoseconds: 280_000_000)
             guard !Task.isCancelled, let self else { return }
-            self.finishUnsuccessfulRound()
+            self.finishUnsuccessfulRound(expectedRoundID: completedRoundID)
         }
     }
 
-    private func finishSuccessfulRound() {
-        guard var session else { return }
+    private func finishSuccessfulRound(expectedRoundID: UUID) {
+        guard expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
+              pendingRoundSuccess == true, var session else { return }
+        finalizedRoundID = expectedRoundID
+        pendingRoundSuccess = nil
         var progress = store.ensureProgress(for: session.normalizedTopicID)
         progress.totalRoundsCompleted += 1
         progress.totalSuccessfulRounds += 1
@@ -530,8 +557,11 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
         screen = .basketReveal
     }
 
-    private func finishUnsuccessfulRound() {
-        guard var session else { return }
+    private func finishUnsuccessfulRound(expectedRoundID: UUID) {
+        guard expectedRoundID == roundID, finalizedRoundID != expectedRoundID,
+              pendingRoundSuccess == false, var session else { return }
+        finalizedRoundID = expectedRoundID
+        pendingRoundSuccess = nil
         var progress = store.ensureProgress(for: session.normalizedTopicID)
         progress.totalRoundsCompleted += 1
         progress.bestScore = max(progress.bestScore, session.score)

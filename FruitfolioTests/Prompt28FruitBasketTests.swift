@@ -5,6 +5,45 @@ import XCTest
 final class Prompt28FruitBasketTests: XCTestCase {
     private let engine = Prompt28FruitBasketEngine()
 
+    private func roundModel(starPasses: Int = 0) -> Prompt28FruitBasketViewModel {
+        let store = Prompt28FruitBasketStore(defaults: UserDefaults(suiteName: UUID().uuidString)!)
+        store.controlMode = .classification
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.currentQuestion = fixtureQuestion()
+        model.session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .easy, startingLevel: 1)
+        model.session?.availableStarPasses = starPasses
+        model.beginCatch()
+        return model
+    }
+
+    func testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice() async throws {
+        let model = roundModel()
+        model.classificationFruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        model.sceneBecameInactive()
+        model.resume()
+        model.sceneBecameInactive()
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertEqual(model.screen, .catchUnsuccessful)
+        XCTAssertEqual(model.store.progress(for: "demo")?.totalRoundsCompleted, 1)
+        XCTAssertEqual(model.store.progress(for: "demo")?.totalSuccessfulRounds, 0)
+    }
+
+    func testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume() {
+        let model = roundModel(starPasses: 2)
+        model.classificationFruit = Prompt28FallingFruit(fruitID: .lemon, classification: .bad,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        XCTAssertEqual(model.screen, .catchActive)
+        model.sceneBecameInactive()
+        model.resume()
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertEqual(model.session?.availableStarPasses, 1)
+        model.leaveScreen()
+    }
+
     func testCanonicalRoundRulesNeverScaleTarget() {
         XCTAssertEqual(Prompt28FruitBasketEngine.goodFruitTarget, 10)
         XCTAssertEqual(Prompt28RoundRules.canonical.goodFruitTarget, 10)

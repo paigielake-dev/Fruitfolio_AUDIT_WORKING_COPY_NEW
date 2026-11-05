@@ -6431,15 +6431,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Preserve the required order: answer the question \u2192 catch fruit \u2192 reveal basket.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 327,
@@ -6447,15 +6455,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make the game distinguish between good fruit, bad fruit, and standalone stars.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 328,
@@ -6495,15 +6511,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Make each collected star grant one star pass.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 331,
@@ -6511,15 +6535,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Allow star passes to accumulate without a fixed maximum.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 332,
@@ -6527,15 +6559,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Consume exactly one star pass when a bad-fruit catch triggers its protective use.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 333,
@@ -6543,15 +6583,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Allow the round to continue when a star pass protects against an otherwise round-ending bad-fruit catch.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 334,
@@ -6559,15 +6607,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Do not count standalone stars toward the good-fruit basket target.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 335,
@@ -6623,15 +6679,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Update all game instructions and feedback to reflect the implemented star-pass rules.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 339,
@@ -7055,15 +7119,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Keep gameplay challenging but not excessively demanding.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 366,
@@ -7071,15 +7143,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Trigger basket reveal after the actual round finishes.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 367,
@@ -7087,15 +7167,23 @@
       "original_checklist_part": "Part 7 \u2014 Fruit Basket",
       "original_section": null,
       "description": "Include accumulated fruit, stars, rewards, and consequences in the result.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt28FruitBasketTests/testBadFruitWithoutPassCannotResumeAfterInterruptionOrFinalizeTwice",
+        "Prompt28FruitBasketTests/testBadFruitWithPassConsumesOneAndContinuesThroughPauseResume"
+      ],
+      "commit_reference": "batch:P7-owned-round-finalization (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion."
+      ],
+      "last_updated": "2026-11-05T18:57:53.164725+00:00"
     },
     {
       "sequence": 368,

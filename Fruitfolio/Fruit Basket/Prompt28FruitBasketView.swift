@@ -122,6 +122,7 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
