@@ -113,9 +113,7 @@ struct Prompt10SavedLibraryView: View {
                     if store.encyclopedias.isEmpty {
                         emptyState
                     } else {
-                        if store.encyclopedias.count >= 13 {
-                            managementTools
-                        }
+                        managementTools
 
                         encyclopediaGrid
 
@@ -173,9 +171,7 @@ struct Prompt10SavedLibraryView: View {
 
     private var composedLibraryHero: some View {
         ZStack {
-            Prompt10LibraryHero(
-                isEmpty: store.encyclopedias.isEmpty
-            )
+            Prompt10LibraryHero()
             .scaleEffect(1.10)
 
             // Pink washed-out flower — upper left
@@ -233,15 +229,13 @@ struct Prompt10SavedLibraryView: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 310)
-        .accessibilityElement(
-            children: .contain
-        )
+        .accessibilityHidden(true)
         .padding(.vertical, 2)
     }
 
     private var emptyState: some View {
         VStack(spacing: 10) {
-            Text("nothing here yet ✿")
+            Text("nothing here yet! ☆")
                 .font(
                     .custom(
                         "Chalkboard SE",

@@ -563,3 +563,14 @@
 - Verification: {"Swift_6_headless": "88 XCTest + 21 Swift Testing passed (109 total)", "Swift_5_native": "91 XCTest + 21 Swift Testing passed (112 total)", "workflow": "15 Python tests passed", "Swift_syntax": "128 files, zero parser errors", "native_corpus_generated": "10.572s Linux CPU; generated path asserted, not fallback", "Apple_UI_and_MADLAD": "NOT_RUN; existing blockers remain"}.
 - Next action: Implement original source-order library requirements 168 onward: save transition treatment, canonical identical decorative shelf, accessible sorting, title/description validation; continue remaining original backlog.
 - Commit: containing commit for batch Ask-compact-native-evidence-selection-and-exact-attribution.
+
+## Library-canonical-shelf-and-accessible-sorting
+
+- Parent checkpoint: 6423ddf1803f2056b389d13bc18e76f80bd465fa.
+- Source-order requirements: [170, 171, 172, 173, 174, 175].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift.
+- Removed the populated-only duplicate book stack and plant from the shared decorative hero, so saved and empty libraries use the same unchanged decorative composition and keep actual books in the separate collection. Applied exact founder empty-state wording. Search/sort are available from the first saved encyclopedia rather than hidden below thirteen books; sort announces its current value, expansion state and selected option. Decorative shelf is hidden from accessibility. Source syntax verified; Apple UI compilation, VoiceOver and screenshot comparison are not available on Linux.
+- Tests added/updated: .
+- Verification: {"Swift_syntax": "128 files, zero parser errors", "diff": "passed", "Apple_UI": "NOT_RUN: Apple SDK absent; VoiceOver and visual acceptance remain open"}.
+- Next action: Add shared grapheme-counted title/description validation with clear limits and bounded non-explicit rules that preserve legitimate sexual-health terminology, then continuous coded book transition requirements.
+- Commit: containing commit for batch Library-canonical-shelf-and-accessible-sorting.

@@ -67,8 +67,6 @@ struct Prompt10BookTile: View {
 }
 
 struct Prompt10LibraryHero: View {
-    let isEmpty: Bool
-
     var body: some View {
         ZStack {
             Prompt10LibraryAssetImage(
@@ -77,25 +75,7 @@ struct Prompt10LibraryHero: View {
             .frame(maxWidth: 310)
             .accessibilityHidden(true)
 
-            if !isEmpty {
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookStack
-                    )
-                    .frame(width: 72)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .pottedPlant
-                    )
-                    .frame(width: 64)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 12)
-                .offset(y: 48)
-            }
         }
         .frame(
             maxWidth: .infinity,
@@ -200,9 +180,9 @@ struct Prompt10SortPicker: View {
                     reduceMotion: reduceMotion
                 )
             )
-            .accessibilityLabel(
-                "Sort, \(sort.label)"
-            )
+            .accessibilityLabel("sort encyclopedias")
+            .accessibilityValue("\(sort.label), \(expanded ? "expanded" : "collapsed")")
+            .accessibilityHint(expanded ? "hides sorting choices" : "shows sorting choices")
 
             if expanded {
                 VStack(spacing: 2) {
@@ -242,6 +222,8 @@ struct Prompt10SortPicker: View {
                             .padding(.horizontal, 12)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel(option.label)
+                        .accessibilityAddTraits(option == sort ? .isSelected : [])
                     }
                 }
                 .padding(.vertical, 6)
