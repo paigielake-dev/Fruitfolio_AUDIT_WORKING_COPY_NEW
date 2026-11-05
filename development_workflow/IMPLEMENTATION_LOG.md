@@ -277,3 +277,14 @@
 - Verification: {"portable_swift": "22 XCTest + 21 Swift Testing cases passed (43 total)", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
 - Next action: Repair semantic emphasis during partial streamed Markdown and preserve formatted excerpts, then continue localization catalog completeness and remaining context/education requirements.
 - Commit: containing commit for batch P4-strawberry-save-confirmation.
+
+## P10-native-runtime-recovery-and-apple-package
+
+- Parent checkpoint: 2a0f59b7dfebe32db02515a34dc5115be2166229.
+- Source-order requirements: [129, 136, 418, 419, 427, 428, 430, 441, 445, 446, 447, 448, 454, 466, 467, 475, 476, 477].
+- Source files: Fruitfolio.xcodeproj/project.pbxproj, Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, Tools/build_llama_xcframework_mac.sh, Tools/typecheck_madlad_api.py, Tools/verify_apple_runtime.py, Tools/validate_xcode_project.swift, Tools/run_portable_swift_tests.py.
+- Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.
+- Tests added/updated: Prompt1BGGUFResourceTests, AppleRuntimePackagingTests, Prompt1BSemanticSliceTests.
+- Verification: {"Ask_model_CPU": "PASS: actual verified GGUF generated a hello; exit 0; 0.518s wall; max RSS 566264KiB", "MADLAD_C_API_typecheck": "PASS; no Apple linking/inference", "project_metadata": "OpenStep parsed; target build-file references resolved", "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total)", "workflow_and_packaging": "9 passed", "shell_syntax": "passed", "diff": "passed", "Apple_runtime": "NOT_RUN; device/simulator XCFramework not yet built", "MADLAD_model_inference": "BLOCKED: official resources unavailable through current network policy"}.
+- Next action: Commit and continue the already-prepared semantic-span streaming integration after its portable slice tests; implement formatting-preserving saved excerpts and remaining original requirements.
+- Commit: containing commit for batch P10-native-runtime-recovery-and-apple-package.

@@ -13,6 +13,8 @@ import tempfile
 
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
+    'Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift',
+    'Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift',
     'Fruitfolio/LifeBridge/LifeBridgeInformation.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift',
@@ -31,6 +33,8 @@ SOURCES = [
 TESTS = [
     'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',
+    'Prompt1BSemanticSliceTests.swift',
+    'Prompt1BGGUFResourceTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift',
     'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',
     'Prompt1BMADLADManifestTests.swift', 'Prompt1BScientificTranslationTests.swift',
@@ -60,6 +64,7 @@ let package = Package(name: "FruitfolioPortableChecks", products: [], targets: [
 ])
 ''')
         environment = os.environ.copy()
+        environment['FRUITFOLIO_TEST_MODEL_PATH'] = str(root / 'FruitfolioAI.gguf')
         environment['CLANG_MODULE_CACHE_PATH'] = str(work / 'module-cache')
         environment['SWIFTPM_MODULECACHE_OVERRIDE'] = str(work / 'module-cache')
         environment['XDG_CACHE_HOME'] = str(work / 'xdg-cache')

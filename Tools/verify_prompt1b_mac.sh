@@ -6,6 +6,7 @@ if ! command -v xcodebuild >/dev/null; then
   exit 2
 fi
 : "${FRUITFOLIO_TEST_DESTINATION:?Set FRUITFOLIO_TEST_DESTINATION to platform=iOS Simulator,id=<available simulator UDID>}"
+python3 Tools/verify_apple_runtime.py
 xcodebuild -version
 xcodebuild -list -project Fruitfolio.xcodeproj
 result="${TMPDIR:-/tmp}/Fruitfolio-Prompt1B-$(date +%Y%m%dT%H%M%S)-$$.xcresult"

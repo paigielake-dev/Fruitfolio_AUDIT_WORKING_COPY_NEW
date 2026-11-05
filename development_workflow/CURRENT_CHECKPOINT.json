@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "2e3bc7819ccdc28a0ab3f3826b157e9b7245581b",
+  "current_HEAD": "2a0f59b7dfebe32db02515a34dc5115be2166229",
   "latest_verified_commit": null,
-  "current_checklist_part": 4,
-  "current_requirement": 46,
-  "current_implementation_batch": "P4-strawberry-save-confirmation",
+  "current_checklist_part": 10,
+  "current_requirement": 60,
+  "current_implementation_batch": "P10-native-runtime-recovery-and-apple-package",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,25 +493,62 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+    ".gitignore",
+    "Fruitfolio.xcodeproj/project.pbxproj",
+    "Fruitfolio/Ask/Prompt09AskView.swift",
+    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "FruitfolioTests/Prompt1BGGUFResourceTests.swift",
+    "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+    "Tools/build_llama_xcframework_mac.sh",
+    "Tools/run_portable_swift_tests.py",
+    "Tools/typecheck_madlad_api.py",
+    "Tools/validate_xcode_project.swift",
+    "Tools/verify_apple_runtime.py",
+    "Tools/verify_prompt1b_mac.sh",
+    "development_workflow/BLOCKERS.md",
+    "development_workflow/MADLAD_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/NATIVE_RUNTIME_VERIFICATION.md",
+    "development_workflow/PERFORMANCE_LOG.md",
+    "development_workflow/RUN_LOGS/Ask-model-CPU-smoke-result.json",
+    "development_workflow/RUN_LOGS/Ask-model-CPU-smoke.stderr",
+    "development_workflow/RUN_LOGS/Ask-model-CPU-smoke.stdout",
+    "development_workflow/RUN_LOGS/MADLAD-C-API-typecheck.log",
+    "development_workflow/tests/test_apple_runtime_packaging.py"
   ],
   "known_blockers": [
-    "Linux: Swift and Xcode unavailable",
-    "GGUF checkout is an LFS pointer, not model bytes",
-    "No MADLAD model/tokenizer resources located"
+    "Xcode/Apple SDK and iOS UI tests unavailable on Linux",
+    "MADLAD official weights/tokenizer blocked by huggingface.co proxy 403; domain draft immutable",
+    "Device/simulator llama.xcframework must be built on Mac; supplied framework is simulator-only",
+    "Approved LifeBridge snapshots from both founder-specified sources absent",
+    "Canonical FAQ tulip not found in supplied assets",
+    "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
+    "git lfs fetch/checkout and explicit SHA-256 verification",
+    "vendored llama-simple CPU model smoke",
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "swift Tools/validate_xcode_project.swift",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
-    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+    "bash -n Tools/build_llama_xcframework_mac.sh",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_swift": "22 XCTest + 21 Swift Testing cases passed (43 total)",
-    "Swift_syntax": "zero parser errors; not an iOS build",
+    "Ask_model_CPU": "PASS: actual verified GGUF generated a hello; exit 0; 0.518s wall; max RSS 566264KiB",
+    "MADLAD_C_API_typecheck": "PASS; no Apple linking/inference",
+    "project_metadata": "OpenStep parsed; target build-file references resolved",
+    "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total)",
+    "workflow_and_packaging": "9 passed",
+    "shell_syntax": "passed",
     "diff": "passed",
-    "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"
+    "Apple_runtime": "NOT_RUN; device/simulator XCFramework not yet built",
+    "MADLAD_model_inference": "BLOCKED: official resources unavailable through current network policy"
   },
-  "next_exact_implementation_action": "Repair semantic emphasis during partial streamed Markdown and preserve formatted excerpts, then continue localization catalog completeness and remaining context/education requirements.",
-  "updated_at": "2026-11-05T19:29:34.751509+00:00"
+  "next_exact_implementation_action": "Commit and continue the already-prepared semantic-span streaming integration after its portable slice tests; implement formatting-preserving saved excerpts and remaining original requirements.",
+  "updated_at": "2026-11-05T19:42:14.103606+00:00"
 }

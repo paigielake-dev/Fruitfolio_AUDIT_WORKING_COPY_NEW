@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2EEA86E7306065DB00BCEB7D /* FruitfolioAI.gguf in Resources */ = {isa = PBXBuildFile; fileRef = 2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */; };
 		3A1000000000000000000002 /* llama.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1000000000000000000001 /* llama.xcframework */; };
-		3A1000000000000000000003 /* llama.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3A1000000000000000000001 /* llama.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,24 +28,11 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		3A1000000000000000000005 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				3A1000000000000000000003 /* llama.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
+
 
 /* Begin PBXFileReference section */
-		2E756F3E307C0BC500D6B9DA /* llama.swiftui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = llama.swiftui.xcodeproj; sourceTree = "<group>"; };
 		2EEA86E6306065DB00BCEB7D /* FruitfolioAI.gguf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FruitfolioAI.gguf; sourceTree = "<group>"; };
-		3A1000000000000000000001 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = llama.xcframework; path = "/Users/paigelake/Desktop/llama.xcframework"; sourceTree = "<absolute>"; };
+		3A1000000000000000000001 /* llama.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = llama.xcframework; path = Fruitfolio/Frameworks/llama.xcframework; sourceTree = "<group>"; };
 		A00000000000000000000001 /* Fruitfolio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fruitfolio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000002 /* FruitfolioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FruitfolioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00000000000000000000003 /* FruitfolioUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FruitfolioUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +43,8 @@
             isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
             membershipExceptions = (
                 "llama.cpp",
+                "Frameworks/llama.framework",
+                "Frameworks/llama.xcframework",
             );
             target = E00000000000000000000001 /* Fruitfolio */;
         };
@@ -109,13 +97,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E757C8E307C0BC500D6B9DA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D00000000000000000000001 = {
 			isa = PBXGroup;
 			children = (
@@ -147,7 +128,6 @@
 			buildPhases = (
 				C00000000000000000000004 /* Sources */,
 				C00000000000000000000001 /* Frameworks */,
-				3A1000000000000000000005 /* Embed Frameworks */,
 				C00000000000000000000005 /* Resources */,
 			);
 			buildRules = (
@@ -245,12 +225,6 @@
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D00000000000000000000002 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 2E757C8E307C0BC500D6B9DA /* Products */;
-					ProjectRef = 2E756F3E307C0BC500D6B9DA /* llama.swiftui.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E00000000000000000000001 /* Fruitfolio */,
@@ -373,7 +347,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/paigelake/Desktop",
+					"$(PROJECT_DIR)/Fruitfolio/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Fruitfolio;
@@ -404,7 +378,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/paigelake/Desktop",
+					"$(PROJECT_DIR)/Fruitfolio/Frameworks",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Fruitfolio;

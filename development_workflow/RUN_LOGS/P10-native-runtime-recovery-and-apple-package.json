@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-05T19:42:14.103606+00:00",
+  "commands": [
+    "git lfs fetch/checkout and explicit SHA-256 verification",
+    "vendored llama-simple CPU model smoke",
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "swift Tools/validate_xcode_project.swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+    "bash -n Tools/build_llama_xcframework_mac.sh",
+    "git diff --check"
+  ],
+  "results": {
+    "Ask_model_CPU": "PASS: actual verified GGUF generated a hello; exit 0; 0.518s wall; max RSS 566264KiB",
+    "MADLAD_C_API_typecheck": "PASS; no Apple linking/inference",
+    "project_metadata": "OpenStep parsed; target build-file references resolved",
+    "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total)",
+    "workflow_and_packaging": "9 passed",
+    "shell_syntax": "passed",
+    "diff": "passed",
+    "Apple_runtime": "NOT_RUN; device/simulator XCFramework not yet built",
+    "MADLAD_model_inference": "BLOCKED: official resources unavailable through current network policy"
+  }
+}

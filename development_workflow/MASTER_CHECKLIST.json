@@ -2971,15 +2971,30 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Audit the complete local retrieval and generation pipeline.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
+      ],
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
+      ],
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 130,
@@ -3085,20 +3100,32 @@
       "description": "Preserve research retrieval, claim/evidence mapping, medical safety, and citation validation.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 137,
@@ -9165,7 +9192,14 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9175,14 +9209,18 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 419,
@@ -9205,7 +9243,14 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9215,14 +9260,18 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 420,
@@ -9558,7 +9607,14 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9568,14 +9624,18 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 428,
@@ -9598,7 +9658,14 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9608,14 +9675,18 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 429,
@@ -9678,7 +9749,14 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9688,14 +9766,18 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 431,
@@ -10071,7 +10153,15 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10081,13 +10171,17 @@
         "MADLADPackagingTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 442,
@@ -10215,15 +10309,30 @@
       "original_checklist_part": "Part 10 \u2014 Testing, integration, and final verification",
       "original_section": null,
       "description": "Test the shared blur system.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
+      ],
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
+      ],
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 446,
@@ -10231,15 +10340,30 @@
       "original_checklist_part": "Part 10 \u2014 Testing, integration, and final verification",
       "original_section": null,
       "description": "Test button animation and sound consistency.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
+      ],
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
+      ],
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 447,
@@ -10252,7 +10376,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10267,13 +10398,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 448,
@@ -10286,7 +10421,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10301,13 +10443,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 449,
@@ -10409,7 +10555,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10424,13 +10577,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 455,
@@ -10673,7 +10830,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10688,13 +10852,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 467,
@@ -10707,7 +10875,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10722,13 +10897,17 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 468,
@@ -10875,15 +11054,30 @@
       "original_checklist_part": "Part 10 \u2014 Testing, integration, and final verification",
       "original_section": null,
       "description": "Test app performance and responsiveness.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift",
+        "Tools/run_portable_swift_tests.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
+      ],
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
+      ],
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 476,
@@ -10900,7 +11094,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10916,14 +11117,18 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 477,
@@ -10940,7 +11145,14 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio.xcodeproj/project.pbxproj",
+        "Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Tools/build_llama_xcframework_mac.sh",
+        "Tools/typecheck_madlad_api.py",
+        "Tools/verify_apple_runtime.py",
+        "Tools/validate_xcode_project.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10956,14 +11168,18 @@
         "Prompt1BFruitBasketRulesTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BGGUFResourceTests",
+        "AppleRuntimePackagingTests",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P10-compiled-portable-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:P10-native-runtime-recovery-and-apple-package (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
-        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun."
+        "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
+        "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them."
       ],
-      "last_updated": "2026-11-05T19:19:46.923457+00:00"
+      "last_updated": "2026-11-05T19:42:14.103606+00:00"
     },
     {
       "sequence": 478,

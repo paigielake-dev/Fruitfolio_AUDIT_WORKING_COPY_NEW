@@ -818,10 +818,10 @@ actor LlamaFruitfolioLanguageModel:
     func availability() async
         -> FruitfolioLanguageModelAvailability
     {
-        guard Bundle.main.url(
+        guard let modelURL = Bundle.main.url(
             forResource: resourceName,
             withExtension: resourceExtension
-        ) != nil else {
+        ), FruitfolioGGUFResource.isReadableModel(at: modelURL) else {
             return .modelResourceMissing
         }
 

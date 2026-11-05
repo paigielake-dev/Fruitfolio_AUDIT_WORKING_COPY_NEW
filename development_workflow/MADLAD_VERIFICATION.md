@@ -5,7 +5,7 @@ Full on-device inference remains required. A local T5 encoder/decoder implementa
 ## Executed
 
 - Python packaging tests validate that only actual vocabulary tags are declared supported and reject decoder-only/unpinned fixtures. These are fixture tests, not model inference.
-- Swift syntax parser ran on changed sources. This does not establish type/API/link compatibility.
+- Swift syntax parser ran on changed sources. In addition, the real MADLAD Swift implementation typechecks against the actual checked-in llama C headers on Linux. This does not establish Apple binary ABI/link compatibility or real inference.
 - Official metadata request to huggingface.co: configured proxy HTTP 403 CONNECT denial.
 - Proposed network domain save: failed with draft_not_editable. No network change is confirmed.
 

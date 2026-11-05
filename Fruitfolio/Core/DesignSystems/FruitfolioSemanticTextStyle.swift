@@ -1,33 +1,6 @@
 import SwiftUI
 import UIKit
 
-enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
-    case plain
-    case anchorBold
-    case anchorBoldSpokenItalic
-    case spokenItalic
-    case symptomOrPracticalUnderline
-    case actionableBoldUnderline
-    case rareItalicUnderline
-    case absoluteBoldItalicUnderline
-}
-
-struct FruitfolioSemanticSpan: Identifiable, Codable, Equatable, Sendable {
-    let id: UUID
-    let text: String
-    let emphasis: FruitfolioSemanticEmphasis
-
-    init(
-        id: UUID = UUID(),
-        text: String,
-        emphasis: FruitfolioSemanticEmphasis = .plain
-    ) {
-        self.id = id
-        self.text = text
-        self.emphasis = emphasis
-    }
-}
-
 @MainActor
 struct FruitfolioSemanticText: View {
     let spans: [FruitfolioSemanticSpan]
