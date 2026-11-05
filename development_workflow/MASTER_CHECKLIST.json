@@ -3013,7 +3013,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3026,16 +3027,18 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 126,
@@ -3080,7 +3083,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3093,16 +3097,18 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 128,
@@ -3124,7 +3130,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3135,15 +3142,17 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 129,
@@ -3649,7 +3658,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3660,15 +3670,17 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 157,
@@ -3690,7 +3702,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3701,15 +3714,17 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 158,
@@ -3731,7 +3746,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3742,15 +3758,17 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 159,
@@ -3772,7 +3790,8 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3783,15 +3802,17 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T19:56:02.412826+00:00"
     },
     {
       "sequence": 160,

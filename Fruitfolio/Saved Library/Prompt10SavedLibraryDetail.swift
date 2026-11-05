@@ -370,7 +370,10 @@ struct Prompt10SavedPageView: View {
     @State private var imageImportTask: Task<Void, Never>?
     @State private var imageImportGeneration = UUID()
     @State private var mediaMessage: String?
-    @State private var noteDraft = ""
+    @State private var notes = Prompt10NoteDraft()
+    @State private var confirmDiscardNotes = false
+
+    private var hasUnsavedNotes: Bool { notes.hasChanges }
 
     var body: some View {
         ScrollView {
@@ -379,7 +382,7 @@ struct Prompt10SavedPageView: View {
                     HStack {
                         BackControl {
                             audioManager.play(.buttonSoftPop)
-                            onBack()
+                            if hasUnsavedNotes { confirmDiscardNotes = true } else { onBack() }
                         }
 
                         Spacer()
@@ -472,7 +475,20 @@ struct Prompt10SavedPageView: View {
         }
         .scrollIndicators(.hidden)
         .onDisappear { cancelImageImport() }
-        .onChange(of: page.id) { _, _ in cancelImageImport() }
+        .onChange(of: page.id) { _, _ in
+            cancelImageImport()
+            loadNotesIfNeeded()
+        }
+        .onAppear { loadNotesIfNeeded() }
+        .interactiveDismissDisabled(hasUnsavedNotes)
+        .confirmationDialog("save your note changes?", isPresented: $confirmDiscardNotes, titleVisibility: .visible) {
+            Button("save and go back") { if saveNotes() { onBack() } }
+            Button("discard changes", role: .destructive) {
+                notes.discard()
+                onBack()
+            }
+            Button("keep editing", role: .cancel) {}
+        }
     }
 
     private var notesSection: some View {
@@ -480,25 +496,38 @@ struct Prompt10SavedPageView: View {
             Text("my notes")
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .headline))
                 .fontWeight(.bold)
-            TextEditor(text: $noteDraft)
+            TextEditor(text: $notes.text)
                 .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
                 .frame(minHeight: 110)
                 .padding(8)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.75), in: RoundedRectangle(cornerRadius: 12))
-            Button("save notes") {
-                do {
-                    try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: noteDraft)
-                    var updated = page
-                    updated.notes = noteDraft.trimmingCharacters(in: .whitespacesAndNewlines)
-                    onPageChanged(updated)
-                    mediaMessage = "notes saved!"
-                } catch {
-                    mediaMessage = "those notes could not be saved."
-                }
-            }
+            Button("save notes") { _ = saveNotes() }
             .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
         }
-        .onAppear { noteDraft = page.notes }
+
+    }
+
+    private func loadNotesIfNeeded() {
+        // Re-rendering after an image import must not overwrite an active draft.
+        notes.load(pageID: page.id, notes: page.notes)
+    }
+
+    @discardableResult
+    private func saveNotes() -> Bool {
+        do {
+            try store.updatePageNotes(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, notes: notes.text)
+            notes.didSave()
+            // Preserve concurrently attached images and other persisted fields.
+            if let updated = store.encyclopedia(id: encyclopediaID)?.chapters
+                .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) {
+                onPageChanged(updated)
+            }
+            mediaMessage = "notes saved!"
+            return true
+        } catch {
+            mediaMessage = "those notes could not be saved."
+            return false
+        }
     }
 
     @ViewBuilder

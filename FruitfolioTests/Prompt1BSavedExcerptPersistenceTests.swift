@@ -2,6 +2,24 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
+    func testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage() {
+        var draft = Prompt10NoteDraft()
+        let id = UUID()
+        draft.load(pageID: id, notes: "original")
+        draft.text = "  my draft\n"
+        draft.load(pageID: id, notes: "stale snapshot")
+        XCTAssertEqual(draft.text, "  my draft\n")
+        XCTAssertTrue(draft.hasChanges)
+        draft.didSave()
+        XCTAssertFalse(draft.hasChanges)
+        draft.text = "discard me"
+        draft.discard()
+        XCTAssertEqual(draft.text, "  my draft\n")
+        draft.load(pageID: UUID(), notes: "another page")
+        XCTAssertEqual(draft.text, "another page")
+        XCTAssertFalse(draft.hasChanges)
+    }
+
     private func page(location: Int = 0, language: String = "en", saveType: Prompt10SavedPageType = .excerpt) -> Prompt10SavedPage {
         Prompt10SavedPage(chapterID: UUID(), question: "fixture", answer: "E2 and E2 [source-1]",
                          saveType: saveType, excerptText: "E2", originalAnswerID: "answer-1", sourceIDs: ["source-1"],

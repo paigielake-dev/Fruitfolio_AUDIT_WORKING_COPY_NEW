@@ -247,3 +247,21 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
         }
     }
 }
+
+/// Draft ownership prevents unrelated media redraws from replacing unsaved notes.
+struct Prompt10NoteDraft: Equatable {
+    private(set) var pageID: UUID?
+    private(set) var baseline = ""
+    var text = ""
+    var hasChanges: Bool { text != baseline }
+
+    mutating func load(pageID: UUID, notes: String) {
+        guard self.pageID != pageID else { return }
+        self.pageID = pageID
+        baseline = notes
+        text = notes
+    }
+
+    mutating func didSave() { baseline = text }
+    mutating func discard() { text = baseline }
+}

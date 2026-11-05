@@ -397,9 +397,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
             .chapters[chapterIndex]
             .pages[pageIndex]
             .notes =
-                rawNotes.trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
+                rawNotes
 
         encyclopedias[encyclopediaIndex]
             .chapters[chapterIndex]

@@ -321,3 +321,14 @@
 - Verification: {"portable_swift": "32 XCTest + 21 Swift Testing passed (53 total)", "Apple_rendering": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Implement unsaved saved-page note protection, then shared image references and remaining requirements.
 - Commit: containing commit for batch P3-translated-semantic-annotation-roundtrip.
+
+## P3-unsaved-note-ownership
+
+- Parent checkpoint: 5b3e4695301958f66fc97316aa36530b8cc62a0c.
+- Source-order requirements: [125, 127, 128, 156, 157, 158, 159].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift.
+- Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.
+- Tests added/updated: Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage.
+- Verification: {"portable_swift": "33 XCTest + 21 Swift Testing passed (54 total)", "workflow": "9 Python tests passed", "Swift_syntax": "85 files, zero parser errors", "UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Preserve shared imported-image references in guides, remove synchronous body decoding and continue remaining source-order requirements.
+- Commit: containing commit for batch P3-unsaved-note-ownership.

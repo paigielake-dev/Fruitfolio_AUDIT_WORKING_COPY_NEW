@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "81ddc131db501e12dec672708af423fc5092bdc3",
+  "current_HEAD": "5b3e4695301958f66fc97316aa36530b8cc62a0c",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
   "current_requirement": 61,
-  "current_implementation_batch": "P3-translated-semantic-annotation-roundtrip",
+  "current_implementation_batch": "P3-unsaved-note-ownership",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,10 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
-    "FruitfolioTests/Prompt1BSemanticTextTests.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+    "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -515,9 +513,11 @@
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_swift": "32 XCTest + 21 Swift Testing passed (53 total)",
-    "Apple_rendering": "NOT_RUN: Apple SDK unavailable"
+    "portable_swift": "33 XCTest + 21 Swift Testing passed (54 total)",
+    "workflow": "9 Python tests passed",
+    "Swift_syntax": "85 files, zero parser errors",
+    "UI": "NOT_RUN: Apple SDK unavailable"
   },
-  "next_exact_implementation_action": "Implement unsaved saved-page note protection, then shared image references and remaining requirements.",
-  "updated_at": "2026-11-05T19:54:43.955284+00:00"
+  "next_exact_implementation_action": "Preserve shared imported-image references in guides, remove synchronous body decoding and continue remaining source-order requirements.",
+  "updated_at": "2026-11-05T19:56:02.412826+00:00"
 }
