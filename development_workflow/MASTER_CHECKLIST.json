@@ -9361,15 +9361,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Add optional Adjusted Rhythm functionality.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 268,
@@ -9377,15 +9385,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Allow users to opt into research-supported educational adjustments.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 269,
@@ -9393,15 +9409,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Use actual measurements as reference points only.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 270,
@@ -9412,20 +9436,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 271,
@@ -9433,15 +9462,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Preserve scientifically established hormone relationships.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 272,
@@ -9452,20 +9489,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 273,
@@ -9476,20 +9518,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 274,
@@ -9497,15 +9544,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Distinguish educational curves from actual results with labels, legends, and styling.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 275,
@@ -9513,15 +9568,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Add the specified educational-adjustment disclosure.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 276,
@@ -9532,20 +9595,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 277,
@@ -9553,15 +9621,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Allow users to restore the original Hormone Rhythm.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
+      ],
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
+      ],
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 278,
@@ -9574,7 +9650,9 @@
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9583,14 +9661,17 @@
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormonePersistenceTests",
-        "Prompt1BHormoneValidationTests"
+        "Prompt1BHormoneValidationTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T22:07:23.342395+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 279,
@@ -9603,7 +9684,9 @@
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9612,14 +9695,17 @@
       "related_tests": [
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormonePersistenceTests",
-        "Prompt1BHormoneValidationTests"
+        "Prompt1BHormoneValidationTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
-        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T22:07:23.342395+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 280,
@@ -9630,20 +9716,25 @@
       "relevant_source_files": [
         "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift"
+        "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
+        "Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneAdjustmentTests",
+        "Prompt22CoreTests"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:Hormone-Rhythm-explicit-adjustment-request-and-scientific-gate (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Added explicit local opt-in/request and restore controls beside original Hormone Rhythm, with separate actual-measurements entry and distinct no-records/unreadable-storage/no-reviewed-method messages. The policy preserves the entire original presentation byte-for-value in every current decision, never maps laboratory values onto unitless curves, and has no prediction/Ask/measurement mutation path. Exact founder insufficient-information and applied-disclosure text centralized; applied text is deliberately not displayed because no adjustment is actually applied. Added original existing hormone core tests to portable coverage. Actual adjusted curves remain BLOCKED on a versioned clinically reviewed transformation with sufficient testing/measurement context; exact blocker documented rather than faking scientific personalization. Apple UI/runtime remains unrun."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T22:14:38.683709+00:00"
     },
     {
       "sequence": 281,

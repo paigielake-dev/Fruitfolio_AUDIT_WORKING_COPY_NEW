@@ -19,6 +19,9 @@ struct Prompt22HormoneRhythmView: View {
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
+    @ObservedObject private var measurements = FruitfolioHormoneMeasurementStore.shared
+    @State private var adjustmentRequested = false
+    @State private var showingMeasurements = false
     @State private var loadState: LoadState = .loading
     @State private var presentation =
         Prompt22HormoneRhythmEngine().presentation(for: .neutral)
@@ -34,7 +37,16 @@ struct Prompt22HormoneRhythmView: View {
         Prompt27AExistingSystemPolicyAdapter(result: contextPolicy)
     }
 
+    private var adjustmentDecision: FruitfolioHormoneAdjustmentPolicy.Decision {
+        FruitfolioHormoneAdjustmentPolicy.decision(requested: adjustmentRequested,
+            measurementCount: measurements.records.count, storageUnreadable: measurements.storageUnreadable)
+    }
+
     private var displayedPresentation: Prompt22HormoneRhythmPresentation {
+        FruitfolioHormoneAdjustmentPolicy.presentation(preserving: contextPresentation, decision: adjustmentDecision)
+    }
+
+    private var contextPresentation: Prompt22HormoneRhythmPresentation {
         guard !contextAdapter.showHormoneRhythmContextMarker else {
             return presentation
         }
@@ -81,6 +93,9 @@ struct Prompt22HormoneRhythmView: View {
         .task {
             await load()
         }
+        .sheet(isPresented: $showingMeasurements) {
+            FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
+        }
     }
 
     private var loadingView: some View {
@@ -106,6 +121,8 @@ struct Prompt22HormoneRhythmView: View {
 
             contextClarificationView
 
+            adjustmentControls
+
             ForEach(displayedPresentation.sections, id: \.hormone) { section in
                 hormoneSection(section)
             }
@@ -121,6 +138,8 @@ struct Prompt22HormoneRhythmView: View {
             header
 
             contextClarificationView
+
+            adjustmentControls
 
             if let contextNote = displayedPresentation.contextNote {
                 Text(contextNote)
@@ -144,6 +163,34 @@ struct Prompt22HormoneRhythmView: View {
         }
         .frame(maxWidth: 620, alignment: .leading)
         .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    private var adjustmentControls: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Toggle("explore Adjusted Rhythm using my recorded measurements", isOn: $adjustmentRequested)
+                .font(Prompt22Type.body)
+            Text("Hormone Rhythm shows typical educational curves. My Measurements keeps only your actual recorded values, units and dates. measured values are not plotted on these unitless curves.")
+                .font(Prompt22Type.context)
+            if adjustmentRequested {
+                switch adjustmentDecision {
+                case .original: EmptyView()
+                case .measurementsUnavailable:
+                    Text("your measurement storage could not be read. the original Hormone Rhythm is unchanged.")
+                case .noMeasurements:
+                    Text("add measurements in My Measurements first. the original Hormone Rhythm is unchanged.")
+                case .reviewedMethodUnavailable:
+                    Text(FruitfolioHormoneAdjustmentPolicy.insufficientTitle).font(.headline)
+                    Text(FruitfolioHormoneAdjustmentPolicy.insufficientMessage)
+                }
+                Button("restore original Hormone Rhythm") { adjustmentRequested = false }
+                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+            }
+            Button("open My Measurements") { showingMeasurements = true }
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+        }
+        .foregroundStyle(Prompt22Palette.burgundy)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("educational rhythm and actual measurements remain separate")
     }
 
     @ViewBuilder
