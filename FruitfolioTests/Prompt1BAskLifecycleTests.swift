@@ -75,3 +75,25 @@ extension Prompt1BAskLifecycleTests {
         XCTAssertEqual(model.answerHistory[0].sourceIDs, ["fixture-source"])
     }
 }
+
+private actor Prompt1BFormattedAskEngine: AskKnowledgeServing {
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        AskAnswer(originalQuestion: question,
+                  answerText: "**hormone** information preserves *uncertainty* and its source identifiers.",
+                  support: .supported, knowledgeBaseVersion: "fixture")
+    }
+}
+
+extension Prompt1BAskLifecycleTests {
+    func testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers() async throws {
+        let model = Prompt09AskViewModel(engine: Prompt1BFormattedAskEngine())
+        model.inputText = "fixture"
+        await model.submitCurrentQuestion(reduceMotion: false)
+        try await Task.sleep(for: .milliseconds(35))
+        XCTAssertFalse(model.displayedAnswerText.contains("*"))
+        XCTAssertEqual(model.displayedSemanticSpans.first?.emphasis, .anchorBold)
+        model.cancelOutstandingWork()
+        XCTAssertEqual(model.phase, .ready)
+        XCTAssertEqual(model.displayedAnswerText, model.answer?.answerText)
+    }
+}

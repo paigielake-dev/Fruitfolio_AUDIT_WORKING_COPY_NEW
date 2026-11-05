@@ -29,6 +29,7 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published private(set) var phase: Phase = .ready
     @Published private(set) var searchStatusText = "looking through the FruitsofLife.xo library…"
     @Published private(set) var displayedAnswerText = ""
+    @Published private(set) var displayedSemanticSpans: [FruitfolioSemanticSpan] = []
     @Published private(set) var selectedEducationalAssets: [EducationalAssetDescriptor] = []
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
@@ -72,6 +73,10 @@ final class Prompt09AskViewModel: ObservableObject {
         requestGeneration = UUID()
         typingTask?.cancel()
         typingTask = nil
+        if phase == .answering, let answer {
+            displayedAnswerText = answer.answerText
+            displayedSemanticSpans = FruitfolioSemanticDocument.spans(from: answer.answerText)
+        }
         if phase == .searching || phase == .answering { phase = .ready }
     }
 
@@ -134,6 +139,7 @@ final class Prompt09AskViewModel: ObservableObject {
 
         answer = nil
         displayedAnswerText = ""
+        displayedSemanticSpans = []
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
@@ -239,6 +245,7 @@ final class Prompt09AskViewModel: ObservableObject {
         inputText = ""
         answer = nil
         displayedAnswerText = ""
+        displayedSemanticSpans = []
         selectedEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
@@ -254,42 +261,30 @@ final class Prompt09AskViewModel: ObservableObject {
         ]
     }
 
-    private func beginTypewriter(
-        text: String
-    ) {
+    private func beginTypewriter(text: String) {
         displayedAnswerText = ""
-
-        let characters = Array(text)
-
-        let delay: UInt64 =
-            characters.count > 480
-            ? 7_000_000
-            : 22_000_000
-
-        typingTask = Task {
-            @MainActor [weak self] in
-
-            guard let self else {
-                return
+        displayedSemanticSpans = []
+        let spans = FruitfolioSemanticDocument.spans(from: text)
+        let total = spans.reduce(0) { $0 + $1.text.count }
+        guard total > 0 else { phase = .ready; return }
+        // Keep the existing long-answer speed while batching publications below
+        // display refresh rate. Parse once, then reveal semantic span prefixes.
+        let step = total > 480 ? 3 : 1
+        let delay: UInt64 = total > 480 ? 21_000_000 : 22_000_000
+        typingTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            for count in stride(from: step, through: total + step - 1, by: step) {
+                guard !Task.isCancelled else { return }
+                displayedSemanticSpans = FruitfolioSemanticSlices.prefix(spans, characterCount: min(count, total))
+                displayedAnswerText = displayedSemanticSpans.map(\.text).joined()
+                do { try await Task.sleep(nanoseconds: delay) }
+                catch { return }
             }
-
-            for character in characters {
-                if Task.isCancelled {
-                    return
-                }
-
-                displayedAnswerText.append(
-                    character
-                )
-
-                try? await Task.sleep(
-                    nanoseconds: delay
-                )
-            }
-
-            if !Task.isCancelled {
-                phase = .ready
-            }
+            guard !Task.isCancelled else { return }
+            // Completed native selection surfaces parse the original full markup.
+            displayedAnswerText = text
+            displayedSemanticSpans = spans
+            phase = .ready
         }
     }
 }

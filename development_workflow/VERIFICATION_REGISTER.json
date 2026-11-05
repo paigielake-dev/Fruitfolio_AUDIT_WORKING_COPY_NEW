@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T19:42:14.103606+00:00",
+  "updated_at": "2026-11-05T19:43:09.461107+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -404,6 +404,21 @@
         "MADLAD_model_inference": "BLOCKED: official resources unavailable through current network policy"
       },
       "timestamp": "2026-11-05T19:42:14.103606+00:00"
+    },
+    {
+      "batch": "P1-semantic-streaming-prefixes",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total); includes semantic slice behavior",
+        "Swift_syntax": "zero parser errors; not an iOS build",
+        "diff": "passed",
+        "ViewModel_SwiftUI_integration": "NOT_RUN: Apple SDK/Combine unavailable on Linux"
+      },
+      "timestamp": "2026-11-05T19:43:09.461107+00:00"
     }
   ]
 }

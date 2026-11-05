@@ -901,7 +901,7 @@ struct Prompt09AskView: View {
                         .answering {
 
                         FruitfolioSemanticText(
-                            markdown: viewModel.displayedAnswerText,
+                            spans: viewModel.displayedSemanticSpans,
                             baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body)
                         )
                         .font(

@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-11-05T19:43:09.461107+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total); includes semantic slice behavior",
+    "Swift_syntax": "zero parser errors; not an iOS build",
+    "diff": "passed",
+    "ViewModel_SwiftUI_integration": "NOT_RUN: Apple SDK/Combine unavailable on Linux"
+  }
+}

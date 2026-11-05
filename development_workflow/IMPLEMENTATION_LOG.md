@@ -288,3 +288,14 @@
 - Verification: {"Ask_model_CPU": "PASS: actual verified GGUF generated a hello; exit 0; 0.518s wall; max RSS 566264KiB", "MADLAD_C_API_typecheck": "PASS; no Apple linking/inference", "project_metadata": "OpenStep parsed; target build-file references resolved", "portable_swift": "27 XCTest + 21 Swift Testing passed (48 total)", "workflow_and_packaging": "9 passed", "shell_syntax": "passed", "diff": "passed", "Apple_runtime": "NOT_RUN; device/simulator XCFramework not yet built", "MADLAD_model_inference": "BLOCKED: official resources unavailable through current network policy"}.
 - Next action: Commit and continue the already-prepared semantic-span streaming integration after its portable slice tests; implement formatting-preserving saved excerpts and remaining original requirements.
 - Commit: containing commit for batch P10-native-runtime-recovery-and-apple-package.
+
+## P1-semantic-streaming-prefixes
+
+- Parent checkpoint: ae335f75c2124cb6a009a4c5b0455fa75977051d.
+- Source-order requirements: [46, 47, 48, 49, 50, 60, 62, 63, 65, 66, 67, 68, 69, 70, 134, 137].
+- Source files: Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Ask/Prompt09AskView.swift, FruitfolioTests/Prompt1BAskLifecycleTests.swift.
+- Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.
+- Tests added/updated: Prompt1BSemanticSliceTests, Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers.
+- Verification: {"portable_swift": "27 XCTest + 21 Swift Testing passed (48 total); includes semantic slice behavior", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "ViewModel_SwiftUI_integration": "NOT_RUN: Apple SDK/Combine unavailable on Linux"}.
+- Next action: Carry exact styled excerpt spans through explicit save requests, saved pages and guide references with backward-compatible optional persistence fields; then continue remaining requirements.
+- Commit: containing commit for batch P1-semantic-streaming-prefixes.

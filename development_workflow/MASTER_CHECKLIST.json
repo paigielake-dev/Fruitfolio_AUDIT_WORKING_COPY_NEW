@@ -1187,20 +1187,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 47,
@@ -1212,20 +1217,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 48,
@@ -1237,20 +1247,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 49,
@@ -1262,20 +1277,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 50,
@@ -1287,20 +1307,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 51,
@@ -1483,20 +1508,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 61,
@@ -1533,20 +1563,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 63,
@@ -1558,20 +1593,25 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 64,
@@ -1595,15 +1635,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Performance and responsiveness",
       "description": "Audit unnecessary loading delays across the application.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 66,
@@ -1611,15 +1660,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Performance and responsiveness",
       "description": "Remove avoidable UI-thread blocking.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 67,
@@ -1627,15 +1685,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Performance and responsiveness",
       "description": "Reduce redundant calculations and processing.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 68,
@@ -1643,15 +1710,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Performance and responsiveness",
       "description": "Ensure animations and navigation remain responsive.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 69,
@@ -1659,15 +1735,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Performance and responsiveness",
       "description": "Optimize transitions without changing their intended appearance.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 70,
@@ -1680,7 +1765,10 @@
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
         "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1689,15 +1777,18 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
         "Prompt08GlobalControlsTests",
-        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
       ],
-      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
-        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.",
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
       ],
-      "last_updated": "2026-11-05T19:29:34.751509+00:00"
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 71,
@@ -3066,15 +3157,24 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Begin displaying validated content as soon as practical.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 135,
@@ -3133,15 +3233,24 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Preserve Canonical Voice and semantic styling during performance optimization.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+      ],
+      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+      ],
+      "last_updated": "2026-11-05T19:43:09.461107+00:00"
     },
     {
       "sequence": 138,
