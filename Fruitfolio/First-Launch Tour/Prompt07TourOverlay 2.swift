@@ -28,7 +28,7 @@ struct Prompt07TourOverlay: View {
             ZStack {
                 veil(in: proxy.size)
 
-                if let targetRect = currentTargetRect {
+                if let targetRect = highlight(in: proxy.size) {
                     RoundedRectangle(
                         cornerRadius: 18,
                         style: .continuous
@@ -40,8 +40,8 @@ struct Prompt07TourOverlay: View {
                         lineWidth: 1
                     )
                     .frame(
-                        width: targetRect.width + 12,
-                        height: targetRect.height + 12
+                        width: targetRect.width,
+                        height: targetRect.height
                     )
                     .position(
                         x: targetRect.midX,
@@ -105,6 +105,10 @@ struct Prompt07TourOverlay: View {
         return frames[target]
     }
 
+    private func highlight(in size: CGSize) -> CGRect? {
+        Prompt07SpotlightGeometry.highlight(target: currentTargetRect, viewport: CGRect(origin: .zero, size: size))
+    }
+
     @ViewBuilder
     private func veil(
         in size: CGSize
@@ -123,14 +127,7 @@ struct Prompt07TourOverlay: View {
                     )
                 )
 
-                if let targetRect =
-                    currentTargetRect
-                {
-                    let cutout =
-                        targetRect.insetBy(
-                            dx: -6,
-                            dy: -6
-                        )
+                if let cutout = highlight(in: size) {
 
                     path.addRoundedRect(
                         in: cutout,

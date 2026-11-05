@@ -40,9 +40,6 @@ struct Prompt04HubBridgeView: View {
                         to: route
                     )
                 }
-                .coordinateSpace(
-                    name: "Prompt07HubSpace"
-                )
                 .onPreferenceChange(
                     Prompt07TargetFramePreferenceKey.self
                 ) {
@@ -71,6 +68,7 @@ struct Prompt04HubBridgeView: View {
                     )
                 }
             }
+            .coordinateSpace(name: "Prompt07HubSpace")
         }
         .onDisappear { cancelInvitation() }
         .onChange(of: scenePhase) { _, phase in
@@ -681,6 +679,8 @@ private struct Prompt05HubPaperControls:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
+    @Environment(\.scenePhase) private var scenePhase
+
     @State
     private var navigationLocked =
         false
@@ -694,7 +694,7 @@ private struct Prompt05HubPaperControls:
         false
 
     @State
-    private var hubTitleAnimationStarted =
+    private var hubTitleAnimationCompleted =
         false
 
     private let primarySpecs:
@@ -1013,24 +1013,9 @@ private struct Prompt05HubPaperControls:
         .accessibilityElement(
             children: .contain
         )
-        .task {
-            guard interactive else {
-                return
-            }
-
+        .task(id: "\(interactive)-\(scenePhase == .active)") {
+            guard interactive, scenePhase == .active else { return }
             await beginHubTitleAnimationAfterSettling()
-        }
-        .onChange(
-            of: interactive
-        ) { _, isReady in
-
-            guard isReady else {
-                return
-            }
-
-            Task { @MainActor in
-                await beginHubTitleAnimationAfterSettling()
-            }
         }
     }
 
@@ -1042,23 +1027,19 @@ private struct Prompt05HubPaperControls:
 
         guard
             interactive,
-            !hubTitleAnimationStarted
+            !hubTitleAnimationCompleted
         else {
             return
         }
 
-        hubTitleAnimationStarted =
-            true
-
-        try? await Task.sleep(
+        do { try await Task.sleep(
             nanoseconds:
                 150_000_000
-        )
+        ) } catch {
+            return
+        }
 
-        guard interactive else {
-            hubTitleAnimationStarted =
-                false
-
+        guard !Task.isCancelled, interactive, scenePhase == .active else {
             return
         }
 
@@ -1071,6 +1052,7 @@ private struct Prompt05HubPaperControls:
             bylineVisible =
                 true
 
+            hubTitleAnimationCompleted = true
             onBrandingAnimationCompleted()
 
             return
@@ -1091,12 +1073,14 @@ private struct Prompt05HubPaperControls:
                 1
         }
 
-        try? await Task.sleep(
+        do { try await Task.sleep(
             nanoseconds:
                 1_200_000_000
-        )
+        ) } catch {
+            return
+        }
 
-        guard interactive else {
+        guard !Task.isCancelled, interactive, scenePhase == .active else {
             return
         }
 
@@ -1110,15 +1094,18 @@ private struct Prompt05HubPaperControls:
                 true
         }
 
-        try? await Task.sleep(
+        do { try await Task.sleep(
             nanoseconds:
                 400_000_000
-        )
-
-        guard interactive else {
+        ) } catch {
             return
         }
 
+        guard !Task.isCancelled, interactive, scenePhase == .active else {
+            return
+        }
+
+        hubTitleAnimationCompleted = true
         onBrandingAnimationCompleted()
     }
 
@@ -1205,13 +1192,9 @@ private struct Prompt05PrimaryHubButton:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
-    @State
-    private var activationInFlight =
-        false
-
     var body: some View {
         Button {
-            activateAfterBounce()
+            activateImmediately()
 
         } label: {
             ZStack {
@@ -1330,14 +1313,13 @@ private struct Prompt05PrimaryHubButton:
             )
         }
         .buttonStyle(
-            Prompt05WatercolorBounceStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     reduceMotion
             )
         )
         .disabled(
             !interactive
-            || activationInFlight
         )
         .accessibilityHidden(
             !interactive
@@ -1353,33 +1335,9 @@ private struct Prompt05PrimaryHubButton:
     // MARK: - Delayed Navigation
 
     @MainActor
-    private func activateAfterBounce() {
-        guard
-            interactive,
-            !activationInFlight
-        else {
-            return
-        }
-
-        if reduceMotion {
-            action()
-            return
-        }
-
-        activationInFlight =
-            true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    240_000_000
-            )
-
-            activationInFlight =
-                false
-
-            action()
-        }
+    private func activateImmediately() {
+        guard interactive else { return }
+        action()
     }
 
     private var accessibilityLabel:
@@ -1418,69 +1376,8 @@ private struct Prompt05PrimaryHubButton:
     }
 }
 
-// MARK: - Main Hub Button Bounce
 
-private struct Prompt05WatercolorBounceStyle:
-    ButtonStyle {
 
-    let reduceMotion:
-        Bool
-
-    func makeBody(
-        configuration: Configuration
-    ) -> some View {
-
-        configuration.label
-            .scaleEffect(
-                reduceMotion
-                ? 1
-                : (
-                    configuration.isPressed
-                    ? 0.89
-                    : 1
-                )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? 5
-                        : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? -1.1
-                        : 0
-                    )
-                )
-            )
-            .brightness(
-                configuration.isPressed
-                ? -0.04
-                : 0
-            )
-            .animation(
-                reduceMotion
-                ? .easeOut(
-                    duration: 0.08
-                )
-                : .spring(
-                    response: 0.27,
-                    dampingFraction: 0.34,
-                    blendDuration: 0
-                ),
-                value:
-                    configuration.isPressed
-            )
-    }
-}
 
 // MARK: - Utility Row
 
@@ -1651,13 +1548,9 @@ private struct Prompt05HubUtilityButton:
     @Environment(\.dynamicTypeSize)
     private var dynamicTypeSize
 
-    @State
-    private var activationInFlight =
-        false
-
     var body: some View {
         Button {
-            activateAfterBounce()
+            activateImmediately()
 
         } label: {
             VStack(
@@ -1716,14 +1609,13 @@ private struct Prompt05HubUtilityButton:
             )
         }
         .buttonStyle(
-            Prompt05UtilityPressStyle(
+            CutePopButtonStyle(
                 reduceMotion:
                     reduceMotion
             )
         )
         .disabled(
             !interactive
-            || activationInFlight
         )
         .accessibilityHidden(
             !interactive
@@ -1739,135 +1631,8 @@ private struct Prompt05HubUtilityButton:
     }
 
     @MainActor
-    private func activateAfterBounce() {
-        guard
-            interactive,
-            !activationInFlight
-        else {
-            return
-        }
-
-        if reduceMotion {
-            activate(route)
-            return
-        }
-
-        activationInFlight =
-            true
-
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    240_000_000
-            )
-
-            activationInFlight =
-                false
-
-            activate(route)
-        }
+    private func activateImmediately() {
+        guard interactive else { return }
+        activate(route)
     }
 }
-
-// MARK: - Utility Button Animation
-
-private struct Prompt05UtilityPressStyle:
-    ButtonStyle {
-
-    let reduceMotion:
-        Bool
-
-    func makeBody(
-        configuration: Configuration
-    ) -> some View {
-
-        configuration.label
-            .scaleEffect(
-                reduceMotion
-                ? 1
-                : (
-                    configuration.isPressed
-                    ? 0.89
-                    : 1
-                )
-            )
-            .offset(
-                y:
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? 5
-                        : 0
-                    )
-            )
-            .rotationEffect(
-                .degrees(
-                    reduceMotion
-                    ? 0
-                    : (
-                        configuration.isPressed
-                        ? -1.1
-                        : 0
-                    )
-                )
-            )
-            .brightness(
-                configuration.isPressed
-                ? -0.04
-                : 0
-            )
-            .animation(
-                reduceMotion
-                ? .easeOut(
-                    duration: 0.08
-                )
-                : .spring(
-                    response: 0.27,
-                    dampingFraction: 0.34,
-                    blendDuration: 0
-                ),
-                value:
-                    configuration.isPressed
-            )
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

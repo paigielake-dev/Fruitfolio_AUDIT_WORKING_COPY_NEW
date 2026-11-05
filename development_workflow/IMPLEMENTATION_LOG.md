@@ -387,3 +387,14 @@
 - Verification: {"portable_swift": "41 XCTest + 21 Swift Testing passed (62 total)", "Swift_syntax": "97 files, zero parser errors", "Apple_intro_sequence": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Verify and fix Hub/tour button interaction and spotlight geometry, then continue continuous Ask paper and remaining source-order requirements.
 - Commit: containing commit for batch P2-logo-registration-and-reduced-motion-sequence.
+
+## P2-immediate-shared-hub-controls-and-runtime-spotlights
+
+- Parent checkpoint: 75383323dd0ac32093046bd27748a902d411c156.
+- Source-order requirements: [9, 11, 12, 65, 66, 67, 68, 70, 88, 89, 92, 93, 94].
+- Source files: Fruitfolio/Hub/Prompt04HubBridgeView.swift, Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift, Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift.
+- Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification.
+- Tests added/updated: Prompt1BSpotlightGeometryTests, Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize.
+- Verification: {"portable_swift": "43 XCTest + 21 Swift Testing passed (64 total)", "workflow": "10 Python tests passed", "Swift_syntax": "99 files, zero parser errors", "Hub_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Implement genuinely continuous Ask paper with responsive runtime text/art columns and no bottom edge; continue Part 3 and remaining requirements.
+- Commit: containing commit for batch P2-immediate-shared-hub-controls-and-runtime-spotlights.

@@ -217,7 +217,10 @@
       "description": "Apply the same cute button-pop animation across the entire application.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -225,14 +228,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating",
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 10,
@@ -267,7 +273,10 @@
       "description": "Keep button interaction, sound, and navigation synchronized.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -275,14 +284,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating",
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 12,
@@ -292,7 +304,10 @@
       "description": "Prevent animations from introducing noticeable input lag.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -300,14 +315,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating",
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending.",
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 13,
@@ -2179,7 +2197,10 @@
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2187,13 +2208,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSemanticSliceTests",
-        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T19:43:09.461107+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 66,
@@ -2221,7 +2245,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2233,15 +2259,17 @@
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BSpotlightGeometryTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 67,
@@ -2269,7 +2297,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2281,15 +2311,17 @@
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BSpotlightGeometryTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 68,
@@ -2312,7 +2344,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2322,14 +2356,16 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BSpotlightGeometryTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 69,
@@ -2381,7 +2417,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2394,17 +2432,19 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BSpotlightGeometryTests"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 71,
@@ -2907,20 +2947,25 @@
       "description": "Optimize Hub loading and navigation responsiveness.",
       "relevant_source_files": [
         "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
-        "Fruitfolio/First-Launch Tour/Prompt07TourModels.swift"
+        "Fruitfolio/First-Launch Tour/Prompt07TourModels.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub"
+        "Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub",
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P2-hub-invitation-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration."
+        "Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration.",
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
       ],
-      "last_updated": "2026-11-05T18:42:18.592924+00:00"
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 89,
@@ -2928,15 +2973,24 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Apply the universal button-pop animation to Hub interactions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+      ],
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+      ],
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 90,
@@ -2990,15 +3044,24 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Calculate tour highlights from actual button positions and dimensions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+      ],
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+      ],
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 93,
@@ -3006,15 +3069,24 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Remove fixed-device assumptions from the tour spotlight geometry.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+      ],
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+      ],
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 94,
@@ -3022,15 +3094,24 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Keep the highlighted region precisely aligned with its corresponding button.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+      ],
+      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+      ],
+      "last_updated": "2026-11-05T20:11:46.164010+00:00"
     },
     {
       "sequence": 95,
