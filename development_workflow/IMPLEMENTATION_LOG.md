@@ -37,3 +37,13 @@
 - Executed workflow tests: 2 passed; shell syntax and whitespace checks passed. Mac runner exits 2 with explicit missing-Xcode diagnostic.
 - Founder binary specification preserved, but antiword download failed because distro package indexes do not list it. Full-text extraction remains pending; no content invented.
 - Commit: containing commit, P1-scrollable-character-dialogue.
+
+## P1-notebook-popup-geometry
+
+- Parent checkpoint: 675d8a29a523acac9c8a58ab57356d1e40637bdd.
+- Source-order requirements: [2, 3, 4, 13, 14, 15, 16, 17, 18, 19, 20, 23, 24, 26].
+- Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.
+- Tests added/updated: Prompt1BPopupLayoutTests, WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png.
+- Verification: {"workflow": "3 passed", "shell_syntax": "passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Continue Part 1 decorative layout: handle collision avoidance using approved anchors and painted bounds without random repositioning; then reconcile semantic text paths.
+- Commit: containing commit for batch P1-notebook-popup-geometry.

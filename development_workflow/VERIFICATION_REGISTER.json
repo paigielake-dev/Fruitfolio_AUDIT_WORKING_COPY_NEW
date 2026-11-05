@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T18:31:07.185422+00:00",
+  "updated_at": "2026-11-05T18:36:07.124599+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -30,6 +30,23 @@
       "name": "MADLAD inference",
       "status": "NOT_RUN",
       "reason": "Runtime/model/tokenizer implementation unfinished; no supported-device execution."
+    }
+  ],
+  "batches": [
+    {
+      "batch": "P1-notebook-popup-geometry",
+      "commands": [
+        "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+        "bash -n Tools/verify_prompt1b_mac.sh",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow": "3 passed",
+        "shell_syntax": "passed",
+        "diff": "passed",
+        "Swift_iOS": "NOT_RUN: Xcode unavailable"
+      },
+      "timestamp": "2026-11-05T18:36:07.124599+00:00"
     }
   ]
 }

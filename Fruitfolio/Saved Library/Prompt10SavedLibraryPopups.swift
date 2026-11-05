@@ -14,40 +14,12 @@ struct Prompt10CreateEncyclopediaPopup: View {
     @State private var errorMessage: String?
 
     var body: some View {
-        GeometryReader { proxy in
-            popupLayout(in: proxy)
+        Prompt10WatercolorPopup {
+            popupContent
         }
         .onAppear {
             audioManager.play(.popupOpen)
         }
-    }
-
-    private func popupLayout(
-        in proxy: GeometryProxy
-    ) -> some View {
-        let paperWidth = min(
-            max(proxy.size.width - 28, 280),
-            365
-        )
-
-        return ZStack {
-            Color.clear
-
-            Prompt10WatercolorPopup {
-                popupContent
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 30)
-                    .padding(.bottom, 30)
-            }
-            .frame(width: paperWidth)
-            .frame(minHeight: 520)
-        }
-        .frame(
-            width: proxy.size.width,
-            height: proxy.size.height,
-            alignment: .center
-        )
     }
 
     private var popupContent: some View {

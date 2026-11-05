@@ -23,6 +23,16 @@ class WorkflowIntegrityTests(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertEqual([r['sequence'] for r in data['requirements']], list(range(1, 479)))
 
+    def test_notebook_geometry_matches_actual_bundled_png(self):
+        import struct
+        repo = ROOT.parent
+        asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob('popup_notebook_paper.png'))
+        dimensions = struct.unpack('>II', asset.read_bytes()[16:24])
+        source = (repo / 'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift').read_text()
+        declared = re.search(r'notebookPixelSize = CGSize\(width: (\d+), height: (\d+)\)', source)
+        self.assertIsNotNone(declared)
+        self.assertEqual(tuple(map(int, declared.groups())), dimensions)
+
     def test_statuses_do_not_claim_unexecuted_ios_verification(self):
         rows = json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']
         for row in rows:

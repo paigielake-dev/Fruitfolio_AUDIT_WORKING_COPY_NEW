@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
+  "current_HEAD": "675d8a29a523acac9c8a58ab57356d1e40637bdd",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 13,
-  "current_implementation_batch": "P1-scrollable-character-dialogue",
+  "current_requirement": 28,
+  "current_implementation_batch": "P1-notebook-popup-geometry",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,9 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Shared character popup scroll surface",
-    "DEBUG-only regression harness and UI screenshot tests"
+    "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -504,15 +505,14 @@
   "last_executed_tests": [
     "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
     "bash -n Tools/verify_prompt1b_mac.sh",
-    "bash Tools/verify_prompt1b_mac.sh",
     "git diff --check"
   ],
   "last_test_results": {
-    "workflow_integrity": "2 passed",
+    "workflow": "3 passed",
     "shell_syntax": "passed",
-    "diff_check": "passed",
-    "mac_verification": "exit 2: Xcode unavailable; no Swift tests executed"
+    "diff": "passed",
+    "Swift_iOS": "NOT_RUN: Xcode unavailable"
   },
-  "next_exact_implementation_action": "Continue Part 1 sequence 13: inspect other popup families and integrate shared responsive layout without replacing artwork. Run added Swift/UI regression suites on macOS when available. Reconcile full binary founder spec after obtaining a Word text extractor.",
-  "updated_at": "2026-11-05T18:31:07.185422+00:00"
+  "next_exact_implementation_action": "Continue Part 1 decorative layout: handle collision avoidance using approved anchors and painted bounds without random repositioning; then reconcile semantic text paths.",
+  "updated_at": "2026-11-05T18:36:07.124599+00:00"
 }

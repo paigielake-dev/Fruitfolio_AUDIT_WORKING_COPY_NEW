@@ -33,20 +33,26 @@
       "original_section": "Universal blur system",
       "description": "Apply identical blur appearance, intensity, opacity, and behavior wherever blur is required.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
+        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": "00818937eb837d50ba905864584c0d0a07c34f20",
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
+        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 3,
@@ -55,20 +61,26 @@
       "original_section": "Universal blur system",
       "description": "Remove inconsistent feature-specific blur implementations.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
+        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": "00818937eb837d50ba905864584c0d0a07c34f20",
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
+        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 4,
@@ -77,20 +89,26 @@
       "original_section": "Universal blur system",
       "description": "Specifically correct the different popup blur treatments in My Encyclopedias and Build Your Own Guide.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
+        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": "00818937eb837d50ba905864584c0d0a07c34f20",
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
+        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 5,
@@ -279,15 +297,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Create a dedicated shared Swift system for popup composition.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+      ],
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+      ],
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 14,
@@ -295,15 +322,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Remove individual screens\u2019 fragile popup positioning calculations.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+      ],
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+      ],
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 15,
@@ -311,15 +347,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Measure each popup artwork asset\u2019s actual dimensions and aspect ratio.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+      ],
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+      ],
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 16,
@@ -327,15 +372,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Determine the usable writing area within each popup.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+      ],
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+      ],
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 17,
@@ -343,15 +397,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Center text inside its intended writing area.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+      ],
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+      ],
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 18,
@@ -360,7 +423,10 @@
       "original_section": "Universal popup layout system",
       "description": "Ensure text wraps without clipping, overflowing, or truncating with ellipses.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -368,13 +434,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 19,
@@ -383,7 +452,10 @@
       "original_section": "Universal popup layout system",
       "description": "Support different popup artwork sizes, text lengths, and screen sizes.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -391,13 +463,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 20,
@@ -406,7 +481,10 @@
       "original_section": "Universal popup layout system",
       "description": "Position popup buttons and other controls without collisions.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -414,13 +492,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 21,
@@ -461,7 +542,10 @@
       "original_section": "Universal popup layout system",
       "description": "Adapt popup layouts to Dynamic Type.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -469,13 +553,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 24,
@@ -484,7 +571,10 @@
       "original_section": "Universal popup layout system",
       "description": "Prioritize wrapping and responsive layout over reducing font size.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -492,13 +582,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 25,
@@ -530,7 +623,10 @@
       "original_section": "Universal popup layout system",
       "description": "Apply this system to all applicable confirmations, errors, help popups, character dialogue, and feature-specific overlays.",
       "relevant_source_files": [
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -538,13 +634,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
-        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
       ],
-      "commit_reference": null,
+      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
       ],
-      "last_updated": "2026-11-05T18:31:07.185422+00:00"
+      "last_updated": "2026-11-05T18:36:07.124599+00:00"
     },
     {
       "sequence": 27,

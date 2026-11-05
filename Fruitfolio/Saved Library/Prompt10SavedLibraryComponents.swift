@@ -275,29 +275,40 @@ struct Prompt10WatercolorPopup<Content: View>: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let paperWidth = min(max(proxy.size.width - 32, 280), 340)
-            let safeBodyWidth = paperWidth * 0.80
+            let available = CGSize(
+                width: proxy.size.width,
+                height: max(0, proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom)
+            )
+            let metrics = FruitfolioPopupLayout.notebook(available: available)
 
             ZStack {
-                DesignTokens.ColorToken.primaryBurgundy
-                    .opacity(0.10)
-                    .ignoresSafeArea()
+                // Parent screens own the canonical dim/blur. A second tint here
+                // used to produce different-looking Library and Guide popups.
+                Color.clear.contentShape(Rectangle())
 
-                ZStack(alignment: .center) {
+                ZStack {
                     Image("popup_notebook_paper")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: paperWidth)
+                        .frame(width: metrics.paperSize.width, height: metrics.paperSize.height)
                         .accessibilityHidden(true)
 
-                    content()
-                        .frame(width: safeBodyWidth, alignment: .center)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 30)
+                    ScrollView(.vertical) {
+                        content()
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .multilineTextAlignment(.center)
+                            .padding(.vertical, 8)
+                            .frame(minHeight: metrics.writingSize.height, alignment: .center)
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
+                    .scrollDismissesKeyboard(.interactively)
+                    .frame(width: metrics.writingSize.width, height: metrics.writingSize.height)
+                    .accessibilityIdentifier("fruitfolio.notebookPopup.scroll")
                 }
-                .frame(width: paperWidth, alignment: .center)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .frame(width: metrics.paperSize.width, height: metrics.paperSize.height)
+                .accessibilityElement(children: .contain)
             }
+            .frame(width: proxy.size.width, height: proxy.size.height)
         }
     }
 }
