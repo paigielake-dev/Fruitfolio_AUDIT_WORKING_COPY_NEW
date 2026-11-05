@@ -310,3 +310,14 @@
 - Verification: {"portable_swift": "31 XCTest + 21 Swift Testing passed (52 total)", "Swift_syntax": "zero parser errors; an out-of-scope UIKit binding update found during source review was corrected before commit", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
 - Next action: Preserve semantic annotations through translated excerpt display, then finish unsaved-note protection, shared imported-image references, additional specification tracking and remaining requirements.
 - Commit: containing commit for batch P3-styled-excerpt-persistence-and-deduplication.
+
+## P3-translated-semantic-annotation-roundtrip
+
+- Parent checkpoint: 81ddc131db501e12dec672708af423fc5092bdc3.
+- Source-order requirements: [61, 109, 124, 125, 127, 128, 156, 157, 158, 159, 206, 207, 209, 210, 431, 432, 433, 434].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift, Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift, Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift.
+- Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.
+- Tests added/updated: Prompt1BSemanticSliceTests, Prompt1BSemanticTextTests.
+- Verification: {"portable_swift": "32 XCTest + 21 Swift Testing passed (53 total)", "Apple_rendering": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Implement unsaved saved-page note protection, then shared image references and remaining requirements.
+- Commit: containing commit for batch P3-translated-semantic-annotation-roundtrip.

@@ -12,6 +12,8 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
         let literalPatterns = protectedLiterals.filter { !$0.isEmpty }
             .sorted { $0.count > $1.count }.map { NSRegularExpression.escapedPattern(for: $0) }
         let patterns = literalPatterns + [
+            #"\\[\\*_`\[\]<>]"#,
+            #"</?u>"#,
             #"https?://[^\s<>]+"#,
             #"\[[^\]\n]{1,200}\]"#,
             #"\([^\)\n]*\b(?:19|20)\d{2}[a-z]?[^\)\n]*\)"#,

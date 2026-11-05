@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T19:50:41.407591+00:00",
+  "updated_at": "2026-11-05T19:54:43.955284+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -434,6 +434,19 @@
         "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"
       },
       "timestamp": "2026-11-05T19:50:41.407591+00:00"
+    },
+    {
+      "batch": "P3-translated-semantic-annotation-roundtrip",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_swift": "32 XCTest + 21 Swift Testing passed (53 total)",
+        "Apple_rendering": "NOT_RUN: Apple SDK unavailable"
+      },
+      "timestamp": "2026-11-05T19:54:43.955284+00:00"
     }
   ]
 }

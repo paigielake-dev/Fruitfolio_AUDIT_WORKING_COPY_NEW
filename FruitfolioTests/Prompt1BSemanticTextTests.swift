@@ -12,6 +12,15 @@ final class Prompt1BSemanticTextTests: XCTestCase {
         XCTAssertTrue(spans.contains { $0.text == "measured" && $0.emphasis == .spokenItalic })
     }
 
+    func testCanonicalSemanticMarkupRetainsUnderlineAndCombinedEmphasis() {
+        let original = [FruitfolioSemanticSpan(text: "symptoms", emphasis: .symptomOrPracticalUnderline),
+                        .init(text: "important", emphasis: .actionableBoldUnderline),
+                        .init(text: "uncertainty", emphasis: .absoluteBoldItalicUnderline)]
+        let restored = FruitfolioSemanticDocument.spans(from: FruitfolioSemanticMarkup.markdown(original))
+        XCTAssertEqual(restored.map(\.text), original.map(\.text))
+        XCTAssertEqual(restored.map(\.emphasis), original.map(\.emphasis))
+    }
+
     func testMentioningASymptomDoesNotAutomaticallyUnderlineIt() {
         let rendered = FruitfolioSemanticRenderer.attributed(
             markdown: "The word cramps appears in a quotation, not a clinical finding.",

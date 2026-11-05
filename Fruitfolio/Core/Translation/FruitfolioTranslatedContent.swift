@@ -71,8 +71,9 @@ struct FruitfolioTranslatedText: View {
     var sourceLanguage = "en"
     var semanticSpans: [FruitfolioSemanticSpan]?
     var body: some View {
-        FruitfolioTranslatedContent(source: source, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
-            if let semanticSpans, display == source {
+        let translationSource = semanticSpans.map(FruitfolioSemanticMarkup.markdown) ?? source
+        FruitfolioTranslatedContent(source: translationSource, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
+            if let semanticSpans, display == translationSource {
                 FruitfolioSemanticText(spans: semanticSpans, baseFont: font)
             } else {
                 FruitfolioSemanticText(markdown: display, baseFont: font)

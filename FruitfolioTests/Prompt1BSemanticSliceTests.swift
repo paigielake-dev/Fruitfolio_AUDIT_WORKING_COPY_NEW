@@ -16,6 +16,14 @@ final class Prompt1BSemanticSliceTests: XCTestCase {
         XCTAssertEqual(selected.map(\.text).joined(), "2 sym")
         XCTAssertEqual(selected.map(\.emphasis), [.anchorBold, .symptomOrPracticalUnderline])
     }
+    func testLiteralMarkdownIsEscapedAndExplicitUnderlineIsSerializable() throws {
+        let original = [FruitfolioSemanticSpan(text: "2 * 3", emphasis: .symptomOrPracticalUnderline)]
+        let encoded = FruitfolioSemanticMarkup.markdown(original)
+        XCTAssertEqual(encoded, "<u>2 \\* 3</u>")
+        let envelope = try FruitfolioScientificTranslationEnvelope(encoded)
+        XCTAssertEqual(try envelope.restore(envelope.prepared), encoded)
+    }
+
     func testInvalidSelectionAndZeroPrefixAreSafe() {
         let spans = [FruitfolioSemanticSpan(text: "💛")]
         XCTAssertTrue(FruitfolioSemanticSlices.selection(spans, utf16Range: NSRange(location: 1, length: 1)).isEmpty)

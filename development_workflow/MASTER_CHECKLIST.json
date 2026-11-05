@@ -1546,7 +1546,8 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1555,14 +1556,16 @@
       "related_tests": [
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 62,
@@ -2652,7 +2655,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2663,15 +2668,18 @@
         "Prompt1BAskScrollTests",
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 110,
@@ -2957,7 +2965,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2969,16 +2979,19 @@
         "Prompt1BAskScrollTests",
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 125,
@@ -2998,7 +3011,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3009,15 +3024,18 @@
         "Prompt1BAskScrollTests",
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 126,
@@ -3060,7 +3078,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3071,15 +3091,18 @@
         "Prompt1BAskScrollTests",
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 128,
@@ -3099,7 +3122,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3108,14 +3133,17 @@
       "related_tests": [
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 129,
@@ -3619,7 +3647,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3628,14 +3658,17 @@
       "related_tests": [
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 157,
@@ -3655,7 +3688,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3664,14 +3699,17 @@
       "related_tests": [
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 158,
@@ -3691,7 +3729,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3700,14 +3740,17 @@
       "related_tests": [
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 159,
@@ -3727,7 +3770,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3736,14 +3781,17 @@
       "related_tests": [
         "Prompt1BExcerptIdentityTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 160,
@@ -4540,7 +4588,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4548,13 +4598,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 207,
@@ -4573,7 +4626,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4581,13 +4636,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 208,
@@ -4622,7 +4680,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4630,13 +4690,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 210,
@@ -4655,7 +4718,9 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4663,13 +4728,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 211,
@@ -10083,7 +10151,9 @@
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10095,15 +10165,18 @@
         "Prompt1BTranslationPipelineTests",
         "MADLADPackagingTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 432,
@@ -10131,7 +10204,9 @@
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10143,15 +10218,18 @@
         "Prompt1BTranslationPipelineTests",
         "MADLADPackagingTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 433,
@@ -10179,7 +10257,9 @@
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10191,15 +10271,18 @@
         "Prompt1BTranslationPipelineTests",
         "MADLADPackagingTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 434,
@@ -10223,7 +10306,9 @@
         "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10235,14 +10320,17 @@
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
         "Prompt1BSavedExcerptPersistenceTests",
-        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
+        "Prompt1BSemanticSliceTests",
+        "Prompt1BSemanticTextTests"
       ],
-      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
-        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
       ],
-      "last_updated": "2026-11-05T19:50:41.407591+00:00"
+      "last_updated": "2026-11-05T19:54:43.955284+00:00"
     },
     {
       "sequence": 435,

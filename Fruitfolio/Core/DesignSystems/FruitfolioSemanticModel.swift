@@ -62,3 +62,27 @@ enum FruitfolioSemanticSlices {
         return result
     }
 }
+
+/// Canonical interchange for explicit semantic spans through local translation.
+/// Literal Markdown/control characters are escaped; underline tags are emitted
+/// only by the semantic model and protected by the translation envelope.
+enum FruitfolioSemanticMarkup {
+    static func markdown(_ spans: [FruitfolioSemanticSpan]) -> String {
+        spans.map { span in
+            var text = span.text
+            for character in ["\\", "*", "_", "`", "[", "]", "<", ">"] {
+                text = text.replacingOccurrences(of: character, with: "\\" + character)
+            }
+            switch span.emphasis {
+            case .plain: return text
+            case .anchorBold: return "**\(text)**"
+            case .spokenItalic: return "*\(text)*"
+            case .anchorBoldSpokenItalic: return "***\(text)***"
+            case .symptomOrPracticalUnderline: return "<u>\(text)</u>"
+            case .actionableBoldUnderline: return "<u>**\(text)**</u>"
+            case .rareItalicUnderline: return "<u>*\(text)*</u>"
+            case .absoluteBoldItalicUnderline: return "<u>***\(text)***</u>"
+            }
+        }.joined()
+    }
+}

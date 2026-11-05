@@ -67,6 +67,41 @@ struct FruitfolioSemanticText: View {
 /// from a symptom/hormone keyword lookup. Unknown prose remains plain.
 enum FruitfolioSemanticDocument {
     static func spans(from markdown: String) -> [FruitfolioSemanticSpan] {
+        // Underline annotations use canonical paired tags, with ordinary inline
+        // Markdown inside each segment. Arbitrary HTML is never rendered.
+        guard let tags = try? NSRegularExpression(pattern: "</?u>") else { return inlineSpans(markdown) }
+        let source = markdown as NSString
+        let matches = tags.matches(in: markdown, range: NSRange(location: 0, length: source.length))
+        guard !matches.isEmpty else { return inlineSpans(markdown) }
+        var offset = 0
+        var depth = 0
+        var result: [FruitfolioSemanticSpan] = []
+        for match in matches {
+            let fragment = source.substring(with: NSRange(location: offset, length: match.range.location - offset))
+            result += underlined(inlineSpans(fragment), enabled: depth > 0)
+            if source.substring(with: match.range) == "<u>" { depth += 1 }
+            else { depth = max(0, depth - 1) }
+            offset = NSMaxRange(match.range)
+        }
+        result += underlined(inlineSpans(source.substring(from: offset)), enabled: depth > 0)
+        return result
+    }
+
+    private static func underlined(_ spans: [FruitfolioSemanticSpan], enabled: Bool) -> [FruitfolioSemanticSpan] {
+        guard enabled else { return spans }
+        return spans.map { span in
+            let emphasis: FruitfolioSemanticEmphasis
+            switch span.emphasis {
+            case .anchorBold: emphasis = .actionableBoldUnderline
+            case .spokenItalic: emphasis = .rareItalicUnderline
+            case .anchorBoldSpokenItalic: emphasis = .absoluteBoldItalicUnderline
+            default: emphasis = .symptomOrPracticalUnderline
+            }
+            return .init(id: span.id, text: span.text, emphasis: emphasis)
+        }
+    }
+
+    private static func inlineSpans(_ markdown: String) -> [FruitfolioSemanticSpan] {
         guard let parsed = try? AttributedString(
             markdown: markdown,
             options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)

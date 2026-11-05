@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "16c7474d6fed2267c2342eedee1317e8b12160a6",
+  "current_HEAD": "81ddc131db501e12dec672708af423fc5092bdc3",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
   "current_requirement": 61,
-  "current_implementation_batch": "P3-styled-excerpt-persistence-and-deduplication",
+  "current_implementation_batch": "P3-translated-semantic-annotation-roundtrip",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-    "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
-    "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
     "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
     "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-    "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
-    "FruitfolioTests/Prompt1BSavedExcerptPersistenceTests.swift",
-    "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/P3-styled-excerpts-portable-swift.log"
+    "FruitfolioTests/Prompt1BSemanticSliceTests.swift",
+    "FruitfolioTests/Prompt1BSemanticTextTests.swift",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Xcode/Apple SDK and iOS UI tests unavailable on Linux",
@@ -524,11 +515,9 @@
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_swift": "31 XCTest + 21 Swift Testing passed (52 total)",
-    "Swift_syntax": "zero parser errors; an out-of-scope UIKit binding update found during source review was corrected before commit",
-    "diff": "passed",
-    "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"
+    "portable_swift": "32 XCTest + 21 Swift Testing passed (53 total)",
+    "Apple_rendering": "NOT_RUN: Apple SDK unavailable"
   },
-  "next_exact_implementation_action": "Preserve semantic annotations through translated excerpt display, then finish unsaved-note protection, shared imported-image references, additional specification tracking and remaining requirements.",
-  "updated_at": "2026-11-05T19:50:41.407591+00:00"
+  "next_exact_implementation_action": "Implement unsaved saved-page note protection, then shared image references and remaining requirements.",
+  "updated_at": "2026-11-05T19:54:43.955284+00:00"
 }
