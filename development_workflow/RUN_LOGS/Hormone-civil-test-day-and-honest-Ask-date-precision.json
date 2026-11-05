@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-11-05T23:21:08.711392+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "Targeted final five hormone civil-date tests in both modes",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "308 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed",
+    "Swift_5_native": "312 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed",
+    "workflow": "16 Python tests passed",
+    "Swift_syntax": "190 changed Swift files parsed, zero errors; no Apple typecheck",
+    "Apple_runtime": "NOT_RUN; no Apple SDK/device",
+    "MADLAD": "Official weights/tokenizer still blocked by proxy; T5 inference and clinical translation not verified"
+  }
+}

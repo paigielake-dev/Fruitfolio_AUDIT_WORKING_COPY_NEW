@@ -32,7 +32,8 @@ struct FruitfolioAskContextPicker: View {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(verbatim: record.hormoneName).bold()
                             Text(verbatim: record.result + " " + record.unit)
-                            Text(record.testDate, style: .date)
+                            if let date = record.dateForDisplay() { Text(date, style: .date) }
+                            else { Text(verbatim: record.reportedTestDay?.description ?? "date unavailable") }
                         }
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)

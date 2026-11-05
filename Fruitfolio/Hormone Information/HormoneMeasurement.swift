@@ -17,6 +17,8 @@ enum FruitfolioMeasuredHormone: String, CaseIterable, Codable, Identifiable, Sen
     }
 }
 
+enum FruitfolioHormoneTestDatePrecision: String, Codable, Sendable { case day }
+
 struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable {
     var id = UUID()
     var hormone: FruitfolioMeasuredHormone = .estradiol
@@ -24,13 +26,34 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
     var result = ""
     var resultLocaleIdentifier: String?
     var unit = ""
+    // Compatibility Date value; the form collects a day, never a clinical time.
     var testDate = Date()
+    var testDatePrecision: FruitfolioHormoneTestDatePrecision? = .day
+    var reportedTestDay: Prompt13LocalDate?
+    var testDateEntryTimeZoneIdentifier: String?
     var sampleType = ""
     var cycleDay: Int?
     var laboratoryReferenceRange = ""
     var notes = ""
 
     var hormoneName: String { hormone == .other ? otherHormoneName : hormone.label }
+
+    mutating func setReportedTestDate(_ date: Date, calendar: Calendar) throws {
+        let day = try Prompt13LocalDate(date, calendar: calendar)
+        guard reportedTestDay != day || testDateEntryTimeZoneIdentifier == nil || testDatePrecision != .day else { return }
+        testDate = date
+        reportedTestDay = day
+        testDatePrecision = .day
+        testDateEntryTimeZoneIdentifier = calendar.timeZone.identifier
+    }
+
+    func dateForDisplay(calendar: Calendar = .autoupdatingCurrent) -> Date? {
+        if let reportedTestDay { return try? reportedTestDay.foundationDate(in: calendar) }
+        return testDate.timeIntervalSinceReferenceDate.isFinite ? testDate : nil
+    }
+    func dayForOrdering(calendar: Calendar = .autoupdatingCurrent) -> Prompt13LocalDate? {
+        reportedTestDay ?? (try? Prompt13LocalDate(testDate, calendar: calendar))
+    }
 
     func validate(locale: Locale = .current) throws {
         let input = result.trimmingCharacters(in: .whitespacesAndNewlines)

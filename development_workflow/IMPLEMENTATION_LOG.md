@@ -750,3 +750,14 @@
 - Verification: {"Swift_6_headless": "304 XCTest + 21 Swift Testing passed (325 total)", "Swift_5_native": "308 XCTest + 21 Swift Testing passed (329 total)", "workflow": "16 Python tests passed", "Swift_syntax": "189 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors", "date_safety": "Five calendar identifiers, leap/travel boundaries, actual Calendar loader and corrupted real cycle file exercised; old valid stored years remain unchanged", "Apple_UI": "NOT_RUN: date picker/display and full Hormone/Trends UI behavior await Apple runtime"}.
 - Next action: Refresh recovery bundle, then preserve date-only hormone test days for new records and keep uncollected time-of-day out of explicit Ask context; retain legacy records without guessing original time zones. Resume original logging/control backlog afterward.
 - Commit: containing commit for batch Canonical-civil-date-boundaries-and-invalid-record-protection.
+
+## Hormone-civil-test-day-and-honest-Ask-date-precision
+
+- Parent checkpoint: 5e6e53f074119ff849783614ab8cff33b829a46f.
+- Source-order requirements: [242, 247, 249, 250, 251, 253, 263, 264].
+- Source files: Fruitfolio/Hormone Information/HormoneMeasurement.swift, Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift, Fruitfolio/Hormone Information/HormoneInformationView.swift, Fruitfolio/Ask/FruitfolioAskUserContext.swift, Fruitfolio/Ask/FruitfolioAskContextPicker.swift.
+- New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.
+- Tests added/updated: Prompt1BHormoneCivilDateTests.
+- Verification: {"Swift_6_headless": "308 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed", "Swift_5_native": "312 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed", "workflow": "16 Python tests passed", "Swift_syntax": "190 changed Swift files parsed, zero errors; no Apple typecheck", "Apple_runtime": "NOT_RUN; no Apple SDK/device", "MADLAD": "Official weights/tokenizer still blocked by proxy; T5 inference and clinical translation not verified"}.
+- Next action: Continue daily-log shared controls, accessible unsaved confirmation and asynchronous draft/save correctness; then continue next independent original-order requirements.
+- Commit: containing commit for batch Hormone-civil-test-day-and-honest-Ask-date-precision.

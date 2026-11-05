@@ -29,9 +29,15 @@ nonisolated struct FruitfolioAskUserContext: Equatable, Sendable {
         var hints: Set<String> = []
         for measurement in measurements.filter({ measurementIDs.contains($0.id) }).sorted(by: { $0.id.uuidString < $1.id.uuidString }) {
             var fields = ["hormone": measurement.hormoneName, "result_exactly_as_entered": measurement.result,
-                "unit_exactly_as_entered": measurement.unit, "test_date": measurement.testDate.ISO8601Format(),
+                "unit_exactly_as_entered": measurement.unit,
+                "test_date_gregorian": measurement.dayForOrdering()?.description ?? "unavailable",
+                "test_time_of_day": "not_recorded",
+                "test_date_precision": measurement.testDatePrecision?.rawValue ?? "legacy_precision_not_recorded",
+                "test_date_basis": measurement.reportedTestDay == nil
+                    ? "date_value_in_current_timezone_original_entry_timezone_unknown" : "explicit_user_entered_civil_day",
                 "sample_type_user_reported": measurement.sampleType, "laboratory_reference_range_user_reported": measurement.laboratoryReferenceRange,
                 "notes_user_reported": measurement.notes]
+            if let zone = measurement.testDateEntryTimeZoneIdentifier { fields["date_entry_timezone_not_test_location"] = zone }
             if let day = measurement.cycleDay { fields["cycle_day_user_reported"] = String(day) }
             if let locale = measurement.resultLocaleIdentifier { fields["result_entry_locale"] = locale }
             records.append(.init(kind: "recorded_hormone_measurement", sourceID: measurement.id.uuidString,

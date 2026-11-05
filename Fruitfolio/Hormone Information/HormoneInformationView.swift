@@ -45,7 +45,11 @@ struct FruitfolioHormoneInformationView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(verbatim: measurement.hormoneName).bold()
                         Text(verbatim: "\(measurement.result) \(measurement.unit)")
-                        Text(measurement.testDate, style: .date)
+                        if let date = measurement.dateForDisplay() { Text(date, style: .date) }
+                        else { Text(verbatim: measurement.reportedTestDay?.description ?? "date unavailable") }
+                        if measurement.reportedTestDay == nil {
+                            Text("date shown in your current time zone; you can confirm or correct it when editing.").font(.caption)
+                        }
                         if !measurement.sampleType.isEmpty { Text(verbatim: measurement.sampleType) }
                         if let day = measurement.cycleDay { Text("cycle day \(day)") }
                         if !measurement.laboratoryReferenceRange.isEmpty {
@@ -86,7 +90,7 @@ struct FruitfolioHormoneInformationView: View {
             FruitfolioHormoneLibraryView(onBack: { showingLibrary = false })
         }
         .sheet(item: $editing) { record in
-            FruitfolioHormoneMeasurementEditor(original: record, onCancel: { editing = nil }) { updated in
+            FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
                 try store.save(updated)
                 editing = nil
             }
@@ -125,12 +129,14 @@ private struct FruitfolioHormoneMeasurementEditor: View {
     @State private var errorMessage: String?
     @State private var confirmDiscard = false
 
-    init(original: FruitfolioHormoneMeasurement, onCancel: @escaping () -> Void,
+    init(original: FruitfolioHormoneMeasurement, captureInitialTestDay: Bool = false, onCancel: @escaping () -> Void,
          onSave: @escaping (FruitfolioHormoneMeasurement) throws -> Void) {
-        self.original = original
+        var initial = original
+        if captureInitialTestDay { try? initial.setReportedTestDate(original.testDate, calendar: .autoupdatingCurrent) }
+        self.original = initial
         self.onCancel = onCancel
         self.onSave = onSave
-        _draft = State(initialValue: original)
+        _draft = State(initialValue: initial)
         _cycleDayText = State(initialValue: original.cycleDay.map(String.init) ?? "")
     }
     private var hasChanges: Bool { draft != original || cycleDayText != (original.cycleDay.map(String.init) ?? "") }
@@ -145,7 +151,26 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
                     .onChange(of: draft.result) { _, _ in draft.resultLocaleIdentifier = Locale.current.identifier }
                 TextField("unit, exactly as reported", text: $draft.unit)
-                DatePicker("test date", selection: $draft.testDate, displayedComponents: .date)
+                if let shownDate = draft.dateForDisplay() {
+                    DatePicker("test date", selection: Binding(
+                        get: { draft.dateForDisplay() ?? shownDate },
+                        set: { value in
+                            do { try draft.setReportedTestDate(value, calendar: .autoupdatingCurrent) }
+                            catch { errorMessage = error.localizedDescription }
+                        }), displayedComponents: .date)
+                } else {
+                    Text(verbatim: draft.reportedTestDay?.description ?? "date unavailable")
+                    Text("the stored day has been kept. your current time zone cannot represent it; no replacement date was assumed.")
+                        .font(.caption)
+                }
+                Text("record the date as reported. the time of day is not collected.").font(.caption)
+                if draft.reportedTestDay == nil {
+                    Button("confirm this displayed test date") {
+                        do { try draft.setReportedTestDate(draft.testDate, calendar: .autoupdatingCurrent) }
+                        catch { errorMessage = error.localizedDescription }
+                    }
+                    .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                }
                 TextField("sample type (optional)", text: $draft.sampleType)
                 TextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
                 TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange)

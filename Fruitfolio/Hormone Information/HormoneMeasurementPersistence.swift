@@ -21,7 +21,13 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
 
     func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
         records.filter { hormone == nil || $0.hormone == hormone }.sorted {
-            $0.testDate == $1.testDate ? $0.id.uuidString < $1.id.uuidString : $0.testDate > $1.testDate
+            let left = $0.dayForOrdering()
+            let right = $1.dayForOrdering()
+            if let left, let right, left != right { return left > right }
+            if (left == nil) != (right == nil) { return left != nil }
+            // No test time was collected. UUID is a deterministic same-day tie,
+            // not a fabricated order of laboratory concentrations.
+            return $0.id.uuidString < $1.id.uuidString
         }
     }
 

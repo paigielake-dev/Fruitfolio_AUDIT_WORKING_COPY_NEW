@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "e8dda227cd2b22ee5b646cea21b55f07ad445545",
+  "current_HEAD": "5e6e53f074119ff849783614ab8cff33b829a46f",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
-  "current_requirement": 247,
-  "current_implementation_batch": "Canonical-civil-date-boundaries-and-invalid-record-protection",
+  "current_requirement": 297,
+  "current_implementation_batch": "Hormone-civil-test-day-and-honest-Ask-date-precision",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,14 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift",
-    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingViewModel.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
-    "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
-    "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-    "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
-    "FruitfolioTests/Prompt1BCanonicalCalendarTests.swift",
+    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+    "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+    "FruitfolioTests/Prompt1BHormoneCivilDateTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/BLOCKERS.md",
+    "development_workflow/HORMONE_DATE_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -522,19 +514,22 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "Targeted final five hormone civil-date tests in both modes",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "python3 -m unittest discover -s development_workflow/tests -q",
-    "git diff --check",
-    "python3 Tools/create_local_recovery_bundle.py --output /workspace/recovery/Fruitfolio-prompt-1b.bundle (after commit)"
+    "git diff --check"
   ],
   "last_test_results": {
-    "Swift_6_headless": "304 XCTest + 21 Swift Testing passed (325 total)",
-    "Swift_5_native": "308 XCTest + 21 Swift Testing passed (329 total)",
+    "Swift_6_headless": "308 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed",
+    "Swift_5_native": "312 XCTest +21 Swift Testing passed; final 5-test hormone suite also passed",
     "workflow": "16 Python tests passed",
-    "Swift_syntax": "189 changed Swift files parsed by Swift 6.2.1 compiler; zero parse errors",
-    "date_safety": "Five calendar identifiers, leap/travel boundaries, actual Calendar loader and corrupted real cycle file exercised; old valid stored years remain unchanged",
-    "Apple_UI": "NOT_RUN: date picker/display and full Hormone/Trends UI behavior await Apple runtime"
+    "Swift_syntax": "190 changed Swift files parsed, zero errors; no Apple typecheck",
+    "Apple_runtime": "NOT_RUN; no Apple SDK/device",
+    "MADLAD": "Official weights/tokenizer still blocked by proxy; T5 inference and clinical translation not verified"
   },
-  "next_exact_implementation_action": "Refresh recovery bundle, then preserve date-only hormone test days for new records and keep uncollected time-of-day out of explicit Ask context; retain legacy records without guessing original time zones. Resume original logging/control backlog afterward.",
-  "updated_at": "2026-11-05T23:10:03.932755+00:00",
+  "next_exact_implementation_action": "Continue daily-log shared controls, accessible unsaved confirmation and asynchronous draft/save correctness; then continue next independent original-order requirements.",
+  "updated_at": "2026-11-05T23:21:08.711392+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }
