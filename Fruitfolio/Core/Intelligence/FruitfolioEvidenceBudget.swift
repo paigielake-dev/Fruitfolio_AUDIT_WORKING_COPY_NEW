@@ -37,7 +37,7 @@ nonisolated enum FruitfolioEvidenceBudget {
         for note in evidence.researchNoteChunks where permitted.contains(note.chunkID) {
             try Task.checkCancellation()
             guard notes.count < FruitfolioEvidencePromptBuilder.maximumNoteParagraphs else { break }
-            let cost = try outputTokenCount(FruitfolioEvidenceDecodingGrammar.singleClaimDraftJSON(id: note.chunkID, text: note.text))
+            let cost = try outputTokenCount(FruitfolioEvidenceDecodingGrammar.singleSelectionJSON(id: note.chunkID))
             guard cost + 8 <= maximumOutputTokens,
                   try promptTokenCount(packet(notes + [note], sources)) <= maximumPromptTokens else { continue }
             notes.append(note)
@@ -46,7 +46,7 @@ nonisolated enum FruitfolioEvidenceBudget {
         for source in evidence.sourceChunks where permitted.contains(source.sourceChunkID) {
             try Task.checkCancellation()
             guard sources.count < FruitfolioEvidencePromptBuilder.maximumSourceParagraphs else { break }
-            let cost = try outputTokenCount(FruitfolioEvidenceDecodingGrammar.singleClaimDraftJSON(id: source.sourceChunkID, text: source.text))
+            let cost = try outputTokenCount(FruitfolioEvidenceDecodingGrammar.singleSelectionJSON(id: source.sourceChunkID))
             guard cost + 8 <= maximumOutputTokens,
                   try promptTokenCount(packet(notes, sources + [source])) <= maximumPromptTokens else { continue }
             sources.append(source)

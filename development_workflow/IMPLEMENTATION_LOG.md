@@ -552,3 +552,14 @@
 - Verification: {"Swift_6_headless": "85 XCTest + 21 Swift Testing passed (106 total)", "Swift_5_native": "88 XCTest + 21 Swift Testing passed (109 total)", "workflow": "15 Python tests passed", "Swift_syntax": "128 files, zero parser errors", "MADLAD_inference": "NOT_RUN: official weights/tokenizer blocked; no translation-quality claim"}.
 - Next action: Reduce measured native generation latency by selecting permitted evidence IDs and reconstructing exact paragraphs deterministically; verify actual corpus-backed generated path, then remaining feature providers and original backlog.
 - Commit: containing commit for batch MADLAD-signed-quantities-units-and-reference-protection.
+
+## Ask-compact-native-evidence-selection-and-exact-attribution
+
+- Parent checkpoint: fcab0855be793a0f695b54f9b99ee3542d83cef7.
+- Source-order requirements: [130, 131, 132, 133, 134, 135, 136, 137, 161, 162].
+- Source files: Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift.
+- Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.
+- Tests added/updated: Prompt1BEvidenceBoundaryTests, Prompt1BEvidenceBudgetTests, Prompt1BResearchEngineIntegrationTests.
+- Verification: {"Swift_6_headless": "88 XCTest + 21 Swift Testing passed (109 total)", "Swift_5_native": "91 XCTest + 21 Swift Testing passed (112 total)", "workflow": "15 Python tests passed", "Swift_syntax": "128 files, zero parser errors", "native_corpus_generated": "10.572s Linux CPU; generated path asserted, not fallback", "Apple_UI_and_MADLAD": "NOT_RUN; existing blockers remain"}.
+- Next action: Implement original source-order library requirements 168 onward: save transition treatment, canonical identical decorative shelf, accessible sorting, title/description validation; continue remaining original backlog.
+- Commit: containing commit for batch Ask-compact-native-evidence-selection-and-exact-attribution.

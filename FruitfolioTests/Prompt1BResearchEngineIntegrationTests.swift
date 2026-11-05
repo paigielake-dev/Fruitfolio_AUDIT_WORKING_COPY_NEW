@@ -8,6 +8,17 @@ private actor Prompt1BUnavailableSynthesis: FruitfolioLanguageModel {
     }
 }
 
+private actor Prompt1BSingleEvidenceSynthesis: FruitfolioLanguageModel {
+    private(set) var expectedSourceIDs: Set<String> = []
+    func availability() async -> FruitfolioLanguageModelAvailability { .available }
+    func generateDraft(question: String, evidence: FruitfolioEvidencePacket) async throws -> FruitfolioGeneratedDraft {
+        let permitted = Set(evidence.claimEvidenceMap.flatMap(\.noteChunkIDs))
+        let note = try XCTUnwrap(evidence.researchNoteChunks.first { permitted.contains($0.chunkID) })
+        expectedSourceIDs = Set(note.sourceIDs)
+        return .init(bridge: nil, claims: [.init(text: note.text, evidenceIDs: [note.chunkID])], limitation: nil)
+    }
+}
+
 @MainActor
 final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
     private func store() throws -> FruitfolioResearchPackageStore {
@@ -27,6 +38,15 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         XCTAssertFalse(answer.isDevelopmentPreview)
         XCTAssertEqual(answer.answerPath, .retrievalFallback)
         XCTAssertGreaterThan(engine.lastDiagnostics?.noteCount ?? 0, 0)
+    }
+    func testSourcesContainOnlyEvidenceActuallyPresented() async throws {
+        let model = Prompt1BSingleEvidenceSynthesis()
+        let engine = FruitfolioResearchIntelligenceEngine(packageStore: try store(), languageModel: model)
+        let answer = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])
+        let expected = await model.expectedSourceIDs
+        XCTAssertEqual(answer.answerPath, .generated)
+        XCTAssertFalse(expected.isEmpty)
+        XCTAssertEqual(Set(answer.sourceIDs), expected)
     }
     func testUrgentGuidanceDoesNotDependOnPackageOrModelAvailability() async throws {
         let missing = FruitfolioResearchPackageStore(resourceURL: URL(fileURLWithPath: "/missing/research.json"))

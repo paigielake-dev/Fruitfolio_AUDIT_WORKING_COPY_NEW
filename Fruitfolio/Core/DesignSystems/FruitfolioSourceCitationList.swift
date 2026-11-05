@@ -10,6 +10,7 @@ struct FruitfolioSourceCitationList: View {
     @State private var failedToOpen = false
 
     var body: some View {
+        if !sources.isEmpty {
         VStack(alignment: .leading, spacing: 12) {
             Divider()
             HStack(spacing: 8) {
@@ -58,6 +59,7 @@ struct FruitfolioSourceCitationList: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text("the citation details remain available here.")
+        }
         }
     }
 }

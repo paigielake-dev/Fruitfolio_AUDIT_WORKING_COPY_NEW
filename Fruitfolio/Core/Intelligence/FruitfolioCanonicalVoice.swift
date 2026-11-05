@@ -31,7 +31,7 @@ nonisolated enum FruitfolioCanonicalAnswerVoice {
             : "let’s start with what the approved research can support.")
         sections.append(excerpts.map { "☆ " + $0 }.joined(separator: "\n\n"))
         if hasUnansweredParts {
-            sections.append("i can share the supported part here, but the approved library doesn’t yet cover the rest reliably.")
+            sections.append("i can share the supported part here, but this material doesn’t resolve every part reliably.")
         }
         return sections.joined(separator: "\n\n")
     }

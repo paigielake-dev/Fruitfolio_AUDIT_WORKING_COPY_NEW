@@ -17,3 +17,9 @@ One warm run: 0.518 s wall; max RSS 566264 KiB; model-reported load 261.63 ms; 9
 - Native corpus-backed query `how does progesterone affect temperature?` passed the generated-path assertion in 30.335 seconds on Linux CPU.
 - Prompt and output admission use actual model token counts; complete paragraphs are never clipped.
 - This remains a latency concern, with redundant autoregressive evidence copying identified for optimization. It is not an iPhone/device benchmark.
+
+## Compact evidence selection (Linux CPU)
+
+- Same real corpus-backed query, actual Swift/Qwen model: generated path passed in 10.572 seconds (earlier recorded full-text-output baseline 30.335 seconds).
+- Model emits only whitelisted evidence IDs; complete paragraphs are restored deterministically, then validated and styled. Attribution includes only presented evidence.
+- Different run conditions and model loading contribute to timing; no controlled device benchmark, clinical paraphrase, or MADLAD inference claim.

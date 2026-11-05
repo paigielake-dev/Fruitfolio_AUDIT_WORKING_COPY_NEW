@@ -182,7 +182,7 @@ actor LlamaFruitfolioLanguageModel:
     }
 
     private let contextSize: UInt32 = 4096
-    private let maximumGeneratedTokens: Int32 = 768
+    private let maximumGeneratedTokens: Int32 = 256
 
     private var model: OpaquePointer?
     private var context: OpaquePointer?
@@ -242,13 +242,13 @@ actor LlamaFruitfolioLanguageModel:
             evidence: evidence, maximumPromptTokens: contextCapacity - Int(maximumGeneratedTokens) - 1,
             maximumOutputTokens: Int(maximumGeneratedTokens),
             promptTokenCount: { packet in
-                try tokenize(qwenPrompt(FruitfolioEvidencePromptBuilder.prompt(question: question, evidence: packet)), vocab: vocab).count
+                try tokenize(qwenPrompt(FruitfolioEvidencePromptBuilder.selectionPrompt(question: question, evidence: packet)), vocab: vocab).count
             }, outputTokenCount: { json in try tokenize(json, vocab: vocab).count }) else {
             throw FruitfolioLlamaError.promptTooLong
         }
         let sampler = try makeSampler(vocab: vocab, evidence: selection.evidence, maximumClaims: selection.maximumClaims)
         defer { llama_sampler_free(sampler) }
-        let prompt = qwenPrompt(FruitfolioEvidencePromptBuilder.prompt(question: question, evidence: selection.evidence))
+        let prompt = qwenPrompt(FruitfolioEvidencePromptBuilder.selectionPrompt(question: question, evidence: selection.evidence, maximumClaims: selection.maximumClaims))
         let promptTokens = try tokenize(prompt, vocab: vocab)
         guard promptTokens.count + Int(maximumGeneratedTokens) < contextCapacity else {
             throw FruitfolioLlamaError.promptTooLong
@@ -325,16 +325,11 @@ actor LlamaFruitfolioLanguageModel:
 
         let cleaned = extractJSONObject(from: generated)
 
-        guard
-            !cleaned.isEmpty,
-            let data = cleaned.data(using: .utf8),
-            let draft = try? JSONDecoder().decode(
-                FruitfolioGeneratedDraft.self,
-                from: data
-            )
-        else {
+        guard !cleaned.isEmpty, let data = cleaned.data(using: .utf8) else {
             throw FruitfolioLlamaError.invalidOutput
         }
+        let draft = try FruitfolioEvidenceSelectionDecoder.draft(from: data, evidence: selection.evidence,
+                                                               maximumClaims: selection.maximumClaims)
 
         return draft
     }
@@ -889,6 +884,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
         let answerText: String
         let answerPath: FruitfolioAnswerPath
+        let usedEvidenceIDs: Set<String>
 
         do {
             progress?(.synthesizing)
@@ -901,18 +897,21 @@ final class FruitfolioResearchIntelligenceEngine:
 
             progress?(.validating)
 
-            if let validated = FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: packet) {
-                answerText = validated
+            if let validated = FruitfolioGeneratedDraftValidator.validatedAnswer(draft: draft, evidence: packet) {
+                answerText = validated.text
+                usedEvidenceIDs = validated.usedEvidenceIDs
                 answerPath = .generated
             } else {
                 answerText = retrievalOnlyAnswer(question: trimmed, coverage: coverage,
                     notes: packet.researchNoteChunks, safety: safety)
                 answerPath = .retrievalFallback
+                usedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
             }
 
         } catch {
             if Task.isCancelled || error is CancellationError { throw CancellationError() }
             answerPath = .retrievalFallback
+            usedEvidenceIDs = Set(packet.researchNoteChunks.prefix(3).map(\.chunkID))
             answerText =
                 retrievalOnlyAnswer(
                     question: trimmed,
@@ -923,8 +922,10 @@ final class FruitfolioResearchIntelligenceEngine:
                 )
         }
 
+        let displayedSourceIDs = Set(packet.researchNoteChunks.filter { usedEvidenceIDs.contains($0.chunkID) }.flatMap(\.sourceIDs)
+            + packet.sourceChunks.filter { usedEvidenceIDs.contains($0.sourceChunkID) }.map(\.sourceID))
         let sources =
-            approvedSources.map {
+            approvedSources.filter { displayedSourceIDs.contains($0.sourceID) }.map {
                 source in
 
                 AskSourceRecord(

@@ -30,7 +30,7 @@ final class Prompt1BEvidenceBudgetTests: XCTestCase {
     }
     func testOutputBudgetRestrictsNumberOfWholeClaimsAndJSONPreservesUnits() throws {
         let original = packet(["E2 20 pg/mL", "exact second paragraph"])
-        let selected = try XCTUnwrap(FruitfolioEvidenceBudget.fit(evidence: original, maximumPromptTokens: 500, maximumOutputTokens: 160,
+        let selected = try XCTUnwrap(FruitfolioEvidenceBudget.fit(evidence: original, maximumPromptTokens: 500, maximumOutputTokens: 50,
             promptTokenCount: { _ in 20 }, outputTokenCount: { $0.utf8.count }))
         XCTAssertEqual(selected.maximumClaims, 1)
         let json = try FruitfolioEvidenceDecodingGrammar.singleClaimDraftJSON(id: "note-0", text: "E2 20 pg/mL")

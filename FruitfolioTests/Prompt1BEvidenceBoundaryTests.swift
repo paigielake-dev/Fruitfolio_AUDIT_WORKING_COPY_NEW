@@ -33,8 +33,28 @@ final class Prompt1BEvidenceBoundaryTests: XCTestCase {
         XCTAssertEqual(presentation, "2 \\* 3 \\* 4")
         XCTAssertTrue(FruitfolioEvidenceCopyPolicy.matchesCompleteEvidence("**E2** 20 pg/mL", original: "E2 20 pg/mL"))
     }
+    func testSelectionRejectsUnknownUnpermittedAndExcessiveIDs() throws {
+        for json in [#"{"evidenceIDs":["invented"]}"#, #"{"evidenceIDs":["note-1","note-1","note-1","note-1"]}"#] {
+            XCTAssertThrowsError(try FruitfolioEvidenceSelectionDecoder.draft(from: Data(json.utf8), evidence: packet(), maximumClaims: 3))
+        }
+        var evidence = packet()
+        evidence = .init(normalizedQuestion: evidence.normalizedQuestion, researchNoteChunks: evidence.researchNoteChunks,
+            sourceChunks: [], claimEvidenceMap: [], sourceRecords: [], safetyClassification: evidence.safetyClassification,
+            permittedContext: nil, contentVersion: "fixture")
+        XCTAssertThrowsError(try FruitfolioEvidenceSelectionDecoder.draft(from: Data(#"{"evidenceIDs":["note-1"]}"#.utf8), evidence: evidence, maximumClaims: 3))
+    }
+
+    func testSelectionReconstructsOnlyOriginalEvidenceAndRecordsActualAttribution() throws {
+        let data = Data(#"{"evidenceIDs":["note-1","note-1"],"text":"invented treatment"}"#.utf8)
+        let draft = try FruitfolioEvidenceSelectionDecoder.draft(from: data, evidence: packet(), maximumClaims: 3)
+        XCTAssertEqual(draft.claims.count, 1)
+        XCTAssertEqual(draft.claims.first?.text, original)
+        let answer = try XCTUnwrap(FruitfolioGeneratedDraftValidator.validatedAnswer(draft: draft, evidence: packet()))
+        XCTAssertEqual(answer.usedEvidenceIDs, ["note-1"])
+        XCTAssertFalse(answer.text.contains("invented treatment"))
+    }
     #if canImport(llama)
-    func testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID() async throws {
+    func testNativeEvidenceSelectionPreservesQuotedUnicodeSourceAndExactEvidenceID() async throws {
         let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"].map { URL(fileURLWithPath: $0) }
         let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
         let model = LlamaFruitfolioLanguageModel(modelURL: url)
