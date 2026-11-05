@@ -16,8 +16,10 @@ SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift',
+    'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogStore.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogRules.swift',
     'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarProjection.swift',
+    'Fruitfolio/Cycle Tracker/Daily Logging/Prompt20CalendarIntegration.swift',
     'Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleModels.swift',
     'Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleLogicEngine.swift',
     'Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CyclePersistence.swift',
@@ -88,6 +90,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BDailyLogWriteTests.swift', 'Prompt20DailyLogCoreTests.swift',
     'Prompt1BUsernamePersistenceTests.swift', 'Prompt1BPseudonymPolicyTests.swift', 'Prompt1BSharedLibraryCatalogTests.swift', 'Prompt1BUserMaterialTests.swift', 'Prompt1BBookMotionTests.swift', 'Prompt1BBookLabelTests.swift', 'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',
     'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',

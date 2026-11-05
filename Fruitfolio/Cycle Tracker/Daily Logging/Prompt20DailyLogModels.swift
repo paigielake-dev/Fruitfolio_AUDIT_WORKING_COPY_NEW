@@ -563,3 +563,19 @@ public enum Prompt20DailyLogSection: String, CaseIterable, Identifiable, Sendabl
         }
     }
 }
+
+/// One immutable repository write. Only an identical retry may reuse its ID;
+/// edits made while awaiting storage never become part of that saved baseline.
+struct Prompt20DailyLogWrite: Equatable, Sendable {
+    let id: UUID
+    let draft: Prompt20DailyLogDraft
+
+    static func begin(draft: Prompt20DailyLogDraft, retrying previous: Self?) -> Self {
+        if let previous, previous.draft == draft { return previous }
+        return Self(id: UUID(), draft: draft)
+    }
+
+    func hasLaterEdits(_ current: Prompt20DailyLogDraft) -> Bool {
+        current != draft
+    }
+}

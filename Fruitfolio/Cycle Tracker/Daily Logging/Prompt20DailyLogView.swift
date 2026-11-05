@@ -10,6 +10,7 @@ public struct Prompt20DailyLogView: View {
     @State private var showSavedMessage = false
     @State private var showUnsavedConfirmation = false
     @State private var savedMessageTask: Task<Void, Never>?
+    @State private var repositoryTask: Task<Void, Never>?
 
     private let onSaved: (Prompt20DailyLog?) -> Void
     private let onDirtyStateChange: (Bool) -> Void
@@ -58,7 +59,7 @@ public struct Prompt20DailyLogView: View {
             if showUnsavedConfirmation {
                 Prompt20UnsavedChangesOverlay(
                     onKeepEditing: {
-                        withAnimation(.easeOut(duration: 0.14)) {
+                        withAnimation(.easeOut(duration: motionPreferences.reduceMotionActive ? 0.08 : 0.14)) {
                             showUnsavedConfirmation = false
                         }
                     },
@@ -77,9 +78,10 @@ public struct Prompt20DailyLogView: View {
         .onChange(of: model.hasUnsavedChanges) { _, newValue in
             onDirtyStateChange(newValue)
         }
-        .interactiveDismissDisabled(model.hasUnsavedChanges)
+        .interactiveDismissDisabled(model.hasUnsavedChanges || model.saveState == .saving)
         .onDisappear {
             savedMessageTask?.cancel()
+            repositoryTask?.cancel()
         }
         .accessibilityIdentifier("prompt20.dailyLog")
     }
@@ -135,6 +137,7 @@ public struct Prompt20DailyLogView: View {
             Spacer(minLength: 8)
 
             CloseControl(action: requestClose)
+                .disabled(model.saveState == .saving)
         }
     }
 
@@ -211,14 +214,13 @@ public struct Prompt20DailyLogView: View {
 
                 Button("try again") {
                     audioManager.play(.buttonSoftPop)
-                    Task { @MainActor in
-                        await model.load()
-                    }
+                    repositoryTask?.cancel()
+                    repositoryTask = Task { @MainActor in await model.load() }
                 }
                 .font(Prompt20Type.button)
                 .foregroundStyle(Prompt20Palette.coral)
                 .frame(minHeight: 44, alignment: .leading)
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
             }
         }
         .padding(14)
@@ -280,7 +282,7 @@ public struct Prompt20DailyLogView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(
-                Prompt20SoftPressStyle(
+                CutePopButtonStyle(
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
             )
@@ -461,7 +463,7 @@ public struct Prompt20DailyLogView: View {
                 }
                 .font(Prompt20Type.micro)
                 .foregroundStyle(Prompt20Palette.dustyBlue)
-                .buttonStyle(.plain)
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 .accessibilityHint("explains cervical fluid categories")
             }
 
@@ -569,7 +571,7 @@ public struct Prompt20DailyLogView: View {
                 .frame(minHeight: 44)
             }
             .buttonStyle(
-                Prompt20SoftPressStyle(
+                CutePopButtonStyle(
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
             )
@@ -611,13 +613,7 @@ public struct Prompt20DailyLogView: View {
                 guard model.canSave else { return }
                 audioManager.play(.buttonSoftPop)
 
-                Task { @MainActor in
-                    let success = await model.save()
-                    if success {
-                        onSaved(model.existingLog)
-                        showSaveFeedback()
-                    }
-                }
+                saveLog()
             }
             .disabled(!model.canSave)
             .opacity(model.canSave ? 1 : 0.52)
@@ -638,17 +634,11 @@ public struct Prompt20DailyLogView: View {
 
                     Button("try again") {
                         audioManager.play(.buttonSoftPop)
-                        Task { @MainActor in
-                            let success = await model.retrySave()
-                            if success {
-                                onSaved(model.existingLog)
-                                showSaveFeedback()
-                            }
-                        }
+                        saveLog()
                     }
                     .font(Prompt20Type.button)
                     .foregroundStyle(Prompt20Palette.coral)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 }
             }
         }
@@ -687,7 +677,7 @@ public struct Prompt20DailyLogView: View {
             .font(Prompt20Type.button)
             .foregroundStyle(Prompt20Palette.burgundy)
             .frame(minWidth: 80, minHeight: 44)
-            .buttonStyle(.plain)
+            .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
 
             Spacer()
         }
@@ -695,6 +685,7 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func requestClose() {
+        guard model.saveState != .saving else { return }
         if model.hasUnsavedChanges {
             withAnimation(
                 motionPreferences.reduceMotionActive
@@ -762,7 +753,7 @@ public struct Prompt20DailyLogView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(
-            Prompt20SoftPressStyle(
+            CutePopButtonStyle(
                 reduceMotion: motionPreferences.reduceMotionActive
             )
         )
@@ -825,6 +816,17 @@ public struct Prompt20DailyLogView: View {
         return model.validationMessage(for: .medicationNameRequired(index: index))
     }
 
+    private func saveLog() {
+        guard model.canSave else { return }
+        repositoryTask?.cancel()
+        repositoryTask = Task { @MainActor in
+            let success = await model.save()
+            guard success, !Task.isCancelled else { return }
+            onSaved(model.existingLog)
+            if !model.hasUnsavedChanges { showSaveFeedback() }
+        }
+    }
+
     private func showSaveFeedback() {
         savedMessageTask?.cancel()
 
@@ -861,20 +863,7 @@ private struct Prompt20UnsavedChangesOverlay: View {
             Prompt20Palette.burgundy.opacity(0.055)
                 .ignoresSafeArea()
 
-            ZStack(alignment: .topLeading) {
-                Image("popup_taped_white")
-                    .resizable()
-                    .scaledToFit()
-                    .accessibilityHidden(true)
-
-                FruitfolioImage(id: .popup_pushpin)
-                    .scaledToFit()
-                    .frame(width: 38, height: 38)
-                    .offset(x: 18, y: 12)
-                    .allowsHitTesting(false)
-                    .accessibilityHidden(true)
-                    .zIndex(2)
-
+            FruitfolioTapedWhitePopup {
                 VStack(spacing: 10) {
                     Image("fruit_peach_soft")
                         .resizable()
@@ -902,7 +891,7 @@ private struct Prompt20UnsavedChangesOverlay: View {
                         .foregroundStyle(Prompt20Palette.burgundy)
                         .frame(minHeight: 44)
                         .buttonStyle(
-                            Prompt20SoftPressStyle(
+                            CutePopButtonStyle(
                                 reduceMotion: motionPreferences.reduceMotionActive
                             )
                         )
@@ -915,23 +904,21 @@ private struct Prompt20UnsavedChangesOverlay: View {
                         .foregroundStyle(Prompt20Palette.coral)
                         .frame(minHeight: 44)
                         .buttonStyle(
-                            Prompt20SoftPressStyle(
+                            CutePopButtonStyle(
                                 reduceMotion: motionPreferences.reduceMotionActive
                             )
                         )
                     }
                 }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 26)
+                .padding(.horizontal, 8)
             }
-            .frame(maxWidth: 330)
-            .padding(.horizontal, 24)
         }
         .accessibilityElement(children: .contain)
     }
 }
 
 private struct Prompt20MedicationRow: View {
+    @EnvironmentObject private var motionPreferences: MotionPreferences
     let medication: Prompt20MedicationEntry
     let validationMessage: String?
     let onChange: (Prompt20MedicationEntry) -> Void
@@ -958,7 +945,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.coral)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                     .accessibilityLabel("remove \(medication.name.isEmpty ? "medication entry" : medication.name)")
             }
 
@@ -1008,7 +995,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.burgundy)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
 
                     Button("remove") {
                         confirmingRemoval = false
@@ -1017,7 +1004,7 @@ private struct Prompt20MedicationRow: View {
                     .font(Prompt20Type.micro)
                     .foregroundStyle(Prompt20Palette.coral)
                     .frame(minHeight: 44)
-                    .buttonStyle(.plain)
+                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                 }
                 .transition(.opacity)
             }
@@ -1091,30 +1078,6 @@ private struct Prompt20AdaptiveChips<Content: View>: View {
         ) {
             content
         }
-    }
-}
-
-private struct Prompt20SoftPressStyle: ButtonStyle {
-    let reduceMotion: Bool
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .scaleEffect(
-                reduceMotion
-                    ? 1
-                    : (configuration.isPressed ? 0.975 : 1)
-            )
-            .offset(
-                y: reduceMotion
-                    ? 0
-                    : (configuration.isPressed ? 1 : 0)
-            )
-            .animation(
-                reduceMotion
-                    ? .easeOut(duration: 0.05)
-                    : .spring(response: 0.22, dampingFraction: 0.72),
-                value: configuration.isPressed
-            )
     }
 }
 

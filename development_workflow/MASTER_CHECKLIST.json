@@ -10714,7 +10714,10 @@
         "Fruitfolio/Cycle Tracker/Pre-UI Cycle Tracker foundation/Prompt13CycleStore.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayModels.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10724,13 +10727,17 @@
         "Prompt1BTodaySnapshotTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt16TodayStateBuilderTests"
+        "Prompt16TodayStateBuilderTests",
+        "Prompt1BDailyLogWriteTests",
+        "Prompt20CoreTests",
+        "Prompt1BDailyLogViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:Today-coherent-cycle-read-and-actual-loader-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-immutable-writes-and-shared-controls (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency."
+        "Replaced Today's repeated archive/onboarding reads with one actor-isolated archive+derived-state read and a reusable immutable Today load snapshot. Today state and its existing prediction bridge now consume the same captured inputs; onboarding and Daily Log work stay independently concurrent. Owned reveal tasks cancel on departure/inactive scene, returning active triggers a fresh load, generation guards reject stale completions, and load failure logging omits raw health errors. No prediction algorithms or stored observations changed. Expanded exact production Foundation compilation to real cycle/onboarding stores, Today loader and Calendar loader; original domain/onboarding/Today tests plus real-loader integration verify context suppression preserves recorded metadata and creates no fertile/ovulation windows. Test preferences now use disposable XDG_CONFIG_HOME. This verifies core runtime on Linux, not Apple UI, physical restart or device latency.",
+        "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux."
       ],
-      "last_updated": "2026-11-05T22:58:43.464026+00:00"
+      "last_updated": "2026-11-05T23:26:12.993722+00:00"
     },
     {
       "sequence": 298,
@@ -10747,7 +10754,9 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10757,13 +10766,17 @@
         "Prompt1BCanonicalCalendarTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BDailyLogWriteTests",
+        "Prompt20CoreTests",
+        "Prompt1BDailyLogViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-immutable-writes-and-shared-controls (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
+        "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux."
       ],
-      "last_updated": "2026-11-05T23:10:03.932755+00:00"
+      "last_updated": "2026-11-05T23:26:12.993722+00:00"
     },
     {
       "sequence": 299,
@@ -10780,7 +10793,9 @@
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmLoader.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsLoader.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10790,13 +10805,17 @@
         "Prompt1BCanonicalCalendarTests",
         "Prompt13CycleEngineTests",
         "Prompt14CycleOnboardingTests",
-        "Prompt1BTodaySnapshotTests"
+        "Prompt1BTodaySnapshotTests",
+        "Prompt1BDailyLogWriteTests",
+        "Prompt20CoreTests",
+        "Prompt1BDailyLogViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:Canonical-civil-date-boundaries-and-invalid-record-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-immutable-writes-and-shared-controls (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun."
+        "Fixed Date-to-civil-date conversions copying Buddhist/Hebrew/Islamic/Japanese device-calendar years into Gregorian cycle records. One validated shared boundary now retains caller time zone but canonical Gregorian components; typed reverse conversion replaces JSON/reflection work in Today/Calendar/Hormone/Trends and onboarding. Daily Log uses the same civil-date convention and projects explicitly to display-calendar month/day keys off the main actor. Custom decoding rejects impossible dates instead of rolling them forward; makeLog refuses invalid days, and actual cycle-file regression proves malformed original bytes cannot be overwritten by a new record. Closed a nonfinite BBT numeric gap without adding clinical range interpretations. Tests cover leap day, five calendars, travel, no epoch invention, actual Buddhist calendar-loader display and unchanged legacy valid years. Existing ambiguous legacy calendar identity is never guessed/migrated; exact limitation recorded. Apple date-picker and historical reconciliation acceptance remain unrun.",
+        "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux."
       ],
-      "last_updated": "2026-11-05T23:10:03.932755+00:00"
+      "last_updated": "2026-11-05T23:26:12.993722+00:00"
     },
     {
       "sequence": 300,
@@ -10805,20 +10824,27 @@
       "original_section": null,
       "description": "Ensure logging overlays use the universal popup and control systems.",
       "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Prediction Engine/Prompt17CyclePredictionEngine.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries"
+        "Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries",
+        "Prompt1BDailyLogWriteTests",
+        "Prompt20CoreTests",
+        "Prompt1BDailyLogViewModelTests (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P6-period-count-confidence-boundaries (resolve containing commit with git log)",
+      "commit_reference": "batch:Daily-log-immutable-writes-and-shared-controls (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches."
+        "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
+        "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux."
       ],
-      "last_updated": "2026-11-05T18:56:12.026857+00:00"
+      "last_updated": "2026-11-05T23:26:12.993722+00:00"
     },
     {
       "sequence": 301,
@@ -10864,15 +10890,25 @@
       "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
       "original_section": null,
       "description": "Preserve accessibility and reduced-motion behavior.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogModels.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogViewModel.swift",
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BDailyLogWriteTests",
+        "Prompt20CoreTests",
+        "Prompt1BDailyLogViewModelTests (Apple NOT_RUN)"
+      ],
+      "commit_reference": "batch:Daily-log-immutable-writes-and-shared-controls (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Fixed in-flight draft edits being incorrectly marked saved and changed retry drafts reusing old idempotency IDs. Repository writes capture immutable drafts; baseline reconciliation preserves later edits, including durable writes after presentation cancellation. Cancelled initial loads become retryable, and loaded dirty drafts survive view reappearance. Explicit UI repository tasks are owned/cancelled, callbacks guarded, and dismissal prevented during active writes. Daily log actions use canonical Reduce Motion-aware press style; unsaved dialog uses measured shared taped-white popup. Added exact production store/integration sources and existing 36 daily-log tests to portable runner; converted 26 synchronous MainActor test signatures to async after Linux XCTest discovery cast crash, with assertions unchanged. Two actual view-model suspension tests added for Apple, not run on Linux."
+      ],
+      "last_updated": "2026-11-05T23:26:12.993722+00:00"
     },
     {
       "sequence": 304,

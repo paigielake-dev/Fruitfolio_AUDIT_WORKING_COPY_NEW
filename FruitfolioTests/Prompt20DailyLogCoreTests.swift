@@ -33,7 +33,7 @@ final class Prompt20CoreTests: XCTestCase {
         Prompt20LocalDay(year: year, month: month, day: day)
     }
 
-    func testLocalDayRoundTripUsesCalendarDay() {
+    func testLocalDayRoundTripUsesCalendarDay() async {
         let cal = calendar()
         let source = date(2026, 9, 7, hour: 23, calendar: cal)
         let local = Prompt20LocalDay(date: source, calendar: cal)
@@ -41,21 +41,21 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(Prompt20LocalDay(date: local.date(in: cal)!, calendar: cal), local)
     }
 
-    func testLocalDaySurvivesDSTBoundary() {
+    func testLocalDaySurvivesDSTBoundary() async {
         let cal = calendar()
         let local = day(2026, 3, 8)
         let restored = local.date(in: cal)!
         XCTAssertEqual(Prompt20LocalDay(date: restored, calendar: cal), local)
     }
 
-    func testFutureDateRuleUsesLocalCalendarDayNotElapsedHours() {
+    func testFutureDateRuleUsesLocalCalendarDayNotElapsedHours() async {
         let cal = calendar()
         let now = date(2026, 9, 7, hour: 23, calendar: cal)
         XCTAssertFalse(Prompt20DailyLogRules.isFuture(day(2026, 9, 7), relativeTo: now, calendar: cal))
         XCTAssertTrue(Prompt20DailyLogRules.isFuture(day(2026, 9, 8), relativeTo: now, calendar: cal))
     }
 
-    func testPartialBleedingOnlyLogIsValid() throws {
+    func testPartialBleedingOnlyLogIsValid() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.bleedingLevel = .spotting
         let log = try Prompt20DailyLogRules.makeLog(
@@ -71,7 +71,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertTrue(log.hasRecordedContent)
     }
 
-    func testBleedingObservationDoesNotDeclarePeriodInCalendarBridge() throws {
+    func testBleedingObservationDoesNotDeclarePeriodInCalendarBridge() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.bleedingLevel = .heavy
         let log = try Prompt20DailyLogRules.makeLog(
@@ -93,7 +93,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertFalse(annotations[0].ovulationEstimated)
     }
 
-    func testSymptomsRemainStructuredAndNoteSeparate() throws {
+    func testSymptomsRemainStructuredAndNoteSeparate() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.selectedSymptoms = [.cramps, .bloating, .headache]
         draft.symptomNote = "after lunch"
@@ -108,7 +108,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(log.symptoms?.note, "after lunch")
     }
 
-    func testSymptomSummaryDoesNotInventSeverity() throws {
+    func testSymptomSummaryDoesNotInventSeverity() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.selectedSymptoms = [.cramps]
         let log = try Prompt20DailyLogRules.makeLog(
@@ -123,7 +123,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertFalse(summary.symptomNames.contains { $0.contains("mild") || $0.contains("severe") })
     }
 
-    func testFahrenheitConvertsToCanonicalCelsius() {
+    func testFahrenheitConvertsToCanonicalCelsius() async {
         let value = Prompt20TemperatureObservation(
             originalValue: 98.6,
             originalUnit: .fahrenheit,
@@ -133,7 +133,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(value.value(in: .fahrenheit), 98.6, accuracy: 0.0001)
     }
 
-    func testCelsiusConvertsToFahrenheit() {
+    func testCelsiusConvertsToFahrenheit() async {
         let value = Prompt20TemperatureObservation(
             originalValue: 36.5,
             originalUnit: .celsius,
@@ -142,7 +142,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(value.value(in: .fahrenheit), 97.7, accuracy: 0.0001)
     }
 
-    func testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft() {
+    func testTemperatureValidationRejectsNonnumericInputWithoutDiscardingDraft() async {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureText = "ninety seven"
         let result = Prompt20DailyLogRules.validate(draft)
@@ -150,21 +150,21 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(draft.temperatureText, "ninety seven")
     }
 
-    func testTemperatureValidationRejectsObviousUnitTypo() {
+    func testTemperatureValidationRejectsObviousUnitTypo() async {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureText = "986"
         draft.temperatureUnit = .fahrenheit
         XCTAssertEqual(Prompt20DailyLogRules.validate(draft).issues, [.implausibleTemperature])
     }
 
-    func testTemperatureValidationAcceptsReasonableGeneralInput() {
+    func testTemperatureValidationAcceptsReasonableGeneralInput() async {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureText = "98.6"
         draft.temperatureUnit = .fahrenheit
         XCTAssertTrue(Prompt20DailyLogRules.validate(draft).isValid)
     }
 
-    func testGeneralTemperatureDoesNotBecomeBBTCalendarMarker() throws {
+    func testGeneralTemperatureDoesNotBecomeBBTCalendarMarker() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureText = "98.6"
         draft.temperatureUnit = .fahrenheit
@@ -185,7 +185,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertNil(annotation.temperatureDisplay)
     }
 
-    func testBasalTemperatureBecomesBBTCalendarMarker() throws {
+    func testBasalTemperatureBecomesBBTCalendarMarker() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureText = "97.8"
         draft.temperatureUnit = .fahrenheit
@@ -206,7 +206,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(annotation.temperatureDisplay, "97.8°F · basal / waking")
     }
 
-    func testCervicalFluidStaysObservationOnly() throws {
+    func testCervicalFluidStaysObservationOnly() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.cervicalFluidCategory = .eggWhiteStretchy
         let log = try Prompt20DailyLogRules.makeLog(
@@ -226,7 +226,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertFalse(annotation.ovulationEstimated)
     }
 
-    func testMedicationRequiresNameWhenOtherFieldsContainContent() {
+    func testMedicationRequiresNameWhenOtherFieldsContainContent() async {
         var draft = Prompt20DailyLogDraft()
         draft.medications = [Prompt20MedicationEntry(dose: "10 mg")]
         XCTAssertEqual(
@@ -235,7 +235,7 @@ final class Prompt20CoreTests: XCTestCase {
         )
     }
 
-    func testMultipleMedicationsRemainSeparateRows() throws {
+    func testMultipleMedicationsRemainSeparateRows() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.medications = [
             Prompt20MedicationEntry(name: "Medication A", dose: "10 mg"),
@@ -252,7 +252,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(log.medications.map(\.name), ["Medication A", "Supplement B"])
     }
 
-    func testGeneralNoteIsSensitiveDataFieldNotCalendarPrimaryState() throws {
+    func testGeneralNoteIsSensitiveDataFieldNotCalendarPrimaryState() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.generalNote = "private note"
         let log = try Prompt20DailyLogRules.makeLog(
@@ -273,7 +273,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(annotation.primaryState, .none)
     }
 
-    func testEditPreservesStableIDAndCreatedAtAndIncrementsRevision() throws {
+    func testEditPreservesStableIDAndCreatedAtAndIncrementsRevision() async throws {
         var firstDraft = Prompt20DailyLogDraft()
         firstDraft.selectedSymptoms = [.cramps]
         let created = date(2026, 9, 7, hour: 10)
@@ -469,7 +469,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertTrue(activeAfterReload.isEmpty)
     }
 
-    func testCalendarBridgeFiltersToDisplayedMonth() throws {
+    func testCalendarBridgeFiltersToDisplayedMonth() async throws {
         var septemberDraft = Prompt20DailyLogDraft()
         septemberDraft.selectedSymptoms = [.cramps]
         let september = try Prompt20DailyLogRules.makeLog(
@@ -496,7 +496,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(annotations.map(\.key), [Prompt19CalendarDateKey(year: 2026, month: 9, day: 7)])
     }
 
-    func testCalendarMetadataRespectsPrompt19TwoIndicatorPriority() throws {
+    func testCalendarMetadataRespectsPrompt19TwoIndicatorPriority() async throws {
         var draft = Prompt20DailyLogDraft()
         draft.selectedSymptoms = [.cramps]
         draft.temperatureText = "97.8"
@@ -519,7 +519,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertTrue(annotation.noteAdded)
     }
 
-    func testEmptyDraftProducesNoRecordedObservations() throws {
+    func testEmptyDraftProducesNoRecordedObservations() async throws {
         let log = try Prompt20DailyLogRules.makeLog(
             ownerID: .localDevice,
             date: day(2026, 9, 7),
@@ -623,7 +623,7 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(second.updatedAt, first.updatedAt)
     }
 
-    func testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped() {
+    func testBleedingNoteWithoutLevelIsRejectedRatherThanSilentlyDropped() async {
         var draft = Prompt20DailyLogDraft()
         draft.bleedingNote = "important detail"
         XCTAssertEqual(
@@ -632,7 +632,7 @@ final class Prompt20CoreTests: XCTestCase {
         )
     }
 
-    func testTemperatureContextWithoutValueIsRejectedRatherThanSilentlyDropped() {
+    func testTemperatureContextWithoutValueIsRejectedRatherThanSilentlyDropped() async {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureReadingType = .basalWaking
         XCTAssertEqual(
@@ -641,7 +641,7 @@ final class Prompt20CoreTests: XCTestCase {
         )
     }
 
-    func testTemperatureNoteWithoutValueIsRejectedRatherThanSilentlyDropped() {
+    func testTemperatureNoteWithoutValueIsRejectedRatherThanSilentlyDropped() async {
         var draft = Prompt20DailyLogDraft()
         draft.temperatureNote = "slept poorly"
         XCTAssertEqual(
@@ -650,7 +650,7 @@ final class Prompt20CoreTests: XCTestCase {
         )
     }
 
-    func testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped() {
+    func testCervicalNoteWithoutCategoryIsRejectedRatherThanSilentlyDropped() async {
         var draft = Prompt20DailyLogDraft()
         draft.cervicalFluidNote = "hard to categorize"
         XCTAssertEqual(

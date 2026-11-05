@@ -35,7 +35,7 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
     private let nowProvider: @Sendable () -> Date
     private let initialExpandedSection: Prompt20DailyLogSection?
     private var baselineDraft: Prompt20DailyLogDraft
-    private var activeSaveRequestID: UUID?
+    private var pendingWrite: Prompt20DailyLogWrite?
 
     public init(
         ownerID: Prompt20DailyLogOwnerID,
@@ -92,11 +92,13 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
     }
 
     public func load() async {
-        guard loadState != .loading else {
+        guard loadState != .loading, loadState != .loaded else {
             return
         }
 
         loadState = .loading
+        // Cancellation must leave the same view model reloadable on reappearance.
+        defer { if loadState == .loading { loadState = .idle } }
         saveState = .idle
         validationIssues = []
 
@@ -321,33 +323,29 @@ public final class Prompt20DailyLogViewModel: ObservableObject {
 
         saveState = .saving
 
-        let requestID =
-            activeSaveRequestID ?? UUID()
-
-        activeSaveRequestID =
-            requestID
+        let write = Prompt20DailyLogWrite.begin(draft: draft, retrying: pendingWrite)
+        pendingWrite = write
+        defer { if saveState == .saving { saveState = .idle } }
 
         do {
             let saved =
                 try await repository.save(
                     ownerID: ownerID,
                     date: selectedDay,
-                    draft: draft,
+                    draft: write.draft,
                     now: nowProvider(),
-                    requestID: requestID
+                    requestID: write.id
                 )
 
-            guard !Task.isCancelled else {
-                return false
-            }
-
+            // Storage may have committed even if the presentation was cancelled.
+            // Reconcile the exact written snapshot, preserving subsequent edits.
             existingLog = saved
-            baselineDraft = draft
-            hasUnsavedChanges = false
-            activeSaveRequestID = nil
-            saveState = .saved
+            baselineDraft = write.draft
+            hasUnsavedChanges = write.hasLaterEdits(draft)
+            pendingWrite = nil
+            saveState = hasUnsavedChanges ? .idle : .saved
 
-            return true
+            return !Task.isCancelled
         } catch let error
             as Prompt20DailyLogDomainError {
 

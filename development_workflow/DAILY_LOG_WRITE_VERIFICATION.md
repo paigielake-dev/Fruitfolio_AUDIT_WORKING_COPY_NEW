@@ -1,0 +1,7 @@
+# Daily log write and shared controls
+
+The view model captures the exact draft in a `Prompt20DailyLogWrite` before awaiting the repository. Identical retries keep their idempotency identity; changed drafts get a new identity. A successful write reconciles that captured baseline even when presentation cancellation races a durable repository write. Subsequent edits remain dirty. A loaded model is not reloaded on view reappearance over unsaved edits; a cancelled initial load returns to an idle/retryable state.
+
+The view owns its explicit repository task and cancels it on disappearance. Save callbacks and feedback are suppressed after cancellation. Closing/dismissing while a write is active is prevented. The existing repository remains the sole persistence path; this does not add a second log store. The unsaved dialog now uses the measured shared taped-white popup, and journal actions use the canonical shared Reduce Motion-aware press style.
+
+Portable tests execute the production write-snapshot policy, including changed retries, in-flight edits and clearing. Two additional tests exercise the actual SwiftUI/Combine view model with a suspended repository write on Apple platforms; these are **NOT RUN** on Linux. Compiler parsing is not iOS typechecking, VoiceOver, popup fit or runtime verification. Actual Today/Calendar refresh after iOS saves and interactive cancellation still require the Mac/device test gate.
