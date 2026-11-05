@@ -413,7 +413,9 @@ struct Prompt10SavedPageView: View {
                 FruitfolioTranslatedText(
                     source: page.displayBody, protectedLiterals: page.sourceIDs,
                     enabled: page.originalAnswerID != nil,
-                    font: .custom("Chalkboard SE", size: 14, relativeTo: .body)
+                    font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                    sourceLanguage: page.saveType == .excerpt ? (page.excerptLanguage ?? "en") : "en",
+                    semanticSpans: page.saveType == .excerpt ? page.excerptSemanticSpans : nil
                 )
                     .font(
                         .custom(

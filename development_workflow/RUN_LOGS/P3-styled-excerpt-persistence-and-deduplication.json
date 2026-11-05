@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-11-05T19:50:41.407591+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "31 XCTest + 21 Swift Testing passed (52 total)",
+    "Swift_syntax": "zero parser errors; an out-of-scope UIKit binding update found during source review was corrected before commit",
+    "diff": "passed",
+    "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"
+  }
+}

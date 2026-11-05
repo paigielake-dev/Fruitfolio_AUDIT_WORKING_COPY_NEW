@@ -13,6 +13,7 @@ import tempfile
 
 SOURCES = [
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
+    'Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift',
     'Fruitfolio/LifeBridge/LifeBridgeInformation.swift',
@@ -33,7 +34,7 @@ SOURCES = [
 TESTS = [
     'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',
     'Prompt1BDecorativeLayoutTests.swift', 'Prompt1BLifeBridgeTests.swift',
-    'Prompt1BSemanticSliceTests.swift',
+    'Prompt1BSemanticSliceTests.swift', 'Prompt1BSavedExcerptPersistenceTests.swift',
     'Prompt1BGGUFResourceTests.swift',
     'Prompt1BExcerptIdentityTests.swift', 'Prompt1BAskScrollTests.swift',
     'Prompt1BHormoneValidationTests.swift', 'Prompt1BFruitBasketRulesTests.swift',

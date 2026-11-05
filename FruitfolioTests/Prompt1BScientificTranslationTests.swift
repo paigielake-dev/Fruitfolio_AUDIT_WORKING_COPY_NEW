@@ -19,10 +19,23 @@ final class Prompt1BScientificTranslationTests: XCTestCase {
 }
 
 private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRuntime {
-    func translate(_ text: String, targetTag: String) async throws -> String { text }
+    private var tags: [String] = []
+    func translate(_ text: String, targetTag: String) async throws -> String {
+        tags.append(targetTag)
+        return text
+    }
+    func requestedTags() -> [String] { tags }
 }
 
 final class Prompt1BTranslationPipelineTests: XCTestCase {
+    func testNonEnglishSavedContentCanRequestEnglishTranslation() async throws {
+        let fixture = Prompt1BIdentityTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: fixture)
+        _ = try await service.translate("texto original", language: .english, sourceLanguage: "es")
+        let tags = await fixture.requestedTags()
+        XCTAssertEqual(tags, ["en"])
+    }
+
     func testParagraphAndStructuredReferencePreservationWithFixtureRuntime() async throws {
         let service = FruitfolioTranslationService(runtime: Prompt1BIdentityTranslationFixture())
         let original = "value 3.2 ng/mL [A]\n\nuncertainty remains."

@@ -34,6 +34,8 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
     @Published var selectedExcerptRange: NSRange?
+    @Published var selectedExcerptSemanticSpans: [FruitfolioSemanticSpan]?
+    @Published var selectedExcerptLanguage: String?
     @Published private(set) var excerptSaved = false
 
     private(set) var conversationID: UUID
@@ -144,6 +146,8 @@ final class Prompt09AskViewModel: ObservableObject {
         isSaved = false
         selectedExcerptText = nil
         selectedExcerptRange = nil
+        selectedExcerptSemanticSpans = nil
+        selectedExcerptLanguage = nil
         excerptSaved = false
         inputText = ""
 
@@ -250,6 +254,8 @@ final class Prompt09AskViewModel: ObservableObject {
         isSaved = false
         selectedExcerptText = nil
         selectedExcerptRange = nil
+        selectedExcerptSemanticSpans = nil
+        selectedExcerptLanguage = nil
         excerptSaved = false
         phase = .ready
 

@@ -10,6 +10,7 @@ struct Prompt10PendingSavedContent: Equatable {
     let excerptText: String?
     let selectedRenderedRange: NSRange?
     let selectedDisplayLanguage: String
+    let selectedSemanticSpans: [FruitfolioSemanticSpan]?
 
     let originalAnswerID: String?
     let originalConversationID: String?
@@ -31,7 +32,8 @@ struct Prompt10PendingSavedContent: Equatable {
         knowledgeBaseVersion: String? = nil,
         generationTimestamp: Date? = nil,
         selectedRenderedRange: NSRange? = nil,
-        selectedDisplayLanguage: String = "en"
+        selectedDisplayLanguage: String = "en",
+        selectedSemanticSpans: [FruitfolioSemanticSpan]? = nil
     ) {
         self.question = question
         self.answer = answer
@@ -39,6 +41,7 @@ struct Prompt10PendingSavedContent: Equatable {
         self.excerptText = excerptText
         self.selectedRenderedRange = selectedRenderedRange
         self.selectedDisplayLanguage = selectedDisplayLanguage
+        self.selectedSemanticSpans = selectedSemanticSpans
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
@@ -415,13 +418,6 @@ struct Prompt10AskSaveDestination: View {
         }
 
         do {
-            if let origin = pending.originalAnswerID,
-               let selected = store.encyclopedia(id: encyclopediaID),
-               selected.chapters.flatMap(\.pages).contains(where: { $0.originalAnswerID == origin }) {
-                errorMessage = "that reveal is already tucked into this encyclopedia ♡"
-                return
-            }
-
             let page = Prompt10SavedPage(
                 chapterID: chapterID,
                 question: pending.question,
@@ -439,8 +435,18 @@ struct Prompt10AskSaveDestination: View {
                 knowledgeBaseVersion:
                     pending.knowledgeBaseVersion,
                 generationTimestamp:
-                    pending.generationTimestamp
+                    pending.generationTimestamp,
+                excerptSemanticSpans: pending.selectedSemanticSpans,
+                excerptSelectionLocation: pending.selectedRenderedRange?.location,
+                excerptSelectionLength: pending.selectedRenderedRange?.length,
+                excerptLanguage: pending.saveType == .excerpt ? pending.selectedDisplayLanguage : nil
             )
+
+            if let selected = store.encyclopedia(id: encyclopediaID),
+               selected.chapters.flatMap(\.pages).contains(where: { $0.isDuplicateSave(of: page) }) {
+                errorMessage = "that content is already tucked into this encyclopedia ♡"
+                return
+            }
 
             _ = try store.savePage(
                 page,

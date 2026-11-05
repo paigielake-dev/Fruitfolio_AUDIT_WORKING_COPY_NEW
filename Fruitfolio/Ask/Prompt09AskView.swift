@@ -25,6 +25,8 @@ struct Prompt09AskView: View {
     @State private var historicalSelections: [UUID: String] = [:]
     @State private var savedAnswerIDs: Set<UUID> = []
     @State private var historicalSelectionRanges: [UUID: NSRange] = [:]
+    @State private var historicalSelectionSpans: [UUID: [FruitfolioSemanticSpan]] = [:]
+    @State private var historicalSelectionLanguages: [UUID: String] = [:]
     @State private var savedExcerptIdentities: Set<Prompt09ExcerptIdentity> = []
     @State private var isNearConversationBottom = true
     @State private var conversationViewportHeight: CGFloat = 0
@@ -184,7 +186,8 @@ struct Prompt09AskView: View {
                             if pendingLibrarySave.saveType == .fullAnswer { savedAnswerIDs.insert(savedID) }
                             if pendingLibrarySave.saveType == .excerpt,
                                let key = Prompt09ExcerptIdentity(answerID: savedID, renderedRange: pendingLibrarySave.selectedRenderedRange,
-                                                                 language: pendingLibrarySave.selectedDisplayLanguage) {
+                                                                 language: pendingLibrarySave.selectedDisplayLanguage,
+                                                                 selectionText: pendingLibrarySave.excerptText ?? "") {
                                 savedExcerptIdentities.insert(key)
                             }
                         }
@@ -272,14 +275,20 @@ struct Prompt09AskView: View {
                 historicalSelections = [:]
                 savedAnswerIDs = []
                 historicalSelectionRanges = [:]
+            historicalSelectionSpans = [:]
+            historicalSelectionLanguages = [:]
                 savedExcerptIdentities = []
             }
         }
         .onChange(of: settings.language) { _, _ in
             viewModel.selectedExcerptText = nil
             viewModel.selectedExcerptRange = nil
+            viewModel.selectedExcerptSemanticSpans = nil
+            viewModel.selectedExcerptLanguage = nil
             historicalSelections = [:]
             historicalSelectionRanges = [:]
+            historicalSelectionSpans = [:]
+            historicalSelectionLanguages = [:]
         }
         .toolbar(
             .hidden,
@@ -927,11 +936,13 @@ struct Prompt09AskView: View {
 
                     } else {
                         FruitfolioTranslatedContent(source: viewModel.displayedAnswerText,
-                                                     protectedLiterals: answer.sourceIDs) { display in
+                                                     protectedLiterals: answer.sourceIDs) { display, displayLanguage in
                             Prompt09MaroonSelectableAnswerText(
                                 text: display,
                                 selectedText: $viewModel.selectedExcerptText,
-                                selectedRange: $viewModel.selectedExcerptRange
+                                selectedRange: $viewModel.selectedExcerptRange,
+                                selectedSemanticSpans: $viewModel.selectedExcerptSemanticSpans,
+                                selectedLanguage: $viewModel.selectedExcerptLanguage, renderedLanguage: displayLanguage
                             )
                         }
                         .frame(
@@ -950,7 +961,8 @@ struct Prompt09AskView: View {
                             ) {
                                 WatercolorSecondaryButton(
                                     label:
-                                        isExcerptSaved(answerID: answer.id, range: viewModel.selectedExcerptRange)
+                                        isExcerptSaved(answerID: answer.id, range: viewModel.selectedExcerptRange,
+                                                       language: viewModel.selectedExcerptLanguage, text: viewModel.selectedExcerptText)
                                         ? "selection saved ♡"
                                         : "save selection ♡",
                                     action: {
@@ -960,7 +972,8 @@ struct Prompt09AskView: View {
                                     }
                                 )
                                 .disabled(
-                                    isExcerptSaved(answerID: answer.id, range: viewModel.selectedExcerptRange)
+                                    isExcerptSaved(answerID: answer.id, range: viewModel.selectedExcerptRange,
+                                                       language: viewModel.selectedExcerptLanguage, text: viewModel.selectedExcerptText)
                                 )
                             }
                         }
@@ -1155,20 +1168,27 @@ struct Prompt09AskView: View {
         }
     }
 
-    private func isExcerptSaved(answerID: UUID, range: NSRange?) -> Bool {
-        guard let key = Prompt09ExcerptIdentity(answerID: answerID, renderedRange: range, language: settings.language.rawValue) else { return false }
+    private func isExcerptSaved(answerID: UUID, range: NSRange?, language: String?, text: String?) -> Bool {
+        guard let language, let text,
+              let key = Prompt09ExcerptIdentity(answerID: answerID, renderedRange: range,
+                                               language: language, selectionText: text) else { return false }
         return savedExcerptIdentities.contains(key)
     }
 
     private func historicalAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs) { display in
+            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs) { display, displayLanguage in
                 Prompt09SelectableAnswerText(
                     text: display,
                     selectedText: Binding(get: { historicalSelections[answer.id] },
                                           set: { historicalSelections[answer.id] = $0 }),
                     selectedRange: Binding(get: { historicalSelectionRanges[answer.id] },
-                                           set: { historicalSelectionRanges[answer.id] = $0 })
+                                           set: { historicalSelectionRanges[answer.id] = $0 }),
+                    selectedSemanticSpans: Binding(get: { historicalSelectionSpans[answer.id] },
+                                                   set: { historicalSelectionSpans[answer.id] = $0 }),
+                    selectedLanguage: Binding(get: { historicalSelectionLanguages[answer.id] },
+                                               set: { historicalSelectionLanguages[answer.id] = $0 }),
+                    renderedLanguage: displayLanguage
                 )
             }
             sourceSection(answer.sources)
@@ -1180,7 +1200,8 @@ struct Prompt09AskView: View {
                 WatercolorSecondaryButton(label: "save selection ♡") {
                     prepareHistoricalSave(answer, excerpt: excerpt)
                 }
-                .disabled(isExcerptSaved(answerID: answer.id, range: historicalSelectionRanges[answer.id]))
+                .disabled(isExcerptSaved(answerID: answer.id, range: historicalSelectionRanges[answer.id],
+                                         language: historicalSelectionLanguages[answer.id], text: historicalSelections[answer.id]))
             }
             Text(Prompt09AskViewModel.educationDisclaimer)
                 .font(.footnote).italic()
@@ -1200,7 +1221,8 @@ struct Prompt09AskView: View {
             }, uniquingKeysWith: { first, _ in first }),
             knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
             selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
-            selectedDisplayLanguage: settings.language.rawValue)
+            selectedDisplayLanguage: historicalSelectionLanguages[answer.id] ?? "en",
+            selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id])
     }
 
     // MARK: - Prompt 10 Save Preparation
@@ -1289,7 +1311,8 @@ struct Prompt09AskView: View {
                 generationTimestamp:
                     answer.generationTimestamp,
                 selectedRenderedRange: viewModel.selectedExcerptRange,
-                selectedDisplayLanguage: settings.language.rawValue
+                selectedDisplayLanguage: viewModel.selectedExcerptLanguage ?? "en",
+                selectedSemanticSpans: viewModel.selectedExcerptSemanticSpans
             )
     }
 
@@ -1803,11 +1826,19 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
     @Binding var selectedRange: NSRange?
+    @Binding var selectedSemanticSpans: [FruitfolioSemanticSpan]?
+    @Binding var selectedLanguage: String?
+    let renderedLanguage: String
 
-    init(text: String, selectedText: Binding<String?>, selectedRange: Binding<NSRange?> = .constant(nil)) {
+    init(text: String, selectedText: Binding<String?>, selectedRange: Binding<NSRange?> = .constant(nil),
+         selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?> = .constant(nil),
+         selectedLanguage: Binding<String?> = .constant(nil), renderedLanguage: String = "en") {
         self.text = text
         self._selectedText = selectedText
         self._selectedRange = selectedRange
+        self._selectedSemanticSpans = selectedSemanticSpans
+        self._selectedLanguage = selectedLanguage
+        self.renderedLanguage = renderedLanguage
     }
 
     private static let maroon = UIColor(
@@ -1825,7 +1856,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     )
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange)
+        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange,
+                    selectedSemanticSpans: $selectedSemanticSpans, selectedLanguage: $selectedLanguage,
+                    renderedLanguage: renderedLanguage)
     }
 
     func makeUIView(context: Context) -> UITextView {
@@ -1857,6 +1890,10 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         _ textView: UITextView,
         context: Context
     ) {
+        context.coordinator.selectedRange = $selectedRange
+        context.coordinator.selectedSemanticSpans = $selectedSemanticSpans
+        context.coordinator.selectedLanguage = $selectedLanguage
+        context.coordinator.renderedLanguage = renderedLanguage
         textView.tintColor = Self.selectionHighlight
 
         if context.coordinator.renderedSource != text ||
@@ -1910,6 +1947,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         UITextViewDelegate
     {
         var selectedRange: Binding<NSRange?>
+        var selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?>
+        var selectedLanguage: Binding<String?>
+        var renderedLanguage: String
         var renderedSource: String?
         var renderedSize: DynamicTypeSize?
 
@@ -1917,9 +1957,14 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 
         init(
             selectedText: Binding<String?>,
-            selectedRange: Binding<NSRange?>
+            selectedRange: Binding<NSRange?>,
+            selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?>, selectedLanguage: Binding<String?>,
+            renderedLanguage: String
         ) {
             self.selectedRange = selectedRange
+            self.selectedSemanticSpans = selectedSemanticSpans
+            self.selectedLanguage = selectedLanguage
+            self.renderedLanguage = renderedLanguage
             _selectedText = selectedText
         }
 
@@ -1939,6 +1984,8 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
                 )
             else {
                 selectedRange.wrappedValue = nil
+                selectedSemanticSpans.wrappedValue = nil
+                selectedLanguage.wrappedValue = nil
                 if selectedText != nil {
                     selectedText = nil
                 }
@@ -1946,6 +1993,9 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
             }
 
             selectedRange.wrappedValue = range
+            selectedLanguage.wrappedValue = renderedLanguage
+            selectedSemanticSpans.wrappedValue = FruitfolioSemanticSlices.selection(
+                FruitfolioSemanticDocument.spans(from: renderedSource ?? textView.text ?? ""), utf16Range: range)
             let selection = String(
                 currentText[swiftRange]
             )

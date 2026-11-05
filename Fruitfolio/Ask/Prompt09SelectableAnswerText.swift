@@ -8,15 +8,25 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
     let text: String
     @Binding var selectedText: String?
     @Binding var selectedRange: NSRange?
+    @Binding var selectedSemanticSpans: [FruitfolioSemanticSpan]?
+    @Binding var selectedLanguage: String?
+    let renderedLanguage: String
 
-    init(text: String, selectedText: Binding<String?>, selectedRange: Binding<NSRange?> = .constant(nil)) {
+    init(text: String, selectedText: Binding<String?>, selectedRange: Binding<NSRange?> = .constant(nil),
+         selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?> = .constant(nil),
+         selectedLanguage: Binding<String?> = .constant(nil), renderedLanguage: String = "en") {
         self.text = text
         self._selectedText = selectedText
         self._selectedRange = selectedRange
+        self._selectedSemanticSpans = selectedSemanticSpans
+        self._selectedLanguage = selectedLanguage
+        self.renderedLanguage = renderedLanguage
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange)
+        Coordinator(selectedText: $selectedText, selectedRange: $selectedRange,
+                    selectedSemanticSpans: $selectedSemanticSpans, selectedLanguage: $selectedLanguage,
+                    renderedLanguage: renderedLanguage)
     }
 
     func makeUIView(context: Context) -> UITextView {
@@ -49,6 +59,9 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
     func updateUIView(_ textView: UITextView, context: Context) {
         context.coordinator.selectedText = $selectedText
         context.coordinator.selectedRange = $selectedRange
+        context.coordinator.selectedSemanticSpans = $selectedSemanticSpans
+        context.coordinator.selectedLanguage = $selectedLanguage
+        context.coordinator.renderedLanguage = renderedLanguage
 
         if context.coordinator.renderedSource != text ||
             context.coordinator.renderedSize != context.environment.dynamicTypeSize {
@@ -88,12 +101,20 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
 
     final class Coordinator: NSObject, UITextViewDelegate {
         var selectedRange: Binding<NSRange?>
+        var selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?>
+        var selectedLanguage: Binding<String?>
+        var renderedLanguage: String
         var renderedSource: String?
         var renderedSize: DynamicTypeSize?
         var selectedText: Binding<String?>
 
-        init(selectedText: Binding<String?>, selectedRange: Binding<NSRange?>) {
+        init(selectedText: Binding<String?>, selectedRange: Binding<NSRange?>,
+             selectedSemanticSpans: Binding<[FruitfolioSemanticSpan]?>, selectedLanguage: Binding<String?>,
+             renderedLanguage: String) {
             self.selectedRange = selectedRange
+            self.selectedSemanticSpans = selectedSemanticSpans
+            self.selectedLanguage = selectedLanguage
+            self.renderedLanguage = renderedLanguage
             self.selectedText = selectedText
         }
 
@@ -101,20 +122,26 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
             let range = textView.selectedRange
             guard range.location != NSNotFound, range.length > 0 else {
                 selectedRange.wrappedValue = nil
+                selectedSemanticSpans.wrappedValue = nil
+                selectedLanguage.wrappedValue = nil
                 selectedText.wrappedValue = nil
                 return
             }
 
             guard let swiftRange = Range(range, in: textView.text) else {
                 selectedRange.wrappedValue = nil
+                selectedSemanticSpans.wrappedValue = nil
+                selectedLanguage.wrappedValue = nil
                 selectedText.wrappedValue = nil
                 return
             }
 
             selectedRange.wrappedValue = range
+            selectedLanguage.wrappedValue = renderedLanguage
+            selectedSemanticSpans.wrappedValue = FruitfolioSemanticSlices.selection(
+                FruitfolioSemanticDocument.spans(from: renderedSource ?? textView.text ?? ""), utf16Range: range)
             let value = String(textView.text[swiftRange])
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            selectedText.wrappedValue = value.isEmpty ? nil : value
+            selectedText.wrappedValue = value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? nil : value
         }
     }
 }

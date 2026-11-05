@@ -1538,20 +1538,31 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:39:57.728156+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 62,
@@ -2634,7 +2645,14 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2643,14 +2661,17 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
         "Prompt1BAskScrollTests",
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 110,
@@ -2929,7 +2950,14 @@
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2939,15 +2967,18 @@
         "Prompt1BAskLifecycleTests",
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
         "Prompt1BAskScrollTests",
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 125,
@@ -2960,7 +2991,14 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2969,14 +3007,17 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
         "Prompt1BAskScrollTests",
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 126,
@@ -3012,7 +3053,14 @@
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3021,14 +3069,17 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
         "Prompt1BAskScrollTests",
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 128,
@@ -3041,20 +3092,30 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 129,
@@ -3551,20 +3612,30 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 157,
@@ -3577,20 +3648,30 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 158,
@@ -3603,20 +3684,30 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 159,
@@ -3629,20 +3720,30 @@
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
-        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift"
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BExcerptIdentityTests"
+        "Prompt1BExcerptIdentityTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P3-exact-excerpt-save-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved."
+        "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T18:47:29.293267+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 160,
@@ -4428,15 +4529,32 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Create one shared source of truth for guides.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+      ],
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+      ],
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 207,
@@ -4444,15 +4562,32 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Synchronize guides across Ask, My Encyclopedias, and Build Your Own Guide.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+      ],
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+      ],
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 208,
@@ -4476,15 +4611,32 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Preserve guide title, cover style, contents, ordering, and edits.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+      ],
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+      ],
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 210,
@@ -4492,15 +4644,32 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Prevent duplicate feature-specific guide records.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
+      ],
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
+      ],
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 211,
@@ -9909,7 +10078,12 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9919,14 +10093,17 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 432,
@@ -9949,7 +10126,12 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9959,14 +10141,17 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 433,
@@ -9989,7 +10174,12 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9999,14 +10189,17 @@
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
         "Prompt1BTranslationPipelineTests",
-        "MADLADPackagingTests"
+        "MADLADPackagingTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 434,
@@ -10024,7 +10217,13 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Tools/prepare_madlad_manifest.py",
-        "Tools/convert_madlad_local.sh"
+        "Tools/convert_madlad_local.sh",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10034,13 +10233,16 @@
         "MADLADPackagingTests",
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "Prompt1BSavedExcerptPersistenceTests",
+        "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation"
       ],
-      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-styled-excerpt-persistence-and-deduplication (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
+        "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun."
       ],
-      "last_updated": "2026-11-05T19:10:19.681081+00:00"
+      "last_updated": "2026-11-05T19:50:41.407591+00:00"
     },
     {
       "sequence": 435,

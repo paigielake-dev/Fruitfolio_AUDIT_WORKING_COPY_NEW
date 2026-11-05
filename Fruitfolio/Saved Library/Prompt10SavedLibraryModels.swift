@@ -60,6 +60,10 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var order: Int
     var sourceSavedPageID: UUID?
     var importedImageIDs: [String]?
+    var excerptSemanticSpans: [FruitfolioSemanticSpan]?
+    var excerptSelectionLocation: Int?
+    var excerptSelectionLength: Int?
+    var excerptLanguage: String?
 
     init(
         id: UUID = UUID(),
@@ -79,7 +83,11 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         notes: String = "",
         order: Int = 0,
         sourceSavedPageID: UUID? = nil,
-        importedImageIDs: [String]? = nil
+        importedImageIDs: [String]? = nil,
+        excerptSemanticSpans: [FruitfolioSemanticSpan]? = nil,
+        excerptSelectionLocation: Int? = nil,
+        excerptSelectionLength: Int? = nil,
+        excerptLanguage: String? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -99,6 +107,23 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.order = order
         self.sourceSavedPageID = sourceSavedPageID
         self.importedImageIDs = importedImageIDs
+        self.excerptSemanticSpans = excerptSemanticSpans
+        self.excerptSelectionLocation = excerptSelectionLocation
+        self.excerptSelectionLength = excerptSelectionLength
+        self.excerptLanguage = excerptLanguage
+    }
+
+    func isDuplicateSave(of candidate: Prompt10SavedPage) -> Bool {
+        guard let origin = originalAnswerID, origin == candidate.originalAnswerID,
+              saveType == candidate.saveType else { return false }
+        if saveType == .fullAnswer { return true }
+        // Legacy records without an occurrence range cannot prove that a new
+        // selection is the same occurrence; do not guess from equal words.
+        guard let location = excerptSelectionLocation, let length = excerptSelectionLength,
+              let otherLocation = candidate.excerptSelectionLocation,
+              let otherLength = candidate.excerptSelectionLength else { return false }
+        return location == otherLocation && length == otherLength &&
+            (excerptLanguage ?? "en") == (candidate.excerptLanguage ?? "en") && excerptText == candidate.excerptText
     }
 
     var displayBody: String {

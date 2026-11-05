@@ -6,7 +6,8 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     let source: String
     var protectedLiterals: [String] = []
     var enabled = true
-    @ViewBuilder let content: (String) -> Content
+    var sourceLanguage = "en"
+    @ViewBuilder let content: (String, String) -> Content
     @EnvironmentObject private var settings: SettingsStore
     @State private var rendered: String?
     @State private var resolvedKey: Key?
@@ -17,13 +18,15 @@ struct FruitfolioTranslatedContent<Content: View>: View {
         let language: FruitfolioLanguage
         let protectedLiterals: [String]
         let enabled: Bool
+        let sourceLanguage: String
     }
-    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: protectedLiterals, enabled: enabled) }
-    private var usesTranslation: Bool { enabled && settings.language != .english }
+    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) }
+    private var usesTranslation: Bool { enabled && settings.language.rawValue != sourceLanguage }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            content(resolvedKey == key ? (rendered ?? source) : source)
+            content(resolvedKey == key ? (rendered ?? source) : source,
+                    resolvedKey == key && rendered != nil ? settings.language.rawValue : sourceLanguage)
             if usesTranslation {
                 if resolvedKey == key, rendered != nil {
                     Text("local machine translation").font(.caption)
@@ -46,7 +49,8 @@ struct FruitfolioTranslatedContent<Content: View>: View {
             guard usesTranslation else { return }
             do {
                 let result = try await FruitfolioTranslationService.shared.translate(
-                    source, language: request.language, protectedLiterals: protectedLiterals)
+                    source, language: request.language, protectedLiterals: protectedLiterals,
+                    sourceLanguage: request.sourceLanguage)
                 try Task.checkCancellation()
                 rendered = result
                 resolvedKey = request
@@ -64,9 +68,15 @@ struct FruitfolioTranslatedText: View {
     var protectedLiterals: [String] = []
     var enabled = true
     var font: Font = .body
+    var sourceLanguage = "en"
+    var semanticSpans: [FruitfolioSemanticSpan]?
     var body: some View {
-        FruitfolioTranslatedContent(source: source, protectedLiterals: protectedLiterals, enabled: enabled) { display in
-            FruitfolioSemanticText(markdown: display, baseFont: font)
+        FruitfolioTranslatedContent(source: source, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
+            if let semanticSpans, display == source {
+                FruitfolioSemanticText(spans: semanticSpans, baseFont: font)
+            } else {
+                FruitfolioSemanticText(markdown: display, baseFont: font)
+            }
         }
     }
 }

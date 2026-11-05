@@ -106,7 +106,11 @@ extension Prompt10SavedLibraryStore {
             knowledgeBaseVersion: sourcePage.knowledgeBaseVersion,
             generationTimestamp: sourcePage.generationTimestamp,
             notes: "",
-            sourceSavedPageID: sourceKey
+            sourceSavedPageID: sourceKey,
+            excerptSemanticSpans: sourcePage.excerptSemanticSpans,
+            excerptSelectionLocation: sourcePage.excerptSelectionLocation,
+            excerptSelectionLength: sourcePage.excerptSelectionLength,
+            excerptLanguage: sourcePage.excerptLanguage
         )
 
         return try savePage(

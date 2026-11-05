@@ -299,3 +299,14 @@
 - Verification: {"portable_swift": "27 XCTest + 21 Swift Testing passed (48 total); includes semantic slice behavior", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "ViewModel_SwiftUI_integration": "NOT_RUN: Apple SDK/Combine unavailable on Linux"}.
 - Next action: Carry exact styled excerpt spans through explicit save requests, saved pages and guide references with backward-compatible optional persistence fields; then continue remaining requirements.
 - Commit: containing commit for batch P1-semantic-streaming-prefixes.
+
+## P3-styled-excerpt-persistence-and-deduplication
+
+- Parent checkpoint: 16c7474d6fed2267c2342eedee1317e8b12160a6.
+- Source-order requirements: [61, 109, 124, 125, 127, 128, 156, 157, 158, 159, 206, 207, 209, 210, 431, 432, 433, 434].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Ask/Prompt09SelectableAnswerText.swift, Fruitfolio/Ask/Prompt09ConversationPolicies.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift, Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.
+- Tests added/updated: Prompt1BSavedExcerptPersistenceTests, Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation.
+- Verification: {"portable_swift": "31 XCTest + 21 Swift Testing passed (52 total)", "Swift_syntax": "zero parser errors; an out-of-scope UIKit binding update found during source review was corrected before commit", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
+- Next action: Preserve semantic annotations through translated excerpt display, then finish unsaved-note protection, shared imported-image references, additional specification tracking and remaining requirements.
+- Commit: containing commit for batch P3-styled-excerpt-persistence-and-deduplication.

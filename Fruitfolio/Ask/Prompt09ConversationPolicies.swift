@@ -14,12 +14,14 @@ struct Prompt09ExcerptIdentity: Hashable, Sendable {
     let location: Int
     let length: Int
     let language: String
+    let selectionText: String
 
-    init?(answerID: UUID, renderedRange: NSRange?, language: String = "en") {
+    init?(answerID: UUID, renderedRange: NSRange?, language: String = "en", selectionText: String = "") {
         guard let range = renderedRange, range.location != NSNotFound,
               range.location >= 0, range.length > 0 else { return nil }
         self.answerID = answerID
         self.language = language
+        self.selectionText = selectionText
         location = range.location
         length = range.length
     }
