@@ -86,7 +86,8 @@ final class Prompt11GuideBuilderTests: XCTestCase {
             chapterID: sourceChapter.id,
             question: "what is estrogen?",
             answer: "saved answer",
-            saveType: .fullAnswer
+            saveType: .fullAnswer,
+            importedImageIDs: ["shared-image"]
         )
 
         let savedSource = try store.savePage(
@@ -118,6 +119,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
             chapterID: section.id
         )
 
+        XCTAssertEqual(firstReference.importedImageIDs, ["shared-image"])
+        try store.setImportedImageIDs(encyclopediaID: sourceLibrary.id, chapterID: sourceChapter.id, pageID: savedSource.id, imageIDs: [])
+        XCTAssertTrue(Prompt10MediaReferences.contains("shared-image", in: store.encyclopedias))
         XCTAssertEqual(firstReference.sourceSavedPageID, savedSource.id)
         XCTAssertEqual(store.encyclopedia(id: guide.id)?.savedPageCount, 1)
     }

@@ -539,19 +539,11 @@ struct Prompt10SavedPageView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
-                if let data = Prompt10LocalMediaStore.shared.data(for: imageID),
-                   let image = UIImage(data: data) {
-                    VStack(spacing: 6) {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxWidth: .infinity)
-                            .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                            .accessibilityLabel("user imported image")
-
-                        Button("remove image") { removeImage(imageID) }
-                            .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
-                    }
+                VStack(spacing: 6) {
+                    Prompt10ImportedImage(imageID: imageID)
+                    Button("remove image") { removeImage(imageID) }
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
             }
 
@@ -631,11 +623,18 @@ struct Prompt10SavedPageView: View {
 
     private func removeImage(_ id: String) {
         do {
-            var ids = page.importedImageIDs ?? []
+            guard let latest = store.encyclopedia(id: encyclopediaID)?.chapters
+                .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) else {
+                throw Prompt10LibraryError.pageNotFound
+            }
+            var ids = latest.importedImageIDs ?? []
             ids.removeAll { $0 == id }
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
-            try Prompt10LocalMediaStore.shared.delete(id)
-            var updated = page
+            // A guide retains its own snapshot even after the source detaches it.
+            if !Prompt10MediaReferences.contains(id, in: store.encyclopedias) {
+                try Prompt10LocalMediaStore.shared.delete(id)
+            }
+            var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
             mediaMessage = "image removed."

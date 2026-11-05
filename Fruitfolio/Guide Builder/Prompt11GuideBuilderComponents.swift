@@ -230,6 +230,10 @@ struct Prompt11SavedPagePaper: View {
                 .lineSpacing(3)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
+            ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
+                Prompt10ImportedImage(imageID: imageID)
+            }
+
             if !page.sourceIDs.isEmpty {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("sources")

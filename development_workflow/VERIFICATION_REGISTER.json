@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T19:56:02.412826+00:00",
+  "updated_at": "2026-11-05T19:57:36.960517+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -462,6 +462,20 @@
         "UI": "NOT_RUN: Apple SDK unavailable"
       },
       "timestamp": "2026-11-05T19:56:02.412826+00:00"
+    },
+    {
+      "batch": "P3-shared-local-media-snapshots",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_swift": "34 XCTest + 21 Swift Testing passed (55 total)",
+        "Swift_syntax": "87 files, zero parser errors",
+        "Apple_integration": "NOT_RUN: Apple SDK unavailable"
+      },
+      "timestamp": "2026-11-05T19:57:36.960517+00:00"
     }
   ]
 }

@@ -332,3 +332,14 @@
 - Verification: {"portable_swift": "33 XCTest + 21 Swift Testing passed (54 total)", "workflow": "9 Python tests passed", "Swift_syntax": "85 files, zero parser errors", "UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Preserve shared imported-image references in guides, remove synchronous body decoding and continue remaining source-order requirements.
 - Commit: containing commit for batch P3-unsaved-note-ownership.
+
+## P3-shared-local-media-snapshots
+
+- Parent checkpoint: e3bfb984a74f55ac412b21374667a1471a5ffa30.
+- Source-order requirements: [61, 66, 67, 125, 128, 156, 157, 158, 159, 206, 207, 209, 210].
+- Source files: Fruitfolio/Saved Library/Prompt10ImportedImage.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift.
+- Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.
+- Tests added/updated: Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt, Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate.
+- Verification: {"portable_swift": "34 XCTest + 21 Swift Testing passed (55 total)", "Swift_syntax": "87 files, zero parser errors", "Apple_integration": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Resume first independent Part 1 gap: measured shared character/bubble layout for Strawberry, Blueberry and Peach; continue remaining requirements.
+- Commit: containing commit for batch P3-shared-local-media-snapshots.

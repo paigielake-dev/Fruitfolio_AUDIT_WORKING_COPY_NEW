@@ -107,6 +107,7 @@ extension Prompt10SavedLibraryStore {
             generationTimestamp: sourcePage.generationTimestamp,
             notes: "",
             sourceSavedPageID: sourceKey,
+            importedImageIDs: sourcePage.importedImageIDs,
             excerptSemanticSpans: sourcePage.excerptSemanticSpans,
             excerptSelectionLocation: sourcePage.excerptSelectionLocation,
             excerptSelectionLength: sourcePage.excerptSelectionLength,

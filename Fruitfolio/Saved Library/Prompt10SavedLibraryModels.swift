@@ -265,3 +265,14 @@ struct Prompt10NoteDraft: Equatable {
     mutating func didSave() { baseline = text }
     mutating func discard() { text = baseline }
 }
+
+/// Media IDs may be shared by independent saved-page snapshots in guides.
+enum Prompt10MediaReferences {
+    static func contains(_ imageID: String, in encyclopedias: [Prompt10Encyclopedia]) -> Bool {
+        encyclopedias.contains { book in
+            book.chapters.contains { chapter in
+                chapter.pages.contains { ($0.importedImageIDs ?? []).contains(imageID) }
+            }
+        }
+    }
+}

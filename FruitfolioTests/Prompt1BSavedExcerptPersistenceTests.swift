@@ -20,6 +20,23 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
         XCTAssertFalse(draft.hasChanges)
     }
 
+    func testImageRemainsReferencedAfterOriginalSnapshotDetachesIt() throws {
+        let bookID = UUID(), chapterID = UUID()
+        var original = page()
+        original.importedImageIDs = ["shared-image"]
+        var reference = original
+        reference.sourceSavedPageID = original.id
+        original.importedImageIDs = []
+        let book = Prompt10Encyclopedia(id: bookID, name: "fixture", style: .sage,
+            chapters: [.init(id: chapterID, encyclopediaID: bookID, name: "chapter", order: 0, pages: [original, reference])])
+        XCTAssertTrue(Prompt10MediaReferences.contains("shared-image", in: [book]))
+        var detached = book
+        detached.chapters[0].pages = [original]
+        XCTAssertFalse(Prompt10MediaReferences.contains("shared-image", in: [detached]))
+        let restored = try JSONDecoder().decode(Prompt10Encyclopedia.self, from: JSONEncoder().encode(book))
+        XCTAssertTrue(Prompt10MediaReferences.contains("shared-image", in: [restored]))
+    }
+
     private func page(location: Int = 0, language: String = "en", saveType: Prompt10SavedPageType = .excerpt) -> Prompt10SavedPage {
         Prompt10SavedPage(chapterID: UUID(), question: "fixture", answer: "E2 and E2 [source-1]",
                          saveType: saveType, excerptText: "E2", originalAnswerID: "answer-1", sourceIDs: ["source-1"],
