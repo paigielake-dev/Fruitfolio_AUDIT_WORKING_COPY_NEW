@@ -31,6 +31,8 @@ struct Prompt09AskView: View {
     @State private var isNearConversationBottom = true
     @State private var conversationViewportHeight: CGFloat = 0
 
+    @Environment(\.scenePhase) private var scenePhase
+
     @FocusState private var inputFocused: Bool
 
     init(viewModel: Prompt09AskViewModel? = nil) {
@@ -154,11 +156,11 @@ struct Prompt09AskView: View {
                 }
             }
             .fruitfolioModalBlur(
-                active: pendingLibrarySave != nil,
+                active: pendingLibrarySave != nil || showingHelp,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if pendingLibrarySave != nil {
+            if pendingLibrarySave != nil || showingHelp {
                 DesignTokens.ColorToken.backgroundCream
                     .opacity(FruitfolioModalBlurSpec.dimOpacity)
                     .ignoresSafeArea()
@@ -206,6 +208,22 @@ struct Prompt09AskView: View {
                 )
                 .zIndex(200)
             }
+            if showingHelp {
+                FruitfolioTapedWhitePopup {
+                    VStack(spacing: 10) {
+                        FruitPopupCharacterArtwork(character: .blueberry, width: 58)
+                        Text("Ask help").font(.headline).accessibilityAddTraits(.isHeader)
+                        FruitfolioTranslatedText(source: "ask naturally. Fruitfolio searches approved FruitsofLife.xo research, explains what the evidence supports, and shows the sources it used. answers are educational, not medical advice. your unsaved conversation stays only in this Ask session. select an answer or passage to save it to your encyclopedia.",
+                                                 font: .custom("Chalkboard SE", size: 13, relativeTo: .body))
+                        WatercolorPrimaryButton(label: "got it") {
+                            audioManager.play(.popupClose)
+                            showingHelp = false
+                        }
+                        .accessibilityIdentifier("ask.help.close")
+                    }
+                }
+                .zIndex(200)
+            }
         }
         .sheet(isPresented: $showLifeBridge) {
             FruitfolioLifeBridgeInformationView(onBack: { showLifeBridge = false })
@@ -216,7 +234,7 @@ struct Prompt09AskView: View {
         ) {
             inputBar
                 .fruitfolioModalBlur(
-                    active: pendingLibrarySave != nil,
+                    active: pendingLibrarySave != nil || showingHelp,
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
         }
@@ -233,34 +251,16 @@ struct Prompt09AskView: View {
                 .zIndex(100)
             }
         }
-        .overlay(
-            alignment: .topTrailing
-        ) {
-            if showingHelp {
-                InfoTooltip(
-                    message:
-                        "ask naturally. Fruitfolio answers only from approved FruitsofLife.xo research and shows the sources it actually used."
-                )
-                .padding(.top, 74)
-                .padding(.trailing, 18)
-                .transition(
-                    .opacity.combined(
-                        with:
-                            .scale(
-                                scale: 0.98
-                            )
-                    )
-                )
-                .zIndex(20)
-            }
-        }
         .task {
             await runEntryTransition()
         }
         .task {
             await revealSuggestions()
         }
+        .onAppear { synchronizeTypingAudio() }
+        .onChange(of: typingAudioActive) { _, _ in synchronizeTypingAudio() }
         .onDisappear {
+            audioManager.forgetLoop(category: .typingASMR)
             inputFocused = false
             viewModel.cancelOutstandingWork()
             if navigation.currentRoute != .ask {
@@ -288,6 +288,15 @@ struct Prompt09AskView: View {
             .hidden,
             for: .navigationBar
         )
+    }
+
+    private var typingAudioActive: Bool {
+        viewModel.phase == .answering && scenePhase == .active && settings.allowsAudio(.typingASMR)
+    }
+
+    private func synchronizeTypingAudio() {
+        if typingAudioActive { audioManager.play(.typingSoft, loop: true) }
+        else { audioManager.forgetLoop(category: .typingASMR) }
     }
 
     // MARK: - Header
@@ -322,19 +331,9 @@ struct Prompt09AskView: View {
                             accessibilityLabel:
                                 "Ask help",
                             action: {
-                                audioManager.play(
-                                    .buttonSoftPop
-                                )
-
-                                withAnimation(
-                                    .easeOut(
-                                        duration:
-                                            0.18
-                                    )
-                                ) {
-                                    showingHelp
-                                        .toggle()
-                                }
+                                inputFocused = false
+                                audioManager.play(.popupOpen)
+                                showingHelp = true
                             }
                         ) {
                             FruitfolioImage(

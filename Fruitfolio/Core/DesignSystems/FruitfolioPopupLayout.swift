@@ -70,6 +70,13 @@ enum FruitfolioPopupLayout {
                 writingFraction: CGSize(width: 0.80, height: 0.72))
     }
 
+    static let tapedWhitePixelSize = CGSize(width: 662, height: 647)
+
+    static func tapedWhite(available: CGSize) -> Metrics {
+        artwork(available: available, pixels: tapedWhitePixelSize, maximumWidth: 340,
+                writingFraction: CGSize(width: 0.76, height: 0.64))
+    }
+
     static func saveConfirmation(available: CGSize) -> Metrics {
         artwork(available: available, pixels: saveCardPixelSize, maximumWidth: 240,
                 writingFraction: CGSize(width: 0.78, height: 0.72))

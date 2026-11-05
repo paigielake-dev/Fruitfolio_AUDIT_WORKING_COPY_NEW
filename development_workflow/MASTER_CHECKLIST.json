@@ -349,7 +349,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -360,15 +363,19 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 14,
@@ -424,7 +431,10 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -433,14 +443,18 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 16,
@@ -453,7 +467,10 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -462,14 +479,18 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 17,
@@ -480,7 +501,10 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -488,13 +512,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 18,
@@ -518,7 +546,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -531,16 +562,20 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 19,
@@ -564,7 +599,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -577,16 +615,20 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 20,
@@ -610,7 +652,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -623,16 +668,20 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 21,
@@ -654,7 +703,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -664,14 +716,18 @@
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 22,
@@ -734,7 +790,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -747,16 +806,20 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 24,
@@ -780,7 +843,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -793,16 +859,20 @@
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 25,
@@ -848,7 +918,10 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -860,15 +933,19 @@
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 27,
@@ -878,20 +955,27 @@
       "description": "Use the appropriate popup opening and closing sounds.",
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T19:29:34.751509+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 28,
@@ -1517,7 +1601,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1530,16 +1616,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 47,
@@ -1619,7 +1709,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1632,16 +1724,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 49,
@@ -4412,15 +4508,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Use typing ASMR during answer presentation unless disabled by the user.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+      ],
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+      ],
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 139,
@@ -4988,15 +5095,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Correct the help overlay to provide the requested actual help popup.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+      ],
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+      ],
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 167,
@@ -5004,15 +5122,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Apply the updated popup system to Ask help and save interactions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea",
+        "Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten",
+        "Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose"
+      ],
+      "commit_reference": "batch:P3-measured-Ask-help-and-owned-typing-audio (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK."
+      ],
+      "last_updated": "2026-11-05T20:21:39.756409+00:00"
     },
     {
       "sequence": 168,

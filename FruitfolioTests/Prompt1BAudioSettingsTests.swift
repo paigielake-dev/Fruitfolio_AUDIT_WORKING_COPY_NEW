@@ -24,6 +24,32 @@ final class Prompt1BAudioSettingsTests: XCTestCase {
         XCTAssertTrue(restored.allowsAudio(.typingASMR))
     }
 
+    func testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten() async throws {
+        let suite = "Prompt1BTypingLoop.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        defer { audio.resetAllAudio() }
+        audio.play(.typingSoft, loop: true)
+        XCTAssertTrue(audio.debugLoopSnapshot(category: .typingASMR).requested)
+        _ = try XCTUnwrap(audio.debugLoopSnapshot(category: .typingASMR).volume,
+                          "The bundled ASMR asset must load for playback verification")
+        settings.globallyMuted = true
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertEqual(audio.debugLoopSnapshot(category: .typingASMR).volume ?? -1, 0, accuracy: 0.001)
+        settings.typingASMREnabled = false
+        settings.globallyMuted = false
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertEqual(audio.debugLoopSnapshot(category: .typingASMR).volume ?? -1, 0, accuracy: 0.001)
+        settings.typingASMREnabled = true
+        try await Task.sleep(for: .milliseconds(250))
+        XCTAssertGreaterThan(audio.debugLoopSnapshot(category: .typingASMR).volume ?? 0, 0)
+        audio.forgetLoop(category: .typingASMR)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .typingASMR).requested)
+        XCTAssertFalse(audio.debugLoopSnapshot(category: .typingASMR).playing)
+    }
+
     func testNonfinitePersistedVolumesRecoverSafely() throws {
         let suite = "Prompt1BVolume.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

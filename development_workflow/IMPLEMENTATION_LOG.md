@@ -409,3 +409,14 @@
 - Verification: {"portable_swift": "46 XCTest + 21 Swift Testing passed (67 total)", "workflow": "11 Python tests passed", "Swift_syntax": "101 files, zero parser errors", "Ask_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Continue Ask lifecycle, citation/save and language handling requirements in source order; add supplemental-spec coverage tracker and remaining independent features.
 - Commit: containing commit for batch P3-continuous-session-paper-and-opening-art.
+
+## P3-measured-Ask-help-and-owned-typing-audio
+
+- Parent checkpoint: 21ed84fb8da11a4c51fa8b317ec7b7aebf16f038.
+- Source-order requirements: [13, 15, 16, 17, 18, 19, 20, 21, 23, 24, 26, 27, 46, 48, 138, 166, 167].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Core/Assets/AudioManager.swift, Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift, Fruitfolio/Core/DesignSystems/FruitfolioTapedWhitePopup.swift.
+- Replaced the small Ask help tooltip with the founder-specified taped-white post-it artwork, Blueberry and concise session/research/save guidance. Measured 662x647 artwork retains its proportions and a tape-free scrollable writing region. Help now isolates both conversation and input with canonical modal blur/dimming, opens/closes with popup audio and has a reachable close action. Answer presentation owns typing ASMR loop intent; phase completion, inactivity, settings mute/disable and disappearance remove that intent. AudioManager now reconciles ASMR loops as well as one-shots when settings change and restores a still-owned loop after an audio interruption. Portable popup bounds pass; actual ASMR playback/mute regression and full help accessibility UI test are added but unrun without Apple SDK.
+- Tests added/updated: Prompt1BPopupLayoutTests/testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea, Prompt1BAudioSettingsTests/testOwnedTypingLoopHonorsMuteToggleAndCanBeForgotten, Prompt1BModalAccessibilityTests/testAskHelpIsAScrollableModalAndRestoresConversationOnClose.
+- Verification: {"portable_swift": "47 XCTest + 21 Swift Testing passed (68 total)", "Swift_syntax": "102 files, zero parser errors", "Audio_and_help_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Enforce default-no-illustration and one-major-visual Ask behavior; finish verified citation controls, source-grounded voice and remaining requirements.
+- Commit: containing commit for batch P3-measured-Ask-help-and-owned-typing-audio.

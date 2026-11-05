@@ -55,6 +55,14 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
         XCTAssertLessThanOrEqual(metrics.bubbleWidth * 499 / 497, 120)
     }
 
+    func testTapedWhitePopupPreservesArtworkAndTapeFreeWritingArea() {
+        let metrics = FruitfolioPopupLayout.tapedWhite(available: CGSize(width: 320, height: 260))
+        XCTAssertLessThanOrEqual(metrics.paperSize.height, 228)
+        XCTAssertEqual(metrics.paperSize.width / metrics.paperSize.height, 662.0 / 647, accuracy: 0.0001)
+        XCTAssertLessThan(metrics.writingSize.width, metrics.paperSize.width)
+        XCTAssertLessThanOrEqual(metrics.writingSize.height / 2 + metrics.paperSize.height * 0.05, metrics.paperSize.height / 2)
+    }
+
     func testNotebookAndWritingAreaRemainWithinSmallOrKeyboardConstrainedViewport() {
         for size in [CGSize(width: 240, height: 180), CGSize(width: 320, height: 220),
                      CGSize(width: 393, height: 852), CGSize(width: 852, height: 270)] {

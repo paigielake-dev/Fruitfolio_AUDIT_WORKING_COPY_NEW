@@ -68,6 +68,27 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         add(attachment)
     }
 
+    func testAskHelpIsAScrollableModalAndRestoresConversationOnClose() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioAskPaperQA", "-UIPreferredContentSizeCategoryName",
+                                "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let help = app.buttons["Ask help"]
+        XCTAssertTrue(help.waitForExistence(timeout: 10))
+        help.tap()
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 3))
+        XCTAssertFalse(app.scrollViews["ask.conversation"].exists)
+        let close = app.buttons["ask.help.close"]
+        for _ in 0..<30 {
+            if close.exists && close.isHittable { break }
+            scroll.swipeUp()
+        }
+        XCTAssertTrue(close.isHittable)
+        close.tap()
+        XCTAssertTrue(app.scrollViews["ask.conversation"].waitForExistence(timeout: 3))
+    }
+
     private func verifyModal(reduceMotion: Bool) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioModalQA"]

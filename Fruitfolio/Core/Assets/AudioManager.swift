@@ -259,6 +259,19 @@ final class AudioManager: ObservableObject {
         desiredLoops[category] = nil
     }
 
+    #if DEBUG
+    struct LoopPlaybackSnapshot {
+        let requested: Bool
+        let playing: Bool
+        let volume: Float?
+    }
+    func debugLoopSnapshot(category: FruitfolioAudioCategory) -> LoopPlaybackSnapshot {
+        LoopPlaybackSnapshot(requested: desiredLoops[category] != nil,
+                             playing: loopPlayers[category]?.isPlaying == true,
+                             volume: loopPlayers[category]?.volume)
+    }
+    #endif
+
     func resetAllAudio() {
         stopAll()
         desiredLoops.removeAll()
@@ -323,20 +336,9 @@ final class AudioManager: ObservableObject {
 
         settings.$typingASMREnabled
             .removeDuplicates()
-            .sink { [weak self] enabled in
-                guard let self else {
-                    return
-                }
-
-                if !enabled {
-                    self.stopOneShots(
-                        category: .typingASMR
-                    )
-                }
-            }
-            .store(
-                in: &settingsCancellables
-            )
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.synchronizePlaybackWithSettings() }
+            .store(in: &settingsCancellables)
 
         settings.$musicVolume
             .removeDuplicates()
@@ -510,7 +512,10 @@ final class AudioManager: ObservableObject {
             )
         }
 
-        if !isEnabled(.typingASMR) {
+        if isEnabled(.typingASMR) {
+            resumeContinuousAudio(category: .typingASMR)
+        } else {
+            muteContinuousAudio(category: .typingASMR)
             stopOneShots(
                 category: .typingASMR
             )
@@ -1021,7 +1026,7 @@ final class AudioManager: ObservableObject {
 
     private func restoreDesiredLoops() {
         guard !audioInterrupted, applicationIsActive else { return }
-        for category in [FruitfolioAudioCategory.music, .rainAmbience] {
+        for category in [FruitfolioAudioCategory.music, .rainAmbience, .typingASMR] {
             guard isEnabled(category),
                   !suspendedLoopCategories.contains(category),
                   let request = desiredLoops[category] else { continue }
