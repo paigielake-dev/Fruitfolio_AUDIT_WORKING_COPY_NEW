@@ -684,3 +684,14 @@
 - Verification: {"Swift_6_headless": "211 XCTest + 21 Swift Testing passed (232 total)", "Swift_5_native": "214 XCTest + 21 Swift Testing passed (235 total)", "workflow": "15 Python tests passed", "Swift_syntax": "161 files, zero parser errors", "privacy": "Shared local context; removal/decline carry no medical text; no account linkage or automatic new free-text AI inclusion", "Apple_UI": "NOT_RUN: isolated optional-profile UI regression added; illustrated layout/VoiceOver/onboarding acceptance open"}.
 - Next action: Implement explicit session-only sharing of selected hormone/personal-context records into Ask with user-reported provenance, relevance and research-only claim boundaries, no autosend/no persistence; then remaining evidence-informed context adaptation and calendar/Today source-order requirements.
 - Commit: containing commit for batch Illustrated-personal-health-shared-model-and-entry-points.
+
+## Apple-regression-routes-use-real-shell-environment
+
+- Parent checkpoint: 27f7b4c1d898a7fa78e08182002f79dc8e82206b.
+- Source-order requirements: [].
+- Source files: Fruitfolio/Fruitfolio/ContentView.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift.
+- Corrected a source-level issue in previously added DEBUG regression routes: they constructed production views directly from ContentView, bypassing required environment objects owned by Prompt03SkeletonView. Regression dispatch now lives inside the existing shell, so navigation/settings/audio/motion/context objects are provided exactly as in the app. ContentView supplies a disposable suite for QA runs and stops if suite creation fails; normal/release routing is unchanged. This makes the source wiring reviewable but does not verify Apple compilation or successful UI launch, which remain NOT_RUN on Linux.
+- Tests added/updated: Prompt1BModalAccessibilityTests.
+- Verification: {"Swift_syntax": "162 files, zero parser errors", "workflow": "15 Python tests passed", "Foundation_source": "unchanged; prior 232 headless / 235 native checks remain last verified", "Apple_UI": "NOT_RUN: environment wiring corrected, launch/typecheck still need Apple runtime"}.
+- Next action: Implement explicit selection and session-only attachment of hormone/personal context into Ask, preserving user-provided provenance, research-only claims, deletion invalidation and no automatic sharing.
+- Commit: containing commit for batch Apple-regression-routes-use-real-shell-environment.

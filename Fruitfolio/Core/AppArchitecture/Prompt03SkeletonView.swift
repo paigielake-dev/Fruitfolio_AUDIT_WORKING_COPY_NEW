@@ -68,9 +68,7 @@ struct Prompt03SkeletonView: View {
         NavigationStack(
             path: $navigation.path
         ) {
-            routeView(
-                navigation.root
-            )
+            initialContent
             .navigationDestination(
                 for: FruitfolioRoute.self
             ) { route in
@@ -117,6 +115,27 @@ struct Prompt03SkeletonView: View {
         .environmentObject(prompt27AContextStore)
         .environment(\.locale, Locale(identifier: settings.language.localeIdentifier))
         .environment(\.layoutDirection, settings.language.isRightToLeft ? .rightToLeft : .leftToRight)
+    }
+
+    @ViewBuilder
+    private var initialContent: some View {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
+            FruitfolioPersonalHealthRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryQA") {
+            FruitfolioHormoneLibraryView(onBack: {})
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookQA") {
+            Prompt1BBookRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioAskPaperQA") {
+            Prompt09AskView(viewModel: .paperRegressionFixture())
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioTourQA") {
+            Prompt1BTourRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioModalQA") {
+            Prompt1BModalRegressionHarness()
+        } else { routeView(navigation.root) }
+        #else
+        routeView(navigation.root)
+        #endif
     }
 
     @ViewBuilder

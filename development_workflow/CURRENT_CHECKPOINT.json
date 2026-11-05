@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "106faad2a4953e39622848dcd5510ef805d63503",
+  "current_HEAD": "27f7b4c1d898a7fa78e08182002f79dc8e82206b",
   "latest_verified_commit": null,
-  "current_checklist_part": 7,
-  "current_requirement": 281,
-  "current_implementation_batch": "Illustrated-personal-health-shared-model-and-entry-points",
+  "current_checklist_part": 3,
+  "current_requirement": 264,
+  "current_implementation_batch": "Apple-regression-routes-use-real-shell-environment",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,18 +493,8 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
-    "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
-    "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-    "Fruitfolio/Context Personalization/Prompt27AContextStore.swift",
-    "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
-    "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift",
-    "FruitfolioTests/Prompt1BPersonalHealthContextTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -517,21 +507,17 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
-    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
-    "python3 -m unittest discover -s development_workflow/tests -q",
     "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "python3 -m unittest discover -s development_workflow/tests -q",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_6_headless": "211 XCTest + 21 Swift Testing passed (232 total)",
-    "Swift_5_native": "214 XCTest + 21 Swift Testing passed (235 total)",
+    "Swift_syntax": "162 files, zero parser errors",
     "workflow": "15 Python tests passed",
-    "Swift_syntax": "161 files, zero parser errors",
-    "privacy": "Shared local context; removal/decline carry no medical text; no account linkage or automatic new free-text AI inclusion",
-    "Apple_UI": "NOT_RUN: isolated optional-profile UI regression added; illustrated layout/VoiceOver/onboarding acceptance open"
+    "Foundation_source": "unchanged; prior 232 headless / 235 native checks remain last verified",
+    "Apple_UI": "NOT_RUN: environment wiring corrected, launch/typecheck still need Apple runtime"
   },
-  "next_exact_implementation_action": "Implement explicit session-only sharing of selected hormone/personal-context records into Ask with user-reported provenance, relevance and research-only claim boundaries, no autosend/no persistence; then remaining evidence-informed context adaptation and calendar/Today source-order requirements.",
-  "updated_at": "2026-11-05T22:24:41.787011+00:00",
+  "next_exact_implementation_action": "Implement explicit selection and session-only attachment of hormone/personal context into Ask, preserving user-provided provenance, research-only claims, deletion invalidation and no automatic sharing.",
+  "updated_at": "2026-11-05T22:26:55.725827+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

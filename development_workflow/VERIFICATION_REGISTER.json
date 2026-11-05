@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T22:24:41.787011+00:00",
+  "updated_at": "2026-11-05T22:26:55.725827+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -986,6 +986,21 @@
         "Apple_UI": "NOT_RUN: isolated optional-profile UI regression added; illustrated layout/VoiceOver/onboarding acceptance open"
       },
       "timestamp": "2026-11-05T22:24:41.787011+00:00"
+    },
+    {
+      "batch": "Apple-regression-routes-use-real-shell-environment",
+      "commands": [
+        "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+        "python3 -m unittest discover -s development_workflow/tests -q",
+        "git diff --check"
+      ],
+      "results": {
+        "Swift_syntax": "162 files, zero parser errors",
+        "workflow": "15 Python tests passed",
+        "Foundation_source": "unchanged; prior 232 headless / 235 native checks remain last verified",
+        "Apple_UI": "NOT_RUN: environment wiring corrected, launch/typecheck still need Apple runtime"
+      },
+      "timestamp": "2026-11-05T22:26:55.725827+00:00"
     }
   ]
 }
