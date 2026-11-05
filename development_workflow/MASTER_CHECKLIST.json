@@ -7631,15 +7631,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Create one persistent source of truth for the selected language.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 393,
@@ -7647,15 +7659,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Synchronize that language across all screens.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 394,
@@ -7871,15 +7895,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Identify languages individually rather than using labels such as \u201cAfrican\u201d or \u201cIndian.\u201d",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 408,
@@ -7887,15 +7923,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Build an extensible language architecture.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 409,
@@ -7903,15 +7951,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify actual model/runtime support rather than assuming every requested language works.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 410,
@@ -7919,15 +7979,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support right-to-left writing systems where required.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 411,
@@ -7935,15 +8007,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Adapt layout to different text lengths and writing systems.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 412,
@@ -7951,15 +8035,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Prevent translated text from clipping or overflowing.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 413,
@@ -7967,15 +8063,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Prevent translated text from colliding with artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 414,
@@ -7983,15 +8091,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Allow responsive container growth and scrolling.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 415,
@@ -7999,15 +8119,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve readable font sizes.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 416,
@@ -8015,15 +8147,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support Dynamic Type.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 417,
@@ -8031,15 +8175,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve Fruitfolio\u2019s visual hierarchy, tone, and appropriate kaomoji usage.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 418,
@@ -8047,15 +8203,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Integrate the approved MADLAD model into the actual SwiftUI application.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 419,
@@ -8063,15 +8231,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Implement working local inference.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 420,
@@ -8079,15 +8259,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Connect the selected language to the Ask translation pipeline.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 421,
@@ -8095,15 +8287,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Translate grounded answers after research and evidence validation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 422,
@@ -8111,15 +8315,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve citations, scientific meaning, numerical values, and safety warnings.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 423,
@@ -8127,15 +8343,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve uncertainty and unsupported-evidence distinctions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 424,
@@ -8143,15 +8371,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Prevent translation from introducing new medical claims.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 425,
@@ -8159,15 +8399,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Handle unavailable models and unsupported languages gracefully.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 426,
@@ -8175,15 +8427,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Prevent incomplete translations from appearing complete.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 427,
@@ -8191,15 +8455,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Keep inference off the main UI thread.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 428,
@@ -8207,15 +8483,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Avoid excessive memory consumption.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 429,
@@ -8223,15 +8511,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Do not silently reset the selected language.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 430,
@@ -8239,15 +8539,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Ensure translation operates without internet access, cloud APIs, remote inference, or Ollama.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 431,
@@ -8255,15 +8567,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve original saved content when switching languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 432,
@@ -8271,15 +8595,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve user-entered notes and measurements.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 433,
@@ -8287,15 +8623,27 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Preserve citations and metadata.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+        "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+      ],
+      "last_updated": "2026-11-05T19:04:58.286136+00:00"
     },
     {
       "sequence": 434,

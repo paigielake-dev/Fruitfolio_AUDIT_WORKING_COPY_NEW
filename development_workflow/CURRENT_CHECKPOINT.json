@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6fd34c9a6a695ac3586d0e5f754115e60b593054",
+  "current_HEAD": "d2ea6d847b9e77a89661ba193fc5e2f8958f3b92",
   "latest_verified_commit": null,
-  "current_checklist_part": 8,
-  "current_requirement": 392,
-  "current_implementation_batch": "P8-faq-and-contact-interaction",
+  "current_checklist_part": 9,
+  "current_requirement": 434,
+  "current_implementation_batch": "P9-madlad-encoder-decoder-and-integrity",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-    "Fruitfolio/Hub/Contact/Prompt30ContactView.swift"
+    "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+    "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -503,13 +506,16 @@
   ],
   "last_executed_tests": [
     "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
-    "git diff --check"
+    "git diff --check",
+    "tree-sitter parse Translation Swift sources"
   ],
   "last_test_results": {
     "workflow": "3 passed",
     "diff": "passed",
-    "Swift_iOS": "NOT_RUN: Xcode unavailable"
+    "translation_syntax": "parsed without errors; not a compile/inference result",
+    "Swift_iOS": "NOT_RUN: Xcode unavailable",
+    "MADLAD_inference": "BLOCKED: no verified model/tokenizer resources; huggingface.co proxy 403; draft_not_editable"
   },
-  "next_exact_implementation_action": "Implement local MADLAD encoder-decoder runtime, model manifest and language support gates; protect scientific tokens and integrate dynamic translation with Ask and reading workflows.",
-  "updated_at": "2026-11-05T18:58:34.684889+00:00"
+  "next_exact_implementation_action": "Build a reproducible local conversion/manifest tool and integrate display-only translation into Ask, saved pages and guide reading without changing source records.",
+  "updated_at": "2026-11-05T19:04:58.286136+00:00"
 }

@@ -812,9 +812,7 @@ actor LlamaFruitfolioLanguageModel:
             llama_model_free(model)
         }
 
-        if backendInitialized {
-            llama_backend_free()
-        }
+        // Backends are process-owned; another model actor may still be using them.
     }
 
     func availability() async
@@ -983,7 +981,7 @@ actor LlamaFruitfolioLanguageModel:
         }
 
         if !backendInitialized {
-            llama_backend_init()
+            FruitfolioLlamaBackend.initialize()
             backendInitialized = true
         }
 

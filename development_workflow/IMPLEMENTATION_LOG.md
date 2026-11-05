@@ -197,3 +197,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Implement local MADLAD encoder-decoder runtime, model manifest and language support gates; protect scientific tokens and integrate dynamic translation with Ask and reading workflows.
 - Commit: containing commit for batch P8-faq-and-contact-interaction.
+
+## P9-madlad-encoder-decoder-and-integrity
+
+- Parent checkpoint: d2ea6d847b9e77a89661ba193fc5e2f8958f3b92.
+- Source-order requirements: [392, 393, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433].
+- Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.
+- Tests added/updated: Prompt1BMADLADManifestTests, Prompt1BScientificTranslationTests, Prompt1BTranslationPipelineTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "translation_syntax": "parsed without errors; not a compile/inference result", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: no verified model/tokenizer resources; huggingface.co proxy 403; draft_not_editable"}.
+- Next action: Build a reproducible local conversion/manifest tool and integrate display-only translation into Ask, saved pages and guide reading without changing source records.
+- Commit: containing commit for batch P9-madlad-encoder-decoder-and-integrity.
