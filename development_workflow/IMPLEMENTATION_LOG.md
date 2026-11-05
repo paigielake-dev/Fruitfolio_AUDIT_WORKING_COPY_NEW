@@ -27,3 +27,13 @@
 - Added UIHostingController sizing regression for a long label at accessibility3. NOT_RUN on Linux; added suite to Mac script.
 - Python workflow tests: 2 passed. Shell syntax and whitespace checks passed. No iOS runtime claims.
 - Commit: containing commit, P1-canonical-watercolor-controls.
+
+## P1-scrollable-character-dialogue
+
+- Previous checkpoint: 02e08666bfa46976777e92a2e3c0b7910e419b5c.
+- Part 1 sequences 18–26 (selected related entries) remain IN_PROGRESS. Character dialogue scrolls inside the existing artwork writing area. Short content retains vertical centering. Labels wrap, scale with Dynamic Type and use minimum 44-point targets.
+- Added stable scroll/action accessibility identifiers and a DEBUG-only isolated modal regression route; it does not read/write user data or enable itself in release.
+- Added UI tests asserting hidden background, reachable long-content dismissal, restoration, Reduce Motion/accessibility size, and screenshot attachments. They have NOT_RUN here.
+- Executed workflow tests: 2 passed; shell syntax and whitespace checks passed. Mac runner exits 2 with explicit missing-Xcode diagnostic.
+- Founder binary specification preserved, but antiword download failed because distro package indexes do not list it. Full-text extraction remains pending; no content invented.
+- Commit: containing commit, P1-scrollable-character-dialogue.

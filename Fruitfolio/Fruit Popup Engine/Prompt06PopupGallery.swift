@@ -31,4 +31,35 @@ struct Prompt06PopupGallery: View {
         }
     }
 }
+/// Disposable UI regression route; never enabled in release builds and does not
+/// read or write production settings, research, conversations, or user content.
+struct Prompt1BModalRegressionHarness: View {
+    @State private var isPresented = true
+    private let reduceMotion = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+
+    var body: some View {
+        ZStack {
+            Button("Background action") { isPresented = true }
+                .accessibilityIdentifier("modalQA.background")
+                .fruitfolioModalBlur(active: isPresented, reduceMotion: reduceMotion)
+
+            if isPresented {
+                FruitPopupView(
+                    request: FruitPopupRequest(
+                        character: .blueberry,
+                        message: String(repeating: "Educational estimates carry uncertainty. Keep citations and units attached to their sources. ", count: 3),
+                        primaryAction: FruitPopupAction(label: "Close this educational explanation") {
+                            isPresented = false
+                        }
+                    ),
+                    availableWidth: 320,
+                    reduceMotion: reduceMotion
+                )
+                .accessibilityIdentifier("modalQA.popup")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(DesignTokens.ColorToken.backgroundCream)
+    }
+}
 #endif

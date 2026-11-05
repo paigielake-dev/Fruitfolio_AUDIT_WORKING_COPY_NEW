@@ -157,7 +157,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -179,7 +179,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -201,7 +201,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -223,7 +223,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -245,7 +245,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -267,7 +267,7 @@
       "related_tests": [
         "Prompt08GlobalControlsTests/testPillGrowsForLongAccessibilityTextInsteadOfTruncating"
       ],
-      "commit_reference": null,
+      "commit_reference": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
       "evidence_of_implementation": [
         "Legacy primary/secondary controls delegate to canonical artwork pill. Labels wrap and drive height; audio and actions remain synchronous; existing shared pop style retained. Full app control coverage/device layout pending."
       ],
@@ -359,15 +359,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Ensure text wraps without clipping, overflowing, or truncating with ellipses.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 19,
@@ -375,15 +382,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Support different popup artwork sizes, text lengths, and screen sizes.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 20,
@@ -391,15 +405,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Position popup buttons and other controls without collisions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 21,
@@ -439,15 +460,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Adapt popup layouts to Dynamic Type.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 24,
@@ -455,15 +483,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Prioritize wrapping and responsive layout over reducing font size.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 25,
@@ -471,15 +506,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Allow only small typography adjustments when necessary.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 26,
@@ -487,15 +529,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Apply this system to all applicable confirmations, errors, help popups, character dialogue, and feature-specific overlays.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
+      "related_tests": [
+        "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
+        "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion"
+      ],
       "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "evidence_of_implementation": [
+        "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending."
+      ],
+      "last_updated": "2026-11-05T18:31:07.185422+00:00"
     },
     {
       "sequence": 27,

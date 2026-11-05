@@ -178,7 +178,14 @@ struct FruitPopupView: View {
             width: bubbleWidth,
             characterSide: characterSide
         ) {
-            bubbleContent
+            GeometryReader { geometry in
+                ScrollView(.vertical) {
+                    bubbleContent
+                        .frame(minHeight: geometry.size.height, alignment: .center)
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .accessibilityIdentifier("fruitPopup.scroll")
+            }
         }
         .scaleEffect(
             reduceMotion ? 1 : (appeared ? 1 : 0.92),
@@ -213,7 +220,7 @@ struct FruitPopupView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 
     private var invitationSafeMessage: Text {
@@ -237,7 +244,7 @@ struct FruitPopupView: View {
             action.handler()
         } label: {
             Text(action.label)
-                .font(.custom("Chalkboard SE", size: 12.25))
+                .font(.custom("Chalkboard SE", size: 12.25, relativeTo: .body))
                 .fontWeight(isPrimary ? .bold : .regular)
                 .foregroundStyle(
                     isPrimary
@@ -245,12 +252,13 @@ struct FruitPopupView: View {
                         : DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.90)
-                .frame(maxWidth: .infinity, minHeight: 30, alignment: .center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .center)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(action.accessibilityLabel ?? action.label)
+        .accessibilityIdentifier(isPrimary ? "fruitPopup.action.primary" : "fruitPopup.action.secondary")
     }
 }

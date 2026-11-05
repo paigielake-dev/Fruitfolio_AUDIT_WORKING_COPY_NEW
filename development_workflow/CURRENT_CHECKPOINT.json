@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "00818937eb837d50ba905864584c0d0a07c34f20",
+  "current_HEAD": "02e08666bfa46976777e92a2e3c0b7910e419b5c",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 7,
-  "current_implementation_batch": "P1-canonical-watercolor-controls",
+  "current_requirement": 13,
+  "current_implementation_batch": "P1-scrollable-character-dialogue",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,7 +493,8 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Shared artwork control consolidation and long-label test"
+    "Shared character popup scroll surface",
+    "DEBUG-only regression harness and UI screenshot tests"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -501,16 +502,17 @@
     "No MADLAD model/tokenizer resources located"
   ],
   "last_executed_tests": [
-    "python3 -m unittest discover -s development_workflow/tests -v",
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
     "bash -n Tools/verify_prompt1b_mac.sh",
+    "bash Tools/verify_prompt1b_mac.sh",
     "git diff --check"
   ],
   "last_test_results": {
     "workflow_integrity": "2 passed",
-    "mac_script_syntax": "passed",
+    "shell_syntax": "passed",
     "diff_check": "passed",
-    "Swift_iOS": "NOT_RUN: unavailable toolchain"
+    "mac_verification": "exit 2: Xcode unavailable; no Swift tests executed"
   },
-  "next_exact_implementation_action": "Make long character dialogue and actions scroll within the painted bubble; preserve artwork and support Dynamic Type.",
-  "updated_at": "2026-11-05T18:28:55.112556+00:00"
+  "next_exact_implementation_action": "Continue Part 1 sequence 13: inspect other popup families and integrate shared responsive layout without replacing artwork. Run added Swift/UI regression suites on macOS when available. Reconcile full binary founder spec after obtaining a Word text extractor.",
+  "updated_at": "2026-11-05T18:31:07.185422+00:00"
 }
