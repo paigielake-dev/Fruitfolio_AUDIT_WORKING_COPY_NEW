@@ -112,7 +112,8 @@ extension Prompt10SavedLibraryStore {
             excerptSelectionLocation: sourcePage.excerptSelectionLocation,
             excerptSelectionLength: sourcePage.excerptSelectionLength,
             excerptLanguage: sourcePage.excerptLanguage,
-            sourceRecords: sourcePage.sourceRecords
+            sourceRecords: sourcePage.sourceRecords,
+            educationalAssetIDs: sourcePage.educationalAssetIDs
         )
 
         return try savePage(

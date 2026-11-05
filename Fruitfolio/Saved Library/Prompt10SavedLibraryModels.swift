@@ -49,6 +49,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     var originalConversationID: String?
 
     var sourceIDs: [String]
+    var educationalAssetIDs: [FruitfolioAssetID]?
     var sourceRecords: [AskSourceRecord]?
     var sourceVersions: [String: String]
     var knowledgeBaseVersion: String?
@@ -89,7 +90,8 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         excerptSelectionLocation: Int? = nil,
         excerptSelectionLength: Int? = nil,
         excerptLanguage: String? = nil,
-        sourceRecords: [AskSourceRecord]? = nil
+        sourceRecords: [AskSourceRecord]? = nil,
+        educationalAssetIDs: [FruitfolioAssetID]? = nil
     ) {
         self.id = id
         self.chapterID = chapterID
@@ -100,6 +102,7 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
+        self.educationalAssetIDs = educationalAssetIDs
         self.sourceRecords = sourceRecords
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion
@@ -119,7 +122,9 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
     func isDuplicateSave(of candidate: Prompt10SavedPage) -> Bool {
         guard let origin = originalAnswerID, origin == candidate.originalAnswerID,
               saveType == candidate.saveType else { return false }
+        guard (educationalAssetIDs ?? []) == (candidate.educationalAssetIDs ?? []) else { return false }
         if saveType == .fullAnswer { return true }
+        if excerptText == "", candidate.excerptText == "", !(educationalAssetIDs ?? []).isEmpty { return true }
         // Legacy records without an occurrence range cannot prove that a new
         // selection is the same occurrence; do not guess from equal words.
         guard let location = excerptSelectionLocation, let length = excerptSelectionLength,

@@ -37,6 +37,25 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
         XCTAssertTrue(Prompt10MediaReferences.contains("shared-image", in: [restored]))
     }
 
+    func testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants() throws {
+        let art: FruitfolioAssetID = .ovarian_cycle_follicle_development_stages
+        var textOnly = page()
+        var withImage = textOnly
+        withImage.educationalAssetIDs = [art]
+        XCTAssertFalse(textOnly.isDuplicateSave(of: withImage))
+        let restored = try JSONDecoder().decode(Prompt10SavedPage.self, from: JSONEncoder().encode(withImage))
+        XCTAssertEqual(restored.educationalAssetIDs, [art])
+        var imageOnly = withImage
+        imageOnly.answer = ""
+        imageOnly.excerptText = ""
+        imageOnly.excerptSelectionLocation = nil
+        imageOnly.excerptSelectionLength = nil
+        XCTAssertTrue(imageOnly.isDuplicateSave(of: imageOnly))
+        XCTAssertFalse(imageOnly.isDuplicateSave(of: textOnly))
+        textOnly.educationalAssetIDs = []
+        XCTAssertNil(page().educationalAssetIDs)
+    }
+
     private func page(location: Int = 0, language: String = "en", saveType: Prompt10SavedPageType = .excerpt) -> Prompt10SavedPage {
         Prompt10SavedPage(chapterID: UUID(), question: "fixture", answer: "E2 and E2 [source-1]",
                          saveType: saveType, excerptText: "E2", originalAnswerID: "answer-1", sourceIDs: ["source-1"],
@@ -56,10 +75,11 @@ final class Prompt1BSavedExcerptPersistenceTests: XCTestCase {
     func testLegacyPagesDecodeWithoutNewOptionalFields() throws {
         let original = page()
         var object = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(original)) as? [String: Any])
-        for field in ["excerptSemanticSpans", "excerptSelectionLocation", "excerptSelectionLength", "excerptLanguage", "sourceRecords"] {
+        for field in ["excerptSemanticSpans", "excerptSelectionLocation", "excerptSelectionLength", "excerptLanguage", "sourceRecords", "educationalAssetIDs"] {
             object.removeValue(forKey: field)
         }
         let restored = try JSONDecoder().decode(Prompt10SavedPage.self, from: JSONSerialization.data(withJSONObject: object))
+        XCTAssertNil(restored.educationalAssetIDs)
         XCTAssertNil(restored.sourceRecords)
         XCTAssertNil(restored.excerptSemanticSpans)
         XCTAssertNil(restored.excerptSelectionLocation)

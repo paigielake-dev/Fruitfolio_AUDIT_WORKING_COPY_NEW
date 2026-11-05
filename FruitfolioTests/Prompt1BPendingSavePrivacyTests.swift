@@ -11,6 +11,18 @@ final class Prompt1BPendingSavePrivacyTests: XCTestCase {
         XCTAssertEqual(pending.originalAnswerID, "answer-1")
         XCTAssertEqual(pending.sourceRecords?.first?.title, "Original source")
     }
+    func testImageOnlyAndTextWithImageRetainExactlyTheChosenContent() {
+        let art: FruitfolioAssetID = .ovarian_cycle_follicle_development_stages
+        let imageOnly = Prompt10PendingSavedContent(question: "question", answer: "private unsaved text", saveType: .excerpt,
+            excerptText: "", sourceIDs: ["source-1"], educationalAssetIDs: [art])
+        XCTAssertEqual(imageOnly.answer, "")
+        XCTAssertEqual(imageOnly.educationalAssetIDs, [art])
+        let combination = Prompt10PendingSavedContent(question: "question", answer: "whole unsaved answer", saveType: .excerpt,
+            excerptText: "chosen passage", educationalAssetIDs: [art])
+        XCTAssertEqual(combination.answer, "chosen passage")
+        XCTAssertEqual(combination.educationalAssetIDs, [art])
+    }
+
     func testOnlyExplicitFullAnswerSaveRetainsFullAnswer() {
         let pending = Prompt10PendingSavedContent(question: "question", answer: "full selected answer", saveType: .fullAnswer)
         XCTAssertEqual(pending.answer, "full selected answer")

@@ -413,6 +413,7 @@ struct Prompt10SavedPageView: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
+                if !page.displayBody.isEmpty {
                 FruitfolioTranslatedText(
                     source: page.displayBody, protectedLiterals: page.sourceIDs,
                     enabled: page.originalAnswerID != nil,
@@ -431,6 +432,9 @@ struct Prompt10SavedPageView: View {
                     )
                     .textSelection(.enabled)
 
+                }
+
+                FruitfolioSavedScientificIllustrations(assetIDs: page.educationalAssetIDs ?? [])
                 notesSection
                 importedImagesSection
 

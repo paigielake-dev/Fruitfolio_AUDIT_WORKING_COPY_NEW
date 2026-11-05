@@ -28,6 +28,8 @@ struct Prompt09AskView: View {
     @State private var historicalSelectionSpans: [UUID: [FruitfolioSemanticSpan]] = [:]
     @State private var historicalSelectionLanguages: [UUID: String] = [:]
     @State private var savedExcerptIdentities: Set<Prompt09ExcerptIdentity> = []
+    @State private var sessionIllustrations: [UUID: [FruitfolioAssetID]] = [:]
+    @State private var includeIllustrationsInSave: Set<UUID> = []
     @State private var isNearConversationBottom = true
     @State private var conversationViewportHeight: CGFloat = 0
 
@@ -183,7 +185,8 @@ struct Prompt09AskView: View {
                             if pendingLibrarySave.saveType == .excerpt,
                                let key = Prompt09ExcerptIdentity(answerID: savedID, renderedRange: pendingLibrarySave.selectedRenderedRange,
                                                                  language: pendingLibrarySave.selectedDisplayLanguage,
-                                                                 selectionText: pendingLibrarySave.excerptText ?? "") {
+                                                                 selectionText: pendingLibrarySave.excerptText ?? "",
+                                                                 educationalAssetIDs: pendingLibrarySave.educationalAssetIDs ?? []) {
                                 savedExcerptIdentities.insert(key)
                             }
                         }
@@ -273,6 +276,10 @@ struct Prompt09AskView: View {
                 historicalSelectionLanguages = [:]
                 savedExcerptIdentities = []
             }
+        }
+        .onChange(of: viewModel.conversationID) { _, _ in
+            sessionIllustrations = [:]
+            includeIllustrationsInSave = []
         }
         .onChange(of: settings.language) { _, _ in
             viewModel.selectedExcerptText = nil
@@ -919,6 +926,7 @@ struct Prompt09AskView: View {
                         WatercolorSecondaryButton(label: "view educational illustration") {
                             audioManager.play(.buttonSoftPop)
                             viewModel.revealEducationalIllustration()
+                            sessionIllustrations[answer.id] = viewModel.selectedEducationalAssets.map(\.assetID)
                         }
                     }
 
@@ -948,6 +956,8 @@ struct Prompt09AskView: View {
                         .frame(maxWidth: .infinity)
                         .clipped()
                     }
+
+                    illustrationSaveControls(answer)
 
                     if !answer
                         .sources
@@ -1064,7 +1074,7 @@ struct Prompt09AskView: View {
     private func isExcerptSaved(answerID: UUID, range: NSRange?, language: String?, text: String?) -> Bool {
         guard let language, let text,
               let key = Prompt09ExcerptIdentity(answerID: answerID, renderedRange: range,
-                                               language: language, selectionText: text) else { return false }
+                                               language: language, selectionText: text, educationalAssetIDs: selectedIllustrationsForSave(answerID)) else { return false }
         return savedExcerptIdentities.contains(key)
     }
 
@@ -1084,6 +1094,8 @@ struct Prompt09AskView: View {
                     renderedLanguage: displayLanguage
                 )
             }
+            FruitfolioSavedScientificIllustrations(assetIDs: sessionIllustrations[answer.id] ?? [])
+            illustrationSaveControls(answer)
             sourceSection(answer.sources)
             WatercolorSecondaryButton(label: savedAnswerIDs.contains(answer.id) ? "answer saved ♡" : "save answer ♡") {
                 prepareHistoricalSave(answer, excerpt: nil)
@@ -1115,7 +1127,38 @@ struct Prompt09AskView: View {
             knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
             selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
             selectedDisplayLanguage: historicalSelectionLanguages[answer.id] ?? "en",
-            selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id], sourceRecords: answer.sources)
+            selectedSemanticSpans: excerpt == nil ? nil : historicalSelectionSpans[answer.id], sourceRecords: answer.sources,
+            educationalAssetIDs: selectedIllustrationsForSave(answer.id))
+    }
+
+    private func visibleIllustrations(_ answerID: UUID) -> [FruitfolioAssetID] {
+        answerID == viewModel.answer?.id ? viewModel.selectedEducationalAssets.map(\.assetID) : (sessionIllustrations[answerID] ?? [])
+    }
+
+    private func selectedIllustrationsForSave(_ answerID: UUID) -> [FruitfolioAssetID] {
+        includeIllustrationsInSave.contains(answerID) ? visibleIllustrations(answerID) : []
+    }
+
+    @ViewBuilder
+    private func illustrationSaveControls(_ answer: AskAnswer) -> some View {
+        if !visibleIllustrations(answer.id).isEmpty {
+            Toggle("include this illustration with saved text", isOn: Binding(
+                get: { includeIllustrationsInSave.contains(answer.id) },
+                set: { include in
+                    if include { includeIllustrationsInSave.insert(answer.id) }
+                    else { includeIllustrationsInSave.remove(answer.id) }
+                }))
+                .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
+            WatercolorSecondaryButton(label: "save illustration only") {
+                pendingLibrarySave = Prompt10PendingSavedContent(
+                    question: answer.originalQuestion, answer: "", saveType: .excerpt, excerptText: "",
+                    originalAnswerID: answer.id.uuidString, originalConversationID: viewModel.conversationID.uuidString,
+                    sourceIDs: answer.sourceIDs,
+                    sourceVersions: Dictionary(answer.sources.compactMap { source in source.contentVersion.map { (source.id, $0) } }, uniquingKeysWith: { first, _ in first }),
+                    knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
+                    sourceRecords: answer.sources, educationalAssetIDs: visibleIllustrations(answer.id))
+            }
+        }
     }
 
     // MARK: - Prompt 10 Save Preparation
@@ -1156,7 +1199,8 @@ struct Prompt09AskView: View {
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
                     answer.generationTimestamp,
-                sourceRecords: answer.sources
+                sourceRecords: answer.sources,
+                educationalAssetIDs: selectedIllustrationsForSave(answer.id)
             )
     }
 
@@ -1207,7 +1251,8 @@ struct Prompt09AskView: View {
                 selectedRenderedRange: viewModel.selectedExcerptRange,
                 selectedDisplayLanguage: viewModel.selectedExcerptLanguage ?? "en",
                 selectedSemanticSpans: viewModel.selectedExcerptSemanticSpans,
-                sourceRecords: answer.sources
+                sourceRecords: answer.sources,
+                educationalAssetIDs: selectedIllustrationsForSave(answer.id)
             )
     }
 

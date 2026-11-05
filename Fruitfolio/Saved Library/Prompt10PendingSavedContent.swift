@@ -13,6 +13,7 @@ struct Prompt10PendingSavedContent: Equatable {
     let originalConversationID: String?
 
     let sourceIDs: [String]
+    let educationalAssetIDs: [FruitfolioAssetID]?
     let sourceRecords: [AskSourceRecord]?
     let sourceVersions: [String: String]
     let knowledgeBaseVersion: String?
@@ -32,7 +33,8 @@ struct Prompt10PendingSavedContent: Equatable {
         selectedRenderedRange: NSRange? = nil,
         selectedDisplayLanguage: String = "en",
         selectedSemanticSpans: [FruitfolioSemanticSpan]? = nil,
-        sourceRecords: [AskSourceRecord]? = nil
+        sourceRecords: [AskSourceRecord]? = nil,
+        educationalAssetIDs: [FruitfolioAssetID]? = nil
     ) {
         self.question = question
         // Only the selected save payload may outlive the active Ask session.
@@ -45,6 +47,7 @@ struct Prompt10PendingSavedContent: Equatable {
         self.originalAnswerID = originalAnswerID
         self.originalConversationID = originalConversationID
         self.sourceIDs = sourceIDs
+        self.educationalAssetIDs = educationalAssetIDs
         self.sourceRecords = sourceRecords
         self.sourceVersions = sourceVersions
         self.knowledgeBaseVersion = knowledgeBaseVersion

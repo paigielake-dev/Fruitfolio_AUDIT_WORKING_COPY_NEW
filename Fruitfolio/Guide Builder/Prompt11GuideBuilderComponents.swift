@@ -218,6 +218,7 @@ struct Prompt11SavedPagePaper: View {
                     )
             }
 
+            if !page.displayBody.isEmpty {
             FruitfolioTranslatedText(source: page.displayBody, protectedLiterals: page.sourceIDs,
                                      enabled: page.originalAnswerID != nil,
                                      font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
@@ -229,6 +230,10 @@ struct Prompt11SavedPagePaper: View {
                 )
                 .lineSpacing(3)
                 .frame(maxWidth: .infinity, alignment: .leading)
+
+            }
+
+            FruitfolioSavedScientificIllustrations(assetIDs: page.educationalAssetIDs ?? [])
 
             ForEach(page.importedImageIDs ?? [], id: \.self) { imageID in
                 Prompt10ImportedImage(imageID: imageID)

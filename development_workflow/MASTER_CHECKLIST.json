@@ -2154,7 +2154,9 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2174,9 +2176,12 @@
         "Prompt1BAskPaperLayoutTests",
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
         "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -2185,9 +2190,10 @@
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
         "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 62,
@@ -3732,7 +3738,10 @@
         "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3750,18 +3759,22 @@
         "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
         "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport",
         "Prompt1BCitationDestinationTests",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 110,
@@ -4153,7 +4166,8 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4168,18 +4182,23 @@
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
-        "Prompt1BPendingSavePrivacyTests"
+        "Prompt1BPendingSavePrivacyTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:28:01.624449+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 125,
@@ -4207,7 +4226,8 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4225,9 +4245,12 @@
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BCitationDestinationTests",
-        "Prompt1BPendingSavePrivacyTests"
+        "Prompt1BPendingSavePrivacyTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
@@ -4236,9 +4259,10 @@
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
-        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:28:01.624449+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 126,
@@ -4251,7 +4275,13 @@
         "Fruitfolio/Ask/Prompt09AskView.swift",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
         "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4259,14 +4289,19 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests",
-        "Prompt1BPendingSavePrivacyTests"
+        "Prompt1BPendingSavePrivacyTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
-        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:28:01.624449+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 127,
@@ -4289,7 +4324,10 @@
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4303,17 +4341,22 @@
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
         "Prompt1BSemanticTextTests",
-        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage"
+        "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-unsaved-note-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
-        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration."
+        "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T19:56:02.412826+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 128,
@@ -4339,7 +4382,8 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4354,18 +4398,22 @@
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BPendingSavePrivacyTests"
+        "Prompt1BPendingSavePrivacyTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:28:01.624449+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 129,
@@ -4687,7 +4735,16 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4695,13 +4752,18 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BEducationalArtworkTests",
-        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:22:50.190439+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 143,
@@ -4714,7 +4776,16 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4722,13 +4793,18 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BEducationalArtworkTests",
-        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:22:50.190439+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 144,
@@ -4768,7 +4844,16 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4776,13 +4861,18 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BEducationalArtworkTests",
-        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:22:50.190439+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 146,
@@ -4822,7 +4912,16 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4830,13 +4929,18 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BEducationalArtworkTests",
-        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge",
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
       ],
-      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:22:50.190439+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 148,
@@ -6029,7 +6133,10 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6042,16 +6149,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 207,
@@ -6076,7 +6187,10 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6089,16 +6203,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 208,
@@ -6139,7 +6257,10 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6152,16 +6273,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 210,
@@ -6186,7 +6311,10 @@
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Ask/Prompt09AskModels.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioSavedScientificIllustrations.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6199,16 +6327,20 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests/testImageOnlyAndTextWithImageRetainExactlyTheChosenContent",
+        "Prompt1BSavedExcerptPersistenceTests/testScientificImageSelectionPersistsWithoutUnsavedAnswerAndDistinguishesSaveVariants",
+        "Prompt1BExcerptIdentityTests/testOptionalIllustrationSelectionHasItsOwnSaveBadge"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-explicit-scientific-illustration-save-payloads (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:31:13.865162+00:00"
     },
     {
       "sequence": 211,

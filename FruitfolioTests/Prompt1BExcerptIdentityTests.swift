@@ -12,6 +12,14 @@ final class Prompt1BExcerptIdentityTests: XCTestCase {
         XCTAssertEqual(Set([first, repeated, differentAnswer]).count, 3)
     }
 
+    func testOptionalIllustrationSelectionHasItsOwnSaveBadge() throws {
+        let answer = UUID(), range = NSRange(location: 0, length: 4)
+        let text = try XCTUnwrap(Prompt09ExcerptIdentity(answerID: answer, renderedRange: range))
+        let illustrated = try XCTUnwrap(Prompt09ExcerptIdentity(answerID: answer, renderedRange: range,
+            educationalAssetIDs: [.ovarian_cycle_follicle_development_stages]))
+        XCTAssertNotEqual(text, illustrated)
+    }
+
     func testEmptyAndInvalidSelectionsCannotReceiveSaveBadge() {
         XCTAssertNil(Prompt09ExcerptIdentity(answerID: UUID(), renderedRange: nil))
         XCTAssertNil(Prompt09ExcerptIdentity(answerID: UUID(), renderedRange: NSRange(location: NSNotFound, length: 1)))
