@@ -12,13 +12,13 @@ struct FruitfolioSemanticText: View {
         baseFont: Font = .body,
         color: Color? = nil
     ) {
-        self.spans = spans
+        self.spans = FruitfolioSemanticPolicy.normalized(spans)
         self.baseFont = baseFont
         self.color = color ?? DesignTokens.ColorToken.primaryBurgundy
     }
 
-    init(markdown: String, baseFont: Font = .body, color: Color? = nil) {
-        self.init(spans: FruitfolioSemanticDocument.spans(from: markdown), baseFont: baseFont, color: color)
+    init(markdown: String, baseFont: Font = .body, color: Color? = nil, serious: Bool = false) {
+        self.init(spans: FruitfolioSemanticPolicy.normalized(FruitfolioSemanticDocument.spans(from: markdown), serious: serious), baseFont: baseFont, color: color)
     }
 
     var body: some View {
@@ -69,10 +69,10 @@ enum FruitfolioSemanticDocument {
     static func spans(from markdown: String) -> [FruitfolioSemanticSpan] {
         // Underline annotations use canonical paired tags, with ordinary inline
         // Markdown inside each segment. Arbitrary HTML is never rendered.
-        guard let tags = try? NSRegularExpression(pattern: "</?u>") else { return inlineSpans(markdown) }
+        guard let tags = try? NSRegularExpression(pattern: "</?u>") else { return FruitfolioSemanticPolicy.normalized(inlineSpans(markdown)) }
         let source = markdown as NSString
         let matches = tags.matches(in: markdown, range: NSRange(location: 0, length: source.length))
-        guard !matches.isEmpty else { return inlineSpans(markdown) }
+        guard !matches.isEmpty else { return FruitfolioSemanticPolicy.normalized(inlineSpans(markdown)) }
         var offset = 0
         var depth = 0
         var result: [FruitfolioSemanticSpan] = []
@@ -84,7 +84,7 @@ enum FruitfolioSemanticDocument {
             offset = NSMaxRange(match.range)
         }
         result += underlined(inlineSpans(source.substring(from: offset)), enabled: depth > 0)
-        return result
+        return FruitfolioSemanticPolicy.normalized(result)
     }
 
     private static func underlined(_ spans: [FruitfolioSemanticSpan], enabled: Bool) -> [FruitfolioSemanticSpan] {
@@ -134,7 +134,7 @@ enum FruitfolioSemanticRenderer {
         let result = NSMutableAttributedString(string: "")
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 4
-        for span in spans {
+        for span in FruitfolioSemanticPolicy.normalized(spans) {
             let bold = [FruitfolioSemanticEmphasis.anchorBold, .anchorBoldSpokenItalic,
                         .actionableBoldUnderline, .absoluteBoldItalicUnderline].contains(span.emphasis)
             let italic = [FruitfolioSemanticEmphasis.spokenItalic, .anchorBoldSpokenItalic,

@@ -86,3 +86,33 @@ enum FruitfolioSemanticMarkup {
         }.joined()
     }
 }
+
+/// Shared author/model contract. Emphasis follows established meaning; this
+/// policy never searches prose for medical keywords or invents emphasis.
+enum FruitfolioSemanticPolicy {
+    static let generationInstructions = """
+    Apply semantic emphasis only after establishing the evidence-bounded meaning of the complete passage. Use **bold** selectively for central informational anchors (conditions, hormones, mechanisms, anatomy, nutrients, treatment concepts, important quantities and scientific concepts). When a food is a meaningful item, bold its complete name, such as **apple slices**. Do not bold every medical noun or repeat nearby anchors automatically.
+    Use *italics* only for occasional natural spoken stress, never merely because a phrase is a symptom or scientific term. Use <u>underline</u> for the smallest meaningful symptom phrase or practical/qualifying clue when recognition improves comprehension. These tags are semantic annotations; do not output other HTML.
+    Combine styles only when their independent meanings both apply. Bold+underline is rare; italic+underline is very rare. Triple emphasis is reserved for the exact words not, never or every, and only when the context truly warrants that emphasis. Never decorate a whole paragraph. Evaluate the whole passage and choose the smallest useful set of emphasized phrases; no per-sentence or per-paragraph quotas. Serious or safety-critical content must remain calm, with restrained informational emphasis and no playful vocal stress. Preserve all scientific claims, uncertainty, numbers, units and evidence IDs exactly; formatting must never change substantive meaning.
+    """
+
+    static func normalized(_ spans: [FruitfolioSemanticSpan], serious: Bool = false) -> [FruitfolioSemanticSpan] {
+        spans.map { span in
+            var emphasis = span.emphasis
+            if emphasis == .absoluteBoldItalicUnderline {
+                let word = span.text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                if !["not", "never", "every"].contains(word) { emphasis = .actionableBoldUnderline }
+            }
+            if serious {
+                switch emphasis {
+                case .spokenItalic: emphasis = .plain
+                case .anchorBoldSpokenItalic: emphasis = .anchorBold
+                case .rareItalicUnderline: emphasis = .symptomOrPracticalUnderline
+                case .absoluteBoldItalicUnderline: emphasis = .actionableBoldUnderline
+                default: break
+                }
+            }
+            return .init(id: span.id, text: span.text, emphasis: emphasis)
+        }
+    }
+}

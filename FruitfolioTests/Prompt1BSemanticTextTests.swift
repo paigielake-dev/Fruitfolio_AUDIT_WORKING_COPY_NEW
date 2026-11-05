@@ -15,7 +15,7 @@ final class Prompt1BSemanticTextTests: XCTestCase {
     func testCanonicalSemanticMarkupRetainsUnderlineAndCombinedEmphasis() {
         let original = [FruitfolioSemanticSpan(text: "symptoms", emphasis: .symptomOrPracticalUnderline),
                         .init(text: "important", emphasis: .actionableBoldUnderline),
-                        .init(text: "uncertainty", emphasis: .absoluteBoldItalicUnderline)]
+                        .init(text: "never", emphasis: .absoluteBoldItalicUnderline)]
         let restored = FruitfolioSemanticDocument.spans(from: FruitfolioSemanticMarkup.markdown(original))
         XCTAssertEqual(restored.map(\.text), original.map(\.text))
         XCTAssertEqual(restored.map(\.emphasis), original.map(\.emphasis))

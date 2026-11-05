@@ -2,6 +2,20 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BSemanticSliceTests: XCTestCase {
+    func testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress() {
+        let spans = [FruitfolioSemanticSpan(text: "uncertainty", emphasis: .absoluteBoldItalicUnderline),
+                     .init(text: "never", emphasis: .absoluteBoldItalicUnderline),
+                     .init(text: "cramps", emphasis: .spokenItalic)]
+        let normal = FruitfolioSemanticPolicy.normalized(spans)
+        XCTAssertEqual(normal.map(\.emphasis), [.actionableBoldUnderline, .absoluteBoldItalicUnderline, .spokenItalic])
+        let serious = FruitfolioSemanticPolicy.normalized(spans, serious: true)
+        XCTAssertEqual(serious.map(\.emphasis), [.actionableBoldUnderline, .actionableBoldUnderline, .plain])
+        XCTAssertEqual(serious.map(\.text), spans.map(\.text))
+        XCTAssertEqual(serious.map(\.id), spans.map(\.id))
+        // No medical-word lookup adds formatting to ordinary source prose.
+        XCTAssertEqual(FruitfolioSemanticPolicy.normalized([.init(text: "estradiol cramps apple slices")]).first?.emphasis, .plain)
+    }
+
     func testProgressiveTextKeepsExplicitEmphasisAndGraphemeBoundaries() {
         let spans = [FruitfolioSemanticSpan(text: "E2", emphasis: .anchorBold), .init(text: " 💛 μg")]
         let prefix = FruitfolioSemanticSlices.prefix(spans, characterCount: 4)

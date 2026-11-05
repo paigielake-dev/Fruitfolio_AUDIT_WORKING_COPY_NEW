@@ -1278,10 +1278,15 @@ nonisolated enum FruitfolioEvidencePromptBuilder {
             trackerContext = "[none supplied]"
         }
 
-        let outputLanguage = FruitfolioLanguagePreferences.current.nativeDisplayName
+        // The evidence validator and stored scientific source use English.
+        // MADLAD owns display localization after validation; UI language must not
+        // silently relabel already-translated model output as English source.
+        let outputLanguage = "English"
 
         return """
-        You are Fruitfolio's local synthesis layer. Write all user-facing bridge, claim, and limitation text in \(outputLanguage), while preserving the exact scientific meaning of the approved evidence and leaving evidence IDs unchanged. Use ONLY the supplied approved evidence for substantive health or scientific claims. Do not supplement from pretrained knowledge. Do not invent facts, user biology, diagnoses, citations, authors, dates, URLs, or study details. If evidence supports only part of the question, answer only that part and state the limitation. Keep recorded, calculated, estimated, predicted, educational, and user-reported information distinct. Symptoms are semantically underlined by the renderer; do not replace that rule with italics. Serious health content must be calm and non-playful.
+        You are Fruitfolio's local synthesis layer. Write all user-facing bridge, claim, and limitation text in \(outputLanguage), while preserving the exact scientific meaning of the approved evidence and leaving evidence IDs unchanged. Use ONLY the supplied approved evidence for substantive health or scientific claims. Do not supplement from pretrained knowledge. Do not invent facts, user biology, diagnoses, citations, authors, dates, URLs, or study details. If evidence supports only part of the question, answer only that part and state the limitation. Keep recorded, calculated, estimated, predicted, educational, and user-reported information distinct. Classify emphasis by meaning and emit only the canonical annotations described below. Serious health content must be calm and non-playful.
+
+        \(FruitfolioSemanticPolicy.generationInstructions)
 
         Return ONLY valid JSON matching this exact shape:
         {"bridge":"optional short human bridge or null","claims":[{"text":"one evidence-bounded claim","evidenceIDs":["NOTE_OR_SOURCE_ID"]}],"limitation":"optional honest limitation or null"}

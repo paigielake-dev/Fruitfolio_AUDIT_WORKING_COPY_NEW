@@ -189,6 +189,10 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             permittedContext: nil,
             contentVersion: "test"
         )
+        let prompt = FruitfolioEvidencePromptBuilder.prompt(question: "progesterone temperature", evidence: packet)
+        XCTAssertTrue(prompt.contains("text in English"))
+        XCTAssertTrue(prompt.contains(FruitfolioSemanticPolicy.generationInstructions))
+        XCTAssertFalse(prompt.contains("Symptoms are semantically underlined by the renderer"))
         let draft = FruitfolioGeneratedDraft(
             bridge: "here’s the evidence-bounded version:",
             claims: [

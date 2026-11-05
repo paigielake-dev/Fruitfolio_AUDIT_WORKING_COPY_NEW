@@ -354,3 +354,14 @@
 - Verification: {"portable_swift": "37 XCTest + 21 Swift Testing passed (58 total)", "workflow": "10 Python tests passed", "Swift_syntax": "87 files, zero parser errors", "UI": "NOT_RUN: Xcode unavailable"}.
 - Next action: Complete shared semantic-intent policy and model formatting instructions; preserve science/source language through MADLAD localization, then remaining Part 1 and later requirements.
 - Commit: containing commit for batch P1-measured-character-dialogue-layout.
+
+## P1-canonical-semantic-policy-and-source-language
+
+- Parent checkpoint: 9c19522a231528ba4d566fef491e9f8081728cd5.
+- Source-order requirements: [46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift, Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift, Fruitfolio/Fruit Popup Engine/FruitPopupView.swift.
+- Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.
+- Tests added/updated: Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress, Prompt1BSemanticTextTests, Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim.
+- Verification: {"portable_swift": "38 XCTest + 21 Swift Testing passed (59 total)", "Swift_syntax": "88 files, zero parser errors", "Apple_model_and_rendering_tests": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Route remaining educational/tour/fallback surfaces through canonical semantic rendering, remove duplicate feature-specific styling, then continue independent requirements.
+- Commit: containing commit for batch P1-canonical-semantic-policy-and-source-language.

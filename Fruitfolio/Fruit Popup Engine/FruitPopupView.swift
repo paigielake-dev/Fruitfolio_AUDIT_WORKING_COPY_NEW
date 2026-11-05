@@ -213,17 +213,16 @@ struct FruitPopupView: View {
         .frame(maxWidth: .infinity, alignment: .center)
     }
 
-    private var invitationSafeMessage: Text {
+    private var invitationSafeMessage: some View {
+        FruitfolioSemanticText(markdown: invitationMessage, baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body), serious: request.tone == .cautionary)
+    }
+
+    private var invitationMessage: String {
         if request.message == "hello there! ♡ want me to show you around?" {
-            return Text("hello there!\u{00A0}♡\nwant me to show you around?")
+            return "hello there!\u{00A0}♡\nwant me to show you around?"
         }
 
-        return Text(
-            request.message.replacingOccurrences(
-                of: " ♡",
-                with: "\u{00A0}♡"
-            )
-        )
+        return request.message.replacingOccurrences(of: " ♡", with: "\u{00A0}♡")
     }
 
     private func popupActionButton(
