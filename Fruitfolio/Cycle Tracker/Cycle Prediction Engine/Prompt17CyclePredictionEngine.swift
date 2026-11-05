@@ -2,7 +2,7 @@ import Foundation
 
 public struct Prompt17CyclePredictionEngine: Sendable {
     public static let recentCycleLimit = 6
-    public static let methodVersion = "prompt17.v1"
+    public static let methodVersion = "prompt17.v2-period-count-tiers"
 
     private let calendar: Calendar
 
@@ -301,7 +301,7 @@ public struct Prompt17CyclePredictionEngine: Sendable {
             return .noCompletedCycles
         case 1:
             return .oneCompletedCycle
-        case 2...3:
+        case 2...4:
             return .someHistory
         default:
             return .establishedHistory
@@ -310,7 +310,9 @@ public struct Prompt17CyclePredictionEngine: Sendable {
 
     /// Explicit deterministic confidence rules.
     ///
-    /// Confidence can move down when recent history becomes more variable.
+    /// Three to five logged starts produce two to four completed cycles.
+    /// Stronger confidence requires at least six starts (five completed cycles).
+    /// Confidence can still move down when recent history becomes more variable.
     private func confidence(
         completedCycleCount: Int,
         variation: Prompt17CycleVariation?
@@ -319,7 +321,7 @@ public struct Prompt17CyclePredictionEngine: Sendable {
         case 0...1:
             return .limitedEstimate
 
-        case 2...3:
+        case 2...4:
             switch variation {
             case .high:
                 return .limitedEstimate

@@ -70,7 +70,7 @@ struct Prompt17CyclePredictionEngineTests {
         #expect(result.meanCycleLength == 30)
         #expect(result.medianCycleLength == 30)
         #expect(result.cycleVariation == .low)
-        #expect(result.predictionConfidence == .strongEstimate)
+        #expect(result.predictionConfidence == .developingEstimate)
     }
 
     @Test("Current cycle day is one-based")
@@ -103,7 +103,7 @@ struct Prompt17CyclePredictionEngineTests {
         #expect(result.currentCycleDay == 1)
     }
 
-    @Test("Identical cycles produce a strong estimate with a narrow range")
+    @Test("Five logged periods remain a developing estimate even with identical cycles")
     func identicalCycleLengths() {
         let cal = calendar()
         let starts = [0, 30, 60, 90, 120].compactMap {
@@ -122,7 +122,7 @@ struct Prompt17CyclePredictionEngineTests {
 
         #expect(result.completedCycleLengths == [30, 30, 30, 30])
         #expect(result.cycleVariation == .low)
-        #expect(result.predictionConfidence == .strongEstimate)
+        #expect(result.predictionConfidence == .developingEstimate)
         #expect(result.predictionRangeHalfWidthDays == 1)
     }
 
@@ -329,13 +329,26 @@ struct Prompt17CyclePredictionEngineTests {
         #expect(oneCompleted.predictionConfidence == .limitedEstimate)
 
         var starts = [base]
-        for _ in 0..<4 {
+        for _ in 0..<5 {
             starts.append(cal.date(byAdding: .day, value: 30, to: starts.last!)!)
         }
         let established = engine.calculate(
             from: .init(cycleStartDates: starts, asOfDate: starts.last!)
         )
         #expect(established.predictionConfidence == .strongEstimate)
+    }
+
+    @Test("Confidence tiers use logged periods, not completed-cycle off-by-one counts")
+    func confidencePeriodCountBoundaries() {
+        let cal = calendar()
+        let base = date(2026, 1, 1, calendar: cal)
+        for count in 1...6 {
+            let starts = (0..<count).map { cal.date(byAdding: .day, value: $0 * 30, to: base)! }
+            let result = Prompt17CyclePredictionEngine(calendar: cal).calculate(
+                from: .init(cycleStartDates: starts, asOfDate: starts.last!))
+            let expected: Prompt17PredictionConfidence = count < 3 ? .limitedEstimate : (count < 6 ? .developingEstimate : .strongEstimate)
+            #expect(result.predictionConfidence == expected)
+        }
     }
 
     @Test("DST transition uses local calendar days rather than elapsed hours")

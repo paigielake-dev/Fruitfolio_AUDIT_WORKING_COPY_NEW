@@ -12,8 +12,5 @@ result="${TMPDIR:-/tmp}/Fruitfolio-Prompt1B-$(date +%Y%m%dT%H%M%S)-$$.xcresult"
 xcodebuild -project Fruitfolio.xcodeproj -scheme Fruitfolio \
   -destination "$FRUITFOLIO_TEST_DESTINATION" \
   -resultBundlePath "$result" \
-  -only-testing:FruitfolioTests/FounderOverrideIntegrationTests \
-  -only-testing:FruitfolioTests/Prompt06FruitPopupTests \
-  -only-testing:FruitfolioTests/Prompt08GlobalControlsTests \
-  -only-testing:FruitfolioTests/Prompt1BPopupLayoutTests \
+  -only-testing:FruitfolioTests \
   -only-testing:FruitfolioUITests/Prompt1BModalAccessibilityTests test

@@ -167,3 +167,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Correct cycle confidence thresholds at logged-period boundaries and verify no measurement-derived confidence changes; then inspect Fruit Basket finalization/interruption.
 - Commit: containing commit for batch P5-explicit-measurement-export-and-erasure.
+
+## P6-period-count-confidence-boundaries
+
+- Parent checkpoint: 861dfaea9579d2b71da20dc96172ba0cce966f34.
+- Source-order requirements: [281, 285, 286, 287, 288, 289, 300, 301].
+- Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.
+- Tests added/updated: Prompt17CyclePredictionEngineTests/confidencePeriodCountBoundaries.
+- Verification: {"workflow": "3 passed", "shell_syntax": "passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Make Fruit Basket finalization idempotent and ensure interruptions cannot resume a round that has already ended; preserve exact bad-fruit star-pass behavior.
+- Commit: containing commit for batch P6-period-count-confidence-boundaries.
