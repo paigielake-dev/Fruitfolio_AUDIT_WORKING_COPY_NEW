@@ -33,10 +33,8 @@ struct Prompt09AskView: View {
 
     @FocusState private var inputFocused: Bool
 
-    init() {
-        _viewModel = StateObject(
-            wrappedValue: Prompt09AskViewModel()
-        )
+    init(viewModel: Prompt09AskViewModel? = nil) {
+        _viewModel = StateObject(wrappedValue: viewModel ?? Prompt09AskViewModel())
     }
 
     private var prompt27AContextPolicy: Prompt27AContextPolicyResult {
@@ -73,90 +71,86 @@ struct Prompt09AskView: View {
                     WatercolorSecondaryButton(label: "LifeBridge information") { showLifeBridge = true }
                 }
 
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        LazyVStack(spacing: 18) {
-                            if !viewModel
-                                .isConversationStarted {
+                GeometryReader { paperViewport in
+                    let paperMetrics = Prompt09PaperLayout.metrics(viewport: paperViewport.size)
+                    ScrollViewReader { proxy in
+                        ScrollView {
+                            LazyVStack(spacing: 18) {
                                 discoveryCard
                                     .transition(.opacity)
-                            }
 
-                            ForEach(
-                                viewModel.messages
-                            ) { message in
-                                if let response = viewModel.answerHistory.first(where: { $0.id == message.id }) {
-                                    if response.id == viewModel.answer?.id {
-                                        answerView(response).id(response.id)
+                                ForEach(
+                                    viewModel.messages
+                                ) { message in
+                                    if let response = viewModel.answerHistory.first(where: { $0.id == message.id }) {
+                                        if response.id == viewModel.answer?.id {
+                                            answerView(response).id(response.id)
+                                        } else {
+                                            historicalAnswerView(response).id(response.id)
+                                        }
                                     } else {
-                                        historicalAnswerView(response).id(response.id)
+                                        messageView(message).id(message.id)
                                     }
-                                } else {
-                                    messageView(message).id(message.id)
                                 }
-                            }
 
-                            if viewModel.phase ==
-                                .searching {
-                                searchingView
-                                    .id(
-                                        "prompt09-searching"
-                                    )
-                            }
-
-                            if case .failed(
-                                let message
-                            ) = viewModel.phase {
-                                failureView(message)
-                            }
-                            Color.clear
-                                .frame(height: 1)
-                                .id("prompt09-conversation-bottom")
-                                .background {
-                                    GeometryReader { geometry in
-                                        Color.clear.preference(
-                                            key: Prompt09ConversationBottomKey.self,
-                                            value: geometry.frame(in: .named("prompt09-conversation-viewport")).maxY
+                                if viewModel.phase ==
+                                    .searching {
+                                    searchingView
+                                        .id(
+                                            "prompt09-searching"
                                         )
-                                    }
                                 }
-                        }
-                        .frame(maxWidth: 680)
-                        .containerRelativeFrame(.horizontal) { length, _ in
-                            min(length, 680)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(
-                            .horizontal,
-                            20
-                        )
-                        .padding(.top, 14)
-                        .padding(.bottom, 28)
-                    }
-                    .scrollDismissesKeyboard(
-                        .interactively
-                    )
-                    .coordinateSpace(name: "prompt09-conversation-viewport")
-                    .background {
-                        GeometryReader { geometry in
-                            Color.clear
-                                .onAppear { conversationViewportHeight = geometry.size.height }
-                                .onChange(of: geometry.size.height) { _, height in conversationViewportHeight = height }
-                        }
-                    }
-                    .onPreferenceChange(Prompt09ConversationBottomKey.self) { bottom in
-                        isNearConversationBottom = Prompt09ScrollFollowPolicy.isNearBottom(
-                            bottom: bottom, viewportHeight: conversationViewportHeight)
-                    }
-                    .onChange(of: viewModel.messages.count) {
-                        guard isNearConversationBottom else { return }
-                        proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
-                    }
-                    .onChange(of: viewModel.displayedAnswerText) {
-                        guard isNearConversationBottom else { return }
-                        proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
-                    }
 
+                                if case .failed(
+                                    let message
+                                ) = viewModel.phase {
+                                    failureView(message)
+                                }
+                                Color.clear
+                                    .frame(height: 1)
+                                    .id("prompt09-conversation-bottom")
+                                    .background {
+                                        GeometryReader { geometry in
+                                            Color.clear.preference(
+                                                key: Prompt09ConversationBottomKey.self,
+                                                value: geometry.frame(in: .named("prompt09-conversation-viewport")).maxY
+                                            )
+                                        }
+                                    }
+                            }
+                            .frame(width: paperMetrics.textColumnWidth)
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, 14)
+                            .padding(.bottom, 28)
+                            .frame(minHeight: paperViewport.size.height, alignment: .top)
+                            .background { Prompt09ContinuousPaper() }
+                        }
+                        .scrollDismissesKeyboard(
+                            .interactively
+                        )
+                        .accessibilityIdentifier("ask.conversation")
+                        .coordinateSpace(name: "prompt09-conversation-viewport")
+                        .background {
+                            GeometryReader { geometry in
+                                Color.clear
+                                    .onAppear { conversationViewportHeight = geometry.size.height }
+                                    .onChange(of: geometry.size.height) { _, height in conversationViewportHeight = height }
+                            }
+                        }
+                        .onPreferenceChange(Prompt09ConversationBottomKey.self) { bottom in
+                            isNearConversationBottom = Prompt09ScrollFollowPolicy.isNearBottom(
+                                bottom: bottom, viewportHeight: conversationViewportHeight)
+                        }
+                        .onChange(of: viewModel.messages.count) {
+                            guard isNearConversationBottom else { return }
+                            proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
+                        }
+                        .onChange(of: viewModel.displayedAnswerText) {
+                            guard isNearConversationBottom else { return }
+                            proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
+                        }
+
+                    }
                 }
             }
             .fruitfolioModalBlur(
@@ -275,8 +269,8 @@ struct Prompt09AskView: View {
                 historicalSelections = [:]
                 savedAnswerIDs = []
                 historicalSelectionRanges = [:]
-            historicalSelectionSpans = [:]
-            historicalSelectionLanguages = [:]
+                historicalSelectionSpans = [:]
+                historicalSelectionLanguages = [:]
                 savedExcerptIdentities = []
             }
         }
@@ -422,72 +416,7 @@ struct Prompt09AskView: View {
     // MARK: - Discovery
 
     private var discoveryCard: some View {
-        ZStack(
-            alignment: .topTrailing
-        ) {
-            FruitfolioImage(
-                id: .ask_answer_paper
-            )
-            .scaledToFill()
-            .accessibilityHidden(true)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_glow"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 150)
-                    .offset(
-                        x: 18,
-                        y: 18
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-                }
-            }
-            .allowsHitTesting(false)
-
-            VStack {
-                Spacer()
-
-                HStack {
-                    Spacer()
-
-                    Image(
-                        "decor_orange_slice"
-                    )
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 132)
-                    .rotationEffect(
-                        .degrees(29)
-                    )
-                    .offset(
-                        x: -5,
-                        y: 8
-                    )
-                    .allowsHitTesting(
-                        false
-                    )
-                    .accessibilityHidden(
-                        true
-                    )
-
-                    Spacer()
-                }
-            }
-            .allowsHitTesting(false)
-
+        VStack(spacing: 14) {
             VStack(spacing: 14) {
                 HStack(
                     alignment: .top,
@@ -644,34 +573,12 @@ struct Prompt09AskView: View {
                     }
                 }
 
-                VStack {
-                    Spacer()
+                Prompt09OpeningFruitComposition()
 
-                    HStack {
-                        Image(
-                            "decor_pear"
-                        )
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 118)
-                        .offset(
-                            x: -34,
-                            y: 38
-                        )
-                        .allowsHitTesting(
-                            false
-                        )
-                        .accessibilityHidden(
-                            true
-                        )
-
-                        Spacer()
-                    }
-                }
             }
             .padding(
                 .horizontal,
-                22
+                0
             )
             .padding(
                 .vertical,
@@ -680,12 +587,6 @@ struct Prompt09AskView: View {
         }
         .frame(maxWidth: .infinity)
         .frame(minHeight: 300)
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 28,
-                style: .continuous
-            )
-        )
         .accessibilityElement(
             children: .contain
         )
@@ -870,14 +771,6 @@ struct Prompt09AskView: View {
     ) -> some View {
         VStack(spacing: 12) {
             ZStack {
-                FruitfolioImage(
-                    id: .ask_answer_paper
-                )
-                .scaledToFill()
-                .accessibilityHidden(
-                    true
-                )
-
                 VStack(
                     alignment: .leading,
                     spacing: 14
@@ -1152,19 +1045,13 @@ struct Prompt09AskView: View {
                 }
                 .padding(
                     .horizontal,
-                    22
+                    0
                 )
                 .padding(
                     .vertical,
                     22
                 )
             }
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: 28,
-                    style: .continuous
-                )
-            )
         }
     }
 
@@ -1206,7 +1093,7 @@ struct Prompt09AskView: View {
             Text(Prompt09AskViewModel.educationDisclaimer)
                 .font(.footnote).italic()
         }
-        .padding(22)
+        .padding(.vertical, 22)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 

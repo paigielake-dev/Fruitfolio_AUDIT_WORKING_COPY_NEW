@@ -39,6 +39,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["tourQA.finished"].waitForExistence(timeout: 3))
     }
 
+    func testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioAskPaperQA"]
+        app.launch()
+        let scroll = app.scrollViews["ask.conversation"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 10))
+        let second = app.staticTexts["Second regression question"]
+        for _ in 0..<35 {
+            if second.exists && second.isHittable { break }
+            scroll.swipeUp()
+        }
+        XCTAssertTrue(second.isHittable)
+        XCTAssertGreaterThanOrEqual(second.frame.minX, scroll.frame.minX)
+        XCTAssertLessThanOrEqual(second.frame.maxX, scroll.frame.maxX)
+        let first = app.staticTexts["First regression question"]
+        for _ in 0..<35 {
+            if first.exists && first.isHittable { break }
+            scroll.swipeDown()
+        }
+        XCTAssertTrue(first.isHittable)
+        for text in app.textViews.allElementsBoundByIndex where text.isHittable && scroll.frame.intersects(text.frame) {
+            XCTAssertLessThanOrEqual(text.frame.width, scroll.frame.width)
+        }
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "continuous-ask-paper-earlier-turn"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
     private func verifyModal(reduceMotion: Bool) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioModalQA"]

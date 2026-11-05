@@ -398,3 +398,14 @@
 - Verification: {"portable_swift": "43 XCTest + 21 Swift Testing passed (64 total)", "workflow": "10 Python tests passed", "Swift_syntax": "99 files, zero parser errors", "Hub_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Implement genuinely continuous Ask paper with responsive runtime text/art columns and no bottom edge; continue Part 3 and remaining requirements.
 - Commit: containing commit for batch P2-immediate-shared-hub-controls-and-runtime-spotlights.
+
+## P3-continuous-session-paper-and-opening-art
+
+- Parent checkpoint: a9b595775a52421fc1f29e435bd6371a8944a7ad.
+- Source-order requirements: [96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 33, 34, 35, 36, 61, 63, 64, 66, 67].
+- Source files: Fruitfolio/Ask/Prompt09AskView.swift, Fruitfolio/Ask/Prompt09ContinuousPaper.swift, Fruitfolio/Ask/Prompt09ConversationPolicies.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Fruitfolio/ContentView.swift.
+- Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof.
+- Tests added/updated: Prompt1BAskPaperLayoutTests, WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs, Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport.
+- Verification: {"portable_swift": "46 XCTest + 21 Swift Testing passed (67 total)", "workflow": "11 Python tests passed", "Swift_syntax": "101 files, zero parser errors", "Ask_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Continue Ask lifecycle, citation/save and language handling requirements in source order; add supplemental-spec coverage tracker and remaining independent features.
+- Commit: containing commit for batch P3-continuous-session-paper-and-opening-art.

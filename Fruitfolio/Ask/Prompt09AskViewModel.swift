@@ -64,6 +64,27 @@ final class Prompt09AskViewModel: ObservableObject {
         ]
     }
 
+    #if DEBUG
+    /// Deterministic presentation fixture; no inference or user records written.
+    static func paperRegressionFixture() -> Prompt09AskViewModel {
+        let model = Prompt09AskViewModel()
+        let body = String(repeating: "UI regression paragraph. **Formatting** and long wrapped text remain inside the same paper. This is a layout fixture, not research or health guidance.\n\n", count: 12)
+        let first = AskAnswer(originalQuestion: "First regression question", answerText: body,
+                              support: .supported, knowledgeBaseVersion: "ui-fixture", isDevelopmentPreview: true)
+        let second = AskAnswer(originalQuestion: "Second regression question", answerText: body,
+                               support: .supported, knowledgeBaseVersion: "ui-fixture", isDevelopmentPreview: true)
+        model.messages = [AskMessage(role: .user, text: first.originalQuestion),
+                          AskMessage(id: first.id, role: .fruitfolio, text: first.answerText),
+                          AskMessage(role: .user, text: second.originalQuestion),
+                          AskMessage(id: second.id, role: .fruitfolio, text: second.answerText)]
+        model.answerHistory = [first, second]
+        model.answer = second
+        model.displayedAnswerText = second.answerText
+        model.displayedSemanticSpans = FruitfolioSemanticDocument.spans(from: second.answerText)
+        return model
+    }
+    #endif
+
     deinit {
         typingTask?.cancel()
         requestTask?.cancel()

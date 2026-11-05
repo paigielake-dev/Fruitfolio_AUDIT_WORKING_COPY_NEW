@@ -1044,7 +1044,12 @@
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1054,15 +1059,19 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 34,
@@ -1074,7 +1083,12 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1083,14 +1097,18 @@
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 35,
@@ -1106,7 +1124,12 @@
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1116,15 +1139,19 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 36,
@@ -1140,7 +1167,12 @@
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1150,15 +1182,19 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 37,
@@ -2018,7 +2054,8 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2034,18 +2071,22 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 62,
@@ -2125,7 +2166,9 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2138,16 +2181,20 @@
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
         "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 64,
@@ -2169,7 +2216,11 @@
         "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2179,14 +2230,18 @@
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
-        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
-        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:05:53.669986+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 65,
@@ -2247,7 +2302,9 @@
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
-        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2260,16 +2317,20 @@
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
-        "Prompt1BSpotlightGeometryTests"
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:11:46.164010+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 67,
@@ -2299,7 +2360,9 @@
         "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Hub/Prompt04HubBridgeView.swift",
-        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift"
+        "Fruitfolio/First-Launch Tour/Prompt07SpotlightGeometry.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2312,16 +2375,20 @@
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
         "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize",
-        "Prompt1BSpotlightGeometryTests"
+        "Prompt1BSpotlightGeometryTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P2-immediate-shared-hub-controls-and-runtime-spotlights (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete.",
-        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification."
+        "Removed duplicate Hub button animation styles and their 240ms delayed-navigation tasks; both primary and utility controls now use CutePopButtonStyle and invoke navigation immediately, retaining central duplicate-navigation protection and pop audio. Moved named Hub measurement space to the common ancestor of controls/overlay. Shared spotlight geometry now sanitizes measured frames, omits missing/offscreen targets and clips cutout/border consistently to the actual viewport. Hub branding work is owned by scene/interaction keyed tasks and honors cancellation rather than completing from unowned callbacks after disappearance/inactivity. Portable resize/edge/invalid geometry tests pass; real Hub touch latency, coordinate alignment and UI transitions still need Apple verification.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T20:11:46.164010+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 68,
@@ -3144,7 +3211,11 @@
       "description": "Replace the limited answer presentation with a continuous vertically scrollable paper experience.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3152,13 +3223,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 97,
@@ -3169,7 +3244,10 @@
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3178,14 +3256,18 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests",
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 98,
@@ -3196,7 +3278,10 @@
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3205,14 +3290,18 @@
       "related_tests": [
         "Prompt1BAskLifecycleTests",
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 99,
@@ -3220,15 +3309,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Make the paper extend downward without an obvious bottom edge.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 100,
@@ -3238,7 +3339,11 @@
       "description": "Prevent hard height caps and truncated answers.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3246,13 +3351,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 101,
@@ -3260,15 +3369,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Keep the paper horizontally centered.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 102,
@@ -3276,15 +3397,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Keep the text column centered inside the paper.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 103,
@@ -3294,7 +3427,11 @@
       "description": "Calculate layout using actual runtime dimensions.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3302,13 +3439,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 104,
@@ -3316,15 +3457,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Prevent long answers from widening or shifting the paper.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 105,
@@ -3334,7 +3487,11 @@
       "description": "Allow text to wrap and expand vertically.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3342,13 +3499,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 106,
@@ -3358,7 +3519,11 @@
       "description": "Preserve scrolling in both directions.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3366,13 +3531,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 107,
@@ -3382,7 +3551,11 @@
       "description": "Automatically follow new streamed text only when the user is near the bottom.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3390,13 +3563,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 108,
@@ -3406,7 +3583,11 @@
       "description": "Do not force scrolling to the bottom while the user is reading older content.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "Fruitfolio/Ask/Prompt09AskModels.swift"
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3414,13 +3595,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder",
-        "Prompt1BAskScrollTests"
+        "Prompt1BAskScrollTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-ordered-history-and-scroll-policy (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation."
+        "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T18:46:05.098253+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 109,
@@ -3442,7 +3627,9 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -3455,16 +3642,20 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 110,
@@ -3472,15 +3663,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Position the orange slice, orange glow, and pear relative to the opening paper.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 111,
@@ -3488,15 +3691,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Center the orange composition.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 112,
@@ -3504,15 +3719,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Balance the other fruit artwork evenly on either side.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 113,
@@ -3520,15 +3747,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Maintain visually consistent spacing.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 114,
@@ -3536,15 +3775,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Use responsive paper-relative positioning.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 115,
@@ -3552,15 +3803,27 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Prevent fruit artwork from overlapping text or controls.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09ContinuousPaper.swift",
+        "Fruitfolio/Ask/Prompt09ConversationPolicies.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskPaperLayoutTests",
+        "WorkflowIntegrityTests/test_ask_paper_and_opening_fruit_dimensions_match_source_pngs",
+        "Prompt1BModalAccessibilityTests/testLongAskSessionKeepsBothQuestionsReachableWithinTheViewport"
+      ],
+      "commit_reference": "batch:P3-continuous-session-paper-and-opening-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced per-answer/discovery paper backgrounds with one extensible scroll-content background for the complete session. The paper stays centered with a runtime-bounded text column; native-source cap strips preserve top/bottom artwork while the middle extends vertically and the bottom edge continues beyond content. Existing native selection, source actions, ordered history and near-bottom auto-follow remain connected. The opening card now remains part of the session, with one reserved art row; pear/orange slice/glow occupy equal runtime columns, orange centered, with measured visible-alpha optical centering and preserved native proportions instead of negative fixed offsets. Added isolated DEBUG two-long-answer fixture plus scroll/backtracking/horizontal-bound UI regression, unrun on Linux. Portable geometry and actual PNG metadata checks pass. Real paper texture transitions, bottom-edge behavior, Dynamic Type, gestures and text accessibility need Apple runtime verification; source edits are not accepted as runtime proof."
+      ],
+      "last_updated": "2026-11-05T20:16:24.923982+00:00"
     },
     {
       "sequence": 116,

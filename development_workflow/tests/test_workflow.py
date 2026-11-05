@@ -57,6 +57,18 @@ class WorkflowIntegrityTests(unittest.TestCase):
         asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob('popup_speech_bubble.png'))
         self.assertEqual(tuple(map(int, bubble.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
 
+    def test_ask_paper_and_opening_fruit_dimensions_match_source_pngs(self):
+        import struct
+        repo = ROOT.parent
+        source = (repo / 'Fruitfolio/Ask/Prompt09ConversationPolicies.swift').read_text()
+        for case, name in [('pear', 'decor_pear'), ('orangeSlice', 'decor_orange_slice'), ('orangeGlow', 'decor_orange_glow')]:
+            dimensions = re.search(r'case \.' + case + r': return CGSize\(width: (\d+), height: (\d+)\)', source)
+            asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob(name + '.png'))
+            self.assertEqual(tuple(map(int, dimensions.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
+        paper = re.search(r'paperPixels = CGSize\(width: (\d+), height: (\d+)\)', source)
+        asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob('ask_answer_paper.png'))
+        self.assertEqual(tuple(map(int, paper.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
+
     def test_statuses_do_not_claim_unexecuted_ios_verification(self):
         rows = json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']
         for row in rows:
