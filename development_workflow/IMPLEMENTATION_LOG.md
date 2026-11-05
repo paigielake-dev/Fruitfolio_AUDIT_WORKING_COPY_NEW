@@ -18,3 +18,12 @@
 - Executed Python workflow tests: 2 passed. Diff check passed. Swift tests NOT_RUN; macOS verification script includes the affected suite.
 - Removed a generated Python bytecode file accidentally included in the first checkpoint; added workflow ignore rules.
 - Commit: containing commit, P1-popup-dismissal-ownership.
+
+## P1-canonical-watercolor-controls
+
+- Previous checkpoint: 00818937eb837d50ba905864584c0d0a07c34f20.
+- Part 1 sequences 7–12: primary/secondary compatibility controls now use existing canonical pill artwork, shared pop animation, synchronous action and audio. Cycle onboarding callers inherit the change. Full app-wide control migration remains pending.
+- Canonical pill labels have no line limit or font shrinking; height follows wrapped content, with resizable image-center regions preserving painted edges. Device visual inspection pending.
+- Added UIHostingController sizing regression for a long label at accessibility3. NOT_RUN on Linux; added suite to Mac script.
+- Python workflow tests: 2 passed. Shell syntax and whitespace checks passed. No iOS runtime claims.
+- Commit: containing commit, P1-canonical-watercolor-controls.

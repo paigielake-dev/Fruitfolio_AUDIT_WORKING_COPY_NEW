@@ -1,5 +1,6 @@
 import XCTest
 import SwiftUI
+import UIKit
 @testable import Fruitfolio
 
 @MainActor
@@ -23,6 +24,25 @@ final class Prompt08GlobalControlsTests: XCTestCase {
         XCTAssertNotNil(primaryButton)
         XCTAssertNotNil(secondaryButton)
         XCTAssertNotNil(controlPillButton)
+    }
+
+    func testPillGrowsForLongAccessibilityTextInsteadOfTruncating() {
+        func measuredHeight(_ label: String, size: DynamicTypeSize) -> CGFloat {
+            let view = FruitfolioControlPillButton(label: label) {}
+                .environmentObject(MotionPreferences())
+                .environmentObject(AudioManager())
+                .environment(\.dynamicTypeSize, size)
+            let host = UIHostingController(rootView: view)
+            return host.sizeThatFits(in: CGSize(width: 292, height: 10_000)).height
+        }
+        let shortHeight = measuredHeight("save", size: .large)
+        let longHeight = measuredHeight(
+            String(repeating: "save this encyclopedia and return to your guide ", count: 6),
+            size: .accessibility3
+        )
+        XCTAssertGreaterThanOrEqual(shortHeight, 44)
+        XCTAssertGreaterThan(longHeight, shortHeight * 2,
+                             "Long localized text at accessibility sizes must grow the control.")
     }
 
     // MARK: - Bookmark binding semantics

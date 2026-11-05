@@ -7,174 +7,32 @@
 
 import SwiftUI
 
-// MARK: - WatercolorPrimaryButton
+// MARK: - Compatibility names for the canonical watercolor control
 
+// Keep existing call sites and actions, including Cycle Tracker onboarding,
+// while rendering the approved artwork instead of a gray/red coded shell.
 struct WatercolorPrimaryButton: View {
     let label: String
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 16,
-                        relativeTo: .headline
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 18)
-                .padding(.vertical, 12)
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                Color(
-                                    red: 1.0,
-                                    green: 0.985,
-                                    blue: 0.95
-                                ),
-                                Color(
-                                    red: 0.79,
-                                    green: 0.76,
-                                    blue: 0.70
-                                )
-                            ],
-                            startPoint: .top,
-                            endPoint: .bottom
-                        )
-                    )
-                    .shadow(
-                        color: Color.black.opacity(0.16),
-                        radius: 4,
-                        x: 0,
-                        y: 2
-                    )
-                )
-                .overlay(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 2
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 12,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, action: action)
     }
 }
-
-// MARK: - WatercolorSecondaryButton
 
 struct WatercolorSecondaryButton: View {
     let label: String
     let action: () -> Void
 
-    @EnvironmentObject
-    private var motionPreferences: MotionPreferences
-
-    @EnvironmentObject
-    private var audioManager: AudioManager
-
     var body: some View {
-        Button {
-            audioManager.play(.buttonSoftPop)
-            action()
-        } label: {
-            Text(label)
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 14,
-                        relativeTo: .body
-                    )
-                )
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .frame(
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .background(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                    .stroke(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                            .opacity(0.8),
-                        lineWidth: 1.6
-                    )
-                )
-                .contentShape(
-                    RoundedRectangle(
-                        cornerRadius: 10,
-                        style: .continuous
-                    )
-                )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    motionPreferences.reduceMotionActive
-            )
-        )
-        .accessibilityLabel(label)
+        FruitfolioControlPillButton(label: label, action: action)
     }
 }
 
 // MARK: - FruitfolioControlPillButton
 
-/// Canonical Fruitfolio pill action using a coded shell derived from the
-/// control_pill_outline.png proportions. The live label stays centered and the
-/// shell grows vertically when longer text or Dynamic Type needs more room.
+/// Canonical action using the bundled watercolor pill. The live label drives
+/// height; resizable center regions allow wrapping without clipping the label.
 struct FruitfolioControlPillButton: View {
     let label: String
     let action: () -> Void
@@ -190,43 +48,24 @@ struct FruitfolioControlPillButton: View {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            ZStack {
-                Image("control_pill_outline")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 292)
-                    .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 15,
-                            relativeTo: .headline
+            Text(label)
+                .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
+                .fontWeight(.semibold)
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 36)
+                .padding(.vertical, 24)
+                .frame(maxWidth: 292, minHeight: 82, alignment: .center)
+                .background {
+                    Image("control_pill_outline")
+                        .resizable(
+                            capInsets: EdgeInsets(top: 80, leading: 180, bottom: 80, trailing: 180),
+                            resizingMode: .stretch
                         )
-                    )
-                    .fontWeight(.semibold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.88)
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                    .frame(
-                        maxWidth: 220,
-                        alignment: .center
-                    )
-                    .padding(.horizontal, 20)
-            }
-            .frame(
-                maxWidth: 292,
-                minHeight: 82,
-                alignment: .center
-            )
+                        .accessibilityHidden(true)
+                }
             .contentShape(Rectangle())
         }
         .buttonStyle(

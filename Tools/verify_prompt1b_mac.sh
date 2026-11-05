@@ -13,4 +13,5 @@ xcodebuild -project Fruitfolio.xcodeproj -scheme Fruitfolio \
   -destination "$FRUITFOLIO_TEST_DESTINATION" \
   -resultBundlePath "$result" \
   -only-testing:FruitfolioTests/FounderOverrideIntegrationTests \
-  -only-testing:FruitfolioTests/Prompt06FruitPopupTests test
+  -only-testing:FruitfolioTests/Prompt06FruitPopupTests \
+  -only-testing:FruitfolioTests/Prompt08GlobalControlsTests test
