@@ -2415,7 +2415,8 @@
       "relevant_source_files": [
         "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
-        "Fruitfolio/Introduction/Prompt04IntroView.swift"
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2423,13 +2424,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
-        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P2-intro-pacing-and-resumption (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending."
+        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:41:18.542307+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 72,
@@ -2440,7 +2444,8 @@
       "relevant_source_files": [
         "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
-        "Fruitfolio/Introduction/Prompt04IntroView.swift"
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2448,13 +2453,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
-        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P2-intro-pacing-and-resumption (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending."
+        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:41:18.542307+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 73,
@@ -2465,7 +2473,8 @@
       "relevant_source_files": [
         "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
-        "Fruitfolio/Introduction/Prompt04IntroView.swift"
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2473,13 +2482,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
-        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P2-intro-pacing-and-resumption (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending."
+        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:41:18.542307+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 74,
@@ -2487,15 +2499,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Add a watercolor ripple/puddle-style logo reveal.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 75,
@@ -2503,15 +2526,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Center that reveal precisely on the book\u2019s existing logo position.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 76,
@@ -2519,15 +2553,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Make the logo appear gradually rather than abruptly swapping between states.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 77,
@@ -2535,15 +2580,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Smooth the transition from the blank book to the branded book.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 78,
@@ -2551,15 +2607,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Smooth the slightly-open and fully-open book transitions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 79,
@@ -2567,15 +2634,26 @@
       "original_checklist_part": "Part 2 \u2014 Introduction and Hub",
       "original_section": null,
       "description": "Smooth the right-page zoom and transition into the Hub.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift",
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+        "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage",
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+      ],
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
+      ],
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 80,
@@ -2586,7 +2664,8 @@
       "relevant_source_files": [
         "Fruitfolio/Introduction/Prompt04IntroConfiguration.swift",
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
-        "Fruitfolio/Introduction/Prompt04IntroView.swift"
+        "Fruitfolio/Introduction/Prompt04IntroView.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2594,13 +2673,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
-        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption"
+        "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P2-intro-pacing-and-resumption (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending."
+        "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T18:41:18.542307+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 81,
@@ -2663,7 +2745,8 @@
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2672,14 +2755,17 @@
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
         "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 84,
@@ -2692,7 +2778,8 @@
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2701,14 +2788,17 @@
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
         "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 85,
@@ -2721,7 +2811,8 @@
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2730,14 +2821,17 @@
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
         "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 86,
@@ -2750,7 +2844,8 @@
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2759,14 +2854,17 @@
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
         "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 87,
@@ -2779,7 +2877,8 @@
         "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2788,14 +2887,17 @@
       "related_tests": [
         "Prompt04IntroTests/testFirstLaunchScheduledDurationIsSixToEightSeconds",
         "Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption",
-        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence"
+        "Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence",
+        "Prompt1BLogoRevealTests",
+        "Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage"
       ],
-      "commit_reference": "batch:P10-regression-review-and-intro-skip (resolve containing commit with git log)",
+      "commit_reference": "batch:P2-logo-registration-and-reduced-motion-sequence (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "First-launch stage holds now total about 6.8 seconds while retaining existing transition durations. Inactive state pauses progression; repeated inactive/background events do not overwrite the checkpoint. Foreground restores ambience and reduced-motion launches resume through crossfades instead of the normal spatial sequence. Simulator animation/audio verification remains pending.",
-        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks."
+        "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
+        "Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun."
       ],
-      "last_updated": "2026-11-05T19:12:35.801264+00:00"
+      "last_updated": "2026-11-05T20:09:26.541455+00:00"
     },
     {
       "sequence": 88,

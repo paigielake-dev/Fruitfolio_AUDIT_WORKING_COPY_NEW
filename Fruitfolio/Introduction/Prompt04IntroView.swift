@@ -81,6 +81,8 @@ struct Prompt04IntroView: View {
         .accessibilityElement(children: .contain)
     }
 
+    private var usesReducedMotion: Bool { motionPreferences.reduceMotionActive || machine.usesReducedMotion }
+
     @ViewBuilder
     private func introComposition(metrics: Prompt04BookLayout.Metrics) -> some View {
         let arrival = clamped(machine.bookArrivalProgress)
@@ -93,10 +95,10 @@ struct Prompt04IntroView: View {
         let slightOpacity = slight * (1 - full)
         let openOpacity = full * (1 - paper)
 
-        let currentOpenWidth = lerp(metrics.centeredOpenBookWidth, metrics.focusedBookWidth, focus)
-        let currentOpenHeight = lerp(metrics.centeredOpenBookHeight, metrics.focusedBookHeight, focus)
-        let currentOpenOffsetX = lerp(0, metrics.focusedBookOffsetX, focus)
-        let currentOpenOffsetY = lerp(0, metrics.focusedBookOffsetY, focus)
+        let currentOpenWidth = usesReducedMotion ? metrics.centeredOpenBookWidth : lerp(metrics.centeredOpenBookWidth, metrics.focusedBookWidth, focus)
+        let currentOpenHeight = usesReducedMotion ? metrics.centeredOpenBookHeight : lerp(metrics.centeredOpenBookHeight, metrics.focusedBookHeight, focus)
+        let currentOpenOffsetX = usesReducedMotion ? 0 : lerp(0, metrics.focusedBookOffsetX, focus)
+        let currentOpenOffsetY = usesReducedMotion ? 0 : lerp(0, metrics.focusedBookOffsetY, focus)
 
         ZStack {
             // FINAL PAPER — standalone blank founder art, no book visible.
@@ -128,7 +130,7 @@ struct Prompt04IntroView: View {
             // STATES 1 + 2 — blank closed book, then exact branded closed book.
             closedBookComposition(metrics: metrics)
                 .opacity(closedOpacity)
-                .scaleEffect(0.94 + (0.06 * arrival))
+                .scaleEffect(usesReducedMotion ? 1 : 0.94 + (0.06 * arrival))
                 .opacity(arrival)
 
             // Hub controls appear only on the standalone paper, never over the
@@ -160,9 +162,11 @@ struct Prompt04IntroView: View {
                 .scaledToFit()
                 .frame(width: metrics.closedBookWidth)
                 .mask {
-                    Prompt04WatercolorPuddleMask(
-                        progress: machine.logoRevealProgress
-                    )
+                    if usesReducedMotion {
+                        Rectangle().fill(.white)
+                    } else {
+                        Prompt04WatercolorPuddleMask(progress: machine.logoRevealProgress)
+                    }
                 }
                 .opacity(machine.logoRevealProgress > 0 ? 1 : 0)
         }
@@ -241,46 +245,30 @@ struct Prompt04IntroView: View {
     }
 }
 
-private struct Prompt04WatercolorPuddleMask: View {
-    let progress: CGFloat
+private struct Prompt04WatercolorPuddleMask: View, Animatable {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
 
     var body: some View {
         GeometryReader { proxy in
-            let width = max(1, proxy.size.width)
-            let height = max(1, proxy.size.height)
-            let p = min(max(progress, 0), 1)
-
+            let metrics = Prompt04LogoRevealGeometry.metrics(size: proxy.size, progress: progress)
             ZStack {
-                Prompt04OrganicBlob(seed: 0)
-                    .frame(
-                        width: width * (0.11 + 1.22 * p),
-                        height: height * (0.12 + 1.02 * p)
-                    )
-                    .offset(
-                        x: width * (-0.18 + 0.12 * p),
-                        y: height * (-0.17 + 0.10 * p)
-                    )
-
-                Prompt04OrganicBlob(seed: 1)
-                    .frame(
-                        width: width * (0.10 + 1.10 * p),
-                        height: height * (0.10 + 0.98 * p)
-                    )
-                    .offset(
-                        x: width * (0.15 - 0.08 * p),
-                        y: height * (-0.05 + 0.02 * p)
-                    )
-
-                Prompt04OrganicBlob(seed: 2)
-                    .frame(
-                        width: width * (0.09 + 1.16 * p),
-                        height: height * (0.10 + 1.08 * p)
-                    )
-                    .offset(
-                        x: width * (-0.02 + 0.04 * p),
-                        y: height * (0.18 - 0.11 * p)
-                    )
+                ForEach(0..<3) { seed in
+                    Prompt04OrganicBlob(seed: seed)
+                        .fill(.white)
+                        .frame(width: metrics.diameter * (1 - CGFloat(seed) * 0.045),
+                               height: metrics.diameter * (1 - CGFloat(seed) * 0.035))
+                        .position(metrics.center)
+                }
+                // Complete the exact branded canvas, including watercolor edges.
+                // A smooth final dissolve avoids a residual blank-cover rim.
+                Rectangle().fill(.white).opacity(metrics.finalCoverage)
             }
+            .opacity(metrics.progress > 0 ? 1 : 0)
         }
     }
 }

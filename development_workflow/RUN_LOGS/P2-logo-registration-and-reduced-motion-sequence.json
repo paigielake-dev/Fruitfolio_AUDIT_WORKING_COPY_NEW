@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-11-05T20:09:26.541455+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "41 XCTest + 21 Swift Testing passed (62 total)",
+    "Swift_syntax": "97 files, zero parser errors",
+    "Apple_intro_sequence": "NOT_RUN: Apple SDK unavailable"
+  }
+}

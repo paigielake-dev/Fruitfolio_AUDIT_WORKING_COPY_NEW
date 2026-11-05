@@ -39,6 +39,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
     @Published private(set) var hasStarted = false
 
     private var activeLaunchMode: Prompt04LaunchMode?
+    var usesReducedMotion: Bool { activeLaunchMode?.usesReducedMotion == true }
     private var sequenceTask: Task<Void, Never>?
     private var sequenceGeneration: UInt = 0
 
@@ -67,14 +68,7 @@ final class Prompt04IntroStateMachine: ObservableObject {
         sequenceTask = Task { @MainActor [weak self] in
             guard let self else { return }
 
-            if mode.usesReducedMotion {
-                await self.runReducedMotionSequence(
-                    mode: mode,
-                    generation: generation,
-                    audioManager: audioManager,
-                    completion: completion
-                )
-            } else if mode.isFirstLaunch {
+            if mode.isFirstLaunch {
                 await self.runFirstLaunchSequence(
                     generation: generation,
                     audioManager: audioManager,
@@ -164,17 +158,6 @@ final class Prompt04IntroStateMachine: ObservableObject {
 
         sequenceTask = Task { @MainActor [weak self] in
             guard let self else { return }
-
-            if let mode = self.activeLaunchMode, mode.usesReducedMotion {
-                if self.stage == .hubRevealing {
-                    await self.complete(generation: generation, audioManager: audioManager,
-                                        completion: completion, wasFirstLaunch: wasFirstLaunch)
-                } else {
-                    await self.runReducedMotionSequence(mode: mode, generation: generation,
-                                                        audioManager: audioManager, completion: completion)
-                }
-                return
-            }
 
             switch self.stage {
             case .blankBookSettled:
@@ -470,71 +453,6 @@ final class Prompt04IntroStateMachine: ObservableObject {
             audioManager: audioManager,
             completion: completion,
             wasFirstLaunch: false
-        )
-    }
-
-    private func runReducedMotionSequence(
-        mode: Prompt04LaunchMode,
-        generation: UInt,
-        audioManager: AudioManager,
-        completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void
-    ) async {
-        guard await sleep(
-            .milliseconds(80),
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .brandedBookSettled
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedClosedBookCrossfade
-                    .timeInterval
-            )
-        ) {
-            bookArrivalProgress = 1
-            logoRevealProgress = 1
-            brandedBookResolved = true
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedClosedBookCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        stage = .hubRevealing
-
-        withAnimation(
-            .easeInOut(
-                duration: Prompt04IntroConfiguration
-                    .reducedOpenHubCrossfade
-                    .timeInterval
-            )
-        ) {
-            slightlyOpenProgress = 1
-            fullyOpenProgress = 1
-            rightPageFocusProgress = 1
-            standalonePaperProgress = 1
-            hubRevealProgress = 1
-        }
-
-        guard await sleep(
-            Prompt04IntroConfiguration.reducedOpenHubCrossfade,
-            generation: generation
-        ) else {
-            return
-        }
-
-        await complete(
-            generation: generation,
-            audioManager: audioManager,
-            completion: completion,
-            wasFirstLaunch: mode.isFirstLaunch
         )
     }
 

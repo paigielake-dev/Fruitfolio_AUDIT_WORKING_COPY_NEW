@@ -1,10 +1,37 @@
 import XCTest
+import Combine
 @testable import Fruitfolio
 
 final class Prompt04IntroTests: XCTestCase {
     func testFirstLaunchScheduledDurationIsSixToEightSeconds() {
         XCTAssertGreaterThanOrEqual(Prompt04IntroConfiguration.firstLaunchDuration, .seconds(6))
         XCTAssertLessThanOrEqual(Prompt04IntroConfiguration.firstLaunchDuration, .seconds(8))
+    }
+
+    @MainActor
+    func testReducedMotionFirstLaunchRetainsEveryImportantVisualStage() async throws {
+        let suite = "Prompt1BReducedSequence.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let machine = Prompt04IntroStateMachine()
+        var stages: Set<Prompt04IntroStage> = []
+        let observation = machine.$stage.sink { stages.insert($0) }
+        defer {
+            observation.cancel()
+            machine.cancelSequence()
+            audio.stop(category: .music)
+            audio.stop(category: .rainAmbience)
+        }
+        let completed = expectation(description: "Same readable stages with reduced motion")
+        machine.start(mode: .reducedMotionFirstLaunch, audioManager: audio, settings: settings) { _ in completed.fulfill() }
+        await fulfillment(of: [completed], timeout: 10)
+        for stage: Prompt04IntroStage in [.blankBookSettled, .logoRevealing, .brandedBookSettled,
+                                         .slightlyOpenSettled, .fullyOpenSettled, .rightPageFocusing,
+                                         .standalonePaperResolving, .hubRevealing] {
+            XCTAssertTrue(stages.contains(stage), "Missing stage: \(stage)")
+        }
     }
 
     @MainActor
@@ -24,7 +51,8 @@ final class Prompt04IntroTests: XCTestCase {
             XCTAssertTrue(firstLaunch)
             resumed.fulfill()
         }, wasFirstLaunch: true)
-        await fulfillment(of: [resumed], timeout: 2)
+        await fulfillment(of: [resumed], timeout: 4)
+        XCTAssertTrue(machine.usesReducedMotion)
         XCTAssertEqual(machine.stage, .introComplete)
         XCTAssertTrue(machine.hubInteractionEnabled)
         audio.stop(category: .music)

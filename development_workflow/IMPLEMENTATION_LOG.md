@@ -376,3 +376,14 @@
 - Verification: {"portable_swift": "39 XCTest + 21 Swift Testing passed (60 total)", "workflow": "10 Python tests passed", "Swift_syntax": "95 files, zero parser errors", "UI_and_ImageIO": "NOT_RUN: Xcode unavailable"}.
 - Next action: Continue introduction requirements: verify logo-centered reveal geometry and lifecycle ownership, then remaining Part 2 and later requirements.
 - Commit: containing commit for batch P1-shared-education-rendering-and-accessible-tour.
+
+## P2-logo-registration-and-reduced-motion-sequence
+
+- Parent checkpoint: 533638a5f45ba4ce53067147d7c2401ed606cf5f.
+- Source-order requirements: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 83, 84, 85, 86, 87].
+- Source files: Fruitfolio/Introduction/Prompt04LogoRevealGeometry.swift, Fruitfolio/Introduction/Prompt04IntroView.swift, Fruitfolio/Introduction/Prompt04IntroStateMachine.swift, Fruitfolio/Introduction/Prompt04IntroConfiguration.swift.
+- Replaced three drifting pigment origins with a fixed logo/wordmark registration point on the original branded-cover canvas and an animatable pigment mask with smooth guaranteed final coverage. The selected registration point (335,321 in 644x795 artwork) is based on source-art visual inspection and still requires on-device/founder visual acceptance, not claimed pixel-perfect runtime verification. Reduce Motion previously skipped nearly all stages through a 550ms path while still inheriting camera/scale geometry. It now uses the same readable stage sequence/timing as normal first/returning launch, replacing pigment/scale/camera motion with stationary crossfades. Removed its special resume restart so the existing logical-stage recovery applies consistently. Portable reveal geometry tests pass; Apple sequencing, rendering, full aspect/texture handoff and interruption tests remain unrun.
+- Tests added/updated: Prompt1BLogoRevealTests, Prompt04IntroTests/testReducedMotionFirstLaunchRetainsEveryImportantVisualStage, Prompt04IntroTests/testReducedMotionRemainsReducedAfterInterruption.
+- Verification: {"portable_swift": "41 XCTest + 21 Swift Testing passed (62 total)", "Swift_syntax": "97 files, zero parser errors", "Apple_intro_sequence": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Verify and fix Hub/tour button interaction and spotlight geometry, then continue continuous Ask paper and remaining source-order requirements.
+- Commit: containing commit for batch P2-logo-registration-and-reduced-motion-sequence.

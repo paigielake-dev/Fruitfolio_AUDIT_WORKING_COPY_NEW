@@ -47,8 +47,8 @@ enum Prompt04IntroConfiguration {
     static let returningStandalonePaperResolve: Duration = .milliseconds(150)
     static let returningHubReveal: Duration = .milliseconds(160)
 
-    static let reducedClosedBookCrossfade: Duration = .milliseconds(250)
-    static let reducedOpenHubCrossfade: Duration = .milliseconds(300)
+    // Reduce Motion retains first/returning stage timing; the renderer replaces
+    // scale, camera movement and pigment expansion with stationary crossfades.
 
     /// Every art asset that can appear during Prompt 04 is preloaded before the
     /// signature animation begins, preventing mid-sequence image flashes.
