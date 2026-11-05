@@ -4995,13 +4995,15 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 250,
@@ -5067,13 +5069,15 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 253,
@@ -5201,15 +5205,22 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Reuse existing hormone artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
+      ],
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
+      ],
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 260,
@@ -5217,15 +5228,22 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Position artwork without interfering with controls or measurements.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hormone Information/HormoneMeasurementStore.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
+      ],
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
+      ],
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 261,
@@ -5283,13 +5301,15 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 264,
@@ -5323,13 +5343,15 @@
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BHormoneMeasurementTests"
+        "Prompt1BHormoneMeasurementTests",
+        "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements"
       ],
-      "commit_reference": "batch:P5-hormone-measurement-local-workflow (resolve containing commit with git log)",
+      "commit_reference": "batch:P5-explicit-measurement-export-and-erasure (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished."
+        "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
+        "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added."
       ],
-      "last_updated": "2026-11-05T18:54:30.387766+00:00"
+      "last_updated": "2026-11-05T18:55:12.087582+00:00"
     },
     {
       "sequence": 266,

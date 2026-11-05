@@ -22,6 +22,24 @@ final class Prompt1BHormoneMeasurementTests: XCTestCase {
         try restored.delete(id: record.id)
         XCTAssertTrue(FruitfolioHormoneMeasurementStore(defaults: defaults).records.isEmpty)
     }
+    func testExplicitExportAndEraseContainOnlyMeasurements() throws {
+        let suite = "Prompt1BHormoneExport.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("preserve me", forKey: "unrelated.setting")
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "2.4"; record.unit = "nmol/L"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let export = try store.exportJSON()
+        let object = try XCTUnwrap(JSONSerialization.jsonObject(with: export) as? [[String: Any]])
+        XCTAssertEqual(object.count, 1)
+        XCTAssertEqual(object[0]["unit"] as? String, "nmol/L")
+        store.eraseAllMeasurements()
+        XCTAssertNil(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey))
+        XCTAssertEqual(defaults.string(forKey: "unrelated.setting"), "preserve me")
+    }
+
     func testIncompleteOrMalformedMeasurementsAreRejected() {
         var record = FruitfolioHormoneMeasurement()
         for value in ["", "NaN", "12invalid", "-2"] {

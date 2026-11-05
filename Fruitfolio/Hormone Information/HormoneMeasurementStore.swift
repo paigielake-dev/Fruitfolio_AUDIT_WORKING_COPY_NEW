@@ -101,6 +101,21 @@ final class FruitfolioHormoneMeasurementStore: ObservableObject {
         try persist(records.filter { $0.id != id })
     }
 
+    func exportJSON() throws -> Data {
+        guard !storageUnreadable else { throw FruitfolioHormoneMeasurementError.unreadableStorage }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.dateEncodingStrategy = .iso8601
+        return try encoder.encode(history())
+    }
+
+    /// Call only after explicit destructive confirmation by the user.
+    func eraseAllMeasurements() {
+        defaults.removeObject(forKey: key)
+        records = []
+        storageUnreadable = false
+    }
+
     private func persist(_ updated: [FruitfolioHormoneMeasurement]) throws {
         let data = try JSONEncoder().encode(updated)
         defaults.set(data, forKey: key)

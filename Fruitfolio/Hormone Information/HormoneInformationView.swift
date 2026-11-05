@@ -1,4 +1,5 @@
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct FruitfolioHormoneInformationView: View {
     let onBack: () -> Void
@@ -7,13 +8,21 @@ struct FruitfolioHormoneInformationView: View {
     @State private var editing: FruitfolioHormoneMeasurement?
     @State private var deleting: FruitfolioHormoneMeasurement?
     @State private var errorMessage: String?
+    @State private var showExport = false
+    @State private var confirmErase = false
+    @State private var exportDocument = FruitfolioHormoneExportDocument(data: Data())
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 BackControl(action: onBack)
-                Text("hormone information ♡").font(.title2).bold()
-                    .accessibilityAddTraits(.isHeader)
+                HStack {
+                    Text("hormone information ♡").font(.title2).bold()
+                        .accessibilityAddTraits(.isHeader)
+                    FruitfolioImage(id: .hormone_estrogen)
+                        .scaledToFit().frame(width: 56, height: 56)
+                        .accessibilityHidden(true)
+                }
                 Text("my measurements").font(.headline)
                 if store.storageUnreadable {
                     Text(FruitfolioHormoneMeasurementError.unreadableStorage.localizedDescription)
@@ -53,6 +62,15 @@ struct FruitfolioHormoneInformationView: View {
                     .font(.footnote)
                     .accessibilityHidden(store.records.isEmpty)
                     .opacity(store.records.isEmpty ? 0 : 1)
+                WatercolorSecondaryButton(label: "export my measurements") {
+                    do {
+                        exportDocument = FruitfolioHormoneExportDocument(data: try store.exportJSON())
+                        showExport = true
+                    } catch { errorMessage = error.localizedDescription }
+                }
+                .disabled(store.storageUnreadable || store.records.isEmpty)
+                WatercolorSecondaryButton(label: "delete all measurements") { confirmErase = true }
+                .disabled(store.records.isEmpty && !store.storageUnreadable)
                 if let errorMessage { Text(errorMessage) }
             }
             .padding(20)
@@ -76,6 +94,14 @@ struct FruitfolioHormoneInformationView: View {
                     deleting = nil
                 }
                 Button("cancel", role: .cancel) { deleting = nil }
+        }
+        .fileExporter(isPresented: $showExport, document: exportDocument, contentType: .json,
+                      defaultFilename: "Fruitfolio-My-Measurements") { result in
+            if case .failure(let error) = result { errorMessage = error.localizedDescription }
+        }
+        .confirmationDialog("delete all hormone measurements from this device?", isPresented: $confirmErase) {
+            Button("delete all measurements", role: .destructive) { store.eraseAllMeasurements() }
+            Button("cancel", role: .cancel) {}
         }
         .accessibilityIdentifier("hormoneInformation.history")
     }
@@ -139,5 +165,18 @@ private struct FruitfolioHormoneMeasurementEditor: View {
             Button("discard changes", role: .destructive, action: onCancel)
             Button("keep editing", role: .cancel) {}
         }
+    }
+}
+
+private struct FruitfolioHormoneExportDocument: FileDocument {
+    static var readableContentTypes: [UTType] { [.json] }
+    var data: Data
+    init(data: Data) { self.data = data }
+    init(configuration: ReadConfiguration) throws {
+        guard let content = configuration.file.regularFileContents else { throw CocoaError(.fileReadCorruptFile) }
+        data = content
+    }
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        FileWrapper(regularFileWithContents: data)
     }
 }

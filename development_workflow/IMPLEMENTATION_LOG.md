@@ -157,3 +157,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "new_hormone_syntax": "2 files parsed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Add explicit measurement export/erase controls and artwork, then repair cycle confidence boundary tiers and Fruit Basket interruption/finalization independently.
 - Commit: containing commit for batch P5-hormone-measurement-local-workflow.
+
+## P5-explicit-measurement-export-and-erasure
+
+- Parent checkpoint: e5b44c983fb67fa0a14724f70d3fde7cfc80ba8d.
+- Source-order requirements: [249, 252, 259, 260, 263, 265].
+- Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.
+- Tests added/updated: Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Correct cycle confidence thresholds at logged-period boundaries and verify no measurement-derived confidence changes; then inspect Fruit Basket finalization/interruption.
+- Commit: containing commit for batch P5-explicit-measurement-export-and-erasure.
