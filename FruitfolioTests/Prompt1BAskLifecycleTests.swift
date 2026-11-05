@@ -53,3 +53,34 @@ final class Prompt1BAskLifecycleTests: XCTestCase {
         XCTAssertNil(model.answer)
     }
 }
+
+final class Prompt1BAskScrollTests: XCTestCase {
+    func testReadingOlderContentDoesNotQualifyForAutomaticFollow() {
+        XCTAssertFalse(Prompt09ScrollFollowPolicy.isNearBottom(bottom: 1400, viewportHeight: 600))
+        XCTAssertTrue(Prompt09ScrollFollowPolicy.isNearBottom(bottom: 660, viewportHeight: 600))
+        XCTAssertTrue(Prompt09ScrollFollowPolicy.isNearBottom(bottom: 400, viewportHeight: 600))
+        XCTAssertFalse(Prompt09ScrollFollowPolicy.isNearBottom(bottom: 10, viewportHeight: 0))
+    }
+}
+
+private actor Prompt1BImmediateAskEngine: AskKnowledgeServing {
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        AskAnswer(originalQuestion: question, answerText: "Evidence for \(question)", support: .supported,
+                  sourceIDs: ["fixture-source"], knowledgeBaseVersion: "fixture")
+    }
+}
+
+extension Prompt1BAskLifecycleTests {
+    func testMultipleTurnsKeepAnswersInOriginalSessionOrder() async {
+        let model = Prompt09AskViewModel(engine: Prompt1BImmediateAskEngine())
+        for question in ["first", "second"] {
+            model.inputText = question
+            await model.submitCurrentQuestion(reduceMotion: true)
+        }
+        XCTAssertEqual(model.answerHistory.map(\.originalQuestion), ["first", "second"])
+        XCTAssertEqual(model.messages.map(\.role), [.fruitfolio, .user, .fruitfolio, .user, .fruitfolio])
+        XCTAssertEqual(model.messages[2].id, model.answerHistory[0].id)
+        XCTAssertEqual(model.messages[4].id, model.answerHistory[1].id)
+        XCTAssertEqual(model.answerHistory[0].sourceIDs, ["fixture-source"])
+    }
+}

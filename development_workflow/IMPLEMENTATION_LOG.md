@@ -97,3 +97,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Render ordered historical Ask answers and associate save state with answer identity; then implement near-bottom-only follow scrolling.
 - Commit: containing commit for batch P3-ask-session-cancellation.
+
+## P3-ordered-history-and-scroll-policy
+
+- Parent checkpoint: 5722a4ec39da9e04896e4e507d83561b438fc560.
+- Source-order requirements: [96, 97, 98, 100, 103, 105, 106, 107, 108, 109, 124, 125, 127].
+- Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.
+- Tests added/updated: Prompt1BAskLifecycleTests/testMultipleTurnsKeepAnswersInOriginalSessionOrder, Prompt1BAskScrollTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "founder_spec_extraction": "antiword built from HTTPS Git source; full UTF-8 output saved"}.
+- Next action: Track excerpt saves by answer ID and exact rendered selection range; then continue image-import cancellation and persistence correctness in Part 4.
+- Commit: containing commit for batch P3-ordered-history-and-scroll-policy.

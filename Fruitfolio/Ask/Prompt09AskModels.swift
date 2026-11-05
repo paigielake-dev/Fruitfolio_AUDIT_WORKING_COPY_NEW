@@ -209,3 +209,10 @@ enum AskEngineError: LocalizedError, Sendable {
         }
     }
 }
+
+/// Pure scroll policy shared by streaming and new-turn insertion.
+enum Prompt09ScrollFollowPolicy {
+    static func isNearBottom(bottom: CGFloat, viewportHeight: CGFloat, tolerance: CGFloat = 120) -> Bool {
+        bottom.isFinite && viewportHeight.isFinite && viewportHeight > 0 && bottom <= viewportHeight + max(0, tolerance)
+    }
+}

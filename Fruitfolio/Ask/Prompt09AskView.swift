@@ -20,6 +20,11 @@ struct Prompt09AskView: View {
         Prompt10PendingSavedContent?
 
     @State private var savedExcerptText: String?
+    @State private var historicalSelections: [UUID: String] = [:]
+    @State private var savedAnswerIDs: Set<UUID> = []
+    @State private var savedHistoricalExcerpts: [UUID: Set<String>] = [:]
+    @State private var isNearConversationBottom = true
+    @State private var conversationViewportHeight: CGFloat = 0
 
     @FocusState private var inputFocused: Bool
 
@@ -71,8 +76,15 @@ struct Prompt09AskView: View {
                             ForEach(
                                 viewModel.messages
                             ) { message in
-                                messageView(message)
-                                    .id(message.id)
+                                if let response = viewModel.answerHistory.first(where: { $0.id == message.id }) {
+                                    if response.id == viewModel.answer?.id {
+                                        answerView(response).id(response.id)
+                                    } else {
+                                        historicalAnswerView(response).id(response.id)
+                                    }
+                                } else {
+                                    messageView(message).id(message.id)
+                                }
                             }
 
                             if viewModel.phase ==
@@ -83,17 +95,22 @@ struct Prompt09AskView: View {
                                     )
                             }
 
-                            if let answer =
-                                viewModel.answer {
-                                answerView(answer)
-                                    .id(answer.id)
-                            }
-
                             if case .failed(
                                 let message
                             ) = viewModel.phase {
                                 failureView(message)
                             }
+                            Color.clear
+                                .frame(height: 1)
+                                .id("prompt09-conversation-bottom")
+                                .background {
+                                    GeometryReader { geometry in
+                                        Color.clear.preference(
+                                            key: Prompt09ConversationBottomKey.self,
+                                            value: geometry.frame(in: .named("prompt09-conversation-viewport")).maxY
+                                        )
+                                    }
+                                }
                         }
                         .frame(maxWidth: 680)
                         .containerRelativeFrame(.horizontal) { length, _ in
@@ -110,58 +127,27 @@ struct Prompt09AskView: View {
                     .scrollDismissesKeyboard(
                         .interactively
                     )
-                    .onChange(
-                        of:
-                            viewModel
-                                .messages
-                                .count
-                    ) {
-                        if let last =
-                            viewModel
-                                .messages
-                                .last {
-                            withAnimation(
-                                motionPreferences
-                                    .reduceMotionActive
-                                    ? nil
-                                    : .easeOut(
-                                        duration:
-                                            0.22
-                                    )
-                            ) {
-                                proxy.scrollTo(
-                                    last.id,
-                                    anchor: .bottom
-                                )
-                            }
+                    .coordinateSpace(name: "prompt09-conversation-viewport")
+                    .background {
+                        GeometryReader { geometry in
+                            Color.clear
+                                .onAppear { conversationViewportHeight = geometry.size.height }
+                                .onChange(of: geometry.size.height) { _, height in conversationViewportHeight = height }
                         }
                     }
-                    .onChange(
-                        of:
-                            viewModel
-                                .answer?
-                                .id
-                    ) {
-                        if let id =
-                            viewModel
-                                .answer?
-                                .id {
-                            withAnimation(
-                                motionPreferences
-                                    .reduceMotionActive
-                                    ? nil
-                                    : .easeOut(
-                                        duration:
-                                            0.22
-                                    )
-                            ) {
-                                proxy.scrollTo(
-                                    id,
-                                    anchor: .top
-                                )
-                            }
-                        }
+                    .onPreferenceChange(Prompt09ConversationBottomKey.self) { bottom in
+                        isNearConversationBottom = Prompt09ScrollFollowPolicy.isNearBottom(
+                            bottom: bottom, viewportHeight: conversationViewportHeight)
                     }
+                    .onChange(of: viewModel.messages.count) {
+                        guard isNearConversationBottom else { return }
+                        proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
+                    }
+                    .onChange(of: viewModel.displayedAnswerText) {
+                        guard isNearConversationBottom else { return }
+                        proxy.scrollTo("prompt09-conversation-bottom", anchor: .bottom)
+                    }
+
                 }
             }
             .fruitfolioModalBlur(
@@ -186,18 +172,22 @@ struct Prompt09AskView: View {
                     pending:
                         pendingLibrarySave,
                     onSaved: {
-                        switch
-                            pendingLibrarySave
-                                .saveType {
+                        let savedID = pendingLibrarySave.originalAnswerID.flatMap(UUID.init(uuidString:))
+                        if let savedID {
+                            if pendingLibrarySave.saveType == .fullAnswer { savedAnswerIDs.insert(savedID) }
+                            if let excerpt = pendingLibrarySave.excerptText {
+                                savedHistoricalExcerpts[savedID, default: []].insert(excerpt)
+                            }
+                        }
+                        switch pendingLibrarySave.saveType {
 
                         case .fullAnswer:
-                            viewModel.isSaved =
-                                true
+                            if savedID == viewModel.answer?.id { viewModel.isSaved = true }
 
                         case .excerpt:
-                            savedExcerptText =
-                                pendingLibrarySave
-                                    .excerptText
+                            if savedID == viewModel.answer?.id {
+                                savedExcerptText = pendingLibrarySave.excerptText
+                            }
                         }
 
                         self.pendingLibrarySave =
@@ -267,6 +257,9 @@ struct Prompt09AskView: View {
             if navigation.currentRoute != .ask {
                 viewModel.resetConversation()
                 savedExcerptText = nil
+                historicalSelections = [:]
+                savedAnswerIDs = []
+                savedHistoricalExcerpts = [:]
             }
         }
         .toolbar(
@@ -1147,6 +1140,43 @@ struct Prompt09AskView: View {
         }
     }
 
+    private func historicalAnswerView(_ answer: AskAnswer) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Prompt09SelectableAnswerText(
+                text: answer.answerText,
+                selectedText: Binding(get: { historicalSelections[answer.id] },
+                                      set: { historicalSelections[answer.id] = $0 })
+            )
+            sourceSection(answer.sources)
+            WatercolorSecondaryButton(label: savedAnswerIDs.contains(answer.id) ? "answer saved ♡" : "save answer ♡") {
+                prepareHistoricalSave(answer, excerpt: nil)
+            }
+            .disabled(savedAnswerIDs.contains(answer.id))
+            if let excerpt = historicalSelections[answer.id], !excerpt.isEmpty {
+                WatercolorSecondaryButton(label: "save selection ♡") {
+                    prepareHistoricalSave(answer, excerpt: excerpt)
+                }
+                .disabled(savedHistoricalExcerpts[answer.id]?.contains(excerpt) == true)
+            }
+            Text(Prompt09AskViewModel.educationDisclaimer)
+                .font(.footnote).italic()
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func prepareHistoricalSave(_ answer: AskAnswer, excerpt: String?) {
+        pendingLibrarySave = Prompt10PendingSavedContent(
+            question: answer.originalQuestion, answer: answer.answerText,
+            saveType: excerpt == nil ? .fullAnswer : .excerpt, excerptText: excerpt,
+            originalAnswerID: answer.id.uuidString, originalConversationID: viewModel.conversationID.uuidString,
+            sourceIDs: answer.sourceIDs,
+            sourceVersions: Dictionary(answer.sources.compactMap { source in
+                source.contentVersion.map { (source.id, $0) }
+            }, uniquingKeysWith: { first, _ in first }),
+            knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp)
+    }
+
     // MARK: - Prompt 10 Save Preparation
 
     private func prepareFullAnswerForLibrarySave(
@@ -1160,10 +1190,9 @@ struct Prompt09AskView: View {
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
-                    currentQuestionForSaving,
+                    answer.originalQuestion,
                 answer:
-                    viewModel
-                        .displayedAnswerText,
+                    answer.answerText,
                 saveType:
                     .fullAnswer,
                 originalAnswerID:
@@ -1206,10 +1235,9 @@ struct Prompt09AskView: View {
         pendingLibrarySave =
             Prompt10PendingSavedContent(
                 question:
-                    currentQuestionForSaving,
+                    answer.originalQuestion,
                 answer:
-                    viewModel
-                        .displayedAnswerText,
+                    answer.answerText,
                 saveType:
                     .excerpt,
                 excerptText:
@@ -1907,3 +1935,8 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
 
 
 
+
+private struct Prompt09ConversationBottomKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = nextValue() }
+}

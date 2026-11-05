@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6415b10404b342cfc2c73ab9ad0c8506f9ca9a97",
+  "current_HEAD": "5722a4ec39da9e04896e4e507d83561b438fc560",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
-  "current_requirement": 96,
-  "current_implementation_batch": "P3-ask-session-cancellation",
+  "current_requirement": 109,
+  "current_implementation_batch": "P3-ordered-history-and-scroll-policy",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,8 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-    "Fruitfolio/Ask/Prompt09AskView.swift"
+    "Fruitfolio/Ask/Prompt09AskView.swift",
+    "Fruitfolio/Ask/Prompt09AskModels.swift"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -508,8 +508,9 @@
   "last_test_results": {
     "workflow": "3 passed",
     "diff": "passed",
-    "Swift_iOS": "NOT_RUN: Xcode unavailable"
+    "Swift_iOS": "NOT_RUN: Xcode unavailable",
+    "founder_spec_extraction": "antiword built from HTTPS Git source; full UTF-8 output saved"
   },
-  "next_exact_implementation_action": "Render ordered historical Ask answers and associate save state with answer identity; then implement near-bottom-only follow scrolling.",
-  "updated_at": "2026-11-05T18:43:52.349910+00:00"
+  "next_exact_implementation_action": "Track excerpt saves by answer ID and exact rendered selection range; then continue image-import cancellation and persistence correctness in Part 4.",
+  "updated_at": "2026-11-05T18:46:05.098253+00:00"
 }
