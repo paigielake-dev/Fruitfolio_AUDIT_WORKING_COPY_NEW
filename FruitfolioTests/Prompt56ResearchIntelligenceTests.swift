@@ -2,17 +2,22 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt56ResearchIntelligenceTests: XCTestCase {
+    #if !os(Linux)
     func testCompiledResearchPackageIsIncludedInTheApplicationBundle() async throws {
         let package = try await FruitfolioResearchPackageStore.shared.load()
         XCTAssertGreaterThan(package.researchNoteChunks.count, 4000)
         XCTAssertFalse(package.sources.isEmpty)
     }
+    #endif
 
 #if canImport(llama)
     /// Directly exercises the native GGUF path, never the research fallback.
     /// Run separately: loading a ~469 MB model may take time and memory.
     func testNativeGGUFProducesStructuredDraftWithoutFallback() async throws {
-        let model = LlamaFruitfolioLanguageModel.shared
+        let model: LlamaFruitfolioLanguageModel
+        if let path = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"] {
+            model = LlamaFruitfolioLanguageModel(modelURL: URL(fileURLWithPath: path))
+        } else { model = .shared }
         let availability = await model.availability()
         XCTAssertEqual(availability, .available, "Bundled GGUF must be available")
         guard availability == .available else { return }
@@ -59,6 +64,8 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
             || !draft.claims.isEmpty
             || !(draft.limitation ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         XCTAssertTrue(hasContent, "Native llama must generate nonempty structured content")
+        XCTAssertNotNil(FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: evidence),
+                        "Native output must cross the same complete-evidence boundary as production")
     }
 #endif
 
@@ -199,11 +206,15 @@ final class Prompt56ResearchIntelligenceTests: XCTestCase {
         XCTAssertTrue(prompt.contains("text in English"))
         XCTAssertTrue(prompt.contains(FruitfolioSemanticPolicy.generationInstructions))
         XCTAssertFalse(prompt.contains("Symptoms are semantically underlined by the renderer"))
+        let paraphrase = FruitfolioGeneratedDraft(bridge: nil,
+            claims: [.init(text: "Progesterone is associated with a temperature rise after ovulation.", evidenceIDs: ["note_1"])], limitation: nil)
+        XCTAssertNil(FruitfolioGeneratedDraftValidator.validatedText(draft: paraphrase, evidence: packet),
+                     "A plausible paraphrase still requires a separately validated entailment method")
         let draft = FruitfolioGeneratedDraft(
             bridge: "here’s the evidence-bounded version:",
             claims: [
                 FruitfolioGeneratedClaim(
-                    text: "Progesterone is associated with a temperature rise after ovulation.",
+                    text: note.text,
                     evidenceIDs: ["note_1"]
                 )
             ],

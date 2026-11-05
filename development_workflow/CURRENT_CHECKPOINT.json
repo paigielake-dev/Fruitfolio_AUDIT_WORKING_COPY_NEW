@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "9436aee1c0ddb87fbcbbc34bf1fc5fd3d1e40f9f",
+  "current_HEAD": "5274726f31b17f5b47479c2fe22c9836d807c3c5",
   "latest_verified_commit": null,
   "current_checklist_part": 3,
-  "current_requirement": 136,
-  "current_implementation_batch": "P3-complete-evidence-context-and-shared-canonical-voice",
+  "current_requirement": 129,
+  "current_implementation_batch": "P3-real-Swift-native-inference-and-headless-engine",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,22 +493,19 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Intelligence/FruitfolioCanonicalVoice.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+    "Fruitfolio/Ask/Prompt09AskModels.swift",
     "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioHealthSafety.swift",
     "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-    "Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift",
-    "Fruitfolio/Core/ProductionPhases/Prompt32To55ProductionSystems.swift",
-    "Fruitfolio/FruitfolioResearchPackage.json",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
     "FruitfolioTests/Prompt1BEvidenceBoundaryTests.swift",
-    "FruitfolioTests/Prompt1BResearchPackageTests.swift",
-    "Tools/compile_research_package.py",
+    "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+    "FruitfolioTests/Prompt56ResearchIntelligenceTests.swift",
     "Tools/run_portable_swift_tests.py",
+    "development_workflow/BLOCKERS.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RESEARCH_PACKAGE_REPORT.json",
-    "development_workflow/RESEARCH_PACKAGE_VERIFICATION.md",
-    "development_workflow/tests/test_research_compilation.py"
+    "development_workflow/NATIVE_RUNTIME_VERIFICATION.md",
+    "development_workflow/RUN_LOGS/Swift-headless-research-engine.log",
+    "development_workflow/RUN_LOGS/Swift-native-Qwen-source-bound-inference.log"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -521,19 +518,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "python3 Tools/compile_research_package.py --check",
-    "python3 -m unittest discover -s development_workflow/tests -q",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
     "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_swift": "67 XCTest + 21 Swift Testing passed (88 total)",
+    "Swift_6_headless": "78 XCTest + 21 Swift Testing passed (99 total)",
+    "Swift_5_real_native": "80 XCTest + 21 Swift Testing passed (101 total), including real Qwen structured generation and Unicode/units/evidence validation",
     "workflow": "15 Python tests passed",
-    "Swift_syntax": "124 files, zero parser errors",
-    "Apple_full_AI": "NOT_RUN: Apple SDK unavailable"
+    "Swift_syntax": "125 files, zero parser errors",
+    "Apple_and_MADLAD_inference": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
   },
-  "next_exact_implementation_action": "Compile and run the full Foundation research engine headlessly, verify normal/failure/urgent boundaries, then connect remaining grounded feature providers and continue source-order requirements.",
-  "updated_at": "2026-11-05T20:54:43.922060+00:00",
+  "next_exact_implementation_action": "Budget complete retrieved paragraphs for real native context/output capacity and verify full-corpus native engine behavior, then grounded feature-provider fallbacks and remaining source-order requirements.",
+  "updated_at": "2026-11-05T21:09:21.211007+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

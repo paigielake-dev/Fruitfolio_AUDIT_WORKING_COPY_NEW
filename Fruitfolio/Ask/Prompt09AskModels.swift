@@ -155,7 +155,7 @@ protocol AskResearchProgressServing: AskKnowledgeServing {
         question: String,
         conversation: [AskMessage],
         trackerContext: FruitfolioBoundedTrackerContext?,
-        progress: ((FruitfolioResearchProgress) -> Void)?
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?
     ) async throws -> AskAnswer
 }
 

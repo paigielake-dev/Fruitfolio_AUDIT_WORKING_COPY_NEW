@@ -14,6 +14,10 @@ actor FruitfolioResearchPackageStore {
     private var cached:
         FruitfolioResearchPackage?
 
+    private let resourceURL: URL?
+
+    init(resourceURL: URL? = nil) { self.resourceURL = resourceURL }
+
     private var cachedRetriever: FruitfolioLocalResearchRetriever?
     private var indexedLocale: String?
 
@@ -50,7 +54,7 @@ actor FruitfolioResearchPackageStore {
         }
 
         guard
-            let url = Bundle.main.url(
+            let url = resourceURL ?? Bundle.main.url(
                 forResource:
                     "FruitfolioResearchPackage",
                 withExtension: "json"
@@ -89,7 +93,7 @@ nonisolated enum FruitfolioLanguageModelAvailability:
     case packageNotLinked
 }
 
-nonisolated protocol FruitfolioLanguageModel:
+protocol FruitfolioLanguageModel:
     Sendable
 {
     func availability() async
@@ -128,6 +132,8 @@ nonisolated enum FruitfolioLanguageModelError:
 private enum FruitfolioLlamaError: Error {
     case couldNotLoadModel
     case couldNotCreateContext
+    case couldNotCreateSampler
+    case outputLimitReached
     case promptTooLong
     case decodeFailed
     case invalidOutput
@@ -169,20 +175,21 @@ actor LlamaFruitfolioLanguageModel:
     private let resourceExtension =
         "gguf"
 
+    private let modelURLOverride: URL?
+    init(modelURL: URL? = nil) { self.modelURLOverride = modelURL }
+    private var resolvedModelURL: URL? {
+        modelURLOverride ?? Bundle.main.url(forResource: resourceName, withExtension: resourceExtension)
+    }
+
     private let contextSize: UInt32 = 4096
     private let maximumGeneratedTokens: Int32 = 768
 
     private var model: OpaquePointer?
     private var context: OpaquePointer?
     private var vocab: OpaquePointer?
-    private var sampler: UnsafeMutablePointer<llama_sampler>?
     private var backendInitialized = false
 
     deinit {
-        if let sampler {
-            llama_sampler_free(sampler)
-        }
-
         if let context {
             llama_free(context)
         }
@@ -197,10 +204,7 @@ actor LlamaFruitfolioLanguageModel:
     func availability() async
         -> FruitfolioLanguageModelAvailability
     {
-        guard let modelURL = Bundle.main.url(
-            forResource: resourceName,
-            withExtension: resourceExtension
-        ), FruitfolioGGUFResource.isReadableModel(at: modelURL) else {
+        guard let modelURL = resolvedModelURL, FruitfolioGGUFResource.isReadableModel(at: modelURL) else {
             return .modelResourceMissing
         }
 
@@ -211,8 +215,9 @@ actor LlamaFruitfolioLanguageModel:
         question: String,
         evidence: FruitfolioEvidencePacket
     ) async throws -> FruitfolioGeneratedDraft {
-        let currentAvailability =
-            await availability()
+        try Task.checkCancellation()
+        let currentAvailability = await availability()
+        try Task.checkCancellation()
 
         guard currentAvailability == .available else {
             throw FruitfolioLanguageModelError
@@ -220,21 +225,20 @@ actor LlamaFruitfolioLanguageModel:
         }
 
         try loadIfNeeded()
+        try Task.checkCancellation()
 
         guard
             let context,
-            let vocab,
-            let sampler
+            let vocab
         else {
             throw FruitfolioLlamaError
                 .couldNotCreateContext
         }
 
-        llama_memory_clear(
-            llama_get_memory(context),
-            true
-        )
-        llama_sampler_reset(sampler)
+        llama_memory_clear(llama_get_memory(context), true)
+        defer { llama_memory_clear(llama_get_memory(context), true) }
+        let sampler = try makeSampler(vocab: vocab, evidence: evidence)
+        defer { llama_sampler_free(sampler) }
 
         let evidencePrompt =
             FruitfolioEvidencePromptBuilder.prompt(
@@ -277,9 +281,11 @@ actor LlamaFruitfolioLanguageModel:
 
         var currentPosition = Int32(promptTokens.count)
         var generated = ""
+        var reachedEnd = false
         var pendingUTF8: [CChar] = []
 
         for _ in 0..<maximumGeneratedTokens {
+            try Task.checkCancellation()
             let token = llama_sampler_sample(
                 sampler,
                 context,
@@ -287,6 +293,7 @@ actor LlamaFruitfolioLanguageModel:
             )
 
             if llama_vocab_is_eog(vocab, token) {
+                reachedEnd = true
                 break
             }
 
@@ -316,12 +323,8 @@ actor LlamaFruitfolioLanguageModel:
             }
         }
 
-        if !pendingUTF8.isEmpty {
-            generated += String(
-                decoding: pendingUTF8.map { UInt8(bitPattern: $0) },
-                as: UTF8.self
-            )
-        }
+        guard reachedEnd else { throw FruitfolioLlamaError.outputLimitReached }
+        guard pendingUTF8.isEmpty else { throw FruitfolioLlamaError.invalidOutput }
 
         let cleaned = extractJSONObject(from: generated)
 
@@ -343,17 +346,13 @@ actor LlamaFruitfolioLanguageModel:
         if
             model != nil,
             context != nil,
-            vocab != nil,
-            sampler != nil
+            vocab != nil
         {
             return
         }
 
         guard
-            let modelURL = Bundle.main.url(
-                forResource: resourceName,
-                withExtension: resourceExtension
-            )
+            let modelURL = resolvedModelURL
         else {
             throw FruitfolioLanguageModelError
                 .unavailable(.modelResourceMissing)
@@ -366,10 +365,10 @@ actor LlamaFruitfolioLanguageModel:
 
         var modelParameters = llama_model_default_params()
 
-        #if targetEnvironment(simulator)
-        modelParameters.n_gpu_layers = 0
-        #else
+        #if os(iOS) && !targetEnvironment(simulator)
         modelParameters.n_gpu_layers = 99
+        #else
+        modelParameters.n_gpu_layers = 0
         #endif
 
         guard
@@ -408,31 +407,24 @@ actor LlamaFruitfolioLanguageModel:
             throw FruitfolioLlamaError.couldNotCreateContext
         }
 
-        let samplerParameters = llama_sampler_chain_default_params()
-
-        guard
-            let loadedSampler = llama_sampler_chain_init(
-                samplerParameters
-            )
-        else {
-            llama_free(loadedContext)
-            llama_model_free(loadedModel)
-            throw FruitfolioLlamaError.couldNotCreateContext
-        }
-
-        llama_sampler_chain_add(
-            loadedSampler,
-            llama_sampler_init_temp(0.20)
-        )
-        llama_sampler_chain_add(
-            loadedSampler,
-            llama_sampler_init_dist(42)
-        )
-
         model = loadedModel
         context = loadedContext
         vocab = loadedVocab
-        sampler = loadedSampler
+    }
+
+    private func makeSampler(vocab: OpaquePointer, evidence: FruitfolioEvidencePacket) throws -> UnsafeMutablePointer<llama_sampler> {
+        let grammar = try FruitfolioEvidenceDecodingGrammar.make(evidence: evidence)
+        guard let chain = llama_sampler_chain_init(llama_sampler_chain_default_params()) else {
+            throw FruitfolioLlamaError.couldNotCreateSampler
+        }
+        guard let grammarSampler = llama_sampler_init_grammar(vocab, grammar, "root") else {
+            llama_sampler_free(chain)
+            throw FruitfolioLlamaError.couldNotCreateSampler
+        }
+        llama_sampler_chain_add(chain, grammarSampler)
+        llama_sampler_chain_add(chain, llama_sampler_init_temp(0.20))
+        llama_sampler_chain_add(chain, llama_sampler_init_dist(42))
+        return chain
     }
 
     private func qwenPrompt(
@@ -590,6 +582,7 @@ actor LlamaFruitfolioLanguageModel:
 #else
 actor LlamaFruitfolioLanguageModel: FruitfolioLanguageModel {
     nonisolated static let shared = LlamaFruitfolioLanguageModel()
+    init() {}
 
     func availability() async -> FruitfolioLanguageModelAvailability {
         .packageNotLinked
@@ -697,7 +690,7 @@ final class FruitfolioResearchIntelligenceEngine:
         trackerContext:
             FruitfolioBoundedTrackerContext?,
         progress:
-            ((FruitfolioResearchProgress) -> Void)?
+            (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?
     ) async throws -> AskAnswer {
         let trimmed =
             question.trimmingCharacters(
@@ -713,6 +706,14 @@ final class FruitfolioResearchIntelligenceEngine:
             Prompt34LocalSafetyRouter.classify(
                 trimmed
             )
+
+        if safety.requiresUrgentGuidance {
+            // A missing package/model must not delay the existing local urgent
+            // guidance. No diagnosis or invented source attribution is added.
+            return AskAnswer(originalQuestion: trimmed,
+                answerText: Prompt34LocalSafetyRouter.urgentResponseText(), support: .partiallySupported,
+                knowledgeBaseVersion: "local-safety-guidance-v1")
+        }
 
         if safety.level == .normal,
            FruitfolioLifeBridgeInformation.isOrganizationQuestion(trimmed),

@@ -33,6 +33,25 @@ final class Prompt1BEvidenceBoundaryTests: XCTestCase {
         XCTAssertEqual(presentation, "2 \\* 3 \\* 4")
         XCTAssertTrue(FruitfolioEvidenceCopyPolicy.matchesCompleteEvidence("**E2** 20 pg/mL", original: "E2 20 pg/mL"))
     }
+    #if canImport(llama)
+    func testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID() async throws {
+        let explicit = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"].map { URL(fileURLWithPath: $0) }
+        let url = try XCTUnwrap(explicit ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
+        let model = LlamaFruitfolioLanguageModel(modelURL: url)
+        let text = "The laboratory supplied the label \"E2\" and the recorded value 20 pg/mL; this is not a diagnosis. μg"
+        let id = "note_μ/1"
+        let note = FruitfolioResearchNoteChunk(chunkID: id, researchTopicID: "fixture", heading: "laboratory label", subheading: nil,
+            text: text, sourceIDs: [], semanticTags: [], domainTags: [])
+        let evidence = FruitfolioEvidencePacket(normalizedQuestion: "laboratory label", researchNoteChunks: [note], sourceChunks: [],
+            claimEvidenceMap: [.init(claim: .init(id: "claim-1", text: "laboratory label"), noteChunkIDs: [id], sourceChunkIDs: [])],
+            sourceRecords: [], safetyClassification: .init(level: .normal, matchedPatterns: []), permittedContext: nil, contentVersion: "fixture")
+        let draft = try await model.generateDraft(question: "What is the exact recorded laboratory label and value?", evidence: evidence)
+        XCTAssertEqual(draft.claims.first?.text, text)
+        XCTAssertEqual(draft.claims.first?.evidenceIDs, [id])
+        XCTAssertNotNil(FruitfolioGeneratedDraftValidator.validatedText(draft: draft, evidence: evidence))
+    }
+    #endif
+
     func testSeriousFramingDoesNotInventAnEmergencyAndKaomojiMaximumMatchesFounderRule() {
         let sensitive = FruitfolioCanonicalAnswerVoice.compose(excerpts: ["exact approved evidence"], hasUnansweredParts: false,
             safety: .init(level: .sensitive, matchedPatterns: []))

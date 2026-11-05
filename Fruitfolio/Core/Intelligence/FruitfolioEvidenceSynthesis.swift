@@ -128,3 +128,26 @@ nonisolated enum FruitfolioGeneratedDraftValidator {
             safety: evidence.safetyClassification)
     }
 }
+
+/// Constrained native selection of complete permitted evidence. JSON grammar
+/// cannot introduce a new factual sentence or an invented evidence identifier.
+nonisolated enum FruitfolioEvidenceDecodingGrammar {
+    static func make(evidence: FruitfolioEvidencePacket) throws -> String {
+        let permitted = Set(evidence.claimEvidenceMap.flatMap { $0.noteChunkIDs + $0.sourceChunkIDs })
+        let entries = evidence.researchNoteChunks.map { ($0.chunkID, $0.text) } + evidence.sourceChunks.map { ($0.sourceChunkID, $0.text) }
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.withoutEscapingSlashes]
+        func jsonString(_ value: String) throws -> String { String(decoding: try encoder.encode(value), as: UTF8.self) }
+        var literals: [String] = []
+        for (id, text) in entries where permitted.contains(id) && !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            let object = "{\"text\":" + (try jsonString(text)) + ",\"evidenceIDs\":[" + (try jsonString(id)) + "]}"
+            literals.append(try jsonString(object))
+        }
+        let emptyRoot = try jsonString("{\"bridge\":null,\"claims\":[],\"limitation\":null}")
+        guard !literals.isEmpty else { return "root ::= " + emptyRoot + "\n" }
+        let prefix = try jsonString("{\"bridge\":null,\"claims\":[")
+        let suffix = try jsonString("],\"limitation\":null}")
+        let repeatLimit = min(3, literals.count) - 1
+        return "root ::= " + prefix + " (claim (\",\" claim){0," + String(repeatLimit) + "})? " + suffix + "\nclaim ::= " + literals.joined(separator: " | ") + "\n"
+    }
+}

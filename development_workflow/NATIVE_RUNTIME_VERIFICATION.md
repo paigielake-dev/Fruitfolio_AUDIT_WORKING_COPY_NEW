@@ -15,3 +15,15 @@
 ## Reproduce CPU smoke test
 
 Install CMake in an isolated tools environment. Configure the vendored source out of tree with Release, GGML_NATIVE=OFF, GGML_OPENMP=OFF, GGML_CUDA=OFF, GGML_BLAS=OFF, LLAMA_BUILD_SERVER=OFF, LLAMA_BUILD_UI=OFF, LLAMA_BUILD_TESTS=OFF, LLAMA_BUILD_EXAMPLES=ON, LLAMA_BUILD_APP=OFF and BUILD_SHARED_LIBS=OFF. Build target llama-simple with parallelism 2. Run it with explicit `-m <checkout>/FruitfolioAI.gguf -ngl 0 -n 24 <Qwen chat prompt>`. No model download/server/remote-inference option is used.
+
+## Actual Swift native inference and headless engine
+
+`Tools/run_portable_swift_tests.py --native-llama-build /tmp/fruitfolio-llama-build` now compiles the actual production Swift engine and translation C branches against exact vendor headers and the previously built CPU archives. No C functions/models are stubbed. The native run uses the application's Swift 5 language mode; the regular Foundation/engine run uses Swift 6.
+
+The first real Swift run loaded the actual Qwen GGUF but failed with `invalidOutput`. This was a genuine runtime failure, not accepted as successful inference. Request-scoped decoding grammar now restricts output to valid draft JSON containing complete permitted evidence and original IDs. Bridge/limitation fields are null; shared voice supplies framing after validation. Samplers are freed after each request, decoder KV memory is cleared on completion/error/cancellation, and cancellation is checked during generation. An exhausted output budget or incomplete UTF-8 is rejected explicitly.
+
+Final native result: **80 XCTest + 21 Swift Testing = 101 passed**. The actual GGUF produced source-bound structured output that crossed the production validator. A second real-model test preserved quoted `E2`, `20 pg/mL`, `μg`, and a Unicode evidence identifier exactly. Real-model test times were 6.344 and 6.839 seconds in this Linux run; these include loading/generation and are not iPhone benchmarks.
+
+Regular result: **78 XCTest + 21 Swift Testing = 99 passed**. Full headless production-engine tests use the actual compiled founder corpus to verify cited deterministic fallback after model unavailability, unsupported classification only after search, and local urgent guidance without package/model availability. These tests do not exercise SwiftUI or application-bundle copying.
+
+Remaining: native generation against the complete retrieved corpus under real prompt/output budgets; full Apple build/link, UI, physical-device behavior and clinical interpretation. **This model is Qwen, not MADLAD.** The MADLAD Swift/C branch compiles/links in the native run, but T5 inference, official weights/tokenizer, translation accuracy, compatibility and offline device behavior remain unverified because the official resource host is blocked.

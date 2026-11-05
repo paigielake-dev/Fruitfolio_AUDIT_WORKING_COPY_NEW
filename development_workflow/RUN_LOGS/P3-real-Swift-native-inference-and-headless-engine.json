@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-11-05T21:09:21.211007+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "78 XCTest + 21 Swift Testing passed (99 total)",
+    "Swift_5_real_native": "80 XCTest + 21 Swift Testing passed (101 total), including real Qwen structured generation and Unicode/units/evidence validation",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "125 files, zero parser errors",
+    "Apple_and_MADLAD_inference": "NOT_RUN: Apple SDK/official MADLAD weights unavailable"
+  }
+}

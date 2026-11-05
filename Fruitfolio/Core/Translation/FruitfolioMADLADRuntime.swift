@@ -26,6 +26,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         guard let model, let context, let vocab, let sampler, let manifest else {
             throw FruitfolioTranslationError.resourcesMissing
         }
+        defer { llama_memory_clear(llama_get_memory(context), true) }
         guard manifest.supportedLanguageTags.contains(targetTag) else {
             throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
         }
