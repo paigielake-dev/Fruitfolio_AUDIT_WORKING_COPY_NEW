@@ -140,6 +140,10 @@ struct FruitfolioIconActionSurface<Label: View>: View {
     @EnvironmentObject
     private var motionPreferences: MotionPreferences
 
+    @Environment(\.isEnabled) private var environmentEnabled
+    @State private var identificationTask: Task<Void, Never>?
+    private var effectivelyEnabled: Bool { isEnabled && environmentEnabled }
+
     @State
     private var showingIdentification = false
 
@@ -195,7 +199,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                     : 0
             )
             .opacity(
-                isEnabled
+                effectivelyEnabled
                     ? 1
                     : 0.48
             )
@@ -208,11 +212,9 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                         word: identificationWord
                     )
                     .offset(y: -34)
-                    .transition(
-                        .opacity.combined(
-                            with: .scale(scale: 0.96)
-                        )
-                    )
+                    .transition(motionPreferences.reduceMotionActive
+                                ? .opacity
+                                : .opacity.combined(with: .scale(scale: 0.96)))
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
                 }
@@ -220,6 +222,12 @@ struct FruitfolioIconActionSurface<Label: View>: View {
 
             // MARK: Interaction
 
+            .allowsHitTesting(effectivelyEnabled)
+            .disabled(!effectivelyEnabled)
+            .onDisappear { identificationTask?.cancel() }
+            .onChange(of: effectivelyEnabled) { _, enabled in
+                if !enabled { isPressed = false; showingIdentification = false; identificationTask?.cancel() }
+            }
             .gesture(
                 exclusiveTapOrHold
             )
@@ -233,13 +241,13 @@ struct FruitfolioIconActionSurface<Label: View>: View {
                 children: .ignore
             )
             .accessibilityLabel(
-                Text(accessibilityLabel)
+                Text(LocalizedStringKey(accessibilityLabel))
             )
             .accessibilityAddTraits(
                 .isButton
             )
             .accessibilityAction {
-                guard isEnabled else {
+                guard effectivelyEnabled else {
                     return
                 }
 
@@ -279,7 +287,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             before: TapGesture()
         )
         .onEnded { result in
-            guard isEnabled else {
+            guard effectivelyEnabled else {
                 return
             }
 
@@ -308,7 +316,7 @@ struct FruitfolioIconActionSurface<Label: View>: View {
             minimumDistance: 0
         )
         .onChanged { _ in
-            guard isEnabled else {
+            guard effectivelyEnabled else {
                 return
             }
 
@@ -323,12 +331,13 @@ struct FruitfolioIconActionSurface<Label: View>: View {
     private func showIdentificationBriefly() {
         showingIdentification = true
 
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds: 1_150_000_000
-            )
-
+        identificationTask?.cancel()
+        identificationTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 1_150_000_000) }
+            catch { return }
+            guard !Task.isCancelled else { return }
             showingIdentification = false
+            identificationTask = nil
         }
     }
 }

@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-11-05T19:15:10.749488+00:00",
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_and_packaging": "5 passed",
+    "Swift_syntax": "zero parser errors; not compiled",
+    "diff": "passed",
+    "Swift_iOS": "NOT_RUN: Xcode unavailable"
+  }
+}

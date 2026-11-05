@@ -227,3 +227,13 @@
 - Verification: {"workflow_and_packaging": "5 passed", "Swift_syntax": "changed sources parsed with no errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"}.
 - Next action: Return to first unfinished requirements, reconcile evidence mappings, add portable functional verification where feasible, and continue remaining popup/decorative/localization gaps. Model retrieval remains blocked independently.
 - Commit: containing commit for batch P10-regression-review-and-intro-skip.
+
+## P1-shared-icon-artwork-and-disabled-actions
+
+- Parent checkpoint: 9f40b9f35b3efaa81a6af8a72212120d798c1f77.
+- Source-order requirements: [7, 8, 9, 10, 11, 12, 70, 384, 389, 390].
+- Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.
+- Tests added/updated: Prompt08GlobalControlsTests.
+- Verification: {"workflow_and_packaging": "5 passed", "Swift_syntax": "zero parser errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Adopt shared decorative layout on FAQ/contact headers using measured assets and protected regions; keep missing tulip/cloud artwork as a precise resource blocker instead of substituting unrelated illustrations.
+- Commit: containing commit for batch P1-shared-icon-artwork-and-disabled-actions.

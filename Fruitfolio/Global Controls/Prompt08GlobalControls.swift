@@ -475,11 +475,8 @@ struct BackControl: View {
                 action()
             }
         ) {
-            Image(systemName: "chevron.left")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioImage(id: .control_previous)
+                .scaledToFit()
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
                 .accessibilityHidden(true)
@@ -513,11 +510,8 @@ struct CloseControl: View {
                 action()
             }
         ) {
-            Image(systemName: "xmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioImage(id: .control_close)
+                .scaledToFit()
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
                 .accessibilityHidden(true)
@@ -551,11 +545,8 @@ struct AddControl: View {
                 action()
             }
         ) {
-            Image(systemName: "plus")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioImage(id: .control_plus)
+                .scaledToFit()
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
                 .accessibilityHidden(true)
@@ -589,11 +580,8 @@ struct ConfirmControl: View {
                 action()
             }
         ) {
-            Image(systemName: "checkmark")
-                .font(.title2.weight(.semibold))
-                .foregroundColor(
-                    DesignTokens.ColorToken.primaryBurgundy
-                )
+            FruitfolioImage(id: .control_check)
+                .scaledToFit()
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
                 .accessibilityHidden(true)
@@ -998,16 +986,8 @@ struct BookmarkButton: View {
                 isBookmarked.toggle()
             }
         ) {
-            Image(
-                systemName:
-                    isBookmarked
-                        ? "bookmark.fill"
-                        : "bookmark"
-            )
-            .font(.title2)
-            .foregroundColor(
-                DesignTokens.ColorToken.primaryBurgundy
-            )
+            FruitfolioImage(id: isBookmarked ? .ask_bookmark : .ask_bookmark_outline)
+                .scaledToFit()
             .frame(width: 44, height: 44)
             .contentShape(Rectangle())
             .accessibilityHidden(true)
