@@ -13,6 +13,10 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyModels.swift',
+    'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyEngine.swift',
+    'Fruitfolio/Cycle Tracker/Body Biology/Prompt21BodyBiologyLoader.swift',
+    'Fruitfolio/Core/DesignSystems/FruitfolioScientificArtSizing.swift',
     'Fruitfolio/Core/Assets/FruitfolioAssetID.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioCanonicalCalendar.swift',
     'Fruitfolio/Cycle Tracker/Symptoms/Prompt23SymptomsModels.swift',
@@ -93,6 +97,8 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt21BodyBiologyCoreTests.swift',
+    'Prompt1BScientificArtSizingTests.swift',
     'Prompt1BSymptomTimelineTests.swift', 'Prompt24TrendsCoreTests.swift',
     'Prompt1BDailyLogWriteTests.swift', 'Prompt20DailyLogCoreTests.swift',
     'Prompt1BUsernamePersistenceTests.swift', 'Prompt1BPseudonymPolicyTests.swift', 'Prompt1BSharedLibraryCatalogTests.swift', 'Prompt1BUserMaterialTests.swift', 'Prompt1BBookMotionTests.swift', 'Prompt1BBookLabelTests.swift', 'Prompt17CyclePredictionEngineTests.swift', 'Prompt1BPopupLayoutTests.swift',

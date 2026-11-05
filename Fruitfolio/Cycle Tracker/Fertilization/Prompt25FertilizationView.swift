@@ -170,12 +170,9 @@ struct Prompt25FertilizationView: View {
                 ? min(maxWidth * 0.72, 280)
                 : min(maxWidth * 0.58, 310)
 
-        return Image(viewModel.stage.primaryAssetID.imageName)
-            .resizable()
-            .scaledToFit()
-            .frame(maxWidth: artWidth)
-            .frame(minHeight: 190)
-            .accessibilityLabel(viewModel.stage.accessibilityLabel)
+        return FruitfolioScientificIllustration(imageName: viewModel.stage.primaryAssetID.imageName,
+            accessibilityDescription: viewModel.stage.accessibilityLabel, maximumWidth: artWidth)
+            .frame(maxWidth: .infinity, minHeight: 190)
     }
 
     @ViewBuilder

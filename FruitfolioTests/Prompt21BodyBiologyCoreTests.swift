@@ -3,14 +3,14 @@ import XCTest
 
 @MainActor
 final class Prompt21BodyBiologyCoreTests: XCTestCase {
-    func testUnknownContextFallsBackToNeutral() {
+    func testUnknownContextFallsBackToNeutral() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("still learning your pattern"),
             .neutral
         )
     }
 
-    func testMenstruationContextMapsWithoutUsingBleedingObservation() {
+    func testMenstruationContextMapsWithoutUsingBleedingObservation() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("menstruation"),
             .menstruation
@@ -18,35 +18,35 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
     }
 
 
-    func testOvulationContextIsExplicitlyEstimatedState() {
+    func testOvulationContextIsExplicitlyEstimatedState() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("estimated ovulation window"),
             .estimatedOvulation
         )
     }
 
-    func testLutealContextMapsToLuteal() {
+    func testLutealContextMapsToLuteal() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("luteal phase"),
             .luteal
         )
     }
 
-    func testBroadFollicularContextMapsToEarlyBroadPresentation() {
+    func testBroadFollicularContextMapsToEarlyBroadPresentation() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("follicular phase"),
             .follicularEarly
         )
     }
 
-    func testExplicitLaterFollicularContextMapsToLaterPresentation() {
+    func testExplicitLaterFollicularContextMapsToLaterPresentation() async {
         XCTAssertEqual(
             Prompt21BodyBiologyLoader.mapEstablishedContextTitle("later follicular phase"),
             .follicularLater
         )
     }
 
-    func testNeutralPresentationDoesNotClaimPersonalizedBiology() {
+    func testNeutralPresentationDoesNotClaimPersonalizedBiology() async {
         let presentation = Prompt21BodyBiologyEngine().presentation(for: .neutral)
         XCTAssertEqual(presentation.state, .neutral)
         XCTAssertEqual(presentation.heroAssetName, "ovulation_ovary")
@@ -56,7 +56,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertFalse(presentation.permitsFimbriaeDetail)
     }
 
-    func testEstimatedOvulationUsesEstimateLanguageAndBlueberry() {
+    func testEstimatedOvulationUsesEstimateLanguageAndBlueberry() async {
         let input = Prompt21BodyBiologyInput(
             state: .estimatedOvulation,
             contextKind: .estimated
@@ -71,7 +71,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertEqual(presentation.supportingAssetName, "ovulation_mature_oocyte")
     }
 
-    func testLutealUsesCorpusLuteumAsset() {
+    func testLutealUsesCorpusLuteumAsset() async {
         let input = Prompt21BodyBiologyInput(
             state: .luteal,
             contextKind: .calculated
@@ -81,7 +81,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertEqual(presentation.title, "luteal phase")
     }
 
-    func testMenstruationUsesUterusAndEndometriumAssets() {
+    func testMenstruationUsesUterusAndEndometriumAssets() async {
         let input = Prompt21BodyBiologyInput(
             state: .menstruation,
             contextKind: .calculated
@@ -92,7 +92,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertFalse(presentation.showsPeachDayOne)
     }
 
-    func testPeachAppearsOnlyForConfirmedDayOneInput() {
+    func testPeachAppearsOnlyForConfirmedDayOneInput() async {
         let ordinary = Prompt21BodyBiologyEngine().presentation(
             for: Prompt21BodyBiologyInput(
                 state: .menstruation,
@@ -113,7 +113,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertTrue(dayOne.showsPeachDayOne)
     }
 
-    func testFollicularStatesUseDifferentApprovedStageArt() {
+    func testFollicularStatesUseDifferentApprovedStageArt() async {
         let early = Prompt21BodyBiologyEngine().presentation(
             for: Prompt21BodyBiologyInput(
                 state: .follicularEarly,
@@ -131,7 +131,7 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
         XCTAssertNotEqual(early.heroAssetName, later.heroAssetName)
     }
 
-    func testNoPresentationUsesForbiddenPersonalizedPhrases() {
+    func testNoPresentationUsesForbiddenPersonalizedPhrases() async {
         let inputs: [Prompt21BodyBiologyInput] = [
             .neutral,
             .init(state: .follicularEarly, contextKind: .calculated),
@@ -158,4 +158,25 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
             }
         }
     }
+    func testTypedTodayContextDoesNotInventABiologicalPhaseFromCycleDay() async {
+        for day in [1, 14, 21, 38] {
+            let today = Prompt16TodayState(cycleDay: day, context: .cycleContext,
+                bbtShortcutEnabled: false, bbtUnit: nil, hasRecordedTemperatureToday: false, hasRecordedBleedingToday: false)
+            let input = Prompt21BodyBiologyLoader.makeInput(from: today)
+            XCTAssertEqual(input.state, .neutral)
+            XCTAssertEqual(input.contextKind, .educational)
+            XCTAssertFalse(input.confirmedCycleDayOne)
+        }
+    }
+
+    func testDayOneCharacterRequiresRecordedBleedingRatherThanOnlyContextTitle() async {
+        for recorded in [false, true] {
+            let today = Prompt16TodayState(cycleDay: 1, context: .menstruation,
+                bbtShortcutEnabled: false, bbtUnit: nil, hasRecordedTemperatureToday: false, hasRecordedBleedingToday: recorded)
+            let input = Prompt21BodyBiologyLoader.makeInput(from: today)
+            XCTAssertEqual(input.state, .menstruation)
+            XCTAssertEqual(input.confirmedCycleDayOne, recorded)
+        }
+    }
+
 }

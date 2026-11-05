@@ -42,6 +42,12 @@ struct Prompt21BodyBiologyView: View {
         .task {
             await load()
         }
+        .onChange(of: motionPreferences.reduceMotionActive) { _, reduced in
+            guard reduced else { return }
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) { oocyteOffset = 0; illustrationVisible = true }
+        }
     }
 
     private var loadingView: some View {
@@ -100,13 +106,17 @@ struct Prompt21BodyBiologyView: View {
                         : 0.985
                 )
 
+            FruitfolioTranslatedText(source: "general biology reference — this illustration does not confirm ovulation or measure what is happening inside your body.",
+                font: Prompt21Type.note, color: Prompt21Palette.burgundy.opacity(0.76), serious: true)
+
             VStack(alignment: .leading, spacing: 9) {
                 Text(presentation.title)
                     .font(Prompt21Type.contextTitle)
                     .foregroundStyle(Prompt21Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
 
-                Text(presentation.body)
+                FruitfolioTranslatedText(source: presentation.body, font: Prompt21Type.body,
+                    color: Prompt21Palette.burgundy, serious: true)
                     .font(Prompt21Type.body)
                     .foregroundStyle(Prompt21Palette.burgundy.opacity(0.84))
                     .fixedSize(horizontal: false, vertical: true)
@@ -175,11 +185,8 @@ struct Prompt21BodyBiologyView: View {
         VStack(spacing: 12) {
             ZStack(alignment: .center) {
                 ZStack {
-                    Image(presentation.heroAssetName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: 268)
-                        .accessibilityLabel(presentation.heroAccessibilityLabel)
+                    FruitfolioScientificIllustration(imageName: presentation.heroAssetName,
+                        accessibilityDescription: presentation.heroAccessibilityLabel, maximumWidth: 268)
 
                     if presentation.state == .menstruation {
                         GeometryReader { proxy in
@@ -210,19 +217,25 @@ struct Prompt21BodyBiologyView: View {
                     }
                 }
                 .frame(maxWidth: 268)
-
-                if presentation.permitsOocyteDrift,
-                   let supportingAssetName = presentation.supportingAssetName {
-                    Image(supportingAssetName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 44, height: 44)
-                        .offset(x: 82 + oocyteOffset, y: 22)
-                        .accessibilityLabel(
-                            presentation.supportingAccessibilityLabel
-                                ?? "watercolor educational illustration of a mature oocyte"
-                        )
+                .overlay {
+                    if presentation.permitsOocyteDrift,
+                       let supportingAssetName = presentation.supportingAssetName {
+                        GeometryReader { proxy in
+                            let scale = min(proxy.size.width / 268, 1)
+                            Image(supportingAssetName)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 44 * scale, height: 44 * scale)
+                                .position(x: proxy.size.width / 2 + (82 + oocyteOffset) * scale,
+                                          y: proxy.size.height / 2 + 22 * scale)
+                                .accessibilityLabel(presentation.supportingAccessibilityLabel
+                                    ?? "watercolor educational illustration of a mature oocyte")
+                        }
+                        .allowsHitTesting(false)
+                    }
                 }
+
+
             }
             .frame(maxWidth: .infinity)
 
@@ -241,6 +254,7 @@ struct Prompt21BodyBiologyView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)
+        .allowsHitTesting(false)
     }
 
     private var blueberryNote: some View {
@@ -284,14 +298,10 @@ struct Prompt21BodyBiologyView: View {
             .accessibilityHint("Shows or hides a small educational detail about the fimbriae")
 
             if fimbriaeExpanded {
-                HStack(alignment: .center, spacing: 16) {
-                    Image(Prompt21BodyBiologyAsset.fimbriae)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 112)
-                        .accessibilityLabel(
-                            "watercolor educational illustration of the fimbriae beside the ovary and uterine tube"
-                        )
+                VStack(alignment: .leading, spacing: 12) {
+                    FruitfolioScientificIllustration(imageName: Prompt21BodyBiologyAsset.fimbriae,
+                        accessibilityDescription: "watercolor educational illustration of the fimbriae beside the ovary and uterine tube",
+                        maximumWidth: 112, maximumHeight: 140)
 
                     Text(
                         "these finger-like structures help sweep the released oocyte toward the uterine tube."
@@ -364,7 +374,8 @@ struct Prompt21BodyBiologyView: View {
         oocyteDriftPlayed = true
 
         try? await Task.sleep(for: .milliseconds(320))
-        guard !Task.isCancelled else { return }
+        guard !Task.isCancelled, !motionPreferences.reduceMotionActive,
+              presentation.permitsOocyteDrift else { return }
 
         withAnimation(.easeInOut(duration: 0.72)) {
             oocyteOffset = 8

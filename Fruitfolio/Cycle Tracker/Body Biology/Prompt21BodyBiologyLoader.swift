@@ -9,32 +9,29 @@ struct Prompt21BodyBiologyLoader {
     func load(
         now: Date = Date()
     ) async throws -> Prompt21BodyBiologyInput {
-        let today = try await todayLoader.load(now: now)
-        let title = today.context.title
-        let explanation = today.context.explanation
-        let state = Self.mapEstablishedContextTitle(title)
+        Self.makeInput(from: try await todayLoader.load(now: now))
+    }
 
-        let kind: Prompt21BodyBiologyContextKind
-        switch state {
-        case .estimatedOvulation:
-            kind = .estimated
-        case .neutral:
-            kind = .educational
-        case .follicularEarly, .follicularLater, .luteal, .menstruation:
-            kind = .calculated
+    /// Consume the stable state, never localized/user-facing prose. The current
+    /// Today contract supplies no typed ovulation/luteal/follicular phase; those
+    /// presentations must not be inferred from words or cycle-day arithmetic.
+    nonisolated static func makeInput(from today: Prompt16TodayState) -> Prompt21BodyBiologyInput {
+        let state: Prompt21BodyBiologyState
+        switch today.context {
+        case .menstruation: state = .menstruation
+        case .cycleContext, .insufficientData: state = .neutral
         }
-
         return Prompt21BodyBiologyInput(
             state: state,
-            contextKind: kind,
+            contextKind: state == .neutral ? .educational : .calculated,
             cycleDay: today.cycleDay,
-            confirmedCycleDayOne:
-                state == .menstruation && today.cycleDay == 1,
-            upstreamContextTitle: title,
-            upstreamContextExplanation: explanation
+            confirmedCycleDayOne: state == .menstruation && today.cycleDay == 1 && today.hasRecordedBleedingToday,
+            upstreamContextTitle: today.context.title,
+            upstreamContextExplanation: today.context.explanation
         )
     }
 
+    /// Legacy title mapper retained for compatibility; production uses makeInput.
     /// This maps only the semantic context title already emitted by the existing
     /// Cycle Tracker. It never derives biology from the calendar date itself.
     /// Unknown or broader states deliberately fall back to neutral education.

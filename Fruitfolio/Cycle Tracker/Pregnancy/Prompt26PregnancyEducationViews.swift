@@ -262,7 +262,7 @@ private struct Prompt26ContentBody: View {
 
         case let .loaded(content):
             VStack(alignment: .leading, spacing: 16) {
-                FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy)
+                FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy, serious: true)
                     .font(.body)
                     .foregroundStyle(Prompt26Palette.burgundy)
                     .fixedSize(horizontal: false, vertical: true)
@@ -280,7 +280,7 @@ private struct Prompt26ContentBody: View {
                                     Text(section.heading)
                                         .font(.headline)
                                         .foregroundStyle(Prompt26Palette.burgundy)
-                                    FruitfolioTranslatedText(source: section.body, protectedLiterals: section.sourceIDs, font: .body, color: Prompt26Palette.burgundy.opacity(0.84))
+                                    FruitfolioTranslatedText(source: section.body, protectedLiterals: section.sourceIDs, font: .body, color: Prompt26Palette.burgundy.opacity(0.84), serious: true)
                                         .font(.body)
                                         .foregroundStyle(Prompt26Palette.burgundy.opacity(0.84))
                                         .fixedSize(horizontal: false, vertical: true)
@@ -342,7 +342,7 @@ private struct Prompt26FetalReferenceSection: View {
                         .font(.footnote)
                         .foregroundStyle(Prompt26Palette.burgundy.opacity(0.74))
                 } else if let content {
-                    FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy)
+                    FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy, serious: true)
                         .font(.body)
                         .foregroundStyle(Prompt26Palette.burgundy)
                         .fixedSize(horizontal: false, vertical: true)
@@ -470,35 +470,9 @@ private struct Prompt26CanonicalImage: View {
     let maxHeight: CGFloat
 
     var body: some View {
-        Group {
-#if canImport(UIKit)
-            if UIImage(named: asset.imageName) != nil {
-                image
-            } else {
-                missingArt
-            }
-#else
-            image
-#endif
-        }
-    }
-
-    private var image: some View {
-        Image(asset.imageName)
-            .resizable()
-            .scaledToFit()
+        FruitfolioScientificIllustration(imageName: asset.imageName,
+            accessibilityDescription: altText, maximumWidth: 420, maximumHeight: maxHeight)
             .frame(maxWidth: .infinity)
-            .frame(maxHeight: maxHeight)
-            .accessibilityLabel(altText)
-    }
-
-    private var missingArt: some View {
-        Text("required artwork unavailable")
-            .font(.footnote.weight(.semibold))
-            .foregroundStyle(Prompt26Palette.burgundy)
-            .frame(maxWidth: .infinity, minHeight: 120)
-            .background(Prompt26Palette.card.opacity(0.45), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .accessibilityLabel("Required Pregnancy Education artwork is unavailable")
     }
 }
 

@@ -9,10 +9,8 @@ struct FruitfolioSavedScientificIllustrations: View {
         VStack(spacing: 12) {
             ForEach(assetIDs, id: \.self) { assetID in
                 if let descriptor = EducationalAssetRouter.canonicalDescriptors.first(where: { $0.assetID == assetID }) {
-                    FruitfolioImage(id: assetID)
-                        .scaledToFit()
-                        .frame(maxWidth: 300)
-                        .accessibilityLabel(descriptor.accessibilityDescription)
+                    FruitfolioScientificIllustration(assetID: assetID,
+                        accessibilityDescription: descriptor.accessibilityDescription, maximumWidth: 300)
                 }
             }
         }
