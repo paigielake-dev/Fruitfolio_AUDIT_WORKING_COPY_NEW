@@ -669,15 +669,22 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Use the appropriate popup opening and closing sounds.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 28,
@@ -1671,7 +1678,9 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1679,14 +1688,16 @@
       "blockers": [],
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 71,
@@ -4457,15 +4468,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Apply universal popup layout rules to guide creation and editing.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 218,
@@ -4473,15 +4491,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Replace the save confirmation with the specified Strawberry presentation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 219,
@@ -4489,15 +4514,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Show Strawberry with \u201csaved!\u201d directly underneath.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 220,
@@ -4505,15 +4537,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Use the existing large control-card popup artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 221,
@@ -4521,15 +4560,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Adjust that card\u2019s scale to fit the intended composition.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds"
+      ],
+      "commit_reference": "batch:P4-strawberry-save-confirmation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware."
+      ],
+      "last_updated": "2026-11-05T19:29:34.751509+00:00"
     },
     {
       "sequence": 222,

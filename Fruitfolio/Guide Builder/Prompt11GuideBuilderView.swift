@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt11GuideBuilderView: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
@@ -15,7 +16,9 @@ struct Prompt11GuideBuilderView: View {
     @State private var showingGuideOptions = false
     @State private var reorderMode = false
     @State private var savedStatusVisible = false
-    @State private var celebrationVisible = false
+    @State private var savedStatusTask: Task<Void, Never>?
+    @State private var savedStatusGuideID: UUID?
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @State private var searchText = ""
 
     init(
@@ -66,10 +69,6 @@ struct Prompt11GuideBuilderView: View {
                     .zIndex(110)
             }
 
-            if celebrationVisible {
-                firstPageCelebration
-                    .zIndex(120)
-            }
         }
         .fullScreenCover(isPresented: $showingReadMode) {
             if let selectedGuideID {
@@ -83,6 +82,10 @@ struct Prompt11GuideBuilderView: View {
                 .environmentObject(audioManager)
                 .environmentObject(motionPreferences)
             }
+        }
+        .onDisappear { dismissSavedStatus() }
+        .onChange(of: selectedGuideID) { _, guideID in
+            if savedStatusGuideID != guideID { dismissSavedStatus() }
         }
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -1044,65 +1047,30 @@ struct Prompt11GuideBuilderView: View {
     }
 
     private var savedStatus: some View {
-        VStack {
-            HStack(spacing: 6) {
-                Image("guide_bookmark_saved")
-                    .resizable()
+        GeometryReader { geometry in
+            let metrics = FruitfolioPopupLayout.saveConfirmation(available: geometry.size)
+            ZStack {
+                FruitfolioImage(id: .control_large_card)
                     .scaledToFit()
-                    .frame(width: 24)
+                    .frame(width: metrics.paperSize.width, height: metrics.paperSize.height)
                     .accessibilityHidden(true)
-
-                Text("saved ♡")
-                    .font(.custom("Chalkboard SE", size: 11))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
+                VStack(spacing: 10) {
+                    FruitfolioImage(id: .fruit_strawberry_silly)
+                        .scaledToFit()
+                        .frame(width: min(72, metrics.paperSize.width * 0.30))
+                        .accessibilityHidden(true)
+                    Text("saved!")
+                        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body)).bold()
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(width: metrics.writingSize.width, height: metrics.writingSize.height)
             }
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                DesignTokens.ColorToken.backgroundCream.opacity(0.96),
-                in: Capsule()
-            )
-
-            Spacer()
-        }
-        .padding(.top, 52)
-        .transition(.opacity)
-        .allowsHitTesting(false)
-    }
-
-    private var firstPageCelebration: some View {
-        VStack {
-            Spacer()
-
-            HStack(spacing: 10) {
-                Image("fruit_strawberry_silly")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 58)
-                    .accessibilityHidden(true)
-
-                Text("your encyclopedia is growing ♡")
-                    .font(.custom("Chalkboard SE", size: 12))
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(
-                DesignTokens.ColorToken.backgroundCream.opacity(0.96),
-                in: RoundedRectangle(
-                    cornerRadius: 18,
-                    style: .continuous
-                )
-            )
-            .padding(.bottom, 36)
+            .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .transition(.opacity)
+        .accessibilityIdentifier("guide.savedConfirmation")
         .allowsHitTesting(false)
     }
 
@@ -1199,29 +1167,37 @@ struct Prompt11GuideBuilderView: View {
         }
     }
 
+    private func dismissSavedStatus() {
+        savedStatusTask?.cancel()
+        savedStatusTask = nil
+        if savedStatusVisible { audioManager.play(.popupClose) }
+        savedStatusVisible = false
+    }
+
     private func showSavedStatus() {
+        savedStatusTask?.cancel()
+        if !savedStatusVisible { audioManager.play(.popupOpen) }
         savedStatusVisible = true
-
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 900_000_000)
-
-            withAnimation(.easeOut(duration: 0.16)) {
-                savedStatusVisible = false
-            }
+        savedStatusGuideID = selectedGuideID
+        if voiceOverEnabled {
+            UIAccessibility.post(notification: .announcement,
+                                 argument: FruitfolioLocalization.localized("saved!"))
+        }
+        let delay: Double = voiceOverEnabled ? 4.0 : 1.35
+        savedStatusTask = Task { @MainActor in
+            do { try await Task.sleep(for: .seconds(delay)) }
+            catch { return }
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeOut(duration: 0.16)) { savedStatusVisible = false }
+            audioManager.play(.popupClose)
+            savedStatusTask = nil
         }
     }
 
     private func showFirstPageCelebration() {
-        celebrationVisible = true
+        // The same compact Strawberry card is already shown by the save action.
+        // Do not stack a second toast or launch another dismissal timer.
         audioManager.play(.gentleCheer)
-
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 1_350_000_000)
-
-            withAnimation(.easeOut(duration: 0.18)) {
-                celebrationVisible = false
-            }
-        }
     }
 
     private var openAnimation: Animation {

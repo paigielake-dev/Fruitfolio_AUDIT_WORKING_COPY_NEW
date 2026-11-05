@@ -15,6 +15,14 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
         }
     }
 
+    func testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds() {
+        let metrics = FruitfolioPopupLayout.saveConfirmation(available: CGSize(width: 320, height: 500))
+        XCTAssertLessThanOrEqual(metrics.paperSize.width, 240)
+        XCTAssertEqual(metrics.paperSize.width / metrics.paperSize.height, 634.0 / 667.0, accuracy: 0.0001)
+        XCTAssertLessThan(metrics.writingSize.width, metrics.paperSize.width)
+        XCTAssertLessThan(metrics.writingSize.height, metrics.paperSize.height)
+    }
+
     func testInvalidOrCollapsedViewportNeverProducesNegativeOrNonfiniteFrames() {
         for size in [CGSize.zero, CGSize(width: 12, height: 10),
                      CGSize(width: -1, height: 100), CGSize(width: CGFloat.infinity, height: 100)] {

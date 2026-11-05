@@ -267,3 +267,13 @@
 - Verification: {"portable_swift": "21 XCTest + 21 Swift Testing cases passed (42 total)", "workflow_and_packaging": "6 passed", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
 - Next action: Correct Guide save confirmation artwork/Strawberry composition and own its cancellation lifecycle, then continue remaining original requirements.
 - Commit: containing commit for batch P6-lifebridge-information-access.
+
+## P4-strawberry-save-confirmation
+
+- Parent checkpoint: 2e3bc7819ccdc28a0ab3f3826b157e9b7245581b.
+- Source-order requirements: [217, 218, 219, 220, 221, 27, 70].
+- Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.
+- Tests added/updated: Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds.
+- Verification: {"portable_swift": "22 XCTest + 21 Swift Testing cases passed (43 total)", "Swift_syntax": "zero parser errors; not an iOS build", "diff": "passed", "SwiftUI_UIKit": "NOT_RUN: Xcode unavailable"}.
+- Next action: Repair semantic emphasis during partial streamed Markdown and preserve formatted excerpts, then continue localization catalog completeness and remaining context/education requirements.
+- Commit: containing commit for batch P4-strawberry-save-confirmation.
