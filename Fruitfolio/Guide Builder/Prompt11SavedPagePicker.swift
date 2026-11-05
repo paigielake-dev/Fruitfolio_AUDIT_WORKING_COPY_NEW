@@ -40,7 +40,7 @@ struct Prompt11SavedPagePicker: View {
                     )
 
                 Text(
-                    "choose from the things you’ve saved in Ask the Encyclopedia."
+                    "choose from your saved answers, excerpts and your own material."
                 )
                 .font(.custom("Chalkboard SE", size: 11.5))
                 .foregroundStyle(
@@ -71,11 +71,12 @@ struct Prompt11SavedPagePicker: View {
                         }
                         .font(.custom("Chalkboard SE", size: 10.5))
                         .fontWeight(filter == option ? .bold : .regular)
+                        .accessibilityAddTraits(filter == option ? .isSelected : [])
                         .foregroundStyle(
                             DesignTokens.ColorToken.primaryBurgundy
                         )
                         .padding(.horizontal, 9)
-                        .frame(minHeight: 38)
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                         .background(
                             filter == option
                                 ? DesignTokens.ColorToken.backgroundCream.opacity(0.94)

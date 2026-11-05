@@ -3,36 +3,15 @@ import Foundation
 @MainActor
 extension Prompt10SavedLibraryStore {
     var prompt11Guides: [Prompt10Encyclopedia] {
-        encyclopedias
-            .filter { $0.guideBuilderEnabled == true }
-            .sorted { $0.updatedAt > $1.updatedAt }
+        Prompt10SharedLibraryCatalog.books(encyclopedias)
     }
 
     func prompt11AllSavedMaterial() -> [Prompt10SavedPage] {
-        var seen = Set<UUID>()
-        var results: [Prompt10SavedPage] = []
-
-        let pages = encyclopedias
-            .filter { $0.guideBuilderEnabled != true }
-            .flatMap(\.chapters)
-            .flatMap(\.pages)
-            .sorted { $0.savedAt > $1.savedAt }
-
-        for page in pages {
-            let sourceKey = page.sourceSavedPageID ?? page.id
-
-            if seen.insert(sourceKey).inserted {
-                results.append(page)
-            }
-        }
-
-        return results
+        Prompt10SharedLibraryCatalog.material(encyclopedias)
     }
 
     func prompt11SourcePage(sourceKey: UUID) -> Prompt10SavedPage? {
-        prompt11AllSavedMaterial().first {
-            ($0.sourceSavedPageID ?? $0.id) == sourceKey
-        }
+        Prompt10SharedLibraryCatalog.originalPage(sourceKey: sourceKey, in: encyclopedias)
     }
 
     func prompt11SavedMaterialCandidates(
@@ -46,11 +25,7 @@ extension Prompt10SavedLibraryStore {
             return []
         }
 
-        let existingSourceKeys = Set(
-            guide.chapters
-                .flatMap(\.pages)
-                .compactMap(\.sourceSavedPageID)
-        )
+        let existingSourceKeys = Prompt10SharedLibraryCatalog.containedSourceKeys(in: guide)
 
         return prompt11AllSavedMaterial()
             .filter { filter.includes($0) }
@@ -85,12 +60,10 @@ extension Prompt10SavedLibraryStore {
 
         let sourceKey = sourcePage.sourceSavedPageID ?? sourcePage.id
 
-        let alreadyExists = guide.chapters
-            .flatMap(\.pages)
-            .contains { $0.sourceSavedPageID == sourceKey }
-
-        if alreadyExists {
-            return sourcePage
+        if let existing = guide.chapters.flatMap(\.pages).first(where: {
+            Prompt10SharedLibraryCatalog.sourceKey($0) == sourceKey
+        }) {
+            return existing
         }
 
         let referencePage = Prompt10SavedPage(

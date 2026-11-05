@@ -40,8 +40,7 @@ struct Prompt11GuideBuilderView: View {
 
             Group {
                 if let selectedGuideID,
-                   let guide = store.encyclopedia(id: selectedGuideID),
-                   guide.guideBuilderEnabled == true {
+                   let guide = store.encyclopedia(id: selectedGuideID) {
                     workspace(guide)
                 } else {
                     home
@@ -192,7 +191,7 @@ struct Prompt11GuideBuilderView: View {
                 .frame(width: 66)
                 .accessibilityHidden(true)
 
-            Text("your bookshelf is waiting ♡")
+            Text("your bookshelf is waiting. :-)")
                 .font(.custom("Chalkboard SE", size: 17))
                 .fontWeight(.bold)
                 .foregroundStyle(
@@ -448,12 +447,6 @@ struct Prompt11GuideBuilderView: View {
         _ guide: Prompt10Encyclopedia
     ) -> some View {
         ZStack {
-            Image("guide_folder")
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 295)
-                .accessibilityHidden(true)
-
             Image(guide.style.assetName)
                 .resizable()
                 .scaledToFit()
@@ -692,7 +685,7 @@ struct Prompt11GuideBuilderView: View {
 
         return VStack(spacing: 18) {
             if sortedChapters.isEmpty {
-                Text("make a section, then tuck your saved pages inside ♡")
+                Text("make a section, then tuck your saved pages inside! <3")
                     .font(.custom("Chalkboard SE", size: 12))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -758,7 +751,7 @@ struct Prompt11GuideBuilderView: View {
             )
 
             if chapter.pages.isEmpty {
-                Text("nothing tucked into this section yet.")
+                Text("nothing tucked into this section yet!")
                     .font(.custom("Chalkboard SE", size: 11))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy

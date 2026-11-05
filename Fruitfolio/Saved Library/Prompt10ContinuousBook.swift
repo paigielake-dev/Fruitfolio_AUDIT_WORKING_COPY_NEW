@@ -81,6 +81,7 @@ extension Prompt10BookStyle {
 struct Prompt1BBookRegressionHarness: View {
     @StateObject private var store: Prompt10SavedLibraryStore
     @StateObject private var motion = MotionPreferences()
+    @State private var showingGuides = false
     private let suite: String
     private let fixtureError: String?
 
@@ -101,7 +102,15 @@ struct Prompt1BBookRegressionHarness: View {
     var body: some View {
         Group {
             if let fixtureError { Text(fixtureError) }
-            else { Prompt10SavedLibraryView(store: store, onBack: {}) }
+            else {
+                VStack(spacing: 0) {
+                    if showingGuides {
+                        Prompt11GuideBuilderView(store: store, onBack: { showingGuides = false }, onGoToAsk: {})
+                    } else { Prompt10SavedLibraryView(store: store, onBack: {}) }
+                    Button(showingGuides ? "QA library" : "QA guide builder") { showingGuides.toggle() }
+                        .frame(minHeight: 44)
+                }
+            }
         }
         .environmentObject(motion)
         .onAppear {

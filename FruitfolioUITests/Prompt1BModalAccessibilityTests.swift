@@ -57,6 +57,33 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.staticTexts["your own material · not verified research"].waitForExistence(timeout: 3))
     }
 
+    func testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioBookQA", "-fruitfolioBookReduceMotion"]
+        app.launch()
+        app.buttons["QA guide builder"].tap()
+        let guide = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "QA sage")).firstMatch
+        for _ in 0..<10 { if guide.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(guide.isHittable)
+        guide.tap()
+        let options = app.buttons["guide options"]
+        XCTAssertTrue(options.waitForExistence(timeout: 3))
+        options.tap()
+        app.buttons["rename"].tap()
+        let field = app.textFields["guide name"]
+        XCTAssertTrue(field.waitForExistence(timeout: 3))
+        field.tap()
+        field.typeText(" updated")
+        let save = app.buttons["save name"]
+        for _ in 0..<8 { if save.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+        save.tap()
+        app.buttons["QA library"].tap()
+        let renamed = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage updated,")).firstMatch
+        for _ in 0..<10 { if renamed.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(renamed.isHittable)
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

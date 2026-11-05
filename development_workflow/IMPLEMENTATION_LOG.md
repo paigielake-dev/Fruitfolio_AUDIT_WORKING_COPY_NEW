@@ -607,3 +607,14 @@
 - Verification: {"Swift_6_headless": "99 XCTest + 21 Swift Testing passed (120 total)", "Swift_5_native": "102 XCTest + 21 Swift Testing passed (123 total)", "workflow": "15 Python tests passed", "Swift_syntax": "135 files, zero parser errors", "Apple_UI": "NOT_RUN: own-material UI regression added; Photos/VoiceOver/draft navigation acceptance open"}.
 - Next action: Unify guide catalog visibility across Ask-created books, Saved Library and Guide Builder without cloning feature records; preserve original-page provenance and avoid self-copy candidates, then exact Guide Builder copy/art requirements.
 - Commit: containing commit for batch Library-user-material-provenance-editing-and-image-replacement.
+
+## Guides-shared-catalog-and-original-source-identity
+
+- Parent checkpoint: db4651807dbcfb1562d80011d61f95b62a180b54.
+- Source-order requirements: [206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217].
+- Source files: Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift.
+- Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.
+- Tests added/updated: Prompt1BSharedLibraryCatalogTests, Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack.
+- Verification: {"Swift_6_headless": "101 XCTest + 21 Swift Testing passed (122 total)", "Swift_5_native": "104 XCTest + 21 Swift Testing passed (125 total)", "workflow": "15 Python tests passed", "Swift_syntax": "138 files, zero parser errors", "Apple_UI": "NOT_RUN: cross-entry rename, selected folder and popup acceptance await Apple runtime"}.
+- Next action: Continue audio/Account source-order requirements; existing audio implementation needs Apple runtime checks, then harden shared pseudonymous username editing and non-identifying validation without pretending local names are globally reserved.
+- Commit: containing commit for batch Guides-shared-catalog-and-original-source-identity.

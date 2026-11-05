@@ -199,6 +199,13 @@ struct Prompt11SavedPagePaper: View {
                 }
             }
 
+            if let provenance = page.userMaterial {
+                Text("your own material · not verified research").font(.caption).bold()
+                if let address = provenance.sourceURL {
+                    Text(verbatim: address).font(.caption).textSelection(.enabled)
+                }
+            }
+
             if page.saveType == .excerpt {
                 Text("saved excerpt")
                     .font(.custom("Chalkboard SE", size: 10.5))
