@@ -2,6 +2,13 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt07FirstLaunchTourTests: XCTestCase {
+    func testDelayedInvitationRequiresActiveUncompletedHub() {
+        XCTAssertTrue(Prompt07InvitationEligibility.allows(route: .hub, isActive: true, tutorialCompleted: false))
+        XCTAssertFalse(Prompt07InvitationEligibility.allows(route: .ask, isActive: true, tutorialCompleted: false))
+        XCTAssertFalse(Prompt07InvitationEligibility.allows(route: .hub, isActive: false, tutorialCompleted: false))
+        XCTAssertFalse(Prompt07InvitationEligibility.allows(route: .hub, isActive: true, tutorialCompleted: true))
+    }
+
     func testTourHasSixSteps() {
         XCTAssertEqual(Prompt07TourStep.allCases.count, 6)
         XCTAssertEqual(Prompt07TourStep.ask.progressText, "1 of 6")

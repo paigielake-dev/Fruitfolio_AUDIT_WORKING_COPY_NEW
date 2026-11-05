@@ -137,3 +137,10 @@ extension View {
         modifier(Prompt07TourTargetModifier(target: target))
     }
 }
+
+/// Delayed invitation work is valid only while the Hub is the active screen.
+enum Prompt07InvitationEligibility {
+    static func allows(route: FruitfolioRoute, isActive: Bool, tutorialCompleted: Bool) -> Bool {
+        route == .hub && isActive && !tutorialCompleted
+    }
+}

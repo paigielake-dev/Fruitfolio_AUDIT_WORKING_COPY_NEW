@@ -14,6 +14,9 @@ struct Prompt04HubBridgeView: View {
     private var targetFrames:
         [Prompt07TourTarget: CGRect] = [:]
 
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var invitationTask: Task<Void, Never>?
+    @State private var invitationGeneration = UUID()
     @State
     private var invitationScheduled = false
 
@@ -69,6 +72,14 @@ struct Prompt04HubBridgeView: View {
                 }
             }
         }
+        .onDisappear { cancelInvitation() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { scheduleInvitationIfNeeded() }
+            else { cancelInvitation() }
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, id in
+            if id == nil { scheduleInvitationIfNeeded() }
+        }
         .task {
             if appState.tourWasManuallyReplayed {
                 beginManualReplayIfNeeded()
@@ -102,6 +113,13 @@ struct Prompt04HubBridgeView: View {
         }
     }
 
+    private func cancelInvitation() {
+        invitationGeneration = UUID()
+        invitationTask?.cancel()
+        invitationTask = nil
+        invitationScheduled = false
+    }
+
     private var shouldOfferFirstLaunchTour: Bool {
         !appState.tutorialCompleted
     }
@@ -113,6 +131,9 @@ struct Prompt04HubBridgeView: View {
     private func scheduleInvitationIfNeeded() {
         guard
             !invitationScheduled,
+            Prompt07InvitationEligibility.allows(route: navigation.currentRoute,
+                                                 isActive: scenePhase == .active,
+                                                 tutorialCompleted: appState.tutorialCompleted),
             hubBrandingAnimationCompleted,
             onboardingHookAllowsInvitation,
             shouldOfferFirstLaunchTour
@@ -122,13 +143,18 @@ struct Prompt04HubBridgeView: View {
 
         invitationScheduled = true
 
-        Task { @MainActor in
-            try? await Task.sleep(
-                nanoseconds:
-                    600_000_000
-            )
-
+        let generation = UUID()
+        invitationGeneration = generation
+        invitationTask = Task { @MainActor in
+            do { try await Task.sleep(nanoseconds: 600_000_000) }
+            catch { return }
+            guard !Task.isCancelled, invitationGeneration == generation else { return }
+            invitationTask = nil
+            invitationScheduled = false
             guard
+                Prompt07InvitationEligibility.allows(route: navigation.currentRoute,
+                                                     isActive: scenePhase == .active,
+                                                     tutorialCompleted: appState.tutorialCompleted),
                 shouldOfferFirstLaunchTour,
                 popupCoordinator
                     .currentPopup == nil
@@ -194,6 +220,7 @@ struct Prompt04HubBridgeView: View {
 
     private func beginManualReplayIfNeeded() {
         guard appState.tourWasManuallyReplayed else { return }
+        cancelInvitation()
 
         popupCoordinator.dismissCurrent(
             reason: .programmatic

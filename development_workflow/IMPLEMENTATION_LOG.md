@@ -77,3 +77,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Cancel stale Hub invitation and navigation work; then continue Ask session/scroll correctness independently of Xcode.
 - Commit: containing commit for batch P2-intro-pacing-and-resumption.
+
+## P2-hub-invitation-ownership
+
+- Parent checkpoint: 7a71d166216bdfc294150bf6404fbaa308539198.
+- Source-order requirements: [88, 90, 91, 95].
+- Hub invitation tasks are owned, cancelled on disappearance/inactivity/manual replay, and generation-checked after delay. Eligibility requires the active Hub and incomplete tutorial. Waiting invitations can retry when another popup clears, instead of appearing over a different screen. Existing popup audio and one-time tutorial persistence remain in their existing owners; semantic tour dialogue still needs further integration.
+- Tests added/updated: Prompt07FirstLaunchTourTests/testDelayedInvitationRequiresActiveUncompletedHub.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Fix Ask request cancellation/reset races and session history so stale responses cannot mutate a newer session, then inspect earlier-answer save associations.
+- Commit: containing commit for batch P2-hub-invitation-ownership.
