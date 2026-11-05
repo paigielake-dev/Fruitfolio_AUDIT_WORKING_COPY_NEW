@@ -4,6 +4,7 @@ import UIKit
 
 struct Prompt09AskView: View {
     @EnvironmentObject private var navigation: NavigationCoordinator
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var prompt27AContextStore: Prompt27AContextStore
@@ -177,7 +178,8 @@ struct Prompt09AskView: View {
                         if let savedID {
                             if pendingLibrarySave.saveType == .fullAnswer { savedAnswerIDs.insert(savedID) }
                             if pendingLibrarySave.saveType == .excerpt,
-                               let key = Prompt09ExcerptIdentity(answerID: savedID, renderedRange: pendingLibrarySave.selectedRenderedRange) {
+                               let key = Prompt09ExcerptIdentity(answerID: savedID, renderedRange: pendingLibrarySave.selectedRenderedRange,
+                                                                 language: pendingLibrarySave.selectedDisplayLanguage) {
                                 savedExcerptIdentities.insert(key)
                             }
                         }
@@ -264,6 +266,12 @@ struct Prompt09AskView: View {
                 historicalSelectionRanges = [:]
                 savedExcerptIdentities = []
             }
+        }
+        .onChange(of: settings.language) { _, _ in
+            viewModel.selectedExcerptText = nil
+            viewModel.selectedExcerptRange = nil
+            historicalSelections = [:]
+            historicalSelectionRanges = [:]
         }
         .toolbar(
             .hidden,
@@ -910,15 +918,14 @@ struct Prompt09AskView: View {
                         )
 
                     } else {
-                        Prompt09MaroonSelectableAnswerText(
-                            text:
-                                viewModel
-                                    .displayedAnswerText,
-                            selectedText:
-                                $viewModel
-                                    .selectedExcerptText,
-                            selectedRange: $viewModel.selectedExcerptRange
-                        )
+                        FruitfolioTranslatedContent(source: viewModel.displayedAnswerText,
+                                                     protectedLiterals: answer.sourceIDs) { display in
+                            Prompt09MaroonSelectableAnswerText(
+                                text: display,
+                                selectedText: $viewModel.selectedExcerptText,
+                                selectedRange: $viewModel.selectedExcerptRange
+                            )
+                        }
                         .frame(
                             maxWidth:
                                 .infinity
@@ -1141,19 +1148,21 @@ struct Prompt09AskView: View {
     }
 
     private func isExcerptSaved(answerID: UUID, range: NSRange?) -> Bool {
-        guard let key = Prompt09ExcerptIdentity(answerID: answerID, renderedRange: range) else { return false }
+        guard let key = Prompt09ExcerptIdentity(answerID: answerID, renderedRange: range, language: settings.language.rawValue) else { return false }
         return savedExcerptIdentities.contains(key)
     }
 
     private func historicalAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            Prompt09SelectableAnswerText(
-                text: answer.answerText,
-                selectedText: Binding(get: { historicalSelections[answer.id] },
-                                      set: { historicalSelections[answer.id] = $0 }),
-                selectedRange: Binding(get: { historicalSelectionRanges[answer.id] },
-                                       set: { historicalSelectionRanges[answer.id] = $0 })
-            )
+            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs) { display in
+                Prompt09SelectableAnswerText(
+                    text: display,
+                    selectedText: Binding(get: { historicalSelections[answer.id] },
+                                          set: { historicalSelections[answer.id] = $0 }),
+                    selectedRange: Binding(get: { historicalSelectionRanges[answer.id] },
+                                           set: { historicalSelectionRanges[answer.id] = $0 })
+                )
+            }
             sourceSection(answer.sources)
             WatercolorSecondaryButton(label: savedAnswerIDs.contains(answer.id) ? "answer saved ♡" : "save answer ♡") {
                 prepareHistoricalSave(answer, excerpt: nil)
@@ -1182,7 +1191,8 @@ struct Prompt09AskView: View {
                 source.contentVersion.map { (source.id, $0) }
             }, uniquingKeysWith: { first, _ in first }),
             knowledgeBaseVersion: answer.knowledgeBaseVersion, generationTimestamp: answer.generationTimestamp,
-            selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id])
+            selectedRenderedRange: excerpt == nil ? nil : historicalSelectionRanges[answer.id],
+            selectedDisplayLanguage: settings.language.rawValue)
     }
 
     // MARK: - Prompt 10 Save Preparation
@@ -1270,7 +1280,8 @@ struct Prompt09AskView: View {
                     answer.knowledgeBaseVersion,
                 generationTimestamp:
                     answer.generationTimestamp,
-                selectedRenderedRange: viewModel.selectedExcerptRange
+                selectedRenderedRange: viewModel.selectedExcerptRange,
+                selectedDisplayLanguage: settings.language.rawValue
             )
     }
 

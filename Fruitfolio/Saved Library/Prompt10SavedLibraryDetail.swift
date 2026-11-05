@@ -410,9 +410,10 @@ struct Prompt10SavedPageView: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                FruitfolioSemanticText(
-                    markdown: page.displayBody,
-                    baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body)
+                FruitfolioTranslatedText(
+                    source: page.displayBody, protectedLiterals: page.sourceIDs,
+                    enabled: page.originalAnswerID != nil,
+                    font: .custom("Chalkboard SE", size: 14, relativeTo: .body)
                 )
                     .font(
                         .custom(

@@ -36,7 +36,7 @@ struct FruitfolioHormoneInformationView: View {
                 Picker("filter by hormone", selection: $filter) {
                     Text("all hormones").tag(Optional<FruitfolioMeasuredHormone>.none)
                     ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
-                        Text(hormone.label).tag(Optional(hormone))
+                        Text(LocalizedStringKey(hormone.label)).tag(Optional(hormone))
                     }
                 }
                 ForEach(store.history(hormone: filter)) { measurement in
@@ -130,7 +130,7 @@ private struct FruitfolioHormoneMeasurementEditor: View {
             VStack(alignment: .leading, spacing: 16) {
                 Text("measurement").font(.title2).bold()
                 Picker("hormone", selection: $draft.hormone) {
-                    ForEach(FruitfolioMeasuredHormone.allCases) { Text($0.label).tag($0) }
+                    ForEach(FruitfolioMeasuredHormone.allCases) { Text(LocalizedStringKey($0.label)).tag($0) }
                 }
                 if draft.hormone == .other { TextField("other hormone name", text: $draft.otherHormoneName) }
                 TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)

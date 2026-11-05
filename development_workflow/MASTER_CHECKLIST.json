@@ -7636,7 +7636,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7645,13 +7655,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 393,
@@ -7664,7 +7676,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7673,13 +7695,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 394,
@@ -7687,15 +7711,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Include onboarding, Hub, Ask, My Encyclopedias, Guide Builder, Cycle Tracker, Hormone Information, Fruit Basket, FAQ, Contact, Account, Privacy, and Purchase.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 395,
@@ -7703,15 +7745,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Translate popups, notifications, validation messages, errors, and accessibility labels.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 396,
@@ -7719,15 +7779,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Translate applicable fruit-character dialogue and dynamically generated content.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 397,
@@ -7735,15 +7813,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Remove hard-coded English strings that bypass the selected language.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 398,
@@ -7751,15 +7847,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Persist the language preference across restarts and navigation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 399,
@@ -7767,15 +7881,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Ensure users can always understand and access the language selector.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 400,
@@ -7783,15 +7915,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major African languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 401,
@@ -7799,15 +7949,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major Asian languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 402,
@@ -7815,15 +7983,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major Middle Eastern languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 403,
@@ -7831,15 +8017,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major European languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 404,
@@ -7847,15 +8051,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major Pacific Islander languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 405,
@@ -7863,15 +8085,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Support the specified major South American languages.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 406,
@@ -7879,15 +8119,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Include relevant regional and Indigenous languages within that scope.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 407,
@@ -7900,7 +8158,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7909,13 +8177,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 408,
@@ -7928,7 +8198,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7937,13 +8217,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 409,
@@ -7956,7 +8238,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7965,13 +8257,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 410,
@@ -7984,7 +8278,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -7993,13 +8297,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 411,
@@ -8012,7 +8318,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8021,13 +8337,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 412,
@@ -8040,7 +8358,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8049,13 +8377,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 413,
@@ -8068,7 +8398,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8077,13 +8417,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 414,
@@ -8096,7 +8438,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8105,13 +8457,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 415,
@@ -8124,7 +8478,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8133,13 +8497,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 416,
@@ -8152,7 +8518,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8161,13 +8537,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 417,
@@ -8180,7 +8558,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8189,13 +8577,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 418,
@@ -8208,7 +8598,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8217,13 +8617,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 419,
@@ -8236,7 +8638,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8245,13 +8657,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 420,
@@ -8264,7 +8678,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8273,13 +8697,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 421,
@@ -8292,7 +8718,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8301,13 +8737,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 422,
@@ -8320,7 +8758,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8329,13 +8777,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 423,
@@ -8348,7 +8798,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8357,13 +8817,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 424,
@@ -8376,7 +8838,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8385,13 +8857,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 425,
@@ -8404,7 +8878,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8413,13 +8897,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 426,
@@ -8432,7 +8918,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8441,13 +8937,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 427,
@@ -8460,7 +8958,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8469,13 +8977,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 428,
@@ -8488,7 +8998,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8497,13 +9017,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 429,
@@ -8516,7 +9038,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8525,13 +9057,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 430,
@@ -8544,7 +9078,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8553,13 +9097,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 431,
@@ -8572,7 +9118,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8581,13 +9137,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 432,
@@ -8600,7 +9158,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8609,13 +9177,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 433,
@@ -8628,7 +9198,17 @@
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -8637,13 +9217,15 @@
       "related_tests": [
         "Prompt1BMADLADManifestTests",
         "Prompt1BScientificTranslationTests",
-        "Prompt1BTranslationPipelineTests"
+        "Prompt1BTranslationPipelineTests",
+        "MADLADPackagingTests"
       ],
-      "commit_reference": "batch:P9-madlad-encoder-decoder-and-integrity (resolve containing commit with git log)",
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed."
+        "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
       ],
-      "last_updated": "2026-11-05T19:04:58.286136+00:00"
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 434,
@@ -8651,15 +9233,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Do not silently overwrite user-authored content with translations.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 435,
@@ -8667,15 +9267,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify the selected language across every applicable feature.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 436,
@@ -8683,15 +9301,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify Ask responses in each supported language.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 437,
@@ -8699,15 +9335,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify clinical meaning and safety-language preservation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 438,
@@ -8715,15 +9369,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify citations remain unchanged.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 439,
@@ -8731,15 +9403,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify offline inference.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 440,
@@ -8747,15 +9437,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify language persistence after restarting the app.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 441,
@@ -8763,15 +9471,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Verify the actual MADLAD runtime executes locally.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 442,
@@ -8779,15 +9505,33 @@
       "original_checklist_part": "Part 9 \u2014 Localization and MADLAD",
       "original_section": null,
       "description": "Test layout and accessibility for each supported writing system.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 443,
@@ -8795,15 +9539,33 @@
       "original_checklist_part": "Part 10 \u2014 Testing, integration, and final verification",
       "original_section": null,
       "description": "Create tests for every applicable Prompt 1B change.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Hormone Information/HormoneInformationView.swift",
+        "Tools/prepare_madlad_manifest.py",
+        "Tools/convert_madlad_local.sh"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "MADLADPackagingTests",
+        "Prompt1BMADLADManifestTests",
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BTranslationPipelineTests"
+      ],
+      "commit_reference": "batch:P9-display-translation-and-reproducible-packaging (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete."
+      ],
+      "last_updated": "2026-11-05T19:10:19.681081+00:00"
     },
     {
       "sequence": 444,

@@ -223,11 +223,13 @@ struct Prompt09ExcerptIdentity: Hashable, Sendable {
     let answerID: UUID
     let location: Int
     let length: Int
+    let language: String
 
-    init?(answerID: UUID, renderedRange: NSRange?) {
+    init?(answerID: UUID, renderedRange: NSRange?, language: String = "en") {
         guard let range = renderedRange, range.location != NSNotFound,
               range.location >= 0, range.length > 0 else { return nil }
         self.answerID = answerID
+        self.language = language
         location = range.location
         length = range.length
     }

@@ -48,7 +48,7 @@ struct FruitfolioControlPillButton: View {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
@@ -74,7 +74,7 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
-        .accessibilityLabel(label)
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
     }
 }
 
@@ -942,7 +942,7 @@ struct WatercolorToggle: View {
 
     var body: some View {
         Toggle(isOn: $isOn) {
-            Text(label)
+            Text(LocalizedStringKey(label))
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -966,7 +966,7 @@ struct WatercolorToggle: View {
             )
         )
         .disabled(isDisabled)
-        .accessibilityLabel(Text(label))
+        .accessibilityLabel(Text(LocalizedStringKey(label)))
         .accessibilityValue(
             Text(isOn ? "on" : "off")
         )

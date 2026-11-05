@@ -218,7 +218,9 @@ struct Prompt11SavedPagePaper: View {
                     )
             }
 
-            Text(page.displayBody)
+            FruitfolioTranslatedText(source: page.displayBody, protectedLiterals: page.sourceIDs,
+                                     enabled: page.originalAnswerID != nil,
+                                     font: .custom("Chalkboard SE", size: 14, relativeTo: .body))
                 .font(.custom("Chalkboard SE", size: 13.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy

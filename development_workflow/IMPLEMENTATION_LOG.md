@@ -207,3 +207,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "translation_syntax": "parsed without errors; not a compile/inference result", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: no verified model/tokenizer resources; huggingface.co proxy 403; draft_not_editable"}.
 - Next action: Build a reproducible local conversion/manifest tool and integrate display-only translation into Ask, saved pages and guide reading without changing source records.
 - Commit: containing commit for batch P9-madlad-encoder-decoder-and-integrity.
+
+## P9-display-translation-and-reproducible-packaging
+
+- Parent checkpoint: a650b1a77cfca2b0bd43f266da37bf568f2c72be.
+- Source-order requirements: [392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440, 441, 442, 443].
+- Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.
+- Tests added/updated: MADLADPackagingTests, Prompt1BMADLADManifestTests, Prompt1BScientificTranslationTests, Prompt1BTranslationPipelineTests.
+- Verification: {"workflow_and_packaging": "5 passed", "shell_syntax": "passed", "Swift_syntax": "65 changed/new files, zero parser errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"}.
+- Next action: Run all supported verification, fix source/API issues found, reconcile tracker source mappings and then return to the first unfinished requirement; do not treat Part 10 checks as completion.
+- Commit: containing commit for batch P9-display-translation-and-reproducible-packaging.

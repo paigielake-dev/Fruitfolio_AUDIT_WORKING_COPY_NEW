@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-11-05T19:10:19.681081+00:00",
+  "commands": [
+    "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
+    "bash -n Tools/convert_madlad_local.sh",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_and_packaging": "5 passed",
+    "shell_syntax": "passed",
+    "Swift_syntax": "65 changed/new files, zero parser errors; not compiled",
+    "diff": "passed",
+    "Swift_iOS": "NOT_RUN: Xcode unavailable",
+    "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"
+  }
+}

@@ -35,6 +35,7 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
               !modelFile.contains(".."), sha256.count == 64,
               sha256.unicodeScalars.allSatisfy(hex.contains),
               sourceRepository == "google/madlad400-3b-mt", sourceRevision.count == 40,
+              sourceRevision.unicodeScalars.allSatisfy(hex.contains),
               contextLength >= 64, contextLength <= 4096,
               maximumOutputTokens > 0, maximumOutputTokens < contextLength,
               !supportedLanguageTags.isEmpty,
