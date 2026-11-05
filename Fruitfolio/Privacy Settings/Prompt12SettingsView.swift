@@ -203,6 +203,7 @@ struct Prompt12SettingsView: View {
                 "experience"
             )
 
+            WatercolorToggle(label: "mute all audio", isOn: $settings.globallyMuted)
             WatercolorToggle(
                 label: "sound effects",
                 isOn:

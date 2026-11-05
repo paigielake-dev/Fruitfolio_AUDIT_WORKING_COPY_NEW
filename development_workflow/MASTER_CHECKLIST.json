@@ -4340,15 +4340,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Add or verify separately adjustable volume controls for music, rain, sound effects, and typing.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 223,
@@ -4356,15 +4364,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Ensure each control updates the actual audio system.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 224,
@@ -4372,15 +4388,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Provide a functioning global mute.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 225,
@@ -4388,15 +4412,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Provide a functioning background-music toggle.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 226,
@@ -4404,15 +4436,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Prevent muted or disabled audio from continuing to play.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 227,
@@ -4420,15 +4460,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Ensure audio preferences persist appropriately.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 228,
@@ -4436,15 +4484,23 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Apply the shared control artwork and button interactions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+        "Fruitfolio/Core/Assets/AudioManager.swift",
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAudioSettingsTests"
+      ],
+      "commit_reference": "batch:P5-persistent-global-audio-mute (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified."
+      ],
+      "last_updated": "2026-11-05T18:50:48.044327+00:00"
     },
     {
       "sequence": 229,

@@ -119,6 +119,7 @@ enum FruitfolioLanguagePreferences {
 @MainActor
 final class SettingsStore: ObservableObject {
     private enum Key {
+        static let globallyMuted = "fruitfolio.settings.globallyMuted"
         static let musicEnabled = "fruitfolio.settings.musicEnabled"
         static let rainEnabled = "fruitfolio.settings.rainEnabled"
         static let soundEffectsEnabled = "fruitfolio.settings.soundEffectsEnabled"
@@ -134,6 +135,7 @@ final class SettingsStore: ObservableObject {
 
     private let defaults: UserDefaults
 
+    @Published var globallyMuted: Bool { didSet { defaults.set(globallyMuted, forKey: Key.globallyMuted) } }
     @Published var musicEnabled: Bool { didSet { defaults.set(musicEnabled, forKey: Key.musicEnabled) } }
     @Published var rainEnabled: Bool { didSet { defaults.set(rainEnabled, forKey: Key.rainEnabled) } }
     @Published var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
@@ -150,6 +152,7 @@ final class SettingsStore: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        self.globallyMuted = Self.bool(defaults, key: Key.globallyMuted, fallback: false)
         self.musicEnabled = Self.bool(defaults, key: Key.musicEnabled, fallback: true)
         self.rainEnabled = Self.bool(defaults, key: Key.rainEnabled, fallback: true)
         self.soundEffectsEnabled = Self.bool(defaults, key: Key.soundEffectsEnabled, fallback: true)
@@ -170,6 +173,16 @@ final class SettingsStore: ObservableObject {
         FruitfolioLocalization.localized(key, language: language, fallback: fallback)
     }
 
+    func allowsAudio(_ category: FruitfolioAudioCategory) -> Bool {
+        guard !globallyMuted else { return false }
+        switch category {
+        case .music: return musicEnabled
+        case .rainAmbience: return rainEnabled
+        case .soundEffects: return soundEffectsEnabled
+        case .typingASMR: return typingASMREnabled
+        }
+    }
+
     private func persistClamped(_ value: Double, key: String) {
         defaults.set(Self.clamp(value), forKey: key)
     }
@@ -185,6 +198,6 @@ final class SettingsStore: ObservableObject {
     }
 
     private static func clamp(_ value: Double) -> Double {
-        min(max(value, 0), 1)
+        value.isFinite ? min(max(value, 0), 1) : 0
     }
 }

@@ -272,6 +272,14 @@ final class AudioManager: ObservableObject {
     ) {
         settingsCancellables.removeAll()
 
+        settings.$globallyMuted
+            .removeDuplicates()
+            // @Published emits before the property is stored. Reconcile on the
+            // next main run-loop turn so all four channels see the new value.
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in self?.synchronizePlaybackWithSettings() }
+            .store(in: &settingsCancellables)
+
         settings.$musicEnabled
             .removeDuplicates()
             .sink { [weak self] enabled in
@@ -674,20 +682,7 @@ final class AudioManager: ObservableObject {
             return true
         }
 
-        switch category {
-
-        case .music:
-            return settings.musicEnabled
-
-        case .rainAmbience:
-            return settings.rainEnabled
-
-        case .soundEffects:
-            return settings.soundEffectsEnabled
-
-        case .typingASMR:
-            return settings.typingASMREnabled
-        }
+        return settings.allowsAudio(category)
     }
 
     private func volume(

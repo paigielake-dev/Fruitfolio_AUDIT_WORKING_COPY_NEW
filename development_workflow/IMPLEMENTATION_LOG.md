@@ -127,3 +127,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Check shared guide persistence propagation, then Part 5 settings/account/context and hormone safeguards in source order, recording external blockers without fabricating services or algorithms.
 - Commit: containing commit for batch P4-owned-validated-photo-import.
+
+## P5-persistent-global-audio-mute
+
+- Parent checkpoint: fd1b3ce56aa10f69fae8d8e261ded9eb828e5686.
+- Source-order requirements: [222, 223, 224, 225, 226, 227, 228].
+- Added a persistent global mute independent of per-channel toggles and volumes. All four audio channels consult the same policy; live audio reconciliation stops muted loops/one-shots and can restore requested loops after unmuting. Nonfinite stored volumes recover to zero. Existing settings and channel values remain intact. Device audio/interruption behavior is not yet verified.
+- Tests added/updated: Prompt1BAudioSettingsTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "Swift_syntax_previous_batches": "36 changed Swift files parsed without syntax errors; not a build/runtime test"}.
+- Next action: Replace production-facing demo authentication/sync success with explicit unavailable-service handling while preserving local profile data, then implement hormone-measurement safeguards.
+- Commit: containing commit for batch P5-persistent-global-audio-mute.

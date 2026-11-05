@@ -15,7 +15,7 @@ final class Prompt1BImagePreparationTests: XCTestCase {
     func testLargeImportedImageIsDecodedAndBounded() async throws {
         let image = UIGraphicsImageRenderer(size: CGSize(width: 3000, height: 1000)).image { context in
             UIColor.blue.setFill()
-            context.fill(CGRect(x: 0, y: 0, width: 3000, height: 1000))
+            context.cgContext.fill(CGRect(x: 0, y: 0, width: 3000, height: 1000))
         }
         let input = try XCTUnwrap(image.pngData())
         let result = try await Prompt10ImagePreparation.prepare(input)
