@@ -75,7 +75,8 @@ struct FruitPopupHost<Content: View>: View {
             of: popupCoordinator.presentationState
         ) { _, state in
 
-            guard state == .dismissing else {
+            guard state == .dismissing,
+                  let dismissingPopupID = popupCoordinator.currentPopup?.id else {
                 return
             }
 
@@ -89,9 +90,12 @@ struct FruitPopupHost<Content: View>: View {
                     ? 150_000_000
                     : 175_000_000
 
-                try? await Task.sleep(
-                    nanoseconds: delay
-                )
+                do {
+                    try await Task.sleep(nanoseconds: delay)
+                } catch {
+                    return
+                }
+                guard !Task.isCancelled else { return }
 
                 /*
                  Do not finish an unrelated future popup dismissal if the
@@ -104,7 +108,7 @@ struct FruitPopupHost<Content: View>: View {
                     return
                 }
 
-                popupCoordinator.finishDismissal()
+                popupCoordinator.finishDismissal(expectedPopupID: dismissingPopupID)
             }
         }
     }

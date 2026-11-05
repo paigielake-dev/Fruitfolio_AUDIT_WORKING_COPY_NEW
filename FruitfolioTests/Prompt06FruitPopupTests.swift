@@ -3,6 +3,35 @@ import XCTest
 
 @MainActor
 final class Prompt06FruitPopupTests: XCTestCase {
+    func testStaleDismissalCannotClearNewerDismissingPopup() {
+        let coordinator = PopupCoordinator()
+        let first = FruitPopupRequest(character: .blueberry, message: "first")
+        let second = FruitPopupRequest(character: .peach, message: "second")
+        coordinator.request(first)
+        coordinator.request(second)
+        coordinator.dismissCurrent()
+        coordinator.finishDismissal(expectedPopupID: first.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, second.id)
+        coordinator.dismissCurrent()
+        // Simulate the old host task arriving after the replacement begins closing.
+        coordinator.finishDismissal(expectedPopupID: first.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, second.id)
+        XCTAssertEqual(coordinator.presentationState, .dismissing)
+        coordinator.finishDismissal(expectedPopupID: second.id)
+        XCTAssertNil(coordinator.currentPopup)
+        XCTAssertEqual(coordinator.presentationState, .idle)
+    }
+
+    func testDismissalCompletionRequiresDismissalState() {
+        let coordinator = PopupCoordinator()
+        let popup = FruitPopupRequest(character: .blueberry, message: "still visible")
+        coordinator.request(popup)
+        coordinator.markPresented()
+        coordinator.finishDismissal(expectedPopupID: popup.id)
+        XCTAssertEqual(coordinator.currentPopup?.id, popup.id)
+        XCTAssertEqual(coordinator.presentationState, .visible)
+    }
+
     func testCanonicalCharacterAssetMapping() {
         XCTAssertEqual(FruitPopupCharacter.strawberry.assetID, .fruit_strawberry_silly)
         XCTAssertEqual(FruitPopupCharacter.blueberry.assetID, .fruit_blueberry_friendly)

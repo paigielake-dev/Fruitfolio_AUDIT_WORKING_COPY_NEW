@@ -92,6 +92,14 @@ final class PopupCoordinator: ObservableObject {
         presentationState = .dismissing
     }
 
+    /// Complete only the dismissal owned by this presentation. A delayed host
+    /// task must never clear a replacement popup, even if it is also dismissing.
+    func finishDismissal(expectedPopupID: UUID) {
+        guard currentPopup?.id == expectedPopupID,
+              presentationState == .dismissing else { return }
+        finishDismissal()
+    }
+
     func finishDismissal() {
         timedDismissTask?.cancel()
         timedDismissTask = nil

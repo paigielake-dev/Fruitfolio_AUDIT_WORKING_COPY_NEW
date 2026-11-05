@@ -20,7 +20,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
@@ -42,7 +42,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
@@ -64,7 +64,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
@@ -86,7 +86,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
@@ -108,7 +108,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
@@ -121,20 +121,25 @@
       "original_section": "Universal blur system",
       "description": "Ensure blur responds correctly to popup opening, closing, navigation, and other state changes.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioModalBlur.swift",
+        "Fruitfolio/Core/AppArchitecture/PopupCoordinator.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
+        "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground",
+        "Prompt06FruitPopupTests/testStaleDismissalCannotClearNewerDismissingPopup",
+        "Prompt06FruitPopupTests/testDismissalCompletionRequiresDismissalState"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
-        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
+        "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
+        "Dismissal completion requires matching popup UUID and dismissing state; cancellation exits without completing."
       ],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "last_updated": "2026-11-05T18:27:47.679238+00:00"
     },
     {
       "sequence": 7,
@@ -1160,7 +1165,7 @@
       "related_tests": [
         "FounderOverrideIntegrationTests/testReducedMotionModalNeverScalesBackground"
       ],
-      "commit_reference": null,
+      "commit_reference": "56723585e21a11416b22ce753b3743967e7f2cc8",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending."
       ],
