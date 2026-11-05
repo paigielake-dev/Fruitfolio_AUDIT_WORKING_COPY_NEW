@@ -217,3 +217,13 @@
 - Verification: {"workflow_and_packaging": "5 passed", "shell_syntax": "passed", "Swift_syntax": "65 changed/new files, zero parser errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"}.
 - Next action: Run all supported verification, fix source/API issues found, reconcile tracker source mappings and then return to the first unfinished requirement; do not treat Part 10 checks as completion.
 - Commit: containing commit for batch P9-display-translation-and-reproducible-packaging.
+
+## P10-regression-review-and-intro-skip
+
+- Parent checkpoint: 5b5fa8139d7b36820ac800bc52054783224b06e1.
+- Source-order requirements: [81, 82, 83, 84, 85, 86, 87, 248, 252, 265, 444, 449, 471, 472, 473, 476, 477].
+- During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.
+- Tests added/updated: Prompt04IntroTests/testSkipCompletesOnceAndCancelsOriginalSequence.
+- Verification: {"workflow_and_packaging": "5 passed", "Swift_syntax": "changed sources parsed with no errors; not compiled", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"}.
+- Next action: Return to first unfinished requirements, reconcile evidence mappings, add portable functional verification where feasible, and continue remaining popup/decorative/localization gaps. Model retrieval remains blocked independently.
+- Commit: containing commit for batch P10-regression-review-and-intro-skip.

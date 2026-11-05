@@ -90,6 +90,21 @@ final class Prompt04IntroStateMachine: ObservableObject {
         }
     }
 
+    func cancelSequence() {
+        sequenceGeneration &+= 1
+        sequenceTask?.cancel()
+        sequenceTask = nil
+    }
+
+    func skipToHub(completion: @escaping @MainActor (_ wasFirstLaunch: Bool) -> Void) {
+        guard hasStarted, stage != .introComplete, let mode = activeLaunchMode else { return }
+        cancelSequence()
+        settleAtHubPaper()
+        stage = .introComplete
+        hubInteractionEnabled = true
+        completion(mode.isFirstLaunch)
+    }
+
     func handleBackgrounding(
         audioManager: AudioManager
     ) {

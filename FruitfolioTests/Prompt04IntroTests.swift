@@ -31,6 +31,29 @@ final class Prompt04IntroTests: XCTestCase {
         audio.stop(category: .rainAmbience)
     }
 
+    @MainActor
+    func testSkipCompletesOnceAndCancelsOriginalSequence() async throws {
+        let suite = "Prompt1BSkip.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        let audio = AudioManager(settings: settings)
+        let machine = Prompt04IntroStateMachine()
+        var completions = 0
+        machine.start(mode: .firstLaunch, audioManager: audio, settings: settings) { _ in completions += 1 }
+        machine.skipToHub { firstLaunch in
+            XCTAssertTrue(firstLaunch)
+            completions += 1
+        }
+        machine.skipToHub { _ in completions += 1 }
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertEqual(completions, 1)
+        XCTAssertEqual(machine.stage, .introComplete)
+        XCTAssertTrue(machine.hubInteractionEnabled)
+        audio.stop(category: .music)
+        audio.stop(category: .rainAmbience)
+    }
+
     func testLaunchStorePersistsSignatureCompletionSeparately() async throws {
         let suiteName = "Prompt04IntroTests.\(UUID().uuidString)"
 

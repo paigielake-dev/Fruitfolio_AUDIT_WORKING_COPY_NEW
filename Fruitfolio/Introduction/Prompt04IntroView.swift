@@ -56,7 +56,29 @@ struct Prompt04IntroView: View {
         .onChange(of: scenePhase) { _, newPhase in
             handleScenePhase(newPhase)
         }
-        .accessibilityElement(children: machine.hubInteractionEnabled ? .contain : .ignore)
+        .onDisappear { machine.cancelSequence() }
+        .overlay(alignment: .bottomLeading) {
+            if launchMode != nil && !machine.hubInteractionEnabled {
+                Button {
+                    audioManager.play(.buttonSoftPop)
+                    machine.skipToHub(completion: completeIntro(wasFirstLaunch:))
+                } label: {
+                    VStack(spacing: 4) {
+                        FruitfolioImage(id: .control_next)
+                            .scaledToFit().frame(width: 44, height: 44)
+                            .accessibilityHidden(true)
+                        Text("skip tour").font(.caption)
+                    }
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .frame(minWidth: 44, minHeight: 44)
+                }
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .accessibilityLabel("skip tour")
+                .accessibilityIdentifier("intro.skipTour")
+                .padding(20)
+            }
+        }
+        .accessibilityElement(children: .contain)
     }
 
     @ViewBuilder

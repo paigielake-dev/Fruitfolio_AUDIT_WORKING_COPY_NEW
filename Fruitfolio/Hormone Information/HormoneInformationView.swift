@@ -86,22 +86,26 @@ struct FruitfolioHormoneInformationView: View {
                 editing = nil
             }
         }
-        .confirmationDialog("delete this measurement?", isPresented: Binding(
-            get: { deleting != nil }, set: { if !$0 { deleting = nil } })) {
+        .fileExporter(isPresented: $showExport, document: exportDocument, contentType: .json,
+                      defaultFilename: "Fruitfolio-My-Measurements") { result in
+            if case .failure(let error) = result { errorMessage = error.localizedDescription }
+        }
+        .confirmationDialog(confirmErase ? "delete all hormone measurements from this device?" : "delete this measurement?",
+                            isPresented: Binding(get: { confirmErase || deleting != nil },
+                                                 set: { if !$0 { confirmErase = false; deleting = nil } })) {
+            if confirmErase {
+                Button("delete all measurements", role: .destructive) {
+                    store.eraseAllMeasurements()
+                    confirmErase = false
+                }
+            } else {
                 Button("delete measurement", role: .destructive) {
                     guard let record = deleting else { return }
                     do { try store.delete(id: record.id) } catch { errorMessage = error.localizedDescription }
                     deleting = nil
                 }
-                Button("cancel", role: .cancel) { deleting = nil }
-        }
-        .fileExporter(isPresented: $showExport, document: exportDocument, contentType: .json,
-                      defaultFilename: "Fruitfolio-My-Measurements") { result in
-            if case .failure(let error) = result { errorMessage = error.localizedDescription }
-        }
-        .confirmationDialog("delete all hormone measurements from this device?", isPresented: $confirmErase) {
-            Button("delete all measurements", role: .destructive) { store.eraseAllMeasurements() }
-            Button("cancel", role: .cancel) {}
+            }
+            Button("cancel", role: .cancel) { confirmErase = false; deleting = nil }
         }
         .accessibilityIdentifier("hormoneInformation.history")
     }

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "a650b1a77cfca2b0bd43f266da37bf568f2c72be",
+  "current_HEAD": "5b5fa8139d7b36820ac800bc52054783224b06e1",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
-  "current_requirement": 444,
-  "current_implementation_batch": "P9-display-translation-and-reproducible-packaging",
+  "current_checklist_part": 10,
+  "current_requirement": 1,
+  "current_implementation_batch": "P10-regression-review-and-intro-skip",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,16 +493,10 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Ask/Prompt09AskModels.swift",
-    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+    "Fruitfolio/Introduction/Prompt04IntroStateMachine.swift",
+    "Fruitfolio/Introduction/Prompt04IntroView.swift",
     "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-    "Tools/prepare_madlad_manifest.py",
-    "Tools/convert_madlad_local.sh"
+    "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift"
   ],
   "known_blockers": [
     "Linux: Swift and Xcode unavailable",
@@ -511,18 +505,16 @@
   ],
   "last_executed_tests": [
     "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s development_workflow/tests -v",
-    "bash -n Tools/convert_madlad_local.sh",
     "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
     "git diff --check"
   ],
   "last_test_results": {
     "workflow_and_packaging": "5 passed",
-    "shell_syntax": "passed",
-    "Swift_syntax": "65 changed/new files, zero parser errors; not compiled",
+    "Swift_syntax": "changed sources parsed with no errors; not compiled",
     "diff": "passed",
     "Swift_iOS": "NOT_RUN: Xcode unavailable",
     "MADLAD_inference": "BLOCKED: official model/tokenizer absent, proxy 403"
   },
-  "next_exact_implementation_action": "Run all supported verification, fix source/API issues found, reconcile tracker source mappings and then return to the first unfinished requirement; do not treat Part 10 checks as completion.",
-  "updated_at": "2026-11-05T19:10:19.681081+00:00"
+  "next_exact_implementation_action": "Return to first unfinished requirements, reconcile evidence mappings, add portable functional verification where feasible, and continue remaining popup/decorative/localization gaps. Model retrieval remains blocked independently.",
+  "updated_at": "2026-11-05T19:12:35.801264+00:00"
 }
