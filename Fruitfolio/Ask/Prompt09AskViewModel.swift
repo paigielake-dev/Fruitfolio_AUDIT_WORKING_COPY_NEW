@@ -25,6 +25,7 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published var inputText = ""
     @Published private(set) var messages: [AskMessage]
     @Published private(set) var answer: AskAnswer?
+    @Published private(set) var answerHistory: [AskAnswer] = []
     @Published private(set) var phase: Phase = .ready
     @Published private(set) var searchStatusText = "looking through the FruitsofLife.xo library…"
     @Published private(set) var displayedAnswerText = ""
@@ -33,7 +34,7 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published var selectedExcerptText: String?
     @Published private(set) var excerptSaved = false
 
-    let conversationID: UUID
+    private(set) var conversationID: UUID
 
     private let engine: any AskKnowledgeServing
     private let router: EducationalAssetRouter
@@ -70,6 +71,7 @@ final class Prompt09AskViewModel: ObservableObject {
         requestGeneration = UUID()
         typingTask?.cancel()
         typingTask = nil
+        if phase == .searching || phase == .answering { phase = .ready }
     }
 
     var canSend: Bool {
@@ -101,7 +103,7 @@ final class Prompt09AskViewModel: ObservableObject {
         requestGeneration = generation
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion)
+            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation)
         }
         requestTask = task
         await task.value
@@ -111,7 +113,8 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     private func performSubmitCurrentQuestion(
-        reduceMotion: Bool
+        reduceMotion: Bool,
+        generation: UUID
     ) async {
         let question = inputText
             .trimmingCharacters(
@@ -125,7 +128,7 @@ final class Prompt09AskViewModel: ObservableObject {
             return
         }
 
-        try? Task.checkCancellation()
+        guard !Task.isCancelled, requestGeneration == generation else { return }
         typingTask?.cancel()
 
         answer = nil
@@ -155,7 +158,8 @@ final class Prompt09AskViewModel: ObservableObject {
                     conversation: messages,
                     trackerContext: nil
                 ) { [weak self] progress in
-                    guard let self else { return }
+                    guard let self, !Task.isCancelled,
+                          self.requestGeneration == generation else { return }
                     switch progress {
                     case .lookingThroughLibrary:
                         self.searchStatusText = "looking through the FruitsofLife.xo library…"
@@ -175,7 +179,10 @@ final class Prompt09AskViewModel: ObservableObject {
             }
 
             try Task.checkCancellation()
+            guard requestGeneration == generation else { return }
             answer = response
+            answerHistory.append(response)
+            messages.append(AskMessage(id: response.id, role: .fruitfolio, text: response.answerText))
 
             selectedEducationalAssets =
                 router.assets(
@@ -196,6 +203,11 @@ final class Prompt09AskViewModel: ObservableObject {
                 )
             }
         } catch {
+            guard requestGeneration == generation else { return }
+            if Task.isCancelled || error is CancellationError {
+                phase = .ready
+                return
+            }
             phase = .failed(
                 error.localizedDescription
             )
@@ -218,7 +230,9 @@ final class Prompt09AskViewModel: ObservableObject {
 
 
     func resetConversation() {
-        typingTask?.cancel()
+        cancelOutstandingWork()
+        conversationID = UUID()
+        answerHistory = []
 
         inputText = ""
         answer = nil

@@ -87,3 +87,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Fix Ask request cancellation/reset races and session history so stale responses cannot mutate a newer session, then inspect earlier-answer save associations.
 - Commit: containing commit for batch P2-hub-invitation-ownership.
+
+## P3-ask-session-cancellation
+
+- Parent checkpoint: 6415b10404b342cfc2c73ab9ad0c8506f9ca9a97.
+- Source-order requirements: [97, 98, 118, 119, 120, 121, 122, 123, 124, 126, 136].
+- Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.
+- Tests added/updated: Prompt1BAskLifecycleTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Render ordered historical Ask answers and associate save state with answer identity; then implement near-bottom-only follow scrolling.
+- Commit: containing commit for batch P3-ask-session-cancellation.

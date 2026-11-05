@@ -264,6 +264,10 @@ struct Prompt09AskView: View {
         .onDisappear {
             inputFocused = false
             viewModel.cancelOutstandingWork()
+            if navigation.currentRoute != .ask {
+                viewModel.resetConversation()
+                savedExcerptText = nil
+            }
         }
         .toolbar(
             .hidden,
