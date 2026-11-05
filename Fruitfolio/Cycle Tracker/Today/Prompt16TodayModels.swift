@@ -2,13 +2,16 @@ import Foundation
 
 nonisolated enum Prompt16TodayContext: String, Equatable, Sendable {
     case menstruation
+    case reportedOpenPeriod = "reported_open_period"
     case cycleContext = "cycle_context"
     case insufficientData = "insufficient_data"
 
     var title: String {
         switch self {
         case .menstruation:
-            return "menstruation"
+            return "bleeding recorded today"
+        case .reportedOpenPeriod:
+            return "reported open period"
         case .cycleContext:
             return "your cycle today"
         case .insufficientData:
@@ -19,7 +22,9 @@ nonisolated enum Prompt16TodayContext: String, Equatable, Sendable {
     var explanation: String {
         switch self {
         case .menstruation:
-            return "you logged that your period is happening now. Fruitfolio will keep this recorded information separate from later estimates."
+            return "you recorded bleeding for today. this observation stays separate from cycle estimates and does not establish bleeding on other days."
+        case .reportedOpenPeriod:
+            return "your saved period information says this period is still open. this earlier report does not establish bleeding on unlogged days; you can update the period end when you know it."
         case .cycleContext:
             return "Fruitfolio has your recorded cycle start. More biological context can appear as enough information becomes available."
         case .insufficientData:
@@ -35,6 +40,7 @@ nonisolated struct Prompt16TodayState: Equatable, Sendable {
     let bbtUnit: Prompt14TemperatureUnitPreference?
     let hasRecordedTemperatureToday: Bool
     let hasRecordedBleedingToday: Bool
+    var hasReportedOpenPeriod: Bool = false
 
     static let empty = Prompt16TodayState(
         cycleDay: nil,
@@ -63,11 +69,15 @@ nonisolated struct Prompt16TodayStateBuilder: Sendable {
         let onboardingSaysCurrentPeriod =
             onboarding.currentPeriodState == .supplied
                 && onboarding.currentPeriodAnswer == .yes
-                && onboarding.latestPeriodStart != nil
+                && onboarding.latestPeriodState == .supplied
+                && onboarding.latestPeriodStart.map { $0 <= today } == true
+                && !(onboarding.periodEndState == .supplied && onboarding.periodEnd != nil)
 
         let context: Prompt16TodayContext
-        if recordedBleedingToday || onboardingSaysCurrentPeriod {
+        if recordedBleedingToday {
             context = .menstruation
+        } else if onboardingSaysCurrentPeriod {
+            context = .reportedOpenPeriod
         } else if derivedState.currentCycleDay != nil {
             context = .cycleContext
         } else {
@@ -90,7 +100,8 @@ nonisolated struct Prompt16TodayStateBuilder: Sendable {
             bbtShortcutEnabled: bbtShortcutEnabled,
             bbtUnit: onboarding.bbtUnit,
             hasRecordedTemperatureToday: recordedTemperatureToday,
-            hasRecordedBleedingToday: recordedBleedingToday
+            hasRecordedBleedingToday: recordedBleedingToday,
+            hasReportedOpenPeriod: onboardingSaysCurrentPeriod
         )
     }
 }

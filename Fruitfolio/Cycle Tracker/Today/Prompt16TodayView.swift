@@ -51,14 +51,17 @@ struct Prompt16TodayView: View {
     }
 
     private var displayContextTitle: String {
-        wheelModel.currentRegion?.title ?? state.context.title
+        if state.context == .menstruation || state.context == .reportedOpenPeriod { return state.context.title }
+        return wheelModel.currentRegion?.title ?? state.context.title
     }
 
     private var displayContextExplanation: String {
-        wheelModel.currentRegion?.noteBody ?? state.context.explanation
+        if state.context == .menstruation || state.context == .reportedOpenPeriod { return state.context.explanation }
+        return wheelModel.currentRegion?.noteBody ?? state.context.explanation
     }
 
     private var displayIsMenstruation: Bool {
+        if state.context == .reportedOpenPeriod { return false }
         if predictionResult != nil,
            wheelModel.currentRegion != nil {
             return wheelModel.currentRegion == .menstruation
@@ -279,7 +282,8 @@ struct Prompt16TodayView: View {
                 alignment: .leading,
                 spacing: 9
             ) {
-                Text(displayContextTitle)
+                FruitfolioTranslatedText(source: displayContextTitle, font: Prompt16Type.contextTitle,
+                    color: Prompt16Palette.burgundy, serious: true)
                     .font(Prompt16Type.contextTitle)
                     .foregroundStyle(
                         Prompt16Palette.burgundy
@@ -296,7 +300,8 @@ struct Prompt16TodayView: View {
                     .frame(height: 74)
                 }
 
-                Text(displayContextExplanation)
+                FruitfolioTranslatedText(source: displayContextExplanation, font: Prompt16Type.body,
+                    color: Prompt16Palette.burgundy.opacity(0.82), serious: true)
                     .font(Prompt16Type.body)
                     .foregroundStyle(
                         Prompt16Palette.burgundy.opacity(0.82)

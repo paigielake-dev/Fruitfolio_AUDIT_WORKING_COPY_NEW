@@ -174,9 +174,26 @@ final class Prompt21BodyBiologyCoreTests: XCTestCase {
             let today = Prompt16TodayState(cycleDay: 1, context: .menstruation,
                 bbtShortcutEnabled: false, bbtUnit: nil, hasRecordedTemperatureToday: false, hasRecordedBleedingToday: recorded)
             let input = Prompt21BodyBiologyLoader.makeInput(from: today)
-            XCTAssertEqual(input.state, .menstruation)
+            XCTAssertEqual(input.state, recorded ? .menstruation : .neutral)
             XCTAssertEqual(input.confirmedCycleDayOne, recorded)
         }
+    }
+
+    func testReportedOpenPeriodCannotBecomeCurrentBiologyOrDayOneConfirmation() async {
+        let today = Prompt16TodayState(cycleDay: 1, context: .reportedOpenPeriod,
+            bbtShortcutEnabled: false, bbtUnit: nil, hasRecordedTemperatureToday: false, hasRecordedBleedingToday: false)
+        let input = Prompt21BodyBiologyLoader.makeInput(from: today)
+        XCTAssertEqual(input.state, .neutral)
+        XCTAssertFalse(input.confirmedCycleDayOne)
+    }
+
+    func testBleedingWithoutReportedPeriodDoesNotEstablishMenstruation() async {
+        let today = Prompt16TodayState(cycleDay: 15, context: .menstruation,
+            bbtShortcutEnabled: false, bbtUnit: nil, hasRecordedTemperatureToday: false, hasRecordedBleedingToday: true)
+        XCTAssertEqual(Prompt21BodyBiologyLoader.makeInput(from: today).state, .neutral)
+        var reported = today
+        reported.hasReportedOpenPeriod = true
+        XCTAssertEqual(Prompt21BodyBiologyLoader.makeInput(from: reported).state, .menstruation)
     }
 
 }

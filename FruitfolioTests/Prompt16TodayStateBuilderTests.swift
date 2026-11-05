@@ -35,7 +35,7 @@ nonisolated final class Prompt16TodayStateBuilderTests: XCTestCase {
         XCTAssertFalse(state.bbtShortcutEnabled)
     }
 
-    func testCurrentPeriodAnswerProducesMenstruationContextWithoutPrediction() throws {
+    func testOpenPeriodReportDoesNotBecomeTodaysBleedingObservation() throws {
         let today = try Prompt13LocalDate(year: 2026, month: 9, day: 7)
         let derived = Prompt13DerivedState(
             generatedAt: Date(timeIntervalSince1970: 1_788_739_200),
@@ -70,7 +70,8 @@ nonisolated final class Prompt16TodayStateBuilderTests: XCTestCase {
         )
 
         XCTAssertEqual(state.cycleDay, 3)
-        XCTAssertEqual(state.context, .menstruation)
+        XCTAssertEqual(state.context, .reportedOpenPeriod)
+        XCTAssertFalse(state.hasRecordedBleedingToday)
     }
 
     func testBBTShortcutRequiresBothTrackingPreferenceAndSetupChoice() {

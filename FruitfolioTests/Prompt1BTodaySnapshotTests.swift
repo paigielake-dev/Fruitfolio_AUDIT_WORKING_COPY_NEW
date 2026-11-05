@@ -22,13 +22,13 @@ final class Prompt1BTodaySnapshotTests: XCTestCase {
         let start = try Prompt13LocalDate(year: 2026, month: 9, day: 1)
         _ = try await cycle.recordCycleStart(on: start, today: .init(year: 2026, month: 9, day: 7))
         var draft = Prompt14OnboardingDraft()
-        draft.currentPeriodState = .supplied; draft.currentPeriodAnswer = .yes; draft.latestPeriodStart = start
+        draft.currentPeriodState = .supplied; draft.currentPeriodAnswer = .yes; draft.latestPeriodStart = start; draft.latestPeriodState = .supplied
         let onboarding = Prompt14CycleOnboardingStore.inMemory(draft: draft, cycleStore: cycle)
         let loader = Prompt16TodayLoader(cycleStore: cycle, onboardingStore: onboarding, calendar: calendar)
         let result = try await loader.loadSnapshot(now: now)
         XCTAssertEqual(result.asOfDate, now)
         XCTAssertEqual(result.state.cycleDay, result.derivedState.currentCycleDay)
-        XCTAssertEqual(result.state.context, .menstruation)
+        XCTAssertEqual(result.state.context, .reportedOpenPeriod)
         XCTAssertFalse(result.state.hasRecordedBleedingToday, "An onboarding report must not become a new recorded bleeding observation")
         XCTAssertEqual(result.onboarding, draft)
         XCTAssertEqual(result.archive.cycleStarts.count, 1)
@@ -67,6 +67,50 @@ final class Prompt1BTodaySnapshotTests: XCTestCase {
         XCTAssertFalse(restricted.annotations.values.contains { $0.predictedPeriod || $0.ovulationEstimated || $0.fertileEstimated })
         XCTAssertEqual(restricted.annotations[key]?.temperatureDisplay, "36.50 °C")
         XCTAssertEqual(restricted.annotations[key]?.noteText, "recorded fixture note")
+    }
+
+    func testBleedingTodayOverridesOnlyTheReportedOpenEpisode() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let today = try Prompt13LocalDate(year: 2026, month: 9, day: 7)
+        let now = try XCTUnwrap(today.foundationDate(in: calendar))
+        let cycle = Prompt13CycleStore.inMemory()
+        let start = try Prompt13LocalDate(year: 2026, month: 8, day: 1)
+        _ = try await cycle.recordCycleStart(on: start, today: today)
+        var draft = Prompt14OnboardingDraft()
+        draft.latestPeriodState = .supplied; draft.latestPeriodStart = start
+        draft.currentPeriodState = .supplied; draft.currentPeriodAnswer = .yes
+        let onboarding = Prompt14CycleOnboardingStore.inMemory(draft: draft, cycleStore: cycle)
+        let loader = Prompt16TodayLoader(cycleStore: cycle, onboardingStore: onboarding, calendar: calendar)
+        let before = try await loader.loadSnapshot(now: now)
+        XCTAssertEqual(before.state.context, .reportedOpenPeriod)
+        XCTAssertFalse(before.state.hasRecordedBleedingToday)
+        _ = try await cycle.recordBleeding(on: today, flowLevel: .light, today: today)
+        let after = try await loader.loadSnapshot(now: now)
+        XCTAssertEqual(after.state.context, .menstruation)
+        XCTAssertTrue(after.state.hasRecordedBleedingToday)
+        XCTAssertEqual(before.onboarding, after.onboarding)
+        let following = try await loader.loadSnapshot(now: now.addingTimeInterval(86_400))
+        XCTAssertEqual(following.state.context, .reportedOpenPeriod)
+        XCTAssertFalse(following.state.hasRecordedBleedingToday)
+        XCTAssertEqual(following.archive.bleedingObservations.count, 1)
+    }
+
+    func testEndedOrFutureReportedEpisodeCannotClaimCurrentBleeding() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let today = try Prompt13LocalDate(year: 2026, month: 9, day: 7)
+        let now = try XCTUnwrap(today.foundationDate(in: calendar))
+        for future in [false, true] {
+            let cycle = Prompt13CycleStore.inMemory()
+            var draft = Prompt14OnboardingDraft()
+            draft.latestPeriodState = .supplied
+            draft.latestPeriodStart = try today.addingDays(future ? 1 : -5)
+            draft.currentPeriodState = .supplied; draft.currentPeriodAnswer = .yes
+            if !future { draft.periodEndState = .supplied; draft.periodEnd = try today.addingDays(-1) }
+            let onboarding = Prompt14CycleOnboardingStore.inMemory(draft: draft, cycleStore: cycle)
+            let result = try await Prompt16TodayLoader(cycleStore: cycle, onboardingStore: onboarding, calendar: calendar).loadSnapshot(now: now)
+            XCTAssertEqual(result.state.context, .insufficientData)
+            XCTAssertFalse(result.state.hasRecordedBleedingToday)
+        }
     }
 
 }

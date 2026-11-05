@@ -18,8 +18,11 @@ struct Prompt21BodyBiologyLoader {
     nonisolated static func makeInput(from today: Prompt16TodayState) -> Prompt21BodyBiologyInput {
         let state: Prompt21BodyBiologyState
         switch today.context {
-        case .menstruation: state = .menstruation
-        case .cycleContext, .insufficientData: state = .neutral
+        case .menstruation:
+            // Bleeding alone (including spotting) does not establish menstruation.
+            state = today.hasRecordedBleedingToday && (today.hasReportedOpenPeriod || today.cycleDay == 1)
+                ? .menstruation : .neutral
+        case .cycleContext, .insufficientData, .reportedOpenPeriod: state = .neutral
         }
         return Prompt21BodyBiologyInput(
             state: state,
