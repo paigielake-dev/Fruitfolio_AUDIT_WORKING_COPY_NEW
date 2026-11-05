@@ -913,6 +913,15 @@ struct Prompt09AskView: View {
                         )
                     }
 
+                    if viewModel.phase == .ready,
+                       viewModel.selectedEducationalAssets.isEmpty,
+                       !viewModel.availableEducationalAssets.isEmpty {
+                        WatercolorSecondaryButton(label: "view educational illustration") {
+                            audioManager.play(.buttonSoftPop)
+                            viewModel.revealEducationalIllustration()
+                        }
+                    }
+
                     ForEach(
                         viewModel
                             .selectedEducationalAssets,
@@ -928,9 +937,7 @@ struct Prompt09AskView: View {
                                         .assetID
                             )
                             .scaledToFit()
-                            .containerRelativeFrame(.horizontal) { length, _ in
-                                min(max(length * 0.82, 180), 300)
-                            }
+                            .frame(maxWidth: 300)
                             .accessibilityLabel(
                                 descriptor
                                     .accessibilityDescription

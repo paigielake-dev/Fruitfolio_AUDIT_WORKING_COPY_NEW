@@ -420,3 +420,14 @@
 - Verification: {"portable_swift": "47 XCTest + 21 Swift Testing passed (68 total)", "Swift_syntax": "102 files, zero parser errors", "Audio_and_help_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Enforce default-no-illustration and one-major-visual Ask behavior; finish verified citation controls, source-grounded voice and remaining requirements.
 - Commit: containing commit for batch P3-measured-Ask-help-and-owned-typing-audio.
+
+## P3-default-text-only-and-single-educational-art
+
+- Parent checkpoint: 221dbbbb5899f97e0170e0adf4d1201f7fee972f.
+- Source-order requirements: [139, 140, 142, 143, 144, 145, 146, 147].
+- Source files: Fruitfolio/Ask/Prompt09AskModels.swift, Fruitfolio/Ask/Prompt09AnswerSupport.swift, Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift, Fruitfolio/Ask/Prompt09AskViewModel.swift, Fruitfolio/Ask/Prompt09AskView.swift.
+- Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple.
+- Tests added/updated: Prompt1BEducationalArtworkTests, Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction.
+- Verification: {"portable_swift": "49 XCTest + 21 Swift Testing passed (70 total)", "workflow": "11 Python tests passed", "Swift_syntax": "106 files, zero parser errors", "Apple_illustration_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Add functional links and preserved identifiers to verified citation records, then continue source-grounded voice and remaining requirements.
+- Commit: containing commit for batch P3-default-text-only-and-single-educational-art.

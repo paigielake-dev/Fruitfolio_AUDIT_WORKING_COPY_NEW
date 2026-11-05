@@ -2,12 +2,6 @@ import Foundation
 
 // MARK: - Ask conversation
 
-enum AskKnowledgeSupport: String, Codable, Sendable {
-    case supported
-    case partiallySupported
-    case genuinelyNovel
-}
-
 enum AskMessageRole: String, Codable, Sendable {
     case fruitfolio
     case user

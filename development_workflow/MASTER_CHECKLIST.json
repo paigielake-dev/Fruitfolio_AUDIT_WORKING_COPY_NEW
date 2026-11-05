@@ -4535,15 +4535,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Ensure answers remain fully contained inside the paper.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 140,
@@ -4551,15 +4562,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Keep answer text horizontally centered within its readable area.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 141,
@@ -4583,15 +4605,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Default to no educational illustration.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 143,
@@ -4599,15 +4632,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Display scientific artwork only when it materially improves understanding.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 144,
@@ -4615,15 +4659,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Do not select artwork merely because an asset matches a keyword.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 145,
@@ -4631,15 +4686,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Generally limit an ordinary answer to one major educational illustration when genuinely appropriate.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 146,
@@ -4647,15 +4713,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Reserve sequential scientific artwork for explicitly opened illustrated experiences.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 147,
@@ -4663,15 +4740,26 @@
       "original_checklist_part": "Part 3 \u2014 Ask the Encyclopedia",
       "original_section": null,
       "description": "Do not create anatomy collages or use educational illustrations as decoration.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/Prompt09AskModels.swift",
+        "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
+        "Fruitfolio/Ask/Prompt09EducationalAssetRouter.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BEducationalArtworkTests",
+        "Prompt1BAskLifecycleTests/testIllustrationIsNotDisplayedUntilExplicitEducationalAction"
+      ],
+      "commit_reference": "batch:P3-default-text-only-and-single-educational-art (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Ordinary Ask now defaults to no visible educational illustration. The evidence-gated router offers at most one candidate and requires fully supported content plus matching topic and specific concept; raw prose keywords do not directly display art. The user must explicitly open an educational illustration. Partial/unsupported answers offer no candidate, and high requested counts cannot create a collage. Existing 44 illustrations and resources are preserved; explicit sequential science modules remain separate. Removed viewport-relative minimum image width that could exceed a narrow paper text column. Pure router tests pass; ViewModel/user-action and actual illustration layout remain unrun on Apple."
+      ],
+      "last_updated": "2026-11-05T20:22:50.190439+00:00"
     },
     {
       "sequence": 148,

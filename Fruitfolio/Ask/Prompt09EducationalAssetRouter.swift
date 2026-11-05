@@ -9,7 +9,8 @@ struct EducationalAssetDescriptor: Hashable, Sendable {
 }
 
 /// Prompt 09 routing rule:
-/// evidence/support is resolved first; only then may a matching educational asset appear.
+/// Evidence/support resolves before a single candidate may be offered. A
+/// candidate is not automatically displayed; ordinary Ask defaults to text.
 struct EducationalAssetRouter: Sendable {
     static let shared = EducationalAssetRouter()
 
@@ -22,9 +23,9 @@ struct EducationalAssetRouter: Sendable {
     func assets(
         for conceptTags: Set<String>,
         support: AskKnowledgeSupport,
-        maximumCount: Int = 2
+        maximumCount: Int = 1
     ) -> [EducationalAssetDescriptor] {
-        guard support != .genuinelyNovel, !conceptTags.isEmpty, maximumCount > 0 else {
+        guard support == .supported, !conceptTags.isEmpty, maximumCount > 0 else {
             return []
         }
 
@@ -57,7 +58,7 @@ struct EducationalAssetRouter: Sendable {
                 if lhs.1 != rhs.1 { return lhs.1 > rhs.1 }
                 return lhs.0.accessibilityDescription < rhs.0.accessibilityDescription
             }
-            .prefix(maximumCount)
+            .prefix(min(maximumCount, 1))
             .map(\.0)
     }
 

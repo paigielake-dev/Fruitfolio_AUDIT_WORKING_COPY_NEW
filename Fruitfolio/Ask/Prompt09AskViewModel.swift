@@ -30,6 +30,7 @@ final class Prompt09AskViewModel: ObservableObject {
     @Published private(set) var searchStatusText = "looking through the FruitsofLife.xo library…"
     @Published private(set) var displayedAnswerText = ""
     @Published private(set) var displayedSemanticSpans: [FruitfolioSemanticSpan] = []
+    @Published private(set) var availableEducationalAssets: [EducationalAssetDescriptor] = []
     @Published private(set) var selectedEducationalAssets: [EducationalAssetDescriptor] = []
     @Published var isSaved = false
     @Published var selectedExcerptText: String?
@@ -164,6 +165,7 @@ final class Prompt09AskViewModel: ObservableObject {
         displayedAnswerText = ""
         displayedSemanticSpans = []
         selectedEducationalAssets = []
+        availableEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
         selectedExcerptRange = nil
@@ -217,7 +219,7 @@ final class Prompt09AskViewModel: ObservableObject {
             answerHistory.append(response)
             messages.append(AskMessage(id: response.id, role: .fruitfolio, text: response.answerText))
 
-            selectedEducationalAssets =
+            availableEducationalAssets =
                 router.assets(
                     for: response.conceptTags,
                     support: response.support
@@ -247,6 +249,12 @@ final class Prompt09AskViewModel: ObservableObject {
         }
     }
 
+    /// An explicit educational action, never decoration selected from raw prose.
+    func revealEducationalIllustration() {
+        guard phase == .ready, answer?.support == .supported else { return }
+        selectedEducationalAssets = Array(availableEducationalAssets.prefix(1))
+    }
+
     func showAll() {
         guard let answer else {
             return
@@ -272,6 +280,7 @@ final class Prompt09AskViewModel: ObservableObject {
         displayedAnswerText = ""
         displayedSemanticSpans = []
         selectedEducationalAssets = []
+        availableEducationalAssets = []
         isSaved = false
         selectedExcerptText = nil
         selectedExcerptRange = nil

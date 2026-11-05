@@ -57,11 +57,24 @@ final class Prompt1BAskLifecycleTests: XCTestCase {
 private actor Prompt1BImmediateAskEngine: AskKnowledgeServing {
     func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
         AskAnswer(originalQuestion: question, answerText: "Evidence for \(question)", support: .supported,
-                  sourceIDs: ["fixture-source"], knowledgeBaseVersion: "fixture")
+                  sourceIDs: ["fixture-source"], knowledgeBaseVersion: "fixture", conceptTags: ["ovulation", "follicle"])
     }
 }
 
 extension Prompt1BAskLifecycleTests {
+    func testIllustrationIsNotDisplayedUntilExplicitEducationalAction() async {
+        let model = Prompt09AskViewModel(engine: Prompt1BImmediateAskEngine())
+        model.inputText = "fixture"
+        await model.submitCurrentQuestion(reduceMotion: true)
+        XCTAssertTrue(model.selectedEducationalAssets.isEmpty)
+        XCTAssertEqual(model.availableEducationalAssets.count, 1)
+        model.revealEducationalIllustration()
+        XCTAssertEqual(model.selectedEducationalAssets.count, 1)
+        model.resetConversation()
+        XCTAssertTrue(model.selectedEducationalAssets.isEmpty)
+        XCTAssertTrue(model.availableEducationalAssets.isEmpty)
+    }
+
     func testMultipleTurnsKeepAnswersInOriginalSessionOrder() async {
         let model = Prompt09AskViewModel(engine: Prompt1BImmediateAskEngine())
         for question in ["first", "second"] {
