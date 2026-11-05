@@ -10,6 +10,13 @@ final class FounderOverrideIntegrationTests: XCTestCase {
         XCTAssertEqual(FruitfolioModalBlurSpec.reducedMotionDuration, 0.12, accuracy: 0.0001)
     }
 
+    func testReducedMotionModalNeverScalesBackground() {
+        XCTAssertEqual(FruitfolioModalBlurSpec.scale(active: true, reduceMotion: true), 1)
+        XCTAssertEqual(FruitfolioModalBlurSpec.scale(active: false, reduceMotion: true), 1)
+        XCTAssertEqual(FruitfolioModalBlurSpec.scale(active: false, reduceMotion: false), 1)
+        XCTAssertEqual(FruitfolioModalBlurSpec.scale(active: true, reduceMotion: false), 0.985, accuracy: 0.0001)
+    }
+
     func testPrompt40IsNotRepresentedAsANewProductionPass() {
         XCTAssertFalse(Prompt53ScreenInventory.requiredRoutes.contains("decoration"))
     }

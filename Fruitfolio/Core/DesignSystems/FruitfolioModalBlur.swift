@@ -8,6 +8,10 @@ enum FruitfolioModalBlurSpec {
     static let contentScale: CGFloat = 0.985
     static let animationDuration: TimeInterval = 0.20
     static let reducedMotionDuration: TimeInterval = 0.12
+
+    static func scale(active: Bool, reduceMotion: Bool) -> CGFloat {
+        active && !reduceMotion ? contentScale : 1
+    }
 }
 
 struct FruitfolioModalBlurModifier: ViewModifier {
@@ -17,7 +21,8 @@ struct FruitfolioModalBlurModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .blur(radius: isActive ? FruitfolioModalBlurSpec.radius : 0)
-            .scaleEffect(isActive ? FruitfolioModalBlurSpec.contentScale : 1.0)
+            .scaleEffect(FruitfolioModalBlurSpec.scale(active: isActive, reduceMotion: reduceMotion))
+            .accessibilityHidden(isActive)
             .allowsHitTesting(!isActive)
             .animation(
                 .easeOut(
