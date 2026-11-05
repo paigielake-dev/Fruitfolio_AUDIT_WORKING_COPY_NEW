@@ -1021,15 +1021,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Create one shared Swift system for bold, italic, and underline styling.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 47,
@@ -1037,15 +1046,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Apply it across all eligible app-generated and dynamically presented text.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 48,
@@ -1053,15 +1071,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Include Ask answers, fallbacks, Cycle Tracker, Fruit Basket, tutorials, popups, character dialogue, saved content, and guides.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 49,
@@ -1069,15 +1096,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Remove separate feature-specific semantic formatting implementations.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 50,
@@ -1085,15 +1121,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Determine emphasis from contextual meaning rather than keyword matching.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 51,
@@ -1101,15 +1146,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Use bold for meaningful informational anchors.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 52,
@@ -1149,15 +1203,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Use italics for natural spoken stress.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 55,
@@ -1181,15 +1244,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Restrict combined emphasis to situations where its meaning warrants it.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 57,
@@ -1245,15 +1317,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Preserve formatting during progressive rendering.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 61,
@@ -1261,15 +1342,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Preserve formatting when content is saved, reopened, or inserted into guides.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 62,
@@ -1277,15 +1367,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Prevent raw Markdown formatting markers from appearing on-screen.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 63,
@@ -1293,15 +1392,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Preserve readable VoiceOver output.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09SelectableAnswerText.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BSemanticTextTests"
+      ],
+      "commit_reference": "batch:P1-semantic-rendering-consolidation (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete."
+      ],
+      "last_updated": "2026-11-05T18:39:57.728156+00:00"
     },
     {
       "sequence": 64,

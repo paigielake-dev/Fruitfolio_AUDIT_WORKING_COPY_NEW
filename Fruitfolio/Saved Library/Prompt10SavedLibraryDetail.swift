@@ -408,7 +408,10 @@ struct Prompt10SavedPageView: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                Text(page.displayBody)
+                FruitfolioSemanticText(
+                    markdown: page.displayBody,
+                    baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body)
+                )
                     .font(
                         .custom(
                             "Chalkboard SE",

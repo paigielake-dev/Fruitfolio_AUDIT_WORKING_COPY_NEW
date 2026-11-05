@@ -57,3 +57,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Consolidate semantic rendering and remove Ask keyword-underlining while preserving explicit contextual emphasis and saved content.
 - Commit: containing commit for batch P1-decorative-safe-resizing.
+
+## P1-semantic-rendering-consolidation
+
+- Parent checkpoint: 3688eb8ff9ba4dd30033ef5e69183d17f5cbb367.
+- Source-order requirements: [46, 47, 48, 49, 50, 51, 54, 56, 60, 61, 62, 63].
+- SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.
+- Tests added/updated: Prompt1BSemanticTextTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Inspect Part 1 lifecycle work, then implement Part 2 intro pacing and reduced-motion foreground resumption without restarting or introducing spatial motion.
+- Commit: containing commit for batch P1-semantic-rendering-consolidation.

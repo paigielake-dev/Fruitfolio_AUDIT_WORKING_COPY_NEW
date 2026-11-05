@@ -1,8 +1,10 @@
 import SwiftUI
+import UIKit
 
 enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case plain
     case anchorBold
+    case anchorBoldSpokenItalic
     case spokenItalic
     case symptomOrPracticalUnderline
     case actionableBoldUnderline
@@ -10,7 +12,7 @@ enum FruitfolioSemanticEmphasis: String, Codable, Sendable {
     case absoluteBoldItalicUnderline
 }
 
-struct FruitfolioSemanticSpan: Identifiable, Equatable, Sendable {
+struct FruitfolioSemanticSpan: Identifiable, Codable, Equatable, Sendable {
     let id: UUID
     let text: String
     let emphasis: FruitfolioSemanticEmphasis
@@ -42,6 +44,10 @@ struct FruitfolioSemanticText: View {
         self.color = color ?? DesignTokens.ColorToken.primaryBurgundy
     }
 
+    init(markdown: String, baseFont: Font = .body, color: Color? = nil) {
+        self.init(spans: FruitfolioSemanticDocument.spans(from: markdown), baseFont: baseFont, color: color)
+    }
+
     var body: some View {
         spans.reduce(Text("")) { partial, span in
             Text("\(partial)\(styled(span))")
@@ -61,6 +67,9 @@ struct FruitfolioSemanticText: View {
         case .anchorBold:
             text = text.bold()
 
+        case .anchorBoldSpokenItalic:
+            text = text.bold().italic()
+
         case .spokenItalic:
             text = text.italic()
 
@@ -78,5 +87,64 @@ struct FruitfolioSemanticText: View {
         }
 
         return text
+    }
+}
+
+/// Emphasis comes from explicit author/model markup or structured spans, never
+/// from a symptom/hormone keyword lookup. Unknown prose remains plain.
+enum FruitfolioSemanticDocument {
+    static func spans(from markdown: String) -> [FruitfolioSemanticSpan] {
+        guard let parsed = try? AttributedString(
+            markdown: markdown,
+            options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)
+        ) else { return [.init(text: markdown)] }
+        return parsed.runs.map { run in
+            let intent = run.inlinePresentationIntent ?? []
+            let bold = intent.contains(.stronglyEmphasized)
+            let italic = intent.contains(.emphasized)
+            let emphasis: FruitfolioSemanticEmphasis
+            if bold && italic { emphasis = .anchorBoldSpokenItalic }
+            else if bold { emphasis = .anchorBold }
+            else if italic { emphasis = .spokenItalic }
+            else { emphasis = .plain }
+            return .init(text: String(parsed[run.range].characters), emphasis: emphasis)
+        }
+    }
+
+    static func plainText(from markdown: String) -> String {
+        spans(from: markdown).map(\.text).joined()
+    }
+}
+
+@MainActor
+enum FruitfolioSemanticRenderer {
+    static func attributed(markdown: String, font: UIFont, color: UIColor) -> NSAttributedString {
+        attributed(spans: FruitfolioSemanticDocument.spans(from: markdown), font: font, color: color)
+    }
+
+    static func attributed(spans: [FruitfolioSemanticSpan], font: UIFont, color: UIColor) -> NSAttributedString {
+        let result = NSMutableAttributedString(string: "")
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.lineSpacing = 4
+        for span in spans {
+            let bold = [FruitfolioSemanticEmphasis.anchorBold, .anchorBoldSpokenItalic,
+                        .actionableBoldUnderline, .absoluteBoldItalicUnderline].contains(span.emphasis)
+            let italic = [FruitfolioSemanticEmphasis.spokenItalic, .anchorBoldSpokenItalic,
+                          .rareItalicUnderline, .absoluteBoldItalicUnderline].contains(span.emphasis)
+            let underline = [FruitfolioSemanticEmphasis.symptomOrPracticalUnderline,
+                             .actionableBoldUnderline, .rareItalicUnderline,
+                             .absoluteBoldItalicUnderline].contains(span.emphasis)
+            var traits = font.fontDescriptor.symbolicTraits
+            if bold { traits.insert(.traitBold) }
+            if italic { traits.insert(.traitItalic) }
+            let descriptor = font.fontDescriptor.withSymbolicTraits(traits) ?? font.fontDescriptor
+            var attributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont(descriptor: descriptor, size: font.pointSize),
+                .foregroundColor: color, .paragraphStyle: paragraph
+            ]
+            if underline { attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue }
+            result.append(NSAttributedString(string: span.text, attributes: attributes))
+        }
+        return result
     }
 }

@@ -884,9 +884,9 @@ struct Prompt09AskView: View {
                     if viewModel.phase ==
                         .answering {
 
-                        Text(
-                            viewModel
-                                .displayedAnswerText
+                        FruitfolioSemanticText(
+                            markdown: viewModel.displayedAnswerText,
+                            baseFont: .custom("Chalkboard SE", size: 16, relativeTo: .body)
                         )
                         .font(
                             .custom(
@@ -1780,6 +1780,8 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
         textView.accessibilityLabel = "Fruitfolio answer"
 
         applyTextStyle(to: textView)
+        context.coordinator.renderedSource = text
+        context.coordinator.renderedSize = context.environment.dynamicTypeSize
 
         return textView
     }
@@ -1790,8 +1792,11 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     ) {
         textView.tintColor = Self.selectionHighlight
 
-        if textView.text != text {
+        if context.coordinator.renderedSource != text ||
+            context.coordinator.renderedSize != context.environment.dynamicTypeSize {
             applyTextStyle(to: textView)
+            context.coordinator.renderedSource = text
+            context.coordinator.renderedSize = context.environment.dynamicTypeSize
         }
     }
 
@@ -1824,67 +1829,22 @@ struct Prompt09MaroonSelectableAnswerText: UIViewRepresentable {
     }
 
     static func styledAnswer(_ text: String) -> NSAttributedString {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineSpacing = 4
-
-        let baseFont =
-            UIFont(
-                name: "ChalkboardSE-Regular",
-                size: 16
-            )
+        let baseFont = UIFont(name: "ChalkboardSE-Regular", size: 16)
             ?? UIFont.systemFont(ofSize: 16)
-
-        let styledText = NSMutableAttributedString(
-            string: text,
-            attributes: [
-                .font: UIFontMetrics(forTextStyle: .body)
-                    .scaledFont(for: baseFont),
-                .foregroundColor: Self.maroon,
-                .paragraphStyle: paragraphStyle
-            ]
+        return FruitfolioSemanticRenderer.attributed(
+            markdown: text,
+            font: UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont),
+            color: Self.maroon
         )
-
-        // Prompt 48: underline recognized symptom phrases.
-        let symptoms = [
-            "cramps", "bloating", "headache", "headaches",
-            "nausea", "fatigue", "breast tenderness",
-            "back pain", "brain fog", "mood changes",
-            "digestive changes"
-        ]
-
-        let nsText = text as NSString
-
-        for symptom in symptoms {
-            let pattern = "(?<![\\p{L}\\p{N}])"
-                + NSRegularExpression.escapedPattern(for: symptom)
-                + "(?![\\p{L}\\p{N}])"
-
-            guard let regex = try? NSRegularExpression(
-                pattern: pattern,
-                options: [.caseInsensitive]
-            ) else {
-                continue
-            }
-
-            for match in regex.matches(
-                in: text,
-                range: NSRange(location: 0, length: nsText.length)
-            ) {
-                styledText.addAttribute(
-                    .underlineStyle,
-                    value: NSUnderlineStyle.single.rawValue,
-                    range: match.range
-                )
-            }
-        }
-
-        return styledText
     }
 
     final class Coordinator:
         NSObject,
         UITextViewDelegate
     {
+        var renderedSource: String?
+        var renderedSize: DynamicTypeSize?
+
         @Binding private var selectedText: String?
 
         init(

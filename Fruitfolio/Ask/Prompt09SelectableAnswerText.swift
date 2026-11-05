@@ -34,14 +34,19 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
             alpha: 1
         )
         applyText(to: textView)
+        context.coordinator.renderedSource = text
+        context.coordinator.renderedSize = context.environment.dynamicTypeSize
         return textView
     }
 
     func updateUIView(_ textView: UITextView, context: Context) {
         context.coordinator.selectedText = $selectedText
 
-        if textView.text != text {
+        if context.coordinator.renderedSource != text ||
+            context.coordinator.renderedSize != context.environment.dynamicTypeSize {
             applyText(to: textView)
+            context.coordinator.renderedSource = text
+            context.coordinator.renderedSize = context.environment.dynamicTypeSize
             selectedText = nil
         }
     }
@@ -64,28 +69,18 @@ struct Prompt09SelectableAnswerText: UIViewRepresentable {
     }
 
     private func applyText(to textView: UITextView) {
-        let paragraph = NSMutableParagraphStyle()
-        paragraph.lineSpacing = 4
-
         let baseFont = UIFont(name: "ChalkboardSE-Regular", size: 16)
-            ?? UIFont.preferredFont(forTextStyle: .body)
-
-        textView.attributedText = NSAttributedString(
-            string: text,
-            attributes: [
-                .font: UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont),
-                .foregroundColor: UIColor(
-                    red: 128.0 / 255.0,
-                    green: 0,
-                    blue: 0,
-                    alpha: 1
-                ),
-                .paragraphStyle: paragraph
-            ]
+            ?? UIFont.systemFont(ofSize: 16)
+        textView.attributedText = FruitfolioSemanticRenderer.attributed(
+            markdown: text,
+            font: UIFontMetrics(forTextStyle: .body).scaledFont(for: baseFont),
+            color: UIColor(red: 128.0 / 255.0, green: 0, blue: 0, alpha: 1)
         )
     }
 
     final class Coordinator: NSObject, UITextViewDelegate {
+        var renderedSource: String?
+        var renderedSize: DynamicTypeSize?
         var selectedText: Binding<String?>
 
         init(selectedText: Binding<String?>) {
