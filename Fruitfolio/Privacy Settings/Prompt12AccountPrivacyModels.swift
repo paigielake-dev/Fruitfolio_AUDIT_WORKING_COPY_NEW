@@ -165,12 +165,15 @@ struct Prompt12DataExportRecord: Codable, Equatable, Sendable {
 
 enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case blankEmail
+    case serviceNotConfigured
     case notSignedIn
     case exportFailed
     case deletionFailed
 
     var errorDescription: String? {
         switch self {
+        case .serviceNotConfigured:
+            return "account sign-in and cloud sync are not available yet. your information remains on this device."
         case .blankEmail:
             return "enter an email before signing in."
         case .notSignedIn:

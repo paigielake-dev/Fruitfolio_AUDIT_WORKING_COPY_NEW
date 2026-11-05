@@ -4508,15 +4508,24 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Allow users to create and edit their username alongside their email.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+      ],
+      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+      ],
+      "last_updated": "2026-11-05T18:51:55.833977+00:00"
     },
     {
       "sequence": 230,
@@ -4524,15 +4533,24 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Use the same username for Account and Fruit Basket.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+      ],
+      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+      ],
+      "last_updated": "2026-11-05T18:51:55.833977+00:00"
     },
     {
       "sequence": 231,
@@ -4540,15 +4558,24 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Synchronize username changes automatically.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+      ],
+      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+      ],
+      "last_updated": "2026-11-05T18:51:55.833977+00:00"
     },
     {
       "sequence": 232,
@@ -4556,15 +4583,24 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Apply appropriate username character limits and moderation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+      ],
+      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+      ],
+      "last_updated": "2026-11-05T18:51:55.833977+00:00"
     },
     {
       "sequence": 233,
@@ -4572,15 +4608,24 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Reject explicit or otherwise prohibited usernames.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount",
+        "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits"
+      ],
+      "commit_reference": "batch:P5-honest-account-service-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker."
+      ],
+      "last_updated": "2026-11-05T18:51:55.833977+00:00"
     },
     {
       "sequence": 234,

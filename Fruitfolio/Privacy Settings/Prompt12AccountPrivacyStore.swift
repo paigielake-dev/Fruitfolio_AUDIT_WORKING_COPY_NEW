@@ -67,20 +67,28 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func beginQuietOwnershipValidation() {
-        ownershipState = .validating
+        // A timer is not a storefront receipt. Preserve app access while a real
+        // StoreKit verification integration is unavailable.
+        ownershipState = .validationUnavailable
         saveSnapshot()
+    }
 
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 350_000_000)
-            ownershipState = .purchased
-            saveSnapshot()
+    func requestSignIn(email: String) throws {
+        guard !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            throw Prompt12AccountPrivacyError.blankEmail
         }
+        // No approved authentication service is configured in this project.
+        // Never turn an email address into a fabricated authenticated session.
+        throw Prompt12AccountPrivacyError.serviceNotConfigured
     }
 
     func signInForDevelopment(
         email rawEmail: String,
         provider: String = "demo"
     ) throws {
+        #if !DEBUG
+        throw Prompt12AccountPrivacyError.serviceNotConfigured
+        #else
         let cleanEmail = rawEmail.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
@@ -110,6 +118,7 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
         syncState = .synced
         pendingLocalChanges = false
         saveSnapshot()
+        #endif
     }
 
     func markLocalChangePending() {
@@ -119,21 +128,10 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func syncNow() {
-        guard isSignedIn else {
-            syncState = .localOnly
-            saveSnapshot()
-            return
-        }
-
-        syncState = .syncing
+        // Keep pending local edits. Successful cloud synchronization requires a
+        // configured service and an acknowledged upload, neither exists here.
+        syncState = isSignedIn ? .unavailable : .localOnly
         saveSnapshot()
-
-        Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 450_000_000)
-            pendingLocalChanges = false
-            syncState = .synced
-            saveSnapshot()
-        }
     }
 
     func signOut(

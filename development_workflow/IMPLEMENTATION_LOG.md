@@ -137,3 +137,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable", "Swift_syntax_previous_batches": "36 changed Swift files parsed without syntax errors; not a build/runtime test"}.
 - Next action: Replace production-facing demo authentication/sync success with explicit unavailable-service handling while preserving local profile data, then implement hormone-measurement safeguards.
 - Commit: containing commit for batch P5-persistent-global-audio-mute.
+
+## P5-honest-account-service-boundaries
+
+- Parent checkpoint: a0c2281e82afb343cc23a6d06939ed46f3306eab.
+- Source-order requirements: [229, 230, 231, 232, 233].
+- Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.
+- Tests added/updated: Prompt12AccountPrivacyStoreTests/testProductionSignInCannotFabricateAnAuthenticatedAccount, Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Implement optional Hormone Information records, validation, local CRUD/history, and a My Context entry while keeping educational curves and predictions separate.
+- Commit: containing commit for batch P5-honest-account-service-boundaries.

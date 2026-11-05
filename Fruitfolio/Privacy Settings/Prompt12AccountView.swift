@@ -354,7 +354,7 @@ struct Prompt12AccountView: View {
 
     private func signIn() {
         do {
-            try store.signInForDevelopment(email: email)
+            try store.requestSignIn(email: email)
             message = nil
         } catch {
             message = error.localizedDescription

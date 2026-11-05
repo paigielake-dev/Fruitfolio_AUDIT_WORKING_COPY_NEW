@@ -34,6 +34,26 @@ final class Prompt12AccountPrivacyStoreTests: XCTestCase {
         )
     }
 
+    func testProductionSignInCannotFabricateAnAuthenticatedAccount() {
+        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+        let store = Prompt12AccountPrivacyStore(defaults: defaults)
+        XCTAssertThrowsError(try store.requestSignIn(email: "person@example.com")) { error in
+            XCTAssertEqual(error as? Prompt12AccountPrivacyError, .serviceNotConfigured)
+        }
+        XCTAssertFalse(store.isSignedIn)
+        XCTAssertNil(store.account)
+    }
+
+    func testUnavailableCloudSyncPreservesPendingLocalEdits() throws {
+        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+        let store = Prompt12AccountPrivacyStore(defaults: defaults)
+        try store.signInForDevelopment(email: "person@example.com")
+        store.markLocalChangePending()
+        store.syncNow()
+        XCTAssertEqual(store.syncState, .unavailable)
+        XCTAssertTrue(store.pendingLocalChanges)
+    }
+
     func testExportCreatesReadableExportRecord() throws {
         let defaults = UserDefaults(suiteName: UUID().uuidString)!
         let store = Prompt12AccountPrivacyStore(defaults: defaults)
