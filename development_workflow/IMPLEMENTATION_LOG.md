@@ -187,3 +187,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Review remaining FAQ/contact interactions, then implement MADLAD encoder-decoder inference and localization support validation with actual model/runtime constraints.
 - Commit: containing commit for batch P7-owned-round-finalization.
+
+## P8-faq-and-contact-interaction
+
+- Parent checkpoint: 6fd34c9a6a695ac3586d0e5f754115e60b593054.
+- Source-order requirements: [373, 374, 375, 376, 377, 378, 379, 380].
+- FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.
+- Tests added/updated: Prompt1BFAQSafetyTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Implement local MADLAD encoder-decoder runtime, model manifest and language support gates; protect scientific tokens and integrate dynamic translation with Ask and reading workflows.
+- Commit: containing commit for batch P8-faq-and-contact-interaction.

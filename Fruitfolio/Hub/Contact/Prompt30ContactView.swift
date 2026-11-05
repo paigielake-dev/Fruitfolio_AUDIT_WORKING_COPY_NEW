@@ -5,6 +5,8 @@ struct Prompt30ContactView: View {
 
     @Environment(\.openURL) private var openURL
 
+    @State private var unavailableLink = false
+
     private let instagramURL = URL(string: "https://www.instagram.com/fruitsoflife.xo")!
     private let tiktokURL = URL(string: "https://www.tiktok.com/@fruitsoflife.xo?lang=en")!
     private let emailURL = URL(string: "mailto:fruitsoflifexo@gmail.com")!
@@ -49,10 +51,10 @@ struct Prompt30ContactView: View {
                     }
 
                     VStack(spacing: 4) {
-                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo") { openURL(instagramURL) }
-                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo") { openURL(tiktokURL) }
-                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com") { openURL(emailURL) }
-                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd") { openURL(carrdURL) }
+                        FruitfolioControlPillButton(label: "Instagram  •  @fruitsoflife.xo") { openContact(instagramURL) }
+                        FruitfolioControlPillButton(label: "TikTok  •  @fruitsoflife.xo") { openContact(tiktokURL) }
+                        FruitfolioControlPillButton(label: "email  •  fruitsoflifexo@gmail.com") { openContact(emailURL) }
+                        FruitfolioControlPillButton(label: "FruitsofLife.xo Carrd") { openContact(carrdURL) }
                     }
 
                     Text("Fruitfolio is educational. For personal medical questions, diagnosis, treatment, or urgent concerns, contact an appropriate healthcare professional or emergency service.")
@@ -73,5 +75,14 @@ struct Prompt30ContactView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .toolbar(.hidden, for: .navigationBar)
+        .alert("this link could not be opened on this device", isPresented: $unavailableLink) {
+            Button("OK", role: .cancel) {}
+        }
+    }
+
+    private func openContact(_ url: URL) {
+        openURL(url) { accepted in
+            if !accepted { unavailableLink = true }
+        }
     }
 }

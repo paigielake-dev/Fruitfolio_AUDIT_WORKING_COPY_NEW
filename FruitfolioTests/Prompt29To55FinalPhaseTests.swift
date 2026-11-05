@@ -97,3 +97,13 @@ final class Prompt29To55FinalPhaseTests: XCTestCase {
         XCTAssertTrue(Prompt51UnicodeIntegrity.isRoundTripStable("﹒ ⋆ ⋆ ₊⊹ ꩜ 𓂃 ♡"))
     }
 }
+
+final class Prompt1BFAQSafetyTests: XCTestCase {
+    func testFruitBasketFAQStatesBothFinalBadFruitOutcomes() throws {
+        let basket = try XCTUnwrap(Prompt29FAQCatalog.sections.first(where: { $0.id == "basket" }))
+        let answer = try XCTUnwrap(basket.items.first?.answer)
+        XCTAssertTrue(answer.contains("ends the round immediately"))
+        XCTAssertTrue(answer.contains("exactly one pass"))
+        XCTAssertTrue(answer.contains("round continues"))
+    }
+}

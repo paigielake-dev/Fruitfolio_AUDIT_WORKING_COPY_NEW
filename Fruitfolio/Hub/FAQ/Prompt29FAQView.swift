@@ -72,7 +72,7 @@ enum Prompt29FAQCatalog {
                 .init(
                     id: "basket-1",
                     question: "how does catching work?",
-                    answer: "catch 10 starred fruits to fill your basket. unstarred fruit can pass, and missing a starred fruit is okay—another one will come along."
+                    answer: "catch 10 starred fruits to fill your basket. missing one is okay—another one will come along. catching bad fruit without a star pass ends the round immediately. with a star pass, exactly one pass is used and the round continues."
                 )
             ]
         ),
@@ -186,6 +186,8 @@ struct Prompt29FAQView: View {
 private struct Prompt29FAQSectionCard: View {
     let section: Prompt29FAQSection
     @Binding var expanded: Set<String>
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -202,6 +204,7 @@ private struct Prompt29FAQSectionCard: View {
             ForEach(section.items) { item in
                 let isExpanded = expanded.contains(item.id)
                 Button {
+                    audioManager.play(.buttonSoftPop)
                     if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
                 } label: {
                     HStack(spacing: 10) {
@@ -214,9 +217,13 @@ private struct Prompt29FAQSectionCard: View {
                             .rotationEffect(.degrees(isExpanded ? 180 : 0))
                             .accessibilityHidden(true)
                     }.frame(minHeight: 44)
-                }.buttonStyle(.plain)
+                }
+                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .accessibilityValue(isExpanded ? "expanded" : "collapsed")
+                .accessibilityIdentifier("faq.question.\(item.id)")
                 if isExpanded {
-                    Text(item.answer)
+                    FruitfolioSemanticText(markdown: item.answer,
+                                           baseFont: .custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)
