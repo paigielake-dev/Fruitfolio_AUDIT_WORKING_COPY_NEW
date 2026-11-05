@@ -62,4 +62,24 @@ struct Prompt1BModalRegressionHarness: View {
         .background(DesignTokens.ColorToken.backgroundCream)
     }
 }
+/// Exercises production tour composition without mutating onboarding progress.
+struct Prompt1BTourRegressionHarness: View {
+    @State private var step: Prompt07TourStep = .ask
+    @State private var active = true
+    private let reduceMotion = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+
+    var body: some View {
+        ZStack {
+            DesignTokens.ColorToken.backgroundCream.ignoresSafeArea()
+            if active {
+                Prompt07TourOverlay(frames: [:], step: step, reduceMotion: reduceMotion,
+                    onBack: { step = Prompt07TourStep(rawValue: max(1, step.rawValue - 1)) ?? .ask },
+                    onNext: { step = Prompt07TourStep(rawValue: min(6, step.rawValue + 1)) ?? .ready },
+                    onSkip: { active = false }, onFinish: { active = false })
+            } else {
+                Text("tour finished").accessibilityIdentifier("tourQA.finished")
+            }
+        }
+    }
+}
 #endif

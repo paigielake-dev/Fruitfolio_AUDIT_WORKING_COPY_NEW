@@ -595,7 +595,7 @@ struct Prompt28FruitBasketView: View {
                                 )
                                 .accessibilityLabel("Strawberry")
 
-                                Text(message)
+                                FruitfolioSemanticText(markdown: message, baseFont: Prompt28TextRole.body.font)
                                     .prompt28Text(.body)
                                     .fixedSize(
                                         horizontal: false,
@@ -812,7 +812,7 @@ struct Prompt28FruitBasketView: View {
                                     )
                                     .prompt28Text(.body)
 
-                                    Text(question.explanation)
+                                    FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font)
                                         .prompt28Text(.body)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
@@ -1449,7 +1449,7 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                            Text(question.explanation)
+                            FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font)
                                 .prompt28Text(.body)
 
                             Text(

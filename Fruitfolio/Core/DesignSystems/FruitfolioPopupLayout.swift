@@ -41,15 +41,17 @@ enum FruitfolioPopupLayout {
 
     static let speechBubblePixelSize = CGSize(width: 497, height: 499)
 
-    static func dialogue(availableWidth: CGFloat, availableHeight: CGFloat = .greatestFiniteMagnitude, messageCount: Int) -> DialogueMetrics {
-        guard availableWidth.isFinite, availableWidth > 0, availableHeight.isFinite, availableHeight > 0 else {
+    static func dialogue(availableWidth: CGFloat, availableHeight: CGFloat = .greatestFiniteMagnitude, messageCount: Int,
+                         maximumBubbleWidth: CGFloat = 246, maximumCharacterWidth: CGFloat = 72) -> DialogueMetrics {
+        guard availableWidth.isFinite, availableWidth > 0, availableHeight.isFinite, availableHeight > 0, maximumBubbleWidth.isFinite,
+              maximumCharacterWidth.isFinite, maximumBubbleWidth > 0, maximumCharacterWidth >= 0 else {
             return DialogueMetrics(characterWidth: 0, bubbleWidth: 0, spacing: 0)
         }
-        let character = min(72, availableWidth * 0.18, availableHeight)
+        let character = min(maximumCharacterWidth, availableWidth * 0.18, availableHeight)
         let spacing = -min(14, character * 0.20)
         let bonus: CGFloat = messageCount <= 58 ? 0 : (messageCount <= 105 ? 18 : 30)
         let desired = max(availableWidth * 0.58, 184) + bonus
-        let bubble = min(desired, 246, max(0, availableWidth - character - spacing),
+        let bubble = min(desired, maximumBubbleWidth, max(0, availableWidth - character - spacing),
                          availableHeight * speechBubblePixelSize.width / speechBubblePixelSize.height)
         return DialogueMetrics(characterWidth: character, bubbleWidth: bubble, spacing: spacing)
     }

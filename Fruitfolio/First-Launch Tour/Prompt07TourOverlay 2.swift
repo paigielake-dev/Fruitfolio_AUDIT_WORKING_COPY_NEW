@@ -18,25 +18,11 @@ struct Prompt07TourOverlay: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let availableWidth = max(
-                proxy.size.width - 16,
-                240
-            )
-
-            let bubbleWidth = min(
-                max(
-                    availableWidth * 0.47,
-                    166
-                ),
-                184
-            )
-
-            let fruitWidth = min(
-                max(
-                    availableWidth * 0.15,
-                    52
-                ),
-                62
+            let bottomInset = max(proxy.safeAreaInsets.bottom + 56, 62)
+            let metrics = FruitfolioPopupLayout.dialogue(
+                availableWidth: max(0, proxy.size.width - 16),
+                availableHeight: max(0, proxy.size.height - bottomInset - 16),
+                messageCount: 0, maximumBubbleWidth: 184, maximumCharacterWidth: 62
             )
 
             ZStack {
@@ -77,8 +63,9 @@ struct Prompt07TourOverlay: View {
                     Spacer(minLength: 0)
 
                     dialogue(
-                        bubbleWidth: bubbleWidth,
-                        fruitWidth: fruitWidth
+                        bubbleWidth: metrics.bubbleWidth,
+                        fruitWidth: metrics.characterWidth,
+                        spacing: metrics.spacing
                     )
                     .frame(
                         maxWidth: .infinity,
@@ -100,14 +87,8 @@ struct Prompt07TourOverlay: View {
                 height: proxy.size.height
             )
             .contentShape(Rectangle())
-            .onAppear {
-                animateStepEntrance()
-            }
-            .onChange(of: step) {
-                _,
-                _ in
-
-                animateStepEntrance()
+            .task(id: "\(step.rawValue)-\(reduceMotion)") {
+                await animateStepEntrance()
             }
         }
         .ignoresSafeArea(edges: [])
@@ -179,11 +160,12 @@ struct Prompt07TourOverlay: View {
 
     private func dialogue(
         bubbleWidth: CGFloat,
-        fruitWidth: CGFloat
+        fruitWidth: CGFloat,
+        spacing: CGFloat
     ) -> some View {
         HStack(
             alignment: .bottom,
-            spacing: -12
+            spacing: spacing
         ) {
             FruitPopupCharacterArtwork(
                 character: step.character,
@@ -197,7 +179,13 @@ struct Prompt07TourOverlay: View {
                 width: bubbleWidth,
                 characterSide: .left
             ) {
-                tourBubbleContent
+                GeometryReader { geometry in
+                    ScrollView(.vertical) {
+                        tourBubbleContent.frame(minHeight: geometry.size.height)
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
+                    .accessibilityIdentifier("tour.dialogue.scroll")
+                }
             }
             .zIndex(1)
         }
@@ -242,7 +230,7 @@ struct Prompt07TourOverlay: View {
             .font(
                 .custom(
                     "Chalkboard SE",
-                    size: 9.25
+                    size: 9.25, relativeTo: .body
                 )
             )
             .fontWeight(.bold)
@@ -258,7 +246,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 10.25
+                        size: 10.25, relativeTo: .body
                     )
                 )
                 .foregroundStyle(
@@ -269,9 +257,6 @@ struct Prompt07TourOverlay: View {
                     .center
                 )
                 .lineSpacing(0.35)
-                .minimumScaleFactor(
-                    0.64
-                )
                 .fixedSize(
                     horizontal: false,
                     vertical: true
@@ -289,7 +274,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 9.0
+                        size: 9.0, relativeTo: .body
                     )
                 )
                 .foregroundStyle(
@@ -312,7 +297,7 @@ struct Prompt07TourOverlay: View {
                 .font(
                     .custom(
                         "Chalkboard SE",
-                        size: 8.4
+                        size: 8.4, relativeTo: .body
                     )
                 )
                 .fontWeight(.bold)
@@ -322,13 +307,12 @@ struct Prompt07TourOverlay: View {
                 )
                 .frame(
                     maxWidth: .infinity,
-                    minHeight: 28,
+                    minHeight: DesignTokens.Layout.minimumHitTarget,
                     alignment: .center
                 )
                 .buttonStyle(.plain)
-                .accessibilityLabel(
-                    "Start exploring"
-                )
+                .accessibilityLabel("Start exploring")
+                .accessibilityIdentifier("tour.finish")
 
             } else {
                 HStack(
@@ -343,7 +327,7 @@ struct Prompt07TourOverlay: View {
                         .font(
                             .custom(
                                 "Chalkboard SE",
-                                size: 8.75
+                                size: 8.75, relativeTo: .body
                             )
                         )
                         .fontWeight(.bold)
@@ -352,7 +336,7 @@ struct Prompt07TourOverlay: View {
                                 .secondaryBurgundy
                         )
                         .frame(
-                            minHeight: 28
+                            minHeight: DesignTokens.Layout.minimumHitTarget
                         )
                         .buttonStyle(.plain)
                     }
@@ -370,10 +354,11 @@ struct Prompt07TourOverlay: View {
                         )
                         onSkip()
                     }
+                    .accessibilityIdentifier("tour.skip")
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size: 8.4
+                            size: 8.4, relativeTo: .body
                         )
                     )
                     .fontWeight(.bold)
@@ -385,7 +370,7 @@ struct Prompt07TourOverlay: View {
                             )
                     )
                     .frame(
-                        minHeight: 28
+                        minHeight: DesignTokens.Layout.minimumHitTarget
                     )
                     .buttonStyle(.plain)
 
@@ -394,10 +379,11 @@ struct Prompt07TourOverlay: View {
                     ) {
                         onNext()
                     }
+                    .accessibilityIdentifier("tour.next")
                     .font(
                         .custom(
                             "Chalkboard SE",
-                            size: 9.0
+                            size: 9.0, relativeTo: .body
                         )
                     )
                     .fontWeight(.bold)
@@ -406,7 +392,7 @@ struct Prompt07TourOverlay: View {
                             .primaryBurgundy
                     )
                     .frame(
-                        minHeight: 28
+                        minHeight: DesignTokens.Layout.minimumHitTarget
                     )
                     .buttonStyle(.plain)
                 }
@@ -422,97 +408,77 @@ struct Prompt07TourOverlay: View {
         )
     }
 
-    private var styledStepMessage: Text {
+    private var styledStepMessage: some View {
+        FruitfolioTranslatedText(source: stepMessage, font: .custom("Chalkboard SE", size: 10.25, relativeTo: .body))
+    }
+
+    private var stepMessage: String {
         switch step {
-
         case .ask:
-            var message =
-                AttributedString(
-                    "got a question? start here\u{00A0}(\u{00A0}´﹀`\u{00A0}) i’ll look through the FruitsofLife.xo library for you."
-                )
-
-            if let range =
-                message.range(
-                    of: "FruitsofLife.xo"
-                )
-            {
-                message[range].font =
-                    .custom(
-                        "Chalkboard SE",
-                        size: 10.25
-                    )
-                    .bold()
-            }
-
-            return Text(
-                message
-            )
-
+            return "got a question? start here\u{00A0}(\u{00A0}´﹀`\u{00A0}) i’ll look through the **FruitsofLife.xo** library for you."
         case .library:
-            return Text(
+            return (
                 "anything you love can be tucked into your own little encyclopedia!\u{00A0}♡"
             )
 
         case .guideBuilder:
-            return Text(
+            return (
                 "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you.\u{00A0}:-)"
             )
 
         case .cycle:
-            return Text(
+            return (
                 "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle."
             )
 
         case .fruitBasket:
-            return Text(
+            return (
                 "and when you feel like playing… come fill your fruit basket!\u{00A0}(〃⌒∇⌒)"
             )
 
         case .ready:
-            return Text(
+            return (
                 "that’s it! explore wherever you’d like.\u{00A0}♡"
             )
         }
     }
 
-    private func animateStepEntrance() {
+    @MainActor
+    private func animateStepEntrance() async {
         dialogueVisible = false
         targetPulse = false
 
-        Task { @MainActor in
-            if reduceMotion {
-                withAnimation(
-                    .easeOut(
-                        duration: 0.17
-                    )
-                ) {
-                    dialogueVisible = true
-                    targetPulse = true
-                }
-
-                return
-            }
-
-            try? await Task.sleep(
-                nanoseconds:
-                    80_000_000
-            )
-
+        if reduceMotion {
             withAnimation(
                 .easeOut(
-                    duration: 0.24
+                    duration: 0.17
                 )
             ) {
                 dialogueVisible = true
-            }
-
-            withAnimation(
-                .easeOut(
-                    duration: 0.36
-                )
-            ) {
                 targetPulse = true
             }
+
+            return
+        }
+
+        do { try await Task.sleep(nanoseconds: 80_000_000) }
+        catch { return }
+        guard !Task.isCancelled else { return }
+
+        withAnimation(
+            .easeOut(
+                duration: 0.24
+            )
+        ) {
+            dialogueVisible = true
+        }
+
+        withAnimation(
+            .easeOut(
+                duration: 0.36
+            )
+        ) {
+            targetPulse = true
         }
     }
 }

@@ -46,6 +46,15 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
         }
     }
 
+    func testTourRetainsItsApprovedSmallerRoleAndViewportBounds() {
+        let metrics = FruitfolioPopupLayout.dialogue(availableWidth: 160, availableHeight: 120,
+            messageCount: 1000, maximumBubbleWidth: 184, maximumCharacterWidth: 62)
+        XCTAssertLessThanOrEqual(metrics.totalWidth, 160)
+        XCTAssertLessThanOrEqual(metrics.bubbleWidth, 184)
+        XCTAssertLessThanOrEqual(metrics.characterWidth, 62)
+        XCTAssertLessThanOrEqual(metrics.bubbleWidth * 499 / 497, 120)
+    }
+
     func testNotebookAndWritingAreaRemainWithinSmallOrKeyboardConstrainedViewport() {
         for size in [CGSize(width: 240, height: 180), CGSize(width: 320, height: 220),
                      CGSize(width: 393, height: 852), CGSize(width: 852, height: 270)] {

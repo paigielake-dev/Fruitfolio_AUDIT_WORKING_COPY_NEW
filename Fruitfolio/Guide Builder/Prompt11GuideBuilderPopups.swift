@@ -958,7 +958,7 @@ struct Prompt11OriginalAnswerPopup: View {
 
                 if let sourcePage {
                     ScrollView {
-                        Text(sourcePage.answer)
+                        FruitfolioTranslatedText(source: sourcePage.answer, protectedLiterals: sourcePage.sourceIDs, enabled: sourcePage.originalAnswerID != nil, font: .custom("Chalkboard SE", size: 12, relativeTo: .body))
                             .font(.custom("Chalkboard SE", size: 12))
                             .foregroundStyle(
                                 DesignTokens.ColorToken.primaryBurgundy

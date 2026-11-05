@@ -33,7 +33,7 @@ struct Prompt12ConfirmationPopup: View {
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Text(message)
+                FruitfolioSemanticText(markdown: message, baseFont: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), color: DesignTokens.ColorToken.secondaryBurgundy)
                     .font(.custom("Chalkboard SE", size: 11.5))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy

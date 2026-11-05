@@ -320,7 +320,18 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -329,14 +340,17 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 14,
@@ -349,7 +363,18 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -358,14 +383,17 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 15,
@@ -461,7 +489,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -472,15 +511,18 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 19,
@@ -493,7 +535,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -504,15 +557,18 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 20,
@@ -525,7 +581,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -536,15 +603,18 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 21,
@@ -555,7 +625,18 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -563,13 +644,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 22,
@@ -580,7 +664,18 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -588,13 +683,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 23,
@@ -607,7 +705,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -618,15 +727,18 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 24,
@@ -639,7 +751,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -650,15 +773,18 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
         "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
         "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 25,
@@ -693,7 +819,18 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -703,14 +840,17 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 27,
@@ -1104,7 +1244,18 @@
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1114,14 +1265,17 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 41,
@@ -1164,7 +1318,18 @@
         "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1174,15 +1339,18 @@
         "Prompt1BDecorativeLayoutTests",
         "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
         "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 43,
@@ -1283,7 +1451,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1294,15 +1474,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 47,
@@ -1319,7 +1502,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1330,15 +1525,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 48,
@@ -1355,7 +1553,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1366,15 +1576,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 49,
@@ -1391,7 +1604,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1402,15 +1627,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 50,
@@ -1761,7 +1989,18 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1775,17 +2014,20 @@
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 62,
@@ -1802,7 +2044,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1813,15 +2067,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 63,
@@ -1838,7 +2095,19 @@
         "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1849,15 +2118,18 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSemanticSliceTests/testExtremeEmphasisRequiresCanonicalVocabularyAndSeriousTextDropsVocalStress",
-        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim"
+        "Prompt56ResearchIntelligenceTests/testGeneratedDraftKeepsEvidenceLinkedClaim",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-canonical-semantic-policy-and-source-language (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "SwiftUI and selectable UIKit Ask text now share explicit semantic spans and inline Markdown parsing. Removed symptom keyword underlining; explicit emphasis survives Codable round trips and full saved-answer display. Citation/numeric/plain text preservation has regression cases. UIKit rerendering is keyed to source and Dynamic Type to avoid resetting selection on unrelated updates. Full app-wide contextual annotation, streaming delimiter edge cases and saved-excerpt formatting remain incomplete.",
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion."
+        "Added one shared semantic author/model contract covering selective anchors, complete food names, spoken stress, practical/symptom underline, contextual combinations, density and serious tone without keyword-based discovery or quotas. Structured normalization restricts triple emphasis to exact canonical not/never/every vocabulary and supports serious-context vocal-stress removal while preserving text and IDs. Shared popup messages now use the canonical renderer, with cautionary tone applying serious normalization. Fixed synthesis to preserve an English validated/stored source for downstream MADLAD display localization instead of generating in the UI language and mislabeling it English. Model compliance, all-feature adoption, clinical quality and Apple rendering remain unverified; this is not full semantic-classification completion.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:02:20.858018+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 64,
@@ -1868,7 +2140,18 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1876,13 +2159,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T20:00:36.550529+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 65,
@@ -1923,7 +2209,19 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1933,14 +2231,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 67,
@@ -1956,7 +2257,19 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1966,14 +2279,17 @@
         "Prompt1BSemanticSliceTests",
         "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 68,
@@ -1984,7 +2300,19 @@
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1992,13 +2320,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BSemanticSliceTests",
-        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T19:43:09.461107+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 69,
@@ -2039,7 +2370,18 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
         "Fruitfolio/Ask/Prompt09AskView.swift",
-        "FruitfolioTests/Prompt1BAskLifecycleTests.swift"
+        "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+        "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+        "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmView.swift",
+        "Fruitfolio/Cycle Tracker/Pregnancy/Prompt26PregnancyEducationViews.swift",
+        "Fruitfolio/Cycle Tracker/Genetics + Body + Lab/Prompt27ScienceViews.swift",
+        "Fruitfolio/Cycle Tracker/Fertilization/Prompt25FertilizationView.swift",
+        "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -2050,16 +2392,19 @@
         "Prompt08GlobalControlsTests",
         "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers"
+        "Prompt1BAskLifecycleTests/testTypewriterPublishesStyledPrefixesWithoutRawMarkdownMarkers",
+        "Prompt1BPopupLayoutTests/testTourRetainsItsApprovedSmallerRoleAndViewportBounds",
+        "Prompt1BModalAccessibilityTests/testTourActionsRemainReachableAtAccessibilitySize"
       ],
-      "commit_reference": "batch:P1-semantic-streaming-prefixes (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-shared-education-rendering-and-accessible-tour (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared modifier now hides blocked background from accessibility and keeps scale at 1 under Reduce Motion. Screen/runtime verification pending.",
         "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
         "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.",
-        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux."
+        "Typewriter presentation now parses the complete validated answer once and reveals explicitly styled span prefixes, so unfinished Markdown delimiters never flash or change emphasis mid-word. Prefix slicing preserves grapheme clusters and semantic identities. Long answers batch three characters at the existing effective speed to reduce redundant publications. Cancelling only the presentation resolves to the already-validated full source instead of presenting a partial answer as complete. Portable span operations passed; the Combine/SwiftUI integration test is added but unrun on Linux.",
+        "Routed tour dialogue, Fruit Basket explanations, selected hormone/pregnancy/fertilization/genetics educational bodies, privacy confirmation messages and original-answer guide popup through canonical semantic rendering. Eligible educational text now shares display-only translation and preserves source IDs where supplied. Original translation disclosures render semantic text instead of exposing raw markers. Removed feature-local tour attributed-string styling and text shrinking; tour uses shared viewport-bounded dialogue metrics with its own smaller artwork role, scrollable writing area and 44-point actions. Step/motion entrance tasks now cancel on replacement/disappearance. Added isolated DEBUG tour harness plus a full-step accessibility-size UI regression test, not executed on Linux. Remaining eligible surfaces and full localization still incomplete."
       ],
-      "last_updated": "2026-11-05T19:43:09.461107+00:00"
+      "last_updated": "2026-11-05T20:05:53.669986+00:00"
     },
     {
       "sequence": 71,

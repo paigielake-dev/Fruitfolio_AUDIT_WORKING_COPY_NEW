@@ -228,7 +228,7 @@ struct Prompt22HormoneRhythmView: View {
             .accessibilityElement()
             .accessibilityLabel(section.accessibilitySummary)
 
-            Text(section.summary)
+            FruitfolioTranslatedText(source: section.summary, font: Prompt22Type.body, color: Prompt22Palette.burgundy.opacity(0.84))
                 .font(Prompt22Type.body)
                 .foregroundStyle(
                     Prompt22Palette.burgundy.opacity(0.84)

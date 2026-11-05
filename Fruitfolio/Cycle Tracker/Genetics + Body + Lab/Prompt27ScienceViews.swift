@@ -142,7 +142,7 @@ struct Prompt27ContextualScienceSectionView: View {
                     .frame(maxWidth: .infinity)
                 }
 
-                Text(content.body)
+                FruitfolioTranslatedText(source: content.body, protectedLiterals: content.sourceIDs, font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
                     .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
                     .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
                     .lineSpacing(3)

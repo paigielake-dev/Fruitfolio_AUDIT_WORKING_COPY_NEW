@@ -31,7 +31,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 if resolvedKey == key, rendered != nil {
                     Text("local machine translation").font(.caption)
                     DisclosureGroup("original text") {
-                        Text(verbatim: source).textSelection(.enabled)
+                        FruitfolioSemanticText(markdown: source).textSelection(.enabled)
                     }
                 } else if resolvedKey == key, let failure {
                     Text("original text — translation unavailable").font(.caption).bold()
@@ -68,15 +68,17 @@ struct FruitfolioTranslatedText: View {
     var protectedLiterals: [String] = []
     var enabled = true
     var font: Font = .body
+    var color: Color? = nil
+    var serious = false
     var sourceLanguage = "en"
     var semanticSpans: [FruitfolioSemanticSpan]?
     var body: some View {
         let translationSource = semanticSpans.map(FruitfolioSemanticMarkup.markdown) ?? source
         FruitfolioTranslatedContent(source: translationSource, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
             if let semanticSpans, display == translationSource {
-                FruitfolioSemanticText(spans: semanticSpans, baseFont: font)
+                FruitfolioSemanticText(spans: FruitfolioSemanticPolicy.normalized(semanticSpans, serious: serious), baseFont: font, color: color)
             } else {
-                FruitfolioSemanticText(markdown: display, baseFont: font)
+                FruitfolioSemanticText(markdown: display, baseFont: font, color: color, serious: serious)
             }
         }
     }

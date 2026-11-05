@@ -1,0 +1,14 @@
+{
+  "timestamp": "2026-11-05T20:05:53.669986+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "portable_swift": "39 XCTest + 21 Swift Testing passed (60 total)",
+    "workflow": "10 Python tests passed",
+    "Swift_syntax": "95 files, zero parser errors",
+    "UI_and_ImageIO": "NOT_RUN: Xcode unavailable"
+  }
+}

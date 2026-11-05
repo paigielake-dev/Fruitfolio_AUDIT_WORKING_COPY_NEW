@@ -262,7 +262,7 @@ private struct Prompt26ContentBody: View {
 
         case let .loaded(content):
             VStack(alignment: .leading, spacing: 16) {
-                Text(content.summary)
+                FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy)
                     .font(.body)
                     .foregroundStyle(Prompt26Palette.burgundy)
                     .fixedSize(horizontal: false, vertical: true)
@@ -280,7 +280,7 @@ private struct Prompt26ContentBody: View {
                                     Text(section.heading)
                                         .font(.headline)
                                         .foregroundStyle(Prompt26Palette.burgundy)
-                                    Text(section.body)
+                                    FruitfolioTranslatedText(source: section.body, protectedLiterals: section.sourceIDs, font: .body, color: Prompt26Palette.burgundy.opacity(0.84))
                                         .font(.body)
                                         .foregroundStyle(Prompt26Palette.burgundy.opacity(0.84))
                                         .fixedSize(horizontal: false, vertical: true)
@@ -342,7 +342,7 @@ private struct Prompt26FetalReferenceSection: View {
                         .font(.footnote)
                         .foregroundStyle(Prompt26Palette.burgundy.opacity(0.74))
                 } else if let content {
-                    Text(content.summary)
+                    FruitfolioTranslatedText(source: content.summary, protectedLiterals: content.sourceIDs, font: .body, color: Prompt26Palette.burgundy)
                         .font(.body)
                         .foregroundStyle(Prompt26Palette.burgundy)
                         .fixedSize(horizontal: false, vertical: true)

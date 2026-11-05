@@ -184,7 +184,7 @@ struct Prompt25FertilizationView: View {
         case .idle, .loading:
             Prompt25LoadingCopy()
         case .loaded:
-            Text(viewModel.content.shortText)
+            FruitfolioTranslatedText(source: viewModel.content.shortText, font: prompt25Font(14, relativeTo: .body), color: Prompt25Palette.burgundy.opacity(0.86))
                 .font(prompt25Font(14, relativeTo: .body))
                 .foregroundStyle(Prompt25Palette.burgundy.opacity(0.86))
                 .multilineTextAlignment(.leading)
@@ -282,7 +282,7 @@ struct Prompt25FertilizationView: View {
                         .fontWeight(.semibold)
                         .foregroundStyle(Prompt25Palette.burgundy)
 
-                    Text(section.body)
+                    FruitfolioTranslatedText(source: section.body, font: prompt25Font(13, relativeTo: .body), color: Prompt25Palette.burgundy.opacity(0.80))
                         .font(prompt25Font(13, relativeTo: .body))
                         .foregroundStyle(
                             Prompt25Palette.burgundy.opacity(0.80)
