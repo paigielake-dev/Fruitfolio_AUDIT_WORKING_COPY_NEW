@@ -27,6 +27,15 @@ struct Prompt10BookTile: View {
                     .truncationMode(.tail)
                     .frame(maxWidth: 132)
 
+                if let description = encyclopedia.subtitle, !description.isEmpty {
+                    Text(description)
+                        .font(.custom("Chalkboard SE", size: 12, relativeTo: .caption))
+                        .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                        .frame(maxWidth: 132)
+                }
+
                 Text(metadataText)
                     .font(.custom("Chalkboard SE", size: 10.5))
                     .foregroundStyle(
@@ -48,7 +57,7 @@ struct Prompt10BookTile: View {
             )
         )
         .accessibilityLabel(
-            "\(encyclopedia.name), \(metadataText)"
+            "\(encyclopedia.name), \(encyclopedia.subtitle ?? ""), \(metadataText)"
         )
         .accessibilityHint(
             "Opens this encyclopedia"
@@ -291,6 +300,18 @@ struct Prompt10WatercolorPopup<Content: View>: View {
                 .accessibilityElement(children: .contain)
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
+        }
+    }
+}
+
+extension View {
+    func bookLabelGuidance(text: String, maximum: Int) -> some View {
+        VStack(alignment: .leading, spacing: 5) {
+            self.accessibilityHint("maximum \(maximum) characters; clinical and sexual-health terms are welcome")
+            Text("\(text.count) / \(maximum) characters")
+                .font(.caption)
+                .foregroundStyle(text.count > maximum ? Color.red : DesignTokens.ColorToken.secondaryBurgundy)
+                .accessibilityLabel("\(text.count) of \(maximum) characters")
         }
     }
 }

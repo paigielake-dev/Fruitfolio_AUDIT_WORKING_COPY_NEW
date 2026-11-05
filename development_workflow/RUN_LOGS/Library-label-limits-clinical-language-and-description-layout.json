@@ -1,0 +1,18 @@
+{
+  "timestamp": "2026-11-05T21:46:10.993659+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "91 XCTest + 21 Swift Testing passed (112 total)",
+    "Swift_5_native": "94 XCTest + 21 Swift Testing passed (115 total)",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "129 files, zero parser errors",
+    "Apple_UI": "NOT_RUN; layout/VoiceOver acceptance open",
+    "content_filter": "Bounded English whole-word/threat policy; multilingual review remains open"
+  }
+}

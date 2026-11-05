@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6423ddf1803f2056b389d13bc18e76f80bd465fa",
+  "current_HEAD": "3bd75ceab3f2037fc1e8808158b3d7ed6a268db1",
   "latest_verified_commit": null,
   "current_checklist_part": 4,
-  "current_requirement": 176,
-  "current_implementation_batch": "Library-canonical-shelf-and-accessible-sorting",
+  "current_requirement": 182,
+  "current_implementation_batch": "Library-label-limits-clinical-language-and-description-layout",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
     "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+    "FruitfolioTests/Prompt1BBookLabelTests.swift",
+    "Tools/run_portable_swift_tests.py",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -508,15 +513,21 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "python3 -m unittest discover -s development_workflow/tests -q",
     "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_syntax": "128 files, zero parser errors",
-    "diff": "passed",
-    "Apple_UI": "NOT_RUN: Apple SDK absent; VoiceOver and visual acceptance remain open"
+    "Swift_6_headless": "91 XCTest + 21 Swift Testing passed (112 total)",
+    "Swift_5_native": "94 XCTest + 21 Swift Testing passed (115 total)",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "129 files, zero parser errors",
+    "Apple_UI": "NOT_RUN; layout/VoiceOver acceptance open",
+    "content_filter": "Bounded English whole-word/threat policy; multilingual review remains open"
   },
-  "next_exact_implementation_action": "Add shared grapheme-counted title/description validation with clear limits and bounded non-explicit rules that preserve legitimate sexual-health terminology, then continuous coded book transition requirements.",
-  "updated_at": "2026-11-05T21:43:58.102108+00:00",
+  "next_exact_implementation_action": "Replace staged artwork-swap book opening with continuous coded book geometry that persists into the inside-book content; preserve selected color, Reduce Motion, cancellation and bounded page layout.",
+  "updated_at": "2026-11-05T21:46:10.993659+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

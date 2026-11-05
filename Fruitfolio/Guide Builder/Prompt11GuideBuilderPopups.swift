@@ -39,6 +39,7 @@ struct Prompt11CreateGuidePopup: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 TextField("ex. my hormone guide", text: $name)
+                .bookLabelGuidance(text: name, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                     .font(.custom("Chalkboard SE", size: 12.5))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -67,6 +68,7 @@ struct Prompt11CreateGuidePopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
+                .bookLabelGuidance(text: guideDescription, maximum: Prompt10BookLabelPolicy.maximumDescriptionLength)
                 .font(.custom("Chalkboard SE", size: 12))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
@@ -215,6 +217,7 @@ struct Prompt11RenameGuidePopup: View {
                     )
 
                 TextField("guide name", text: $name)
+                .bookLabelGuidance(text: name, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                     .font(.custom("Chalkboard SE", size: 12.5))
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -310,6 +313,7 @@ struct Prompt11DescriptionPopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
+                .bookLabelGuidance(text: guideDescription, maximum: Prompt10BookLabelPolicy.maximumDescriptionLength)
                 .font(.custom("Chalkboard SE", size: 12.5))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy

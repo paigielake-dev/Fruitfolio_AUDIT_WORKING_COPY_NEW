@@ -232,6 +232,9 @@ enum Prompt10LibrarySort: String, Codable, CaseIterable, Identifiable, Sendable 
 
 enum Prompt10LibraryError: LocalizedError, Equatable {
     case blankTitle
+    case titleTooLong
+    case descriptionTooLong
+    case inappropriateLabel
     case encyclopediaLimitReached
     case encyclopediaNotFound
     case chapterNotFound
@@ -243,6 +246,12 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
         switch self {
         case .blankTitle:
             return "give your little encyclopedia a name first."
+        case .titleTooLong:
+            return "keep the title to 48 characters or fewer so it fits below your book."
+        case .descriptionTooLong:
+            return "keep the description to 160 characters or fewer."
+        case .inappropriateLabel:
+            return "choose a label without profanity, crude language or threats. sexual-health and clinical terms are welcome."
         case .encyclopediaLimitReached:
             return "your little library is completely full."
         case .encyclopediaNotFound:
@@ -285,5 +294,39 @@ enum Prompt10MediaReferences {
                 chapter.pages.contains { ($0.importedImageIDs ?? []).contains(imageID) }
             }
         }
+    }
+}
+
+/// Applies only to user-authored book labels, never research or saved evidence.
+/// Counts visible grapheme clusters and rejects rather than silently truncating.
+nonisolated enum Prompt10BookLabelPolicy {
+    static let maximumTitleLength = 48
+    static let maximumDescriptionLength = 160
+
+    static func title(_ raw: String) throws -> String {
+        let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else { throw Prompt10LibraryError.blankTitle }
+        guard text.count <= maximumTitleLength else { throw Prompt10LibraryError.titleTooLong }
+        try validateContent(text)
+        return text
+    }
+
+    static func description(_ raw: String) throws -> String {
+        let text = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard text.count <= maximumDescriptionLength else { throw Prompt10LibraryError.descriptionTooLong }
+        try validateContent(text)
+        return text
+    }
+
+    private static func validateContent(_ text: String) throws {
+        let folded = text.folding(options: [.caseInsensitive, .diacriticInsensitive, .widthInsensitive], locale: Locale(identifier: "en_US_POSIX"))
+        let words = folded.components(separatedBy: CharacterSet.letters.inverted).filter { !$0.isEmpty }
+        // Whole words avoid false substring matches in clinical language.
+        let profanity: Set<String> = ["fuck", "fucking", "motherfucker", "shit", "bullshit", "asshole", "bitch", "cunt"]
+        let phrases = " " + words.joined(separator: " ") + " "
+        let threats = [" kill you ", " kill yourself ", " murder you ", " rape you "]
+        guard !words.contains(where: { profanity.contains($0) }), !threats.contains(where: phrases.contains),
+              !text.unicodeScalars.contains(where: { $0.properties.generalCategory == .control && !CharacterSet.whitespacesAndNewlines.contains($0) })
+        else { throw Prompt10LibraryError.inappropriateLabel }
     }
 }

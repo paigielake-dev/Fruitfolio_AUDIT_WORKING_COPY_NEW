@@ -40,7 +40,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
             throw Prompt10LibraryError.encyclopediaLimitReached
         }
 
-        let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanName = try Prompt10BookLabelPolicy.title(rawName)
 
         guard !cleanName.isEmpty else {
             throw Prompt10LibraryError.blankTitle
@@ -70,7 +70,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         id: UUID,
         to rawName: String
     ) throws {
-        let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanName = try Prompt10BookLabelPolicy.title(rawName)
 
         guard !cleanName.isEmpty else {
             throw Prompt10LibraryError.blankTitle
@@ -310,8 +310,8 @@ final class Prompt10SavedLibraryStore: ObservableObject {
             throw Prompt10LibraryError.encyclopediaLimitReached
         }
 
-        let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let cleanSubtitle = rawSubtitle.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanName = try Prompt10BookLabelPolicy.title(rawName)
+        let cleanSubtitle = try Prompt10BookLabelPolicy.description(rawSubtitle)
 
         guard !cleanName.isEmpty else {
             throw Prompt10LibraryError.blankTitle
@@ -340,7 +340,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
             throw Prompt10LibraryError.encyclopediaNotFound
         }
 
-        let cleaned = rawDescription.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleaned = try Prompt10BookLabelPolicy.description(rawDescription)
 
         encyclopedias[index].subtitle =
             cleaned.isEmpty ? nil : cleaned

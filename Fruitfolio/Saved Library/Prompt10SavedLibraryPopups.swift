@@ -74,6 +74,7 @@ struct Prompt10CreateEncyclopediaPopup: View {
             "encyclopedia name",
             text: $title
         )
+                .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
         .font(
             .custom(
                 "Chalkboard SE",
@@ -316,6 +317,7 @@ struct Prompt10RenameEncyclopediaPopup: View {
                     "encyclopedia name",
                     text: $title
                 )
+                .bookLabelGuidance(text: title, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                 .font(
                     .custom(
                         "Chalkboard SE",

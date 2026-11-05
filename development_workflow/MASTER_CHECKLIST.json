@@ -6606,15 +6606,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Add appropriate character limits to encyclopedia titles.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 177,
@@ -6622,15 +6631,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Add appropriate character limits to descriptions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 178,
@@ -6638,15 +6656,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Validate titles and descriptions against the specified non-explicit-content rules.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 179,
@@ -6654,15 +6681,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Do not incorrectly reject legitimate sexual-health terminology.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 180,
@@ -6670,15 +6706,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Improve the positioning of book titles and descriptions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 181,
@@ -6686,15 +6731,24 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Prevent text from bunching up against book artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookLabelTests"
+      ],
+      "commit_reference": "batch:Library-label-limits-clinical-language-and-description-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun."
+      ],
+      "last_updated": "2026-11-05T21:46:10.993659+00:00"
     },
     {
       "sequence": 182,

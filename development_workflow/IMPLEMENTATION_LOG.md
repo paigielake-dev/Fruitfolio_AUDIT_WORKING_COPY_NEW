@@ -574,3 +574,14 @@
 - Verification: {"Swift_syntax": "128 files, zero parser errors", "diff": "passed", "Apple_UI": "NOT_RUN: Apple SDK absent; VoiceOver and visual acceptance remain open"}.
 - Next action: Add shared grapheme-counted title/description validation with clear limits and bounded non-explicit rules that preserve legitimate sexual-health terminology, then continuous coded book transition requirements.
 - Commit: containing commit for batch Library-canonical-shelf-and-accessible-sorting.
+
+## Library-label-limits-clinical-language-and-description-layout
+
+- Parent checkpoint: 3bd75ceab3f2037fc1e8808158b3d7ed6a268db1.
+- Source-order requirements: [176, 177, 178, 179, 180, 181].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift.
+- Shared save-boundary validation enforces 48-grapheme titles and 160-grapheme descriptions without silently truncating; creation, renaming and guide descriptions use the same policy. Visible counts and accessibility guidance accompany main editing fields. Whole-word normalized profanity and explicit-threat checks preserve legitimate sexual-health, trauma, consent and clinical labels; this bounded English filter is not comprehensive multilingual moderation. Regression caught format-character filtering incorrectly rejecting joined emoji; corrected to actual control characters. Description now appears below the library book with independent spacing. Existing records and scientific evidence are not rewritten. Apple layout/typechecking remains unrun.
+- Tests added/updated: Prompt1BBookLabelTests.
+- Verification: {"Swift_6_headless": "91 XCTest + 21 Swift Testing passed (112 total)", "Swift_5_native": "94 XCTest + 21 Swift Testing passed (115 total)", "workflow": "15 Python tests passed", "Swift_syntax": "129 files, zero parser errors", "Apple_UI": "NOT_RUN; layout/VoiceOver acceptance open", "content_filter": "Bounded English whole-word/threat policy; multilingual review remains open"}.
+- Next action: Replace staged artwork-swap book opening with continuous coded book geometry that persists into the inside-book content; preserve selected color, Reduce Motion, cancellation and bounded page layout.
+- Commit: containing commit for batch Library-label-limits-clinical-language-and-description-layout.
