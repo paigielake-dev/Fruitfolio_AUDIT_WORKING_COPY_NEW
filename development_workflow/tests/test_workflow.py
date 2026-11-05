@@ -43,6 +43,20 @@ class WorkflowIntegrityTests(unittest.TestCase):
             asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob(name + '.png'))
             self.assertEqual(tuple(map(int, (width, height))), struct.unpack('>II', asset.read_bytes()[16:24]), name)
 
+    def test_dialogue_art_dimensions_match_bundled_pngs(self):
+        import struct
+        repo = ROOT.parent
+        source = (repo / 'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift').read_text()
+        for character, asset_name in [('strawberry', 'fruit_strawberry_silly'),
+                                      ('blueberry', 'fruit_blueberry_friendly'),
+                                      ('peach', 'fruit_peach_soft')]:
+            dimensions = re.search(r'case \.' + character + r': return CGSize\(width: (\d+), height: (\d+)\)', source)
+            asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob(asset_name + '.png'))
+            self.assertEqual(tuple(map(int, dimensions.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
+        bubble = re.search(r'speechBubblePixelSize = CGSize\(width: (\d+), height: (\d+)\)', source)
+        asset = next((repo / 'Fruitfolio/Assets.xcassets').rglob('popup_speech_bubble.png'))
+        self.assertEqual(tuple(map(int, bubble.groups())), struct.unpack('>II', asset.read_bytes()[16:24]))
+
     def test_statuses_do_not_claim_unexecuted_ios_verification(self):
         rows = json.loads((ROOT / 'MASTER_CHECKLIST.json').read_text())['requirements']
         for row in rows:

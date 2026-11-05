@@ -2,6 +2,50 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BPopupLayoutTests: XCTestCase {
+    func testAllCharacterPaintedBoundsAreCenteredWithoutDistortingAspectRatio() {
+        for character in FruitfolioPopupLayout.CharacterArtwork.allCases {
+            let side: CGFloat = 72
+            let pixels = character.pixelSize
+            let bounds = character.paintedBounds
+            XCTAssertTrue(CGRect(origin: .zero, size: pixels).contains(bounds))
+            let scale = min(side / pixels.width, side / pixels.height)
+            let offset = character.opticalOffset(boxSide: side)
+            let paintedCenter = CGPoint(x: (side - pixels.width * scale) / 2 + bounds.midX * scale + offset.width,
+                                        y: (side - pixels.height * scale) / 2 + bounds.midY * scale + offset.height)
+            XCTAssertEqual(paintedCenter.x, side / 2, accuracy: 0.001)
+            XCTAssertEqual(paintedCenter.y, side / 2, accuracy: 0.001)
+        }
+    }
+
+    func testDialogueNeverOverflowsNarrowViewportEvenForLongMessages() {
+        for width: CGFloat in [0, 100, 160, 240, 288, 361, 852] {
+            for count in [0, 58, 59, 105, 106, 10_000] {
+                let metrics = FruitfolioPopupLayout.dialogue(availableWidth: width, messageCount: count)
+                XCTAssertLessThanOrEqual(metrics.totalWidth, width + 0.001)
+                XCTAssertGreaterThanOrEqual(metrics.characterWidth, 0)
+                XCTAssertGreaterThanOrEqual(metrics.bubbleWidth, 0)
+                // Character artwork ends before the writing area's near edge,
+                // including its measured optical correction for either side.
+                for character in FruitfolioPopupLayout.CharacterArtwork.allCases {
+                    let offset = character.opticalOffset(boxSide: metrics.characterWidth)
+                    XCTAssertLessThanOrEqual(metrics.characterWidth + abs(offset.width),
+                        metrics.characterWidth + metrics.spacing + metrics.bubbleWidth * 0.09 + 0.001)
+                }
+            }
+        }
+        XCTAssertEqual(FruitfolioPopupLayout.dialogue(availableWidth: .infinity, messageCount: 3).totalWidth, 0)
+    }
+
+    func testKeyboardConstrainedDialoguePreservesSpeechArtworkRatioWithinHeight() {
+        for height: CGFloat in [44, 100, 180, 400] {
+            let metrics = FruitfolioPopupLayout.dialogue(availableWidth: 288, availableHeight: height, messageCount: 400)
+            let bubbleHeight = metrics.bubbleWidth * 499 / 497
+            XCTAssertLessThanOrEqual(bubbleHeight, height + 0.001)
+            XCTAssertLessThanOrEqual(metrics.characterWidth, height)
+            XCTAssertLessThanOrEqual(metrics.totalWidth, 288)
+        }
+    }
+
     func testNotebookAndWritingAreaRemainWithinSmallOrKeyboardConstrainedViewport() {
         for size in [CGSize(width: 240, height: 180), CGSize(width: 320, height: 220),
                      CGSize(width: 393, height: 852), CGSize(width: 852, height: 270)] {

@@ -171,7 +171,8 @@ struct FruitPopupHost<Content: View>: View {
                 popup(
                     request,
                     availableWidth:
-                        usableWidth
+                        usableWidth,
+                    availableHeight: max(0, proxy.size.height - safeTop - safeBottom)
                 )
                 .frame(
                     maxWidth: .infinity,
@@ -199,7 +200,8 @@ struct FruitPopupHost<Content: View>: View {
                 popup(
                     request,
                     availableWidth:
-                        usableWidth
+                        usableWidth,
+                    availableHeight: max(0, proxy.size.height - safeTop - safeBottom)
                 )
                 .frame(
                     maxWidth: .infinity,
@@ -223,7 +225,8 @@ struct FruitPopupHost<Content: View>: View {
                 popup(
                     request,
                     availableWidth:
-                        usableWidth
+                        usableWidth,
+                    availableHeight: max(0, proxy.size.height - safeTop - safeBottom)
                 )
                 .frame(
                     maxWidth: .infinity,
@@ -257,13 +260,15 @@ struct FruitPopupHost<Content: View>: View {
 
     private func popup(
         _ request: FruitPopupRequest,
-        availableWidth: CGFloat
+        availableWidth: CGFloat,
+        availableHeight: CGFloat
     ) -> some View {
 
         FruitPopupView(
             request: request,
             availableWidth:
                 availableWidth,
+            availableHeight: availableHeight,
             reduceMotion:
                 motionPreferences
                     .reduceMotionActive

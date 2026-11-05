@@ -14,19 +14,15 @@ struct FruitPopupCharacterArtwork: View {
     let character: FruitPopupCharacter
     let width: CGFloat
 
-    /// The source PNGs have different transparent/painted bounds. These tiny
-    /// corrections center the *visible watercolor fruit* rather than blindly
-    /// centering the rectangular PNG canvas.
-    private var opticalOffset: CGSize {
+    private var artworkMetrics: FruitfolioPopupLayout.CharacterArtwork {
         switch character {
-        case .strawberry:
-            return CGSize(width: 1, height: 1)
-        case .blueberry:
-            return CGSize(width: 0, height: 2)
-        case .peach:
-            return CGSize(width: -5, height: -1)
+        case .strawberry: return .strawberry
+        case .blueberry: return .blueberry
+        case .peach: return .peach
         }
     }
+
+    private var opticalOffset: CGSize { artworkMetrics.opticalOffset(boxSide: width) }
 
     var body: some View {
         FruitfolioImage(id: character.assetID)
@@ -51,11 +47,15 @@ struct FruitPopupBubbleShell<Content: View>: View {
     @ViewBuilder
     let content: () -> Content
 
+    private var bubbleHeight: CGFloat {
+        width * FruitfolioPopupLayout.speechBubblePixelSize.height / FruitfolioPopupLayout.speechBubblePixelSize.width
+    }
+
     var body: some View {
         ZStack {
             FruitfolioImage(id: .popup_speech_bubble)
                 .scaledToFit()
-                .frame(width: width, height: width)
+                .frame(width: width, height: bubbleHeight)
                 .scaleEffect(
                     x: characterSide == .right ? -1 : 1,
                     y: 1,
@@ -68,21 +68,22 @@ struct FruitPopupBubbleShell<Content: View>: View {
                 // Mirroring moves the tail, so mirror the small optical inset too.
                 .frame(
                     width: width * 0.76,
-                    height: width * 0.68,
+                    height: bubbleHeight * 0.68,
                     alignment: .center
                 )
                 .offset(
                     x: (characterSide == .left ? 1 : -1) * width * 0.030,
-                    y: -width * 0.040
+                    y: -bubbleHeight * 0.040
                 )
         }
-        .frame(width: width, height: width)
+        .frame(width: width, height: bubbleHeight)
     }
 }
 
 struct FruitPopupView: View {
     let request: FruitPopupRequest
     let availableWidth: CGFloat
+    let availableHeight: CGFloat
     let reduceMotion: Bool
 
     @State
@@ -91,10 +92,12 @@ struct FruitPopupView: View {
     init(
         request: FruitPopupRequest,
         availableWidth: CGFloat = 361,
+        availableHeight: CGFloat = .greatestFiniteMagnitude,
         reduceMotion: Bool
     ) {
         self.request = request
         self.availableWidth = availableWidth
+        self.availableHeight = availableHeight
         self.reduceMotion = reduceMotion
     }
 
@@ -107,26 +110,13 @@ struct FruitPopupView: View {
         }
     }
 
-    private var characterWidth: CGFloat {
-        min(max(availableWidth * 0.18, 58), 72)
+    private var composition: FruitfolioPopupLayout.DialogueMetrics {
+        FruitfolioPopupLayout.dialogue(availableWidth: availableWidth, availableHeight: availableHeight, messageCount: request.message.count)
     }
 
-    private var bubbleWidth: CGFloat {
-        let messageBonus: CGFloat
-        switch request.message.count {
-        case 0...58: messageBonus = 0
-        case 59...105: messageBonus = 18
-        default: messageBonus = 30
-        }
-
-        let desired = max(availableWidth * 0.58, 184) + messageBonus
-        let maximum = max(188, availableWidth - characterWidth + 10)
-        return min(desired, min(246, maximum))
-    }
-
-    private var compositionSpacing: CGFloat {
-        -min(14, characterWidth * 0.20)
-    }
+    private var characterWidth: CGFloat { composition.characterWidth }
+    private var bubbleWidth: CGFloat { composition.bubbleWidth }
+    private var compositionSpacing: CGFloat { composition.spacing }
 
     var body: some View {
         Group {

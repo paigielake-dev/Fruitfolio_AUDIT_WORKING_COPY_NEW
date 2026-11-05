@@ -343,3 +343,14 @@
 - Verification: {"portable_swift": "34 XCTest + 21 Swift Testing passed (55 total)", "Swift_syntax": "87 files, zero parser errors", "Apple_integration": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Resume first independent Part 1 gap: measured shared character/bubble layout for Strawberry, Blueberry and Peach; continue remaining requirements.
 - Commit: containing commit for batch P3-shared-local-media-snapshots.
+
+## P1-measured-character-dialogue-layout
+
+- Parent checkpoint: 3c5e592bf97280e089b9477186ce696cce8c9c5a.
+- Source-order requirements: [13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24, 33, 34, 35, 36, 38, 40, 42, 64].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift, Fruitfolio/Fruit Popup Engine/FruitPopupView.swift, Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift.
+- Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection.
+- Tests added/updated: Prompt1BPopupLayoutTests, WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs.
+- Verification: {"portable_swift": "37 XCTest + 21 Swift Testing passed (58 total)", "workflow": "10 Python tests passed", "Swift_syntax": "87 files, zero parser errors", "UI": "NOT_RUN: Xcode unavailable"}.
+- Next action: Complete shared semantic-intent policy and model formatting instructions; preserve science/source language through MADLAD localization, then remaining Part 1 and later requirements.
+- Commit: containing commit for batch P1-measured-character-dialogue-layout.

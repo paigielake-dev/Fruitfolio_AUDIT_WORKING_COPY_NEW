@@ -318,7 +318,9 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -326,13 +328,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 14,
@@ -343,7 +347,9 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -351,13 +357,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 15,
@@ -368,7 +376,9 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -376,13 +386,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 16,
@@ -393,7 +405,9 @@
       "relevant_source_files": [
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -401,13 +415,15 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 17,
@@ -444,7 +460,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -454,14 +471,16 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 19,
@@ -473,7 +492,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -483,14 +503,16 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 20,
@@ -502,7 +524,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -512,14 +535,16 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 21,
@@ -527,15 +552,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Account for Strawberry, Blueberry, and Peach artwork.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+      ],
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+      ],
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 22,
@@ -543,15 +577,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal popup layout system",
       "description": "Preserve character proportions and prevent characters from overlapping text.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+      ],
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+      ],
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 23,
@@ -563,7 +606,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -573,14 +617,16 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 24,
@@ -592,7 +638,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryComponents.swift",
-        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift"
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -602,14 +649,16 @@
         "Prompt1BModalAccessibilityTests/testScrollablePopupIsolatesBackgroundAndRestoresItOnClose",
         "Prompt1BModalAccessibilityTests/testScrollablePopupAtAccessibilitySizeWithReduceMotion",
         "Prompt1BPopupLayoutTests",
-        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png"
+        "WorkflowIntegrityTests/test_notebook_geometry_matches_actual_bundled_png",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-notebook-popup-geometry (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Character bubble content scrolls within painted writing area; short content remains centered; action text wraps at Dynamic Type and has a 44-point minimum target. UI execution pending.",
-        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run."
+        "Notebook popups use measured 684x564 artwork with a bounded scrollable writing region; viewport height and keyboard constraints determine aspect-preserving paper size. Removed nested dim tint and create dialog minimum-height/local geometry. Existing artwork and actions preserved. Device geometry/VoiceOver not yet run.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:36:07.124599+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 25,
@@ -834,7 +883,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -842,14 +894,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 34,
@@ -858,20 +913,26 @@
       "original_section": "Universal decorative artwork layout system",
       "description": "Account for transparent PNG boundaries and the visible painted footprint.",
       "relevant_source_files": [
-        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BDecorativeLayoutTests"
+        "Prompt1BDecorativeLayoutTests",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-decorative-safe-resizing (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion."
+        "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T18:38:09.648367+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 35,
@@ -884,7 +945,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -892,14 +956,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 36,
@@ -912,7 +979,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -920,14 +990,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 37,
@@ -968,7 +1041,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -976,13 +1052,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 39,
@@ -1022,7 +1101,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1030,13 +1112,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 41,
@@ -1076,7 +1161,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -1084,14 +1172,17 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Decorative geometry now validates finite inputs and painted bounds, tries only role-bounded sizes at the approved anchor, and omits art when all candidates collide with protected content. Shared authority still needs screen-by-screen adoption; no claim of app-wide completion.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 43,
@@ -1637,15 +1728,24 @@
       "original_checklist_part": "Part 1 \u2014 Universal app-wide systems",
       "original_section": "Universal semantic text stylization",
       "description": "Ensure styling never causes text overflow or popup collisions.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
+        "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BPopupLayoutTests",
+        "WorkflowIntegrityTests/test_dialogue_art_dimensions_match_bundled_pngs"
+      ],
+      "commit_reference": "batch:P1-measured-character-dialogue-layout (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Shared character metrics now use actual Strawberry/Blueberry/Peach canvas sizes and alpha>12 painted bounds rather than guessed optical offsets. Exact 497x499 speech-bubble aspect ratio is preserved. Width/height bounded dialogue metrics remove narrow-screen overflow and constrain the popup to the keyboard/safe-area viewport, with scrolling retained inside its writing area. Portable geometry tests cover three characters, long messages, small widths and constrained heights; asset dimensions are checked against bundled PNG headers. Tour reuses corrected art/shell primitives but its independent positioning still needs integration and device inspection."
+      ],
+      "last_updated": "2026-11-05T20:00:36.550529+00:00"
     },
     {
       "sequence": 65,
