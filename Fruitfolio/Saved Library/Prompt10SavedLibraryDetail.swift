@@ -367,6 +367,8 @@ struct Prompt10SavedPageView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @State private var selectedPhotoItem: PhotosPickerItem?
+    @State private var imageImportTask: Task<Void, Never>?
+    @State private var imageImportGeneration = UUID()
     @State private var mediaMessage: String?
     @State private var noteDraft = ""
 
@@ -466,6 +468,8 @@ struct Prompt10SavedPageView: View {
             .padding(.bottom, 44)
         }
         .scrollIndicators(.hidden)
+        .onDisappear { cancelImageImport() }
+        .onChange(of: page.id) { _, _ in cancelImageImport() }
     }
 
     private var notesSection: some View {
@@ -525,8 +529,11 @@ struct Prompt10SavedPageView: View {
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
             }
             .onChange(of: selectedPhotoItem) { _, item in
+                imageImportTask?.cancel()
+                imageImportGeneration = UUID()
                 guard let item else { return }
-                Task { await importImage(item) }
+                let generation = imageImportGeneration
+                imageImportTask = Task { await importImage(item, generation: generation) }
             }
 
             if let mediaMessage {
@@ -537,22 +544,55 @@ struct Prompt10SavedPageView: View {
         }
     }
 
-    private func importImage(_ item: PhotosPickerItem) async {
-        defer { selectedPhotoItem = nil }
+    private func cancelImageImport() {
+        imageImportGeneration = UUID()
+        imageImportTask?.cancel()
+        imageImportTask = nil
+        selectedPhotoItem = nil
+    }
+
+    private func importImage(_ item: PhotosPickerItem, generation: UUID) async {
+        defer {
+            if imageImportGeneration == generation {
+                selectedPhotoItem = nil
+                imageImportTask = nil
+            }
+        }
+        var writtenID: String?
         do {
             guard let data = try await item.loadTransferable(type: Data.self) else {
-                mediaMessage = "that image could not be imported."
-                return
+                throw Prompt10ImagePreparationError.invalidImage
             }
-            let id = try Prompt10LocalMediaStore.shared.saveImageData(data)
-            var ids = page.importedImageIDs ?? []
+            try Task.checkCancellation()
+            guard imageImportGeneration == generation else { return }
+            let prepared = try await Prompt10ImagePreparation.prepare(data)
+            try Task.checkCancellation()
+            guard imageImportGeneration == generation else { return }
+            let id = try await Task.detached(priority: .utility) {
+                try Prompt10LocalMediaStore.shared.saveImageData(prepared)
+            }.value
+            writtenID = id
+            try Task.checkCancellation()
+            guard imageImportGeneration == generation else { throw CancellationError() }
+            // Read current store state after the await; a stale view snapshot
+            // must not overwrite images or edits made while the picker loaded.
+            guard let latest = store.encyclopedia(id: encyclopediaID)?.chapters
+                .first(where: { $0.id == page.chapterID })?.pages.first(where: { $0.id == page.id }) else {
+                throw Prompt10LibraryError.pageNotFound
+            }
+            var ids = latest.importedImageIDs ?? []
             ids.append(id)
             try store.setImportedImageIDs(encyclopediaID: encyclopediaID, chapterID: page.chapterID, pageID: page.id, imageIDs: ids)
-            var updated = page
+            writtenID = nil
+            var updated = latest
             updated.importedImageIDs = ids
             onPageChanged(updated)
             mediaMessage = "image added!"
         } catch {
+            if let orphan = writtenID {
+                _ = await Task.detached(priority: .utility) { try? Prompt10LocalMediaStore.shared.delete(orphan) }.value
+            }
+            guard !Task.isCancelled, imageImportGeneration == generation else { return }
             mediaMessage = "that image could not be imported."
         }
     }

@@ -3914,15 +3914,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Allow users to import their own images from their device or photo library.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 199,
@@ -3962,15 +3969,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Allow user-added content to be edited.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 202,
@@ -3978,15 +3992,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Allow imported images to be removed or replaced.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 203,
@@ -3994,15 +4015,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Provide save and discard behavior.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 204,
@@ -4010,15 +4038,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Protect unsaved edits.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 205,
@@ -4026,15 +4061,22 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Do not generate images on the user\u2019s behalf.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BImagePreparationTests"
+      ],
+      "commit_reference": "batch:P4-owned-validated-photo-import (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending."
+      ],
+      "last_updated": "2026-11-05T18:48:51.342795+00:00"
     },
     {
       "sequence": 206,

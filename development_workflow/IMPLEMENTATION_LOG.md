@@ -117,3 +117,13 @@
 - Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
 - Next action: Inspect Part 4 image import ownership, cancellation, validation and off-main-thread processing; repair the next source defect.
 - Commit: containing commit for batch P3-exact-excerpt-save-identity.
+
+## P4-owned-validated-photo-import
+
+- Parent checkpoint: dcad3186b73a29176efdd8d86afef5db19e8bf2a.
+- Source-order requirements: [198, 201, 202, 203, 204, 205].
+- Photo imports now cancel and invalidate previous loads, preserve newer selection state, and cancel when the page disappears/changes. ImageIO validates input, downsamples off-main with orientation applied, and strips camera metadata during JPEG encoding. Disk writing is off-main; failed/cancelled attachment removes newly written orphan files. Attachment reads current store state after awaits to avoid overwriting newer edits. Device photo-picker and persistence UI verification remains pending.
+- Tests added/updated: Prompt1BImagePreparationTests.
+- Verification: {"workflow": "3 passed", "diff": "passed", "Swift_iOS": "NOT_RUN: Xcode unavailable"}.
+- Next action: Check shared guide persistence propagation, then Part 5 settings/account/context and hormone safeguards in source order, recording external blockers without fabricating services or algorithms.
+- Commit: containing commit for batch P4-owned-validated-photo-import.
