@@ -3971,20 +3971,25 @@
       "description": "Keep Ask conversation history only while the user remains in the active Ask session.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 119,
@@ -3994,20 +3999,25 @@
       "description": "Clear unsaved questions and answers when the user exits Ask.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 120,
@@ -4017,20 +4027,25 @@
       "description": "Clear unsaved draft text when the session ends.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 121,
@@ -4040,20 +4055,25 @@
       "description": "Open Ask with a fresh paper when the user returns.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 122,
@@ -4063,20 +4083,25 @@
       "description": "Do not silently restore old conversations after restarting the app.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 123,
@@ -4086,20 +4111,25 @@
       "description": "Do not persist transcripts through account state, analytics, or other hidden storage.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 124,
@@ -4121,7 +4151,9 @@
         "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4135,17 +4167,19 @@
         "Prompt1BSavedExcerptPersistenceTests",
         "Prompt1BTranslationPipelineTests/testNonEnglishSavedContentCanRequestEnglishTranslation",
         "Prompt1BSemanticSliceTests",
-        "Prompt1BSemanticTextTests"
+        "Prompt1BSemanticTextTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-translated-semantic-annotation-roundtrip (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
-        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun."
+        "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T19:54:43.955284+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 125,
@@ -4171,7 +4205,9 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
         "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4188,9 +4224,10 @@
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
         "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
-        "Prompt1BCitationDestinationTests"
+        "Prompt1BCitationDestinationTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-persisted-citation-records-and-source-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask now renders session turns in order, retains earlier selectable answers with their own citations and save actions, and builds saved content from the selected answer's original question/body/provenance. Save completion updates the matching answer ID rather than the newest response. Bottom geometry gates streamed/new-turn auto-follow; reading older content does not force a jump. Repeated identical excerpt occurrence identity and continuous paper edge treatment remain unfinished. Complete founder document extraction succeeded and is preserved for targeted reconciliation.",
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
@@ -4198,9 +4235,10 @@
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
-        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing."
+        "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T20:25:58.107159+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 126,
@@ -4210,20 +4248,25 @@
       "description": "Do not delete saved Guide content when the Ask session clears.",
       "relevant_source_files": [
         "Fruitfolio/Ask/Prompt09AskViewModel.swift",
-        "Fruitfolio/Ask/Prompt09AskView.swift"
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt1BAskLifecycleTests"
+        "Prompt1BAskLifecycleTests",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-ask-session-cancellation (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next."
+        "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T18:43:52.349910+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 127,
@@ -4294,7 +4337,9 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioSemanticTextStyle.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift"
+        "Fruitfolio/Saved Library/Prompt10ImportedImage.swift",
+        "Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -4308,17 +4353,19 @@
         "Prompt1BSemanticTextTests",
         "Prompt1BSavedExcerptPersistenceTests/testNoteDraftSurvivesMediaRefreshAndResetsOnlyForAnotherPage",
         "Prompt1BSavedExcerptPersistenceTests/testImageRemainsReferencedAfterOriginalSnapshotDetachesIt",
-        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate"
+        "Prompt11GuideBuilderTests/testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate",
+        "Prompt1BPendingSavePrivacyTests"
       ],
-      "commit_reference": "batch:P3-shared-local-media-snapshots (resolve containing commit with git log)",
+      "commit_reference": "batch:P3-selected-save-payload-privacy (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
-        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup."
+        "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
+        "New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun."
       ],
-      "last_updated": "2026-11-05T19:57:36.960517+00:00"
+      "last_updated": "2026-11-05T20:28:01.624449+00:00"
     },
     {
       "sequence": 129,

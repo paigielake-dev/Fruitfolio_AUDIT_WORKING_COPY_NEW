@@ -948,7 +948,7 @@ struct Prompt11OriginalAnswerPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(alignment: .leading, spacing: 10) {
-                Text("original answer")
+                Text(sourcePage?.saveType == .excerpt ? "saved excerpt" : "original answer")
                     .font(.custom("Chalkboard SE", size: 16))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -958,7 +958,7 @@ struct Prompt11OriginalAnswerPopup: View {
 
                 if let sourcePage {
                     ScrollView {
-                        FruitfolioTranslatedText(source: sourcePage.answer, protectedLiterals: sourcePage.sourceIDs, enabled: sourcePage.originalAnswerID != nil, font: .custom("Chalkboard SE", size: 12, relativeTo: .body))
+                        FruitfolioTranslatedText(source: sourcePage.displayBody, protectedLiterals: sourcePage.sourceIDs, enabled: sourcePage.originalAnswerID != nil, font: .custom("Chalkboard SE", size: 12, relativeTo: .body), sourceLanguage: sourcePage.excerptLanguage ?? "en", semanticSpans: sourcePage.excerptSemanticSpans)
                             .font(.custom("Chalkboard SE", size: 12))
                             .foregroundStyle(
                                 DesignTokens.ColorToken.primaryBurgundy

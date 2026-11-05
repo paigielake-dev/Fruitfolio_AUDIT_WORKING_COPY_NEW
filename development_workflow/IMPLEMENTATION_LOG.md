@@ -442,3 +442,14 @@
 - Verification: {"portable_swift": "51 XCTest + 21 Swift Testing passed (72 total)", "workflow": "11 Python tests passed", "Swift_syntax": "108 files, zero parser errors", "Apple_citation_UI": "NOT_RUN: Apple SDK unavailable"}.
 - Next action: Restrict excerpt saves to explicit selected payloads, support optional scientific-image saves and supplemental founder requirements; continue canonical voice and original source-order backlog.
 - Commit: containing commit for batch P3-persisted-citation-records-and-source-actions.
+
+## P3-selected-save-payload-privacy
+
+- Parent checkpoint: 069c4e59c9eda7aa355a7c4f6bd4aa19355c11e7.
+- Source-order requirements: [118, 119, 120, 121, 122, 123, 124, 125, 126, 128].
+- Source files: Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift, Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift.
+- New excerpt-save payloads retain only explicitly selected text, not the unsaved full answer that was previously copied alongside it. Exact answer/conversation identifiers and citation metadata remain available for attribution. Full answer text persists only when the full-answer save type is explicitly selected. The original-answer popup now identifies excerpt content and displays the selected body with its semantic/language metadata. Existing saved records were preserved, not silently migrated or deleted; legacy excerpt records may still contain the earlier full-answer field until explicitly erased by their owner. Payload privacy tests pass on Linux; Apple save/cancel navigation and persistence integration remain unrun.
+- Tests added/updated: Prompt1BPendingSavePrivacyTests.
+- Verification: {"portable_swift": "53 XCTest + 21 Swift Testing passed (74 total)", "Swift_syntax": "110 files, zero parser errors", "Apple_save_UI": "NOT_RUN: Apple SDK unavailable"}.
+- Next action: Implement explicit scientific-illustration save selection and optional text/image combinations, index supplemental founder additions, then remaining source-order requirements.
+- Commit: containing commit for batch P3-selected-save-payload-privacy.
