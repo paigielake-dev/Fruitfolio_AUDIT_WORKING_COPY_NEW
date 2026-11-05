@@ -128,6 +128,31 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertEqual(dna.value as? String, "removed · add again")
     }
 
+    func testAskContextRequiresAttachAndCancelDoesNotShare() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioAskPaperQA"]
+        app.launch()
+        let attach = app.buttons["attach my context"]
+        XCTAssertTrue(attach.waitForExistence(timeout: 5))
+        attach.tap()
+        let measurement = app.switches.matching(NSPredicate(format: "label CONTAINS %@", "Progesterone")).firstMatch
+        XCTAssertTrue(measurement.waitForExistence(timeout: 3))
+        measurement.tap()
+        let cancel = app.buttons["cancel"]
+        for _ in 0..<10 { if cancel.isHittable { break }; app.swipeUp() }
+        cancel.tap()
+        XCTAssertFalse(app.staticTexts["1 selected for one question"].exists)
+        attach.tap()
+        XCTAssertTrue(measurement.waitForExistence(timeout: 3))
+        measurement.tap()
+        let done = app.buttons["attach selected context"]
+        for _ in 0..<10 { if done.isHittable { break }; app.swipeUp() }
+        done.tap()
+        XCTAssertTrue(app.staticTexts["1 selected for one question"].waitForExistence(timeout: 3))
+        app.buttons["remove attachments"].tap()
+        XCTAssertFalse(app.staticTexts["1 selected for one question"].exists)
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

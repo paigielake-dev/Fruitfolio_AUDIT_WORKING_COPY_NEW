@@ -127,7 +127,7 @@ struct Prompt03SkeletonView: View {
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioBookQA") {
             Prompt1BBookRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioAskPaperQA") {
-            Prompt09AskView(viewModel: .paperRegressionFixture())
+            FruitfolioAskContextRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioTourQA") {
             Prompt1BTourRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioModalQA") {

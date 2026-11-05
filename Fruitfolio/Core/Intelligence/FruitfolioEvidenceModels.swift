@@ -11,6 +11,7 @@ nonisolated struct FruitfolioEvidencePacket:
     let safetyClassification: Prompt34SafetyClassification
     let permittedContext: FruitfolioBoundedTrackerContext?
     let contentVersion: String
+    var userProvidedContext: FruitfolioAskUserContext? = nil
 }
 
 /// The local model never gets to hand arbitrary prose directly to the UI.

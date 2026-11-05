@@ -1,0 +1,16 @@
+{
+  "timestamp": "2026-11-05T22:38:24.244012+00:00",
+  "commands": [
+    "PYTHONPATH=/tmp/fruitfolio-validation-deps python3 Tools/check_swift_syntax.py",
+    "python3 -m unittest discover -s development_workflow/tests -q",
+    "git diff --check"
+  ],
+  "results": {
+    "Swift_6_headless": "215 XCTest + 21 Swift Testing passed (236 total)",
+    "Swift_5_native": "219 XCTest + 21 Swift Testing passed (240 total)",
+    "native_context": "Actual Swift/Qwen + actual corpus generated-path test passed in 12.372s; private fixture marker absent from answer/citations",
+    "workflow": "15 Python tests passed",
+    "Swift_syntax": "165 files, zero parser errors",
+    "Apple_UI": "NOT_RUN: explicit picker, cancellation and shared-store observation require Apple runtime"
+  }
+}

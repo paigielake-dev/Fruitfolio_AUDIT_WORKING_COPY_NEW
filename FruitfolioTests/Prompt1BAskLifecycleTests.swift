@@ -110,3 +110,51 @@ extension Prompt1BAskLifecycleTests {
         XCTAssertEqual(model.displayedAnswerText, model.answer?.answerText)
     }
 }
+
+private actor Prompt1BContextSuspendedAskEngine: AskContextualResearchServing {
+    let started: XCTestExpectation
+    private(set) var captured: FruitfolioAskUserContext?
+    private var pending: CheckedContinuation<AskAnswer, Never>?
+    init(started: XCTestExpectation) { self.started = started }
+    func answer(question: String, conversation: [AskMessage]) async throws -> AskAnswer {
+        try await answer(question: question, conversation: conversation, trackerContext: nil, userContext: nil, progress: nil)
+    }
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        try await answer(question: question, conversation: conversation, trackerContext: trackerContext, userContext: nil, progress: progress)
+    }
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        captured = userContext
+        return await withCheckedContinuation { pending = $0; started.fulfill() }
+    }
+    func finish() {
+        captured = nil
+        pending?.resume(returning: .init(originalQuestion: "question", answerText: "late source-only answer",
+            support: .supported, knowledgeBaseVersion: "fixture"))
+        pending = nil
+    }
+}
+
+extension Prompt1BAskLifecycleTests {
+    func testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse() async throws {
+        let started = expectation(description: "selected context reached provider")
+        let engine = Prompt1BContextSuspendedAskEngine(started: started)
+        let model = Prompt09AskViewModel(engine: engine)
+        var measurement = FruitfolioHormoneMeasurement()
+        measurement.result = "1.25"; measurement.unit = "ng/mL"; measurement.notes = "private context fixture"
+        let context = try XCTUnwrap(FruitfolioAskUserContext.selected(measurementIDs: [measurement.id], personalCategories: [],
+            measurements: [measurement], context: .unspecified))
+        model.inputText = "question"
+        let task = Task { await model.submitCurrentQuestion(reduceMotion: true, userContext: context) }
+        await fulfillment(of: [started], timeout: 2)
+        XCTAssertTrue(model.hasUserContextInFlight)
+        XCTAssertFalse(model.messages.contains { $0.text.contains("private context fixture") })
+        model.cancelOutstandingWork()
+        XCTAssertFalse(model.hasUserContextInFlight)
+        await engine.finish()
+        await task.value
+        XCTAssertNil(model.answer)
+        XCTAssertEqual(model.phase, .ready)
+    }
+}

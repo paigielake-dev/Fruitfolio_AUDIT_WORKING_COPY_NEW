@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "27f7b4c1d898a7fa78e08182002f79dc8e82206b",
+  "current_HEAD": "51380bfaf1ed35ae0c02ce92f4e383ffc261ec61",
   "latest_verified_commit": null,
-  "current_checklist_part": 3,
-  "current_requirement": 264,
-  "current_implementation_batch": "Apple-regression-routes-use-real-shell-environment",
+  "current_checklist_part": 7,
+  "current_requirement": 292,
+  "current_implementation_batch": "Ask-explicit-one-question-context-and-native-evidence-boundaries",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,8 +493,22 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+    "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+    "Fruitfolio/Ask/Prompt09AskModels.swift",
+    "Fruitfolio/Ask/Prompt09AskView.swift",
+    "Fruitfolio/Ask/Prompt09AskViewModel.swift",
     "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift"
+    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceBudget.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "FruitfolioTests/Prompt1BAskLifecycleTests.swift",
+    "FruitfolioTests/Prompt1BAskUserContextTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/SUPPLEMENTAL_SPEC_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -512,12 +526,14 @@
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_syntax": "162 files, zero parser errors",
+    "Swift_6_headless": "215 XCTest + 21 Swift Testing passed (236 total)",
+    "Swift_5_native": "219 XCTest + 21 Swift Testing passed (240 total)",
+    "native_context": "Actual Swift/Qwen + actual corpus generated-path test passed in 12.372s; private fixture marker absent from answer/citations",
     "workflow": "15 Python tests passed",
-    "Foundation_source": "unchanged; prior 232 headless / 235 native checks remain last verified",
-    "Apple_UI": "NOT_RUN: environment wiring corrected, launch/typecheck still need Apple runtime"
+    "Swift_syntax": "165 files, zero parser errors",
+    "Apple_UI": "NOT_RUN: explicit picker, cancellation and shared-store observation require Apple runtime"
   },
-  "next_exact_implementation_action": "Implement explicit selection and session-only attachment of hormone/personal context into Ask, preserving user-provided provenance, research-only claims, deletion invalidation and no automatic sharing.",
-  "updated_at": "2026-11-05T22:26:55.725827+00:00",
+  "next_exact_implementation_action": "Continue independent original-order Cycle Tracker wheel/Today responsive layout and calendar loading/transition interaction fixes; clinically reviewed free-text adaptation, adjusted-curve method, Apple runtime and MADLAD model blockers remain explicit.",
+  "updated_at": "2026-11-05T22:38:24.244012+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

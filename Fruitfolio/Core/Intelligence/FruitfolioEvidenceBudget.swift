@@ -31,7 +31,8 @@ nonisolated enum FruitfolioEvidenceBudget {
                     .init(claim: $0.claim, noteChunkIDs: $0.noteChunkIDs.filter { noteIDs.contains($0) },
                           sourceChunkIDs: $0.sourceChunkIDs.filter { sourceIDs.contains($0) })
                 }, sourceRecords: evidence.sourceRecords, safetyClassification: evidence.safetyClassification,
-                permittedContext: evidence.permittedContext, contentVersion: evidence.contentVersion)
+                permittedContext: evidence.permittedContext, contentVersion: evidence.contentVersion,
+                userProvidedContext: evidence.userProvidedContext)
         }
         guard try promptTokenCount(packet([], [])) <= maximumPromptTokens else { return nil }
         for note in evidence.researchNoteChunks where permitted.contains(note.chunkID) {

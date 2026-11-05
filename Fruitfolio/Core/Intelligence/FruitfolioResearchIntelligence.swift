@@ -216,6 +216,7 @@ actor LlamaFruitfolioLanguageModel:
         evidence: FruitfolioEvidencePacket
     ) async throws -> FruitfolioGeneratedDraft {
         try Task.checkCancellation()
+        if let userContext = evidence.userProvidedContext { _ = try userContext.promptJSON() }
         let currentAvailability = await availability()
         try Task.checkCancellation()
 
@@ -618,8 +619,7 @@ nonisolated enum FruitfolioResearchIntelligenceError:
 
 @MainActor
 final class FruitfolioResearchIntelligenceEngine:
-    AskKnowledgeServing,
-    AskResearchProgressServing
+    AskContextualResearchServing
 {
     static let shared =
         FruitfolioResearchIntelligenceEngine()
@@ -684,6 +684,13 @@ final class FruitfolioResearchIntelligenceEngine:
         progress:
             (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?
     ) async throws -> AskAnswer {
+        try await answer(question: question, conversation: conversation, trackerContext: trackerContext,
+                         userContext: nil, progress: progress)
+    }
+
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer {
+        if let userContext { _ = try userContext.promptJSON() }
         let trimmed =
             question.trimmingCharacters(
                 in: .whitespacesAndNewlines
@@ -694,10 +701,10 @@ final class FruitfolioResearchIntelligenceEngine:
                 .emptyQuestion
         }
 
-        let safety =
-            Prompt34LocalSafetyRouter.classify(
-                trimmed
-            )
+        let classified = Prompt34LocalSafetyRouter.classify(trimmed)
+        let safety = userContext != nil && classified.level == .normal
+            ? Prompt34SafetyClassification(level: .sensitive, matchedPatterns: ["explicit_user_provided_context"])
+            : classified
 
         if safety.requiresUrgentGuidance {
             // A missing package/model must not delay the existing local urgent
@@ -718,7 +725,7 @@ final class FruitfolioResearchIntelligenceEngine:
 
         let normalized =
             FruitfolioQueryNormalizer.normalize(
-                trimmed
+                trimmed + " " + (userContext?.topicHints.joined(separator: " ") ?? "")
             )
 
         let claims =
@@ -879,7 +886,8 @@ final class FruitfolioResearchIntelligenceEngine:
                 permittedContext:
                     trackerContext,
                 contentVersion:
-                    package.contentVersion
+                    package.contentVersion,
+                userProvidedContext: userContext
             )
 
         let answerText: String

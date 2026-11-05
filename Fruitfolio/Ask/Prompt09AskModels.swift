@@ -162,6 +162,11 @@ protocol AskResearchProgressServing: AskKnowledgeServing {
     ) async throws -> AskAnswer
 }
 
+protocol AskContextualResearchServing: AskResearchProgressServing {
+    func answer(question: String, conversation: [AskMessage], trackerContext: FruitfolioBoundedTrackerContext?,
+        userContext: FruitfolioAskUserContext?, progress: (@MainActor @Sendable (FruitfolioResearchProgress) -> Void)?) async throws -> AskAnswer
+}
+
 protocol AskSaving: Sendable {
     func save(_ request: AskSaveRequest) async throws
 }

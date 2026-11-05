@@ -5079,7 +5079,9 @@
         "Fruitfolio/Ask/Prompt09AnswerSupport.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift",
         "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift"
+        "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -5101,9 +5103,12 @@
         "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
         "Prompt1BEvidenceBudgetTests",
         "Prompt1BResearchEngineIntegrationTests/testNativeModelAnswersFromActualCorpusWithinWholeParagraphBudgets",
-        "Prompt1BScientificTranslationTests"
+        "Prompt1BScientificTranslationTests",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Ask-compact-native-evidence-selection-and-exact-attribution (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Ask retains validated answers and assistant turns in session memory. Reset cancels both retrieval and typing, invalidates generation, clears history/draft and rotates session ID. Late provider responses/progress cannot mutate a reset or newer generation, even if cancellation is ignored. Cancellation no longer appears as a user-facing failure. Exiting Ask clears session while explicit saved library data is untouched. History UI integration is next.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -5113,9 +5118,10 @@
         "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
         "Added native-tokenizer admission for complete source paragraphs under actual context and output limits. Oversized paragraphs are omitted without cutting qualifiers or changing source text, and claim/evidence maps are restricted to admitted IDs. Grammar claim count uses conservative worst-alternative output costs. Added optional in-memory answer-path provenance so generation tests cannot pass by silently falling back. Cancellation now propagates through the engine rather than creating a fallback after cancellation. The actual full research engine, actual compiled founder corpus and real Qwen model passed a generated-path/citation assertion in 30.335 seconds on Linux CPU. This verifies functioning bounded inference but remains a latency concern; redundant autoregressive copying is the next optimization candidate. Apple runtime, clinical interpretation and MADLAD resources/inference remain unverified.",
         "Fixed a clinical translation-protection gap: leading signs/comparators and units outside the old limited numeric regex could remain unprotected. Complete signed/comparison quantities, ratios/ranges/uncertainties, scientific powers, broader laboratory units and invariant labels are now protected atomically without interpreting/converting values. Post-restoration signatures also reject added unit/numeric claims and introduced structured references/URLs. Tests preserve escaped Markdown operators and avoid misclassifying ordinary translated contractions/words as bare units. All feasible protection/native regressions pass. These checks cannot prove non-numerical medical meaning or real language quality; official MADLAD weights/T5 inference and clinical review remain blocked/unrun.",
-        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim."
+        "Native generation now selects grammar-constrained permitted evidence IDs; deterministic reconstruction preserves complete scientific paragraphs without autoregressive copying. Unknown/unpermitted/excessive selections fail, duplicates deduplicate, injected text cannot become evidence. Sources now reflect only paragraphs actually presented; empty source lists do not render a misleading footer. Actual Qwen plus actual corpus generated path passed in 10.572 seconds versus recorded 30.335-second baseline on Linux CPU. This is evidence selection, not validated clinical paraphrase or an Apple/device performance claim.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T21:43:17.368091+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 137,
@@ -5991,7 +5997,9 @@
         "Tools/compile_research_package.py",
         "Fruitfolio/FruitfolioResearchPackage.json",
         "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -6011,9 +6019,12 @@
         "ResearchCompilationTests",
         "Prompt1BResearchEngineIntegrationTests",
         "Prompt56ResearchIntelligenceTests/testNativeGGUFProducesStructuredDraftWithoutFallback",
-        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID"
+        "Prompt1BEvidenceBoundaryTests/testNativeConstrainedDraftPreservesQuotedUnicodeUnitsAndExactEvidenceID",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:P3-real-Swift-native-inference-and-headless-engine (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Save badges now use answer UUID plus exact rendered UTF-16 selection location/length rather than excerpt text. Both current and earlier answer selection delegates report ranges; immutable pending saves capture the selected identity. Only successful save callbacks record badges; cancelled requests do not. Two identical phrases in different answers or occurrences remain distinct. Existing persistence schemas and provenance are preserved.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -6021,9 +6032,10 @@
         "Saved-page Back now offers save, discard or keep editing for dirty notes; failed saves retain the editor. Draft ownership prevents media redraws from replacing active notes. Saving re-reads persisted page fields to preserve concurrent attachments, and stores authored whitespace unchanged. Interactive sheet dismissal is disabled for dirty notes. Other app-level navigation and process termination recovery still require broader integration.",
         "Guide snapshots now copy imported image IDs and render them with the same local-image component as saved pages. Background file reads and bounded ImageIO thumbnail decoding replace synchronous decoding inside view body; load tasks cancel on disappearance/ID changes. Detaching an original image checks all saved books before deleting its file, preserving guide references. Reference persistence tests pass on Linux; actual ImageIO/SwiftUI decoding and guide-store integration remain unrun without Apple SDK. Whole-book deletion currently conservatively retains media files, pending verified orphan cleanup.",
         "Restored complete original paragraphs from a deduplicated provenance table before evidence mapping/synthesis/fallback, replacing unsafe mid-paragraph slices and 680-character presentation clipping. Generated facts now require exact complete-evidence preservation with only validated canonical styling; a shared word is no longer treated as medical entailment. This deliberately uses a conservative source-copy boundary until a validated paraphrase verifier exists. Arbitrary model bridge/limitation fields can no longer introduce uncited medical prose. One canonical voice contract/framing now serves generated and retrieval-only responses, with human bridge, main-point stars, bounded partial-support disclosure and urgent guidance only for urgent classifications. Corrected kaomoji policy maximum 4\u21923 and normal preference 0\u20131. Literal scientific operators are escaped for safe rendering, preserving dose, unit case and negative/qualifying language. Source clinical truth/relevance, complete source-authored kaomoji handling and full stylistic acceptance are not claimed verified. Pure shipping validation code and actual package context restoration execute on Linux; Apple UI/integrated AI remains unrun.",
-        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights."
+        "Expanded headless compilation to the actual production research engine and added injectable local resource URLs for tests. Fixed real Swift concurrency errors in the model protocol/actor initializer and main-actor progress callback contract. Added local urgent guidance before package/model loading, preserving no-diagnosis/no-fabricated-citation behavior. Linked the actual native Swift inference branches to exact vendor CPU libraries and the real Qwen GGUF. The first native run genuinely failed invalidOutput; request-scoped evidence-bound JSON grammar fixed it. Native generation now passes both structured production validation and quoted Unicode/scientific-unit preservation tests. Added token-step cancellation, explicit output-limit/UTF-8 rejection, request-scoped sampler cleanup and decoder KV cleanup. Actual headless engine fallback/citation and searched-unsupported tests pass against the real compiled founder corpus. Qwen fixture inference is verified on Linux, not full-corpus native synthesis or Apple runtime. MADLAD code compiles/links, but no T5 inference/quality/device claim is made without its blocked official weights.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T21:09:21.211007+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 159,
@@ -9254,7 +9266,14 @@
         "Fruitfolio/Hormone Information/HormoneInformationView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextViews.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9264,15 +9283,19 @@
         "Prompt1BHormoneMeasurementTests",
         "Prompt1BHormoneMeasurementTests/testExplicitExportAndEraseContainOnlyMeasurements",
         "Prompt1BHormonePersistenceTests",
-        "Prompt1BHormoneValidationTests"
+        "Prompt1BHormoneValidationTests",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Hormones-exact-local-decimals-and-recoverable-persistence (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
-        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified."
+        "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:07:23.342395+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 264,
@@ -9280,15 +9303,29 @@
       "original_checklist_part": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
       "original_section": null,
       "description": "Require explicit user action before sharing measurements in Ask.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
+      ],
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
+      ],
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 265,
@@ -9751,7 +9788,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9762,15 +9806,19 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 282,
@@ -9786,7 +9834,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9796,14 +9851,18 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 283,
@@ -9819,7 +9878,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9829,14 +9895,18 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 284,
@@ -9886,7 +9956,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9897,15 +9974,19 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 286,
@@ -9922,7 +10003,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9933,15 +10021,19 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 287,
@@ -9958,7 +10050,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -9969,15 +10068,19 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 288,
@@ -9999,7 +10102,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10019,16 +10129,20 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Corrected confidence and data-sufficiency off-by-one: five logged periods no longer qualify for strong confidence; at least six starts/five completed cycles are required. High-variation safeguards still downgrade confidence. Measurement records are not inputs. Updated older five-period strong-confidence expectations to the controlling founder tiers and added all count boundaries. Mac script now includes the full unit-test target rather than only early batches.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 289,
@@ -10080,7 +10194,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10090,14 +10211,18 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 291,
@@ -10113,7 +10238,14 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift",
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Context Personalization/Prompt27AContextModels.swift",
-        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift"
+        "Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingView.swift",
+        "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Ask/Prompt09AskView.swift",
+        "Fruitfolio/Ask/Prompt09AskViewModel.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceModels.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioEvidenceSynthesis.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10123,14 +10255,18 @@
         "Prompt1BContextPersistenceTests",
         "Prompt27AContextPersonalizationTests",
         "Prompt1BPersonalHealthContextTests",
-        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved"
+        "Prompt1BModalAccessibilityTests.testOptionalPersonalContextCanBeAddedEditedAndRemoved",
+        "Prompt1BAskUserContextTests",
+        "Prompt1BAskLifecycleTests.testExplicitContextIsNotCopiedIntoMessagesAndCancellationRejectsLateResponse",
+        "Prompt1BModalAccessibilityTests.testAskContextRequiresAttachAndCancelDoesNotShare"
       ],
-      "commit_reference": "batch:Illustrated-personal-health-shared-model-and-entry-points (resolve containing commit with git log)",
+      "commit_reference": "batch:Ask-explicit-one-question-context-and-native-evidence-boundaries (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Fixed a data-loss path where loading corrupt My Context deleted the original payload. Exact local Foundation persistence now preserves corrupt/wrong-type records read-only, encodes candidate mutations before publishing or writing, rejects failed mutations without changing the snapshot, supports restart/export and explicit erase. Existing store API retained; context selections disable on unreadable storage and clearing requires explicit confirmation. Policy tasks verify their input still matches current context before publishing, preventing stale adaptation after edits/deletion. Added 71 existing context regressions to the portable suite, removing an unnecessary MainActor annotation from pure tests after Linux XCTest discovery crashed on synchronous actor tests. No prediction mathematics or logs modified. Apple Combine/UI behavior remains unrun.",
-        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun."
+        "Added 33 optional Body/Genetics/Lab/reproductive/medication/general fields to the existing shared locally persisted context model, preserving old Codable payloads. Each illustrated entry maps to its specific canonical asset; no new artwork or guessed techniques/biology. Records distinguish user-provided from user-asserted clinician confirmation, carry creation/update timestamps and revision IDs, and remove medical text on deletion/decline. Progressive disclosure supports add/edit/remove/skip/prefer-not-to-say with dirty-draft protection. Settings My Context and optional onboarding use the same store; export/erase include the same fields. Actual Foundation codec/persistence tests verify restart, removal and no inferred biological/prediction-policy changes. New free text is intentionally not automatically included in minimized AI context; relevant evidence-informed personalization/explicit Ask sharing remain next work. Apple UI/VoiceOver and onboarding acceptance unrun.",
+        "Added explicit selection/attach/Send flow for one-question local hormone and personal-context snapshots. Nothing attaches by default; unselected/deleted/declined records are omitted, oversized context fails without truncation, exact values/units/locale and user-asserted provenance remain distinct from clinically verified facts. No attachment is copied into question text, transcript, answers, sources or persistent research cache. Known canonical topic hints can guide local retrieval; user free text cannot supply evidence IDs or factual output. Native grammar still selects approved IDs only, validators still require complete original evidence, and clinical tone is sensitive. Store changes invalidate selections and cancel affected pending/in-flight work; owned outer Send tasks and generation checks cover pre-start/departure races. Isolated Ask QA now uses fixture measurements, not production records. Actual full-corpus Swift/Qwen context path generated a source-grounded answer in 12.372s Linux CPU without emitting private fixture details. Apple UI/Combine lifecycle tests are added but unrun; no MADLAD or iOS inference claim."
       ],
-      "last_updated": "2026-11-05T22:24:41.787011+00:00"
+      "last_updated": "2026-11-05T22:38:24.244012+00:00"
     },
     {
       "sequence": 292,

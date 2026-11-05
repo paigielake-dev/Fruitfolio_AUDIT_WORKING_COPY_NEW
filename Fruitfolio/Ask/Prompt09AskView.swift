@@ -13,6 +13,14 @@ struct Prompt09AskView: View {
 
     @State private var suggestionRevealCount = 0
     @State private var showingHelp = false
+    @State private var showingContextPicker = false
+    @State private var selectedContextMeasurements: Set<UUID> = []
+    @State private var selectedContextCategories: Set<FruitfolioPersonalHealthCategory> = []
+    @State private var contextSharingMessage: String?
+    @State private var sendTask: Task<Void, Never>?
+    @State private var sendTaskGeneration = UUID()
+    @State private var pendingContextSend = false
+    @ObservedObject private var contextMeasurements: FruitfolioHormoneMeasurementStore
     @State private var showLifeBridge = false
     @State private var showingEntryPageTurn = true
 
@@ -37,7 +45,8 @@ struct Prompt09AskView: View {
 
     @FocusState private var inputFocused: Bool
 
-    init(viewModel: Prompt09AskViewModel? = nil) {
+    init(viewModel: Prompt09AskViewModel? = nil, measurements: FruitfolioHormoneMeasurementStore? = nil) {
+        _contextMeasurements = ObservedObject(wrappedValue: measurements ?? .shared)
         _viewModel = StateObject(wrappedValue: viewModel ?? Prompt09AskViewModel())
     }
 
@@ -158,11 +167,11 @@ struct Prompt09AskView: View {
                 }
             }
             .fruitfolioModalBlur(
-                active: pendingLibrarySave != nil || showingHelp,
+                active: pendingLibrarySave != nil || showingHelp || showingContextPicker,
                 reduceMotion: motionPreferences.reduceMotionActive
             )
 
-            if pendingLibrarySave != nil || showingHelp {
+            if pendingLibrarySave != nil || showingHelp || showingContextPicker {
                 DesignTokens.ColorToken.backgroundCream
                     .opacity(FruitfolioModalBlurSpec.dimOpacity)
                     .ignoresSafeArea()
@@ -211,6 +220,15 @@ struct Prompt09AskView: View {
                 )
                 .zIndex(200)
             }
+            if showingContextPicker {
+                FruitfolioAskContextPicker(measurements: contextMeasurements, contextStore: prompt27AContextStore,
+                    selectedMeasurements: selectedContextMeasurements, selectedCategories: selectedContextCategories,
+                    onAttach: { ids, categories in
+                        selectedContextMeasurements = ids; selectedContextCategories = categories
+                        contextSharingMessage = nil; showingContextPicker = false
+                    }, onCancel: { showingContextPicker = false })
+                    .zIndex(210)
+            }
             if showingHelp {
                 FruitfolioTapedWhitePopup {
                     VStack(spacing: 10) {
@@ -237,7 +255,7 @@ struct Prompt09AskView: View {
         ) {
             inputBar
                 .fruitfolioModalBlur(
-                    active: pendingLibrarySave != nil || showingHelp,
+                    active: pendingLibrarySave != nil || showingHelp || showingContextPicker,
                     reduceMotion: motionPreferences.reduceMotionActive
                 )
         }
@@ -261,8 +279,13 @@ struct Prompt09AskView: View {
             await revealSuggestions()
         }
         .onAppear { synchronizeTypingAudio() }
+        .onReceive(contextMeasurements.$records.dropFirst()) { _ in invalidateChangedUserContext() }
+        .onReceive(prompt27AContextStore.$context.dropFirst()) { _ in invalidateChangedUserContext() }
         .onChange(of: typingAudioActive) { _, _ in synchronizeTypingAudio() }
         .onDisappear {
+            sendTaskGeneration = UUID(); sendTask?.cancel(); sendTask = nil; pendingContextSend = false
+            selectedContextMeasurements = []; selectedContextCategories = []
+            showingContextPicker = false; contextSharingMessage = nil
             audioManager.forgetLoop(category: .typingASMR)
             inputFocused = false
             viewModel.cancelOutstandingWork()
@@ -1318,6 +1341,42 @@ struct Prompt09AskView: View {
     // MARK: - Input
 
     private var inputBar: some View {
+        VStack(spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
+                WatercolorSecondaryButton(label: "attach my context") {
+                    inputFocused = false; showingContextPicker = true
+                }
+                .disabled(viewModel.phase == .searching)
+                if !selectedContextMeasurements.isEmpty || !selectedContextCategories.isEmpty {
+                    Text("\(selectedContextMeasurements.count + selectedContextCategories.count) selected for one question").font(.caption)
+                    Button("remove attachments") { selectedContextMeasurements = []; selectedContextCategories = [] }
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                }
+            }
+            .padding(.horizontal, 20)
+            if let contextSharingMessage { Text(contextSharingMessage).font(.caption).padding(.horizontal, 20) }
+            questionInputRow
+        }
+    }
+
+    private func invalidateChangedUserContext() {
+        guard viewModel.hasUserContextInFlight || pendingContextSend || !selectedContextMeasurements.isEmpty || !selectedContextCategories.isEmpty else { return }
+        let wasInFlight = viewModel.hasUserContextInFlight || pendingContextSend
+        if wasInFlight { sendTaskGeneration = UUID(); sendTask?.cancel(); sendTask = nil; pendingContextSend = false }
+        if wasInFlight {
+            viewModel.cancelOutstandingWork()
+            if viewModel.inputText.isEmpty {
+                viewModel.inputText = viewModel.messages.last(where: { $0.role == .user })?.text ?? ""
+            }
+        }
+        selectedContextMeasurements = []; selectedContextCategories = []
+        contextSharingMessage = wasInFlight
+            ? "your health context changed. that request was cancelled; choose current records before asking again."
+            : "your health context changed. choose the current records again before sharing them."
+    }
+
+    private var questionInputRow: some View {
         HStack(
             alignment: .bottom,
             spacing: 10
@@ -1433,21 +1492,42 @@ struct Prompt09AskView: View {
             return
         }
 
+        let requestedMeasurements = selectedContextMeasurements
+        let requestedCategories = selectedContextCategories
+        let userContext: FruitfolioAskUserContext?
+        do {
+            userContext = try FruitfolioAskUserContext.selected(measurementIDs: selectedContextMeasurements,
+                personalCategories: selectedContextCategories, measurements: contextMeasurements.records,
+                context: prompt27AContextStore.context)
+        } catch { contextSharingMessage = error.localizedDescription; return }
+        selectedContextMeasurements = []; selectedContextCategories = []
+        contextSharingMessage = userContext == nil ? nil : "selected context is used only for this question; these are educational research excerpts, not a clinical interpretation."
+
         inputFocused = false
 
         audioManager.play(
             .buttonSoftPop
         )
 
-        Task {
-            @MainActor in
-
-            await viewModel
-                .submitCurrentQuestion(
-                    reduceMotion:
-                        motionPreferences
-                            .reduceMotionActive
-                )
+        sendTask?.cancel()
+        let generation = UUID()
+        sendTaskGeneration = generation
+        pendingContextSend = userContext != nil
+        sendTask = Task { @MainActor in
+            defer {
+                if sendTaskGeneration == generation { sendTask = nil; pendingContextSend = false }
+            }
+            guard !Task.isCancelled, sendTaskGeneration == generation else { return }
+            do {
+                let current = try FruitfolioAskUserContext.selected(measurementIDs: requestedMeasurements,
+                    personalCategories: requestedCategories, measurements: contextMeasurements.records,
+                    context: prompt27AContextStore.context)
+                guard current == userContext else {
+                    contextSharingMessage = "your context changed before sending. choose current records again."
+                    return
+                }
+            } catch { contextSharingMessage = error.localizedDescription; return }
+            await viewModel.submitCurrentQuestion(reduceMotion: motionPreferences.reduceMotionActive, userContext: userContext)
         }
     }
 

@@ -23,6 +23,7 @@ final class Prompt09AskViewModel: ObservableObject {
     ]
 
     @Published var inputText = ""
+    @Published private(set) var hasUserContextInFlight = false
     @Published private(set) var messages: [AskMessage]
     @Published private(set) var answer: AskAnswer?
     @Published private(set) var answerHistory: [AskAnswer] = []
@@ -92,6 +93,7 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     func cancelOutstandingWork() {
+        hasUserContextInFlight = false
         requestTask?.cancel()
         requestTask = nil
         requestGeneration = UUID()
@@ -126,25 +128,29 @@ final class Prompt09AskViewModel: ObservableObject {
     }
 
     func submitCurrentQuestion(
-        reduceMotion: Bool
+        reduceMotion: Bool,
+        userContext: FruitfolioAskUserContext? = nil
     ) async {
         requestTask?.cancel()
         let generation = UUID()
         requestGeneration = generation
+        hasUserContextInFlight = userContext != nil
         let task = Task { [weak self] in
             guard let self else { return }
-            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation)
+            await self.performSubmitCurrentQuestion(reduceMotion: reduceMotion, generation: generation, userContext: userContext)
         }
         requestTask = task
         await task.value
         if requestGeneration == generation {
             requestTask = nil
+            hasUserContextInFlight = false
         }
     }
 
     private func performSubmitCurrentQuestion(
         reduceMotion: Bool,
-        generation: UUID
+        generation: UUID,
+        userContext: FruitfolioAskUserContext?
     ) async {
         let question = inputText
             .trimmingCharacters(
@@ -160,6 +166,8 @@ final class Prompt09AskViewModel: ObservableObject {
 
         guard !Task.isCancelled, requestGeneration == generation else { return }
         typingTask?.cancel()
+        hasUserContextInFlight = userContext != nil
+        defer { if requestGeneration == generation { hasUserContextInFlight = false } }
 
         answer = nil
         displayedAnswerText = ""
@@ -187,30 +195,26 @@ final class Prompt09AskViewModel: ObservableObject {
         do {
             let response: AskAnswer
 
-            if let progressive = engine as? any AskResearchProgressServing {
-                response = try await progressive.answer(
-                    question: question,
-                    conversation: messages,
-                    trackerContext: nil
-                ) { [weak self] progress in
-                    guard let self, !Task.isCancelled,
-                          self.requestGeneration == generation else { return }
-                    switch progress {
-                    case .lookingThroughLibrary:
-                        self.searchStatusText = "looking through the FruitsofLife.xo library…"
-                    case .searchingApprovedSources:
-                        self.searchStatusText = "searching sources . . ."
-                    case .synthesizing:
-                        self.searchStatusText = "putting the evidence together…"
-                    case .validating:
-                        self.searchStatusText = "checking the answer…"
-                    }
+            let progressHandler: @MainActor @Sendable (FruitfolioResearchProgress) -> Void = { [weak self] progress in
+                guard let self, !Task.isCancelled, self.requestGeneration == generation else { return }
+                switch progress {
+                case .lookingThroughLibrary: self.searchStatusText = "looking through the FruitsofLife.xo library…"
+                case .searchingApprovedSources: self.searchStatusText = "searching sources . . ."
+                case .synthesizing: self.searchStatusText = "putting the evidence together…"
+                case .validating: self.searchStatusText = "checking the answer…"
                 }
+            }
+            if let contextual = engine as? any AskContextualResearchServing {
+                response = try await contextual.answer(question: question, conversation: messages,
+                    trackerContext: nil, userContext: userContext, progress: progressHandler)
+            } else if userContext != nil {
+                // Never pretend an attached record reached an unsupported engine.
+                throw AskEngineError.knowledgeProviderUnavailable
+            } else if let progressive = engine as? any AskResearchProgressServing {
+                response = try await progressive.answer(question: question, conversation: messages,
+                    trackerContext: nil, progress: progressHandler)
             } else {
-                response = try await engine.answer(
-                    question: question,
-                    conversation: messages
-                )
+                response = try await engine.answer(question: question, conversation: messages)
             }
 
             try Task.checkCancellation()
