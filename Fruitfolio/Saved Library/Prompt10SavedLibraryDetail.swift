@@ -23,21 +23,32 @@ struct Prompt10EncyclopediaDetailView: View {
     var body: some View {
         Group {
             if let encyclopedia {
-                if let selectedPage {
-                    Prompt10SavedPageView(
-                        store: store,
-                        encyclopediaID: encyclopediaID,
-                        page: selectedPage,
-                        onPageChanged: { updated in self.selectedPage = updated },
-                        onBack: {
-                            self.selectedPage = nil
+                GeometryReader { geometry in
+                    HStack(alignment: .top, spacing: max(12, geometry.size.width * 0.05)) {
+                        encyclopediaContents(encyclopedia)
+                            .allowsHitTesting(selectedPage == nil)
+                            .accessibilityHidden(selectedPage != nil)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .accessibilityElement(children: .contain)
+                            .accessibilityLabel("contents, left book page")
+                        Group {
+                            if let selectedPage {
+                                Prompt10SavedPageView(store: store, encyclopediaID: encyclopediaID, page: selectedPage,
+                                    onPageChanged: { updated in self.selectedPage = updated },
+                                    onBack: { self.selectedPage = nil })
+                            } else {
+                                ScrollView {
+                                    Text("choose a saved page from the contents to read it here.")
+                                        .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
+                                        .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                                        .padding(.vertical, 24)
+                                }
+                            }
                         }
-                    )
-
-                } else {
-                    encyclopediaContents(
-                        encyclopedia
-                    )
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityLabel("saved content, right book page")
+                    }
                 }
             }
         }
@@ -52,36 +63,11 @@ struct Prompt10EncyclopediaDetailView: View {
                     encyclopedia
                 )
 
-                ZStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .openBook
-                    )
-                    .frame(maxWidth: 350)
-                    .accessibilityHidden(true)
-
-                    VStack(spacing: 8) {
-                        Prompt10LibraryAssetImage(
-                            asset: .bookOpen
-                        )
-                        .frame(width: 82)
-                        .accessibilityHidden(true)
-
-                        Text(encyclopedia.name)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 21
-                                )
-                            )
-                            .fontWeight(.bold)
-                            .foregroundStyle(
-                                DesignTokens.ColorToken.primaryBurgundy
-                            )
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .padding(.horizontal, 48)
-                    }
-                }
+                Text(encyclopedia.name)
+                    .font(.custom("Chalkboard SE", size: 21, relativeTo: .title2).bold())
+                    .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 if encyclopedia.chapters.isEmpty {
                     Text("this little book is ready for saved pages ♡")
@@ -111,25 +97,10 @@ struct Prompt10EncyclopediaDetailView: View {
                     }
                 }
 
-                HStack {
-                    Prompt10LibraryAssetImage(
-                        asset: .bookmark
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
 
-                    Spacer()
-
-                    Prompt10LibraryAssetImage(
-                        asset: .flower
-                    )
-                    .frame(width: 38)
-                    .accessibilityHidden(true)
-                }
-                .padding(.horizontal, 18)
             }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 44)
+            .padding(.horizontal, 4)
+            .padding(.bottom, 24)
         }
         .scrollIndicators(.hidden)
         .onAppear {

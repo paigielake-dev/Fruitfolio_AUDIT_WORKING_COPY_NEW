@@ -10,11 +10,14 @@ struct Prompt10BookTile: View {
             action()
         } label: {
             VStack(spacing: 8) {
-                Image(encyclopedia.style.assetName)
-                    .resizable()
-                    .scaledToFit()
+                Prompt10ContinuousBook(style: encyclopedia.style, reveal: 0, openness: 0)
                     .frame(width: 116, height: 142)
-                    .accessibilityHidden(true)
+                    .background {
+                        GeometryReader { geometry in
+                            Color.clear.preference(key: Prompt10BookFramePreference.self,
+                                value: [encyclopedia.id: geometry.frame(in: .named("Prompt10BookSpace"))])
+                        }
+                    }
 
                 Text(encyclopedia.name)
                     .font(.custom("Chalkboard SE", size: 14))

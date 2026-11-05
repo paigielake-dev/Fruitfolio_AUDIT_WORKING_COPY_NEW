@@ -11,6 +11,29 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         verifyModal(reduceMotion: true)
     }
 
+    func testSelectedBookRemainsBoundedAndReturnsToShelf() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioBookQA"]
+            if reduced { app.launchArguments += ["-fruitfolioBookReduceMotion"] }
+            app.launch()
+            let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA sage,")).firstMatch
+            for _ in 0..<8 { if book.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(book.isHittable)
+            book.tap()
+            let rename = app.buttons["rename"]
+            XCTAssertTrue(rename.waitForExistence(timeout: 5))
+            let open = app.otherElements["library.openBook"].firstMatch
+            XCTAssertTrue(open.exists)
+            XCTAssertGreaterThanOrEqual(open.frame.minX, app.frame.minX)
+            XCTAssertLessThanOrEqual(open.frame.maxX, app.frame.maxX)
+            XCTAssertLessThanOrEqual(open.frame.maxY, app.frame.maxY)
+            app.buttons["Back"].firstMatch.tap()
+            XCTAssertTrue(book.waitForExistence(timeout: 3))
+            app.terminate()
+        }
+    }
+
     func testTourActionsRemainReachableAtAccessibilitySize() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",

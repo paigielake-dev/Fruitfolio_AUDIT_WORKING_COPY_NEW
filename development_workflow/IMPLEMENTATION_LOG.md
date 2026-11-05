@@ -585,3 +585,14 @@
 - Verification: {"Swift_6_headless": "91 XCTest + 21 Swift Testing passed (112 total)", "Swift_5_native": "94 XCTest + 21 Swift Testing passed (115 total)", "workflow": "15 Python tests passed", "Swift_syntax": "129 files, zero parser errors", "Apple_UI": "NOT_RUN; layout/VoiceOver acceptance open", "content_filter": "Bounded English whole-word/threat policy; multilingual review remains open"}.
 - Next action: Replace staged artwork-swap book opening with continuous coded book geometry that persists into the inside-book content; preserve selected color, Reduce Motion, cancellation and bounded page layout.
 - Commit: containing commit for batch Library-label-limits-clinical-language-and-description-layout.
+
+## Library-continuous-owned-book-surface
+
+- Parent checkpoint: 7c936fc50b32d78d58482135d22f484a52bd631c.
+- Source-order requirements: [182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196].
+- Source files: Fruitfolio/Saved Library/Prompt10BookMotion.swift, Fruitfolio/Saved Library/Prompt10ContinuousBook.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift.
+- Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS.
+- Tests added/updated: Prompt1BBookMotionTests, Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf.
+- Verification: {"Swift_6_headless": "93 XCTest + 21 Swift Testing passed (114 total)", "Swift_5_native": "96 XCTest + 21 Swift Testing passed (117 total)", "workflow": "15 Python tests passed", "Swift_syntax": "132 files, zero parser errors", "Apple_UI": "NOT_RUN: new book harness/test ready; visual and accessibility acceptance remain open"}.
+- Next action: Implement independent user-authored research/material pages with editable notes, provenance and chapter selection, preserving unsaved edits; then remaining guide synchronization and source-order requirements.
+- Commit: containing commit for batch Library-continuous-owned-book-surface.

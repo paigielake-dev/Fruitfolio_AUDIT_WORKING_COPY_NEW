@@ -6756,15 +6756,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Replace the staged artwork-swap animation with a continuous coded book animation.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 183,
@@ -6772,15 +6782,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Begin with the user\u2019s actual selected book spine.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 184,
@@ -6788,15 +6808,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Preserve the selected book color throughout the sequence.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 185,
@@ -6804,15 +6834,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Move the same book forward from the bookshelf.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 186,
@@ -6820,15 +6860,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Center it in front of the user.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 187,
@@ -6836,15 +6886,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Animate the book opening continuously.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 188,
@@ -6852,15 +6912,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Move from closed to partially open to fully open without discrete image swaps.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 189,
@@ -6868,15 +6938,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Keep the complete open book visible.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 190,
@@ -6884,15 +6964,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Do not zoom into the right-hand page.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 191,
@@ -6900,15 +6990,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Smoothly reposition and scale the entire book into the inside-book layout.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 192,
@@ -6916,15 +7016,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Render saved content inside that same book.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 193,
@@ -6932,15 +7042,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Prevent book duplication, disappearance, jumps, and color resets.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 194,
@@ -6948,15 +7068,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Remove the smaller library_book_open artwork from inside the book.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 195,
@@ -6964,15 +7094,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Center the final coded open book near the top of the screen.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 196,
@@ -6980,15 +7120,25 @@
       "original_checklist_part": "Part 4 \u2014 My Encyclopedias and Guide Builder",
       "original_section": null,
       "description": "Remove the extra bottom bookmark and flower decorations.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Saved Library/Prompt10BookMotion.swift",
+        "Fruitfolio/Saved Library/Prompt10ContinuousBook.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BBookMotionTests",
+        "Prompt1BModalAccessibilityTests.testSelectedBookRemainsBoundedAndReturnsToShelf"
+      ],
+      "commit_reference": "batch:Library-continuous-owned-book-surface (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced spine/front/closed/open image swapping and unowned delayed callbacks with a single coded surface used on shelf and retained through movement, reveal, continuous opening and complete-book settling into the reading view. Captured actual shelf frame, preserved selected style color, centered before opening, kept content in left/right book regions, removed duplicate small open-book and bottom bookmark/flower decorations. One owned task cancels stale transitions on departure/inactive scene; Reduce Motion uses the final book without travel/rotation. Pure tests verify continuity and whole-book bounds. Added disposable production-view UI harness and Mac test, NOT_RUN on Linux. Watercolor visual fidelity, iOS typecheck, screenshots, touch/VoiceOver, dynamic type and visual continuity remain unverified and requirements remain IN_PROGRESS."
+      ],
+      "last_updated": "2026-11-05T21:50:27.177776+00:00"
     },
     {
       "sequence": 197,

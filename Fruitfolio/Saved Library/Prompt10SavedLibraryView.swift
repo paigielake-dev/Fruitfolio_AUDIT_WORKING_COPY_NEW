@@ -13,8 +13,14 @@ struct Prompt10SavedLibraryView: View {
     @State private var popup: PopupState?
     @State private var selectedEncyclopediaID: UUID?
     @State private var openingEncyclopediaID: UUID?
-    @State private var openingStage: BookOpeningStage = .idle
-    @Namespace private var bookTransitionNamespace
+    @State private var bookTravel = 0.0
+    @State private var bookReveal = 0.0
+    @State private var bookOpenness = 0.0
+    @State private var bookFrames: [UUID: CGRect] = [:]
+    @State private var openingOrigin = CGRect.zero
+    @State private var openingTask: Task<Void, Never>?
+    @State private var openingGeneration = UUID()
+    @Environment(\.scenePhase) private var scenePhase
 
     init(
         store: Prompt10SavedLibraryStore,
@@ -29,48 +35,11 @@ struct Prompt10SavedLibraryView: View {
             DesignTokens.ColorToken.backgroundCream
                 .ignoresSafeArea()
 
-            Group {
-                if let selectedEncyclopediaID,
-                   let encyclopedia = store.encyclopedia(
-                        id: selectedEncyclopediaID
-                   ) {
-
-                    Prompt10EncyclopediaDetailView(
-                        store: store,
-                        encyclopediaID: encyclopedia.id,
-                        onBack: {
-                            withAnimation(detailTransition) {
-                                self.selectedEncyclopediaID = nil
-                            }
-                        },
-                        onRename: {
-                            popup = .rename(
-                                encyclopedia.id,
-                                encyclopedia.name
-                            )
-                        },
-                        onDelete: {
-                            popup = .delete(
-                                encyclopedia.id
-                            )
-                        }
-                    )
-                    .transition(
-                        motionPreferences.reduceMotionActive
-                            ? .opacity
-                            : .opacity.combined(
-                                with: .scale(scale: 0.985)
-                            )
-                    )
-
-                } else {
-                    libraryCollection
-                }
-            }
-            .fruitfolioModalBlur(
-                active: popup != nil,
-                reduceMotion: motionPreferences.reduceMotionActive
-            )
+            libraryCollection
+                .allowsHitTesting(openingEncyclopediaID == nil)
+                .accessibilityHidden(openingEncyclopediaID != nil)
+                .opacity(openingEncyclopediaID == nil ? 1 : 0.18)
+                .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
 
             if popup != nil {
                 DesignTokens.ColorToken.backgroundCream
@@ -86,6 +55,12 @@ struct Prompt10SavedLibraryView: View {
 
             popupLayer
                 .zIndex(100)
+        }
+        .coordinateSpace(name: "Prompt10BookSpace")
+        .onPreferenceChange(Prompt10BookFramePreference.self) { bookFrames = $0 }
+        .onDisappear { cancelOpening() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active, openingTask != nil { cancelOpening() }
         }
         .toolbar(
             .hidden,
@@ -369,13 +344,6 @@ struct Prompt10SavedLibraryView: View {
                                         .reduceMotionActive
                             )
                         )
-                        .matchedGeometryEffect(
-                            id: bookGeometryID(
-                                encyclopedia.id
-                            ),
-                            in: bookTransitionNamespace,
-                            isSource: true
-                        )
                         .opacity(
                             openingEncyclopediaID ==
                                 encyclopedia.id
@@ -469,7 +437,7 @@ struct Prompt10SavedLibraryView: View {
                     popup = nil
                 },
                 onDeleted: {
-                    selectedEncyclopediaID = nil
+                    cancelOpening()
                     popup = nil
                 }
             )
@@ -483,180 +451,80 @@ struct Prompt10SavedLibraryView: View {
 
     @ViewBuilder
     private var bookOpeningOverlay: some View {
-        if let openingEncyclopediaID,
-           let encyclopedia = store.encyclopedia(
-                id: openingEncyclopediaID
-           ) {
-
-            ZStack {
-                DesignTokens.ColorToken.backgroundCream
-                    .opacity(
-                        openingStage == .open
-                            ? 0.08
-                            : 0.18
-                    )
-                    .ignoresSafeArea()
-
-                Prompt10BookOpeningArtwork(
-                    encyclopedia: encyclopedia,
-                    stage: openingStage
-                )
-                .matchedGeometryEffect(
-                    id: bookGeometryID(
-                        encyclopedia.id
-                    ),
-                    in: bookTransitionNamespace,
-                    isSource: false
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity
-                )
+        if let id = openingEncyclopediaID, let encyclopedia = store.encyclopedia(id: id) {
+            GeometryReader { geometry in
+                let frame = Prompt10BookMotion.frame(from: openingOrigin, in: geometry.size, progress: bookTravel)
+                ZStack {
+                    Prompt10ContinuousBook(style: encyclopedia.style, reveal: bookReveal, openness: bookOpenness)
+                    if selectedEncyclopediaID == id {
+                        Prompt10EncyclopediaDetailView(
+                            store: store, encyclopediaID: id,
+                            onBack: { cancelOpening() },
+                            onRename: { popup = .rename(id, encyclopedia.name) },
+                            onDelete: { popup = .delete(id) })
+                        .padding(.horizontal, max(12, frame.width * 0.06))
+                        .padding(.vertical, max(18, frame.height * 0.075))
+                        .transition(.opacity)
+                    }
+                }
+                .frame(width: frame.width, height: frame.height)
+                .position(x: frame.midX, y: frame.midY)
+                .accessibilityIdentifier("library.openBook")
             }
-            .allowsHitTesting(true)
-            .accessibilityHidden(true)
-            .transition(.opacity)
+            .fruitfolioModalBlur(active: popup != nil, reduceMotion: motionPreferences.reduceMotionActive)
+            .accessibilityElement(children: .contain)
+            .accessibilityLabel("\(encyclopedia.name), open encyclopedia")
         }
     }
 
-    private func beginOpening(
-        _ encyclopedia: Prompt10Encyclopedia
-    ) {
-        guard openingEncyclopediaID == nil else {
-            return
-        }
-
-        audioManager.play(
-            .buttonSoftPop
-        )
-
-        if motionPreferences.reduceMotionActive {
-            audioManager.play(
-                .pageTurn
-            )
-
-            withAnimation(
-                .easeOut(duration: 0.14)
-            ) {
-                selectedEncyclopediaID =
-                    encyclopedia.id
-            }
-
-            return
-        }
-
-        withAnimation(
-            .spring(
-                response: 0.30,
-                dampingFraction: 0.78,
-                blendDuration: 0
-            )
-        ) {
-            openingEncyclopediaID =
-                encyclopedia.id
-            openingStage = .spine
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.18
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                .easeInOut(duration: 0.12)
-            ) {
-                openingStage = .front
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.31
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                .easeInOut(duration: 0.13)
-            ) {
-                openingStage = .closed
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.45
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            audioManager.play(
-                .pageTurn
-            )
-
-            withAnimation(
-                .spring(
-                    response: 0.28,
-                    dampingFraction: 0.82,
-                    blendDuration: 0
-                )
-            ) {
-                openingStage = .open
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.67
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            withAnimation(
-                detailTransition
-            ) {
-                selectedEncyclopediaID =
-                    encyclopedia.id
-            }
-        }
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 0.82
-        ) {
-            guard openingEncyclopediaID ==
-                    encyclopedia.id else {
-                return
-            }
-
-            openingEncyclopediaID = nil
-            openingStage = .idle
+    private func beginOpening(_ encyclopedia: Prompt10Encyclopedia) {
+        guard openingEncyclopediaID == nil else { return }
+        audioManager.play(.buttonSoftPop)
+        openingGeneration = UUID()
+        let generation = openingGeneration
+        openingOrigin = bookFrames[encyclopedia.id] ?? CGRect(x: 20, y: 80, width: 116, height: 142)
+        bookTravel = 0
+        bookReveal = 0
+        bookOpenness = 0
+        openingEncyclopediaID = encyclopedia.id
+        openingTask = Task { @MainActor in
+            do {
+                // Give the source-sized surface a frame before changing targets.
+                try await Task.sleep(nanoseconds: 20_000_000)
+                guard !Task.isCancelled, generation == openingGeneration else { return }
+                if motionPreferences.reduceMotionActive {
+                    bookTravel = 1
+                    bookReveal = 1
+                    bookOpenness = 1
+                    withAnimation(.easeOut(duration: 0.14)) { selectedEncyclopediaID = encyclopedia.id }
+                } else {
+                    withAnimation(.easeInOut(duration: 0.32)) { bookTravel = 0.5; bookReveal = 1 }
+                    try await Task.sleep(nanoseconds: 330_000_000)
+                    try Task.checkCancellation()
+                    audioManager.play(.pageTurn)
+                    withAnimation(.easeInOut(duration: 0.55)) { bookOpenness = 1 }
+                    try await Task.sleep(nanoseconds: 560_000_000)
+                    try Task.checkCancellation()
+                    withAnimation(.easeInOut(duration: 0.36)) { bookTravel = 1 }
+                    try await Task.sleep(nanoseconds: 370_000_000)
+                    try Task.checkCancellation()
+                    guard generation == openingGeneration else { return }
+                    withAnimation(.easeOut(duration: 0.16)) { selectedEncyclopediaID = encyclopedia.id }
+                }
+                openingTask = nil
+            } catch { /* Owner cancels and resets the same book. */ }
         }
     }
 
-    private func bookGeometryID(
-        _ id: UUID
-    ) -> String {
-        "prompt10-book-\(id.uuidString)"
-    }
-
-    private var detailTransition: Animation {
-        motionPreferences.reduceMotionActive
-            ? .easeOut(duration: 0.14)
-            : .easeOut(duration: 0.35)
-    }
-
-    fileprivate enum BookOpeningStage: Equatable {
-        case idle
-        case spine
-        case front
-        case closed
-        case open
+    private func cancelOpening() {
+        openingGeneration = UUID()
+        openingTask?.cancel()
+        openingTask = nil
+        selectedEncyclopediaID = nil
+        openingEncyclopediaID = nil
+        bookTravel = 0
+        bookReveal = 0
+        bookOpenness = 0
     }
 
     private enum PopupState: Equatable {
@@ -674,127 +542,6 @@ struct Prompt10SavedLibraryView: View {
 }
 
 
-
-// MARK: - Prompt 10 Book Opening Transition
-
-private struct Prompt10BookOpeningArtwork: View {
-    let encyclopedia: Prompt10Encyclopedia
-    let stage:
-        Prompt10SavedLibraryView.BookOpeningStage
-
-    var body: some View {
-        ZStack {
-            switch stage {
-            case .idle:
-                Color.clear
-
-            case .spine:
-                Image(
-                    encyclopedia.style.assetName
-                )
-                .resizable()
-                .scaledToFit()
-                .frame(width: 76)
-
-            case .front:
-                tintedArtwork(
-                    assetName:
-                        "library_book_blank",
-                    tintStrength: 0.30
-                )
-                .frame(width: 178)
-
-            case .closed:
-                tintedArtwork(
-                    assetName:
-                        "library_book_closed",
-                    tintStrength: 0.26
-                )
-                .frame(width: 188)
-
-            case .open:
-                tintedArtwork(
-                    assetName:
-                        "library_book_open",
-                    tintStrength: 0.12
-                )
-                .frame(width: 322)
-            }
-        }
-        .frame(
-            width: 340,
-            height: 330
-        )
-        .contentShape(Rectangle())
-    }
-
-    @ViewBuilder
-    private func tintedArtwork(
-        assetName: String,
-        tintStrength: Double
-    ) -> some View {
-        ZStack {
-            Image(assetName)
-                .resizable()
-                .scaledToFit()
-
-            Image(assetName)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(
-                    encyclopedia.style
-                        .openingTint
-                        .opacity(
-                            tintStrength
-                        )
-                )
-                .blendMode(.multiply)
-        }
-        .compositingGroup()
-    }
-}
-
-private extension Prompt10BookStyle {
-    var openingTint: Color {
-        switch self {
-        case .sage:
-            return Color(
-                red: 0.52,
-                green: 0.64,
-                blue: 0.54
-            )
-
-        case .yellow:
-            return Color(
-                red: 0.88,
-                green: 0.73,
-                blue: 0.40
-            )
-
-        case .pink:
-            return Color(
-                red: 0.84,
-                green: 0.60,
-                blue: 0.67
-            )
-
-        case .coral:
-            return Color(
-                red: 0.84,
-                green: 0.50,
-                blue: 0.46
-            )
-
-        case .lavender:
-            return Color(
-                red: 0.69,
-                green: 0.61,
-                blue: 0.79
-            )
-        }
-    }
-}
 
 // MARK: - Prompt 10 Pill Art Button
 
