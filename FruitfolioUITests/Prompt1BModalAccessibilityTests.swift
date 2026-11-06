@@ -191,6 +191,47 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testOriginalTranslationControlUsesCanonicalSelectionAndSingleCueWithRealCatalog() {
+        for muted in [false, true] {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioTranslationDisclosureQA",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            if reduced { app.launchArguments += ["-fruitfolioTranslationDisclosureReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioTranslationDisclosureRTL"] }
+            app.launch()
+            let display = app.descendants(matching: .any).matching(identifier: "translationQA.displayed").firstMatch
+            let target = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "fixture cible"), object: display)
+            XCTAssertEqual(XCTWaiter.wait(for: [target], timeout: 5), .completed)
+            let toggle = app.buttons["translation.originalToggle"]
+            XCTAssertTrue(toggle.waitForExistence(timeout: 3))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<12 { if toggle.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(toggle.isHittable)
+            XCTAssertGreaterThanOrEqual(toggle.frame.height, 44)
+            XCTAssertGreaterThanOrEqual(toggle.frame.width, 44)
+            XCTAssertFalse(toggle.isSelected)
+            let original = app.descendants(matching: .any).matching(identifier: "translation.originalText").firstMatch
+            XCTAssertFalse(original.exists)
+            toggle.tap()
+            XCTAssertTrue(toggle.isSelected)
+            XCTAssertTrue(original.waitForExistence(timeout: 3))
+            XCTAssertEqual(original.label, "fixture source")
+            XCTAssertEqual(display.label, "fixture cible")
+            toggle.tap()
+            XCTAssertFalse(toggle.isSelected)
+            XCTAssertFalse(original.exists)
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 2)")
+            captureGame(app, name: "original-control-muted-\(muted)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testFailedAttemptKeepsLedgerValuesWhileLabelsAndNumberLocaleChange() throws {
         for serious in [false, true] {
         for language in ["en", "ar"] {

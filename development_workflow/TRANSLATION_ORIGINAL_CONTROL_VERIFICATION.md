@@ -1,0 +1,11 @@
+# Canonical original-source disclosure and retry controls
+
+The shared translated-content view now uses the existing compact canonical pill for show/hide original text and memory-pause retry. The original control exposes selected state and explicit show/hide wording; one canonical button owns each soft-pop and motion style. Manual retry audio/style ownership was removed. The original rendered source, source selection, translation origin and accepted-display retention behavior remain. There is no new saved-data write or translation result cache.
+
+The translated-content catalog defaults to Bundle.main. An optional bundle override supports a genuine temporary nonclinical catalog; its path participates in request identity to avoid reusing an accepted result from another bundle. The DEBUG fixture creates real Info.plist/fr.lproj/Localizable.strings files in its own unique temporary directory and removes that directory on owner deinit. It adds no production foreign translation and substitutes no native API.
+
+A Foundation regression resolved its protected-markup fixture through the actual catalog and production service while inference was paused, requiring catalog origin and exact retained markup. The first test attempt referenced a SwiftUI-only semantic parser unavailable to the portable target; that rendered-text check is in the Apple UI scenario instead. No parser/framework stub was introduced. The focused corrected test passed.
+
+Eight Apple UI launches request maximum Dynamic Type with mute, Reduce Motion and RTL combinations. They require the genuine catalog body, original show/hide state, plain rendered source text, target geometry and exactly two actual soft-pop requests, separating accepted playback starts from physical audibility. Apple SDK/typechecking/UI/VoiceOver/RTL/motion/audio execution is NOT_RUN. These fixture strings are explicitly synthetic, not clinical evidence or reviewed language translations.
+
+Two English-only show/hide keys bring the production catalog from 708 to 710, retaining every prior entry; nonempty foreign-language translations remain zero. Full feasible results are recorded in the batch log. Official-model and clinical/device gates remain externally blocked.

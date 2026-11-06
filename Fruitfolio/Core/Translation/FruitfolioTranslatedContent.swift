@@ -8,14 +8,14 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     var sourceRecords: [AskSourceRecord] = []
     var enabled = true
     var sourceLanguage = "en"
+    var bundle: Bundle = .main
     @ViewBuilder let content: (String, String) -> Content
     @EnvironmentObject private var settings: SettingsStore
-    @EnvironmentObject private var motionPreferences: MotionPreferences
-    @EnvironmentObject private var audioManager: AudioManager
     @State private var rendered: String?
     @State private var resolvedKey: Key?
     @State private var failure: String?
     @State private var translationOrigin: FruitfolioTranslationOrigin?
+    @State private var showOriginal = false
 
     private struct Key: Hashable {
         let source: String
@@ -23,12 +23,13 @@ struct FruitfolioTranslatedContent<Content: View>: View {
         let protectedLiterals: [String]
         let enabled: Bool
         let sourceLanguage: String
+        let bundlePath: String
     }
     private struct TaskKey: Hashable {
         let sourceKey: Key
         let paused: Bool
     }
-    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: FruitfolioCitationProtection.literals(ids: protectedLiterals, records: sourceRecords), enabled: enabled, sourceLanguage: sourceLanguage) }
+    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: FruitfolioCitationProtection.literals(ids: protectedLiterals, records: sourceRecords), enabled: enabled, sourceLanguage: sourceLanguage, bundlePath: bundle.bundleURL.path) }
     private var usesTranslation: Bool { enabled && settings.language.rawValue != sourceLanguage }
 
     var body: some View {
@@ -38,19 +39,23 @@ struct FruitfolioTranslatedContent<Content: View>: View {
             if usesTranslation {
                 if resolvedKey == key, rendered != nil {
                     if translationOrigin == .machine { Text("local machine translation").font(.caption) }
-                    DisclosureGroup("original text") {
+                    FruitfolioControlPillButton(label: showOriginal ? "hide original text" : "show original text", isSelected: showOriginal) {
+                        showOriginal.toggle()
+                    }
+                    .controlSize(.small)
+                    .accessibilityIdentifier("translation.originalToggle")
+                    if showOriginal {
                         FruitfolioSemanticText(markdown: source).textSelection(.enabled)
+                            .accessibilityIdentifier("translation.originalText")
                     }
                 } else if resolvedKey == key, let failure {
                     Text("original text — translation unavailable").font(.caption).bold()
                     Text(LocalizedStringKey(failure)).font(.caption)
                     if settings.translationPausedForMemoryPressure {
-                        Button("try translation again") {
-                            audioManager.play(.buttonSoftPop)
+                        FruitfolioControlPillButton(label: "try translation again") {
                             settings.translationPausedForMemoryPressure = false
                         }
-                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                        .controlSize(.small)
                         .accessibilityIdentifier("translation.retryAfterMemoryPressure")
                     }
                 } else {
@@ -73,7 +78,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 let result = try await FruitfolioTranslationService.shared.translateForDisplay(
                     request.source, language: request.language, protectedLiterals: request.protectedLiterals,
                     sourceLanguage: request.sourceLanguage,
-                    inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                    inferenceAllowed: !settings.translationPausedForMemoryPressure, bundle: bundle)
                 try Task.checkCancellation()
                 rendered = result.text
                 translationOrigin = result.origin
@@ -108,3 +113,52 @@ struct FruitfolioTranslatedText: View {
         }
     }
 }
+
+#if DEBUG
+/// Private, nonclinical catalog fixture. No production catalog/resource is
+/// edited and no fixture string is evidence of real localization approval.
+@MainActor
+private final class FruitfolioTranslationDisclosureFixture: ObservableObject {
+    private let catalog: FruitfolioTranslationCatalogRegressionFixture?
+    var bundle: Bundle? { catalog?.bundle }
+    let issue: String?
+    init() {
+        do { catalog = try FruitfolioTranslationCatalogRegressionFixture(); issue = nil }
+        catch { catalog = nil; issue = "synthetic catalog fixture could not be created" }
+    }
+}
+
+struct FruitfolioTranslationDisclosureRegressionHarness: View {
+    @StateObject private var fixture = FruitfolioTranslationDisclosureFixture()
+    @State private var configured = false
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var audio: AudioManager
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("synthetic catalog UI fixture — not research or language approval").font(.caption)
+                if let bundle = fixture.bundle {
+                    FruitfolioTranslatedContent(source: "**fixture source**", bundle: bundle) { display, _ in
+                        FruitfolioSemanticText(markdown: display)
+                            .accessibilityIdentifier("translationQA.displayed")
+                    }
+                } else { Text(fixture.issue ?? "fixture unavailable") }
+                FruitfolioInteractionSoundDiagnostics()
+            }
+            .padding(20)
+        }
+        .task {
+            guard !configured else { return }
+            configured = true
+            let args = ProcessInfo.processInfo.arguments
+            settings.language = .french
+            settings.translationPausedForMemoryPressure = true
+            settings.reduceAnimationOverride = args.contains("-fruitfolioTranslationDisclosureReduceMotion")
+            settings.globallyMuted = args.contains("-fruitfolioAudioMuted")
+            settings.soundEffectsEnabled = true
+            settings.soundEffectsVolume = 0.5
+            audio.debugRecordInteractions(true)
+        }
+    }
+}
+#endif

@@ -28,7 +28,8 @@ struct Prompt03SkeletonView: View {
            (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) ||
            (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) ||
            (args.contains("-fruitfolioSettingsControlsQA") && args.contains("-fruitfolioSettingsControlsRTL")) ||
-           (args.contains("-fruitfolioGameQA") && args.contains("-fruitfolioGameRTL")) {
+           (args.contains("-fruitfolioGameQA") && args.contains("-fruitfolioGameRTL")) ||
+           (args.contains("-fruitfolioTranslationDisclosureQA") && args.contains("-fruitfolioTranslationDisclosureRTL")) {
             return .rightToLeft
         }
         #endif
@@ -171,6 +172,8 @@ struct Prompt03SkeletonView: View {
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
             Prompt28GameRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioTranslationDisclosureQA") {
+            FruitfolioTranslationDisclosureRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioFAQQA") {
             Prompt29FAQView(onBack: {})
                 .environment(\.openURL, OpenURLAction { _ in .discarded })

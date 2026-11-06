@@ -8,6 +8,17 @@ import XCTest
 @MainActor
 final class Prompt1BSettingsLanguageTests: XCTestCase {
     #if DEBUG
+    func testActualTemporaryCatalogCanResolveProtectedFixtureWhileInferenceIsPaused() async throws {
+        let fixture = try FruitfolioTranslationCatalogRegressionFixture()
+        XCTAssertEqual(FruitfolioLocalization.catalogValue("**fixture source**", language: .french,
+            bundle: fixture.bundle), "**fixture cible**")
+        let service = FruitfolioTranslationService(runtime: FruitfolioMADLADRuntime.shared)
+        let result = try await service.translateForDisplay("**fixture source**", language: .french,
+            inferenceAllowed: false, bundle: fixture.bundle)
+        XCTAssertEqual(result.origin, .catalog)
+        XCTAssertEqual(result.text, "**fixture cible**")
+    }
+
     func testRegressionPreferencesSurviveStoreRecreationUntilOwnerRelease() async throws {
         var owner: FruitfolioRegressionPreferenceSuite? = FruitfolioRegressionPreferenceSuite()
         weak var reference = owner
