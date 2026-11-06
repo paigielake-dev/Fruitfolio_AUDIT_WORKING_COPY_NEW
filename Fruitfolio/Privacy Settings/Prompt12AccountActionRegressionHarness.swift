@@ -127,6 +127,7 @@ struct Prompt12AccountActionRegressionHarness: View {
     @EnvironmentObject private var coordinator: PopupCoordinator
     @EnvironmentObject private var settings: SettingsStore
     @State private var visible = false
+    @State private var backRequests = 0
     var body: some View {
         Group {
             if let error = fixture.error {
@@ -135,7 +136,7 @@ struct Prompt12AccountActionRegressionHarness: View {
                 VStack(spacing: 4) {
                     Text("disposable local account fixture — no remote authentication")
                         .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.fixture")
-                    Prompt12AccountView(store: fixture.store, onBack: {}, onShowPrivacy: {},
+                    Prompt12AccountView(store: fixture.store, onBack: { backRequests += 1 }, onShowPrivacy: {},
                         usernameStore: fixture.username, onShowDataExport: {})
                     HStack {
                         Text(fixture.identity).accessibilityIdentifier("accountQA.identity")
@@ -144,6 +145,8 @@ struct Prompt12AccountActionRegressionHarness: View {
                         Text(fixture.accountRecordUnchanged).accessibilityIdentifier("accountQA.recordUnchanged")
                     }
                     .font(.system(size: 9)).dynamicTypeSize(.xSmall)
+                    Text("back requests: \(backRequests)")
+                        .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.backRequests")
                     Text(fixture.username.username.isEmpty ? "empty private username" : "private username set")
                         .font(.system(size: 9)).dynamicTypeSize(.xSmall).accessibilityIdentifier("accountQA.username")
                 }

@@ -1439,6 +1439,62 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(element.isHittable)
     }
 
+    func testAccountDraftExitKeepsOrDiscardsEmailAndOnlySavesUsername() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for mode in ["username", "email", "both"] {
+        for choice in (mode == "email" ? ["keep", "discard"] : ["keep", "save", "discard"]) {
+            let app = launchAccountAction("sign-out", reduced: reduced, rtl: rtl)
+            if mode != "username" {
+                openAccountAction("account.signOut", app: app)
+                tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
+                waitForLabelValue("accountQA.identity", value: "none", app: app)
+            }
+            let username = app.textFields["account.publicUsername"]
+            if mode != "email" {
+                revealAccountInput(username, app: app)
+                username.tap(); username.typeText("sprout_one")
+                if choice == "save" {
+                    let confirm = app.descendants(matching: .any)["account.usernameConfirmation"].firstMatch
+                    revealAccountInput(confirm, app: app); confirm.tap()
+                }
+            }
+            let email = app.textFields["account.email"]
+            if mode != "username" {
+                revealAccountInput(email, app: app)
+                email.tap(); email.typeText("fixture+note@example.invalid")
+            }
+            let back = app.buttons["settings.routeHeader.back"]
+            revealAccountInput(back, app: app); back.tap()
+            XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+            XCTAssertFalse(app.textFields["account.publicUsername"].exists)
+            let context = "account-draft-exit-\(mode)-\(choice)-reduced-\(reduced)-rtl-\(rtl)"
+            let slot = choice == "keep" ? "primary" : (choice == "save" || mode == "email" ? "secondary" : "tertiary")
+            let label = choice == "keep" ? "keep editing" : (choice == "save" ? "save username + leave" : "discard drafts + leave")
+            tapMeasuredPaperAction(slot, label: label, app: app, context: context)
+            waitForLabelValue("accountQA.backRequests", value: "back requests: \(choice == "keep" ? 0 : 1)", app: app)
+            if mode != "email" {
+                revealAccountInput(username, app: app)
+                if choice == "discard" { XCTAssertNotEqual(username.value as? String, "sprout_one") }
+                else { XCTAssertEqual(username.value as? String, "sprout_one") }
+            }
+            if mode != "username" {
+                revealAccountInput(email, app: app)
+                if choice == "keep" { XCTAssertEqual(email.value as? String, "fixture+note@example.invalid") }
+                else { XCTAssertNotEqual(email.value as? String, "fixture+note@example.invalid") }
+                waitForLabelValue("accountQA.identity", value: "none", app: app)
+            }
+            let saved = app.staticTexts["account.qa.savedUsername"].label
+            XCTAssertEqual(saved.contains("sprout_one"), choice == "save")
+            waitForLabelValue("accountQA.healthUnchanged", value: "yes", app: app)
+            captureGame(app, name: context + "-after-dismissal")
+            app.terminate()
+        }
+        }
+        }
+        }
+    }
+
     func testAccountInputLabelsPreserveTypedUsernameAndEmail() {
         for reduced in [false, true] {
         for rtl in [false, true] {

@@ -49,6 +49,7 @@ struct Prompt12RouteHeader: View {
                     BackControl {
                         onBack()
                     }
+                    .accessibilityIdentifier("settings.routeHeader.back")
 
                     Spacer()
                 }

@@ -1861,3 +1861,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 709, "native_CPU_XCTest": 722, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 304, "sound_ownership_findings": 0, "actual_username_exit_methods": 6, "Apple_UI_typecheck": "NOT_RUN; 20 new exit launch scenarios source only", "official_MADLAD": "BLOCKED; synthetic T5 contracts do not approve official language/clinical/device behavior"}.
 - Next action: Protect Account Back from silently losing username and unsubmitted email drafts using the existing owned coordinator and shared paper; save only the username when available, never fabricate an email sign-in/save, preserve both drafts on errors and test all source choice variants.
 - Commit: containing commit for batch Owned-game-username-save-discard-keep-exit-session.
+
+## Owned-Account-username-and-unsubmitted-email-draft-exit
+
+- Parent checkpoint: af96ea6ddb576ada1e5ef95bd257291e72d94e5d.
+- Source-order requirements: [26, 63, 229, 230, 369, 443, 444, 447, 463, 468, 471, 472, 474, 476, 477, 478].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift, Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift, Fruitfolio/Privacy Settings/Prompt12AccountView.swift, Fruitfolio/Privacy Settings/Prompt12SharedViews.swift, Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift.
+- Actual Account Back protects username/email/both drafts through existing owned shared paper. Email-only offers keep/discard; mixed save explicitly saves only acknowledged local username and discards unsubmitted email. Frozen identity exclusions survive to actual commit; failures retain both drafts/focus error, protected data offers no unavailable save. Three actual factory/intent tests pass; 32 Apple UI launch cases added but NOT_RUN.
+- Tests added/updated: FruitfolioTests/Prompt1BAccountDraftExitTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 725, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "sound_ownership_findings": 0, "actual_account_draft_exit_methods": 3, "Apple_UI_typecheck": "NOT_RUN; 32 new draft-exit launch scenarios source only", "official_MADLAD": "BLOCKED; synthetic T5 contracts do not approve official language/clinical/device behavior"}.
+- Next action: Measure actual native T5 blocking-call execution threads in DEBUG diagnostics and assert encoder/decoder/model/context calls stay off the physical main thread in CPU contract tests; retain separate Apple/device/official-model gates.
+- Commit: containing commit for batch Owned-Account-username-and-unsubmitted-email-draft-exit.

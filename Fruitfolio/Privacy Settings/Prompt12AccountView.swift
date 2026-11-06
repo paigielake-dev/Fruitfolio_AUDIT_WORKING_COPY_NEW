@@ -23,11 +23,13 @@ struct Prompt12AccountView: View {
 
     @State private var email = ""
     @State private var message: String?
-    private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message, dataExport }
+    private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message, dataExport, usernameInput, emailInput, usernameError }
     private enum AccountAction {
         case signOut(Prompt12AccountActionSnapshot)
         case sync(Prompt12AccountActionSnapshot)
         case delete(Prompt12AccountActionSnapshot)
+        case leaveDiscardingDrafts
+        case saveUsernameAndLeave(FruitfolioUsernameSaveIntent)
     }
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
@@ -67,7 +69,7 @@ struct Prompt12AccountView: View {
                             title: "your account",
                             subtitle: "your little corner of Fruitfolio ♡",
                             assetName: "hub_account",
-                            onBack: onBack
+                            onBack: requestLeavingAccount
                         )
 
                         HStack(spacing: -7) {
@@ -219,6 +221,7 @@ struct Prompt12AccountView: View {
                     inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
                     await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
                 }
+                .accessibilityFocused($accountFocus, equals: .usernameInput)
                 .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -243,6 +246,8 @@ struct Prompt12AccountView: View {
             if let usernameMessage {
                 Prompt12InfoText(usernameMessage)
                     .multilineTextAlignment(.center)
+                    .accessibilityFocused($accountFocus, equals: .usernameError)
+                    .accessibilityIdentifier("account.usernameError")
             }
 
             WatercolorSecondaryButton(label: "save username") {
@@ -315,6 +320,7 @@ struct Prompt12AccountView: View {
                 .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
                 .accessibilityHint(Text(input.status.accessibilityDetail(
                     original: emailLabelKey.source, localized: { settings.localized($0) })))
+                .accessibilityFocused($accountFocus, equals: .emailInput)
                 .accessibilityIdentifier("account.email")
                 .task(id: FruitfolioControlTranslationState.TaskKey(key: emailLabelKey,
                     inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
@@ -485,8 +491,67 @@ struct Prompt12AccountView: View {
                 try store.attemptSyncNow(expecting: expected)
             case .delete(let expected):
                 try store.deleteAccountAndAssociatedRemoteData(expecting: expected)
+            case .leaveDiscardingDrafts:
+                discardLocalAccountDraftsAndLeave()
+            case .saveUsernameAndLeave(let intent):
+                if let error = intent.commit(to: usernameStore) {
+                    usernameMessage = error
+                    usernameNonIdentifying = false
+                    Task { @MainActor in
+                        await Task.yield()
+                        guard viewIsVisible, popupCoordinator.currentPopup == nil else { return }
+                        accountFocus = .usernameError
+                    }
+                } else {
+                    usernameDraft = usernameStore.username
+                    usernameBaseline = usernameStore.snapshot
+                    usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+                    usernameMessage = "saved on this device only."
+                    email = "" // Explicitly disclosed as an unsubmitted draft, never an account update.
+                    onBack()
+                }
             }
         } catch { showMessage(error.localizedDescription) }
+    }
+
+    private func requestLeavingAccount() {
+        guard viewIsVisible else { return }
+        let hasUsernameDraft = usernameEditorHasLoaded &&
+            usernameBaseline.map({ usernameDraft != $0.username }) == true
+        let hasEmailDraft = !email.isEmpty
+        guard hasUsernameDraft || hasEmailDraft else { onBack(); return }
+        guard let owner = popupOwner else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        let intent = usernameBaseline.map {
+            FruitfolioUsernameSaveIntent(raw: usernameDraft, confirmedNonIdentifying: usernameNonIdentifying,
+                expected: $0, identifyingText: [email, store.account?.email ?? ""])
+        }
+        returnAccountFocus = hasUsernameDraft ? .usernameInput : .emailInput
+        accountFocus = nil
+        owner.present { id in
+            FruitfolioAccountDraftExitRequest.make(id: id, scope: popupScope,
+                hasUsernameDraft: hasUsernameDraft, hasEmailDraft: hasEmailDraft,
+                canSaveUsername: usernameStore.canPersistUsername && intent != nil,
+                onKeep: {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }, onSaveUsername: {
+                    guard viewIsVisible, let intent, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .saveUsernameAndLeave(intent)
+                }, onDiscard: {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingAccountAction = .leaveDiscardingDrafts
+                })
+        }
+    }
+
+    private func discardLocalAccountDraftsAndLeave() {
+        usernameDraft = usernameStore.username
+        usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+        usernameBaseline = usernameStore.snapshot
+        usernameMessage = nil
+        email = ""
+        onBack()
     }
 
     private func requestSignOut() {

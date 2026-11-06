@@ -5,9 +5,18 @@ struct FruitfolioUsernameSaveIntent: Sendable {
     let raw: String
     let confirmedNonIdentifying: Bool
     let expected: FruitfolioUsernamePersistence.Snapshot
+    let identifyingText: [String]
+    init(raw: String, confirmedNonIdentifying: Bool, expected: FruitfolioUsernamePersistence.Snapshot,
+         identifyingText: [String] = []) {
+        self.raw = raw
+        self.confirmedNonIdentifying = confirmedNonIdentifying
+        self.expected = expected
+        self.identifyingText = identifyingText
+    }
     @MainActor
     func commit(to store: FruitfolioUsernameStore) -> String? {
-        store.setUsername(raw, confirmedNonIdentifying: confirmedNonIdentifying, expecting: expected)
+        store.setUsername(raw, confirmedNonIdentifying: confirmedNonIdentifying,
+            identifyingText: identifyingText, expecting: expected)
     }
 }
 
