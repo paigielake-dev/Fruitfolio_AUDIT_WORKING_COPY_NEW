@@ -1,0 +1,11 @@
+# Recognized report formats without locale guessing
+
+Foundation returns fallback separators for opaque locale identifiers and can interpret a hyphenated regional alias differently from its supported platform identifier. The new report-format helper resolves only platform-listed identifiers, matching hyphen/underscore and case aliases without rewriting stored metadata. Unknown identifiers, including unlisted locale extensions, remain opaque until the user explicitly chooses the report's supported separator. No fallback period is treated as historical evidence.
+
+New measurements or changed result/unit/opaque format need a recognized format. Existing records with unknown format remain readable and allow other metadata edits while retaining exact result, unit and format marker. Missing draft metadata inherits the previous exact marker, not the current app language. Explicitly choosing a recognized format allows validation; input strings are never converted or rewritten. Existing conflict/baseline checks remain.
+
+Actual pre-fix focused suite: 16 tests, 30 failures including two unexpected errors; source/log hashes and failed case names preserved in RUN_LOGS/Unknown-report-format-prior-failure.json. After fix all 16 pass. Four new cases cover unknown first saves, metadata-only legacy edits, blocked result/unit/opaque-format changes and explicit reviewed format, and exact regional aliases including Arabic digits. Full suite results are in the batch run log.
+
+The actual format picker uses compact fixed labels with protected point/comma/Arabic numerical examples. It displays an unrecognized-format state instead of a guessed period. Seven English keys added, all 834 previous entries unchanged: 841 total, no nonempty foreign translations. Two new Apple UI launches test metadata save then changed-result rejection under English/paused-French source fallback. All 12 measurement and 56 Guide UI launch cases remain NOT_RUN.
+
+Apple locale availability, native picker/field/focus, unknown-format draft preservation, keyboard and exact persisted UI round trips require execution. Official MADLAD/native clinical review remain open. API-level measurement write/erase acknowledgment is a separate remaining local implementation task; current normal-UserDefaults tests do not establish drop-write behavior or crash durability.

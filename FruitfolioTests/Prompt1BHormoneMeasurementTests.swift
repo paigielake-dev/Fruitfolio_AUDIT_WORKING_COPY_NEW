@@ -241,4 +241,82 @@ final class Prompt1BHormoneMeasurementTests: XCTestCase {
         XCTAssertThrowsError(try store.save(FruitfolioHormoneMeasurement()))
         XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), original)
     }
+    func testUnrecognizedExplicitReportLocaleCannotBeGuessedForNewMeasurement() async throws {
+        let suite = "Fruitfolio.UnknownReportFormat.New." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture")
+        let revision = store.savedRecordRevision
+        for identifier in ["", "unknown-report-format", "Fruitfolio_unknown", "en_FAKE"] {
+            var record = FruitfolioHormoneMeasurement()
+            record.result = "12.50"; record.unit = "pg/mL"; record.resultLocaleIdentifier = identifier
+            XCTAssertThrowsError(try store.save(record, locale: Locale(identifier: "en_US"))) {
+                XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .resultFormatRequired)
+            }
+            XCTAssertTrue(store.records.isEmpty)
+            XCTAssertNil(defaults.object(forKey: "fixture"))
+            XCTAssertEqual(store.savedRecordRevision, revision)
+        }
+    }
+
+    func testUnknownLegacyReportFormatAllowsMetadataEditWithoutReinterpretingOriginalResult() async throws {
+        let suite = "Fruitfolio.UnknownReportFormat.Metadata." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var original = FruitfolioHormoneMeasurement()
+        original.result = "12,500"; original.unit = " nmol/L "; original.resultLocaleIdentifier = "unknown-report-format"
+        defaults.set(try JSONEncoder().encode([original]), forKey: "fixture")
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture")
+        var draft = original; draft.notes = "only my note changed"
+        try store.save(draft, locale: Locale(identifier: "en_US"), intent: .edit(original))
+        let saved = try XCTUnwrap(FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture").records.first)
+        XCTAssertEqual(saved, draft)
+        XCTAssertEqual(saved.result, "12,500")
+        XCTAssertEqual(saved.unit, " nmol/L ")
+        XCTAssertEqual(saved.resultLocaleIdentifier, "unknown-report-format")
+    }
+
+    func testChangedUnknownLegacyResultUnitOrOpaqueFormatNeedsExplicitRecognizedFormat() async throws {
+        let suite = "Fruitfolio.UnknownReportFormat.Changed." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var original = FruitfolioHormoneMeasurement()
+        original.result = "12.50"; original.unit = "pg/mL"; original.resultLocaleIdentifier = "unknown-report-format"
+        defaults.set(try JSONEncoder().encode([original]), forKey: "fixture")
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture")
+        let bytes = defaults.data(forKey: "fixture")
+        let revision = store.savedRecordRevision
+        for field in 0..<3 {
+            var draft = original
+            if field == 0 { draft.result = "13.50" }
+            else if field == 1 { draft.unit = "nmol/L" }
+            else { draft.resultLocaleIdentifier = "another-unknown-format" }
+            XCTAssertThrowsError(try store.save(draft, locale: Locale(identifier: "en_US"), intent: .edit(original))) {
+                XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .resultFormatRequired)
+            }
+            XCTAssertEqual(store.records, [original])
+            XCTAssertEqual(defaults.data(forKey: "fixture"), bytes)
+            XCTAssertEqual(store.savedRecordRevision, revision)
+        }
+        var reviewed = original
+        reviewed.result = "13,50"; reviewed.resultLocaleIdentifier = "fr_FR"
+        try store.save(reviewed, locale: Locale(identifier: "en_US"), intent: .edit(original))
+        XCTAssertEqual(store.records.first, reviewed)
+    }
+
+    func testSupportedRegionalReportAliasesRetainExactStoredIdentifierAndValue() async throws {
+        let suite = "Fruitfolio.ReportFormat.Aliases." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "fixture")
+        for (identifier, value) in [("en-US", "12.50"), ("en_US_POSIX", "12.50"), ("fr-FR", "12,50"), ("ar-EG", "١٢٫٥٠")] {
+            var record = FruitfolioHormoneMeasurement()
+            record.result = value; record.unit = "pg/mL"; record.resultLocaleIdentifier = identifier
+            try store.save(record, locale: Locale(identifier: "de_DE"))
+            let saved = try XCTUnwrap(store.records.first { $0.id == record.id })
+            XCTAssertEqual(saved.result, value)
+            XCTAssertEqual(saved.resultLocaleIdentifier, identifier)
+        }
+    }
+
 }

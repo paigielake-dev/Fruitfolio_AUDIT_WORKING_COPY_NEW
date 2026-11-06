@@ -261,17 +261,25 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                             draft.resultLocaleIdentifier = appLocale.identifier
                         }
                     }
-                Picker("decimal separator on the report", selection: $draft.resultLocaleIdentifier) {
-                    Text("not recorded — preserve original").tag(Optional<String>.none)
-                    Text("point (1.5)").tag(Optional("en_US"))
-                    Text("comma (1,5)").tag(Optional("fr_FR"))
-                    Text("Arabic decimal separator (١٫٥)").tag(Optional("ar_EG"))
+                Picker(selection: $draft.resultLocaleIdentifier) {
+                    FruitfolioFixedText(source: "not recorded — preserve original", serious: true).tag(Optional<String>.none)
+                    FruitfolioFixedText(source: "point (1.5)", protectedLiterals: ["1.5"], serious: true).tag(Optional("en_US"))
+                    FruitfolioFixedText(source: "comma (1,5)", protectedLiterals: ["1,5"], serious: true).tag(Optional("fr_FR"))
+                    FruitfolioFixedText(source: "Arabic decimal separator (١٫٥)", protectedLiterals: ["١٫٥"], serious: true).tag(Optional("ar_EG"))
                     if let identifier = draft.resultLocaleIdentifier,
                        !["en_US", "fr_FR", "ar_EG"].contains(identifier) {
-                        Text("recorded format: \(Locale(identifier: identifier).decimalSeparator ?? ".")")
-                            .tag(Optional(identifier))
+                        Group {
+                            if let separator = FruitfolioHormoneReportFormat.decimalSeparator(for: identifier) {
+                                HStack {
+                                    FruitfolioFixedText(source: "recorded format", serious: true)
+                                    Text(verbatim: separator)
+                                }
+                            } else {
+                                FruitfolioFixedText(source: "format not recognized — preserve original", serious: true)
+                            }
+                        }.tag(Optional(identifier))
                     }
-                }
+                } label: { FruitfolioFixedText(source: "decimal separator on the report", serious: true) }
                 .accessibilityIdentifier("measurements.editor.resultFormat")
                 FruitfolioFixedTextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
                     .accessibilityIdentifier("measurements.editor.unit")

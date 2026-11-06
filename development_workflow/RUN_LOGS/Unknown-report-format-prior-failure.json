@@ -1,0 +1,18 @@
+{
+  "parent": "cbfe03dca9c5f884eb6d790b821b5cb82f3e5dd7",
+  "log_sha256": "768dab51f44cab7bd74799648a344d6bdfdb6886c2b707b332f6c08bfc165cb8",
+  "executed_tests": 16,
+  "failures": 30,
+  "unexpected_failures": 2,
+  "scope": "Actual Foundation/Store regression before production fix; unknown formats were guessed and a supported regional alias failed to parse correctly. Not Apple/official model inference.",
+  "production_source_sha256": {
+    "Fruitfolio/Hormone Information/HormoneMeasurement.swift": "088e9bcd08a2c016663a8d7119bf063370627d8ce6a5587733d635a1ba43bbbf",
+    "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift": "bc27d171d91b05ef0a0adb9abf78dcde65cefb26f2f957d5e1957f2b1f8502fd",
+    "Fruitfolio/Hormone Information/HormoneInformationView.swift": "a95ac66a302bcf3e36c4950d868b5fc621685d86201b45629fb2f248bee05090"
+  },
+  "failed_cases": [
+    "Prompt1BHormoneMeasurementTests.testChangedUnknownLegacyResultUnitOrOpaqueFormatNeedsExplicitRecognizedFormat",
+    "Prompt1BHormoneMeasurementTests.testUnknownLegacyReportFormatAllowsMetadataEditWithoutReinterpretingOriginalResult",
+    "Prompt1BHormoneMeasurementTests.testUnrecognizedExplicitReportLocaleCannotBeGuessedForNewMeasurement"
+  ]
+}

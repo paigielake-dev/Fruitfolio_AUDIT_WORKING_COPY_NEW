@@ -29,6 +29,25 @@ enum FruitfolioMeasuredHormone: String, CaseIterable, Codable, Identifiable, Sen
 
 }
 
+/// Only formats the platform actually recognizes may interpret a result.
+/// Opaque legacy identifiers remain metadata; Foundation's fallback separator
+/// is not evidence of the report's notation. Supported hyphen/underscore
+/// regional aliases share a lookup, without rewriting the stored identifier.
+nonisolated enum FruitfolioHormoneReportFormat {
+    private static let platformIdentifiers: [String: String] = Locale.availableIdentifiers.sorted().reduce(into: [:]) { result, identifier in
+        result[normalized(identifier)] = identifier
+    }
+    private static func normalized(_ identifier: String) -> String {
+        identifier.replacingOccurrences(of: "-", with: "_").lowercased()
+    }
+    static func decimalSeparator(for identifier: String?) -> String? {
+        guard let identifier, !identifier.isEmpty,
+              let recognized = platformIdentifiers[normalized(identifier)],
+              let separator = Locale(identifier: recognized).decimalSeparator, !separator.isEmpty else { return nil }
+        return separator
+    }
+}
+
 enum FruitfolioHormoneTestDatePrecision: String, Codable, Sendable { case day }
 
 struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable {
@@ -99,8 +118,9 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
 
     func validate(locale: Locale = .current) throws {
         let input = result.trimmingCharacters(in: .whitespacesAndNewlines)
-        let parsingLocale = resultLocaleIdentifier.map { Locale(identifier: $0) } ?? locale
-        let separator = parsingLocale.decimalSeparator ?? "."
+        guard let separator = FruitfolioHormoneReportFormat.decimalSeparator(for: resultLocaleIdentifier ?? locale.identifier) else {
+            throw FruitfolioHormoneMeasurementError.resultFormatRequired
+        }
         let digitNormalized = input.unicodeScalars.map { scalar -> String in
             if CharacterSet.decimalDigits.contains(scalar), let digit = Character(String(scalar)).wholeNumberValue {
                 return String(digit)

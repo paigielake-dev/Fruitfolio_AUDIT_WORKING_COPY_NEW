@@ -57,8 +57,13 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         var recorded = measurement
         let previous = records.first { $0.id == recorded.id }
         try intent?.validate(candidate: recorded, current: previous)
-        if recorded.resultLocaleIdentifier == nil, let previous, previous.resultLocaleIdentifier == nil {
-            guard recorded.result == previous.result, recorded.unit == previous.unit else {
+        if recorded.resultLocaleIdentifier == nil, let previous {
+            recorded.resultLocaleIdentifier = previous.resultLocaleIdentifier
+        }
+        if FruitfolioHormoneReportFormat.decimalSeparator(for: recorded.resultLocaleIdentifier) == nil,
+           let previous, FruitfolioHormoneReportFormat.decimalSeparator(for: previous.resultLocaleIdentifier) == nil {
+            guard recorded.result == previous.result, recorded.unit == previous.unit,
+                  recorded.resultLocaleIdentifier == previous.resultLocaleIdentifier else {
                 throw FruitfolioHormoneMeasurementError.resultFormatRequired
             }
             // Preserve the historical unknown; do not reinterpret its number.

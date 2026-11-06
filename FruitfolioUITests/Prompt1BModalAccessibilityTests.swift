@@ -1856,6 +1856,45 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testUnknownMeasurementFormatKeepsMetadataEditButRejectsChangedResultWithoutGuessing() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsUnknownFormat", "-fruitfolioMeasurementsLanguage", language]
+            app.launch()
+            let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            let editor = app.scrollViews["measurements.editor.scroll"]
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            let notes = app.descendants(matching: .any).matching(identifier: "measurements.editor.notes").firstMatch
+            for _ in 0..<24 { if notes.isHittable { break }; editor.swipeUp() }
+            notes.tap(); notes.typeText(" QA metadata only")
+            let save = app.buttons["measurements.editor.save"]
+            for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
+            XCTAssertTrue(save.isHittable); save.tap()
+            XCTAssertTrue(edit.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+            edit.tap()
+            XCTAssertTrue(editor.waitForExistence(timeout: 5))
+            let result = app.textFields["measurements.editor.result"]
+            XCTAssertEqual(result.value as? String, "12,500")
+            result.tap(); result.typeText("1")
+            let draft = result.value as? String
+            XCTAssertNotEqual(draft, "12,500")
+            for _ in 0..<24 { if save.isHittable { break }; editor.swipeUp() }
+            save.tap()
+            let error = app.descendants(matching: .any).matching(identifier: "measurements.editor.error").firstMatch
+            XCTAssertTrue(error.waitForExistence(timeout: 3))
+            XCTAssertTrue(error.label.contains("choose the decimal separator used on the report"))
+            XCTAssertTrue(editor.exists)
+            for _ in 0..<24 { if result.isHittable { break }; editor.swipeDown() }
+            XCTAssertEqual(result.value as? String, draft)
+            captureGame(app, name: "unknown-measurement-format-source-fallback-\(language)")
+            app.terminate()
+        }
+    }
+
     func testMeasurementFutureRecordNoticeKeepsExactReadableValue() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsFutureRecord", "-fruitfolioMeasurementsReduceMotion"]

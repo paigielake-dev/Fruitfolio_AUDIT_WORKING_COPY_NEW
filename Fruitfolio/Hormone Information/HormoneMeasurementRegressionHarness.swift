@@ -20,6 +20,13 @@ private final class FruitfolioMeasurementRegressionFixture: ObservableObject {
             record.notes = "QA original note"
             record.reportedTestDay = try .init(year: 2026, month: 10, day: 16)
             try store.save(record)
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioMeasurementsUnknownFormat") {
+                guard var legacy = store.records.first else { throw FruitfolioHormoneMeasurementError.unreadableStorage }
+                legacy.result = "12,500"
+                legacy.resultLocaleIdentifier = "unknown-report-format"
+                defaults.set(try JSONEncoder().encode([legacy]), forKey: "fixture")
+                store.reloadSavedMeasurements()
+            }
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioMeasurementsFutureRecord") {
                 let bytes = defaults.data(forKey: "fixture")!
                 var object = try JSONSerialization.jsonObject(with: bytes) as! [[String: Any]]
