@@ -2587,3 +2587,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 924, "new_English_entries": 3, "Apple_Today_status_UI": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue wheel contextual information and accessible label/locale consistency using existing scientific uncertainty and genuine source context; preserve original wheel artwork, prediction math and immutable source order.
 - Commit: containing commit for batch Today-context-restriction-and-uncertainty-copy-localization.
+
+## Today-cycle-day-native-locale-integer-display
+
+- Parent checkpoint: d60ce9c6a576891b31fa2491750e0818ce180885.
+- Source-order requirements: [292, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift.
+- Actual limited-data wheel and day indicator display existing cycleDay Int using native number format with active environment locale. Missing-day em dash remains literal. No date, source data, inference or prediction change; integers never supplied to translation. Remaining English-only accessible wheel description explicitly not solved by this numeric batch.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/Today UI; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_number_display": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Localize fixed wheel/day accessibility descriptions via existing keyed control translation state while keeping optional cycleDay separately native-formatted; retain uncertainty and source/machine disclosure.
+- Commit: containing commit for batch Today-cycle-day-native-locale-integer-display.

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:12:06.705380+00:00",
+  "updated_at": "2026-11-06T21:13:35.160972+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -4972,6 +4972,37 @@
         ]
       },
       "timestamp": "2026-11-06T21:12:06.705380+00:00"
+    },
+    {
+      "batch": "Today-cycle-day-native-locale-integer-display",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift syntax parses",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "Apple_number_display": "NOT_RUN",
+        "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Only locale-aware display of existing integer; raw cycle/date/calculation unchanged"
+        },
+        "not_run": [
+          "Apple selected-language number rendering, width and accessibility",
+          "Apple integrated Today/wheel UI suite"
+        ],
+        "remaining": [
+          "Run native number display/fit at selected locales and Dynamic Type on Apple",
+          "Translate fixed wheel accessible descriptions separately; numeric formatting alone is not complete localization",
+          "Whole wheel/localization requirements remain IN_PROGRESS"
+        ]
+      },
+      "timestamp": "2026-11-06T21:13:35.160972+00:00"
     }
   ]
 }

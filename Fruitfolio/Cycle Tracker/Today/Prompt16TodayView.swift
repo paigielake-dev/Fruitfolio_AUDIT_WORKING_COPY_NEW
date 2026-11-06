@@ -996,6 +996,7 @@ private enum Prompt16LocalDateBridge {
 // MARK: - Truthful limited-data wheel shell
 
 private struct Prompt16LimitedDataCycleWheel: View {
+    @Environment(\.locale) private var appLocale
     let cycleDay: Int?
     let revealProgress: CGFloat
 
@@ -1123,9 +1124,7 @@ private struct Prompt16LimitedDataCycleWheel: View {
                             )
                     )
 
-                    Text(
-                        "\(cycleDay)"
-                    )
+                    Text(cycleDay, format: .number.locale(appLocale))
                     .font(
                         Prompt16Type
                             .wheelNumber
@@ -1179,6 +1178,7 @@ private enum Prompt16LoadState {
 }
 
 private struct Prompt16DayIndicator: View {
+    @Environment(\.locale) private var appLocale
     let cycleDay: Int?
 
     var body: some View {
@@ -1205,13 +1205,10 @@ private struct Prompt16DayIndicator: View {
                             .dayLabel
                     )
 
-                Text(
-                    cycleDay
-                        .map(
-                            String.init
-                        )
-                    ?? "—"
-                )
+                Group {
+                    if let cycleDay { Text(cycleDay, format: .number.locale(appLocale)) }
+                    else { Text(verbatim: "—") }
+                }
                 .font(
                     Prompt16Type
                         .dayNumber
