@@ -217,15 +217,22 @@ struct FruitPopupView: View {
     }
 
     private var invitationSafeMessage: some View {
-        FruitfolioSemanticText(markdown: invitationMessage, baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body), serious: request.tone == .cautionary)
+        FruitfolioTranslatedContent(source: request.message, protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"]) { display, _ in
+            FruitfolioSemanticText(
+                markdown: invitationMessage(display),
+                baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body),
+                serious: request.tone == .cautionary
+            )
+        }
     }
 
-    private var invitationMessage: String {
-        if request.message == "hello there! ♡ want me to show you around?" {
+    // Typography is applied after lookup so the canonical source remains the
+    // catalog key and the saved request is never changed by display translation.
+    private func invitationMessage(_ display: String) -> String {
+        if display == "hello there! ♡ want me to show you around?" {
             return "hello there!\u{00A0}♡\nwant me to show you around?"
         }
-
-        return request.message.replacingOccurrences(of: " ♡", with: "\u{00A0}♡")
+        return display.replacingOccurrences(of: " ♡", with: "\u{00A0}♡")
     }
 
     private func popupActionButton(
@@ -233,25 +240,9 @@ struct FruitPopupView: View {
         isPrimary: Bool,
         identifier: String? = nil
     ) -> some View {
-        Button {
-            action.handler()
-        } label: {
-            Text(action.label)
-                .font(.custom("Chalkboard SE", size: 12.25, relativeTo: .body))
-                .fontWeight(isPrimary ? .bold : .regular)
-                .foregroundStyle(
-                    isPrimary
-                        ? DesignTokens.ColorToken.primaryBurgundy
-                        : DesignTokens.ColorToken.secondaryBurgundy
-                )
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(maxWidth: .infinity, minHeight: DesignTokens.Layout.minimumHitTarget, alignment: .center)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(action.accessibilityLabel ?? action.label)
-        .accessibilityIdentifier(identifier ?? (isPrimary ? "fruitPopup.action.primary" : "fruitPopup.action.secondary"))
+        FruitfolioControlPillButton(label: action.label, action: action.handler)
+            .controlSize(.small)
+            .accessibilityLabel(Text(LocalizedStringKey(action.accessibilityLabel ?? action.label)))
+            .accessibilityIdentifier(identifier ?? (isPrimary ? "fruitPopup.action.primary" : "fruitPopup.action.secondary"))
     }
 }

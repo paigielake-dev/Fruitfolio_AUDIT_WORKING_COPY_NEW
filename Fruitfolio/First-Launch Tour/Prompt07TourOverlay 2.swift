@@ -221,9 +221,7 @@ struct Prompt07TourOverlay: View {
             alignment: .center,
             spacing: 5
         ) {
-            Text(
-                step.progressText
-            )
+            Text("\(step.rawValue) of 6")
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -282,120 +280,30 @@ struct Prompt07TourOverlay: View {
                     .center
                 )
 
-                Button(
-                    "start exploring"
-                ) {
-                    // Canonical asset: audio_popup_close.mp3
-                    audioManager.play(
-                        .popupClose
-                    )
+                FruitfolioControlPillButton(label: "start exploring") {
+                    audioManager.play(.popupClose)
                     onFinish()
                 }
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 8.4, relativeTo: .body
-                    )
-                )
-                .fontWeight(.bold)
-                .foregroundStyle(
-                    DesignTokens.ColorToken
-                        .primaryBurgundy
-                )
-                .frame(
-                    maxWidth: .infinity,
-                    minHeight: DesignTokens.Layout.minimumHitTarget,
-                    alignment: .center
-                )
-                .buttonStyle(.plain)
-                .accessibilityLabel("Start exploring")
+                .controlSize(.small)
                 .accessibilityIdentifier("tour.finish")
-
             } else {
-                HStack(
-                    spacing: 4
-                ) {
+                // Stack inside the existing scrollable writing area so three
+                // translated actions do not compete for one narrow line.
+                VStack(spacing: 4) {
                     if step.rawValue > 1 {
-                        Button(
-                            "← back"
-                        ) {
-                            onBack()
-                        }
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 8.75, relativeTo: .body
-                            )
-                        )
-                        .fontWeight(.bold)
-                        .foregroundStyle(
-                            DesignTokens.ColorToken
-                                .secondaryBurgundy
-                        )
-                        .frame(
-                            minHeight: DesignTokens.Layout.minimumHitTarget
-                        )
-                        .buttonStyle(.plain)
+                        FruitfolioControlPillButton(label: "← back", action: onBack)
+                            .accessibilityIdentifier("tour.back")
                     }
-
-                    Spacer(
-                        minLength: 2
-                    )
-
-                    Button(
-                        "skip tour"
-                    ) {
-                        // Canonical asset: audio_popup_close.mp3
-                        audioManager.play(
-                            .popupClose
-                        )
+                    FruitfolioControlPillButton(label: "skip tour") {
+                        audioManager.play(.popupClose)
                         onSkip()
                     }
                     .accessibilityIdentifier("tour.skip")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 8.4, relativeTo: .body
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken
-                            .secondaryBurgundy
-                            .opacity(
-                                0.82
-                            )
-                    )
-                    .frame(
-                        minHeight: DesignTokens.Layout.minimumHitTarget
-                    )
-                    .buttonStyle(.plain)
-
-                    Button(
-                        "next →"
-                    ) {
-                        onNext()
-                    }
-                    .accessibilityIdentifier("tour.next")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 9.0, relativeTo: .body
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken
-                            .primaryBurgundy
-                    )
-                    .frame(
-                        minHeight: DesignTokens.Layout.minimumHitTarget
-                    )
-                    .buttonStyle(.plain)
+                    FruitfolioControlPillButton(label: "next →", action: onNext)
+                        .accessibilityIdentifier("tour.next")
                 }
-                .frame(
-                    maxWidth: .infinity
-                )
+                .controlSize(.small)
+                .frame(maxWidth: .infinity)
             }
         }
         .frame(
@@ -406,36 +314,13 @@ struct Prompt07TourOverlay: View {
     }
 
     private var styledStepMessage: some View {
-        FruitfolioTranslatedText(source: stepMessage, font: .custom("Chalkboard SE", size: 10.25, relativeTo: .body))
-    }
-
-    private var stepMessage: String {
-        switch step {
-        case .ask:
-            return "got a question? start here\u{00A0}(\u{00A0}´﹀`\u{00A0}) i’ll look through the **FruitsofLife.xo** library for you."
-        case .library:
-            return (
-                "anything you love can be tucked into your own little encyclopedia!\u{00A0}♡"
-            )
-
-        case .guideBuilder:
-            return (
-                "organize your saved pages into chapters, notes, study guides, little handbooks… whatever works for you.\u{00A0}:-)"
-            )
-
-        case .cycle:
-            return (
-                "this is more than a period calendar. log what you know, and Fruitfolio will help you see the biology and patterns underneath your cycle."
-            )
-
-        case .fruitBasket:
-            return (
-                "and when you feel like playing… come fill your fruit basket!\u{00A0}(〃⌒∇⌒)"
-            )
-
-        case .ready:
-            return (
-                "that’s it! explore wherever you’d like.\u{00A0}♡"
+        FruitfolioTranslatedContent(source: step.message, protectedLiterals: ["Fruitfolio", "FruitsofLife.xo"]) { display, _ in
+            FruitfolioSemanticText(
+                markdown: display
+                    .replacingOccurrences(of: "FruitsofLife.xo", with: "**FruitsofLife.xo**")
+                    .replacingOccurrences(of: " ♡", with: "\u{00A0}♡")
+                    .replacingOccurrences(of: " :-)", with: "\u{00A0}:-)"),
+                baseFont: .custom("Chalkboard SE", size: 10.25, relativeTo: .body)
             )
         }
     }

@@ -864,6 +864,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
         XCTAssertTrue(close.exists && close.isHittable,
                       "Long content must scroll to a reachable close action.")
+        XCTAssertGreaterThanOrEqual(close.frame.height, 44)
+        XCTAssertGreaterThanOrEqual(close.frame.minX, scroll.frame.minX)
+        XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX)
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = reduceMotion ? "modal-accessibility-reduce-motion" : "modal-scroll-actions"
         attachment.lifetime = .keepAlways
