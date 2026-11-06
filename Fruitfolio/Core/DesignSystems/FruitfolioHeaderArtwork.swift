@@ -1,39 +1,5 @@
 import SwiftUI
 
-/// Explicit approved compositions; no generated or silently substituted art.
-enum FruitfolioHeaderArtworkPalette {
-    case contact, settings, faq
-
-    var items: [Item] {
-        switch self {
-        case .contact:
-            return [
-                Item(id: .fruitbasket_plum, pixels: CGSize(width: 364, height: 361), role: 0.45...0.62, anchor: .bottomTrailing),
-                Item(id: .cycledecor_green_flecks, pixels: CGSize(width: 289, height: 342), role: 0.20...0.40, anchor: .topLeading),
-                Item(id: .decor_sparkles_2, pixels: CGSize(width: 1323, height: 1189), role: 0.18...0.28, anchor: .topTrailing)
-            ]
-        case .settings:
-            return [
-                Item(id: .cycledecor_flower, pixels: CGSize(width: 258, height: 304), role: 0.42...0.55, anchor: .bottomTrailing),
-                Item(id: .cycledecor_lavender_droplets, pixels: CGSize(width: 295, height: 402), role: 0.20...0.36, anchor: .topLeading),
-                Item(id: .decor_sparkles_2, pixels: CGSize(width: 1323, height: 1189), role: 0.18...0.28, anchor: .topTrailing)
-            ]
-        case .faq:
-            // The supplied registry has no canonical tulip or decor_fluffy_cloud.
-            // Keep the approved sparkles; never replace the missing tulip with
-            // an unrelated flower, fruit cluster, or rain cloud.
-            return [Item(id: .decor_sparkles_1, pixels: CGSize(width: 1323, height: 1189), role: 0.35...0.55, anchor: .topTrailing)]
-        }
-    }
-
-    struct Item {
-        let id: FruitfolioAssetID
-        let pixels: CGSize
-        let role: ClosedRange<CGFloat>
-        let anchor: FruitfolioDecorativeAnchor
-    }
-}
-
 /// Reserved artwork column keeps header text and controls protected at every
 /// Dynamic Type size. This header lives outside scrolling content.
 struct FruitfolioDecoratedRouteHeader<Header: View>: View {
@@ -44,13 +10,13 @@ struct FruitfolioDecoratedRouteHeader<Header: View>: View {
         FruitfolioHeaderColumns {
             header()
             GeometryReader { geometry in
-                let placements = placements(in: geometry.size)
+                let placements = palette.placements(in: geometry.size)
                 ZStack {
                     ForEach(Array(placements.enumerated()), id: \.offset) { _, item in
-                        FruitfolioImage(id: item.0)
+                        FruitfolioImage(id: item.id)
                             .scaledToFit()
-                            .frame(width: item.1.width, height: item.1.height)
-                            .position(x: item.1.midX, y: item.1.midY)
+                            .frame(width: item.frame.width, height: item.frame.height)
+                            .position(x: item.frame.midX, y: item.frame.midY)
                     }
                 }
             }
@@ -58,22 +24,6 @@ struct FruitfolioDecoratedRouteHeader<Header: View>: View {
             .allowsHitTesting(false)
             .accessibilityHidden(true)
         }
-    }
-
-    private func placements(in size: CGSize) -> [(FruitfolioAssetID, CGRect)] {
-        var protected: [FruitfolioProtectedRegion] = []
-        var result: [(FruitfolioAssetID, CGRect)] = []
-        for item in palette.items {
-            let placement = FruitfolioDecorativeArtLayout.placement(
-                intrinsicSize: item.pixels, roleFraction: item.role, anchor: item.anchor,
-                container: CGRect(origin: .zero, size: size), safeInsets: .init(),
-                protectedRegions: protected, minimumGap: 6)
-            if placement.isVisible {
-                result.append((item.id, placement.frame))
-                protected.append(.init(rect: placement.frame))
-            }
-        }
-        return result
     }
 }
 

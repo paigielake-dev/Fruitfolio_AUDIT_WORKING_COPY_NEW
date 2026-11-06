@@ -36,7 +36,7 @@ class WorkflowIntegrityTests(unittest.TestCase):
     def test_header_art_dimensions_match_all_bundled_assets(self):
         import struct
         repo = ROOT.parent
-        source = (repo / 'Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift').read_text()
+        source = (repo / 'Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift').read_text()
         entries = re.findall(r'Item\(id: \.(\w+), pixels: CGSize\(width: (\d+), height: (\d+)\)', source)
         self.assertGreaterEqual(len(entries), 7)
         for name, width, height in entries:

@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "b4eaa4e150099535aa58ceeb405db61ebd1bbd1f",
+  "current_HEAD": "11bd0af4930ff86e004ab96bcffe55efdac73688",
   "latest_verified_commit": null,
-  "current_checklist_part": 9,
-  "current_requirement": 34,
-  "current_implementation_batch": "RTL-character-tail-orientation-and-shared-QA-motion-authority",
+  "current_checklist_part": 1,
+  "current_requirement": 21,
+  "current_implementation_batch": "Measured-header-artwork-painted-footprints-and-production-palette-regressions",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,13 +493,14 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift",
-    "Fruitfolio/First-Launch Tour/Prompt07TourOverlay 2.swift",
-    "Fruitfolio/Fruit Popup Engine/FruitPopupView.swift",
-    "Fruitfolio/Fruit Popup Engine/Prompt06PopupGallery.swift",
-    "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
+    "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
+    "FruitfolioTests/Prompt1BDecorativeLayoutTests.swift",
+    "Tools/report_header_artwork_metrics.swift",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Header-artwork-alpha-measurements.json",
+    "development_workflow/tests/test_header_artwork_metrics.py",
+    "development_workflow/tests/test_workflow.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -512,21 +513,23 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
-    "Full actual native-linked Swift5 suite",
-    "39 workflow tests including9 real SwiftSyntax",
-    "278 compiler syntax parses",
+    "Full final portable Swift6 suite",
+    "Full final actual native-linked Swift5 suite",
+    "40 workflow tests with actual SwiftSyntax and compiled-production PNG comparisons",
+    "279 Swift compiler syntax parses",
+    "Xcode project target-reference validation",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable": "575 XCTest +21 Swift Testing passed",
-    "native": "581 XCTest +21 Swift Testing passed with actual CPU llama",
-    "workflow": "39 passed including9 actual SwiftSyntax cases",
-    "syntax": "278 Swift files parsed,0errors; no Apple typecheck",
-    "Apple": "NOT_RUN new RTL character/Tour UI/screenshot/focus/VO/motion checks; no Arabic T5 output claimed"
+    "portable": "578 XCTest +21 Swift Testing passed",
+    "native": "584 XCTest +21 Swift Testing passed with actual CPU llama",
+    "workflow": "40 passed:9 real SwiftSyntax cases plus actual compiled Swift palette/PNG bounds/hash test",
+    "syntax": "279 Swift files parsed,0errors; target build-file references resolved",
+    "artwork": "6 originals hashed/measured;7 actual palette references independently match original PNGs; no resource edits",
+    "Apple": "NOT_RUN rendered header artwork, visual collisions/DT/keyboard and screenshots"
   },
-  "next_exact_implementation_action": "Continue Part1 decorative painted-footprint requirements: header palettes currently pass only full PNG rectangles to the shared geometry and reserve full transparent canvases for later artwork. Measure the six exact bundled header PNGs non-destructively, persist their dimensions/alpha bounds/hash evidence, and connect actual palette placement to visible painted bounds while preserving approved assets/anchors/role sizes. Move only pure palette geometry into the existing Foundation layout file so its real production compositions can be regression-tested; no artwork substitutions or resource edits.",
-  "updated_at": "2026-11-06T06:05:08.405727+00:00",
+  "next_exact_implementation_action": "Strengthen actual shared character verification across all three assets and logical sides: the private Modal QA currently instantiates FruitPopupView directly rather than driving the actual root PopupCoordinator/host. Route the disposable fixture through the tested owned-session/shared host, add private character/trailing modifiers and all-character RTL/LTR UI capture paths, preserve private preference isolation and actual motion settings. Do not claim Apple UI execution on Linux. Then continue independent original-order requirements.",
+  "updated_at": "2026-11-06T06:12:14.251034+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
