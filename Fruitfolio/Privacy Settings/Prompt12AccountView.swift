@@ -125,6 +125,7 @@ struct Prompt12AccountView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
             TextField("public username", text: $usernameDraft)
+                .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
                 .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
@@ -156,9 +157,14 @@ struct Prompt12AccountView: View {
         .onChange(of: usernameDraft) { _, newValue in
             usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
         }
-        .onChange(of: usernameStore.username) { _, newValue in
-            if usernameDraft != newValue { usernameDraft = newValue }
-            usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+        .onChange(of: usernameStore.username) { oldValue, newValue in
+            if usernameDraft == oldValue || usernameDraft == newValue {
+                usernameDraft = newValue
+                usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+            } else {
+                usernameNonIdentifying = false
+                usernameMessage = "the saved username changed in Fruit Basket. your unsaved draft is still here; confirm it again before saving."
+            }
         }
     }
 

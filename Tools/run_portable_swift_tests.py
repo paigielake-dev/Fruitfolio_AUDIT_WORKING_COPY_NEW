@@ -13,6 +13,8 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
+    "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
     'Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift',
     'Fruitfolio/Fruit Basket/Prompt28SavedResearchCopy.swift',
     'Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift',
@@ -105,6 +107,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BGameRulesCatalogTests.swift',
     'Prompt1BRoundLedgerTests.swift', 'Prompt1BGameSavedSourceTests.swift',
     'Prompt1BGamePersistenceTests.swift', 'Prompt1BProgressionPolicyTests.swift',
     'Prompt1BObstaclePhysicsTests.swift',

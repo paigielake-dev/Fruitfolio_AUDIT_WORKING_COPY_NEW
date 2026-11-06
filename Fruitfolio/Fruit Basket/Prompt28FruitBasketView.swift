@@ -533,13 +533,13 @@ struct Prompt28FruitBasketView: View {
                     Prompt28CompactRuleCard(
                         title: "3. catch",
                         artID: .fruitbasket_basket,
-                        body: "catch 10 starred fruits that fit the rule. no star? let it pass. standalone stars are rare bonus drops; each banks one star pass without filling the basket."
+                        body: Prompt28RulesCopy.catches
                     )
 
                     Prompt28CompactRuleCard(
                         title: "4. fill your basket",
                         artID: .fruitbasket_strawberry,
-                        body: "miss a starred fruit? that’s okay! another one will come along. catching unstarred fruit uses exactly one available star pass; without a pass, only that catch attempt ends and you can retry."
+                        body: Prompt28RulesCopy.protection
                     )
                 }
                 .frame(maxWidth: 330)
@@ -1702,6 +1702,20 @@ struct Prompt28FruitBasketView: View {
                 .accessibilityElement(children: .contain)
 
                 Prompt28PaperPanel {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("what counts")
+                            .prompt28Text(.sectionHeading)
+                            .accessibilityAddTraits(.isHeader)
+                        Text(Prompt28RulesCopy.totals)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(Prompt28RulesCopy.results)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .prompt28Text(.secondary)
+                }
+                .accessibilityIdentifier("fruitBasket.leaderboard.rules")
+
+                Prompt28PaperPanel {
                     VStack(spacing: 10) {
                         Text("fruit basket leaderboard")
                             .prompt28Text(.sectionHeading)
@@ -1711,6 +1725,7 @@ struct Prompt28FruitBasketView: View {
                             "public username",
                             text: $leaderboardUsernameDraft
                         )
+                        .accessibilityIdentifier("fruitBasket.publicUsername")
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .prompt28Text(.body)
@@ -1792,9 +1807,12 @@ struct Prompt28FruitBasketView: View {
             usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
         }
         .onChange(of: usernameStore.username) { oldValue, newValue in
-            if leaderboardUsernameDraft == oldValue {
+            if leaderboardUsernameDraft == oldValue || leaderboardUsernameDraft == newValue {
                 leaderboardUsernameDraft = newValue
                 usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+            } else {
+                usernameNonIdentifying = false
+                leaderboardValidationMessage = "the saved username changed in Account. your unsaved draft is still here; confirm it again before saving."
             }
         }
         .onAppear {
@@ -2023,7 +2041,7 @@ struct Prompt28FruitBasketView: View {
             "a good catch adds +1 to your basket and +10 points. ten good fruits fills it.",
             "miss a good fruit? nothing gets taken away. another one will come along.",
             "bad fruit can fall away safely. if you catch one with a star pass banked, exactly one pass is used and the round keeps going. with zero passes, the round ends.",
-            "the tenth good fruit lands first, the basket reaches 10 / 10, then the soft Basket Reveal explains what you collected.",
+            "the tenth good fruit lands first, the basket reaches 10 / 10, then the result shows what you actually caught. the sourced library explanation stays separate from the catch rule.",
             "catch 10 good fruits. standalone stars bank protection for bad-fruit catches. question difficulty and game level stay separate. ♡"
         ][tourStep]
     }
