@@ -46,7 +46,7 @@ final class Prompt1BUsernameStoreIsolationTests: XCTestCase {
         XCTAssertNil(second.setUsername("sprout_two", confirmedNonIdentifying: true))
         XCTAssertEqual(second.username, "sprout_two")
         XCTAssertEqual(first.username, "sprout_one")
-        XCTAssertEqual(firstDefaults.string(forKey: "username"), "sprout_one")
+        XCTAssertEqual(FruitfolioUsernameStore(defaults: firstDefaults, key: "username").username, "sprout_one")
     }
     func testActualAccountUIFixtureUsesDisposableFilesAndPrivateUsernameAuthority() async throws {
         let fixture = Prompt12AccountActionFixture()
@@ -69,4 +69,159 @@ final class Prompt1BUsernameStoreIsolationTests: XCTestCase {
         XCTAssertEqual(fixture.username.username, "")
     }
 
+}
+
+/// Selected fault only; all reads and other writes use the actual private suite.
+private final class UsernameAcknowledgmentDefaults: UserDefaults {
+    var rejectAllWrites = false
+    var rejectLegacyConfirmation = false
+    private(set) var rejectedWrites = 0
+    override func set(_ value: Any?, forKey defaultName: String) {
+        if rejectAllWrites || (rejectLegacyConfirmation && defaultName == "username.nonIdentifyingConfirmation") {
+            rejectedWrites += 1
+            return
+        }
+        super.set(value, forKey: defaultName)
+    }
+}
+
+@MainActor
+final class Prompt1BUsernameAcknowledgmentTests: XCTestCase {
+    func testRefusedActualUsernameWritesCannotReportSaved() async throws {
+        let suite = "Fruitfolio.UsernameRefused." + UUID().uuidString
+        let defaults = try XCTUnwrap(UsernameAcknowledgmentDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        defaults.rejectAllWrites = true
+        XCTAssertNotNil(store.setUsername("new_berry", confirmedNonIdentifying: true))
+        XCTAssertGreaterThan(defaults.rejectedWrites, 0)
+        XCTAssertEqual(store.username, "old_berry")
+        XCTAssertTrue(store.confirmedNonIdentifying)
+        let loaded = FruitfolioUsernamePersistence(defaults: defaults, key: "username").load()
+        XCTAssertEqual(loaded.username, "old_berry")
+        XCTAssertTrue(loaded.confirmedNonIdentifying)
+    }
+    func testAReportedSaveCannotSplitUsernameFromItsNonIdentifyingConsent() async throws {
+        let suite = "Fruitfolio.UsernamePartial." + UUID().uuidString
+        let defaults = try XCTUnwrap(UsernameAcknowledgmentDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        defaults.rejectLegacyConfirmation = true
+        let error = store.setUsername("new_berry", confirmedNonIdentifying: true)
+        let loaded = FruitfolioUsernamePersistence(defaults: defaults, key: "username").load()
+        if error == nil {
+            XCTAssertEqual(loaded.username, "new_berry")
+            XCTAssertTrue(loaded.confirmedNonIdentifying, "Reported success must include acknowledged consent")
+        } else {
+            XCTAssertEqual(loaded.username, "old_berry")
+            XCTAssertTrue(loaded.confirmedNonIdentifying)
+        }
+    }
+}
+
+@MainActor
+final class Prompt1BUsernameRecordProtectionTests: XCTestCase {
+    private func fixture() throws -> (UsernameAcknowledgmentDefaults, String) {
+        let suite = "Fruitfolio.UsernameRecord." + UUID().uuidString
+        return (try XCTUnwrap(UsernameAcknowledgmentDefaults(suiteName: suite)), suite)
+    }
+    func testLegacyMigrationAndClearPreserveOriginalsWithoutResurrectingAnActiveName() async throws {
+        let (defaults, suite) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("old_berry", forKey: "username")
+        defaults.set(true, forKey: "username.initialized")
+        defaults.set("old_berry", forKey: "username.nonIdentifyingConfirmation")
+        let game = Data(#"{"leaderboardPseudonym":"game_berry","futureProgress":9}"#.utf8)
+        defaults.set(game, forKey: "fruitfolio.prompt28.fruitBasket.v1")
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertEqual(store.username, "old_berry"); XCTAssertTrue(store.confirmedNonIdentifying)
+        XCTAssertNil(store.setUsername("new_berry", confirmedNonIdentifying: true))
+        let restored = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertEqual(restored.username, "new_berry"); XCTAssertTrue(restored.confirmedNonIdentifying)
+        XCTAssertEqual(defaults.string(forKey: "username"), "old_berry")
+        XCTAssertEqual(defaults.string(forKey: "username.nonIdentifyingConfirmation"), "old_berry")
+        XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt28.fruitBasket.v1"), game)
+        defaults.rejectAllWrites = true
+        XCTAssertNotNil(store.clear())
+        XCTAssertEqual(store.username, "new_berry"); XCTAssertTrue(store.confirmedNonIdentifying)
+        defaults.rejectAllWrites = false
+        XCTAssertNil(store.clear())
+        XCTAssertEqual(FruitfolioUsernameStore(defaults: defaults, key: "username").username, "")
+        XCTAssertEqual(defaults.string(forKey: "username"), "old_berry")
+    }
+    func testFutureUnknownNullMalformedAndWrongTypeRecordsArePreserved() async throws {
+        for value: Any in [
+            Data(#"{"schemaVersion":3,"username":"new_berry","confirmedNonIdentifying":true}"#.utf8),
+            Data(#"{"schemaVersion":2,"username":"new_berry","confirmedNonIdentifying":true,"future":null}"#.utf8),
+            Data(#"{"schemaVersion":2,"username":"new_berry","confirmedNonIdentifying":false}"#.utf8),
+            Data("not JSON".utf8), "unknown representation"] {
+            let (defaults, suite) = try fixture()
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+            defaults.set(value, forKey: key)
+            let before = defaults.object(forKey: key) as? NSObject
+            let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+            XCTAssertFalse(store.canPersistUsername)
+            XCTAssertFalse(store.confirmedNonIdentifying)
+            XCTAssertNotNil(store.setUsername("later_berry", confirmedNonIdentifying: true))
+            XCTAssertNotNil(store.clear())
+            XCTAssertEqual(defaults.object(forKey: key) as? NSObject, before)
+        }
+    }
+    func testDebugInspectionCannotRebaseAStaleWriter() async throws {
+        let (defaults, suite) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let first = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertNil(first.setUsername("old_berry", confirmedNonIdentifying: true))
+        let second = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertNil(second.setUsername("new_berry", confirmedNonIdentifying: true))
+        let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+        let bytes = defaults.data(forKey: key)
+        #if DEBUG
+        XCTAssertEqual(first.debugStoredUsername.username, "new_berry")
+        #endif
+        XCTAssertNotNil(first.setUsername("later_berry", confirmedNonIdentifying: true))
+        XCTAssertEqual(defaults.data(forKey: key), bytes)
+        XCTAssertEqual(first.username, "new_berry")
+    }
+    func testCapturedSameAuthorityIntentCannotOverwriteLaterName() async throws {
+        let (defaults, suite) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        let expected = store.snapshot
+        XCTAssertNil(store.setUsername("new_berry", confirmedNonIdentifying: true))
+        let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+        let bytes = defaults.data(forKey: key)
+        XCTAssertNotNil(store.setUsername("later_berry", confirmedNonIdentifying: true, expecting: expected))
+        XCTAssertEqual(defaults.data(forKey: key), bytes)
+    }
+    func testLegacyWriterAndUnsupportedLegacyTypesCannotBeSilentlyRebased() async throws {
+        let (defaults, suite) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("old_berry", forKey: "username")
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        defaults.set("new_berry", forKey: "username")
+        XCTAssertNotNil(store.setUsername("later_berry", confirmedNonIdentifying: true))
+        XCTAssertNil(defaults.data(forKey: FruitfolioUsernamePersistence.recordKey(for: "username")))
+        defaults.set("future flag", forKey: "username.initialized")
+        store.reloadSavedUsername()
+        XCTAssertFalse(store.canPersistUsername)
+        XCTAssertNotNil(store.setUsername("later_berry", confirmedNonIdentifying: true))
+        XCTAssertEqual(defaults.string(forKey: "username.initialized"), "future flag")
+    }
+    func testAcknowledgedIdenticalRecordReturnsReceiptWithoutRewritingBytes() async throws {
+        let (defaults, suite) = try fixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let key = FruitfolioUsernamePersistence.recordKey(for: "username")
+        let bytes = Data(#"{ "username":"old_berry", "confirmedNonIdentifying":true, "schemaVersion":2 }"#.utf8)
+        defaults.set(bytes, forKey: key)
+        let store = FruitfolioUsernameStore(defaults: defaults, key: "username")
+        defaults.rejectAllWrites = true
+        XCTAssertNil(store.setUsername("old_berry", confirmedNonIdentifying: true))
+        XCTAssertEqual(defaults.rejectedWrites, 0)
+        XCTAssertEqual(defaults.data(forKey: key), bytes)
+    }
 }

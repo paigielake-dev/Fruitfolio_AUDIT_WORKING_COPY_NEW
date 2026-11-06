@@ -23,7 +23,10 @@ enum FruitfolioLocalDataExport {
     static let preferenceKeys = [
         "fruitfolio.prompt12.accountPrivacy.v1", "fruitfolio.prompt10.savedLibrary.v2",
         "fruitfolio.hormoneMeasurements.v1", "fruitfolio.prompt27a.userReproductiveContext.v1",
-        "fruitfolio.identity.publicUsername.v1", "fruitfolio.prompt28.fruitBasket.v1",
+        FruitfolioUsernamePersistence.defaultKey,
+        FruitfolioUsernamePersistence.defaultKey + ".initialized",
+        FruitfolioUsernamePersistence.defaultKey + ".nonIdentifyingConfirmation",
+        FruitfolioUsernamePersistence.recordKey(), "fruitfolio.prompt28.fruitBasket.v1",
         "fruitfolio.settings.globallyMuted", "fruitfolio.settings.musicEnabled", "fruitfolio.settings.rainEnabled",
         "fruitfolio.settings.soundEffectsEnabled", "fruitfolio.settings.typingASMREnabled",
         "fruitfolio.settings.musicVolume", "fruitfolio.settings.rainVolume", "fruitfolio.settings.soundEffectsVolume",

@@ -8,6 +8,30 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BLocalDataExportTests: XCTestCase {
+    @MainActor
+    func testUsernameRecordAndLegacyConsentExportWithoutRewritingOriginals() async throws {
+        let suite = "Fruitfolio.UsernameExport." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let key = FruitfolioUsernamePersistence.defaultKey
+        defaults.set("old_berry", forKey: key)
+        defaults.set(true, forKey: key + ".initialized")
+        defaults.set("old_berry", forKey: key + ".nonIdentifyingConfirmation")
+        defaults.set("exclude this fixture", forKey: "outside.private.key")
+        let store = FruitfolioUsernameStore(defaults: defaults)
+        XCTAssertNil(store.setUsername("new_berry", confirmedNonIdentifying: true))
+        let recordKey = FruitfolioUsernamePersistence.recordKey()
+        let bytes = try XCTUnwrap(defaults.data(forKey: recordKey))
+        let captured = try FruitfolioLocalDataExport.capturePreferences(defaults: defaults)
+        XCTAssertEqual(Set(captured.map(\.key)), Set([key, key + ".initialized", key + ".nonIdentifyingConfirmation", recordKey]))
+        let record = try XCTUnwrap(captured.first { $0.key == recordKey })
+        XCTAssertTrue(record.isRawData)
+        XCTAssertEqual(record.data, bytes)
+        XCTAssertEqual(defaults.string(forKey: key), "old_berry")
+        XCTAssertEqual(defaults.string(forKey: key + ".nonIdentifyingConfirmation"), "old_berry")
+        XCTAssertEqual(FruitfolioUsernameStore(defaults: defaults).username, "new_berry")
+    }
+
     func testInvalidDuplicateAndAbsoluteArchivePathsCannotOverwriteExistingOutput() throws {
         let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)

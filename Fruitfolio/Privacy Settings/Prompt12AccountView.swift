@@ -39,6 +39,8 @@ struct Prompt12AccountView: View {
     @AccessibilityFocusState private var accountFocus: AccountControl?
     @State private var showDataExport = false
     @State private var usernameDraft = ""
+    @State private var usernameBaseline: FruitfolioUsernamePersistence.Snapshot?
+    @State private var usernameEditorHasLoaded = false
     @State private var usernameNonIdentifying = false
     @State private var usernameMessage: String?
 
@@ -233,19 +235,28 @@ struct Prompt12AccountView: View {
                 isOn: $usernameNonIdentifying)
                 .accessibilityIdentifier("account.usernameConfirmation")
 
+            if let issue = usernameStore.persistenceMessage {
+                Prompt12InfoText(issue)
+                WatercolorSecondaryButton(label: "reload saved username") { usernameStore.reloadSavedUsername() }
+                    .accessibilityIdentifier("account.reloadUsername")
+            }
             if let usernameMessage {
                 Prompt12InfoText(usernameMessage)
                     .multilineTextAlignment(.center)
             }
 
             WatercolorSecondaryButton(label: "save username") {
-                if let error = usernameStore.setUsername(usernameDraft, confirmedNonIdentifying: usernameNonIdentifying, identifyingText: [email, store.account?.email ?? ""]) {
+                if let error = usernameStore.setUsername(usernameDraft, confirmedNonIdentifying: usernameNonIdentifying,
+                    identifyingText: [email, store.account?.email ?? ""], expecting: usernameBaseline) {
+                    usernameNonIdentifying = false
                     usernameMessage = error
                 } else {
                     usernameDraft = usernameStore.username
+                    usernameBaseline = usernameStore.snapshot
                     usernameMessage = "saved!"
                 }
             }
+            .disabled(!usernameStore.canPersistUsername || usernameBaseline == nil)
             .accessibilityIdentifier("account.saveUsername")
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
@@ -254,7 +265,22 @@ struct Prompt12AccountView: View {
             }
             #endif
         }
-        .onAppear { usernameDraft = usernameStore.username; usernameNonIdentifying = usernameStore.confirmedNonIdentifying }
+        .onAppear {
+            let current = usernameStore.snapshot
+            if !usernameEditorHasLoaded || usernameBaseline.map({ usernameDraft == $0.username }) == true {
+                usernameEditorHasLoaded = true
+                usernameDraft = current.username
+                usernameNonIdentifying = current.confirmedNonIdentifying
+                usernameBaseline = current
+            } else if usernameBaseline != current {
+                usernameNonIdentifying = false
+                usernameMessage = "the saved username changed. your unsaved draft is still here; confirm it again before saving."
+            }
+        }
+        .onChange(of: usernameNonIdentifying) { _, confirmed in
+            // An explicit re-confirmation authorizes the currently reviewed name.
+            if confirmed { usernameBaseline = usernameStore.snapshot }
+        }
         .onChange(of: usernameDraft) { _, newValue in
             usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
         }
@@ -262,6 +288,7 @@ struct Prompt12AccountView: View {
             if usernameDraft == oldValue || usernameDraft == newValue {
                 usernameDraft = newValue
                 usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+                usernameBaseline = usernameStore.snapshot
             } else {
                 usernameNonIdentifying = false
                 usernameMessage = "the saved username changed in Fruit Basket. your unsaved draft is still here; confirm it again before saving."

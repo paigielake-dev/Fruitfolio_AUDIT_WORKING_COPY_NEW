@@ -10161,7 +10161,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10172,14 +10173,17 @@
         "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BUsernamePersistenceTests",
-        "FruitfolioUsernameStoreTests"
+        "FruitfolioUsernameStoreTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
-        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-05T22:03:36.295060+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 230,
@@ -10194,7 +10198,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10205,14 +10210,17 @@
         "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BUsernamePersistenceTests",
-        "FruitfolioUsernameStoreTests"
+        "FruitfolioUsernameStoreTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
-        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-05T22:03:36.295060+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 231,
@@ -10227,7 +10235,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10238,14 +10247,17 @@
         "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BUsernamePersistenceTests",
-        "FruitfolioUsernameStoreTests"
+        "FruitfolioUsernameStoreTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
-        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-05T22:03:36.295060+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 232,
@@ -10260,7 +10272,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10271,14 +10284,17 @@
         "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BUsernamePersistenceTests",
-        "FruitfolioUsernameStoreTests"
+        "FruitfolioUsernameStoreTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
-        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-05T22:03:36.295060+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 233,
@@ -10293,7 +10309,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioPseudonymPolicy.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
-        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10304,14 +10321,17 @@
         "Prompt12AccountPrivacyStoreTests/testUnavailableCloudSyncPreservesPendingLocalEdits",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BUsernamePersistenceTests",
-        "FruitfolioUsernameStoreTests"
+        "FruitfolioUsernameStoreTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-shared-pseudonym-drafts-and-identity-guards (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Account UI no longer calls demo sign-in. Without an approved provider it reports the service unavailable and preserves local identity/data. Development sign-in is guarded out of release builds. Sync no longer claims successful uploads after a timer or clears pending edits; ownership checks no longer pretend a timer verified a receipt. Existing shared public username policy is retained. Production service/receipt integration is an explicit external blocker.",
-        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun."
+        "Account and Fruit Basket retain one local username authority. Fruit Basket now edits an explicit draft/save instead of persisting each keystroke. Both paths validate original input without silently stripping/truncating names and require non-identifying confirmation; Account also rejects private identity fragments from email already supplied there, without retaining comparison data or reading health context. Confirmation is tied to the saved name; failed edits preserve the existing identity. Extracted actual Foundation persistence for Linux regression coverage, preserved invalid legacy bytes, and fixed cleared-name resurrection from old game preferences. Local saves do not claim global reservation. Unknown legal-name identity cannot be proved locally; exact limitation and authenticated-backend blocker documented. Apple shared-observation/UI tests remain unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-05T22:03:36.295060+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 234,
@@ -15126,7 +15146,10 @@
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15137,14 +15160,17 @@
         "Prompt1BUsernamePersistenceTests",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
-        "Prompt1BFruitBasketResearchTests"
+        "Prompt1BFruitBasketResearchTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-UI-scenarios-accessible-star-cues-and-serious-failure-feedback (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
-        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n"
+        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T01:46:26.391371+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 370,
@@ -15161,7 +15187,10 @@
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15172,14 +15201,17 @@
         "Prompt1BUsernamePersistenceTests",
         "Prompt1BPseudonymPolicyTests",
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
-        "Prompt1BFruitBasketResearchTests"
+        "Prompt1BFruitBasketResearchTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-UI-scenarios-accessible-star-cues-and-serious-failure-feedback (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
-        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n"
+        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T01:46:26.391371+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 371,
@@ -15192,7 +15224,10 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -15201,13 +15236,16 @@
       "related_tests": [
         "Prompt1BGameRulesCatalogTests",
         "Prompt1BUsernamePersistenceTests",
-        "Prompt1BPseudonymPolicyTests"
+        "Prompt1BPseudonymPolicyTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Consistent-game-rules-FAQ-and-shared-username-drafts (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun."
+        "Shared canonical gameplay instruction text now distinguishes attached good-fruit badges from standalone protection stars, zero star score/fruit credit, entry/settlement, exact one-pass spending, retry/session pass scope, actual results versus sourced explanation and capture totals versus successful baskets. Leaderboard explains local totals, historical omissions and unavailable worldwide service. FAQ catalog is exact production Foundation data, portable regressions validate unique catalog identities/current rule availability and real engine score/protection behavior. FAQ questions explicitly regular-weight/verbatim. Both Account and game preserve dirty username drafts if the shared authority changes in the other location; confirmation resets with clear feedback; stable field accessibility identifiers added. No global registration or universal real-name detection claim. Existing shared persistence/policy regressions included in full portable suite. Apple UI/observer interactions unrun.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T01:14:24.919234+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 372,
@@ -19348,7 +19386,8 @@
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
         "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -19459,9 +19498,10 @@
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19510,9 +19550,10 @@
         "Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.",
         "Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 444,
@@ -19631,7 +19672,8 @@
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
         "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -19739,9 +19781,10 @@
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19789,9 +19832,10 @@
         "Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.",
         "Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 445,
@@ -20661,7 +20705,11 @@
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-        "Fruitfolio/Fruitfolio/ContentView.swift"
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
+        "Fruitfolio/Core/DataExport/FruitfolioLocalDataExport.swift",
+        "Fruitfolio/Privacy Settings/Prompt12AccountView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -20669,13 +20717,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BModalAccessibilityTests (four actual-game UI methods, Apple NOT_RUN)",
-        "Prompt1BFruitBasketResearchTests"
+        "Prompt1BFruitBasketResearchTests",
+        "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-UI-scenarios-accessible-star-cues-and-serious-failure-feedback (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n"
+        "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T01:46:26.391371+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 464,
@@ -21914,7 +21965,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
         "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
-        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift"
+        "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21986,9 +22038,10 @@
         "Existing AccountPersistence/Restoration/Ownership regressions",
         "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -22019,9 +22072,10 @@
         "Active account sign-out/delete confirmations now use existing identity-owned white-paper pipeline, frozen identity/auth/pending/local-container expectation, post-dismissal execution, cancellation/lifetime/focus guards and visible translated typed failures. No try?-success or fake remote deletion. Sign-out makes1acknowledged local write, retains pending-local marker and local container/health files, rolls cache back on refused write; keepLocalData:false requires separate local review. Privacy toggles revert after refused actual record writes. Sync/deletion stay unavailable without fabricated cloud success. Existing decoder now protects explicit-null metadata via genuine JSON field coverage. Eight actual private UserDefaults/store/file regressions pass;2old-API probes against parent actualstore reproduced6failures, not mislabeled identicalafter suite. Actual SwiftSyntax tool removed9duplicate row-caller press cues; row nowuses globalCutePopButtonStyle and unbounded detail with accessible hint. Authdevelopment fixtures are not real authentication. UserDefaults readback notfsync/CAS. AppleUI/runtime remainNOT_RUN.",
         "Actual private-suite/account/cycle-file QA fixture and username injection; 20 Apple UI launch scenarios added but NOT_RUN. Root DEBUG RTL reaches shared popup host. SwiftPM unbatched compilation resolves reproducible compiler batching failure without skipping sources or altering persistence actor.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 475,
@@ -22210,7 +22264,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22299,9 +22354,10 @@
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -22338,9 +22394,10 @@
         "Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.",
         "Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 477,
@@ -22469,7 +22526,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameStore.swift",
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22602,9 +22660,10 @@
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -22664,9 +22723,10 @@
         "Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.",
         "Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     },
     {
       "sequence": 478,
@@ -22779,7 +22839,8 @@
         "Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
         "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22877,9 +22938,10 @@
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
         "FruitfolioTests/Prompt1BAccountActionTests.swift",
-        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
+        "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+        "FruitfolioTests/Prompt1BLocalDataExportTests.swift"
       ],
-      "commit_reference": "batch:Account-input-label-localization-and-preview-dependencies (resolve containing commit with git log)",
+      "commit_reference": "batch:Recovered-workspace-and-acknowledged-shared-username-record (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -22925,9 +22987,10 @@
         "Actual navigation title/detail now resolve independently through shared catalog/scientific/MADLAD state, each with truthful original/machine/unavailable status, semantic/plain VO text and scalable type. Single genuine button/cue/artwork retained. Canonical controls share caption/hint/task keys. Actual independent concurrent title/detail regression passes; genuine Combine publisher test added but NOT_RUN on Linux.",
         "Existing route headers/explanatory/status text now uses actual protected catalog/MADLAD display path and scalable type. Username remains verbatim. Actual Foundation account-status source escapes and masks provider/email as whole literals; two service regressions and actual native output rejection cover identity preservation. Original price token explicitly preserved. Four Apple large-text heading/identity scenarios added but NOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification."
+        "Actual account TextFields resolve constant source labels/prompts only; entered username/email bindings are never translation inputs. Explicit fallback/status hints, scalable email type and interactive keyboard dismissal retain drafts. Existing confirmation uses canonical toggle. Four source-only Apple UI scenarios check literal input/save/readback/signout/email. Existing previews receive settings locale/direction and Tracker context/popup host. Apple runtime/typecheck NOT_RUN; source inspection found username save acknowledgments need next-batch fault verification.",
+        "Recovered original workspace after read-only confirmation of branch/7140173, five modified files and readable original bundle. Actual parent fault tests reproduced two failures. Shared username name/consent now commit in one acknowledged schema-2 record; legacy originals preserved, clear tombstone, bounded/future-field/type/stale guards, read-only inspector, frozen Account intent and 21-key explicit export coverage. Eight new username fault/protection tests and one actual export test pass. Original bundle retained; no assets/reset/merge/push."
       ],
-      "last_updated": "2026-11-06T11:36:39.545936+00:00"
+      "last_updated": "2026-11-06T12:09:08.892942+00:00"
     }
   ]
 }
