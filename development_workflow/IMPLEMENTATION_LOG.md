@@ -2565,3 +2565,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_context_reload": "existing written tests, NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21 SwiftTesting each not rerun"}.
 - Next action: Continue remaining actual context fixed/native labels and accessible provenance, then subsequent original context integration requirements. Preserve source and private drafts; no guessed clinical methods.
 - Commit: containing commit for batch Context-storage-notice-active-owner-propagation.
+
+## Personal-context-native-editor-fixed-accessible-label
+
+- Parent checkpoint: 3ffbfcca40c11d3b4c8786a8a1dfb960613df602.
+- Source-order requirements: [281, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift, Fruitfolio/Localizable.xcstrings.
+- Native TextEditor wrapper translates only fixed accessible label using existing keyed control state and provenance hint. Original patient binding is forwarded unchanged; entered text never becomes translation source. Actual personal-health editor uses wrapper with prior frame/identifier/focus modifiers. Existing edit/remove UI test queries stable editor identifier. One English label added,920 prior catalog entries preserved. Apple keyboard/focus/VoiceOver behavior unverified.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 921, "preserved_entries": 920, "Apple_native_editor": "written stable-ID regression, NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue original290 predicted versus confirmed event presentation and291 unsupported certainty; preserve existing no-diagnostic context policy. Context282–289 source policies exist but clinical/integrated Apple acceptance remains open, not certified complete.
+- Commit: containing commit for batch Personal-context-native-editor-fixed-accessible-label.

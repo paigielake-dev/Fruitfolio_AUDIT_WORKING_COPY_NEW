@@ -175,6 +175,33 @@ struct FruitfolioFixedTextField: View {
     }
 }
 
+
+/// Translates only the fixed accessible label. The native editor receives the
+/// original patient binding; entered text is never supplied to translation.
+struct FruitfolioFixedTextEditor: View {
+    let source: String
+    @Binding private var text: String
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+
+    init(_ source: String, text: Binding<String>) {
+        self.source = source
+        self._text = text
+    }
+
+    var body: some View {
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language)
+        let presentation = translation.presentation(for: key)
+        TextEditor(text: $text)
+            .accessibilityLabel(Text(verbatim: presentation.text))
+            .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+    }
+}
+
 #if DEBUG
 /// Private, nonclinical catalog fixture. No production catalog/resource is
 /// edited and no fixture string is evidence of real localization approval.

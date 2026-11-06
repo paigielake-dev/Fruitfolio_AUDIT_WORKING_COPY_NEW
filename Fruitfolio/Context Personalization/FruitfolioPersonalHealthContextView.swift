@@ -120,7 +120,7 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                     FruitfolioImage(id: asset).scaledToFit().frame(maxWidth: 100, maxHeight: 100).allowsHitTesting(false).accessibilityHidden(true)
                 }
                 FruitfolioTranslatedText(source: "anything you want Fruitfolio to know? this is your report, not something Fruitfolio has verified.", serious: true)
-                TextEditor(text: $text).frame(minHeight: 180).accessibilityLabel("optional personal health context")
+                FruitfolioFixedTextEditor("optional personal health context", text: $text).frame(minHeight: 180)
                     .accessibilityIdentifier("personalHealth.editor.text")
                     .focused($textFocused)
                 Text("\(text.count) / 10000 characters").font(.caption)

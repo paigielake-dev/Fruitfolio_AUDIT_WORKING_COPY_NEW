@@ -2358,7 +2358,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<10 { if dna.isHittable { break }; app.swipeUp() }
         XCTAssertTrue(dna.isHittable)
         dna.tap()
-        let text = app.textViews["optional personal health context"]
+        let text = app.textViews["personalHealth.editor.text"]
         XCTAssertTrue(text.waitForExistence(timeout: 3))
         text.tap(); text.typeText("only my explicitly supplied finding")
         XCUIDevice.shared.press(.home)
