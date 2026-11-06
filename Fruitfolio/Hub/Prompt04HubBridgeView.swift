@@ -40,6 +40,8 @@ struct Prompt04HubBridgeView: View {
                         to: route
                     )
                 }
+                .accessibilityHidden(tour.isTourActive)
+                .allowsHitTesting(!tour.isTourActive)
                 .onPreferenceChange(
                     Prompt07TargetFramePreferenceKey.self
                 ) {

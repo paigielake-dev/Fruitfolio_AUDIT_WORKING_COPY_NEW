@@ -2,6 +2,19 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BPopupLayoutTests: XCTestCase {
+    func testActualHostWidthCannotExpandNarrowOrCollapsedContainers() {
+        for viewport: CGFloat in [0, 12, 32, 100, 160, 240, 320, 852] {
+            let inset = min(16, viewport / 2)
+            let available = FruitfolioPopupLayout.hostAvailableWidth(viewportWidth: viewport, horizontalInset: inset)
+            let metrics = FruitfolioPopupLayout.dialogue(availableWidth: available, messageCount: 10_000)
+            XCTAssertGreaterThanOrEqual(available, 0)
+            XCTAssertLessThanOrEqual(metrics.totalWidth + 2 * inset, viewport + 0.001)
+        }
+        XCTAssertEqual(FruitfolioPopupLayout.hostAvailableWidth(viewportWidth: .infinity, horizontalInset: 16), 0)
+        XCTAssertEqual(FruitfolioPopupLayout.hostAvailableWidth(viewportWidth: 320, horizontalInset: .nan), 0)
+        XCTAssertEqual(FruitfolioPopupLayout.hostAvailableWidth(viewportWidth: 320, horizontalInset: -1), 0)
+    }
+
     func testAllCharacterPaintedBoundsAreCenteredWithoutDistortingAspectRatio() {
         for character in FruitfolioPopupLayout.CharacterArtwork.allCases {
             let side: CGFloat = 72

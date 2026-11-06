@@ -88,6 +88,7 @@ struct FruitPopupView: View {
 
     @State
     private var appeared = false
+    @AccessibilityFocusState private var messageFocus: UUID?
 
     init(
         request: FruitPopupRequest,
@@ -151,6 +152,13 @@ struct FruitPopupView: View {
             }
         }
         .accessibilityElement(children: .contain)
+        .task(id: request.id) {
+            messageFocus = nil
+            await Task.yield()
+            guard !Task.isCancelled else { return }
+            messageFocus = request.id
+        }
+        .onDisappear { messageFocus = nil }
     }
 
     private var animatedCharacter: some View {
@@ -223,6 +231,7 @@ struct FruitPopupView: View {
                 baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body),
                 serious: request.tone == .cautionary
             )
+            .accessibilityFocused($messageFocus, equals: request.id)
         }
     }
 

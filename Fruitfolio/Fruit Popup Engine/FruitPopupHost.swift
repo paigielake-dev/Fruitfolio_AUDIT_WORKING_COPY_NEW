@@ -185,9 +185,7 @@ struct FruitPopupHost<Content: View>: View {
         .accessibilityAddTraits(.isModal)
         .accessibilityIdentifier("fruitPopup.tapedWhite")
         .accessibilityAction(.escape) {
-            if request.dismissBehavior != .persistentUntilAcknowledged {
-                popupCoordinator.dismissCurrent(reason: .programmatic)
-            }
+            popupCoordinator.dismissUsingAccessibilityEscape(expectedPopupID: request.id)
         }
     }
 
@@ -212,15 +210,10 @@ struct FruitPopupHost<Content: View>: View {
         let safeBottom =
             proxy.safeAreaInsets.bottom + 58
 
-        let horizontalInset:
-            CGFloat = 16
+        let horizontalInset: CGFloat = min(16, max(0, proxy.size.width / 2))
 
-        let usableWidth =
-            max(
-                proxy.size.width
-                    - (horizontalInset * 2),
-                240
-            )
+        let usableWidth = FruitfolioPopupLayout.hostAvailableWidth(
+            viewportWidth: proxy.size.width, horizontalInset: horizontalInset)
 
         return VStack(
             spacing: 0
@@ -336,7 +329,11 @@ struct FruitPopupHost<Content: View>: View {
                 motionPreferences
                     .reduceMotionActive
         )
+        .id(request.id)
         .accessibilityAddTraits(.isModal)
+        .accessibilityAction(.escape) {
+            popupCoordinator.dismissUsingAccessibilityEscape(expectedPopupID: request.id)
+        }
         .onTapGesture {
             if request.dismissBehavior
                 == .tapPopup {

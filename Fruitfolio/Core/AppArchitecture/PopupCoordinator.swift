@@ -93,6 +93,17 @@ final class PopupCoordinator {
         scheduleTimedDismissIfNeeded()
     }
 
+    /// Escape is an explicit accessibility action, scoped to the request the
+    /// user encountered. A stale element cannot close its queued replacement.
+    @discardableResult
+    func dismissUsingAccessibilityEscape(expectedPopupID: UUID) -> Bool {
+        guard let currentPopup, currentPopup.id == expectedPopupID,
+              currentPopup.dismissBehavior != .persistentUntilAcknowledged,
+              presentationState != .dismissing else { return false }
+        dismissCurrent(reason: .programmatic)
+        return true
+    }
+
     func dismissCurrent(
         reason: DismissReason = .programmatic
     ) {

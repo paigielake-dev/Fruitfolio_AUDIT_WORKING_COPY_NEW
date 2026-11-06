@@ -11,6 +11,7 @@ struct Prompt07TourOverlay: View {
 
     @EnvironmentObject private var audioManager: AudioManager
 
+    @AccessibilityFocusState private var messageFocus: Int?
     @State private var targetPulse = false
     @State private var dialogueVisible = false
 
@@ -88,10 +89,20 @@ struct Prompt07TourOverlay: View {
             )
             .contentShape(Rectangle())
             .task(id: "\(step.rawValue)-\(reduceMotion)") {
+                messageFocus = nil
                 await animateStepEntrance()
+                await Task.yield()
+                guard !Task.isCancelled else { return }
+                messageFocus = step.rawValue
             }
         }
         .ignoresSafeArea(edges: [])
+        .onDisappear { messageFocus = nil }
+        .accessibilityAddTraits(.isModal)
+        .accessibilityAction(.escape) {
+            audioManager.play(.popupClose)
+            onSkip()
+        }
         .accessibilityElement(
             children: .contain
         )
@@ -181,6 +192,7 @@ struct Prompt07TourOverlay: View {
                         tourBubbleContent.frame(minHeight: geometry.size.height)
                     }
                     .scrollBounceBehavior(.basedOnSize)
+                    .id(step.id)
                     .accessibilityIdentifier("tour.dialogue.scroll")
                 }
             }
@@ -322,6 +334,7 @@ struct Prompt07TourOverlay: View {
                     .replacingOccurrences(of: " :-)", with: "\u{00A0}:-)"),
                 baseFont: .custom("Chalkboard SE", size: 10.25, relativeTo: .body)
             )
+            .accessibilityFocused($messageFocus, equals: step.rawValue)
         }
     }
 

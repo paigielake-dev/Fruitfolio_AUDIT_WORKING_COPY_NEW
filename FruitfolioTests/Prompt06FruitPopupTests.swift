@@ -6,6 +6,32 @@ import Combine
 
 @MainActor
 final class Prompt06FruitPopupTests: XCTestCase {
+    func testAccessibilityEscapeIsIdentityScopedAndCannotDismissAcknowledgmentOrReplacement() async {
+        for surface: FruitPopupSurface in [.characterSpeech, .tapedWhite] {
+            let coordinator = PopupCoordinator()
+            let first = FruitPopupRequest(character: .blueberry, message: "first", surface: surface)
+            let second = FruitPopupRequest(character: .peach, message: "second", surface: surface)
+            XCTAssertFalse(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: first.id))
+            coordinator.request(first)
+            coordinator.request(second)
+            XCTAssertFalse(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: second.id))
+            XCTAssertEqual(coordinator.currentPopup?.id, first.id)
+            XCTAssertTrue(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: first.id))
+            XCTAssertFalse(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: first.id))
+            coordinator.finishDismissal(expectedPopupID: first.id)
+            XCTAssertEqual(coordinator.currentPopup?.id, second.id)
+            XCTAssertFalse(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: first.id))
+            XCTAssertTrue(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: second.id))
+            coordinator.finishDismissal(expectedPopupID: second.id)
+            let acknowledgment = FruitPopupRequest(character: .blueberry, message: "acknowledge",
+                dismissBehavior: .persistentUntilAcknowledged, surface: surface)
+            coordinator.request(acknowledgment)
+            XCTAssertFalse(coordinator.dismissUsingAccessibilityEscape(expectedPopupID: acknowledgment.id))
+            XCTAssertEqual(coordinator.currentPopup?.id, acknowledgment.id)
+            XCTAssertNotEqual(coordinator.presentationState, .dismissing)
+        }
+    }
+
     #if canImport(Combine)
     func testActualObservableCoordinatorPublishesPaperIdentityAndDismissal() async {
         let coordinator = PopupCoordinator()

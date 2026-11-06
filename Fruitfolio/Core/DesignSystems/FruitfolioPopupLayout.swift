@@ -41,6 +41,14 @@ enum FruitfolioPopupLayout {
 
     static let speechBubblePixelSize = CGSize(width: 497, height: 499)
 
+    /// Host padding must never expand a narrow container into a fictitious
+    /// minimum viewport before the artwork's responsive layout is calculated.
+    static func hostAvailableWidth(viewportWidth: CGFloat, horizontalInset: CGFloat) -> CGFloat {
+        guard viewportWidth.isFinite, horizontalInset.isFinite,
+              viewportWidth > 0, horizontalInset >= 0 else { return 0 }
+        return max(0, viewportWidth - 2 * horizontalInset)
+    }
+
     static func dialogue(availableWidth: CGFloat, availableHeight: CGFloat = .greatestFiniteMagnitude, messageCount: Int,
                          maximumBubbleWidth: CGFloat = 246, maximumCharacterWidth: CGFloat = 72) -> DialogueMetrics {
         guard availableWidth.isFinite, availableWidth > 0, availableHeight.isFinite, availableHeight > 0, maximumBubbleWidth.isFinite,
