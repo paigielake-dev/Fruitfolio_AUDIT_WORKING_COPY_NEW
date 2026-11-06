@@ -114,6 +114,38 @@ struct FruitfolioTranslatedText: View {
     }
 }
 
+/// Short, fixed interface copy. One existing translation-state owner provides
+/// source/catalog/machine provenance without adding long-form action controls.
+/// Saved scientific or user-authored bodies keep FruitfolioTranslatedText.
+struct FruitfolioFixedText: View {
+    let source: String
+    var font: Font = .body
+    var color: Color? = nil
+    var serious = false
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+
+    var body: some View {
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language)
+        let presentation = translation.presentation(for: key)
+        VStack(alignment: .leading, spacing: 4) {
+            FruitfolioSemanticText(markdown: presentation.text, baseFont: font, color: color, serious: serious)
+            if let caption = presentation.status.captionKey {
+                Text(verbatim: settings.localized(caption))
+                    .font(.caption2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityElement(children: .combine)
+        .accessibilityHint(Text(presentation.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+    }
+}
+
 #if DEBUG
 /// Private, nonclinical catalog fixture. No production catalog/resource is
 /// edited and no fixture string is evidence of real localization approval.

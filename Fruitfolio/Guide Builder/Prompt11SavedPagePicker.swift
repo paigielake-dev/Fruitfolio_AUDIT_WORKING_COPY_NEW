@@ -36,14 +36,14 @@ struct Prompt11SavedPagePicker: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                FruitfolioTranslatedText(source: "what should we add?",
+                FruitfolioFixedText(source: "what should we add?",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                FruitfolioTranslatedText(source: "choose from your saved answers, excerpts and your own material.",
+                FruitfolioFixedText(source: "choose from your saved answers, excerpts and your own material.",
                     font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: false)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
@@ -127,7 +127,7 @@ struct Prompt11SavedPagePicker: View {
 
                 } else {
                     VStack(spacing: 6) {
-                        FruitfolioTranslatedText(source: "make a section first so these pages have somewhere to settle.",
+                        FruitfolioFixedText(source: "make a section first so these pages have somewhere to settle.",
                                 font: .custom("Chalkboard SE", size: 11, relativeTo: .body), serious: false)
                             .foregroundStyle(
                                 DesignTokens.ColorToken.secondaryBurgundy
@@ -155,7 +155,7 @@ struct Prompt11SavedPagePicker: View {
                 }
 
                 if candidates.isEmpty {
-                    FruitfolioTranslatedText(source: store.prompt11AllSavedMaterial().isEmpty
+                    FruitfolioFixedText(source: store.prompt11AllSavedMaterial().isEmpty
                             ? "nothing has been saved from Ask yet."
                             : "nothing matched this little search.",
                         font: .custom("Chalkboard SE", size: 11, relativeTo: .body))
@@ -177,7 +177,7 @@ struct Prompt11SavedPagePicker: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -250,7 +250,7 @@ struct Prompt11SavedPagePicker: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Group {
                         if candidate.page.question.isEmpty {
-                            FruitfolioTranslatedText(source: "saved page",
+                            FruitfolioFixedText(source: "saved page",
                                 font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                         } else {
                             Text(verbatim: candidate.page.question)
@@ -271,7 +271,7 @@ struct Prompt11SavedPagePicker: View {
                         .lineLimit(3)
 
                     HStack(spacing: 7) {
-                        FruitfolioTranslatedText(source: candidate.page.saveType == .excerpt ? "excerpt" : "full answer",
+                        FruitfolioFixedText(source: candidate.page.saveType == .excerpt ? "excerpt" : "full answer",
                             font: .custom("Chalkboard SE", size: 9.5, relativeTo: .caption))
 
                         Text(
@@ -280,7 +280,7 @@ struct Prompt11SavedPagePicker: View {
                         )
 
                         if candidate.isAlreadyInGuide {
-                            FruitfolioTranslatedText(source: "already in this guide", font: .custom("Chalkboard SE", size: 9.5, relativeTo: .caption))
+                            FruitfolioFixedText(source: "already in this guide", font: .custom("Chalkboard SE", size: 9.5, relativeTo: .caption))
                                 .fontWeight(.bold)
                         }
                     }

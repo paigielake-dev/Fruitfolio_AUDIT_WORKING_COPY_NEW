@@ -27,6 +27,7 @@ struct Prompt11GuideBuilderView: View {
     @State private var savedStatusRequests = 0
     #endif
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var searchText = ""
 
     init(
@@ -1098,30 +1099,37 @@ struct Prompt11GuideBuilderView: View {
 
     private var savedStatus: some View {
         GeometryReader { geometry in
-            let metrics = FruitfolioPopupLayout.saveConfirmation(available: geometry.size)
+            let metrics = FruitfolioPopupLayout.saveConfirmation(available: geometry.size,
+                expanded: dynamicTypeSize.isAccessibilitySize || settings.language != .english)
             ZStack {
                 FruitfolioImage(id: .control_large_card)
                     .scaledToFit()
                     .frame(width: metrics.paperSize.width, height: metrics.paperSize.height)
                     .accessibilityHidden(true)
-                VStack(spacing: 10) {
-                    FruitfolioImage(id: .fruit_strawberry_silly)
-                        .scaledToFit()
-                        .frame(width: min(72, metrics.paperSize.width * 0.30))
-                        .accessibilityHidden(true)
-                    Text("saved!")
-                        .font(.custom("Chalkboard SE", size: 16, relativeTo: .body)).bold()
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
+                ScrollView {
+                    VStack(spacing: 10) {
+                        FruitfolioImage(id: .fruit_strawberry_silly)
+                            .scaledToFit()
+                            .frame(width: min(72, metrics.paperSize.width * 0.30))
+                            .accessibilityHidden(true)
+                        FruitfolioFixedText(source: "saved!",
+                            font: .custom("Chalkboard SE", size: 16, relativeTo: .body))
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .accessibilityIdentifier("guide.savedConfirmation.label")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
                 }
+                .scrollIndicators(.hidden)
                 .frame(width: metrics.writingSize.width, height: metrics.writingSize.height)
+                .accessibilityIdentifier("guide.savedConfirmation.content")
             }
             .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .transition(.opacity)
         .accessibilityIdentifier("guide.savedConfirmation")
-        .allowsHitTesting(false)
     }
 
     private func searchMatches(
@@ -1250,7 +1258,7 @@ struct Prompt11GuideBuilderView: View {
             UIAccessibility.post(notification: .announcement,
                                  argument: settings.localized("saved!"))
         }
-        let delay: Double = voiceOverEnabled ? 4.0 : 1.35
+        let delay: Double = voiceOverEnabled || dynamicTypeSize.isAccessibilitySize || settings.language != .english ? 4.0 : 1.35
         savedStatusTask = Task { @MainActor in
             do { try await Task.sleep(for: .seconds(delay)) }
             catch { return }

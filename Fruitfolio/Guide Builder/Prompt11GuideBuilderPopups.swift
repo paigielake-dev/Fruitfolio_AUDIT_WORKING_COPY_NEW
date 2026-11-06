@@ -21,7 +21,7 @@ struct Prompt11CreateGuidePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                FruitfolioTranslatedText(source: "let’s make your guide ♡",
+                FruitfolioFixedText(source: "let’s make your guide ♡",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.create")
                     .fontWeight(.bold)
@@ -35,7 +35,7 @@ struct Prompt11CreateGuidePopup: View {
                     .frame(width: 68, height: 88)
                     .accessibilityHidden(true)
 
-                FruitfolioTranslatedText(source: "guide name",
+                FruitfolioFixedText(source: "guide name",
                         font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -61,7 +61,7 @@ struct Prompt11CreateGuidePopup: View {
                         )
                     )
 
-                FruitfolioTranslatedText(source: "little description",
+                FruitfolioFixedText(source: "little description",
                         font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -134,7 +134,7 @@ struct Prompt11CreateGuidePopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -224,7 +224,7 @@ struct Prompt11RenameGuidePopup: View {
                     .frame(width: 54)
                     .accessibilityHidden(true)
 
-                FruitfolioTranslatedText(source: "rename guide",
+                FruitfolioFixedText(source: "rename guide",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.rename")
                     .fontWeight(.bold)
@@ -250,7 +250,7 @@ struct Prompt11RenameGuidePopup: View {
                     )
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -319,7 +319,7 @@ struct Prompt11DescriptionPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: "edit little description",
+                FruitfolioFixedText(source: "edit little description",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.description")
                     .fontWeight(.bold)
@@ -350,7 +350,7 @@ struct Prompt11DescriptionPopup: View {
                 )
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -422,7 +422,7 @@ struct Prompt11ChangeCoverPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: "choose a cover",
+                FruitfolioFixedText(source: "choose a cover",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.cover")
                     .fontWeight(.bold)
@@ -478,7 +478,7 @@ struct Prompt11ChangeCoverPopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -534,7 +534,7 @@ struct Prompt11DeleteGuidePopup: View {
                     .frame(width: 52)
                     .accessibilityHidden(true)
 
-                FruitfolioTranslatedText(source: "delete this guide?",
+                FruitfolioFixedText(source: "delete this guide?",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: true)
                     .accessibilityIdentifier("guide.form.heading.delete")
                     .fontWeight(.bold)
@@ -542,7 +542,7 @@ struct Prompt11DeleteGuidePopup: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                FruitfolioTranslatedText(source: "the guide will disappear, but the things you saved from Ask will stay in your saved library.",
+                FruitfolioFixedText(source: "the guide will disappear, but the things you saved from Ask will stay in your saved library.",
                     font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: true)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
@@ -550,7 +550,7 @@ struct Prompt11DeleteGuidePopup: View {
                 .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -619,7 +619,7 @@ struct Prompt11SectionPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: chapterID == nil ? "name this section" : "rename section",
+                FruitfolioFixedText(source: chapterID == nil ? "name this section" : "rename section",
                     font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -643,7 +643,7 @@ struct Prompt11SectionPopup: View {
                     )
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -728,7 +728,7 @@ struct Prompt11NotePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: "my note",
+                FruitfolioFixedText(source: "my note",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.note")
                     .fontWeight(.bold)
@@ -757,7 +757,7 @@ struct Prompt11NotePopup: View {
                 )
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -815,7 +815,7 @@ struct Prompt11MovePagePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                FruitfolioTranslatedText(source: "move this page to…",
+                FruitfolioFixedText(source: "move this page to…",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .accessibilityIdentifier("guide.form.heading.move")
                     .fontWeight(.bold)
@@ -838,7 +838,7 @@ struct Prompt11MovePagePopup: View {
                                 Spacer()
 
                                 if chapter.id == fromChapterID {
-                                    FruitfolioTranslatedText(source: "current",
+                                    FruitfolioFixedText(source: "current",
                                             font: .custom("Chalkboard SE", size: 9.5, relativeTo: .body), serious: false)
                                 }
                             }
@@ -859,7 +859,7 @@ struct Prompt11MovePagePopup: View {
                 }
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -925,7 +925,7 @@ struct Prompt11RemovePagePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: "remove this page from your guide?",
+                FruitfolioFixedText(source: "remove this page from your guide?",
                         font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: true)
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -933,7 +933,7 @@ struct Prompt11RemovePagePopup: View {
                     )
                     .multilineTextAlignment(.center)
 
-                FruitfolioTranslatedText(source: "it’ll stay safely in your saved library.",
+                FruitfolioFixedText(source: "it’ll stay safely in your saved library.",
                         font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: false)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -941,7 +941,7 @@ struct Prompt11RemovePagePopup: View {
                     .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
+                    FruitfolioFixedText(source: errorMessage,
                             font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
                         .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
@@ -986,7 +986,7 @@ struct Prompt11OriginalAnswerPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(alignment: .leading, spacing: 10) {
-                FruitfolioTranslatedText(source: sourcePage?.saveType == .excerpt ? "saved selection" : "original answer",
+                FruitfolioFixedText(source: sourcePage?.saveType == .excerpt ? "saved selection" : "original answer",
                     font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -1010,7 +1010,7 @@ struct Prompt11OriginalAnswerPopup: View {
                     }
                     .frame(maxHeight: 330)
                 } else {
-                    FruitfolioTranslatedText(source: "this saved page is no longer in your library",
+                    FruitfolioFixedText(source: "this saved page is no longer in your library",
                             font: .custom("Chalkboard SE", size: 12, relativeTo: .body), serious: true)
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy

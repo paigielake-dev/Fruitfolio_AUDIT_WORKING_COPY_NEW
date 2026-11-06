@@ -105,7 +105,10 @@ struct Prompt11GuideSaveRegressionHarness: View {
                 guard !configured else { return }
                 configured = true
                 let args = ProcessInfo.processInfo.arguments
-                settings.language = .english // Layout-only RTL; no translation claim.
+                let language = args.firstIndex(of: "-fruitfolioGuideSaveQALanguage")
+                    .flatMap { $0 + 1 < args.count ? args[$0 + 1] : nil }
+                    .flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+                settings.language = language // RTL override remains layout-only.
                 settings.translationPausedForMemoryPressure = true
                 settings.reduceAnimationOverride = args.contains("-fruitfolioGuideSaveReduceMotion")
                 if args.contains("-fruitfolioAudioDiagnostics") { audio.debugRecordInteractions(true) }

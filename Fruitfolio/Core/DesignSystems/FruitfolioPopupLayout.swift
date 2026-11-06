@@ -112,8 +112,8 @@ enum FruitfolioPopupLayout {
                 writingFraction: CGSize(width: 0.78, height: 0.72))
     }
 
-    static func saveConfirmation(available: CGSize) -> Metrics {
-        artwork(available: available, pixels: saveCardPixelSize, maximumWidth: 240,
+    static func saveConfirmation(available: CGSize, expanded: Bool = false) -> Metrics {
+        artwork(available: available, pixels: saveCardPixelSize, maximumWidth: expanded ? 340 : 240,
                 writingFraction: CGSize(width: 0.78, height: 0.72))
     }
 

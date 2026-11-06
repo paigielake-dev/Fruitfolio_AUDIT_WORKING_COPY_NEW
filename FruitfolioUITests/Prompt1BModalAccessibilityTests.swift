@@ -194,9 +194,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
-    private func launchGuideSave(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
+    private func launchGuideSave(_ scenario: String, reduced: Bool, rtl: Bool, language: String = "en") -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments += ["-fruitfolioGuideSaveQA", "-fruitfolioGuideSaveQAScenario", scenario, "-fruitfolioAudioDiagnostics",
+        app.launchArguments += ["-fruitfolioGuideSaveQA", "-fruitfolioGuideSaveQAScenario", scenario, "-fruitfolioAudioDiagnostics", "-fruitfolioGuideSaveQALanguage", language,
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         if reduced { app.launchArguments += ["-fruitfolioGuideSaveReduceMotion", "-fruitfolioAudioMuted"] }
         if rtl { app.launchArguments += ["-fruitfolioGuideSaveRTL"] }
@@ -389,6 +389,17 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertEqual(app.staticTexts["guideQA.persistedCount"].label, "persisted guide count: \(save ? 1 : 0)")
             XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: \(!save)")
             if save {
+                let status = app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation.label").firstMatch
+                XCTAssertTrue(status.waitForExistence(timeout: 2))
+                XCTAssertEqual(status.label, "saved!")
+                let content = app.scrollViews["guide.savedConfirmation.content"]
+                XCTAssertTrue(content.exists)
+                XCTAssertGreaterThan(status.frame.height, 0)
+                XCTAssertGreaterThanOrEqual(status.frame.minX, content.frame.minX - 2)
+                XCTAssertLessThanOrEqual(status.frame.maxX, content.frame.maxX + 2)
+                XCTAssertGreaterThanOrEqual(status.frame.minY, content.frame.minY - 2)
+                XCTAssertLessThanOrEqual(status.frame.maxY, content.frame.maxY + 2)
+                XCTAssertFalse(app.buttons["translation.originalToggle"].exists, "A compact save status has no long-form translation controls")
                 XCTAssertEqual(app.staticTexts["guideQA.persistedName"].label, "persisted name: QA created guide")
                 XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA created description")
             } else { XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists) }
@@ -397,6 +408,36 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             captureGame(app, name: "guide-create-save-\(save)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
         }
+        }
+        }
+    }
+
+    func testGuideFixedHeadingAndSavedStatusKeepSourceFallbackWithoutLongFormControlsWhenInferencePaused() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = launchGuideSave("create", reduced: reduced, rtl: rtl, language: "fr")
+            let open = app.buttons["guide.create.open"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            let home = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; home.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let heading = app.descendants(matching: .any).matching(identifier: "guide.form.heading.create").firstMatch
+            XCTAssertTrue(heading.waitForExistence(timeout: 3))
+            XCTAssertTrue(heading.label.contains("let’s make your guide ♡"))
+            XCTAssertFalse(app.buttons["translation.originalToggle"].exists)
+            XCTAssertFalse(app.buttons["translation.retryAfterMemoryPressure"].exists)
+            let name = app.descendants(matching: .any).matching(identifier: "guide.create.name").firstMatch
+            name.tap(); name.typeText("QA source fallback")
+            tapGuideFormAction("guide.create.save", in: app)
+            let status = app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation.label").firstMatch
+            XCTAssertTrue(status.waitForExistence(timeout: 2))
+            XCTAssertTrue(status.label.contains("saved!"), "Paused inference retains source; this is not verified French translation")
+            XCTAssertFalse(app.buttons["translation.originalToggle"].exists)
+            XCTAssertFalse(app.buttons["translation.retryAfterMemoryPressure"].exists)
+            XCTAssertEqual(app.staticTexts["guideQA.persistedName"].label, "persisted name: QA source fallback")
+            expectGuidePopupRequests(open: 2, close: 2, in: app)
+            captureGame(app, name: "guide-fixed-copy-source-fallback-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
         }
         }
     }

@@ -159,4 +159,26 @@ final class Prompt1BPopupLayoutTests: XCTestCase {
         }
     }
 
+    func testExpandedSaveCardRetainsOriginalCanvasAndWritingBoundsAcrossViewports() {
+        for size in [CGSize(width: 393, height: 852), CGSize(width: 270, height: 220), CGSize(width: 180, height: 150)] {
+            let compact = FruitfolioPopupLayout.saveConfirmation(available: size)
+            let expanded = FruitfolioPopupLayout.saveConfirmation(available: size, expanded: true)
+            XCTAssertGreaterThanOrEqual(expanded.paperSize.width, compact.paperSize.width)
+            XCTAssertLessThanOrEqual(expanded.paperSize.width, 340)
+            XCTAssertLessThanOrEqual(expanded.paperSize.width, size.width - 32)
+            XCTAssertLessThanOrEqual(expanded.paperSize.height, size.height - 32 + 0.0001)
+            XCTAssertEqual(expanded.paperSize.width / expanded.paperSize.height, 634.0 / 667.0, accuracy: 0.0001)
+            XCTAssertEqual(expanded.writingSize.width, expanded.paperSize.width * 0.78, accuracy: 0.0001)
+            XCTAssertEqual(expanded.writingSize.height, expanded.paperSize.height * 0.72, accuracy: 0.0001)
+        }
+    }
+
+    func testExpandedSaveCardRejectsInvalidViewportWithoutNonfiniteSizes() {
+        for size in [CGSize.zero, CGSize(width: -1, height: 100), CGSize(width: CGFloat.infinity, height: 100), CGSize(width: 100, height: CGFloat.nan), CGSize(width: 12, height: 10)] {
+            let metrics = FruitfolioPopupLayout.saveConfirmation(available: size, expanded: true)
+            XCTAssertEqual(metrics.paperSize, CGSize.zero)
+            XCTAssertEqual(metrics.writingSize, CGSize.zero)
+        }
+    }
+
 }
