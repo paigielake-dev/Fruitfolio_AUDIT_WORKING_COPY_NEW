@@ -21,7 +21,7 @@ struct FruitfolioPersonalHealthContextView: View {
                 FruitfolioTranslatedText(source: "entirely optional, user-provided context, stored on this device. explore only what matters to you. skip anything; no biological findings or diagnoses are guessed from your answers. these notes do not replace approved research or clinical advice.", serious: true)
                 FruitfolioTranslatedText(source: "for laboratory artwork, choose a technique or sample category only if it was actually reported or you know it applies. otherwise use other labs / testing.", font: .callout, serious: true)
                     .font(.callout)
-                FruitfolioContextStorageNotice(store: store)
+                FruitfolioContextStorageNotice(store: store, interactionAllowed: canInteract)
                 ForEach(FruitfolioPersonalHealthGroup.allCases) { group in
                     DisclosureGroup {
                         VStack(spacing: 12) {
@@ -131,7 +131,7 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                 if category == .knownOvulation {
                     FruitfolioTranslatedText(source: "this remains user-reported history. it does not confirm ovulation or replace Cycle Tracker’s separately labeled estimates.", font: .callout, serious: true).font(.callout)
                 }
-                FruitfolioContextStorageNotice(store: store)
+                FruitfolioContextStorageNotice(store: store, interactionAllowed: canInteract)
                 if let errorMessage {
                     FruitfolioTranslatedContent(source: errorMessage) { display, _ in
                         FruitfolioSemanticText(markdown: display,

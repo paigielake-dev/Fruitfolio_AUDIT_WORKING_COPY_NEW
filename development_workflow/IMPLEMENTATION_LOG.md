@@ -2554,3 +2554,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_personal_context_UI": "extended existing launch, NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Guard shared context storage reload/focus notice against inactive/covered owner while preserving read-only reload and protected original data, then continue next independent context requirement.
 - Commit: containing commit for batch Personal-context-active-owner-and-unsent-draft-resume.
+
+## Context-storage-notice-active-owner-propagation
+
+- Parent checkpoint: 26573ee221463463193f99a998dbcb4402180b73.
+- Source-order requirements: [281, 287, 476, 477, 478].
+- Source files: Fruitfolio/Context Personalization/FruitfolioContextStorageNotice.swift, Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift, Fruitfolio/Context Personalization/Prompt27AContextViews.swift.
+- Shared context notice reload and delayed focus require visible active scene/UIKit owner without covering popup. Actual three callers additionally pass their current root/editor interaction gate, including native child-sheet coverage, so root visibility alone cannot allow stale actions. Read-only canonical reload/storage protection unchanged.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing protected context reload cases; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_context_reload": "existing written tests, NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21 SwiftTesting each not rerun"}.
+- Next action: Continue remaining actual context fixed/native labels and accessible provenance, then subsequent original context integration requirements. Preserve source and private drafts; no guessed clinical methods.
+- Commit: containing commit for batch Context-storage-notice-active-owner-propagation.

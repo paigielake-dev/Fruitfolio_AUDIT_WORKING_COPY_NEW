@@ -61,7 +61,7 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
-                        FruitfolioContextStorageNotice(store: viewModel.store, messageFocusRequest: failureNoticeFocus)
+                        FruitfolioContextStorageNotice(store: viewModel.store, messageFocusRequest: failureNoticeFocus, interactionAllowed: canInteractWithContext)
                         WatercolorPrimaryButton(label: "optional personal health context") { guard canInteractWithContext else { return }; showPersonalHealthContext = true }
                         WatercolorPrimaryButton(label: "Hormone Information") {
                             guard canInteractWithContext else { return }
