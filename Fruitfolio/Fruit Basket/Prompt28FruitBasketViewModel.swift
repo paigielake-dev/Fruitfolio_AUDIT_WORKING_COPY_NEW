@@ -24,7 +24,7 @@ final class Prompt28FruitBasketViewModel {
     #if canImport(Combine)
     @Published
     #endif
-    var selectedAnswerID: String?
+    private(set) var selectedAnswerID: String?
     #if canImport(Combine)
     @Published
     #endif
@@ -98,6 +98,13 @@ final class Prompt28FruitBasketViewModel {
     private var basketTargetX = 0.5
     private let researchProvider: any Prompt28ResearchProviding
     private var questionGeneration = UUID()
+    var questionInteractionID: UUID { questionGeneration }
+    var allowsTopicEditing: Bool {
+        switch screen {
+        case .learningSetup, .topicProgressChoice, .loading, .topicUnsupported, .topicExhausted, .error: return true
+        default: return false
+        }
+    }
     private var gameplayTask: Task<Void, Never>?
     private var roundCompletionTask: Task<Void, Never>?
     private var spawnPlanner = Prompt28SpawnPlanner()
@@ -158,11 +165,15 @@ final class Prompt28FruitBasketViewModel {
         message = nil
     }
 
-    func chooseSuggestedTopic(_ topic: String) {
+    func editTopic(_ topic: String) {
+        guard !store.isReadOnly, allowsTopicEditing else { return }
         rawTopic = topic
     }
 
+    func chooseSuggestedTopic(_ topic: String) { editTopic(topic) }
+
     func updateDifficulty(_ value: Prompt28EducationalDifficulty) {
+        guard !store.isReadOnly, allowsTopicEditing else { return }
         difficulty = value
         store.preferredDifficulty = value
         store.persistPreferences()
@@ -173,7 +184,7 @@ final class Prompt28FruitBasketViewModel {
     }
 
     func startTopic() async {
-        guard !store.isReadOnly else { return }
+        guard !Task.isCancelled, !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else {
             message = "type a topic first ♡"
@@ -197,7 +208,7 @@ final class Prompt28FruitBasketViewModel {
     }
 
     func continueReturningTopic(resetLevel: Bool) async {
-        guard !store.isReadOnly else { return }
+        guard !Task.isCancelled, !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         if resetLevel { store.resetCurrentGameLevel(for: normalized) }
@@ -212,7 +223,7 @@ final class Prompt28FruitBasketViewModel {
     }
 
     func loadQuestion() async {
-        guard !store.isReadOnly else { return }
+        guard !Task.isCancelled, !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         let request = UUID()
@@ -257,8 +268,12 @@ final class Prompt28FruitBasketViewModel {
         }
     }
 
-    func answer(_ answerID: String) {
-        guard let question = currentQuestion, selectedAnswerID == nil else { return }
+    func answer(_ answerID: String, expectedQuestionID: String? = nil, expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .question,
+              let question = currentQuestion, question.isPlayable, selectedAnswerID == nil,
+              expectedQuestionID == nil || expectedQuestionID == question.id,
+              question.answerOptions.contains(where: { $0.id == answerID }) else { return }
+        questionGeneration = UUID()
         selectedAnswerID = answerID
         if answerID == question.correctAnswerID {
             if var session {
@@ -275,9 +290,31 @@ final class Prompt28FruitBasketViewModel {
         }
     }
 
-    func beginCatch() {
-        guard !store.isReadOnly else { return }
-        guard currentQuestion != nil, var session else { return }
+    func retryQuestion(expectedQuestionID: String? = nil, expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .incorrectFeedback,
+              let question = currentQuestion, question.isPlayable,
+              let selectedAnswerID, selectedAnswerID != question.correctAnswerID,
+              expectedQuestionID == nil || expectedQuestionID == question.id else { return }
+        questionGeneration = UUID()
+        self.selectedAnswerID = nil
+        screen = .question
+    }
+
+    func presentCatchIntro(expectedQuestionID: String? = nil, expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .correctFeedback,
+              let question = currentQuestion, question.isPlayable,
+              selectedAnswerID == question.correctAnswerID,
+              expectedQuestionID == nil || expectedQuestionID == question.id else { return }
+        questionGeneration = UUID()
+        screen = .catchIntro
+    }
+
+    func beginCatch(expectedQuestionID: String? = nil, expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .catchIntro,
+              let question = currentQuestion, question.isPlayable, var session,
+              selectedAnswerID == question.correctAnswerID,
+              expectedQuestionID == nil || expectedQuestionID == question.id else { return }
+        questionGeneration = UUID()
         stopGameplay()
         if !activeObstacles.intersection([.vines, .branch, .puddle]).isEmpty && obstacleLibrary == nil {
             screen = .error
@@ -374,12 +411,16 @@ final class Prompt28FruitBasketViewModel {
         else if classificationFruit == nil && !classificationStarAvailable { spawnClassificationFruit() }
     }
 
-    func retryRound() {
-        guard var session else { return }
-        session.goodFruitCaughtThisRound = 0
-        self.session = session
+    func retryRound(expectedQuestionID: String? = nil, expectedRoundID: UUID? = nil, expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .catchUnsuccessful, session != nil,
+              let question = currentQuestion, question.isPlayable,
+              selectedAnswerID == question.correctAnswerID,
+              let result = roundResult, !result.succeeded, result.roundID == roundLedger.roundID,
+              expectedQuestionID == nil || expectedQuestionID == question.id,
+              expectedRoundID == nil || expectedRoundID == result.roundID else { return }
         lastBadFruit = nil
-        beginCatch()
+        screen = .catchIntro
+        beginCatch(expectedQuestionID: question.id)
     }
 
     func resetGameLevel() {
@@ -396,8 +437,13 @@ final class Prompt28FruitBasketViewModel {
         screen = .learningSetup
     }
 
-    func continueAfterReveal() async {
-        guard var session else { return }
+    func continueAfterReveal(expectedRoundID: UUID? = nil, expectedInteractionID: UUID? = nil) async {
+        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .basketReveal,
+              let result = roundResult, result.succeeded, result.roundID == roundLedger.roundID,
+              expectedRoundID == nil || expectedRoundID == result.roundID,
+              var session else { return }
+        questionGeneration = UUID()
+        screen = .learningSetup
         session.currentRound += 1
         session.goodFruitCaughtThisRound = 0
         self.session = session
@@ -429,6 +475,8 @@ final class Prompt28FruitBasketViewModel {
     }
 
     func sceneBecameInactive() {
+        questionGeneration = UUID()
+        if screen == .loading { screen = .learningSetup }
         if roundResultLocked { resolvePendingRound() }
         else if screen == .catchActive { pause() }
     }

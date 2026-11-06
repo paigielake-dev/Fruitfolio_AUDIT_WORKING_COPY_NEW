@@ -28,6 +28,24 @@ private actor Prompt1BDelayedGameResearch: Prompt28ResearchProviding {
 
 @MainActor
 final class Prompt1BFruitBasketQuestionOwnershipTests: XCTestCase {
+    func testBackgroundedQuestionLoadCannotPublishOrPersistLateResponse() async throws {
+        let suite = "Fruitfolio.game-question-background." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults)
+        let provider = Prompt1BDelayedGameResearch()
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: provider)
+        model.rawTopic = "fixture"
+        let task = Task { await model.loadQuestion() }
+        await provider.waitForStart()
+        model.sceneBecameInactive()
+        await provider.finish()
+        await task.value
+        XCTAssertNil(model.currentQuestion)
+        XCTAssertEqual(model.screen, .learningSetup)
+        XCTAssertNil(store.questionHistory["fixture"])
+    }
+
     func testChangingTopicRejectsDelayedQuestionWithoutPersistingHistory() async throws {
         let suite = "Fruitfolio.game-question-ownership." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

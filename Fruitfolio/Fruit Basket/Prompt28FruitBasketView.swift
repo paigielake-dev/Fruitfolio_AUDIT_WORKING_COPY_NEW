@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 private enum Prompt28TextRole {
     case screenTitle
@@ -82,6 +83,11 @@ struct Prompt28FruitBasketView: View {
 
     @State private var questionOperationTask: Task<Void, Never>?
     @State private var showingSaveDestination = false
+    @State private var pendingSaveContent: Prompt10PendingSavedContent?
+    private var canInteractWithGame: Bool {
+        rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active &&
+            !store.isReadOnly && popupCoordinator.currentPopup == nil && !showTour && !showStormNote && !showingSaveDestination
+    }
     @State private var showTour = false
     @State private var showStormNote = false
     @State private var lastStormNoteKey: String?
@@ -257,18 +263,16 @@ struct Prompt28FruitBasketView: View {
             else if showTour { tourHeadingFocused = true }
             else if pauseMenuVisible { pauseHeadingFocused = true }
         }
-        .sheet(isPresented: $showingSaveDestination) {
-            if let pending = viewModel.savePendingContent() {
-                Prompt10AskSaveDestination(
-                    store: libraryStore,
-                    pending: pending,
-                    onSaved: {
-                        showingSaveDestination = false
-                    },
-                    onCancel: {
-                        showingSaveDestination = false
-                    }
-                )
+        .sheet(isPresented: $showingSaveDestination, onDismiss: { pendingSaveContent = nil }) {
+            if let pending = pendingSaveContent {
+                FruitfolioPresentedPopupHost {
+                    Prompt10AskSaveDestination(
+                        store: libraryStore,
+                        pending: pending,
+                        onSaved: { showingSaveDestination = false },
+                        onCancel: { showingSaveDestination = false }
+                    )
+                }
             }
         }
     }
@@ -564,9 +568,27 @@ struct Prompt28FruitBasketView: View {
         }
     }
 
+    private func requestQuestionSave(expectedQuestionID: String?, expectedInteractionID: UUID) {
+        guard canInteractWithGame, expectedInteractionID == viewModel.questionInteractionID, let expectedQuestionID,
+              viewModel.currentQuestion?.id == expectedQuestionID,
+              let pending = viewModel.savePendingContent() else { return }
+        pendingSaveContent = pending
+        showingSaveDestination = true
+    }
+
     private func performQuestionOperation(_ operation: @MainActor @escaping () async -> Void) {
+        guard canInteractWithGame else { return }
+        let screen = viewModel.screen
+        let topic = viewModel.rawTopic
+        let difficulty = viewModel.difficulty
+        let interactionID = viewModel.questionInteractionID
         questionOperationTask?.cancel()
-        questionOperationTask = Task { @MainActor in await operation() }
+        questionOperationTask = Task { @MainActor in
+            guard !Task.isCancelled, canInteractWithGame, viewModel.screen == screen,
+                  viewModel.rawTopic == topic, viewModel.difficulty == difficulty,
+                  viewModel.questionInteractionID == interactionID else { return }
+            await operation()
+        }
     }
 
     private func questionSources(_ question: Prompt28Question) -> some View {
@@ -770,7 +792,10 @@ struct Prompt28FruitBasketView: View {
                                 vertical: true
                             )
 
-                        FruitfolioFixedTextField("type literally anything…", text: $viewModel.rawTopic, axis: .vertical)
+                        FruitfolioFixedTextField("type literally anything…", text: Binding(
+                            get: { viewModel.rawTopic },
+                            set: { guard canInteractWithGame else { return }; viewModel.editTopic($0) }
+                        ), axis: .vertical)
                         .accessibilityIdentifier("fruitBasket.topicInput")
                         .textInputAutocapitalization(.never)
                         .font(
@@ -815,7 +840,7 @@ struct Prompt28FruitBasketView: View {
 
                         Prompt28ChipWrap(
                             titles: Prompt28LearningTopic.allCases.map(\.displayName),
-                            onSelect: viewModel.chooseSuggestedTopic
+                            onSelect: { guard canInteractWithGame else { return }; viewModel.chooseSuggestedTopic($0) }
                         )
                         .frame(maxWidth: 286)
 
@@ -831,6 +856,7 @@ struct Prompt28FruitBasketView: View {
                                     title: option.displayName,
                                     isSelected: viewModel.difficulty == option
                                 ) {
+                                    guard canInteractWithGame else { return }
                                     viewModel.updateDifficulty(option)
                                 }
                                 .accessibilityIdentifier("fruitBasket.difficulty." + option.rawValue)
@@ -993,7 +1019,8 @@ struct Prompt28FruitBasketView: View {
 
     @ViewBuilder
     private var questionFlow: some View {
-        ScrollView {
+        let interactionID = viewModel.questionInteractionID
+        return ScrollView {
         VStack(spacing: 14) {
             topBar
 
@@ -1042,8 +1069,9 @@ struct Prompt28FruitBasketView: View {
                             question.answerOptions
                         ) { answer in
                             Button {
+                                guard canInteractWithGame else { return }
                                 audioManager.play(.buttonSoftPop)
-                                viewModel.answer(answer.id)
+                                viewModel.answer(answer.id, expectedQuestionID: question.id, expectedInteractionID: interactionID)
                             } label: {
                                 HStack(alignment: .top) {
                                     Text(verbatim: answer.text)
@@ -1126,8 +1154,8 @@ struct Prompt28FruitBasketView: View {
                                 title: question.usesSeriousFeedback ? "review question" : "got it ♡",
                                 accent: .mint
                             ) {
-                                viewModel.selectedAnswerID = nil
-                                viewModel.screen = .question
+                                guard canInteractWithGame else { return }
+                                viewModel.retryQuestion(expectedQuestionID: question.id, expectedInteractionID: interactionID)
                             }
                             .accessibilityIdentifier("fruitBasket.question.review")
 
@@ -1154,7 +1182,8 @@ struct Prompt28FruitBasketView: View {
                                 title: "catch",
                                 accent: .paleYellow
                             ) {
-                                viewModel.screen = .catchIntro
+                                guard canInteractWithGame else { return }
+                                viewModel.presentCatchIntro(expectedQuestionID: question.id, expectedInteractionID: interactionID)
                             }
                             .accessibilityIdentifier("fruitBasket.question.correctContinue")
 
@@ -1173,7 +1202,8 @@ struct Prompt28FruitBasketView: View {
                                 title: question.usesSeriousFeedback ? "ready" : "ready ♡",
                                 accent: .paleYellow
                             ) {
-                                viewModel.beginCatch()
+                                guard canInteractWithGame else { return }
+                                viewModel.beginCatch(expectedQuestionID: question.id, expectedInteractionID: interactionID)
                             }
                             .accessibilityIdentifier("fruitBasket.question.continue")
                         }
@@ -1645,7 +1675,10 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var unsuccessful: some View {
-        ScrollView {
+        let failedQuestionID = viewModel.currentQuestion?.id
+        let failedRoundID = viewModel.roundResult?.roundID
+        let interactionID = viewModel.questionInteractionID
+        return ScrollView {
         VStack(spacing: 14) {
             topBar
 
@@ -1695,7 +1728,8 @@ struct Prompt28FruitBasketView: View {
                         title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "try this round again" : "try this round again ♡",
                         accent: .paleYellow
                     ) {
-                        viewModel.retryRound()
+                        guard canInteractWithGame, let failedQuestionID, let failedRoundID else { return }
+                        viewModel.retryRound(expectedQuestionID: failedQuestionID, expectedRoundID: failedRoundID, expectedInteractionID: interactionID)
                     }
                     .accessibilityIdentifier("fruitBasket.failure.retry")
 
@@ -1770,6 +1804,9 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var basketReveal: some View {
+        let sourceQuestionID = viewModel.currentQuestion?.id
+        let completedRoundID = viewModel.roundResult?.roundID
+        let interactionID = viewModel.questionInteractionID
         let serious = viewModel.currentQuestion?.usesSeriousFeedback == true
         let celebrateBest = viewModel.didSetPersonalBestThisRound && !serious
         let basketLabel = viewModel.roundResult == nil ? "Round result unavailable."
@@ -1865,15 +1902,16 @@ struct Prompt28FruitBasketView: View {
                             title: "save to my encyclopedia",
                             accent: .sage
                         ) {
-                            showingSaveDestination = true
+                            requestQuestionSave(expectedQuestionID: sourceQuestionID, expectedInteractionID: interactionID)
                         }
 
                         Prompt28WatercolorButton(
                             title: "keep playing",
                             accent: .paleYellow
                         ) {
+                            guard canInteractWithGame, let completedRoundID else { return }
                             performQuestionOperation {
-                                await viewModel.continueAfterReveal()
+                                await viewModel.continueAfterReveal(expectedRoundID: completedRoundID, expectedInteractionID: interactionID)
                             }
                         }
 

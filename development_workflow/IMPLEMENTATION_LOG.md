@@ -2829,3 +2829,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 837, "native_CPU_XCTest": 859, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "newly_executable_existing_game_XCTest": 36, "Apple_Published_properties_preserved": 29, "initial_discovery_executed_tests": 0, "baseline_failed_assertions": 7, "earlier_full_resource_failed_assertions": 3, "Apple_game_and_Combine": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
 - Next action: Verify native game save destination presentation hosting; then implement actual controller transition guards with genuine failing tests: invalid/out-of-screen answers, stale question identity, catch before correct answer and duplicate begin/retry. Preserve source/citation/score/session state and update QA setup to legitimate sequence.
 - Commit: containing commit for batch Actual-game-controller-Linux-execution-and-bounded-rain-physics.
+
+## Actual-game-transition-identities-and-frozen-save
+
+- Parent checkpoint: 64001a4f2a67aefe56f91be42d0748a20f76d783.
+- Source-order requirements: [324, 325, 326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, development_workflow/ACTUAL_GAME_TRANSITION_GUARDS.md.
+- Actual controller rejects invalid/out-of-phase/stale/duplicate answer, begin, retry and reveal actions before mutation; setup edits gated; cancelled start and background provider completions rejected. UI captures question/round/interaction identity and freezes source/citation save content in canonical presentation host. Actual QA setup follows legitimate transitions. Twelve pre-fix assertion failures reproduced; final 851 portable/873 native CPU XCTest and 21 Swift Testing each passed. Apple behavior remains unexecuted.
+- Tests added/updated: FruitfolioTests/Prompt28FruitBasketTests.swift, FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift.
+- Verification: {"portable_XCTest": 851, "native_CPU_XCTest": 873, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 12, "Apple_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Protect actual classification callbacks with captured fruit/round identity before consuming passes or advancing drops; add failing actual-controller regressions, execute supported suites, record per-entry evidence and checkpoint locally.
+- Commit: containing commit for batch Actual-game-transition-identities-and-frozen-save.

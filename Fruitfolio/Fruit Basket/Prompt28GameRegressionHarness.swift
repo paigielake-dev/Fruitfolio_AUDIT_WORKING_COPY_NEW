@@ -149,8 +149,13 @@ struct Prompt28GameRegressionHarness: View {
             difficulty: .easy, startingLevel: (isStorm || isReset) ? 6 : 1)
         if isStorm { session.currentRound = 3 }
         model.session = session
-        if isExcerpt { model.screen = .question; return }
-        model.beginCatch()
+        model.screen = .question
+        if isExcerpt { return }
+        if let question = model.currentQuestion {
+            model.answer(question.correctAnswerID, expectedQuestionID: question.id)
+            model.presentCatchIntro(expectedQuestionID: question.id)
+            model.beginCatch(expectedQuestionID: question.id)
+        }
         if isStorm { return } // Real screen-change observer presents the real storm modal.
         if scenario == "reset-paused" { model.pause(); return }
         if scenario == "reset-result" {

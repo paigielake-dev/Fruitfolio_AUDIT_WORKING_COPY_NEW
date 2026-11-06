@@ -5,14 +5,226 @@ import XCTest
 final class Prompt28FruitBasketTests: XCTestCase {
     private let engine = Prompt28FruitBasketEngine()
 
+    private func unansweredModel() -> Prompt28FruitBasketViewModel {
+        let store = Prompt28FruitBasketStore(defaults: UserDefaults(suiteName: UUID().uuidString)!)
+        store.controlMode = .classification
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.rawTopic = "demo"
+        model.currentQuestion = fixtureQuestion()
+        model.session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .easy, startingLevel: 1)
+        model.screen = .question
+        return model
+    }
+
+    func testUnknownAnswerCannotMutateQuestionChoiceOrStreak() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        model.session?.currentStreak = 3
+        model.answer("not-a-current-option")
+        XCTAssertNil(model.selectedAnswerID)
+        XCTAssertEqual(model.screen, .question)
+        XCTAssertEqual(model.session?.currentStreak, 3)
+    }
+
+    func testAnswerOutsideQuestionCannotMutateFeedbackOrStreak() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        model.screen = .learningSetup
+        model.session?.currentStreak = 7
+        model.answer("a")
+        XCTAssertNil(model.selectedAnswerID)
+        XCTAssertEqual(model.screen, .learningSetup)
+        XCTAssertEqual(model.session?.currentStreak, 7)
+    }
+
+    func testUnansweredQuestionCannotStartCatchOrReplaceRoundIdentity() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let ledger = model.roundLedger
+        model.beginCatch()
+        XCTAssertEqual(model.screen, .question)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertTrue(model.activeFruit.isEmpty)
+        XCTAssertNil(model.classificationFruit)
+    }
+
+    func testDuplicateCatchEntryCannotEraseActualSettledCatchesOrLedger() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        for _ in 0..<3 {
+            model.classificationFruit = .init(fruitID: .apple, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        XCTAssertEqual(model.basketCount, 3)
+        let ledger = model.roundLedger
+        let collected = model.collectedFruit
+        model.beginCatch()
+        XCTAssertEqual(model.basketCount, 3)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(model.collectedFruit, collected)
+        XCTAssertEqual(model.screen, .catchActive)
+    }
+
+    func testStaleQuestionAndInteractionCannotAdvanceCorrectFeedbackOrCatch() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let original = model.questionInteractionID
+        model.answer("a", expectedQuestionID: "stale", expectedInteractionID: original)
+        XCTAssertNil(model.selectedAnswerID)
+        model.answer("a", expectedQuestionID: "q1", expectedInteractionID: original)
+        XCTAssertEqual(model.screen, .correctFeedback)
+        XCTAssertNotEqual(model.questionInteractionID, original)
+        model.presentCatchIntro(expectedQuestionID: "q1", expectedInteractionID: original)
+        XCTAssertEqual(model.screen, .correctFeedback)
+        let feedback = model.questionInteractionID
+        model.presentCatchIntro(expectedQuestionID: "stale", expectedInteractionID: feedback)
+        XCTAssertEqual(model.screen, .correctFeedback)
+        model.presentCatchIntro(expectedQuestionID: "q1", expectedInteractionID: feedback)
+        XCTAssertEqual(model.screen, .catchIntro)
+        model.beginCatch(expectedQuestionID: "q1", expectedInteractionID: feedback)
+        XCTAssertEqual(model.screen, .catchIntro)
+        model.beginCatch(expectedQuestionID: "q1", expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.screen, .catchActive)
+    }
+
+    func testWrongFeedbackRetryKeepsExactQuestionAndRejectsOldAnswerTicket() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let question = model.currentQuestion
+        let first = model.questionInteractionID
+        model.answer("b", expectedQuestionID: "q1", expectedInteractionID: first)
+        XCTAssertEqual(model.screen, .incorrectFeedback)
+        model.retryQuestion(expectedQuestionID: "stale", expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.screen, .incorrectFeedback)
+        model.retryQuestion(expectedQuestionID: "q1", expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.screen, .question); XCTAssertNil(model.selectedAnswerID)
+        XCTAssertEqual(model.currentQuestion, question)
+        model.answer("a", expectedQuestionID: "q1", expectedInteractionID: first)
+        XCTAssertNil(model.selectedAnswerID)
+        model.answer("a", expectedQuestionID: "q1", expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(model.screen, .correctFeedback)
+    }
+
+    func testRetryOutsideFailedResultCannotReplaceActiveLedger() async {
+        let model = roundModel(); defer { model.leaveScreen() }
+        let original = model.roundLedger
+        let session = model.session
+        model.retryRound()
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertEqual(model.roundLedger, original)
+        XCTAssertEqual(model.session, session)
+    }
+
+    func testActualFailedRoundRetryRejectsStaleRoundThenStartsExactlyOnce() async throws {
+        let model = roundModel(); defer { model.leaveScreen() }
+        model.classificationFruit = .init(fruitID: .lemon, classification: .bad,
+            x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+        model.classificationDecision(accept: true)
+        for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        model.sceneBecameInactive()
+        XCTAssertEqual(model.screen, .catchUnsuccessful)
+        let failed = try XCTUnwrap(model.roundResult)
+        let interaction = model.questionInteractionID
+        model.retryRound(expectedQuestionID: "q1", expectedRoundID: UUID(), expectedInteractionID: interaction)
+        XCTAssertEqual(model.screen, .catchUnsuccessful)
+        model.retryRound(expectedQuestionID: "q1", expectedRoundID: failed.roundID, expectedInteractionID: interaction)
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertNotEqual(model.roundLedger.roundID, failed.roundID)
+        let retry = model.roundLedger
+        model.retryRound(expectedQuestionID: "q1", expectedRoundID: failed.roundID, expectedInteractionID: interaction)
+        XCTAssertEqual(model.roundLedger, retry)
+        XCTAssertEqual(model.store.progress(for: "demo")?.totalRoundsCompleted, 1)
+    }
+
+    func testContinueBeforeRevealCannotAdvanceRoundOrStartQuestionLoading() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let session = model.session
+        let question = model.currentQuestion
+        await model.continueAfterReveal()
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(model.currentQuestion, question)
+        XCTAssertEqual(model.screen, .question)
+    }
+
+    func testActualSuccessfulRevealConsumesNextRequestOnlyOnce() async throws {
+        let model = roundModel(); defer { model.leaveScreen() }
+        for _ in 0..<engine.rules.goodFruitTarget {
+            model.classificationFruit = .init(fruitID: .apple, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        model.sceneBecameInactive()
+        XCTAssertEqual(model.screen, .basketReveal)
+        let result = try XCTUnwrap(model.roundResult)
+        let original = try XCTUnwrap(model.session?.currentRound)
+        let interaction = model.questionInteractionID
+        await model.continueAfterReveal(expectedRoundID: UUID(), expectedInteractionID: interaction)
+        XCTAssertEqual(model.session?.currentRound, original)
+        await model.continueAfterReveal(expectedRoundID: result.roundID, expectedInteractionID: interaction)
+        XCTAssertEqual(model.session?.currentRound, original + 1)
+        XCTAssertEqual(model.screen, .topicUnsupported, "Real unavailable provider gives honest next-question state")
+        await model.continueAfterReveal(expectedRoundID: result.roundID, expectedInteractionID: interaction)
+        XCTAssertEqual(model.session?.currentRound, original + 1)
+        XCTAssertEqual(model.store.progress(for: "demo")?.totalSuccessfulRounds, 1)
+    }
+
+    func testTopicAndDifficultyCallbacksCannotEditAnActiveQuestion() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let session = model.session
+        let difficulty = model.difficulty
+        model.editTopic("stale edited topic")
+        model.chooseSuggestedTopic("stale suggestion")
+        model.updateDifficulty(.hard)
+        XCTAssertEqual(model.rawTopic, "demo")
+        XCTAssertEqual(model.difficulty, difficulty)
+        XCTAssertEqual(model.session, session)
+        model.openSetup()
+        let raw = "  exact topic Ω  "
+        model.editTopic(raw)
+        XCTAssertEqual(model.rawTopic, raw)
+        model.updateDifficulty(.hard)
+        XCTAssertEqual(model.difficulty, .hard)
+    }
+
+    func testBackgroundInvalidatesSameQuestionInteractionTicket() async {
+        let model = unansweredModel(); defer { model.leaveScreen() }
+        let old = model.questionInteractionID
+        model.sceneBecameInactive()
+        XCTAssertNotEqual(model.questionInteractionID, old)
+        model.answer("a", expectedQuestionID: "q1", expectedInteractionID: old)
+        XCTAssertNil(model.selectedAnswerID)
+        XCTAssertEqual(model.screen, .question)
+    }
+
+    func testAlreadyCancelledStartCannotCreateSessionOrPersistTopicProgress() async throws {
+        let suite = "Prompt28-cancelled-start-" + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "cancelled-start")
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        defer { model.leaveScreen() }
+        model.openSetup(); model.rawTopic = "fixture"
+        let original = defaults.data(forKey: "cancelled-start")
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            await model.startTopic()
+        }
+        await task.value
+        XCTAssertNil(model.session)
+        XCTAssertTrue(store.topicProgress.isEmpty)
+        XCTAssertEqual(defaults.data(forKey: "cancelled-start"), original)
+        XCTAssertEqual(model.screen, .learningSetup)
+    }
+
     private func roundModel(starPasses: Int = 0) -> Prompt28FruitBasketViewModel {
         let store = Prompt28FruitBasketStore(defaults: UserDefaults(suiteName: UUID().uuidString)!)
         store.controlMode = .classification
         let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.rawTopic = "demo"
         model.currentQuestion = fixtureQuestion()
         model.session = engine.newSession(topic: "demo", normalizedTopic: "demo", difficulty: .easy, startingLevel: 1)
         model.session?.availableStarPasses = starPasses
-        model.beginCatch()
+        model.screen = .question
+        model.answer("a", expectedQuestionID: "q1")
+        model.presentCatchIntro(expectedQuestionID: "q1")
+        model.beginCatch(expectedQuestionID: "q1")
         return model
     }
 
