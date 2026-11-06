@@ -198,6 +198,31 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testUnsupportedSavedLibraryKeepsReadableBooksAndMeasuredReloadAvailable() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioLibraryStorageQA", "-UIPreferredContentSizeCategoryName",
+                "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioLibraryReduceMotion"] }
+            app.launch()
+            let reload = app.buttons["library.reloadSavedRecord"]
+            XCTAssertTrue(reload.waitForExistence(timeout: 5))
+            for _ in 0..<12 { if reload.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(reload.isHittable)
+            XCTAssertGreaterThanOrEqual(reload.frame.height, 44)
+            reload.tap()
+            XCTAssertTrue(reload.exists)
+            let book = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "QA readable book,")).firstMatch
+            for _ in 0..<16 { if book.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(book.isHittable)
+            captureGame(app, name: "library-protected-readable-large-text-reduced-\(reduced)")
+            book.tap()
+            XCTAssertTrue(app.otherElements["library.openBook"].waitForExistence(timeout: 5))
+            captureGame(app, name: "library-protected-open-book-reduced-\(reduced)")
+            app.terminate()
+        }
+    }
+
     func testLocalDataExportOpensRealSavePickerAndCancellationDoesNotClaimSaved() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataReduceMotion",

@@ -1,16 +1,27 @@
 import Foundation
-import SwiftUI
+#if canImport(Combine)
 import Combine
+#endif
 
 @MainActor
-final class Prompt10SavedLibraryStore: ObservableObject {
+final class Prompt10SavedLibraryStore {
     static let shared = Prompt10SavedLibraryStore()
 
     static let maximumEncyclopedias = 100
 
-    @Published private(set) var encyclopedias: [Prompt10Encyclopedia] = []
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var encyclopedias: [Prompt10Encyclopedia] = []
 
-    @Published private(set) var storageUnreadable = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var storageUnreadable = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var storageProtectionReason: Prompt10LibraryError?
     private var persistence: Prompt10SavedLibraryPersistence
 
     init(
@@ -20,6 +31,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         self.persistence = Prompt10SavedLibraryPersistence(defaults: defaults, key: persistenceKey)
         self.encyclopedias = persistence.committed
         self.storageUnreadable = persistence.storageUnreadable
+        self.storageProtectionReason = persistence.protectionReason
     }
 
     var count: Int {
@@ -27,7 +39,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
     }
 
     var canCreateEncyclopedia: Bool {
-        count < Self.maximumEncyclopedias
+        storageProtectionReason == nil && count < Self.maximumEncyclopedias
     }
 
     @discardableResult
@@ -577,10 +589,19 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         try persist()
     }
 
+    func reloadSavedLibrary() {
+        persistence.reload()
+        encyclopedias = persistence.committed
+        storageUnreadable = persistence.storageUnreadable
+        storageProtectionReason = persistence.protectionReason
+    }
+
     private func persist() throws {
         do { try persistence.commit(encyclopedias) }
         catch {
             encyclopedias = persistence.committed
+            storageUnreadable = persistence.storageUnreadable
+            storageProtectionReason = persistence.protectionReason
             throw error
         }
     }
@@ -616,3 +637,7 @@ final class Prompt10SavedLibraryStore: ObservableObject {
         }
     }
 }
+
+#if canImport(Combine)
+extension Prompt10SavedLibraryStore: ObservableObject {}
+#endif

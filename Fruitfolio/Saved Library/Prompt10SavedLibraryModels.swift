@@ -258,6 +258,8 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
     case pageNotFound
     case persistenceFailure
     case unreadableStorage
+    case unsupportedStorage
+    case storageChanged
 
     var errorDescription: String? {
         switch self {
@@ -279,6 +281,10 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
             return "that saved page could not be found."
         case .persistenceFailure:
             return "that change didn’t settle properly."
+        case .unsupportedStorage:
+            return "your saved library has fields this version cannot safely update. readable pages remain available. the original data has been kept, and changes are paused."
+        case .storageChanged:
+            return "your saved library changed or was cleared elsewhere. the latest saved data has been preserved. reload it before making changes."
         case .unreadableStorage:
             return "your saved library couldn’t be opened. the original data has been kept, and changes are paused."
         }

@@ -36,9 +36,11 @@ struct Prompt10AskSaveDestination: View {
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                if store.storageUnreadable {
-                    FruitfolioSemanticText(markdown: Prompt10LibraryError.unreadableStorage.localizedDescription,
-                                           baseFont: .custom("Chalkboard SE", size: 13, relativeTo: .body))
+                Prompt10LibraryStorageNotice(store: store)
+                if store.storageProtectionReason != nil {
+                    // Original pending Ask content remains owned by this popup;
+                    // no write or automatic destination change is attempted.
+                    EmptyView()
                 } else if store.encyclopedias.isEmpty {
                     Text(
                         "make your first little encyclopedia ♡"

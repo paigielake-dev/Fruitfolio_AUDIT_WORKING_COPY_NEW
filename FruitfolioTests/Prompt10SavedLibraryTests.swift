@@ -33,7 +33,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         key = nil
     }
 
-    func testExactSavedLibraryAssetManifestHasSixteenPhysicalPNGs() {
+    func testExactSavedLibraryAssetManifestHasSixteenPhysicalPNGs() async {
         XCTAssertEqual(
             Prompt10SavedLibraryAsset.exactPhysicalFilenames.count,
             16
@@ -62,7 +62,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testCreatePersistsAcrossStoreReinitialization() throws {
+    func testCreatePersistsAcrossStoreReinitialization() async throws {
         let created = try store.createEncyclopedia(
             name: "cycle health",
             style: .sage
@@ -89,7 +89,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes() throws {
+    func testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes() async throws {
         let book = try store.createEncyclopedia(name: "existing", style: .sage)
         let chapter = try XCTUnwrap(book.chapters.first)
         let before = store.encyclopedias
@@ -101,7 +101,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         XCTAssertEqual(defaults.data(forKey: key), bytes)
     }
 
-    func testBlankTitleIsRejected() {
+    func testBlankTitleIsRejected() async {
         XCTAssertThrowsError(
             try store.createEncyclopedia(
                 name: "   ",
@@ -115,7 +115,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         }
     }
 
-    func testMaximumIsEnforcedAtStoreLayer() throws {
+    func testMaximumIsEnforcedAtStoreLayer() async throws {
         for index in 0..<Prompt10SavedLibraryStore.maximumEncyclopedias {
             _ = try store.createEncyclopedia(
                 name: "book \(index)",
@@ -145,7 +145,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         }
     }
 
-    func testDeletingOneBookAtLimitImmediatelyRestoresCreation() throws {
+    func testDeletingOneBookAtLimitImmediatelyRestoresCreation() async throws {
         for index in 0..<Prompt10SavedLibraryStore.maximumEncyclopedias {
             _ = try store.createEncyclopedia(
                 name: "book \(index)",
@@ -178,7 +178,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testRenamePersists() throws {
+    func testRenamePersists() async throws {
         let encyclopedia = try store.createEncyclopedia(
             name: "old name",
             style: .sage
@@ -202,7 +202,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testFullAnswerPreservesPrompt09Provenance() throws {
+    func testFullAnswerPreservesPrompt09Provenance() async throws {
         let encyclopedia = try store.createEncyclopedia(
             name: "hormones",
             style: .sage
@@ -273,7 +273,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testExcerptDisplaysExactExcerptNotWholeAnswer() throws {
+    func testExcerptDisplaysExactExcerptNotWholeAnswer() async throws {
         let encyclopedia = try store.createEncyclopedia(
             name: "nutrition",
             style: .sage
@@ -308,7 +308,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testDeletingEncyclopediaDoesNotMutateAnotherEncyclopedia() throws {
+    func testDeletingEncyclopediaDoesNotMutateAnotherEncyclopedia() async throws {
         let first = try store.createEncyclopedia(
             name: "first",
             style: .sage
@@ -337,7 +337,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testSortControlsDoNotAppearConceptuallyBeforeThirteenBooks() throws {
+    func testSortControlsDoNotAppearConceptuallyBeforeThirteenBooks() async throws {
         for index in 0..<12 {
             _ = try store.createEncyclopedia(
                 name: "book \(index)",
@@ -361,7 +361,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testSearchMatchesTitlesCaseInsensitively() throws {
+    func testSearchMatchesTitlesCaseInsensitively() async throws {
         _ = try store.createEncyclopedia(
             name: "Cycle Health",
                 style: .sage
@@ -383,7 +383,7 @@ final class Prompt10SavedLibraryTests: XCTestCase {
         )
     }
 
-    func testChosenBookStylePersistsInsteadOfAutoCycling() throws {
+    func testChosenBookStylePersistsInsteadOfAutoCycling() async throws {
         _ = try store.createEncyclopedia(
             name: "styled book",
             style: .lavender

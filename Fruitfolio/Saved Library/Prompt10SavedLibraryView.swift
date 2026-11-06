@@ -79,10 +79,8 @@ struct Prompt10SavedLibraryView: View {
             VStack(spacing: 18) {
                 header
 
-                if store.storageUnreadable {
-                    FruitfolioSemanticText(markdown: Prompt10LibraryError.unreadableStorage.localizedDescription,
-                                           baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body))
-                } else {
+                Prompt10LibraryStorageNotice(store: store)
+                if !store.storageUnreadable {
                     composedLibraryHero
 
                     if store.encyclopedias.isEmpty {

@@ -85,6 +85,9 @@ SOURCES = [
     'Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift',
     'Fruitfolio/Saved Library/Prompt10PendingSavedContent.swift',
     'Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift',
+    'Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift',
+    'Fruitfolio/Saved Library/Prompt10SavedLibraryAssets.swift',
+    'Fruitfolio/Core/Persistence/FruitfolioJSONFieldCoverage.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioSemanticModel.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioGGUFResource.swift',
     'Fruitfolio/Core/Intelligence/FruitfolioResearchRetrieval.swift',
@@ -121,6 +124,8 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt10SavedLibraryTests.swift',
+    'Prompt1BLibrarySnapshotProtectionTests.swift',
     'Prompt1BLocalDataExportTests.swift',
     'Prompt1BAccountPersistenceTests.swift',
     'Prompt1BSettingsLanguageTests.swift',

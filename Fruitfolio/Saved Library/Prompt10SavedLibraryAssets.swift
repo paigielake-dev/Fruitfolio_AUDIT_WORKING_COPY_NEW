@@ -1,4 +1,6 @@
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 // Exact Prompt 10 physical SavedLibrary asset set.
 // Keep all names centralized; do not scatter filename strings through the UI.
@@ -41,6 +43,7 @@ enum Prompt10SavedLibraryAsset: String, CaseIterable {
     ]
 }
 
+#if canImport(SwiftUI)
 struct Prompt10LibraryAssetImage: View {
     let asset: Prompt10SavedLibraryAsset
     var accessibilityLabel: String? = nil
@@ -53,3 +56,5 @@ struct Prompt10LibraryAssetImage: View {
             .accessibilityLabel(accessibilityLabel ?? "")
     }
 }
+
+#endif
