@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "c081075f1b6ddd21f1e1816e72490600bbcee761",
+  "current_HEAD": "150d5533926886c04f02231ff4493879f6321a18",
   "latest_verified_commit": null,
   "current_checklist_part": 6,
   "current_requirement": 296,
-  "current_implementation_batch": "Calendar-cancelled-load-entry-and-supplemental-result-rejection",
+  "current_implementation_batch": "Calendar-active-controls-and-current-cell-selection",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,8 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarLoader.swift",
     "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-    "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift",
-    "development_workflow/CALENDAR_LOAD_CANCELLATION.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Calendar-cancellation-prior-failure.json"
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -511,25 +507,19 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Pre-fix4 focused XCTest,2failed assertions",
-    "Full portable/native CPU suites",
     "60 workflow checks",
-    "311 syntax parses",
+    "311 Swift files parsed",
+    "Review actual isInteractive model excludes adjacent padding cells",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 796,
-    "native_CPU_XCTest": 818,
-    "SwiftTesting_each": 21,
     "workflow_checks": 60,
     "syntax_files": 311,
-    "prior_focused_XCTest": 4,
-    "prior_failed_assertions": 2,
-    "Apple_calendar_month_transitions": "NOT_RUN",
-    "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"
+    "Apple_calendar_ownership": "NOT_RUN; no new fake UI harness",
+    "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"
   },
-  "next_exact_implementation_action": "Continue canonical calendar controls and logging interaction ownership: reject inactive/covered requests and stale selected cell callbacks while preserving original artwork, source annotations and accepted action intent.",
-  "updated_at": "2026-11-06T21:20:22.295882+00:00",
+  "next_exact_implementation_action": "Continue canonical calendar controls fixed-label translation/accessibility without replacing original arrow art or changing calendar dates/predictions; then logging controls in original order.",
+  "updated_at": "2026-11-06T21:21:42.564647+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -539,22 +529,18 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": "796 passed",
-      "native_CPU_XCTest": "818 passed; syntheticT5/real independent Qwen, not official MADLAD",
-      "SwiftTesting": "21 passed per run",
       "workflow": "60 passed",
       "syntax": "311 parsed",
-      "prior_reproduction": "Four cases/two failed assertions; SHA receipt preserved"
+      "source": "Current-month key check matches genuine model interactive-month rule; current annotations used; no persisted data/geometry/source changes"
     },
     "not_run": [
-      "Apple SDK build and actual rapid month transitions/context/background/cancellation rendering",
-      "Physical-device large-history latency/energy and VoiceOver/Reduce Motion",
-      "Official MADLAD model/tokenizer/language acceptance"
+      "Apple SDK build and actual rapid taps/stale cell callbacks/date-sheet ownership",
+      "Apple accepted action/dismiss/depart/background ordering, Reduce Motion and VoiceOver"
     ],
     "remaining": [
-      "Execute actual calendar rapid transition/context change/cancellation Apple UI/device checks",
-      "Measure real file/large-history cancellation responsiveness; no claim of mid-calculation or journal interruption",
-      "Complete full requirement/official-model/device acceptance independently; all targeted rows remain IN_PROGRESS"
+      "Execute calendar rapid transition and stale cell/native-sheet/repeated action cases on Apple",
+      "Verify accepted post-dismiss actions run once and departure discards unconsumed navigation without corrupting logs",
+      "Whole calendar/accessibility/runtime requirements remain IN_PROGRESS; Foundation cancellation tests do not verify SwiftUI callbacks"
     ]
   },
   "current_checklist_section": "Part 6 \u2014 Cycle Tracker and scientific education",

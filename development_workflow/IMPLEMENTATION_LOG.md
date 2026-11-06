@@ -2631,3 +2631,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 796, "native_CPU_XCTest": 818, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "prior_focused_XCTest": 4, "prior_failed_assertions": 2, "Apple_calendar_month_transitions": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
 - Next action: Continue canonical calendar controls and logging interaction ownership: reject inactive/covered requests and stale selected cell callbacks while preserving original artwork, source annotations and accepted action intent.
 - Commit: containing commit for batch Calendar-cancelled-load-entry-and-supplemental-result-rejection.
+
+## Calendar-active-controls-and-current-cell-selection
+
+- Parent checkpoint: 150d5533926886c04f02231ff4493879f6321a18.
+- Source-order requirements: [295, 296, 297, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift.
+- Calendar month/date controls require active visible owner without shared popup, selected native date sheet or pending action. Cell must belong to current displayed month; estimate disclosure reads current accepted annotations rather than stale captured cell. Date-sheet callbacks validate selected key and reject duplicate pending actions. Departure clears unconsumed pending action; accepted action remains single-consumed after dismissal. Existing style/cue/calculations/artwork retained. Actual SwiftUI paths not executed.
+- Tests added/updated: FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (existing four executed parent cases; unchanged/not rerun this UI batch).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_calendar_ownership": "NOT_RUN; no new fake UI harness", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue canonical calendar controls fixed-label translation/accessibility without replacing original arrow art or changing calendar dates/predictions; then logging controls in original order.
+- Commit: containing commit for batch Calendar-active-controls-and-current-cell-selection.

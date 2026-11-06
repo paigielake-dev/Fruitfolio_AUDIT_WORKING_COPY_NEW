@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-11-06T21:21:42.564647+00:00",
+  "commands": [
+    "60 workflow checks",
+    "311 Swift files parsed",
+    "Review actual isInteractive model excludes adjacent padding cells",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_checks": 60,
+    "syntax_files": 311,
+    "Apple_calendar_ownership": "NOT_RUN; no new fake UI harness",
+    "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"
+  },
+  "verification": {
+    "executed": {
+      "workflow": "60 passed",
+      "syntax": "311 parsed",
+      "source": "Current-month key check matches genuine model interactive-month rule; current annotations used; no persisted data/geometry/source changes"
+    },
+    "not_run": [
+      "Apple SDK build and actual rapid taps/stale cell callbacks/date-sheet ownership",
+      "Apple accepted action/dismiss/depart/background ordering, Reduce Motion and VoiceOver"
+    ],
+    "remaining": [
+      "Execute calendar rapid transition and stale cell/native-sheet/repeated action cases on Apple",
+      "Verify accepted post-dismiss actions run once and departure discards unconsumed navigation without corrupting logs",
+      "Whole calendar/accessibility/runtime requirements remain IN_PROGRESS; Foundation cancellation tests do not verify SwiftUI callbacks"
+    ]
+  }
+}

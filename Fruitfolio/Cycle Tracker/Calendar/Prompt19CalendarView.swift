@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct Prompt19CalendarView: View {
     var loader: Prompt19CalendarLoader
@@ -8,6 +9,13 @@ struct Prompt19CalendarView: View {
 
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var viewIsVisible = false
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
+    }
+    private var canInteract: Bool { ownerIsActive && selectedKey == nil && pendingAction == nil }
 
     @State private var displayedMonth: Prompt19CalendarMonth
     @State private var selectedKey: Prompt19CalendarDateKey?
@@ -157,6 +165,7 @@ struct Prompt19CalendarView: View {
                 }
 
                 pendingAction = nil
+                guard viewIsVisible else { return }
                 onAction(action)
             }
         ) {
@@ -167,10 +176,12 @@ struct Prompt19CalendarView: View {
                     calendar: calendar,
                     showPredictionNote: showPredictionNote,
                     onDismiss: {
+                        guard ownerIsActive, selectedKey == selectedDateKey else { return }
                         selectedKey = nil
                         showPredictionNote = false
                     },
                     onAction: { action in
+                        guard ownerIsActive, selectedKey == selectedDateKey, pendingAction == nil else { return }
                         audioManager.play(.buttonSoftPop)
                         pendingAction = action
                         selectedKey = nil
@@ -182,6 +193,8 @@ struct Prompt19CalendarView: View {
                 .presentationBackground(.clear)
             }
         }
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false; pendingAction = nil }
         .accessibilityIdentifier("prompt19.calendar")
     }
 
@@ -383,9 +396,11 @@ struct Prompt19CalendarView: View {
     private func select(
         _ cell: Prompt19CalendarCell
     ) {
-        guard
+        guard canInteract,
             cell.isInteractive,
-            let key = cell.key
+            let key = cell.key,
+            key.year == displayedMonth.year,
+            key.month == displayedMonth.month
         else {
             return
         }
@@ -396,7 +411,7 @@ struct Prompt19CalendarView: View {
 
         selectedKey = key
 
-        if cell.annotation?.containsEstimate == true {
+        if presentationAnnotations[key]?.containsEstimate == true {
             showPredictionNote = true
         } else {
             showPredictionNote = false
@@ -406,6 +421,7 @@ struct Prompt19CalendarView: View {
     private func shiftMonth(
         _ delta: Int
     ) {
+        guard canInteract else { return }
         guard let next =
             displayedMonth.shifted(
                 by: delta,
