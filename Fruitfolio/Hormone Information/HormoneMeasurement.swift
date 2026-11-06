@@ -82,12 +82,16 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
     }
 }
 
-enum FruitfolioHormoneMeasurementError: LocalizedError {
-    case invalidRequiredFields, unreadableStorage
+enum FruitfolioHormoneMeasurementError: LocalizedError, Equatable {
+    case invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged
     var errorDescription: String? {
         switch self {
         case .invalidRequiredFields:
             return "enter a hormone, a valid non-negative numerical result, and its unit. cycle day, when provided, must be positive."
+        case .unsupportedStorage:
+            return "saved measurements contain fields this version cannot safely update. readable values remain available, and the original data has been preserved."
+        case .storageChanged:
+            return "saved measurements changed or were cleared elsewhere. the latest saved data has been preserved. reload it before making changes or exporting."
         case .unreadableStorage:
             return "saved measurements could not be read. the original data has been preserved."
         }

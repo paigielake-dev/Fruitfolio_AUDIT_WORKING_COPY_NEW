@@ -11,6 +11,7 @@ struct FruitfolioHormoneInformationView: View {
     @State private var errorMessage: String?
     @State private var showExport = false
     @State private var confirmErase = false
+    @State private var measurementSavedThisVisit = false
     @State private var exportDocument = FruitfolioHormoneExportDocument(data: Data())
 
     var body: some View {
@@ -26,15 +27,21 @@ struct FruitfolioHormoneInformationView: View {
                 }
                 WatercolorSecondaryButton(label: "explore the hormone library") { showingLibrary = true }
                 Text("my measurements").font(.headline)
-                if store.storageUnreadable {
-                    Text(FruitfolioHormoneMeasurementError.unreadableStorage.localizedDescription)
+                if let reason = store.storageProtectionReason {
+                    FruitfolioTranslatedText(source: reason.localizedDescription,
+                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                    WatercolorSecondaryButton(label: "reload saved measurements") {
+                        measurementSavedThisVisit = false
+                        store.reloadSavedMeasurements()
+                    }
+                        .accessibilityIdentifier("measurements.reloadSavedRecord")
                 } else if store.records.isEmpty {
                     Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                 }
                 WatercolorPrimaryButton(label: "Add Measurement") {
                     editing = FruitfolioHormoneMeasurement()
                 }
-                .disabled(store.storageUnreadable)
+                .disabled(store.storageProtectionReason != nil)
                 Picker("filter by hormone", selection: $filter) {
                     Text("all hormones").tag(Optional<FruitfolioMeasuredHormone>.none)
                     ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
@@ -58,26 +65,31 @@ struct FruitfolioHormoneInformationView: View {
                         }
                         if !measurement.notes.isEmpty { Text(verbatim: measurement.notes) }
                         WatercolorSecondaryButton(label: "edit measurement") { editing = measurement }
+                            .disabled(store.storageProtectionReason != nil)
                         WatercolorSecondaryButton(label: "delete measurement") { deleting = measurement }
+                            .disabled(store.storageProtectionReason != nil)
                     }
                     .padding(16)
                     .background(DesignTokens.ColorToken.softWhite, in: RoundedRectangle(cornerRadius: 16))
                 }
                 Text("Hormone Rhythm shows typical educational patterns. My Measurements contains only values you record. These records do not adjust cycle predictions or confirm ovulation, fertility, or a diagnosis.")
-                Text("your measurement has been saved, but there isn’t enough information to adjust this illustration reliably. you can still explore the typical hormone rhythm and view your actual result in my measurements.")
-                    .font(.footnote)
-                    .accessibilityHidden(store.records.isEmpty)
-                    .opacity(store.records.isEmpty ? 0 : 1)
+                if measurementSavedThisVisit && !store.records.isEmpty {
+                    FruitfolioTranslatedText(source: FruitfolioHormoneAdjustmentPolicy.insufficientMessage,
+                        font: .custom("Chalkboard SE", size: 13, relativeTo: .footnote), serious: true)
+                }
                 WatercolorSecondaryButton(label: "export my measurements") {
                     do {
                         exportDocument = FruitfolioHormoneExportDocument(data: try store.exportJSON())
                         showExport = true
                     } catch { errorMessage = error.localizedDescription }
                 }
-                .disabled(store.storageUnreadable || store.records.isEmpty)
+                .disabled(store.storageProtectionReason != nil || store.records.isEmpty)
                 WatercolorSecondaryButton(label: "delete all measurements") { confirmErase = true }
                 .disabled(store.records.isEmpty && !store.storageUnreadable)
-                if let errorMessage { Text(errorMessage) }
+                if let errorMessage {
+                    FruitfolioTranslatedText(source: errorMessage,
+                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                }
             }
             .padding(20)
             .frame(maxWidth: 620, alignment: .leading)
@@ -94,6 +106,7 @@ struct FruitfolioHormoneInformationView: View {
         .sheet(item: $editing) { record in
             FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
                 try store.save(updated)
+                measurementSavedThisVisit = true
                 editing = nil
             }
         }
@@ -106,7 +119,7 @@ struct FruitfolioHormoneInformationView: View {
                                                  set: { if !$0 { confirmErase = false; deleting = nil } })) {
             if confirmErase {
                 Button("delete all measurements", role: .destructive) {
-                    store.eraseAllMeasurements()
+                    do { try store.eraseAllMeasurements(); measurementSavedThisVisit = false } catch { errorMessage = error.localizedDescription }
                     confirmErase = false
                 }
             } else {
@@ -177,7 +190,10 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 TextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
                 TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange)
                 TextField("notes (optional)", text: $draft.notes, axis: .vertical)
-                if let errorMessage { Text(errorMessage) }
+                if let errorMessage {
+                    FruitfolioTranslatedText(source: errorMessage,
+                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                }
                 WatercolorPrimaryButton(label: "save measurement") {
                     do {
                         let day = cycleDayText.trimmingCharacters(in: .whitespacesAndNewlines)

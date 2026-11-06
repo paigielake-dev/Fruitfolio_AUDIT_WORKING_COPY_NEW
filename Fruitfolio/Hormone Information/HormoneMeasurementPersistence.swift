@@ -4,19 +4,37 @@ import Foundation
 nonisolated final class FruitfolioHormoneMeasurementPersistence {
     private(set) var records: [FruitfolioHormoneMeasurement] = []
     private(set) var storageUnreadable = false
+    private(set) var protectionReason: FruitfolioHormoneMeasurementError?
+    private var expectedPersistedObject: NSObject?
     private let defaults: UserDefaults
     private let key: String
 
     init(defaults: UserDefaults, key: String) {
         self.defaults = defaults
         self.key = key
-        guard let object = defaults.object(forKey: key) else { return }
-        guard let data = object as? Data else { storageUnreadable = true; return }
+        reload()
+    }
+
+    /// Read only. Never repair an unsupported/corrupt saved record by writing it.
+    func reload() {
+        records = []
+        storageUnreadable = false
+        protectionReason = nil
+        expectedPersistedObject = defaults.object(forKey: key) as? NSObject
+        guard let object = expectedPersistedObject else { return }
+        guard let data = object as? Data else {
+            storageUnreadable = true; protectionReason = .unreadableStorage; return
+        }
         do {
             let decoded = try JSONDecoder().decode([FruitfolioHormoneMeasurement].self, from: data)
-            guard Set(decoded.map(\.id)).count == decoded.count else { storageUnreadable = true; return }
+            guard Set(decoded.map(\.id)).count == decoded.count else {
+                storageUnreadable = true; protectionReason = .unreadableStorage; return
+            }
             records = decoded
-        } catch { storageUnreadable = true }
+            if !FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: try JSONEncoder().encode(decoded)) {
+                protectionReason = .unsupportedStorage
+            }
+        } catch { storageUnreadable = true; protectionReason = .unreadableStorage }
     }
 
     func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
@@ -32,7 +50,7 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     }
 
     func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current) throws {
-        guard !storageUnreadable else { throw FruitfolioHormoneMeasurementError.unreadableStorage }
+        try requireWritable()
         var recorded = measurement
         if recorded.resultLocaleIdentifier == nil { recorded.resultLocaleIdentifier = locale.identifier }
         try recorded.validate(locale: locale)
@@ -43,12 +61,12 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     }
 
     func delete(id: UUID) throws {
-        guard !storageUnreadable else { throw FruitfolioHormoneMeasurementError.unreadableStorage }
+        try requireWritable()
         try persist(records.filter { $0.id != id })
     }
 
     func exportJSON() throws -> Data {
-        guard !storageUnreadable else { throw FruitfolioHormoneMeasurementError.unreadableStorage }
+        try requireWritable()
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
         encoder.dateEncodingStrategy = .iso8601
@@ -56,15 +74,34 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     }
 
     /// Call only after explicit destructive confirmation by the user.
-    func eraseAllMeasurements() {
+    func eraseAllMeasurements() throws {
+        // Explicit erasure may remove the unreadable baseline the user confirmed,
+        // but must not erase a newer record that appeared after confirmation.
+        try requireCurrentSnapshot()
         defaults.removeObject(forKey: key)
+        expectedPersistedObject = nil
         records = []
         storageUnreadable = false
+        protectionReason = nil
+    }
+
+    private func requireWritable() throws {
+        if let protectionReason { throw protectionReason }
+        try requireCurrentSnapshot()
+    }
+
+    private func requireCurrentSnapshot() throws {
+        guard defaults.object(forKey: key) as? NSObject == expectedPersistedObject else {
+            protectionReason = .storageChanged
+            throw FruitfolioHormoneMeasurementError.storageChanged
+        }
     }
 
     private func persist(_ updated: [FruitfolioHormoneMeasurement]) throws {
         let data = try JSONEncoder().encode(updated)
+        try requireWritable()
         defaults.set(data, forKey: key)
         records = updated
+        expectedPersistedObject = data as NSData
     }
 }

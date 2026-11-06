@@ -3,7 +3,7 @@ import XCTest
 
 @MainActor
 final class Prompt1BHormoneMeasurementTests: XCTestCase {
-    func testCreateEditDeletePreservesExactUnitsAndPersists() throws {
+    func testCreateEditDeletePreservesExactUnitsAndPersists() async throws {
         let suite = "Prompt1BHormone.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -22,7 +22,7 @@ final class Prompt1BHormoneMeasurementTests: XCTestCase {
         try restored.delete(id: record.id)
         XCTAssertTrue(FruitfolioHormoneMeasurementStore(defaults: defaults).records.isEmpty)
     }
-    func testExplicitExportAndEraseContainOnlyMeasurements() throws {
+    func testExplicitExportAndEraseContainOnlyMeasurements() async throws {
         let suite = "Prompt1BHormoneExport.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }
@@ -35,12 +35,12 @@ final class Prompt1BHormoneMeasurementTests: XCTestCase {
         let object = try XCTUnwrap(JSONSerialization.jsonObject(with: export) as? [[String: Any]])
         XCTAssertEqual(object.count, 1)
         XCTAssertEqual(object[0]["unit"] as? String, "nmol/L")
-        store.eraseAllMeasurements()
+        try store.eraseAllMeasurements()
         XCTAssertNil(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey))
         XCTAssertEqual(defaults.string(forKey: "unrelated.setting"), "preserve me")
     }
 
-    func testIncompleteOrMalformedMeasurementsAreRejected() {
+    func testIncompleteOrMalformedMeasurementsAreRejected() async {
         var record = FruitfolioHormoneMeasurement()
         for value in ["", "NaN", "12invalid", "-2"] {
             record.result = value
@@ -48,7 +48,7 @@ final class Prompt1BHormoneMeasurementTests: XCTestCase {
             XCTAssertThrowsError(try record.validate(locale: Locale(identifier: "en_US")))
         }
     }
-    func testCorruptStorageIsPreservedInsteadOfOverwritten() throws {
+    func testCorruptStorageIsPreservedInsteadOfOverwritten() async throws {
         let suite = "Prompt1BHormoneCorrupt.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
         defer { defaults.removePersistentDomain(forName: suite) }

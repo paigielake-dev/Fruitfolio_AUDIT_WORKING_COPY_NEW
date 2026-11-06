@@ -71,6 +71,7 @@ SOURCES = [
     'Fruitfolio/Context Personalization/Prompt27AContextSafety.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift',
     'Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift',
+    'Fruitfolio/Hormone Information/HormoneMeasurementStore.swift',
     'Fruitfolio/Hormone Information/HormoneLibraryProvider.swift',
     'Fruitfolio/Hormone Information/HormoneAdjustmentPolicy.swift',
     'Fruitfolio/Cycle Tracker/Hormone Rhythm/Prompt22HormoneRhythmModels.swift',
@@ -124,6 +125,8 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BHormoneMeasurementTests.swift',
+    'Prompt1BHormoneSnapshotProtectionTests.swift',
     'Prompt10SavedLibraryTests.swift',
     'Prompt1BLibrarySnapshotProtectionTests.swift',
     'Prompt1BLocalDataExportTests.swift',

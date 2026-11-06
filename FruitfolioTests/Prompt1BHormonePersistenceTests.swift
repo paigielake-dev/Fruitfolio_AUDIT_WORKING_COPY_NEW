@@ -40,7 +40,7 @@ final class Prompt1BHormonePersistenceTests: XCTestCase {
                 XCTAssertThrowsError(try store.exportJSON())
                 if let original = original as? Data { XCTAssertEqual(defaults.data(forKey: "measurements"), original) }
                 else { XCTAssertEqual(defaults.string(forKey: "measurements"), original as? String) }
-                store.eraseAllMeasurements()
+                try store.eraseAllMeasurements()
                 XCTAssertFalse(store.storageUnreadable)
                 XCTAssertNil(defaults.object(forKey: "measurements"))
             }
