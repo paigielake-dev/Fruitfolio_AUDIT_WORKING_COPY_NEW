@@ -32,14 +32,16 @@ struct FruitfolioHormoneInformationView: View {
             VStack(alignment: .leading, spacing: 18) {
                 BackControl(action: onBack)
                 HStack {
-                    Text("hormone information ♡").font(.title2).bold()
+                    FruitfolioFixedText(source: "hormone information ♡", protectedLiterals: ["♡"], font: .title2, serious: true).fontWeight(.bold)
+                        .accessibilityIdentifier("measurements.heading")
                         .accessibilityAddTraits(.isHeader)
                     FruitfolioImage(id: .hormone_estrogen)
                         .scaledToFit().frame(width: 56, height: 56)
                         .accessibilityHidden(true)
                 }
                 WatercolorSecondaryButton(label: "explore the hormone library") { showingLibrary = true }
-                Text("my measurements").font(.headline)
+                    .accessibilityIdentifier("measurements.openLibrary")
+                FruitfolioFixedText(source: "my measurements", font: .headline, serious: true).accessibilityAddTraits(.isHeader)
                 if let reason = store.storageProtectionReason {
                     FruitfolioTranslatedText(source: reason.localizedDescription,
                         font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
@@ -51,7 +53,7 @@ struct FruitfolioHormoneInformationView: View {
                         .accessibilityIdentifier("measurements.reloadSavedRecord")
                     .accessibilityFocused($deletionFocus, equals: .reload)
                 } else if store.records.isEmpty {
-                    Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
+                    FruitfolioFixedText(source: "have hormone results you’d like to keep track of? add them whenever you’re ready.", serious: true)
                 }
                 WatercolorPrimaryButton(label: "Add Measurement") {
                     let record = FruitfolioHormoneMeasurement()
@@ -80,14 +82,20 @@ struct FruitfolioHormoneInformationView: View {
                         }.fontWeight(.bold)
                         Text(verbatim: "\(measurement.result) \(measurement.unit)")
                         if let date = measurement.dateForDisplay() { Text(date, style: .date) }
-                        else { Text(verbatim: measurement.reportedTestDay?.description ?? "date unavailable") }
+                        else if let rawDay = measurement.reportedTestDay?.description { Text(verbatim: rawDay) }
+                        else { FruitfolioFixedText(source: "date unavailable", serious: true) }
                         if measurement.reportedTestDay == nil {
-                            Text("date shown in your current time zone; you can confirm or correct it when editing.").font(.caption)
+                            FruitfolioFixedText(source: "date shown in your current time zone; you can confirm or correct it when editing.", font: .caption, serious: true)
                         }
                         if !measurement.sampleType.isEmpty { Text(verbatim: measurement.sampleType) }
-                        if let day = measurement.cycleDay { Text("cycle day \(day)") }
+                        if let day = measurement.cycleDay {
+                            HStack(alignment: .firstTextBaseline) {
+                                FruitfolioFixedText(source: "cycle day", serious: true)
+                                Text(day, format: .number.locale(appLocale))
+                            }.accessibilityElement(children: .combine)
+                        }
                         if !measurement.laboratoryReferenceRange.isEmpty {
-                            Text("laboratory reference range")
+                            FruitfolioFixedText(source: "laboratory reference range", serious: true)
                             Text(verbatim: measurement.laboratoryReferenceRange)
                         }
                         if !measurement.notes.isEmpty { Text(verbatim: measurement.notes) }
@@ -105,7 +113,8 @@ struct FruitfolioHormoneInformationView: View {
                     .padding(16)
                     .background(DesignTokens.ColorToken.softWhite, in: RoundedRectangle(cornerRadius: 16))
                 }
-                Text("Hormone Rhythm shows typical educational patterns. My Measurements contains only values you record. These records do not adjust cycle predictions or confirm ovulation, fertility, or a diagnosis.")
+                FruitfolioTranslatedText(source: "Hormone Rhythm shows typical educational patterns. My Measurements contains only values you record. These records do not adjust cycle predictions or confirm ovulation, fertility, or a diagnosis.", font: .body, serious: true)
+                    .accessibilityIdentifier("measurements.safetyNotice")
                 if measurementSavedThisVisit && !store.records.isEmpty {
                     FruitfolioTranslatedText(source: FruitfolioHormoneAdjustmentPolicy.insufficientMessage,
                         font: .custom("Chalkboard SE", size: 13, relativeTo: .footnote), serious: true)
@@ -260,7 +269,8 @@ private struct FruitfolioHormoneMeasurementEditor: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("measurement").font(.title2).bold()
+                FruitfolioFixedText(source: "measurement", font: .title2, serious: true).fontWeight(.bold).accessibilityAddTraits(.isHeader)
+                    .accessibilityIdentifier("measurements.editor.heading")
                 Picker(selection: $draft.hormone) {
                     ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
                         FruitfolioFixedText(source: hormone.label, protectedLiterals: hormone.protectedAbbreviations, serious: true).tag(hormone)
@@ -302,20 +312,25 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 FruitfolioFixedTextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
                     .accessibilityIdentifier("measurements.editor.unit")
                 if let shownDate = draft.dateForDisplay() {
-                    DatePicker("test date", selection: Binding(
+                    DatePicker(selection: Binding(
                         get: { draft.dateForDisplay() ?? shownDate },
                         set: { value in
                             do { try draft.setReportedTestDate(value, calendar: .autoupdatingCurrent) }
                             catch { errorMessage = error.localizedDescription }
-                        }), displayedComponents: .date)
+                        }), displayedComponents: .date) {
+                            FruitfolioFixedText(source: "test date", serious: true)
+                        }
+                        .accessibilityIdentifier("measurements.editor.testDate")
                 } else {
-                    Text(verbatim: draft.reportedTestDay?.description ?? "date unavailable")
-                    Text("the stored day has been kept. your current time zone cannot represent it; no replacement date was assumed.")
-                        .font(.caption)
+                    if let rawDay = draft.reportedTestDay?.description { Text(verbatim: rawDay) }
+                    else { FruitfolioFixedText(source: "date unavailable", serious: true) }
+                    FruitfolioFixedText(source: "the stored day has been kept. your current time zone cannot represent it; no replacement date was assumed.", font: .caption, serious: true)
                 }
-                Text("record the date as reported. the time of day is not collected.").font(.caption)
+                FruitfolioFixedText(source: "record the date as reported. the time of day is not collected.", font: .caption, serious: true)
+                    .accessibilityIdentifier("measurements.editor.dateInstruction")
                 if draft.reportedTestDay == nil {
-                    Button("confirm this displayed test date") {
+                    WatercolorSecondaryButton(label: "confirm this displayed test date") {
+                        guard editorIsInteractive else { return }
                         do { try draft.setReportedTestDate(draft.testDate, calendar: .autoupdatingCurrent) }
                         catch { errorMessage = error.localizedDescription }
                     }

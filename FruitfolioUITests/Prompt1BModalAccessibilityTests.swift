@@ -1787,10 +1787,17 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         app.launch()
         let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
         XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        let heading = app.descendants(matching: .any).matching(identifier: "measurements.heading").firstMatch
+        XCTAssertTrue(heading.label.contains("hormone information ♡"), "English/source fallback is not verified foreign localization")
         for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
         edit.tap()
         let editor = app.scrollViews["measurements.editor.scroll"]
         XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let editorHeading = app.descendants(matching: .any).matching(identifier: "measurements.editor.heading").firstMatch
+        XCTAssertTrue(editorHeading.label.contains("measurement"))
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "measurements.editor.testDate").firstMatch.exists)
+        let dateInstruction = app.descendants(matching: .any).matching(identifier: "measurements.editor.dateInstruction").firstMatch
+        XCTAssertTrue(dateInstruction.label.contains("record the date as reported. the time of day is not collected."))
         let hormone = app.descendants(matching: .any).matching(identifier: "measurements.editor.hormone").firstMatch
         XCTAssertTrue((hormone.label + " " + (hormone.value as? String ?? "")).contains("E2"), "Controlled symbol remains literal under source fallback")
         let unit = app.textFields["measurements.editor.unit"]
@@ -2032,6 +2039,47 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertEqual(app.staticTexts["measurementQA.persistedNotes"].label, "persisted notes: QA newer independent record")
             XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 1", "Reload must not rebase authority over a newer record")
             captureGame(app, name: "measurement-reload-keeps-conflict-language-\(language)")
+            app.terminate()
+        }
+    }
+
+    func testMeasurementHormoneLibraryFixedHeadersRetainScientificSourcesAndRecords() {
+        for language in ["en", "fr"] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion", "-fruitfolioMeasurementsLanguage", language,
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            app.launch()
+            let open = app.buttons["measurements.openLibrary"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            for _ in 0..<24 { if open.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let library = app.scrollViews["hormoneLibrary.scroll"]
+            XCTAssertTrue(library.waitForExistence(timeout: 5))
+            let heading = app.descendants(matching: .any).matching(identifier: "hormoneLibrary.heading").firstMatch
+            XCTAssertTrue(heading.label.contains("hormone library"), "Paused source fallback is not verified French translation")
+            let picker = app.descendants(matching: .any).matching(identifier: "hormoneLibrary.hormone").firstMatch
+            XCTAssertTrue((picker.label + " " + (picker.value as? String ?? "")).contains("E2"))
+            let firstSection = app.descendants(matching: .any).matching(identifier: "hormoneLibrary.section.functions").firstMatch
+            XCTAssertTrue(firstSection.waitForExistence(timeout: 10), "Actual bundled research must load; an unavailable screen is not successful integration")
+            for (key, source) in [("functions", "biological functions"), ("reproductiveRelevance", "reproductive relevance"),
+                                  ("measurementLimitations", "measurement limitations"), ("testingContext", "testing context"),
+                                  ("medicalGuidance", "medical guidance and interpretation")] {
+                let section = app.descendants(matching: .any).matching(identifier: "hormoneLibrary.section." + key).firstMatch
+                for _ in 0..<32 { if section.isHittable { break }; library.swipeUp() }
+                XCTAssertTrue(section.exists)
+                XCTAssertTrue(section.isHittable)
+                XCTAssertTrue(section.label.contains(source))
+                XCTAssertGreaterThan(section.frame.width, 0)
+                XCTAssertGreaterThanOrEqual(section.frame.minX, library.frame.minX - 2)
+                XCTAssertLessThanOrEqual(section.frame.maxX, library.frame.maxX + 2)
+            }
+            let back = app.buttons["hormoneLibrary.back"]
+            for _ in 0..<32 { if back.isHittable { break }; library.swipeDown() }
+            XCTAssertTrue(back.isHittable); back.tap()
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "measurements.heading").firstMatch.waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
+            XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 0")
+            captureGame(app, name: "hormone-library-fixed-copy-source-fallback-\(language)")
             app.terminate()
         }
     }

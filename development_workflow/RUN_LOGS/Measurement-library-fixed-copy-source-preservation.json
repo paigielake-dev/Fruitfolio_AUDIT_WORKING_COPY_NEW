@@ -1,0 +1,172 @@
+{
+  "scope": "Source/catalog preservation and written UI matrix only, not Apple/clinical/official-model verification",
+  "view_sources": {
+    "Fruitfolio/Hormone Information/HormoneInformationView.swift": {
+      "before_sha256": "1164dd8efdc1442799047249bc2ff3b92e6b157c41178a4da6032ab0297baf7f",
+      "after_sha256": "2f10520e58f5f6760eff17290ceb4e78899ad753311f140f6b2158275c7c5cb5"
+    },
+    "Fruitfolio/Hormone Information/HormoneLibraryView.swift": {
+      "before_sha256": "84d9c609b4fd4a04017baa0f6b7b9db2108c79ebeaa4ac771650feec8ae182a4",
+      "after_sha256": "6b2fca78d3d2c5d1d336ae949e3a007865e9219f0e138797830f52e2ae4ffbfb"
+    }
+  },
+  "reported_date_getter_setter_unchanged": true,
+  "raw_user_lab_value_renderers_preserved": true,
+  "scientific_excerpt_and_citation_owners_unchanged": true,
+  "measurement_models_persistence_provider_unchanged": true,
+  "original_catalog_entries_preserved": 842,
+  "added_English_keys": [
+    "Hormone Rhythm shows typical educational patterns. My Measurements contains only values you record. These records do not adjust cycle predictions or confirm ovulation, fertility, or a diagnosis.",
+    "biological functions",
+    "date shown in your current time zone; you can confirm or correct it when editing.",
+    "date unavailable",
+    "details not available in the approved library yet.",
+    "educational library excerpts, not an interpretation of your measurements. keep each excerpt\u2019s original topic and source context in view. coverage is partial; these sections do not establish a diagnosis, normal range or treatment recommendation.",
+    "have hormone results you\u2019d like to keep track of? add them whenever you\u2019re ready.",
+    "hormone information \u2661",
+    "hormone library",
+    "laboratory reference range",
+    "looking through the approved library",
+    "measurement",
+    "measurement limitations",
+    "medical guidance and interpretation",
+    "my measurements",
+    "record the date as reported. the time of day is not collected.",
+    "reproductive relevance",
+    "test date",
+    "testing context",
+    "the local hormone library could not be opened. your measurements have not changed.",
+    "the stored day has been kept. your current time zone cannot represent it; no replacement date was assumed."
+  ],
+  "catalog_total": 863,
+  "foreign_nonempty_units": 0,
+  "measurement_UI_source_matrix": [
+    {
+      "method": "testMeasurementDeletionUsesOneSharedPaperWithCancelAndConfirmedDelete",
+      "outer_source_vectors": [
+        {
+          "variable": "reduced",
+          "source_values": [
+            "false",
+            "true"
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testMeasurementEditorNativeSheetHostsDirtyDraftPaperWithoutSavingDiscardedText",
+      "outer_source_vectors": [],
+      "written_launches": 1
+    },
+    {
+      "method": "testMeasurementEditorSavesArabicDecimalCycleDayAndKeepsReportedResult",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testControlledOtherHormonePreservesEnteredNameAndExactLaboratoryFieldsUnderSourceFallback",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testUnknownMeasurementFormatKeepsMetadataEditButRejectsChangedResultWithoutGuessing",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testMeasurementEditorReloadRetainsRejectedDraftThenAcknowledgesRetry",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testMeasurementDroppedDeletionPreservesRecordsUntilExplicitReloadAndFreshConfirmation",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        },
+        {
+          "variable": "all",
+          "source_values": [
+            "false",
+            "true"
+          ]
+        }
+      ],
+      "written_launches": 4
+    },
+    {
+      "method": "testMeasurementEditorReloadKeepsOldIntentAndCannotOverwriteNewerForeignRecord",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testMeasurementHormoneLibraryFixedHeadersRetainScientificSourcesAndRecords",
+      "outer_source_vectors": [
+        {
+          "variable": "language",
+          "source_values": [
+            "\"en\"",
+            "\"fr\""
+          ]
+        }
+      ],
+      "written_launches": 2
+    },
+    {
+      "method": "testMeasurementFutureRecordNoticeKeepsExactReadableValue",
+      "outer_source_vectors": [],
+      "written_launches": 1
+    }
+  ],
+  "measurement_UI_written_NOT_RUN": 20,
+  "Guide_UI_written_NOT_RUN_unchanged": 56,
+  "UI_test_source_sha256": "1a3be229fa2d56244b7d2e492f458482bf759aa3415f0094a955c755db72d942",
+  "existing_safety_context_wording_unchanged": true,
+  "safety_context_uses_existing_long_form_source_access_and_provenance": true,
+  "clinical_meaning_and_warning_polarity": "NOT_VERIFIED; lexical/source preservation is not clinical acceptance. Official model/resources and native/clinical review remain required."
+}
