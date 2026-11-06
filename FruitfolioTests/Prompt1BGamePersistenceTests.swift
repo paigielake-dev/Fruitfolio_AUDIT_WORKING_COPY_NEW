@@ -25,6 +25,103 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let name = "Fruitfolio.game-persistence-tests." + UUID().uuidString
         return (name, try XCTUnwrap(UserDefaults(suiteName: name)))
     }
+    func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
+        let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+        store.controlMode = .classification; store.persistPreferences()
+        _ = store.ensureProgress(for: "fixture")
+        let question = Prompt28Question(id: "credit-fixture", topicQuery: "fixture", normalizedTopic: "fixture", category: "nonclinical test",
+            educationalDifficulty: .easy, questionText: "Which visual item has a star?",
+            answerOptions: [.init(id: "a", text: "Pear"), .init(id: "b", text: "Lemon")],
+            correctAnswerID: "a", explanation: "Nonclinical write-acknowledgement fixture only.",
+            sourceIDs: ["qa-only"], sourceTitles: ["Nonclinical fixture"], catchConceptID: "visual-star",
+            catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
+            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        defer { model.leaveScreen() }
+        model.rawTopic = "fixture"; model.currentQuestion = question
+        model.session = Prompt28FruitBasketEngine().newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 1)
+        model.screen = .question
+        model.answer("a", expectedQuestionID: question.id)
+        model.presentCatchIntro(expectedQuestionID: question.id)
+        model.beginCatch(expectedQuestionID: question.id)
+        XCTAssertEqual(model.screen, .catchActive)
+        for _ in 0..<model.engine.rules.goodFruitTarget {
+            model.classificationStarAvailable = false
+            model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        XCTAssertEqual(model.session?.goodFruitCaughtThisRound, model.engine.rules.goodFruitTarget)
+        XCTAssertFalse(model.didSetPersonalBestThisRound)
+        let accepted = store.topicProgress
+        let original = defaults.data(forKey: "game")
+        let score = model.session?.score
+        defaults.fault = .drop
+        model.sceneBecameInactive()
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertFalse(model.didSetPersonalBestThisRound, "An unacknowledged terminal write is not a confirmed personal best")
+        XCTAssertNil(model.roundResult)
+        XCTAssertEqual(store.topicProgress, accepted)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        XCTAssertEqual(model.session?.score, score)
+        defaults.fault = .accept
+        store.reload(); model.changeTopic()
+        XCTAssertEqual(store.topicProgress, accepted)
+        XCTAssertEqual(model.screen, .learningSetup)
+    }
+
+    func testNewAcceptedRoundClearsPreviousAcknowledgedPersonalBest() async throws {
+        let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+        store.controlMode = .classification; store.persistPreferences()
+        _ = store.ensureProgress(for: "fixture")
+        let question = Prompt28Question(id: "credit-fixture", topicQuery: "fixture", normalizedTopic: "fixture", category: "nonclinical test",
+            educationalDifficulty: .easy, questionText: "Which visual item has a star?",
+            answerOptions: [.init(id: "a", text: "Pear"), .init(id: "b", text: "Lemon")],
+            correctAnswerID: "a", explanation: "Nonclinical write-acknowledgement fixture only.",
+            sourceIDs: ["qa-only"], sourceTitles: ["Nonclinical fixture"], catchConceptID: "visual-star",
+            catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
+            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        defer { model.leaveScreen() }
+        model.rawTopic = "fixture"; model.currentQuestion = question
+        model.session = Prompt28FruitBasketEngine().newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 1)
+        model.screen = .question
+        model.answer("a", expectedQuestionID: question.id)
+        model.presentCatchIntro(expectedQuestionID: question.id)
+        model.beginCatch(expectedQuestionID: question.id)
+        XCTAssertEqual(model.screen, .catchActive)
+        for _ in 0..<model.engine.rules.goodFruitTarget {
+            model.classificationStarAvailable = false
+            model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        model.sceneBecameInactive()
+        XCTAssertEqual(model.screen, .basketReveal)
+        XCTAssertTrue(model.didSetPersonalBestThisRound)
+        model.changeTopic()
+        model.rawTopic = "fixture"; model.currentQuestion = question
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 1)
+        model.screen = .question
+        model.answer("a", expectedQuestionID: question.id)
+        model.presentCatchIntro(expectedQuestionID: question.id)
+        model.beginCatch(expectedQuestionID: question.id)
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertFalse(model.didSetPersonalBestThisRound)
+        XCTAssertNil(model.roundResult)
+    }
+
     func testActualGoodFruitCreditRequiresAcknowledgedProgress() async throws {
         try assertDroppedControllerCredit(isStar: false)
     }

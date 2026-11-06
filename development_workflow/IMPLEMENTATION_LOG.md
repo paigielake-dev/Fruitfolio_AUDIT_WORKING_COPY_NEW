@@ -2917,3 +2917,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 863, "native_CPU_XCTest": 885, "SwiftTesting_each": 21, "parent_baseline_XCTest": 16, "parent_baseline_failed_assertions": 4, "earlier_invalid_fixture_executed_tests": 0, "workflow_checks": 60, "syntax_files": 311, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Reproduce terminal-round personal-best flag publication before rejected progress acknowledgement using actual settled10fruit controller. Stage personal-best/finalized marker after ack while preserving explicit-reload→topic-setup (do not introduce stale replay). Verify success/failure paths and checkpoints.
 - Commit: containing commit for batch Controller-fruit-star-credit-after-progress-acknowledgement.
+
+## Terminal-round-and-personal-best-after-acknowledgement
+
+- Parent checkpoint: fc7336761c11b65ec048fcbe2804b1abc3048663.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/TERMINAL_ROUND_ACKNOWLEDGEMENT.md.
+- Actual success/failure terminal paths finalize only after explicit acknowledged stats write; success personal-best flag likewise follows ack. Valid new catch resets prior round PB without changing duplicate/invalid begin behavior. Pending terminal action remains consumed on failure, preserving explicit reload→topic setup and preventing stale external-data replay. New actual10-settled-fruit failure regression reproduced1assertion before fix; secondactual success→newlegitimate round verifiesPBreset. Full865/887XCTest+21SwiftTesting each passed. Apple timing/publication/official model not certified.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 865, "native_CPU_XCTest": 887, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 1, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Add actual dropped-write regressions for first topic session creation, returning-topic reset, level reset and difficulty/session mutation. Expose discardable acknowledgement results for preference/reset APIs, gate dependent model/session changes on ack, preserve explicit recovery and existing UX, execute all supported checks and record checklist evidence.
+- Commit: containing commit for batch Terminal-round-and-personal-best-after-acknowledgement.

@@ -339,6 +339,7 @@ final class Prompt28FruitBasketViewModel {
         roundLedger = Prompt28RoundLedger(roundID: roundID, targetFruit: engine.rules.goodFruitTarget,
             gameLevelPlayed: session.currentGameLevel, startingScore: session.score, startingPasses: session.availableStarPasses)
         roundResult = nil
+        didSetPersonalBestThisRound = false
         pendingRoundSuccess = nil
         spawnPlanner.reset()
         starPlanner = Prompt28RareStarPlanner()
@@ -763,15 +764,16 @@ final class Prompt28FruitBasketViewModel {
             screen = .error
             return
         }
-        finalizedRoundID = expectedRoundID
         pendingRoundSuccess = nil
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
+        var progress = store.progress(for: session.normalizedTopicID)
+            ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
         progress = Prompt28ProgressionPolicy.afterSuccessfulRound(progress)
-        didSetPersonalBestThisRound = session.score > progress.bestScore
+        let isPersonalBest = session.score > progress.bestScore
         progress.bestScore = max(progress.bestScore, session.score)
         progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        guard !store.isReadOnly else { return }
+        guard store.updateProgress(progress) else { return }
+        finalizedRoundID = expectedRoundID
+        didSetPersonalBestThisRound = isPersonalBest
         session.currentGameLevel = progress.currentGameLevel
         self.session = session
         roundResult = roundLedger.result(score: session.score, passesRemaining: session.availableStarPasses, nextGameLevel: session.currentGameLevel)
@@ -792,14 +794,14 @@ final class Prompt28FruitBasketViewModel {
             screen = .error
             return
         }
-        finalizedRoundID = expectedRoundID
         pendingRoundSuccess = nil
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
+        var progress = store.progress(for: session.normalizedTopicID)
+            ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
         progress = Prompt28ProgressionPolicy.afterUnsuccessfulRound(progress)
         progress.bestScore = max(progress.bestScore, session.score)
         progress.bestStreak = max(progress.bestStreak, session.currentStreak)
-        store.updateProgress(progress)
-        guard !store.isReadOnly else { return }
+        guard store.updateProgress(progress) else { return }
+        finalizedRoundID = expectedRoundID
         session.currentGameLevel = progress.currentGameLevel
         self.session = session
         roundResult = roundLedger.result(score: session.score, passesRemaining: session.availableStarPasses, nextGameLevel: session.currentGameLevel)
