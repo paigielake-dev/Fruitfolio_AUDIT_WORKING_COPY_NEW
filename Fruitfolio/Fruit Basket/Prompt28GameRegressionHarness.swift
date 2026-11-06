@@ -119,6 +119,7 @@ struct Prompt28GameRegressionHarness: View {
             model.openSetup()
             return
         }
+        if scenario == "home" { model.screen = .home; return }
         if scenario == "rules" { model.screen = .howItWorks; return }
         if scenario == "leaderboard" || scenario == "leaderboard-username-future" {
             model.screen = .leaderboard

@@ -2796,3 +2796,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_native_LifeBridge_layering": "NOT_RUN", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Resume original Part7 Fruit Basket founder-revised home/How It Works/topic wording and canonical interaction requirements; use immutable founder text and preserve existing game mechanics/art/research.315–317remain external source blockers.
 - Commit: containing commit for batch LifeBridge-native-sheet-shared-presentation-surfaces.
+
+## Game-home-scroll-and-native-topic-fixed-copy
+
+- Parent checkpoint: a6fc619a84eb8afc01a700c4d837436b55571508.
+- Source-order requirements: [320, 321, 322, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Existing inventory home/topic literals now use shared semantic fixed translation; raw topic binding/axis/identifier unchanged via native helper. Home uses bounded viewport ScrollView/minHeight, preserving normal spacing and scrolling large text. Actual private game harness adds home mode; four English/paused-French × Reduce Motion launches written with portrait/landscape controls and native exact topic input. Two English additions preserve956 entries,958 total. Exact revised-copy320–322 ambiguity documented and asynchronous clarification pending; no revised-copy certification. Game model/controller/research byte-preserved.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 958, "new_English_entries": 2, "new_game_home_Apple_launches_written_NOT_RUN": 4, "orientation_checks_per_home_launch": 2, "exact_revised_founder_copy": "PENDING clarification; no certification", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue original starred/unstarred/standalone star explanation and universal game popup/semantic/mechanic requirements. Preserve known current copy pending exact founder response; do independent work without waiting or inventing wording.
+- Commit: containing commit for batch Game-home-scroll-and-native-topic-fixed-copy.

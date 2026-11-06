@@ -100,6 +100,49 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         add(attachment)
     }
 
+    func testGameHomeAndNativeTopicInputRemainReachableAtAccessibilitySize() {
+        for language in ["en", "fr"] {
+            for reduced in [false, true] {
+                XCUIDevice.shared.orientation = .portrait
+                let app = XCUIApplication()
+                app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "home",
+                    "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                    "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+                if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+                app.launch()
+                let scroll = app.scrollViews["fruitBasket.home.scroll"]
+                XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+                XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "fruitBasket.home.invitation").firstMatch.exists)
+                for orientation in [XCUIDeviceOrientation.portrait, .landscapeLeft] {
+                    XCUIDevice.shared.orientation = orientation
+                    for id in ["fruitBasket.home.play", "fruitBasket.home.rules", "fruitBasket.openLeaderboard"] {
+                        let button = app.buttons[id]
+                        for _ in 0..<16 { if button.isHittable { break }; scroll.swipeUp() }
+                        XCTAssertTrue(button.isHittable)
+                        XCTAssertGreaterThanOrEqual(button.frame.height, 44)
+                        XCTAssertGreaterThanOrEqual(button.frame.minX, app.frame.minX)
+                        XCTAssertLessThanOrEqual(button.frame.maxX, app.frame.maxX)
+                    }
+                    for _ in 0..<16 { if app.buttons["fruitBasket.home.play"].isHittable { break }; scroll.swipeDown() }
+                }
+                XCUIDevice.shared.orientation = .portrait
+                for _ in 0..<16 { if app.buttons["fruitBasket.home.play"].isHittable { break }; scroll.swipeDown() }
+                app.buttons["fruitBasket.home.play"].tap()
+                let input = app.textFields["fruitBasket.topicInput"]
+                let anyInput = app.descendants(matching: .any).matching(identifier: "fruitBasket.topicInput").firstMatch
+                XCTAssertTrue(anyInput.waitForExistence(timeout: 5))
+                let native = input.exists ? input : app.textViews["fruitBasket.topicInput"]
+                XCTAssertTrue(native.exists)
+                for _ in 0..<16 { if native.isHittable { break }; app.swipeUp() }
+                XCTAssertTrue(native.isHittable); native.tap(); native.typeText("reproductive health")
+                XCTAssertEqual(native.value as? String, "reproductive health")
+                captureGame(app, name: "game-home-native-topic-\(language)-\(reduced)")
+                app.terminate()
+                XCUIDevice.shared.orientation = .portrait
+            }
+        }
+    }
+
     func testGameClassificationDistinguishesGoodFruitAndBonusStarAtAccessibilitySize() {
         for reduced in [false, true] {
             for scenario in ["good", "star"] {

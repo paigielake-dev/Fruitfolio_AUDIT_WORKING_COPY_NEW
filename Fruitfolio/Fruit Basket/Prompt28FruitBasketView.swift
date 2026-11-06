@@ -385,7 +385,12 @@ struct Prompt28FruitBasketView: View {
         } else {
             switch viewModel.screen {
             case .home:
-                home
+                GeometryReader { viewport in
+                    ScrollView {
+                        home.frame(minHeight: viewport.size.height)
+                    }
+                    .accessibilityIdentifier("fruitBasket.home.scroll")
+                }
 
             case .howItWorks:
                 howItWorks
@@ -586,7 +591,7 @@ struct Prompt28FruitBasketView: View {
 
             Spacer(minLength: 8)
 
-            Text("fruit basket")
+            FruitfolioFixedText(source: "fruit basket", font: .custom("Chalkboard SE", size: 34, relativeTo: .largeTitle))
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -597,12 +602,14 @@ struct Prompt28FruitBasketView: View {
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .accessibilityAddTraits(.isHeader)
+                .accessibilityIdentifier("fruitBasket.home.heading")
 
             FruitfolioImage(id: .fruit_strawberry_silly)
                 .frame(width: 92, height: 92)
                 .accessibilityLabel("Strawberry")
 
-            Text("ready to collect some fruit\nand learn a little? ♡")
+            FruitfolioFixedText(source: "ready to collect some fruit\nand learn a little? ♡", protectedLiterals: ["♡"], font: .custom("Chalkboard SE", size: 17, relativeTo: .headline))
+                .accessibilityIdentifier("fruitBasket.home.invitation")
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -637,6 +644,7 @@ struct Prompt28FruitBasketView: View {
                 ) {
                     viewModel.openSetup()
                 }
+                .accessibilityIdentifier("fruitBasket.home.play")
 
                 Prompt28WatercolorButton(
                     title: "how it works",
@@ -644,6 +652,7 @@ struct Prompt28FruitBasketView: View {
                 ) {
                     viewModel.screen = .howItWorks
                 }
+                .accessibilityIdentifier("fruitBasket.home.rules")
 
                 Prompt28WatercolorButton(
                     title: "leaderboard",
@@ -752,7 +761,7 @@ struct Prompt28FruitBasketView: View {
                         alignment: .center,
                         spacing: 14
                     ) {
-                        Text("what do you want to learn about? ♡")
+                        FruitfolioFixedText(source: "what do you want to learn about? ♡", protectedLiterals: ["♡"], font: Prompt28TextRole.screenTitle.font)
                             .prompt28Text(.screenTitle)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
@@ -761,11 +770,7 @@ struct Prompt28FruitBasketView: View {
                                 vertical: true
                             )
 
-                        TextField(
-                            "type literally anything…",
-                            text: $viewModel.rawTopic,
-                            axis: .vertical
-                        )
+                        FruitfolioFixedTextField("type literally anything…", text: $viewModel.rawTopic, axis: .vertical)
                         .accessibilityIdentifier("fruitBasket.topicInput")
                         .textInputAutocapitalization(.never)
                         .font(
@@ -804,7 +809,7 @@ struct Prompt28FruitBasketView: View {
                             )
                         )
 
-                        Text("or pick something!")
+                        FruitfolioFixedText(source: "or pick something!", font: Prompt28TextRole.secondary.font)
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
@@ -814,7 +819,7 @@ struct Prompt28FruitBasketView: View {
                         )
                         .frame(maxWidth: 286)
 
-                        Text("how deep should we go?")
+                        FruitfolioFixedText(source: "how deep should we go?", font: Prompt28TextRole.sectionHeading.font)
                             .prompt28Text(.sectionHeading)
                             .multilineTextAlignment(.center)
 
