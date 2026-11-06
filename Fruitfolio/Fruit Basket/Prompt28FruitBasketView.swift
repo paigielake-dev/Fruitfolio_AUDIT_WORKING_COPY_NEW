@@ -1380,7 +1380,8 @@ struct Prompt28FruitBasketView: View {
                 fruitIDs: viewModel.collectedFruit,
                 transits: viewModel.catchTransits,
                 playfield: geometry.playfield,
-                basketX: viewModel.basketX
+                basketX: viewModel.basketX,
+                groundStateSource: viewModel.basketIsInPuddle ? "in a puddle; movement meets gentle resistance" : "on dry ground"
             )
             .frame(width: geometry.basketWidth, height: 132)
             .position(
@@ -1405,8 +1406,6 @@ struct Prompt28FruitBasketView: View {
             )
             .zIndex(30)
             .accessibilityIdentifier("fruitBasket.round.basket")
-            .accessibilityLabel("Basket, \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget)")
-            .accessibilityValue(viewModel.basketIsInPuddle ? "in a puddle; movement meets gentle resistance" : "on dry ground")
         }
         .onAppear { viewModel.updatePlayfield(size: geometry.playfield) }
         .onChange(of: geometry.playfield) { _, size in viewModel.updatePlayfield(size: size) }
@@ -1488,6 +1487,7 @@ struct Prompt28FruitBasketView: View {
                 fruitIDs: viewModel.collectedFruit,
                 transits: viewModel.catchTransits
             )
+            .accessibilityIdentifier("fruitBasket.classification.basketArt")
             .frame(
                 width: 150,
                 height: 132
@@ -2375,15 +2375,38 @@ private struct Prompt28MovingFruit: View {
     }
 }
 
+@MainActor
 private struct Prompt28BasketProgressView: View {
     let count: Int
     let fruitIDs: [Prompt28FruitID]
     var transits: [Prompt28CatchTransit] = []
     var playfield: CGSize = .zero
     var basketX: Double = 0.5
+    var groundStateSource: String? = nil
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var labelTranslation = FruitfolioControlTranslationState()
+    @StateObject private var groundTranslation = FruitfolioControlTranslationState()
+    private var labelKey: FruitfolioControlTranslationState.Key {
+        .init(source: "basket", language: settings.language)
+    }
+    private var groundKey: FruitfolioControlTranslationState.Key {
+        .init(source: groundStateSource ?? "", language: settings.language)
+    }
 
     var body: some View {
+        let label = labelTranslation.presentation(for: labelKey)
+        let ground = groundTranslation.presentation(for: groundKey)
+        let fraction = Prompt28GameStatisticFormatting.fraction(count,
+            target: Prompt28RoundRules.canonical.goodFruitTarget, language: settings.language)
+        let value = groundStateSource == nil ? fraction
+            : fraction + "; " + FruitfolioSemanticDocument.plainText(from: ground.text)
+        let hint = [
+            label.status.accessibilityDetail(original: "basket", localized: { settings.localized($0) }),
+            groundStateSource.map { ground.status.accessibilityDetail(original: $0, localized: { settings.localized($0) }) } ?? ""
+        ].reduce(into: [String]()) { details, detail in
+            if !detail.isEmpty, !details.contains(detail) { details.append(detail) }
+        }.joined(separator: ". ")
         GeometryReader { proxy in
             let width = max(proxy.size.width, 1)
             let height = max(proxy.size.height, 1)
@@ -2442,7 +2465,7 @@ private struct Prompt28BasketProgressView: View {
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
 
-                Text("\(count) / 10")
+                Text(verbatim: fraction)
                     .font(.custom("Chalkboard SE", size: 13, relativeTo: .caption).bold())
                     .monospacedDigit()
                     .padding(.horizontal, 8).padding(.vertical, 3)
@@ -2452,7 +2475,18 @@ private struct Prompt28BasketProgressView: View {
             .frame(width: width, height: height)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Basket \(count) of 10")
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: label.text)))
+        .accessibilityValue(Text(value))
+        .accessibilityHint(Text(hint))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: labelKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await labelTranslation.resolve(labelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: groundKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            guard groundStateSource != nil else { return }
+            await groundTranslation.resolve(groundKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 

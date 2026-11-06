@@ -194,6 +194,36 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testBasketArtworkUsesSeparateLocalizedLabelAndNumericValue() {
+        for catchMode in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", catchMode ? "hud-catch" : "hud-classification",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let identifier = catchMode ? "fruitBasket.round.basket" : "fruitBasket.classification.basketArt"
+            let basket = app.descendants(matching: .any).matching(identifier: identifier).firstMatch
+            XCTAssertTrue(basket.waitForExistence(timeout: 5))
+            if !catchMode {
+                let scroll = app.scrollViews["fruitBasket.classification.scroll"]
+                for _ in 0..<24 { if basket.isHittable { break }; scroll.swipeUp() }
+            }
+            XCTAssertEqual(basket.label, "basket")
+            let value = basket.value as? String ?? ""
+            XCTAssertEqual(value.compactMap(\.wholeNumberValue), [0, 1, 0])
+            XCTAssertEqual(value.contains("on dry ground"), catchMode)
+            XCTAssertFalse(value.contains("in a puddle"))
+            XCTAssertFalse(basket.label.contains("0"))
+            captureGame(app, name: "basket-catch-\(catchMode)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testClassificationLocalizedPresentationRetainsRealCatchAndPassLedger() {
         for serious in [false, true] {
         for language in ["en", "ar"] {
@@ -222,6 +252,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let caught = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "raw basket count: 1"), object: actualCount)
             XCTAssertEqual(XCTWaiter.wait(for: [caught], timeout: 5), .completed)
             XCTAssertEqual(app.staticTexts["gameQA.rawSessionScore"].label, "raw session score: 10")
+            let basketArt = app.descendants(matching: .any).matching(identifier: "fruitBasket.classification.basketArt").firstMatch
+            XCTAssertEqual((basketArt.value as? String ?? "").compactMap(\.wholeNumberValue), [1, 1, 0])
             for _ in 0..<24 { if passFruit.isHittable { break }; scroll.swipeUp() }
             XCTAssertTrue(passFruit.isHittable)
             passFruit.tap()
