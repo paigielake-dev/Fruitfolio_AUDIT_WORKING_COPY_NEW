@@ -19,8 +19,13 @@ public protocol Prompt20DailyLogRepository: Sendable {
     ) async throws -> [Prompt20DailyLog]
 }
 
+/// Explicit read-only recovery capability; reload never rewrites a saved file.
+public protocol Prompt20ReloadableDailyLogRepository: Prompt20DailyLogRepository {
+    func reloadSavedLogs() async throws
+}
+
 public actor Prompt20CycleDailyLogStore:
-    Prompt20DailyLogRepository {
+    Prompt20ReloadableDailyLogRepository {
 
     public static let shared =
         Prompt20CycleDailyLogStore()
@@ -62,6 +67,7 @@ public actor Prompt20CycleDailyLogStore:
     private let calendar:
         Calendar
 
+    private var expectedPersistedData: Data?
     private var loaded =
         false
 
@@ -329,177 +335,74 @@ public actor Prompt20CycleDailyLogStore:
                 }
     }
 
-    public func
-        resetInMemoryCacheForTesting() {
-
-        loaded =
-            false
-
-        logsByKey =
-            [:]
-
-        processedRequestIDs =
-            []
-
-        processedRequestSet =
-            []
+    public func reloadSavedLogs() async throws {
+        resetCache()
+        try ensureLoaded()
     }
 
-    private func
-        ensureLoaded() throws {
+    public func resetInMemoryCacheForTesting() { resetCache() }
 
-        guard
-            !loaded
-        else {
+    private func resetCache() {
+        loaded = false
+        expectedPersistedData = nil
+        logsByKey = [:]
+        processedRequestIDs = []
+        processedRequestSet = []
+    }
+
+    private func readPersistedData() throws -> Data? {
+        guard let fileURL, FileManager.default.fileExists(atPath: fileURL.path) else { return nil }
+        do { return try Data(contentsOf: fileURL) }
+        catch { throw Prompt20DailyLogDomainError.persistenceUnavailable }
+    }
+
+    private func requireCurrentSnapshot() throws {
+        guard fileURL != nil else { return }
+        guard try readPersistedData() == expectedPersistedData else {
+            throw Prompt20DailyLogDomainError.storageChanged
+        }
+    }
+
+    private func ensureLoaded() throws {
+        if loaded { try requireCurrentSnapshot(); return }
+        guard let data = try readPersistedData() else {
+            expectedPersistedData = nil
+            loaded = true
             return
         }
-
-        guard
-            let fileURL
-        else {
-            loaded =
-                true
-
-            return
-        }
-
-        guard
-            FileManager
-                .default
-                .fileExists(
-                    atPath:
-                        fileURL.path
-                )
-        else {
-            loaded =
-                true
-
-            return
-        }
-
         do {
-            let data =
-                try Data(
-                    contentsOf:
-                        fileURL
-                )
-
-            let decoder =
-                JSONDecoder()
-
-            decoder.dateDecodingStrategy =
-                .millisecondsSince1970
-
-            let envelope =
-                try decoder.decode(
-                    Envelope.self,
-                    from:
-                        data
-                )
-
-            guard
-                envelope
-                    .schemaVersion
-                ==
-                Self
-                    .schemaVersion
-            else {
-                throw
-                    Prompt20DailyLogDomainError
-                        .corruptPersistence
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .millisecondsSince1970
+            let envelope = try decoder.decode(Envelope.self, from: data)
+            guard envelope.schemaVersion == Self.schemaVersion else {
+                throw Prompt20DailyLogDomainError.unsupportedPersistence
             }
-
-            /*
-             Reconstruct by logical storage key.
-
-             If duplicate records somehow exist,
-             keep the latest revision. If revisions
-             are equal, keep the latest update time.
-             */
-            var reconstructed:
-                [StorageKey: Prompt20DailyLog] =
-                [:]
-
-            for log
-                in envelope.logs {
-
-                let key =
-                    StorageKey(
-                        ownerID:
-                            log.ownerID,
-                        date:
-                            log.date
-                    )
-
-                if let existing =
-                    reconstructed[
-                        key
-                    ] {
-
-                    if
-                        log.revision
-                            >
-                        existing.revision
-                        ||
-                        (
-                            log.revision
-                                ==
-                            existing.revision
-                            &&
-                            log.updatedAt
-                                >
-                            existing.updatedAt
-                        ) {
-
-                        reconstructed[
-                            key
-                        ] =
-                            log
-                    }
-
-                } else {
-                    reconstructed[
-                        key
-                    ] =
-                        log
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .millisecondsSince1970
+            guard FruitfolioJSONFieldCoverage.preservesFields(original: data, encoded: try encoder.encode(envelope)),
+                  envelope.recentlyProcessedRequestIDs.count <= Self.maxRememberedRequestIDs else {
+                throw Prompt20DailyLogDomainError.unsupportedPersistence
+            }
+            // Ambiguous records must not be silently coalesced then rewritten.
+            var reconstructed: [StorageKey: Prompt20DailyLog] = [:]
+            var identities = Set<UUID>()
+            for log in envelope.logs {
+                let key = StorageKey(ownerID: log.ownerID, date: log.date)
+                guard reconstructed[key] == nil, identities.insert(log.id).inserted else {
+                    throw Prompt20DailyLogDomainError.corruptPersistence
                 }
+                reconstructed[key] = log
             }
-
-            logsByKey =
-                reconstructed
-
-            /*
-             Bound request-ID history so persistence
-             cannot grow indefinitely.
-             */
-            processedRequestIDs =
-                Array(
-                    envelope
-                        .recentlyProcessedRequestIDs
-                        .suffix(
-                            Self
-                                .maxRememberedRequestIDs
-                        )
-                )
-
-            processedRequestSet =
-                Set(
-                    processedRequestIDs
-                )
-
-            loaded =
-                true
-
-        } catch let error
-            as Prompt20DailyLogDomainError {
-
-            throw error
-
-        } catch {
-            throw
-                Prompt20DailyLogDomainError
-                    .corruptPersistence
-        }
+            guard Set(envelope.recentlyProcessedRequestIDs).count == envelope.recentlyProcessedRequestIDs.count else {
+                throw Prompt20DailyLogDomainError.corruptPersistence
+            }
+            logsByKey = reconstructed
+            processedRequestIDs = envelope.recentlyProcessedRequestIDs
+            processedRequestSet = Set(processedRequestIDs)
+            expectedPersistedData = data
+            loaded = true
+        } catch let error as Prompt20DailyLogDomainError { throw error }
+        catch { throw Prompt20DailyLogDomainError.corruptPersistence }
     }
 
     private func remember(
@@ -570,6 +473,8 @@ public actor Prompt20CycleDailyLogStore:
             return
         }
 
+        try requireCurrentSnapshot()
+
         let directory =
             fileURL
                 .deletingLastPathComponent()
@@ -634,6 +539,7 @@ public actor Prompt20CycleDailyLogStore:
                         envelope
                     )
 
+            try requireCurrentSnapshot()
             try data.write(
                 to:
                     fileURL,
@@ -641,6 +547,10 @@ public actor Prompt20CycleDailyLogStore:
                     .atomic
             )
 
+            expectedPersistedData = data
+
+        } catch let error as Prompt20DailyLogDomainError {
+            throw error
         } catch {
             throw
                 Prompt20DailyLogDomainError

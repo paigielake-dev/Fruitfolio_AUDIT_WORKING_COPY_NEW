@@ -48,6 +48,15 @@ public final class Prompt20DailyLogViewModel {
     #endif
     public private(set) var hasUnsavedChanges = false
 
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var loadFailureMessage: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    public private(set) var saveFailureMessage: String?
+
     public let ownerID: Prompt20DailyLogOwnerID
     public let selectedDate: Date
     public let selectedDay: Prompt20LocalDay
@@ -119,6 +128,7 @@ public final class Prompt20DailyLogViewModel {
         }
 
         loadState = .loading
+        loadFailureMessage = nil
         // Cancellation must leave the same view model reloadable on reappearance.
         defer { if loadState == .loading { loadState = .idle } }
         saveState = .idle
@@ -163,8 +173,35 @@ public final class Prompt20DailyLogViewModel {
                 return
             }
 
+            loadFailureMessage = persistenceMessage(error)
             loadState = .failed
         }
+    }
+
+    /// Only an initial failed load can reload its saved reference. A loaded
+    /// editor's draft is never replaced by a retry/recovery action.
+    public func retryLoad() async {
+        guard loadState == .failed, !hasUnsavedChanges else { return }
+        loadState = .loading
+        loadFailureMessage = nil
+        defer { if loadState == .loading { loadState = .idle } }
+        do {
+            if let reloadable = repository as? any Prompt20ReloadableDailyLogRepository {
+                try await reloadable.reloadSavedLogs()
+            }
+            guard !Task.isCancelled else { return }
+            loadState = .idle
+            await load()
+        } catch {
+            guard !Task.isCancelled else { return }
+            loadFailureMessage = persistenceMessage(error)
+            loadState = .failed
+        }
+    }
+
+    private func persistenceMessage(_ error: Error) -> String {
+        (error as? Prompt20DailyLogDomainError)?.errorDescription
+            ?? "saved logs could not be accessed. please try again."
     }
 
     public func setExpanded(
@@ -201,6 +238,7 @@ public final class Prompt20DailyLogViewModel {
 
         if saveState == .saved ||
             saveState == .failed {
+            saveFailureMessage = nil
             saveState = .idle
         }
     }
@@ -280,6 +318,7 @@ public final class Prompt20DailyLogViewModel {
             return false
         }
 
+        saveFailureMessage = nil
         guard !isFutureDate else {
             saveState = .failed
             return false
@@ -337,6 +376,7 @@ public final class Prompt20DailyLogViewModel {
                     issues
             }
 
+            saveFailureMessage = persistenceMessage(error)
             saveState = .failed
             return false
         } catch {
@@ -344,6 +384,7 @@ public final class Prompt20DailyLogViewModel {
                 return false
             }
 
+            saveFailureMessage = persistenceMessage(error)
             saveState = .failed
             return false
         }

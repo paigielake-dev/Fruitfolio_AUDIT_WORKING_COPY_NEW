@@ -190,6 +190,150 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(original?.generalNote?.text, "original observation")
     }
 
+    private func seedPersistenceFile(_ file: URL) async throws -> (store: Prompt20CycleDailyLogStore, log: Prompt20DailyLog, bytes: Data, now: Date, calendar: Calendar) {
+        let cal = calendar("UTC")
+        let now = date(2026, 9, 7, calendar: cal)
+        let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: cal)
+        var draft = Prompt20DailyLogDraft(); draft.generalNote = "original observation"
+        draft.temperatureText = "98.67"; draft.temperatureUnit = .fahrenheit
+        let saved = try await store.save(ownerID: .localDevice, date: day(2026, 9, 7), draft: draft, now: now)
+        return (store, try XCTUnwrap(saved), try Data(contentsOf: file), now, cal)
+    }
+
+    func testOutsideDailyLogWriterCannotBeOverwrittenAndReloadIsReadOnly() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        let writer = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+        var newer = Prompt20DailyLogDraft(log: fixture.log, displayTemperatureUnit: .celsius)
+        newer.generalNote = "newer outside observation"
+        _ = try await writer.save(ownerID: .localDevice, date: fixture.log.date, draft: newer, now: fixture.now)
+        let bytes = try Data(contentsOf: file)
+        var old = Prompt20DailyLogDraft(log: fixture.log, displayTemperatureUnit: .fahrenheit)
+        old.generalNote = "must not overwrite"
+        do {
+            _ = try await fixture.store.save(ownerID: .localDevice, date: fixture.log.date, draft: old, now: fixture.now)
+            XCTFail("Outside writer must invalidate the cached snapshot")
+        } catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .storageChanged) }
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        do { _ = try await fixture.store.load(ownerID: .localDevice, date: fixture.log.date); XCTFail("Read must not report a stale cache") }
+        catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .storageChanged) }
+        try await fixture.store.reloadSavedLogs()
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        let current = try await fixture.store.load(ownerID: .localDevice, date: fixture.log.date)
+        XCTAssertEqual(current?.generalNote?.text, "newer outside observation")
+    }
+
+    func testDeletedDailyLogFileCannotBeResurrectedFromLoadedCache() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        try FileManager.default.removeItem(at: file)
+        var draft = Prompt20DailyLogDraft(); draft.generalNote = "stale editor"
+        for _ in 0..<2 {
+            do { _ = try await fixture.store.save(ownerID: .localDevice, date: fixture.log.date, draft: draft, now: fixture.now); XCTFail("Cleared file must stay cleared") }
+            catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .storageChanged) }
+            XCTAssertFalse(FileManager.default.fileExists(atPath: file.path))
+        }
+        try await fixture.store.reloadSavedLogs()
+        let empty = try await fixture.store.allActiveLogs(ownerID: .localDevice)
+        XCTAssertTrue(empty.isEmpty)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file.path))
+        draft.generalNote = "new explicitly entered day"
+        _ = try await fixture.store.save(ownerID: .localDevice, date: day(2026, 9, 6), draft: draft, now: fixture.now)
+        let restored = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+        let active = try await restored.allActiveLogs(ownerID: .localDevice)
+        XCTAssertEqual(active.map(\.date), [day(2026, 9, 6)])
+    }
+
+    func testUnknownDailyLogFieldsAndExplicitNullsPreserveOriginalBytes() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        for location in ["root", "record", "temperature", "explicit-null"] {
+            var object = try XCTUnwrap(JSONSerialization.jsonObject(with: fixture.bytes) as? [String: Any])
+            var logs = try XCTUnwrap(object["logs"] as? [[String: Any]])
+            switch location {
+            case "root": object["futureRootMetadata"] = ["retain": true]
+            case "record": logs[0]["futureObservation"] = ["value": "exact future data"]
+            case "temperature":
+                var temperature = try XCTUnwrap(logs[0]["temperature"] as? [String: Any])
+                temperature["futurePrecision"] = "preserve"; logs[0]["temperature"] = temperature
+            default: logs[0]["symptoms"] = NSNull()
+            }
+            object["logs"] = logs
+            let bytes = try JSONSerialization.data(withJSONObject: object)
+            try bytes.write(to: file)
+            let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+            do { _ = try await store.load(ownerID: .localDevice, date: fixture.log.date); XCTFail(location) }
+            catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .unsupportedPersistence, location) }
+            var draft = Prompt20DailyLogDraft(); draft.generalNote = "must not replace future fields"
+            do { _ = try await store.save(ownerID: .localDevice, date: fixture.log.date, draft: draft, now: fixture.now); XCTFail(location) }
+            catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .unsupportedPersistence, location) }
+            XCTAssertEqual(try Data(contentsOf: file), bytes, location)
+        }
+    }
+
+    func testAmbiguousOrFutureDailyLogEnvelopesAreNotSilentlyNormalized() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        let encoder = JSONEncoder(); encoder.dateEncodingStrategy = .millisecondsSince1970
+        let original = try JSONSerialization.jsonObject(with: encoder.encode(fixture.log))
+        for variant in ["schema", "history-capacity", "duplicate-day", "duplicate-id", "duplicate-request"] {
+            var object: [String: Any] = ["schemaVersion": 1, "logs": [original], "recentlyProcessedRequestIDs": []]
+            var expected = Prompt20DailyLogDomainError.corruptPersistence
+            switch variant {
+            case "schema": object["schemaVersion"] = 2; expected = .unsupportedPersistence
+            case "history-capacity": object["recentlyProcessedRequestIDs"] = (0..<129).map { _ in UUID().uuidString }; expected = .unsupportedPersistence
+            case "duplicate-day":
+                var other = try XCTUnwrap(original as? [String: Any]); other["id"] = UUID().uuidString
+                object["logs"] = [original, other]
+            case "duplicate-id":
+                var other = try XCTUnwrap(original as? [String: Any])
+                other["date"] = try JSONSerialization.jsonObject(with: encoder.encode(day(2026, 9, 6)), options: [.fragmentsAllowed])
+                object["logs"] = [original, other]
+            default:
+                let id = UUID().uuidString; object["recentlyProcessedRequestIDs"] = [id, id]
+            }
+            let bytes = try JSONSerialization.data(withJSONObject: object); try bytes.write(to: file)
+            let store = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+            do { _ = try await store.load(ownerID: .localDevice, date: fixture.log.date); XCTFail(variant) }
+            catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, expected, variant) }
+            XCTAssertEqual(try Data(contentsOf: file), bytes)
+        }
+    }
+
+    func testExactSnapshotChangeRequiresReloadEvenWhenDecodedRecordsMatch() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        let bytes = fixture.bytes + Data("\n  ".utf8); try bytes.write(to: file)
+        do { _ = try await fixture.store.load(ownerID: .localDevice, date: fixture.log.date); XCTFail("Exact snapshot changed") }
+        catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .storageChanged) }
+        try await fixture.store.reloadSavedLogs()
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        let actual = try await fixture.store.load(ownerID: .localDevice, date: fixture.log.date)
+        XCTAssertEqual(actual?.temperature, fixture.log.temperature)
+    }
+
+    func testOutsideFutureFieldsStayProtectedAfterExplicitReloadAttempt() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await seedPersistenceFile(file)
+        var object = try XCTUnwrap(JSONSerialization.jsonObject(with: fixture.bytes) as? [String: Any])
+        object["futureSourceMetadata"] = "must remain"
+        let bytes = try JSONSerialization.data(withJSONObject: object); try bytes.write(to: file)
+        do { _ = try await fixture.store.allActiveLogs(ownerID: .localDevice); XCTFail("Cache cannot mask an outside change") }
+        catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .storageChanged) }
+        do { try await fixture.store.reloadSavedLogs(); XCTFail("Reload cannot discard future fields") }
+        catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .unsupportedPersistence) }
+        var draft = Prompt20DailyLogDraft(); draft.generalNote = "must not write"
+        do { _ = try await fixture.store.save(ownerID: .localDevice, date: fixture.log.date, draft: draft, now: fixture.now); XCTFail("Future fields must survive") }
+        catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .unsupportedPersistence) }
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+    }
+
     func testLocalDayRoundTripUsesCalendarDay() async {
         let cal = calendar()
         let source = date(2026, 9, 7, hour: 23, calendar: cal)

@@ -207,20 +207,16 @@ public struct Prompt20DailyLogView: View {
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 7) {
-                Text("couldn’t open that day just yet. nothing was changed.")
-                    .font(Prompt20Type.body)
-                    .foregroundStyle(Prompt20Palette.burgundy.opacity(0.72))
+                FruitfolioTranslatedText(source: model.loadFailureMessage ?? "couldn’t open that day just yet. nothing was changed.",
+                    font: Prompt20Type.body, color: Prompt20Palette.burgundy.opacity(0.72), serious: true)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Button("try again") {
-                    audioManager.play(.buttonSoftPop)
+                FruitfolioControlPillButton(label: "try again") {
                     repositoryTask?.cancel()
-                    repositoryTask = Task { @MainActor in await model.load() }
+                    repositoryTask = Task { @MainActor in await model.retryLoad() }
                 }
-                .font(Prompt20Type.button)
-                .foregroundStyle(Prompt20Palette.coral)
-                .frame(minHeight: 44, alignment: .leading)
-                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .controlSize(.small)
+                .accessibilityIdentifier("dailyLog.retryLoad")
             }
         }
         .padding(14)
@@ -628,18 +624,14 @@ public struct Prompt20DailyLogView: View {
 
             if model.saveState == .failed && model.validationIssues.isEmpty {
                 VStack(spacing: 6) {
-                    Text("couldn’t save that just yet. your entry is still here.")
-                        .font(Prompt20Type.summary)
-                        .foregroundStyle(Prompt20Palette.burgundy.opacity(0.68))
+                    FruitfolioTranslatedText(source: "couldn’t save that just yet. your entry is still here."
+                        + (model.saveFailureMessage.map { "\n\n" + $0 } ?? ""),
+                        font: Prompt20Type.summary, color: Prompt20Palette.burgundy.opacity(0.68), serious: true)
                         .multilineTextAlignment(.center)
 
-                    Button("try again") {
-                        audioManager.play(.buttonSoftPop)
-                        saveLog()
-                    }
-                    .font(Prompt20Type.button)
-                    .foregroundStyle(Prompt20Palette.coral)
-                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                    FruitfolioControlPillButton(label: "try again") { saveLog() }
+                        .controlSize(.small)
+                        .accessibilityIdentifier("dailyLog.retrySave")
                 }
             }
         }

@@ -223,9 +223,23 @@ public struct Prompt20DailyLogSummary: Equatable, Sendable {
     public let notePreview: String?
 }
 
-public enum Prompt20DailyLogDomainError: Error, Equatable, Sendable {
+public nonisolated enum Prompt20DailyLogDomainError: LocalizedError, Equatable, Sendable {
     case validation([Prompt20DailyLogValidationIssue])
     case futureDate
     case persistenceUnavailable
     case corruptPersistence
+    case unsupportedPersistence
+    case storageChanged
+
+    public var errorDescription: String? {
+        switch self {
+        case .validation: return "review the highlighted entries before saving."
+        case .futureDate: return "future days cannot be logged yet."
+        case .persistenceUnavailable: return "saved logs could not be accessed. please try again."
+        case .corruptPersistence: return "saved logs could not be read safely. the original file is preserved."
+        case .unsupportedPersistence: return "saved logs contain fields or a format this version cannot safely update. the original file is preserved."
+        case .storageChanged: return "saved logs changed or were cleared elsewhere. close this page and reopen it to review and reload the current record."
+        }
+    }
+
 }
