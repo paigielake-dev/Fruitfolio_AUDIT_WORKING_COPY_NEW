@@ -848,12 +848,43 @@
       "source_end_line": 1548,
       "description": "    FRUIT BASKET \u2014 VINES: Standalone stars are affected by vines just like GOOD fruit. When a star or GOOD fruit encounters the vine obstacle, it should visibly struggle/slow while passing through it, with the existing vine interaction/audio treatment. BAD fruit does not use this vine interaction. The animation and physics must make the resistance visually believable rather than merely reducing velocity invisibly.",
       "description_sha256": "171304ecd04f2a1968e7231f470a6d9db8658414ebbb6b31e229ca11c1986f09",
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
-      "relevant_source_files": [],
-      "related_tests": [],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "related_tests": [
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+      ],
       "blockers": [],
-      "evidence": []
+      "evidence": [],
+      "last_updated": "2026-11-06T17:12:06.196416+00:00",
+      "evidence_of_implementation": [
+        "Reconciled stale NOT_STARTED against existing actual painted-vine physics for good fruit/standalone stars, preserved bad-fruit distinction and actual render/contact/audio paths."
+      ],
+      "commit_reference": "batch:Assessment-snapshot-and-individual-tracker-reconciliation (resolve containing commit)",
+      "latest_batch_verification": {
+        "batch": "Assessment-snapshot-and-individual-tracker-reconciliation",
+        "executed": {
+          "source_inspection": "Reconciled stale NOT_STARTED against existing actual painted-vine physics for good fruit/standalone stars, preserved bad-fruit distinction and actual render/contact/audio paths.",
+          "prior_executed_regression": "testPaintedVinesSlowGoodFruitAndStarsButNeverBadFruit passed in the actual preceding portable/native suite; no Swift code changed in this reconciliation"
+        },
+        "not_run": [
+          "Apple gameplay visual/motion/audio/gesture acceptance",
+          "Real device obstacle responsiveness/performance"
+        ],
+        "remaining": [
+          "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
+          "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+        ],
+        "scope": "Existing implementation evidence reconciled; no new physics or runtime completion claim."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
+        "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+      ]
     },
     {
       "id": "SPEC-BINDING-GAME-PUDDLE",
@@ -862,12 +893,43 @@
       "source_end_line": 1550,
       "description": "    FRUIT BASKET \u2014 PUDDLE: Basket inertia applies only while the basket is physically passing through the puddle. The basket\u2019s movement/animation must visually communicate that it is actually moving through the puddle and encountering resistance rather than simply applying an unexplained slowdown. Once the basket has exited the puddle, normal basket movement resumes; the puddle must not leave an unintended persistent inertia effect.",
       "description_sha256": "7e073696ad6dd280faf7ad63792232cd8399a5ec8477caacc72247ce379078d6",
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
-      "relevant_source_files": [],
-      "related_tests": [],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
+      "relevant_source_files": [
+        "Fruitfolio/Fruit Basket/Prompt28ObstaclePhysics.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
+        "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift"
+      ],
+      "related_tests": [
+        "FruitfolioTests/Prompt1BObstaclePhysicsTests.swift"
+      ],
       "blockers": [],
-      "evidence": []
+      "evidence": [],
+      "last_updated": "2026-11-06T17:12:06.196416+00:00",
+      "evidence_of_implementation": [
+        "Reconciled stale NOT_STARTED against existing actual painted-puddle overlap/resistance and dry-ground restoration physics and basket render paths."
+      ],
+      "commit_reference": "batch:Assessment-snapshot-and-individual-tracker-reconciliation (resolve containing commit)",
+      "latest_batch_verification": {
+        "batch": "Assessment-snapshot-and-individual-tracker-reconciliation",
+        "executed": {
+          "source_inspection": "Reconciled stale NOT_STARTED against existing actual painted-puddle overlap/resistance and dry-ground restoration physics and basket render paths.",
+          "prior_executed_regression": "testPuddleResistanceFollowsTargetThenRestoresDryResponse passed in the actual preceding portable/native suite; no Swift code changed in this reconciliation"
+        },
+        "not_run": [
+          "Apple gameplay visual/motion/audio/gesture acceptance",
+          "Real device obstacle responsiveness/performance"
+        ],
+        "remaining": [
+          "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
+          "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+        ],
+        "scope": "Existing implementation evidence reconciled; no new physics or runtime completion claim."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual game with this obstacle on Apple/device at normal and reduced motion; inspect physical overlap, visible struggle/resistance, VoiceOver alternatives and applicable sound",
+        "Retain source/asset identity; do not infer whole-feature completion from the Foundation physics contract"
+      ]
     }
   ]
 }

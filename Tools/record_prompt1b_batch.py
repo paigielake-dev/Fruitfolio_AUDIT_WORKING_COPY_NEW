@@ -33,6 +33,17 @@ if not isinstance(ids, list) or not ids or any(type(n) is not int or n < 1 or n 
 verification = b.get('verification')
 if not isinstance(verification, dict) or not isinstance(verification.get('executed'), dict) or any(not isinstance(verification.get(k), list) for k in ['not_run', 'remaining']):
     parser.error('verification must explicitly provide executed results, not_run tests and remaining requirements')
+entries = b.get('entry_evidence', {})
+if not isinstance(entries, dict):
+    parser.error('entry_evidence must be an object keyed by targeted source-order IDs')
+for entry_id, entry in entries.items():
+    if entry_id not in {str(n) for n in ids} or not isinstance(entry, dict):
+        parser.error("entry evidence may refer only to this batch's targeted requirement IDs")
+    if not isinstance(entry.get('summary'), str) or any(not isinstance(entry.get(k), list) or not all(isinstance(x, str) for x in entry[k]) for k in ['files', 'tests']):
+        parser.error('each entry must explicitly identify its implementation evidence, source files and tests')
+    ev = entry.get('verification')
+    if not isinstance(ev, dict) or not isinstance(ev.get('executed'), dict) or any(not isinstance(ev.get(k), list) for k in ['not_run', 'remaining']):
+        parser.error('each entry must distinguish executed, unexecuted and remaining verification')
 original = json.loads((workflow / 'MASTER_CHECKLIST.json').read_text())['requirements']
 if len(original) != 478 or [r['sequence'] for r in original] != list(range(1, 479)):
     parser.error('original 478-item order must be intact before recording a batch')
@@ -43,12 +54,14 @@ def save(p,d):
 p=workflow/'MASTER_CHECKLIST.json';d=json.loads(p.read_text())
 for n in b['requirements']:
  row=d['requirements'][n-1]
+ entry=entries.get(str(n), {})
+ row_verification=entry.get('verification', verification)
  row.update(implementation_status='IN_PROGRESS',verification_status='SOURCE_REVIEWED',last_updated=now)
- for key,vals in [('relevant_source_files',b['files']),('related_tests',b['tests']),('evidence_of_implementation',[b['summary']])]:
+ for key,vals in [('relevant_source_files',entry.get('files', b['files'])),('related_tests',entry.get('tests', b['tests'])),('evidence_of_implementation',[entry.get('summary', b['summary'])])]:
   row[key]=list(dict.fromkeys(row[key]+vals))
  row['commit_reference']='batch:'+b['batch']+' (resolve containing commit with git log)'
- row['latest_batch_verification']={'batch': b['batch'], 'executed': verification['executed'], 'not_run': verification['not_run'], 'remaining': verification['remaining'], 'scope': 'Evidence for this batch only; does not certify the entire original requirement.'}
- row['remaining_verification_requirements']=verification['remaining']
+ row['latest_batch_verification']={'batch': b['batch'], 'executed': row_verification['executed'], 'not_run': row_verification['not_run'], 'remaining': row_verification['remaining'], 'scope': 'Evidence for this batch only; does not certify the entire original requirement.'}
+ row['remaining_verification_requirements']=row_verification['remaining']
 save(p,d)
 p=workflow/'CURRENT_CHECKPOINT.json';c=json.loads(p.read_text());c.update(current_HEAD=head,current_checklist_part=b.get('part',1),current_requirement=b['next_requirement'],current_implementation_batch=b['batch'],uncommitted_changes=sorted(set(subprocess.check_output(['git','diff','--name-only'],cwd=root,text=True).splitlines()+subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=root,text=True).splitlines())),next_exact_implementation_action=b['next'],updated_at=now,last_test_results=b['results'],last_executed_tests=b['commands'],last_batch_verification=verification);c['blocker_register']='development_workflow/BLOCKERS.md'; c['known_blockers']=['Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md','Production auth/cloud sync services are not configured; StoreKit source adapter awaits Apple SDK/receipt validation','Xcode/Apple SDK and iOS UI tests unavailable on Linux','MADLAD official weights/tokenizer blocked by huggingface.co proxy 403; domain draft immutable','Device/simulator llama.xcframework must be built on Mac; supplied framework is simulator-only','Both exact LifeBridge hosts excluded by enforced network policy; approved snapshots from both founder-specified sources absent','Canonical FAQ tulip not found in supplied assets','Clinical translation-quality and physical-device performance review not completed']; save(p,c)
 p=workflow/'IMPLEMENTATION_LOG.md';p.write_text(p.read_text()+f"\n## {b['batch']}\n\n- Parent checkpoint: {head}.\n- Source-order requirements: {b['requirements']}.\n- Source files: {', '.join(b['files'])}.\n- {b['summary']}\n- Tests added/updated: {', '.join(b['tests'])}.\n- Verification: {json.dumps(b['results'])}.\n- Next action: {b['next']}\n- Commit: containing commit for batch {b['batch']}.\n")

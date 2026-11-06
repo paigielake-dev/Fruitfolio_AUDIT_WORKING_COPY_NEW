@@ -72,3 +72,23 @@ class BatchRecorderTests(unittest.TestCase):
         self.assertNotEqual(self.run_recorder().returncode,0)
         self.assertEqual(self.snapshots(),before)
         self.assertEqual((self.workflow/'RUN_LOGS/fixture.json').read_bytes(),log)
+
+    def testDistinctPerEntryEvidenceDoesNotSpreadUnrelatedSourceOrTestClaims(self):
+        self.batch['requirements']=[59,63]
+        specific={'summary':'Specific serious-context source change.', 'files':['serious.swift'],
+            'tests':['seriousUITests.swift'], 'verification':{'executed':{'inspection':'source only'},
+            'not_run':['serious Apple UI'], 'remaining':['actual serious rendering']}}
+        self.batch['entry_evidence']={'59':specific}
+        result=self.run_recorder();self.assertEqual(result.returncode,0,result.stderr)
+        rows=json.loads((self.workflow/'MASTER_CHECKLIST.json').read_text())['requirements']
+        self.assertEqual(rows[58]['relevant_source_files'],['serious.swift'])
+        self.assertEqual(rows[58]['related_tests'],['seriousUITests.swift'])
+        self.assertEqual(rows[58]['remaining_verification_requirements'],['actual serious rendering'])
+        self.assertEqual(rows[62]['relevant_source_files'],['actual.swift'])
+        self.assertEqual(rows[62]['latest_batch_verification']['not_run'],['Apple UI test'])
+    def testUnscopedOrIncompletePerEntryEvidenceCannotWriteAnyRecoveryRecord(self):
+        before=self.snapshots()
+        for entries in [{'63':{}},{'59':{'summary':'missing verification'}}]:
+            self.batch['entry_evidence']=entries
+            self.assertNotEqual(self.run_recorder().returncode,0)
+            self.assertEqual(self.snapshots(),before)
