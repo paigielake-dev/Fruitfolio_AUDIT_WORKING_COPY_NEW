@@ -2807,3 +2807,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 958, "new_English_entries": 2, "new_game_home_Apple_launches_written_NOT_RUN": 4, "orientation_checks_per_home_launch": 2, "exact_revised_founder_copy": "PENDING clarification; no certification", "Foundation": "unchanged; prior800/822 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue original starred/unstarred/standalone star explanation and universal game popup/semantic/mechanic requirements. Preserve known current copy pending exact founder response; do independent work without waiting or inventing wording.
 - Commit: containing commit for batch Game-home-scroll-and-native-topic-fixed-copy.
+
+## Shared-game-star-bank-mechanics-copy-and-large-bank-regression
+
+- Parent checkpoint: 2cbb70e05f8282f705d9387e8b8b80f205eb8f2d.
+- Source-order requirements: [323, 330, 331, 332, 333, 334, 338, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift, Fruitfolio/Localizable.xcstrings.
+- Shared protection/FAQ copy explicitly explains rare standalone stars add to existing pass bank without fixed game cap. Existing no-score/no-fruit, one-pass protection, unprotected failure/retry/session wording retained. New actual engine test banks1000, consumes one per bad catch through zero, requires next bad catch fail, and preserves zero score/fruit. Engine/controller/planner SHA unchanged. One English addition preserves958 entries,959total. This mechanic clarification does not resolve exact founder replacement-copy320–322; Apple physical catch/rareness/translation remain unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BFruitBasketRulesTests.swift, FruitfolioTests/Prompt1BGameRulesCatalogTests.swift.
+- Verification: {"portable_XCTest": 801, "native_CPU_XCTest": 823, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 959, "new_English_entries": 1, "engine_star_pass_bank_exercised": 1000, "Apple_game_physics_and_copy": "NOT_RUN", "official_MADLAD": "BLOCKED; syntheticT5 is not official inference"}.
+- Next action: Continue universal game popup/canonical dialogue and answer→catch→reveal ownership in original order, preserving measured hosts, source citations and exact gameplay conservation. Exact screen replacement copy320–322 remains pending asynchronous clarification.
+- Commit: containing commit for batch Shared-game-star-bank-mechanics-copy-and-large-bank-regression.
