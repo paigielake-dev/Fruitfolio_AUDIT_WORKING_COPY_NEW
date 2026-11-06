@@ -1,10 +1,12 @@
+#if canImport(Combine)
 import Combine
+#endif
 import Foundation
 
 /// Persistent preferences needed to prove Prompt 03 architecture.
 /// UserDefaults is injectable so unit tests never modify the user's real preferences.
 @MainActor
-final class SettingsStore: ObservableObject {
+final class SettingsStore {
     private enum Key {
         static let globallyMuted = "fruitfolio.settings.globallyMuted"
         static let musicEnabled = "fruitfolio.settings.musicEnabled"
@@ -21,23 +23,65 @@ final class SettingsStore: ObservableObject {
 
     private let defaults: UserDefaults
 
-    @Published var globallyMuted: Bool { didSet { defaults.set(globallyMuted, forKey: Key.globallyMuted) } }
-    @Published var musicEnabled: Bool { didSet { defaults.set(musicEnabled, forKey: Key.musicEnabled) } }
-    @Published var rainEnabled: Bool { didSet { defaults.set(rainEnabled, forKey: Key.rainEnabled) } }
-    @Published var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
-    @Published var typingASMREnabled: Bool { didSet { defaults.set(typingASMREnabled, forKey: Key.typingASMREnabled) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var globallyMuted: Bool { didSet { defaults.set(globallyMuted, forKey: Key.globallyMuted) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var musicEnabled: Bool { didSet { defaults.set(musicEnabled, forKey: Key.musicEnabled) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var rainEnabled: Bool { didSet { defaults.set(rainEnabled, forKey: Key.rainEnabled) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var soundEffectsEnabled: Bool { didSet { defaults.set(soundEffectsEnabled, forKey: Key.soundEffectsEnabled) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var typingASMREnabled: Bool { didSet { defaults.set(typingASMREnabled, forKey: Key.typingASMREnabled) } }
 
-    @Published var musicVolume: Double { didSet { persistClamped(musicVolume, key: Key.musicVolume) } }
-    @Published var rainVolume: Double { didSet { persistClamped(rainVolume, key: Key.rainVolume) } }
-    @Published var soundEffectsVolume: Double { didSet { persistClamped(soundEffectsVolume, key: Key.soundEffectsVolume) } }
-    @Published var typingVolume: Double { didSet { persistClamped(typingVolume, key: Key.typingVolume) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var musicVolume: Double { didSet { persistClamped(musicVolume, key: Key.musicVolume) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var rainVolume: Double { didSet { persistClamped(rainVolume, key: Key.rainVolume) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var soundEffectsVolume: Double { didSet { persistClamped(soundEffectsVolume, key: Key.soundEffectsVolume) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var typingVolume: Double { didSet { persistClamped(typingVolume, key: Key.typingVolume) } }
 
-    @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
-    @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
+    #if canImport(Combine)
+    @Published
+    #endif
+    var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
     /// Transient process state, deliberately never written to user preferences.
-    @Published var translationPausedForMemoryPressure = false
-    @Published private(set) var languagePreferenceNeedsReview = false
-    @Published var language: FruitfolioLanguage {
+    #if canImport(Combine)
+    @Published
+    #endif
+    var translationPausedForMemoryPressure = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var languagePreferenceNeedsReview = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var language: FruitfolioLanguage {
         didSet {
             FruitfolioLanguagePreferences.save(language, to: defaults)
             languagePreferenceNeedsReview = false
@@ -64,8 +108,8 @@ final class SettingsStore: ObservableObject {
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's
     /// environment locale handles most Text/Button literals automatically; this
     /// helper is for runtime/deterministic strings that are built outside a View.
-    func localized(_ key: String, fallback: String? = nil) -> String {
-        FruitfolioLocalization.localized(key, language: language, fallback: fallback)
+    func localized(_ key: String, fallback: String? = nil, bundle: Bundle = .main) -> String {
+        FruitfolioLocalization.localized(key, language: language, fallback: fallback, bundle: bundle)
     }
 
     func allowsAudio(_ category: FruitfolioAudioCategory) -> Bool {
@@ -96,3 +140,7 @@ final class SettingsStore: ObservableObject {
         value.isFinite ? min(max(value, 0), 1) : 0
     }
 }
+
+#if canImport(Combine)
+extension SettingsStore: ObservableObject {}
+#endif

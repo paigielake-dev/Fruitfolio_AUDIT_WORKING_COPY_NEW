@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "a933a3f47029a043707f2c094db135315c694fe1",
+  "current_HEAD": "975608cce45ee3cbc6ee3b5b3eb9c66379bd04bd",
   "latest_verified_commit": null,
-  "current_checklist_part": 10,
-  "current_requirement": 392,
-  "current_implementation_batch": "Canonical-control-sound-ownership-and-opt-in-real-playback-diagnostics",
+  "current_checklist_part": 9,
+  "current_requirement": 401,
+  "current_implementation_batch": "Explicit-selected-language-resource-resolution-and-real-settings-tests",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,28 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Ask/Prompt09AskView.swift",
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Core/Assets/AudioManager.swift",
-    "Fruitfolio/Core/Assets/FruitfolioInteractionSoundDiagnostics.swift",
-    "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
-    "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-    "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12ConfirmationPopup.swift",
-    "Fruitfolio/Privacy Settings/Prompt12OwnershipView.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
-    "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/normalize_control_sound_ownership.swift",
-    "development_workflow/CONTROL_SOUND_OWNERSHIP_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RECOVERY_PROTOCOL.md",
-    "development_workflow/RUN_LOGS/Control-sound-ownership-removals.json",
-    "development_workflow/RUN_LOGS/Interaction-cue-asset-decode.json",
-    "development_workflow/tests/test_control_sound_ownership.py"
+    "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
+    "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
+    "FruitfolioTests/Prompt1BExplicitLocalizationTests.swift",
+    "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/EXPLICIT_LANGUAGE_RESOLUTION_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -527,30 +512,24 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Real SwiftSyntax checker compile with writable module cache",
-    "Six codemod regression tests",
-    "Actual source migration and clean immediate-owner check",
-    "35 workflow tests with FRUITFOLIO_SWIFTC configured",
     "Full portable Swift6 suite",
-    "Full actual native-linked Swift5 suite",
+    "Full native-linked Swift5 suite",
+    "35 workflow tests with real SwiftSyntax compiler",
     "Swift compiler syntax parse",
-    "Three original MP3 full decodes and ffprobe metadata",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "489 XCTest +21 Swift Testing passed",
-    "nativeSwift5": "494 XCTest +21 Swift Testing passed",
-    "workflow": "35 passed, including6 real SwiftSyntax tool regressions",
-    "sound_source": "10 direct duplicate cues removed by AST plus1 indirect Contact cue; actual supported direct owner check clean",
-    "assets": "Three original MP3 files fully decode; durations/hashes logged; no resource edits",
-    "syntax": "253 changed Swift files parsed; zero errors",
-    "Apple": "NOT_RUN AVAudioManager/Contact sound counts, actual playback/mix/listening and tap/motion acceptance; decode is not device proof"
+    "Swift6": "498 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "503 XCTest +21 Swift Testing passed",
+    "workflow": "35 tests passed, all6 SwiftSyntax cases executed",
+    "syntax": "254 Swift files parsed,0errors; Xcode references resolved, not built",
+    "Apple": "NOT_RUN compiled iOS catalog, publisher observation, UI/RTL/device translation acceptance"
   },
-  "next_exact_implementation_action": "Fix explicit selected-language bundle lookup: current Foundation resolver uses String(localized:locale:) whose locale primarily formats rather than selecting a resource language. Resolve the actual requested lproj table with source fallback, verify with real temporary localization bundles on Linux, then port exact SettingsStore preferences/allow-audio policy without fake Combine observation so mute/language persistence tests can execute. Continue account snapshot hardening and actual combined local archive export afterward.",
-  "updated_at": "2026-11-06T03:19:28.285262+00:00",
+  "next_exact_implementation_action": "Add languages explicitly named in founder source lines352\u2013359 that are missing from the shared enum: Thai, Mongolian, Indonesian, Russian, Polish, Dutch, Swedish, Ukrainian, Turkish, Kurdish and Hebrew. Preserve autonyms/preference raw values, apply Hebrew RTL and explicit Kurdish script semantics, verify persistence/manifest compatibility without asserting official model inference. Then continue general account-snapshot write protection and actual combined local export.",
+  "updated_at": "2026-11-06T03:30:47.723607+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
-    "Remove duplicate canonical button soft-pop calls and validate actual sound request ownership",
+    "Add explicitly requested missing language selectors and verify script-specific direction without assuming model support",
     "Protect account/privacy snapshot against corrupt/future/stale writers across all mutators",
     "Implement actual combined local saved-data/image export, without metadata-only success",
     "Reconcile remaining unnumbered founder requirements and full UI/localization/clinical acceptance"

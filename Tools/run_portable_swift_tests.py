@@ -98,6 +98,9 @@ SOURCES = [
     'Fruitfolio/Core/DesignSystems/FruitfolioPopupLayout.swift',
     'Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift',
     'Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift',
+    'Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift',
+    'Fruitfolio/Core/AppArchitecture/SettingsStore.swift',
+    'Fruitfolio/Core/DesignSystems/FruitfolioAudioDesign.swift',
     'Fruitfolio/Ask/Prompt09ConversationPolicies.swift',
     'Fruitfolio/Ask/Prompt09AnswerSupport.swift',
     'Fruitfolio/Ask/Prompt09AskModels.swift',
@@ -116,6 +119,8 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BSettingsLanguageTests.swift',
+    'Prompt1BExplicitLocalizationTests.swift',
     'Prompt12AccountPrivacyStoreTests.swift',
     'Prompt1BOwnershipValidationTests.swift',
     'Prompt1BAccountRestorationPolicyTests.swift',

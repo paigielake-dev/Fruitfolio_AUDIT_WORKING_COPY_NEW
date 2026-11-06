@@ -1,24 +1,29 @@
 import Foundation
 
-/// One app-wide resolver for user-facing strings that must be produced outside
-/// SwiftUI's Text/LocalizedStringKey pipeline (errors, deterministic fallbacks,
-/// generated-status text, accessibility values, etc.).
+/// Resolve runtime strings using the app preference, independently of the OS language.
 enum FruitfolioLocalization {
     static func localized(
         _ key: String,
         language: FruitfolioLanguage,
-        fallback: String? = nil
+        fallback: String? = nil,
+        bundle: Bundle = .main
     ) -> String {
-        let locale = Locale(identifier: language.localeIdentifier)
-        let value = String(
-            localized: String.LocalizationValue(key),
-            table: "Localizable",
-            bundle: .main,
-            locale: locale
-        )
-        if value == key || value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            return fallback ?? key
+        // String(localized:locale:) supplies formatting locale, not an explicit
+        // resource-language override. Open the exact language table instead.
+        // In particular, never substitute one Chinese script for the other.
+        var directories = [language.rawValue]
+        if language == .english,
+           bundle.developmentLocalization == nil || bundle.developmentLocalization == "en" {
+            directories.append("Base")
         }
-        return value
+        for directory in directories {
+            guard let root = bundle.resourceURL,
+                  let selected = Bundle(url: root.appendingPathComponent(directory + ".lproj", isDirectory: true)) else { continue }
+            let value = selected.localizedString(forKey: key, value: key, table: "Localizable")
+            if value != key && !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return value
+            }
+        }
+        return fallback ?? key
     }
 }
