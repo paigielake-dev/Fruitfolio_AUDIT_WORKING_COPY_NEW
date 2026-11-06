@@ -368,7 +368,7 @@ public struct Prompt20DailyLogView: View {
                 }
             }
 
-            Text("period start + end are separate from bleeding, so spotting or other bleeding won’t automatically become a new cycle.")
+            FruitfolioTranslatedText(source: "period start + end are separate from bleeding, so spotting or other bleeding won’t automatically become a new cycle.", font: Prompt20Type.micro, serious: true)
                 .font(Prompt20Type.micro)
                 .foregroundStyle(
                     Prompt20Palette.burgundy.opacity(0.62)
@@ -510,7 +510,7 @@ public struct Prompt20DailyLogView: View {
                         .frame(width: 38)
                         .accessibilityHidden(true)
 
-                    Text("cervical fluid can vary, and it can be hard to categorize sometimes. one observation does not prove fertility or ovulation.")
+                    FruitfolioTranslatedText(source: "cervical fluid can vary, and it can be hard to categorize sometimes. one observation does not prove fertility or ovulation.", font: Prompt20Type.micro, serious: true)
                         .font(Prompt20Type.micro)
                         .foregroundStyle(Prompt20Palette.burgundy.opacity(0.72))
                 }
@@ -623,7 +623,7 @@ public struct Prompt20DailyLogView: View {
         if !model.validationIssues.isEmpty {
             VStack(alignment: .leading, spacing: 5) {
                 ForEach(Array(model.validationIssues.enumerated()), id: \.offset) { _, issue in
-                    Text(model.validationMessage(for: issue))
+                    FruitfolioFixedText(source: model.validationMessage(for: issue), font: Prompt20Type.micro, serious: true)
                         .font(Prompt20Type.micro)
                         .foregroundStyle(Prompt20Palette.burgundy.opacity(0.72))
                 }
@@ -687,7 +687,7 @@ public struct Prompt20DailyLogView: View {
                 .font(Prompt20Type.date)
                 .foregroundStyle(Prompt20Palette.coral)
 
-            Text("this date hasn’t happened yet, so body observations stay closed for now.")
+            FruitfolioTranslatedText(source: "this date hasn’t happened yet, so body observations stay closed for now.", font: Prompt20Type.body, serious: true)
                 .font(Prompt20Type.body)
                 .foregroundStyle(Prompt20Palette.burgundy.opacity(0.68))
                 .multilineTextAlignment(.center)

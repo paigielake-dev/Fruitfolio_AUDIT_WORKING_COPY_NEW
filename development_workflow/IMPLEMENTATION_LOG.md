@@ -2675,3 +2675,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 935, "preserved_entries": 924, "new_English_entries": 11, "native_editor_call_sites_preserved": 5, "Apple_dirty_note_matrix": "12existing launches NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue original context-appropriate explanatory limitations and semantic warnings in logging/educational source paths; preserve raw patient observations and unitless educational versus measured-data separation.
 - Commit: containing commit for batch Daily-journal-fixed-prompts-and-native-editor-labels.
+
+## Journal-limitations-source-display-and-fixed-validation-copy
+
+- Parent checkpoint: 34779dd0cf143bc4dbfb3a59140774310abb010f.
+- Source-order requirements: [302, 303, 304, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift, Fruitfolio/Localizable.xcstrings.
+- Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 942, "new_English_entries": 7, "Apple_logging_limitations": "NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue unified symptom-pattern graph requirements in original order using existing Trends architecture and real recorded observations; preserve uncertainty, no diagnosis and required graph distinctions. No synthetic clinical trends or unsupported forecasts.
+- Commit: containing commit for batch Journal-limitations-source-display-and-fixed-validation-copy.

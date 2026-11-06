@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:26:23.718734+00:00",
+  "updated_at": "2026-11-06T21:27:35.261257+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5244,6 +5244,42 @@
         ]
       },
       "timestamp": "2026-11-06T21:26:23.718734+00:00"
+    },
+    {
+      "batch": "Journal-limitations-source-display-and-fixed-validation-copy",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift source parses",
+        "Seven validation source cases inspected: fixed strings, no patient interpolation",
+        "Catalog935-entry preservation plus7English entries",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "English_catalog_keys": 942,
+        "new_English_entries": 7,
+        "Apple_logging_limitations": "NOT_RUN",
+        "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Original explanations preserved; controlled fixed validation strings; no clinical rules or patient observations changed",
+          "catalog": "935 entries structurally preserved, seven English additions"
+        },
+        "not_run": [
+          "Apple source/original warning disclosure, long translation layout and logging validation UI",
+          "Official MADLAD warning polarity/scientific semantics and qualified native/clinical review"
+        ],
+        "remaining": [
+          "Execute actual warning/validation/source controls at accessibility sizes on Apple",
+          "Review clinical negation/uncertainty and exact meaning with official model and qualified reviewers; lexical preservation alone insufficient",
+          "Whole limitation/semantic/localization/device requirements remain IN_PROGRESS"
+        ]
+      },
+      "timestamp": "2026-11-06T21:27:35.261257+00:00"
     }
   ]
 }
