@@ -1356,7 +1356,7 @@ struct Prompt28FruitBasketView: View {
                     y: height * fruit.y
                 )
                 .zIndex(10)
-                .accessibilityIdentifier("fruitBasket.classification.item")
+                .accessibilityIdentifier("fruitBasket.round.fruit." + fruit.fruitID.rawValue)
                 .onAppear {
                     Prompt28AssetUsageRegistrar.markRendered(
                         fruit.fruitID.assetID
@@ -1372,7 +1372,8 @@ struct Prompt28FruitBasketView: View {
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees + (star.isInVines ? sin(star.vineContactTime * 13) * 4 : 0)))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
-                    .accessibilityLabel("star pass")
+                    .modifier(Prompt28TranslatedAccessibilityLabel(source: "star pass"))
+                    .accessibilityIdentifier("fruitBasket.round.star")
             }
 
             Prompt28BasketProgressView(
@@ -1438,13 +1439,11 @@ struct Prompt28FruitBasketView: View {
             if let fruit =
                 viewModel.classificationFruit {
 
-                FruitfolioTranslatedContent(source: "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?") { display, _ in
-                    Prompt28MovingFruit(fruit: fruit, reduceMotion: true)
-                        .frame(width: 100, height: 100)
-                        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display)))
-                        .accessibilityIdentifier("fruitBasket.classification.fruit")
-                        .onAppear { Prompt28AssetUsageRegistrar.markRendered(fruit.fruitID.assetID) }
-                }
+                Prompt28MovingFruit(fruit: fruit, reduceMotion: true,
+                    accessibilitySource: "\(fruit.fruitID.displayName). \(fruit.classification == .good ? "attached star marker" : "no attached star marker"). Does this belong in the basket?")
+                    .frame(width: 100, height: 100)
+                    .accessibilityIdentifier("fruitBasket.classification.fruit")
+                    .onAppear { Prompt28AssetUsageRegistrar.markRendered(fruit.fruitID.assetID) }
 
                 FruitfolioTranslatedText(source: "does this belong in the basket?",
                     font: Prompt28TextRole.sectionHeading.font,
@@ -2345,6 +2344,7 @@ nonisolated private struct Prompt28GameplayHeaderHeightKey: PreferenceKey {
 private struct Prompt28MovingFruit: View {
     let fruit: Prompt28FallingFruit
     let reduceMotion: Bool
+    var accessibilitySource: String? = nil
 
     var body: some View {
         GeometryReader { proxy in
@@ -2369,9 +2369,31 @@ private struct Prompt28MovingFruit: View {
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(
-            "\(fruit.fruitID.displayName), \(fruit.classification == .good ? "belongs in basket" : "does not belong in basket")"
-        )
+        .modifier(Prompt28TranslatedAccessibilityLabel(source: accessibilitySource
+            ?? "\(fruit.fruitID.displayName), \(fruit.classification == .good ? "belongs in basket" : "does not belong in basket")"))
+    }
+}
+
+/// One owner for image-only accessibility copy; moving coordinates and count
+/// changes never become part of a translation key. Fallback remains explicit.
+@MainActor
+private struct Prompt28TranslatedAccessibilityLabel: ViewModifier {
+    let source: String
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: source, language: settings.language)
+    }
+    func body(content: Content) -> some View {
+        let display = translation.presentation(for: key)
+        content
+            .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+            .accessibilityHint(Text(display.status.accessibilityDetail(original: source,
+                localized: { settings.localized($0) })))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
     }
 }
 

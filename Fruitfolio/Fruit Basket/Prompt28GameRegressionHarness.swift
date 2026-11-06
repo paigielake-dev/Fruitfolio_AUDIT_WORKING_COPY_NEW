@@ -17,7 +17,7 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
         let scenarioIndex = args.firstIndex(of: "-fruitfolioGameQAScenario")
         let isTour = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "tour" } ?? false
         if !isTour { store.completeTour() }
-        let isCatchLayout = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "hud-catch" } ?? false
+        let isCatchLayout = scenarioIndex.map { $0 + 1 < args.count && ["hud-catch", "catch-objects"].contains(args[$0 + 1]) } ?? false
         store.controlMode = isCatchLayout ? .catchMode : .classification
         store.persistPreferences()
         model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
@@ -128,7 +128,15 @@ struct Prompt28GameRegressionHarness: View {
             model.classificationStarAvailable = false
             model.classificationFruit = fruit(.pear, classification: .good)
         }
-        if scenario == "hud-catch" || scenario == "hud-classification" {
+        if scenario == "catch-objects" {
+            // Actual render records held by the real frame guard: layout/AX only.
+            model.activeFruit = [
+                .init(fruitID: .pear, classification: .good, x: 0.25, y: 0.2, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0),
+                .init(fruitID: .lemon, classification: .bad, x: 0.75, y: 0.4, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)
+            ]
+            model.activeStars = [.init(x: 0.5, y: 0.6, fallSpeed: 0.1, horizontalDrift: 0, rotationDegrees: 0)]
+        }
+        if ["hud-catch", "hud-classification", "catch-objects"].contains(scenario) {
             // Layout-only fixture: hold the real frame-advance guard while the
             // active renderer stays visible. This does not verify live physics.
             model.isPaused = true

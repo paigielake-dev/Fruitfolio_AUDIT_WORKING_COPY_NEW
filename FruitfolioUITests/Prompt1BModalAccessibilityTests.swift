@@ -194,6 +194,31 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testMovingFruitAndStandaloneStarRetainDistinctTranslatedAccessibility() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "catch-objects",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let pear = app.descendants(matching: .any).matching(identifier: "fruitBasket.round.fruit.pear").firstMatch
+            let lemon = app.descendants(matching: .any).matching(identifier: "fruitBasket.round.fruit.lemon").firstMatch
+            let star = app.descendants(matching: .any).matching(identifier: "fruitBasket.round.star").firstMatch
+            XCTAssertTrue(pear.waitForExistence(timeout: 5))
+            XCTAssertEqual(pear.label, "pear, belongs in basket")
+            XCTAssertEqual(lemon.label, "lemon, does not belong in basket")
+            XCTAssertEqual(star.label, "star pass")
+            XCTAssertEqual(app.descendants(matching: .any).matching(identifier: "fruitBasket.round.star").count, 1)
+            XCTAssertFalse(pear.label.contains("**"))
+            XCTAssertFalse(lemon.label.contains("**"))
+            captureGame(app, name: "catch-object-labels-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testBasketArtworkUsesSeparateLocalizedLabelAndNumericValue() {
         for catchMode in [false, true] {
         for language in ["en", "ar"] {
