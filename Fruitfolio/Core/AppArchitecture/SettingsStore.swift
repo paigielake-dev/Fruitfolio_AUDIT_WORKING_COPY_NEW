@@ -34,7 +34,13 @@ final class SettingsStore: ObservableObject {
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
-    @Published var language: FruitfolioLanguage { didSet { FruitfolioLanguagePreferences.save(language, to: defaults) } }
+    @Published private(set) var languagePreferenceNeedsReview = false
+    @Published var language: FruitfolioLanguage {
+        didSet {
+            FruitfolioLanguagePreferences.save(language, to: defaults)
+            languagePreferenceNeedsReview = false
+        }
+    }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -50,6 +56,7 @@ final class SettingsStore: ObservableObject {
         self.reduceAnimationOverride = Self.bool(defaults, key: Key.reduceAnimationOverride, fallback: false)
         self.onboardingCompleted = Self.bool(defaults, key: Key.onboardingCompleted, fallback: false)
         self.language = FruitfolioLanguagePreferences.load(from: defaults)
+        self.languagePreferenceNeedsReview = FruitfolioLanguagePreferences.needsReview(in: defaults)
     }
 
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's

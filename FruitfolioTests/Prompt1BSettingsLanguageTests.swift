@@ -22,5 +22,19 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
         }
         XCTAssertEqual(observed, [.english] + FruitfolioLanguage.allCases)
     }
+    func testUnknownPreferenceIsDisclosedWithoutRewriteUntilExplicitSelection() async throws {
+        let suite = "Fruitfolio.SettingsLanguageRecovery." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        defaults.set("future-language", forKey: FruitfolioLanguagePreferences.defaultsKey)
+        let settings = SettingsStore(defaults: defaults)
+        XCTAssertEqual(settings.language, .english)
+        XCTAssertTrue(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(defaults.string(forKey: FruitfolioLanguagePreferences.defaultsKey), "future-language")
+        settings.language = .guarani
+        XCTAssertFalse(settings.languagePreferenceNeedsReview)
+        XCTAssertEqual(SettingsStore(defaults: defaults).language, .guarani)
+    }
+
 }
 #endif

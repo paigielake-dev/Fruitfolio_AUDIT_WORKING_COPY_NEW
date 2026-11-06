@@ -4,6 +4,9 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
     case english = "en"
     case spanish = "es"
     case portuguese = "pt"
+    case quechua = "qu"
+    case guarani = "gn"
+    case aymara = "ay"
     case french = "fr"
     case chineseSimplified = "zh-Hans"
     case chineseTraditional = "zh-Hant"
@@ -57,6 +60,9 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
         case .english: return "English"
         case .spanish: return "Español"
         case .portuguese: return "Português"
+        case .quechua: return "Runa Simi"
+        case .guarani: return "Avañeʼẽ"
+        case .aymara: return "Aymar aru"
         case .french: return "Français"
         case .chineseSimplified: return "简体中文"
         case .chineseTraditional: return "繁體中文"
@@ -110,6 +116,13 @@ enum FruitfolioLanguagePreferences {
         guard let raw = defaults.string(forKey: defaultsKey),
               let language = FruitfolioLanguage(rawValue: raw) else { return .english }
         return language
+    }
+
+    /// Preserve unknown/future raw preferences; show an explicit display fallback.
+    static func needsReview(in defaults: UserDefaults) -> Bool {
+        guard defaults.object(forKey: defaultsKey) != nil else { return false }
+        guard let raw = defaults.string(forKey: defaultsKey) else { return true }
+        return FruitfolioLanguage(rawValue: raw) == nil
     }
 
     static func save(_ language: FruitfolioLanguage, to defaults: UserDefaults) {

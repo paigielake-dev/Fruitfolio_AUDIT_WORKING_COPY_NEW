@@ -1009,3 +1009,21 @@ Actual official T5 offline inference, tokenizer/language quality and device/ther
 - Verification: {"Swift6": "455 XCTest +21 Swift Testing passed", "nativeSwift5": "460 XCTest +21 Swift Testing passed; actual wrong-architecture model rejected after checksum", "standalone": "System OpenSSL checksum reached actual Qwen loader; runtime rejected qwen2; no translated value", "workflow": "24 passed", "syntax": "238 changed Swift files parsed; zero errors", "MADLAD": "Official T5 inference NOT_RUN: weights/tokenizer blocked; Apple/device/clinical quality unavailable", "resolved": "Linux CryptoKit-only checksum restriction removed using standard system OpenSSL EVP; no custom crypto"}.
 - Next action: Add founder-specified individual Quechua/Guaraní/Aymara selectors and explicit unknown-language preference notice without guessing runtime support or silently replacing stored language; test actual authority. Continue405–417 language/layout work and then431+ preservation/integration requirements. Official T5 resources and Apple/clinical verification remain external blockers; Linux checksum restriction is resolved.
 - Commit: containing commit for batch Streaming-system-checksums-and-real-native-MADLAD-architecture-refusal.
+
+## Individual-founder-South-American-languages-and-visible-preference-recovery
+
+- Parent checkpoint: c56a4bcbca6ea061322ef9e327233b0384d29244.
+- Source-order requirements: [392, 398, 399, 405, 406, 407, 408, 409, 410, 425, 429, 440].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift, Fruitfolio/Core/AppArchitecture/SettingsStore.swift, Fruitfolio/Privacy Settings/Prompt12SettingsView.swift.
+- # Individual South American selectors and preserved unknown preferences
+
+Added the founder-specified Quechua (`qu`, Runa Simi), Guaraní (`gn`, Avañeʼẽ) and Aymara (`ay`, Aymar aru) to the existing individual language/autonym architecture. Spanish and Portuguese remain. No generic “South American,” “African” or “Indian” replacement is introduced. This adds selectable stable identities and persistence, not a claim that the installed tokenizer/model has verified those target tags or that each regional variety is equivalent. Actual MADLAD vocabulary checks still gate every request.
+
+Unknown/future or wrong-type stored language data is retained. Settings explicitly discloses the temporary English display fallback and only replaces that stored value after an explicit language assignment. The same published authority records whether review is needed. Settings also explains that unavailable translation leaves the original visible. No saved source, note or measurement is rewritten.
+
+Five portable language tests now cover every individual selector's actual persistence/reinitialization, independent stores, original unknown/wrong-type bytes/objects, explicit recovery and RTL identities. Full portable verification: 457 XCTest +21 Swift Testing passed. The additional actual SettingsStore recovery/publication tests remain Apple-only and NOT_RUN. Compiler parsing covers238 changed files with zero errors. Source/API support is not complete reviewed translation, actual app process restart, dialect validation, or UI/VoiceOver/RTL rendering acceptance. Those gates remain open.
+
+- Tests added/updated: Prompt1BLanguagePreferencesTests, Prompt1BSettingsLanguageTests (Apple NOT_RUN).
+- Verification: {"Swift6": "457 XCTest +21 Swift Testing passed", "syntax": "238 changed Swift files parsed; zero errors", "Apple": "NOT_RUN actual SettingsStore observer/recovery and process restart/UI/RTL", "language_support": "Individual selectors/persistence added; actual MADLAD tags/clinical translation not verified without official resources"}.
+- Next action: Implement bounded native translation resource lifecycle/memory pressure handling without fake hardware budgets; continue translated-layout411–417 and saved/source preservation431–434 actual regressions. Official T5 weights/tokenizer and device/clinical/per-language acceptance remain externally blocked. Continue remaining integrated changes and exact founder paragraphs without repeating completed broad audits.
+- Commit: containing commit for batch Individual-founder-South-American-languages-and-visible-preference-recovery.

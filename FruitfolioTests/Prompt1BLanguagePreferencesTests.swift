@@ -27,10 +27,34 @@ final class Prompt1BLanguagePreferencesTests: XCTestCase {
         a.set("unknown-future-language", forKey: FruitfolioLanguagePreferences.defaultsKey)
         XCTAssertEqual(FruitfolioLanguagePreferences.load(from: a), .english)
         XCTAssertEqual(a.string(forKey: FruitfolioLanguagePreferences.defaultsKey), "unknown-future-language")
+        XCTAssertTrue(FruitfolioLanguagePreferences.needsReview(in: a))
+        XCTAssertFalse(FruitfolioLanguagePreferences.needsReview(in: b))
+        FruitfolioLanguagePreferences.save(.quechua, to: a)
+        XCTAssertFalse(FruitfolioLanguagePreferences.needsReview(in: a))
         XCTAssertEqual(FruitfolioLanguagePreferences.load(from: b), .japanese)
     }
     func testOnlyArabicPersianAndUrduSelectRightToLeftLayout() {
         XCTAssertEqual(Set(FruitfolioLanguage.allCases.filter(\.isRightToLeft)), [.arabic, .persian, .urdu])
         XCTAssertEqual(Set(FruitfolioLanguage.allCases.map(\.rawValue)).count, FruitfolioLanguage.allCases.count)
     }
+    func testFounderSouthAmericanLanguagesAreIndividualSelectorsWithStableNativeLabels() {
+        let expected: [FruitfolioLanguage: String] = [.quechua: "qu", .guarani: "gn", .aymara: "ay"]
+        for (language, code) in expected {
+            XCTAssertTrue(FruitfolioLanguage.allCases.contains(language))
+            XCTAssertEqual(language.rawValue, code)
+            XCTAssertNotEqual(language.nativeDisplayName, code)
+        }
+        // Selector availability is not a claim of installed tokenizer/model support.
+    }
+    func testMissingPreferenceNeedsNoWarningButWrongTypeIsRetainedForReview() throws {
+        let suite = "Fruitfolio.language.invalid." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        XCTAssertFalse(FruitfolioLanguagePreferences.needsReview(in: defaults))
+        defaults.set(["future": "record"], forKey: FruitfolioLanguagePreferences.defaultsKey)
+        XCTAssertEqual(FruitfolioLanguagePreferences.load(from: defaults), .english)
+        XCTAssertTrue(FruitfolioLanguagePreferences.needsReview(in: defaults))
+        XCTAssertEqual(defaults.dictionary(forKey: FruitfolioLanguagePreferences.defaultsKey) as? [String: String], ["future": "record"])
+    }
+
 }

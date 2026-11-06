@@ -251,7 +251,12 @@ struct Prompt12SettingsView: View {
             .accessibilityLabel("Language / भाषा / زبان")
             .accessibilityValue(settings.language.nativeDisplayName)
 
+            if settings.languagePreferenceNeedsReview {
+                Prompt12InfoText("the saved language is not recognized by this version. English is shown for now; the original preference is preserved until you choose a language.")
+                    .accessibilityIdentifier("settings.language.recovery")
+            }
             Prompt12InfoText("choose the language Fruitfolio uses throughout the app. language names stay recognizable so you can always change this setting again.")
+            Prompt12InfoText("some translations may be unavailable. when that happens, the original text stays visible.")
         }
     }
 
