@@ -243,6 +243,39 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(model.screen, .question)
     }
 
+    func testAlreadyCancelledRevealContinuationPreservesCompletedRoundAndRetryTicket() async throws {
+        let model = roundModel(); defer { model.leaveScreen() }
+        for _ in 0..<engine.rules.goodFruitTarget {
+            model.classificationStarAvailable = false
+            model.classificationFruit = .init(fruitID: .apple, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        model.sceneBecameInactive()
+        XCTAssertEqual(model.screen, .basketReveal)
+        let result = try XCTUnwrap(model.roundResult)
+        let session = model.session
+        let ledger = model.roundLedger
+        let ticket = model.questionInteractionID
+        let progress = model.store.progress(for: "demo")
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            await model.continueAfterReveal(expectedRoundID: result.roundID, expectedInteractionID: ticket)
+        }
+        await task.value
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(model.roundResult, result)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(model.screen, .basketReveal)
+        XCTAssertEqual(model.questionInteractionID, ticket)
+        XCTAssertEqual(model.store.progress(for: "demo"), progress)
+        // The same accepted result remains usable by a fresh, uncancelled request.
+        await model.continueAfterReveal(expectedRoundID: result.roundID, expectedInteractionID: ticket)
+        XCTAssertEqual(model.session?.currentRound, session!.currentRound + 1)
+        XCTAssertEqual(model.screen, .topicUnsupported)
+    }
+
     func testActualSuccessfulRevealConsumesNextRequestOnlyOnce() async throws {
         let model = roundModel(); defer { model.leaveScreen() }
         for _ in 0..<engine.rules.goodFruitTarget {

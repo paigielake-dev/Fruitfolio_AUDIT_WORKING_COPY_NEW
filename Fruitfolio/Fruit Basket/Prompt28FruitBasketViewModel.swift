@@ -444,7 +444,7 @@ final class Prompt28FruitBasketViewModel {
     }
 
     func continueAfterReveal(expectedRoundID: UUID? = nil, expectedInteractionID: UUID? = nil) async {
-        guard !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .basketReveal,
+        guard !Task.isCancelled, !store.isReadOnly, expectedInteractionID == nil || expectedInteractionID == questionGeneration, screen == .basketReveal,
               let result = roundResult, result.succeeded, result.roundID == roundLedger.roundID,
               expectedRoundID == nil || expectedRoundID == result.roundID,
               var session else { return }

@@ -84,9 +84,15 @@ struct Prompt28FruitBasketView: View {
     @State private var questionOperationTask: Task<Void, Never>?
     @State private var showingSaveDestination = false
     @State private var pendingSaveContent: Prompt10PendingSavedContent?
+    private struct QuestionSaveReturnContext {
+        let questionID: String
+        let roundID: UUID
+    }
+    @State private var questionSaveReturnContext: QuestionSaveReturnContext?
+    @AccessibilityFocusState private var questionSaveFocused: Bool
     private var canInteractWithGame: Bool {
         rootIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active &&
-            !store.isReadOnly && popupCoordinator.currentPopup == nil && !showTour && !showStormNote && !showingSaveDestination
+            !store.isReadOnly && popupCoordinator.currentPopup == nil && !showTour && !showStormNote && !showingSaveDestination && pendingSaveContent == nil
     }
     @State private var showTour = false
     @State private var showStormNote = false
@@ -190,6 +196,7 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            questionSaveFocused = false
             rootIsVisible = false
             setPauseMenuVisible(false)
             returnExitFocus = false
@@ -253,6 +260,7 @@ struct Prompt28FruitBasketView: View {
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
+                questionSaveFocused = false
                 tourHeadingFocused = false
                 stormHeadingFocused = false
                 pauseHeadingFocused = false
@@ -263,7 +271,7 @@ struct Prompt28FruitBasketView: View {
             else if showTour { tourHeadingFocused = true }
             else if pauseMenuVisible { pauseHeadingFocused = true }
         }
-        .sheet(isPresented: $showingSaveDestination, onDismiss: { pendingSaveContent = nil }) {
+        .sheet(isPresented: $showingSaveDestination, onDismiss: questionSaveDidDismiss) {
             if let pending = pendingSaveContent {
                 FruitfolioPresentedPopupHost {
                     Prompt10AskSaveDestination(
@@ -570,10 +578,27 @@ struct Prompt28FruitBasketView: View {
 
     private func requestQuestionSave(expectedQuestionID: String?, expectedInteractionID: UUID) {
         guard canInteractWithGame, expectedInteractionID == viewModel.questionInteractionID, let expectedQuestionID,
-              viewModel.currentQuestion?.id == expectedQuestionID,
+              viewModel.screen == .basketReveal, viewModel.currentQuestion?.id == expectedQuestionID,
+              let result = viewModel.roundResult, result.succeeded,
+              result.roundID == viewModel.roundLedger.roundID,
               let pending = viewModel.savePendingContent() else { return }
+        questionSaveFocused = false
+        questionSaveReturnContext = .init(questionID: expectedQuestionID, roundID: result.roundID)
         pendingSaveContent = pending
         showingSaveDestination = true
+    }
+
+    private func questionSaveDidDismiss() {
+        let context = questionSaveReturnContext
+        pendingSaveContent = nil
+        questionSaveReturnContext = nil
+        Task { @MainActor in
+            await Task.yield()
+            guard let context, canInteractWithGame, viewModel.screen == .basketReveal,
+                  viewModel.currentQuestion?.id == context.questionID,
+                  viewModel.roundResult?.roundID == context.roundID else { return }
+            questionSaveFocused = true
+        }
     }
 
     private func performQuestionOperation(_ operation: @MainActor @escaping () async -> Void) {
@@ -1910,6 +1935,7 @@ struct Prompt28FruitBasketView: View {
                             requestQuestionSave(expectedQuestionID: sourceQuestionID, expectedInteractionID: interactionID)
                         }
                         .accessibilityIdentifier("fruitBasket.result.saveQuestion")
+                        .accessibilityFocused($questionSaveFocused)
 
                         Prompt28WatercolorButton(
                             title: "keep playing",
@@ -1925,6 +1951,7 @@ struct Prompt28FruitBasketView: View {
                             title: "change topic",
                             accent: .mint
                         ) {
+                            guard canInteractWithGame else { return }
                             viewModel.changeTopic()
                         }
 
@@ -1932,6 +1959,7 @@ struct Prompt28FruitBasketView: View {
                             title: "change difficulty",
                             accent: .lavender
                         ) {
+                            guard canInteractWithGame else { return }
                             viewModel.screen = .learningSetup
                         }
 
@@ -2273,7 +2301,7 @@ struct Prompt28FruitBasketView: View {
     }
 
     private func requestLevelReset() {
-        guard rootIsVisible, !store.isReadOnly, currentLevelResetContext.isEligible else { return }
+        guard canInteractWithGame, currentLevelResetContext.isEligible else { return }
         levelResetControlFocused = false
         levelResetSession?.present(context: currentLevelResetContext)
         returnLevelResetFocus = levelResetSession?.requestID != nil

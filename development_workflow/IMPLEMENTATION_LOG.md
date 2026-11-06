@@ -2884,3 +2884,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "English_catalog_entries": 965, "nonempty_foreign_units": 0, "written_Apple_UI_launch_vectors": 4, "executed_new_Apple_UI_launch_vectors": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Reject already-cancelled reveal continuation before round/session mutation, with actual successful-round regression. Keep frozen save-presentation ownership through actual native onDismiss (pending payload remains nonnil while closing), preventing queued root save reentry. Execute supported checks and record remaining Apple acceptance.
 - Commit: containing commit for batch Save-fixed-copy-and-shared-art-accessibility.
+
+## Cancelled-reveal-and-actual-native-dismissal-boundaries
+
+- Parent checkpoint: d7950deab90481f55db2760092f4b42cff52e25e.
+- Source-order requirements: [324, 326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/REVEAL_AND_NATIVE_DISMISSAL_OWNERSHIP.md.
+- Already-cancelled reveal continuation now rejected before session/round/screen/ticket mutation. Actual settled-success regression previously1test/4failedassertions; fixed test preserves complete session/ledger/result/progress and allows fresh request. Root save remains owned by frozen pending payload until actual native onDismiss; valid successful reveal/ledger required. Reveal topic/difficulty and reset requests share gate. Context-guarded accessibility focus returns to same question/round Save trigger after actual dismissal. Apple lifecycle/focus behavior NOT_RUN.
+- Tests added/updated: FruitfolioTests/Prompt28FruitBasketTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 859, "native_CPU_XCTest": 881, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 4, "Apple_UI_focus_native_dismissal": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Inspect actual frame credit on failed progress readback: stage controller ledger/session and star/pass updates until saved progress acknowledgement, reproduce real injected write failure without source-only certification, preserve recoverable originals, execute checks and checkpoint.
+- Commit: containing commit for batch Cancelled-reveal-and-actual-native-dismissal-boundaries.
