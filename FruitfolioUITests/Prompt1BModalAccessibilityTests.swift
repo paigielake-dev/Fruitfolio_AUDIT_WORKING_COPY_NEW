@@ -811,9 +811,18 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     }
 
     func testTourActionsRemainReachableAtAccessibilitySize() {
+        verifyTour(rightToLeft: false)
+    }
+
+    func testRTLTourActionsRemainReachableAtAccessibilitySize() {
+        verifyTour(rightToLeft: true)
+    }
+
+    private func verifyTour(rightToLeft: Bool) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioTourQA", "-fruitfolioModalReduceMotion",
                                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if rightToLeft { app.launchArguments += ["-fruitfolioDialogueRTL"] }
         app.launch()
         let scroll = app.scrollViews["tour.dialogue.scroll"]
         XCTAssertTrue(scroll.waitForExistence(timeout: 10))
@@ -834,6 +843,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
         XCTAssertTrue(finish.isHittable)
         XCTAssertGreaterThanOrEqual(finish.frame.height, 44)
+        captureGame(app, name: "tour-ready-rtl-\(rightToLeft)")
         finish.tap()
         XCTAssertTrue(app.staticTexts["tourQA.finished"].waitForExistence(timeout: 3))
     }
@@ -888,7 +898,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(app.scrollViews["ask.conversation"].waitForExistence(timeout: 3))
     }
 
-    private func verifyModal(reduceMotion: Bool) {
+    func testRTLCharacterDialogueKeepsActionsWithinWritingArea() {
+        verifyModal(reduceMotion: true, rightToLeft: true)
+    }
+
+    private func verifyModal(reduceMotion: Bool, rightToLeft: Bool = false) {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioModalQA"]
         if reduceMotion {
@@ -896,6 +910,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                                     "-UIPreferredContentSizeCategoryName",
                                     "UICTContentSizeCategoryAccessibilityXXXL"]
         }
+        if rightToLeft { app.launchArguments += ["-fruitfolioDialogueRTL"] }
         app.launch()
         let scroll = app.scrollViews["fruitPopup.scroll"]
         XCTAssertTrue(scroll.waitForExistence(timeout: 10))
@@ -912,7 +927,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(close.frame.minX, scroll.frame.minX)
         XCTAssertLessThanOrEqual(close.frame.maxX, scroll.frame.maxX)
         let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = reduceMotion ? "modal-accessibility-reduce-motion" : "modal-scroll-actions"
+        attachment.name = (reduceMotion ? "modal-accessibility-reduce-motion" : "modal-scroll-actions")
+            + (rightToLeft ? "-rtl" : "-ltr")
         attachment.lifetime = .keepAlways
         add(attachment)
         close.tap()

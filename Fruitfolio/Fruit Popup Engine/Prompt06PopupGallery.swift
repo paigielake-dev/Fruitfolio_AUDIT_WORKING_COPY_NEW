@@ -35,7 +35,9 @@ struct Prompt06PopupGallery: View {
 /// read or write production settings, research, conversations, or user content.
 struct Prompt1BModalRegressionHarness: View {
     @State private var isPresented = true
-    private let reduceMotion = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    private var reduceMotion: Bool { motionPreferences.reduceMotionActive }
 
     var body: some View {
         ZStack {
@@ -60,13 +62,19 @@ struct Prompt1BModalRegressionHarness: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(DesignTokens.ColorToken.backgroundCream)
+        .onAppear {
+            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioDialogueRTL") { settings.language = .arabic }
+        }
     }
 }
 /// Exercises production tour composition without mutating onboarding progress.
 struct Prompt1BTourRegressionHarness: View {
     @State private var step: Prompt07TourStep = .ask
     @State private var active = true
-    private let reduceMotion = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    private var reduceMotion: Bool { motionPreferences.reduceMotionActive }
 
     var body: some View {
         ZStack {
@@ -79,6 +87,10 @@ struct Prompt1BTourRegressionHarness: View {
             } else {
                 Text("tour finished").accessibilityIdentifier("tourQA.finished")
             }
+        }
+        .onAppear {
+            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioModalReduceMotion")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioDialogueRTL") { settings.language = .arabic }
         }
     }
 }

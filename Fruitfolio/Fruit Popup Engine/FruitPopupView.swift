@@ -5,11 +5,6 @@ import SwiftUI
 // safe text bounds, optical centering, and fruit-to-bubble relationships stay
 // consistent everywhere.
 
-enum FruitPopupCharacterSide {
-    case left
-    case right
-}
-
 struct FruitPopupCharacterArtwork: View {
     let character: FruitPopupCharacter
     let width: CGFloat
@@ -85,6 +80,7 @@ struct FruitPopupView: View {
     let availableWidth: CGFloat
     let availableHeight: CGFloat
     let reduceMotion: Bool
+    @Environment(\.layoutDirection) private var layoutDirection
 
     @State
     private var appeared = false
@@ -102,13 +98,15 @@ struct FruitPopupView: View {
         self.reduceMotion = reduceMotion
     }
 
-    private var characterSide: FruitPopupCharacterSide {
+    private var prefersTrailingCharacter: Bool {
         switch request.positionPreference {
-        case .upperTrailing, .centerTrailing, .lowerTrailing:
-            return .right
-        default:
-            return .left
+        case .upperTrailing, .centerTrailing, .lowerTrailing: return true
+        default: return false
         }
+    }
+    private var characterSide: FruitPopupCharacterSide {
+        FruitfolioPopupLayout.characterSide(prefersTrailing: prefersTrailingCharacter,
+                                            rightToLeft: layoutDirection == .rightToLeft)
     }
 
     private var composition: FruitfolioPopupLayout.DialogueMetrics {
@@ -121,7 +119,7 @@ struct FruitPopupView: View {
 
     var body: some View {
         Group {
-            if characterSide == .left {
+            if !prefersTrailingCharacter {
                 HStack(alignment: .bottom, spacing: compositionSpacing) {
                     animatedCharacter
                     animatedBubble
@@ -187,7 +185,7 @@ struct FruitPopupView: View {
         }
         .scaleEffect(
             reduceMotion ? 1 : (appeared ? 1 : 0.92),
-            anchor: characterSide == .left ? .bottomLeading : .bottomTrailing
+            anchor: UnitPoint(x: characterSide == .left ? 0 : 1, y: 1)
         )
         .offset(y: reduceMotion ? 0 : (appeared ? 0 : 6))
         .opacity(appeared ? 1 : 0)

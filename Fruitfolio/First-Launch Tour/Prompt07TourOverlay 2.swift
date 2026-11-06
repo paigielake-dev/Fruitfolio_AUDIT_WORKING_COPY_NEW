@@ -9,6 +9,7 @@ struct Prompt07TourOverlay: View {
     let onSkip: () -> Void
     let onFinish: () -> Void
 
+    @Environment(\.layoutDirection) private var layoutDirection
     @EnvironmentObject private var audioManager: AudioManager
 
     @AccessibilityFocusState private var messageFocus: Int?
@@ -185,7 +186,8 @@ struct Prompt07TourOverlay: View {
 
             FruitPopupBubbleShell(
                 width: bubbleWidth,
-                characterSide: .left
+                characterSide: FruitfolioPopupLayout.characterSide(prefersTrailing: false,
+                    rightToLeft: layoutDirection == .rightToLeft)
             ) {
                 GeometryReader { geometry in
                     ScrollView(.vertical) {

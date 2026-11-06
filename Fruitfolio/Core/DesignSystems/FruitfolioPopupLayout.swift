@@ -3,6 +3,11 @@ import Foundation
 /// Geometry shared by popup families. Pixel dimensions come from the bundled
 /// artwork; normalized writing areas deliberately exclude painted edges.
 /// Content scrolls within that area instead of stretching watercolor artwork.
+enum FruitPopupCharacterSide: Equatable, Sendable {
+    case left
+    case right
+}
+
 enum FruitfolioPopupLayout {
     enum CharacterArtwork: CaseIterable {
         case strawberry, blueberry, peach
@@ -30,6 +35,13 @@ enum FruitfolioPopupLayout {
             return CGSize(width: (pixelSize.width / 2 - paintedBounds.midX) * scale,
                           height: (pixelSize.height / 2 - paintedBounds.midY) * scale)
         }
+    }
+
+    /// HStack places its first child at logical leading. Artwork mirroring
+    /// needs the resulting physical side, not the untranslated preference.
+    static func characterSide(prefersTrailing: Bool, rightToLeft: Bool) -> FruitPopupCharacterSide {
+        if prefersTrailing { return rightToLeft ? .left : .right }
+        return rightToLeft ? .right : .left
     }
 
     struct DialogueMetrics {

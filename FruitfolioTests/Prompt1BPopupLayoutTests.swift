@@ -2,6 +2,20 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BPopupLayoutTests: XCTestCase {
+    func testCharacterTailUsesPhysicalSideAfterLogicalRTLPlacement() {
+        XCTAssertEqual(FruitfolioPopupLayout.characterSide(prefersTrailing: false, rightToLeft: false), .left)
+        XCTAssertEqual(FruitfolioPopupLayout.characterSide(prefersTrailing: true, rightToLeft: false), .right)
+        XCTAssertEqual(FruitfolioPopupLayout.characterSide(prefersTrailing: false, rightToLeft: true), .right)
+        XCTAssertEqual(FruitfolioPopupLayout.characterSide(prefersTrailing: true, rightToLeft: true), .left)
+        for language in FruitfolioLanguage.allCases {
+            let leading = FruitfolioPopupLayout.characterSide(prefersTrailing: false, rightToLeft: language.isRightToLeft)
+            let trailing = FruitfolioPopupLayout.characterSide(prefersTrailing: true, rightToLeft: language.isRightToLeft)
+            XCTAssertNotEqual(leading, trailing, language.rawValue)
+            XCTAssertEqual(leading, language.isRightToLeft ? .right : .left, language.rawValue)
+        }
+        // This tests the actual direction mapping, not SwiftUI rendering or VO.
+    }
+
     func testActualHostWidthCannotExpandNarrowOrCollapsedContainers() {
         for viewport: CGFloat in [0, 12, 32, 100, 160, 240, 320, 852] {
             let inset = min(16, viewport / 2)
