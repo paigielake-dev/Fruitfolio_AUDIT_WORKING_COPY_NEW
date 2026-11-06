@@ -14,6 +14,7 @@ struct Prompt12OwnershipView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
+                    Prompt12SavedRecordNotice(store: store)
                     Prompt12RouteHeader(
                         title: "Fruitfolio ownership",
                         subtitle: "one little encyclopedia. yours to keep ♡",
@@ -66,7 +67,7 @@ struct Prompt12OwnershipView: View {
                         WatercolorSecondaryButton(label: "check ownership") {
                             store.beginQuietOwnershipValidation()
                         }
-                        .disabled(store.ownershipState == .validating)
+                        .disabled(store.ownershipState == .validating || !store.canPersistAccountChanges)
                     }
                 }
                 .padding(.horizontal, 20)

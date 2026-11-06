@@ -14,6 +14,7 @@ struct Prompt12PrivacyView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
+                    Prompt12SavedRecordNotice(store: store)
                     ZStack(alignment: .topTrailing) {
                         Prompt12RouteHeader(
                             title: "privacy",
@@ -65,6 +66,7 @@ struct Prompt12PrivacyView: View {
                             label: "private notification wording",
                             isOn: $store.usePrivacyModeOnLockScreen
                         )
+                        .disabled(!store.canPersistAccountChanges)
 
                         Prompt12InfoText(
                             "notification copy should avoid exposing reproductive-health details by default."

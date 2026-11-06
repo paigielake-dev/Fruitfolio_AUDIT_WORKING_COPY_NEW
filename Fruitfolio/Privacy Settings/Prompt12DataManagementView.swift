@@ -92,6 +92,7 @@ struct Prompt12DataManagementView: View {
                     .accessibilityHidden(true)
             }
 
+            Prompt12SavedRecordNotice(store: store)
             exportCard
             includedAreasCard
             deletionCard

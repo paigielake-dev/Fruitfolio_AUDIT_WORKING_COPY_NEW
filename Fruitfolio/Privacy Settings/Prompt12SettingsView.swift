@@ -25,6 +25,7 @@ struct Prompt12SettingsView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
+                    Prompt12SavedRecordNotice(store: store)
                     languageSection
                     experienceSection
                     accessibilitySection

@@ -334,3 +334,23 @@ struct Prompt12VolumeRow: View {
         }.frame(minHeight: 44)
     }
 }
+
+/// Inline, scrollable with the existing page; never traps navigation behind an alert.
+struct Prompt12SavedRecordNotice: View {
+    @ObservedObject var store: Prompt12AccountPrivacyStore
+
+    var body: some View {
+        if let message = store.persistenceRecoveryMessage {
+            Prompt12PaperCard {
+                FruitfolioTranslatedContent(source: message) { value, _ in
+                    Prompt12InfoText(value)
+                }
+                WatercolorSecondaryButton(label: "reload saved record") {
+                    store.reloadSavedAccountState()
+                }
+                .accessibilityIdentifier("account.reloadSavedRecord")
+            }
+            .accessibilityIdentifier("account.savedRecordNotice")
+        }
+    }
+}

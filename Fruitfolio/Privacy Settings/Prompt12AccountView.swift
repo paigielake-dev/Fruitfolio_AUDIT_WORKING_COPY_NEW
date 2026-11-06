@@ -26,6 +26,7 @@ struct Prompt12AccountView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
+                    Prompt12SavedRecordNotice(store: store)
                     ZStack(alignment: .topTrailing) {
                         Prompt12RouteHeader(
                             title: "your account",

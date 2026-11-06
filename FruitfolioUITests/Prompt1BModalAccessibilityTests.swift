@@ -198,6 +198,32 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testUnreadableAccountNoticeCanReloadWithoutBlockingLocalDataNavigation() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataUnreadableAccount",
+            "-fruitfolioDataReduceMotion", "-UIPreferredContentSizeCategoryName",
+            "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+        let reload = app.buttons["account.reloadSavedRecord"]
+        for _ in 0..<12 { if reload.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(reload.isHittable)
+        XCTAssertGreaterThanOrEqual(reload.frame.height, 44)
+        reload.tap()
+        XCTAssertTrue(reload.exists) // Invalid bytes remain protected, not silently repaired.
+        let export = app.buttons["dataManagement.measurementExport"]
+        for _ in 0..<12 { if export.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(export.isHittable)
+        captureGame(app, name: "account-preserved-record-data-options")
+        let close = app.buttons["dataManagement.close"]
+        for _ in 0..<24 { if close.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(close.isHittable)
+        close.tap()
+        XCTAssertTrue(app.buttons["dataQA.background"].waitForExistence(timeout: 3))
+        app.terminate()
+    }
+
     func testContactButtonOwnsOneSoftPopAndMutePreventsSoftwarePlayback() {
         for muted in [false, true] {
             let app = XCUIApplication()

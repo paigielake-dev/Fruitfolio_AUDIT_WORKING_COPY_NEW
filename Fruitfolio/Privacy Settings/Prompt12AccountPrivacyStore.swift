@@ -42,7 +42,23 @@ final class Prompt12AccountPrivacyStore {
     #if canImport(Combine)
     @Published
     #endif
-    var usePrivacyModeOnLockScreen: Bool
+    var usePrivacyModeOnLockScreen: Bool {
+        didSet {
+            guard !isRestoringSnapshot else { return }
+            guard checkPersistenceWritable() else {
+                usePrivacyModeOnLockScreen = oldValue
+                return
+            }
+            saveSnapshot()
+        }
+    }
+
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var persistenceRecoveryMessage: String? = nil
+    var canPersistAccountChanges: Bool { persistenceRecoveryMessage == nil }
+
 
     private let defaults: UserDefaults
     private let persistenceKey: String
@@ -50,6 +66,8 @@ final class Prompt12AccountPrivacyStore {
     private let expectedBundleIdentifier: String?
     private var ownershipValidationTask: Task<Void, Never>?
     private var ownershipGeneration = UUID()
+    private var expectedPersistedObject: NSObject?
+    private var isRestoringSnapshot = false
 
     init(
         defaults: UserDefaults = .standard,
@@ -61,12 +79,10 @@ final class Prompt12AccountPrivacyStore {
         self.persistenceKey = persistenceKey
         self.ownershipVerifier = ownershipVerifier
         self.expectedBundleIdentifier = expectedBundleIdentifier
+        self.expectedPersistedObject = defaults.object(forKey: persistenceKey) as? NSObject
 
         if let data = defaults.data(forKey: persistenceKey),
-           let snapshot = try? JSONDecoder().decode(
-                Prompt12StoreSnapshot.self,
-                from: data
-           ) {
+           let snapshot = Self.readableSnapshot(data) {
             ownershipState = snapshot.ownershipState == .validating ? .validationUnavailable : snapshot.ownershipState
             authenticationState = Prompt12SessionRestorationPolicy.authentication(snapshot.authenticationState,
                                                                                   hasLocalAccount: snapshot.account != nil)
@@ -85,6 +101,9 @@ final class Prompt12AccountPrivacyStore {
             pendingLocalChanges = false
             localDataContainerID = UUID()
             usePrivacyModeOnLockScreen = true
+            if expectedPersistedObject != nil {
+                persistenceRecoveryMessage = "the saved account/settings record is unreadable or uses a newer format. it has been preserved. account changes are paused; other local features remain available."
+            }
         }
     }
 
@@ -109,13 +128,10 @@ final class Prompt12AccountPrivacyStore {
     @discardableResult
     func beginQuietOwnershipValidation() -> Task<Void, Never> {
         if let ownershipValidationTask { return ownershipValidationTask }
-        if defaults.object(forKey: persistenceKey) != nil {
-            guard let bytes = defaults.data(forKey: persistenceKey),
-                  (try? JSONDecoder().decode(Prompt12StoreSnapshot.self, from: bytes)) != nil else {
-                ownershipState = .validationUnavailable
-                ownershipValidationMessage = "the saved account/settings record could not be read. it has been preserved; this ownership check did not change it."
-                return Task {}
-            }
+        guard checkPersistenceWritable() else {
+            ownershipState = .validationUnavailable
+            ownershipValidationMessage = persistenceRecoveryMessage
+            return Task {}
         }
         ownershipValidationMessage = nil
         ownershipGeneration = UUID()
@@ -133,6 +149,7 @@ final class Prompt12AccountPrivacyStore {
             guard let self, self.ownershipGeneration == generation else { return }
             self.ownershipValidationTask = nil
             guard let expectedBytes, self.defaults.data(forKey: self.persistenceKey) == expectedBytes else {
+                _ = self.checkPersistenceWritable()
                 self.ownershipState = .validationUnavailable
                 self.ownershipValidationMessage = "the local account/settings record changed during this check. the newer record was preserved; try again when ready."
                 return
@@ -170,6 +187,7 @@ final class Prompt12AccountPrivacyStore {
         #if !DEBUG
         throw Prompt12AccountPrivacyError.serviceNotConfigured
         #else
+        guard checkPersistenceWritable() else { throw Prompt12AccountPrivacyError.localRecordProtected }
         let cleanEmail = rawEmail.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
@@ -203,12 +221,14 @@ final class Prompt12AccountPrivacyStore {
     }
 
     func markLocalChangePending() {
+        guard checkPersistenceWritable() else { return }
         pendingLocalChanges = true
         syncState = isSignedIn ? .pendingLocalChanges : .localOnly
         saveSnapshot()
     }
 
     func syncNow() {
+        guard checkPersistenceWritable() else { return }
         // Keep pending local edits. Successful cloud synchronization requires a
         // configured service and an acknowledged upload, neither exists here.
         syncState = isSignedIn ? .unavailable : .localOnly
@@ -218,6 +238,7 @@ final class Prompt12AccountPrivacyStore {
     func signOut(
         keepLocalData: Bool = true
     ) throws {
+        guard checkPersistenceWritable() else { throw Prompt12AccountPrivacyError.localRecordProtected }
         guard account != nil else {
             authenticationState = .signedOut
             syncState = .localOnly
@@ -248,6 +269,7 @@ final class Prompt12AccountPrivacyStore {
     }
 
     func resetLocalAccountPrivacyStateForTesting() {
+        guard checkPersistenceWritable() else { return }
         ownershipGeneration = UUID()
         ownershipValidationTask?.cancel()
         ownershipValidationTask = nil
@@ -263,6 +285,7 @@ final class Prompt12AccountPrivacyStore {
     }
 
     private func saveSnapshot() {
+        guard checkPersistenceWritable() else { return }
         let snapshot = Prompt12StoreSnapshot(
             ownershipState: ownershipState,
             authenticationState: authenticationState,
@@ -279,6 +302,54 @@ final class Prompt12AccountPrivacyStore {
         }
 
         defaults.set(data, forKey: persistenceKey)
+        expectedPersistedObject = data as NSData
+    }
+
+    /// Read the latest record explicitly; never restore/repair by writing defaults.
+    func reloadSavedAccountState() {
+        ownershipGeneration = UUID()
+        ownershipValidationTask?.cancel()
+        ownershipValidationTask = nil
+        let fresh = Prompt12AccountPrivacyStore(defaults: defaults, persistenceKey: persistenceKey,
+            ownershipVerifier: ownershipVerifier, expectedBundleIdentifier: expectedBundleIdentifier)
+        isRestoringSnapshot = true
+        ownershipState = fresh.ownershipState
+        ownershipValidationMessage = nil
+        authenticationState = fresh.authenticationState
+        syncState = fresh.syncState
+        account = fresh.account
+        lastExport = fresh.lastExport
+        pendingLocalChanges = fresh.pendingLocalChanges
+        localDataContainerID = fresh.localDataContainerID
+        usePrivacyModeOnLockScreen = fresh.usePrivacyModeOnLockScreen
+        expectedPersistedObject = fresh.expectedPersistedObject
+        persistenceRecoveryMessage = fresh.persistenceRecoveryMessage
+        isRestoringSnapshot = false
+    }
+
+    private func checkPersistenceWritable() -> Bool {
+        guard persistenceRecoveryMessage == nil else { return false }
+        let current = defaults.object(forKey: persistenceKey) as? NSObject
+        guard current == expectedPersistedObject else {
+            persistenceRecoveryMessage = "the saved account/settings record changed or was cleared elsewhere. the latest record has been preserved. reload the saved record before making account changes."
+            return false
+        }
+        return true
+    }
+
+    /// Codable ignores unknown keys. Refuse to rewrite such records because a
+    /// newer app may depend on fields this version cannot round-trip.
+    private static func readableSnapshot(_ data: Data) -> Prompt12StoreSnapshot? {
+        guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              Set(object.keys).isSubset(of: ["ownershipState", "authenticationState", "syncState", "account", "lastExport",
+                  "pendingLocalChanges", "localDataContainerID", "usePrivacyModeOnLockScreen"]) else { return nil }
+        for (name, keys) in [
+            ("account", Set(["accountID", "provider", "email", "username", "createdAt", "updatedAt"])),
+            ("lastExport", Set(["id", "createdAt", "scopes", "summary"]))
+        ] {
+            if let nested = object[name] as? [String: Any], !Set(nested.keys).isSubset(of: keys) { return nil }
+        }
+        return try? JSONDecoder().decode(Prompt12StoreSnapshot.self, from: data)
     }
 }
 

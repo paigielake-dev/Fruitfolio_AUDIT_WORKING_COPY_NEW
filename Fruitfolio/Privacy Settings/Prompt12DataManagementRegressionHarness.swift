@@ -8,6 +8,9 @@ private final class Prompt12DataRegressionFixture: ObservableObject {
     private let defaults: UserDefaults
     init() {
         defaults = UserDefaults(suiteName: suite)!
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioDataUnreadableAccount") {
+            defaults.set(Data("unreadable UI fixture".utf8), forKey: "fruitfolio.prompt12.accountPrivacy.v1")
+        }
         store = Prompt12AccountPrivacyStore(defaults: defaults)
     }
     func cleanUp() { defaults.removePersistentDomain(forName: suite) }
