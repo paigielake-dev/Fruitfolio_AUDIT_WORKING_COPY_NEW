@@ -1,0 +1,9 @@
+# Actual game help-card localization
+
+The actual how-it-works heading, four compact card titles/bodies and fixed level note now use the existing shared semantic translation presentation. Heading emphasis applies to the heading itself, not its translation-status caption. Card text wraps vertically within the original content-sized card/background; inline artwork, existing spacing, numbering/order, replay-tour and return-home behavior remain unchanged. No active unused rule helper was substituted for the real renderer.
+
+The preservation receipt records byte-equal four card call sites and the unchanged RulesCopy source hash. Six English-only catalog additions preserve all 795 earlier entries. The dynamically generated catch-rule key is derived from the actual unchanged canonical target/score constants, not guessed or treated as a clinical statement. The existing translation pipeline's quantity protection still applies; official-model numerical/semantic acceptance remains unverified.
+
+Eight new Apple UI launches exercise English/Arabic, motion settings and replay/return actions at accessibility text size. Inference is paused and the production foreign catalog is empty, so these cases deliberately assert truthful complete original-source fallback and accessible actions. They do not verify Arabic translations. Apple SDK typecheck, rendered card bounds/screenshots, VoiceOver, gesture/lifecycle and these UI cases are NOT_RUN. Full feasible Linux contracts are batch-baseline evidence, not execution of SwiftUI cards.
+
+Relevant checklist entries record explicit executed results, unexecuted Apple cases and remaining requirement-wide verification through the persistent recorder. Original artwork, game rules, research and saved data are unchanged. Passing this source batch does not close app-wide localization or semantic/accessibility requirements.

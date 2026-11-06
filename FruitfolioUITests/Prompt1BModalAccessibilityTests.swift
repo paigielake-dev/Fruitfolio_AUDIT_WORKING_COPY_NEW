@@ -194,6 +194,41 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameRulesRetainCompleteSourceFallbackAndReplayReturnActionsAtAccessibilitySize() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+        for replay in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "rules",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let heading = app.descendants(matching: .any).matching(identifier: "fruitBasket.rules.heading").firstMatch
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(heading.label, "how it works!")
+            let scroll = app.scrollViews["fruitBasket.rules.scroll"]
+            for title in ["1. pick what you want to learn", "2. answer", "3. catch", "4. fill your basket"] {
+                let label = app.descendants(matching: .any).matching(identifier: "fruitBasket.rules.title." + title).firstMatch
+                for _ in 0..<24 { if label.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(label.isHittable)
+                XCTAssertEqual(label.label, title)
+                XCTAssertFalse(label.label.contains("**"))
+            }
+            let action = app.buttons[replay ? "fruitBasket.rules.replayTour" : "fruitBasket.rules.returnHome"]
+            for _ in 0..<24 { if action.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(action.isHittable)
+            XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+            captureGame(app, name: "rules-language-\(language)-reduced-\(reduced)-replay-\(replay)")
+            action.tap()
+            if replay { XCTAssertTrue(app.otherElements["fruitBasket.tour"].waitForExistence(timeout: 3)) }
+            else { XCTAssertTrue(app.buttons["fruitBasket.openLeaderboard"].waitForExistence(timeout: 3)) }
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testSeriousBasketRevealRetainsActualBestWithoutCelebrationOrCheer() {
         for serious in [false, true] {
         for language in ["en", "ar"] {

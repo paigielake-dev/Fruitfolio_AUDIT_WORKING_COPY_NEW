@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T17:14:19.247177+00:00",
+  "updated_at": "2026-11-06T17:20:09.822797+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -3601,6 +3601,57 @@
         ]
       },
       "timestamp": "2026-11-06T17:14:19.247177+00:00"
+    },
+    {
+      "batch": "Actual-game-help-card-semantic-localization",
+      "commands": [
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+        "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "swift Tools/validate_xcode_project.swift",
+        "actual SwiftSyntax control-sound-ownership --check",
+        "byte comparison of four original card call sites / RulesCopy hash and all 795 catalog entries"
+      ],
+      "results": {
+        "portable_XCTest": 743,
+        "native_CPU_XCTest": 765,
+        "SwiftTesting_each_suite": 21,
+        "workflow_checks": 48,
+        "Swift_syntax_files": 308,
+        "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+        "official_MADLAD": "BLOCKED; see BLOCKERS.md",
+        "native_T5_contract_methods": 16,
+        "catalog_keys": 801,
+        "nonempty_foreign_units": 0,
+        "Foundation_shared_ownership_regressions": 11,
+        "SwiftSyntax_sound_ownership_findings": 0,
+        "Xcode_project_references": "PASS; not an Apple build",
+        "batch_recorder_integrity_tests": 6,
+        "catalog_existing_entries_preserved": 795,
+        "Apple_UI_game_rules_launches_added_NOT_RUN": 8
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
+          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
+          "SwiftTesting": "21 passed per run, overlapping",
+          "workflow": "48 passed",
+          "parser": "308 Swift files syntax parsed; not Apple typecheck",
+          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+        },
+        "not_run": [
+          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
+          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
+          "Official MADLAD translation and actual foreign-language acceptance"
+        ],
+        "remaining": [
+          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
+          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
+          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        ]
+      },
+      "timestamp": "2026-11-06T17:20:09.822797+00:00"
     }
   ]
 }

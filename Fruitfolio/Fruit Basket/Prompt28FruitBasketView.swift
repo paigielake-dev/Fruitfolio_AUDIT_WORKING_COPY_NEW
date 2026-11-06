@@ -666,9 +666,12 @@ struct Prompt28FruitBasketView: View {
             VStack(spacing: 14) {
                 topBar
 
-                Text("how it works!")
-                    .prompt28Text(.screenTitle)
-                    .fontWeight(.bold)
+                FruitfolioTranslatedContent(source: "how it works!") { display, _ in
+                    FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.screenTitle.font)
+                        .fontWeight(.bold)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityIdentifier("fruitBasket.rules.heading")
+                }
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: 320)
 
@@ -698,11 +701,11 @@ struct Prompt28FruitBasketView: View {
                 }
                 .frame(maxWidth: 330)
 
-                Text(
-                    "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆"
-                )
-                .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                FruitfolioTranslatedText(
+                    source: "catching gets a little trickier as your game level grows, but you can start the game level over whenever you want. ☆",
+                    font: Prompt28TextRole.secondary.font,
+                    color: DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                .accessibilityIdentifier("fruitBasket.rules.levelNote")
                 .multilineTextAlignment(.center)
                 .fixedSize(
                     horizontal: false,
@@ -719,6 +722,7 @@ struct Prompt28FruitBasketView: View {
                         tourStep = 0
                         showTour = true
                     }
+                    .accessibilityIdentifier("fruitBasket.rules.replayTour")
 
                     Prompt28WatercolorButton(
                         title: "got it!",
@@ -726,6 +730,7 @@ struct Prompt28FruitBasketView: View {
                     ) {
                         viewModel.screen = .home
                     }
+                    .accessibilityIdentifier("fruitBasket.rules.returnHome")
                 }
                 .frame(maxWidth: 292)
             }
@@ -733,6 +738,7 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .accessibilityIdentifier("fruitBasket.rules.scroll")
     }
 
     @ViewBuilder
@@ -2920,15 +2926,15 @@ private struct Prompt28CompactRuleCard: View {
         Prompt28CompactPopupCard {
             VStack(spacing: 5) {
                 HStack(spacing: 5) {
-                    Text(title)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 15,
-                                relativeTo: .headline
-                            )
-                        )
-                        .fontWeight(.semibold)
+                    FruitfolioTranslatedContent(source: title) { display, _ in
+                        FruitfolioSemanticText(markdown: display,
+                            baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .headline))
+                            .fontWeight(.semibold)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityIdentifier("fruitBasket.rules.title." + title)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .fixedSize(horizontal: false, vertical: true)
 
                     if let artID {
                         Prompt28InlineArtGlyph(assetID: artID)
@@ -2937,20 +2943,10 @@ private struct Prompt28CompactRuleCard: View {
                 }
                 .multilineTextAlignment(.center)
 
-                Text(ruleBody)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 13,
-                            relativeTo: .body
-                        )
-                    )
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                            .opacity(0.78)
-                    )
+                FruitfolioTranslatedText(source: ruleBody,
+                    font: .custom("Chalkboard SE", size: 13, relativeTo: .body),
+                    color: DesignTokens.ColorToken.primaryBurgundy.opacity(0.78))
+                    .accessibilityIdentifier("fruitBasket.rules.body." + title)
                     .multilineTextAlignment(.center)
                     .fixedSize(
                         horizontal: false,
@@ -2959,6 +2955,7 @@ private struct Prompt28CompactRuleCard: View {
             }
         }
         .frame(maxWidth: 292)
+        .accessibilityIdentifier("fruitBasket.rules.card." + title)
     }
 }
 
