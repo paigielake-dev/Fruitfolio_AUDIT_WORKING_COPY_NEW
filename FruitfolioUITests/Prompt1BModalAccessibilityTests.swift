@@ -1264,6 +1264,51 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(message.label.contains(fragment), message.label)
     }
 
+    private func revealAccountInput(_ element: XCUIElement, app: XCUIApplication) {
+        let scroll = app.scrollViews["account.scroll"]
+        for _ in 0..<24 {
+            if element.isHittable { break }
+            if element.exists, element.frame.midY < scroll.frame.midY { scroll.swipeDown() }
+            else { scroll.swipeUp() }
+        }
+        XCTAssertTrue(element.isHittable)
+    }
+
+    func testAccountInputLabelsPreserveTypedUsernameAndEmail() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = launchAccountAction("sign-out", reduced: reduced, rtl: rtl)
+            let username = app.textFields["account.publicUsername"]
+            revealAccountInput(username, app: app)
+            XCTAssertEqual(username.label, "public username")
+            username.tap()
+            username.typeText("sprout_one")
+            XCTAssertEqual(username.value as? String, "sprout_one")
+            let confirmation = app.descendants(matching: .any)["account.usernameConfirmation"].firstMatch
+            revealAccountInput(confirmation, app: app)
+            confirmation.tap()
+            XCTAssertEqual(confirmation.value as? String, "on")
+            let save = app.buttons["account.saveUsername"]
+            revealAccountInput(save, app: app)
+            XCTAssertGreaterThanOrEqual(save.frame.height, 44)
+            save.tap()
+            XCTAssertEqual(app.staticTexts["account.qa.savedUsername"].label, "saved username: sprout_one")
+            openAccountAction("account.signOut", app: app)
+            tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
+            waitForAccountValue("accountQA.identity", value: "none", app: app)
+            let email = app.textFields["account.email"]
+            revealAccountInput(email, app: app)
+            XCTAssertEqual(email.label, "email")
+            XCTAssertGreaterThanOrEqual(email.frame.height, 44)
+            email.tap()
+            email.typeText("fixture+note@example.invalid")
+            XCTAssertEqual(email.value as? String, "fixture+note@example.invalid")
+            captureGame(app, name: "account-literal-input-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testAccountHeaderAndIdentityRemainReadableAtAccessibilitySize() {
         for reduced in [false, true] {
         for rtl in [false, true] {

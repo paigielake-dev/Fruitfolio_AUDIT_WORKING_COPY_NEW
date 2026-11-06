@@ -1730,6 +1730,9 @@ private enum Prompt16Type {
         onLogBBT: {},
         onPredictionInfoRequested: { _ in }
     )
+    .environmentObject(settings)
+    .environment(\.locale, Locale(identifier: settings.language.localeIdentifier))
+    .environment(\.layoutDirection, settings.language.isRightToLeft ? .rightToLeft : .leftToRight)
     .padding(20)
     .background(
         DesignTokens

@@ -1800,9 +1800,13 @@ private enum Prompt15Type {
     let settings =
         SettingsStore()
 
-    Prompt15CycleTrackerView(
-        onBack: {}
-    )
+    FruitfolioPresentedPopupHost {
+        Prompt15CycleTrackerView(onBack: {})
+    }
+    .environmentObject(settings)
+    .environment(\.locale, Locale(identifier: settings.language.localeIdentifier))
+    .environment(\.layoutDirection, settings.language.isRightToLeft ? .rightToLeft : .leftToRight)
+    .environmentObject(Prompt27AContextStore())
     .environmentObject(
         MotionPreferences()
     )

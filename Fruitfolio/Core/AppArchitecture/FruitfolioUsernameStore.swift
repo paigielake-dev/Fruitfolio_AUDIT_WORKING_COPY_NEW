@@ -31,6 +31,10 @@ final class FruitfolioUsernameStore {
         refresh()
         return nil
     }
+    #if DEBUG
+    /// Actual persistence readback for a registered disposable username QA scene.
+    var debugStoredUsername: FruitfolioUsernamePersistence.Snapshot { persistence.load() }
+    #endif
     func clear() { persistence.clear(); refresh() }
     private func refresh() {
         let saved = persistence.load()

@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct Prompt12AccountView: View {
     @ObservedObject var store: Prompt12AccountPrivacyStore
 
@@ -9,6 +10,15 @@ struct Prompt12AccountView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var usernameLabel = FruitfolioControlTranslationState()
+    @StateObject private var emailLabel = FruitfolioControlTranslationState()
+    private var usernameLabelKey: FruitfolioControlTranslationState.Key {
+        .init(source: "public username", language: settings.language)
+    }
+    private var emailLabelKey: FruitfolioControlTranslationState.Key {
+        .init(source: "email", language: settings.language)
+    }
     @ObservedObject private var usernameStore: FruitfolioUsernameStore
 
     @State private var email = ""
@@ -107,6 +117,7 @@ struct Prompt12AccountView: View {
                 .padding(.bottom, 42)
             }
             .scrollIndicators(.hidden)
+            .scrollDismissesKeyboard(.interactively)
             .accessibilityIdentifier("account.scroll")
             .fruitfolioModalBlur(
                 active: activeOverlay,
@@ -190,13 +201,22 @@ struct Prompt12AccountView: View {
 
 
     private var usernameCard: some View {
-        Prompt12PaperCard {
+        let input = usernameLabel.presentation(for: usernameLabelKey)
+        return Prompt12PaperCard {
             FruitfolioTranslatedText(source: "fruit basket username",
                 font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                 .fontWeight(.bold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
 
-            TextField("public username", text: $usernameDraft)
+            TextField("", text: $usernameDraft,
+                prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                .accessibilityHint(Text(input.status.accessibilityDetail(
+                    original: usernameLabelKey.source, localized: { settings.localized($0) })))
+                .task(id: FruitfolioControlTranslationState.TaskKey(key: usernameLabelKey,
+                    inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                    await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                }
                 .accessibilityIdentifier("account.publicUsername")
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -205,10 +225,13 @@ struct Prompt12AccountView: View {
                 .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 .background(DesignTokens.ColorToken.backgroundCream.opacity(0.8), in: RoundedRectangle(cornerRadius: 14))
 
+            inputTranslationCaption(input.status)
+
             Prompt12InfoText("this is your pseudonymous Fruit Basket name. Account and Fruit Basket use the same locally saved name. public registration and global uniqueness are unavailable until the secure service is configured.")
 
-            Toggle("this is not my real or legal name and contains no identifying details", isOn: $usernameNonIdentifying)
-                .font(.caption)
+            WatercolorToggle(label: "this is not my real or legal name and contains no identifying details",
+                isOn: $usernameNonIdentifying)
+                .accessibilityIdentifier("account.usernameConfirmation")
 
             if let usernameMessage {
                 Prompt12InfoText(usernameMessage)
@@ -223,6 +246,13 @@ struct Prompt12AccountView: View {
                     usernameMessage = "saved!"
                 }
             }
+            .accessibilityIdentifier("account.saveUsername")
+            #if DEBUG
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
+                Text("saved username: \(usernameStore.debugStoredUsername.username)")
+                    .accessibilityIdentifier("account.qa.savedUsername")
+            }
+            #endif
         }
         .onAppear { usernameDraft = usernameStore.username; usernameNonIdentifying = usernameStore.confirmedNonIdentifying }
         .onChange(of: usernameDraft) { _, newValue in
@@ -240,7 +270,8 @@ struct Prompt12AccountView: View {
     }
 
     private var signedOutCard: some View {
-        Prompt12PaperCard {
+        let input = emailLabel.presentation(for: emailLabelKey)
+        return Prompt12PaperCard {
             FruitfolioTranslatedText(source: "sign in",
                 font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                 .fontWeight(.bold)
@@ -252,8 +283,17 @@ struct Prompt12AccountView: View {
                 "sign in to keep supported Fruitfolio data connected to you across devices. local features can still use local storage when available."
             )
 
-            TextField("email", text: $email)
-                .font(.custom("Chalkboard SE", size: 12.5))
+            TextField("", text: $email,
+                prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                .accessibilityHint(Text(input.status.accessibilityDetail(
+                    original: emailLabelKey.source, localized: { settings.localized($0) })))
+                .accessibilityIdentifier("account.email")
+                .task(id: FruitfolioControlTranslationState.TaskKey(key: emailLabelKey,
+                    inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                    await emailLabel.resolve(emailLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                }
+                .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                 .foregroundStyle(
                     DesignTokens.ColorToken.primaryBurgundy
                 )
@@ -274,6 +314,8 @@ struct Prompt12AccountView: View {
                     )
                 )
 
+            inputTranslationCaption(input.status)
+
             FruitfolioControlPillButton(
                 label: "sign in"
             ) {
@@ -284,6 +326,16 @@ struct Prompt12AccountView: View {
                 alignment: .center
             )
 
+        }
+    }
+
+    @ViewBuilder
+    private func inputTranslationCaption(_ status: FruitfolioControlTranslationState.Presentation.Status) -> some View {
+        if let key = status.captionKey {
+            Text(LocalizedStringKey(key))
+                .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
+                .accessibilityHidden(true) // The actual field carries this status in its hint.
         }
     }
 
