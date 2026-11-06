@@ -948,3 +948,42 @@ The string catalog still contains incomplete/unreviewed non-English entries and 
 - Verification: {"Swift6": "452 XCTest +21 Swift Testing passed", "syntax": "236 changed Swift files parsed; zero errors", "Apple": "NOT_RUN actual SettingsStore publication and UI locale switching; no Apple SDK", "translation": "FAQ display pipeline integrated; no actual MADLAD output/quality verified; full catalog incomplete"}.
 - Next action: Continue localization397+ and MADLAD: replace unsafe legacy Qwen catalog auto-translation workflow with actual offline MADLAD/protected-content draft production and review gates; update catalog coverage for changed UI without claiming untranslated strings complete. Continue original-order requirements405+ after independent localization work; actual official weights/tokenizer and device quality remain explicit external blockers.
 - Commit: containing commit for batch Explicit-selected-language-authority-and-FAQ-display-translation.
+
+## Actual-offline-MADLAD-catalog-runner-and-unreviewed-recoverable-drafts
+
+- Parent checkpoint: 96c31c93ec431644701ec029905b5dfaf91fe330.
+- Source-order requirements: [397, 408, 409, 418, 419, 422, 423, 424, 425, 426, 427, 429, 430].
+- Source files: Tools/MADLADCatalogRunner.swift, Tools/translate_catalog_with_madlad.py, Tools/translate_catalog_with_llama.py, Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift, Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift.
+- # Offline MADLAD catalog draft workflow
+
+The legacy `translate_catalog_with_llama.py` entry point now forwards to the MADLAD workflow. Its old Qwen `--model`, `--llama-cli` and auto-approval `--overwrite` behavior is removed. No existing translations are overwritten or reclassified.
+
+`Tools/MADLADCatalogRunner.swift` compiles the exact application MADLAD runtime, scientific protection, language mapping and translation service against actual native llama archives. One process retains its local model across sequential catalog jobs. It uses no remote inference, network client, Ollama, Ask model or test implementation. Each guarded result is written only to a separate unreviewed draft with source/catalog/manifest/runner hashes. Protected printf specifiers are passed intact into the application's protection envelope. Unsupported target tags, invalid resources, changed scientific information and truncated output remain errors. Raw Swift interpolation/plural variation entries require genuine Xcode extraction and are not translated as literal code.
+
+Build on a host with the Swift compiler and a CPU native CMake build of the vendored llama source (disable optional BLAS/Accelerate/OpenMP backends unless their additional link flags are supplied):
+
+```bash
+python3 Tools/translate_catalog_with_madlad.py --build-only \
+  --swift /path/to/swiftc --native-llama-build /path/to/llama-build \
+  --runner /path/to/MADLADCatalogRunner
+```
+
+With the official converted/checksummed model and generated manifest in a local resource directory:
+
+```bash
+python3 Tools/translate_catalog_with_madlad.py \
+  --runner /path/to/MADLADCatalogRunner \
+  --catalog Fruitfolio/Localizable.xcstrings --resources /path/to/resources \
+  --draft-output /path/to/catalog-es-drafts.json --locales es --limit 10
+```
+
+The output resumes completed entries only when the exact catalog, manifest and runner hashes match. Changed inputs require a separate draft path. It checkpoints every accepted result and records interrupted/failed processing. Source catalogs stay immutable. A successful exit is not linguistic/clinical acceptance; `runtimeVerified` deliberately remains false because this command does not attest installed-resource provenance, device performance or translation quality. Human/clinical review and a separate explicit reviewed merge remain required. No automatic import/approval tool is provided.
+
+Verification here: the real C/Swift runner compiled/linked successfully against the native CPU archives; its actual missing-resource path returned the original-preserving error with no translated value. The actual repository catalog preflight recorded missing `MADLAD400.manifest.json` without starting inference or altering the catalog. Twenty-four workflow tests pass, including six new orchestration tests using an explicitly named fixture executable; those tests do not execute a translation model. The compiler parsed 237 changed Swift files without syntax errors.
+
+Real T5 inference remains **NOT_RUN**: official weights/tokenizer acquisition is denied by the immutable cloud network policy for huggingface.co. In addition, the application manifest verifier currently requires CryptoKit; this Linux toolchain compiles its explicit rejection branch, while actual verified-model execution requires an Apple host with CryptoKit. No Linux CPU compatibility, actual model output, clinical language equivalence or iPhone memory/thermal claim is made. The previous real Qwen research inference is unrelated to MADLAD acceptance. See MADLAD_VERIFICATION.md and BLOCKERS.md for the exact open gates.
+
+- Tests added/updated: development_workflow/tests/test_madlad_catalog_drafts.py, Actual native-linked missing-resource runner execution.
+- Verification: {"runner": "Compiled/linked successfully; actual missing-resource guard returned error and no translated value", "catalog": "Missing manifest recorded; inference NOT_RUN and no source catalog writes", "workflow": "24 passed; fixture draft tests are orchestration only", "syntax": "237 changed Swift files parsed; zero errors", "MADLAD": "NOT_RUN actual T5 output: official resources blocked; current Linux branch also rejects checksum verification without CryptoKit", "Apple": "NOT_RUN device inference/UI; no Apple SDK"}.
+- Next action: Continue individual/regional language mapping405–410 and translated layout411–417; preserve unsupported target tags as unverified. Then original-order431+ saved media/performance/final requirements. Resolve Linux hash verification limitation with a standard verified implementation if feasible; official MADLAD weights/tokenizer acquisition and actual T5/device/clinical verification remain externally blocked. Never replace with Ask/Qwen or mark machine drafts reviewed.
+- Commit: containing commit for batch Actual-offline-MADLAD-catalog-runner-and-unreviewed-recoverable-drafts.

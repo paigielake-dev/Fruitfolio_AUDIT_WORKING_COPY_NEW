@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "16e52b5c071edb8e2df88393e6222d9454df3f55",
+  "current_HEAD": "96c31c93ec431644701ec029905b5dfaf91fe330",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 397,
-  "current_implementation_batch": "Explicit-selected-language-authority-and-FAQ-display-translation",
+  "current_requirement": 405,
+  "current_implementation_batch": "Actual-offline-MADLAD-catalog-runner-and-unreviewed-recoverable-drafts",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,18 +493,13 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift",
-    "Fruitfolio/Core/AppArchitecture/FruitfolioLocalization.swift",
-    "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
-    "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-    "FruitfolioTests/Prompt1BLanguagePreferencesTests.swift",
-    "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/LANGUAGE_AUTHORITY_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Tools/MADLADCatalogRunner.swift",
+    "Tools/translate_catalog_with_llama.py",
+    "Tools/translate_catalog_with_madlad.py",
+    "development_workflow/MADLAD_CATALOG_DRAFT_WORKFLOW.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/MADLAD-catalog-resource-preflight.json",
+    "development_workflow/tests/test_madlad_catalog_drafts.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -517,17 +512,22 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Full portable Swift6 suite",
-    "Compiler syntax parse",
+    "Native runner build from exact production Swift and actual C libraries",
+    "Actual native-linked unavailable-resource execution",
+    "Actual repository catalog preflight (expected exit1, original unchanged)",
+    "24 Python workflow tests",
+    "Swift compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "452 XCTest +21 Swift Testing passed",
-    "syntax": "236 changed Swift files parsed; zero errors",
-    "Apple": "NOT_RUN actual SettingsStore publication and UI locale switching; no Apple SDK",
-    "translation": "FAQ display pipeline integrated; no actual MADLAD output/quality verified; full catalog incomplete"
+    "runner": "Compiled/linked successfully; actual missing-resource guard returned error and no translated value",
+    "catalog": "Missing manifest recorded; inference NOT_RUN and no source catalog writes",
+    "workflow": "24 passed; fixture draft tests are orchestration only",
+    "syntax": "237 changed Swift files parsed; zero errors",
+    "MADLAD": "NOT_RUN actual T5 output: official resources blocked; current Linux branch also rejects checksum verification without CryptoKit",
+    "Apple": "NOT_RUN device inference/UI; no Apple SDK"
   },
-  "next_exact_implementation_action": "Continue localization397+ and MADLAD: replace unsafe legacy Qwen catalog auto-translation workflow with actual offline MADLAD/protected-content draft production and review gates; update catalog coverage for changed UI without claiming untranslated strings complete. Continue original-order requirements405+ after independent localization work; actual official weights/tokenizer and device quality remain explicit external blockers.",
-  "updated_at": "2026-11-06T01:20:42.118505+00:00",
+  "next_exact_implementation_action": "Continue individual/regional language mapping405\u2013410 and translated layout411\u2013417; preserve unsupported target tags as unverified. Then original-order431+ saved media/performance/final requirements. Resolve Linux hash verification limitation with a standard verified implementation if feasible; official MADLAD weights/tokenizer acquisition and actual T5/device/clinical verification remain externally blocked. Never replace with Ask/Qwen or mark machine drafts reviewed.",
+  "updated_at": "2026-11-06T01:24:22.036251+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }
