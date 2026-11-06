@@ -2928,3 +2928,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 865, "native_CPU_XCTest": 887, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 1, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Add actual dropped-write regressions for first topic session creation, returning-topic reset, level reset and difficulty/session mutation. Expose discardable acknowledgement results for preference/reset APIs, gate dependent model/session changes on ack, preserve explicit recovery and existing UX, execute all supported checks and record checklist evidence.
 - Commit: containing commit for batch Terminal-round-and-personal-best-after-acknowledgement.
+
+## Setup-session-level-and-difficulty-after-write-acknowledgement
+
+- Parent checkpoint: 609c0ccd3fb017e61682ab0444671b5336248d94.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md.
+- Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 869, "native_CPU_XCTest": 891, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 22, "pre_fix_failed_assertions": 6, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Reproduce control-mode change clearing visible fruit/star state before rejected preference acknowledgement. Stage mode preference ack before presentation replacement; validate active/paused phase ownership and real clock startup where applicable, preserving entering transits/earned counters. Add actual controller tests, run all supported checks and update checklist evidence.
+- Commit: containing commit for batch Setup-session-level-and-difficulty-after-write-acknowledgement.

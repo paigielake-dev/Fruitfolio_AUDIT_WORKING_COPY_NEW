@@ -174,9 +174,9 @@ final class Prompt28FruitBasketViewModel {
 
     func updateDifficulty(_ value: Prompt28EducationalDifficulty) {
         guard !store.isReadOnly, allowsTopicEditing else { return }
-        difficulty = value
         store.preferredDifficulty = value
-        store.persistPreferences()
+        guard store.persistPreferences() else { return }
+        difficulty = value
         if var session {
             session.educationalDifficulty = value
             self.session = session
@@ -198,6 +198,7 @@ final class Prompt28FruitBasketViewModel {
         }
 
         _ = store.ensureProgress(for: normalized)
+        guard !Task.isCancelled, !store.isReadOnly else { return }
         session = engine.newSession(
             topic: rawTopic,
             normalizedTopic: normalized,
@@ -211,8 +212,9 @@ final class Prompt28FruitBasketViewModel {
         guard !Task.isCancelled, !store.isReadOnly else { return }
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
-        if resetLevel { store.resetCurrentGameLevel(for: normalized) }
+        if resetLevel, !store.resetCurrentGameLevel(for: normalized) { return }
         let progress = store.ensureProgress(for: normalized)
+        guard !Task.isCancelled, !store.isReadOnly else { return }
         session = engine.newSession(
             topic: rawTopic,
             normalizedTopic: normalized,
@@ -435,7 +437,7 @@ final class Prompt28FruitBasketViewModel {
         let normalized = normalizedTopic
         guard !normalized.isEmpty else { return }
         stopGameplay()
-        store.resetCurrentGameLevel(for: normalized)
+        guard store.resetCurrentGameLevel(for: normalized) else { return }
         if var session {
             session.currentGameLevel = 1
             session.startingGameLevel = 1

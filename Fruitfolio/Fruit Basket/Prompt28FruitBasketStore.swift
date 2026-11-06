@@ -85,15 +85,16 @@ final class Prompt28FruitBasketStore {
         return persist(candidate)
     }
 
-    func resetCurrentGameLevel(for normalizedTopic: String) {
-        guard !isReadOnly else { return }
+    @discardableResult
+    func resetCurrentGameLevel(for normalizedTopic: String) -> Bool {
+        guard !isReadOnly else { return false }
         let original = ensureProgress(for: normalizedTopic)
-        guard !isReadOnly else { return }
+        guard !isReadOnly else { return false }
         var progress = Prompt28ProgressionPolicy.resettingLevel(original)
         progress.lastPlayedAt = Date()
         var candidate = currentState
         candidate.topicProgress[normalizedTopic] = progress
-        persist(candidate)
+        return persist(candidate)
     }
 
     func recordQuestion(_ questionID: String, topic: String) {
@@ -126,7 +127,8 @@ final class Prompt28FruitBasketStore {
         persist(candidate)
     }
 
-    func persistPreferences() {
+    @discardableResult
+    func persistPreferences() -> Bool {
         persist(currentState)
     }
 

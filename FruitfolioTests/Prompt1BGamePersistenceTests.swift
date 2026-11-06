@@ -25,6 +25,97 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let name = "Fruitfolio.game-persistence-tests." + UUID().uuidString
         return (name, try XCTUnwrap(UserDefaults(suiteName: name)))
     }
+    private func setupWriteFixture() throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+        let suite = "Fruitfolio.setup-write-ack." + UUID().uuidString
+        let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
+        let store = Prompt28FruitBasketStore(defaults: defaults, persistenceKey: "game")
+        var progress = store.ensureProgress(for: "fixture")
+        progress.currentGameLevel = 6; progress.highestGameLevelReached = 8
+        progress.totalRoundsCompleted = 2
+        store.updateProgress(progress)
+        let model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        model.rawTopic = "fixture"; model.screen = .learningSetup
+        return (suite, defaults, store, model)
+    }
+
+    func testRejectedNewTopicWriteCannotCreateUnacknowledgedSession() async throws {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.rawTopic = "new-topic"
+        let original = defaults.data(forKey: "game")
+        defaults.fault = .drop
+        await model.startTopic()
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertNil(model.session)
+        XCTAssertNil(store.progress(for: "new-topic"))
+        XCTAssertEqual(model.screen, .learningSetup)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+    }
+
+    func testRejectedReturningTopicResetCannotCreateSession() async throws {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.screen = .topicProgressChoice
+        let original = defaults.data(forKey: "game")
+        let accepted = store.topicProgress
+        defaults.fault = .drop
+        await model.continueReturningTopic(resetLevel: true)
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertNil(model.session)
+        XCTAssertEqual(model.screen, .topicProgressChoice)
+        XCTAssertEqual(store.topicProgress, accepted)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+    }
+
+    func testRejectedLevelResetPreservesSessionUntilFreshAcknowledgedRequest() async throws {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        // Domain-level paused session; this does not claim level-six physical gameplay.
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 6)
+        model.screen = .paused
+        let session = model.session
+        let accepted = store.topicProgress
+        let original = defaults.data(forKey: "game")
+        defaults.fault = .drop
+        model.resetGameLevel()
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(model.screen, .paused)
+        XCTAssertEqual(store.topicProgress, accepted)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        defaults.fault = .accept; store.reload()
+        model.resetGameLevel() // A fresh explicit request, not automatic replay.
+        XCTAssertEqual(model.session?.currentGameLevel, 1)
+        XCTAssertEqual(model.session?.startingGameLevel, 1)
+        XCTAssertEqual(model.session?.score, session?.score)
+        XCTAssertEqual(store.progress(for: "fixture")?.currentGameLevel, 1)
+        XCTAssertEqual(store.progress(for: "fixture")?.highestGameLevelReached, 8)
+    }
+
+    func testRejectedDifficultyWritePreservesSeparateSessionLevelAndDifficulty() async throws {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 6)
+        let session = model.session
+        let original = defaults.data(forKey: "game")
+        defaults.fault = .drop
+        model.updateDifficulty(.hard)
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertEqual(model.difficulty, .easy)
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(store.preferredDifficulty, .easy)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        defaults.fault = .accept; store.reload()
+        model.updateDifficulty(.hard)
+        XCTAssertEqual(model.difficulty, .hard)
+        XCTAssertEqual(model.session?.educationalDifficulty, .hard)
+        XCTAssertEqual(model.session?.currentGameLevel, 6)
+        XCTAssertEqual(model.session?.score, session?.score)
+        XCTAssertEqual(store.preferredDifficulty, .hard)
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))
