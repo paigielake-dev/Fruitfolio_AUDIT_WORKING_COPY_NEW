@@ -207,6 +207,8 @@ struct Prompt03SkeletonView: View {
                 }
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelQA") {
             Prompt18WheelRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioSymptomGraphQA") {
+            Prompt24SymptomGraphRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
             FruitfolioPersonalHealthRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioHormoneLibraryQA") {

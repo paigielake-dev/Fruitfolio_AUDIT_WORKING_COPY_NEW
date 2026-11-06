@@ -177,6 +177,7 @@ struct Prompt24TrendsView: View {
                     .frame(minHeight: 44)
                     .contentShape(Rectangle())
                 }
+                .accessibilityIdentifier("trends.tab." + tab.rawValue)
                 .buttonStyle(
                     Prompt24SoftPressButtonStyle(
                         reduceMotion: motionPreferences.reduceMotionActive
@@ -1334,3 +1335,91 @@ private enum Prompt24Format {
         return "Basal body temperature graph. \(points.count) recorded measurements. Values: \(values.joined(separator: ", ")) \(unit.symbol)."
     }
 }
+
+#if DEBUG
+/// Disposable nonclinical observations using the actual repository and loader.
+/// No production cycle store, patient record or settings suite is used.
+@MainActor
+private final class Prompt24SymptomGraphFixture: ObservableObject {
+    let calendar: Calendar
+    let repository: Prompt20InMemoryDailyLogRepository
+    let cycle: Prompt13CycleStore
+    let onboarding: Prompt14CycleOnboardingStore
+    let owner = Prompt20DailyLogOwnerID(rawValue: "disposable-symptom-graph-fixture")
+    let settings: SettingsStore
+    let motion = MotionPreferences()
+    private let suite = "Fruitfolio.symptomGraphQA." + UUID().uuidString
+    private var baseline: [Prompt20DailyLog] = []
+    @Published var ready = false
+    @Published var issue: String?
+    @Published var readout = "fixture records not inspected"
+    @Published var reads = 0
+    init() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/New_York")!
+        self.calendar = calendar
+        repository = Prompt20InMemoryDailyLogRepository(calendar: calendar)
+        cycle = .inMemory()
+        onboarding = .inMemory(cycleStore: cycle)
+        settings = SettingsStore(defaults: UserDefaults(suiteName: suite)!)
+        let args = ProcessInfo.processInfo.arguments
+        settings.language = args.firstIndex(of: "-fruitfolioSymptomGraphLanguage")
+            .flatMap { $0 + 1 < args.count ? args[$0 + 1] : nil }
+            .flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+        settings.translationPausedForMemoryPressure = true
+        settings.reduceAnimationOverride = args.contains("-fruitfolioSymptomGraphReduceMotion")
+        motion.update(systemReduceMotion: UIAccessibility.isReduceMotionEnabled, appOverride: settings.reduceAnimationOverride)
+    }
+    var loader: Prompt24TrendsLoader {
+        .init(todayLoader: .init(cycleStore: cycle, onboardingStore: onboarding, calendar: calendar),
+            dailyLogRepository: repository, ownerID: owner)
+    }
+    func prepare() async {
+        guard !ready else { return }
+        do {
+            for day in [7, 9] {
+                let date = calendar.date(from: DateComponents(year: 2026, month: 3, day: day, hour: 12))!
+                var draft = Prompt20DailyLogDraft()
+                draft.selectedSymptoms = [.cramps, .fatigue]
+                _ = try await repository.save(ownerID: owner, date: .init(date: date, calendar: calendar), draft: draft, now: date, requestID: UUID())
+            }
+            baseline = try await repository.allActiveLogs(ownerID: owner).sorted { $0.id.uuidString < $1.id.uuidString }
+            ready = true
+        } catch { issue = "disposable symptom fixture setup failed" }
+    }
+    func inspectActualRecords() async {
+        do {
+            let actual = try await repository.allActiveLogs(ownerID: owner).sorted { $0.id.uuidString < $1.id.uuidString }
+            let count = actual.reduce(0) { $0 + ($1.symptoms?.selectedIDs.count ?? 0) }
+            readout = "fixture logs: \(actual.count); observations: \(count); unchanged: \(actual == baseline)"
+            reads += 1
+        } catch { issue = "disposable symptom fixture read failed" }
+    }
+    deinit { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
+}
+
+struct Prompt24SymptomGraphRegressionHarness: View {
+    @StateObject private var fixture = Prompt24SymptomGraphFixture()
+    var body: some View {
+        ScrollView {
+            if let issue = fixture.issue { Text(issue).accessibilityIdentifier("symptomQA.issue") }
+            else if fixture.ready { Prompt24TrendsView(loader: fixture.loader) }
+            else { ProgressView("preparing disposable symptom fixture") }
+        }
+        .accessibilityIdentifier("symptomQA.scroll")
+        .safeAreaInset(edge: .bottom) {
+            VStack {
+                Button("inspect actual fixture records") { Task { await fixture.inspectActualRecords() } }
+                    .accessibilityIdentifier("symptomQA.inspect")
+                Text(fixture.readout).accessibilityIdentifier("symptomQA.records")
+                Text("fixture reads: \(fixture.reads)").accessibilityIdentifier("symptomQA.reads")
+            }.font(.caption).padding(8).background(DesignTokens.ColorToken.backgroundCream)
+        }
+        .environmentObject(fixture.settings)
+        .environmentObject(fixture.motion)
+        .environment(\.locale, Locale(identifier: fixture.settings.language.rawValue))
+        .environment(\.layoutDirection, .leftToRight)
+        .task { await fixture.prepare() }
+    }
+}
+#endif

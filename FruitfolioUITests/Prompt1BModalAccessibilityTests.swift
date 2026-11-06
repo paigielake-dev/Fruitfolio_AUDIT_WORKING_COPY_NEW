@@ -3,6 +3,48 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testUnifiedSymptomFiltersRestoreRecordedHistoryWithoutMutatingActualFixtureRecords() {
+        for language in ["en", "fr"] {
+            for reduced in [false, true] {
+                let app = XCUIApplication()
+                app.launchArguments += ["-fruitfolioSymptomGraphQA", "-fruitfolioSymptomGraphLanguage", language,
+                    "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+                if reduced { app.launchArguments += ["-fruitfolioSymptomGraphReduceMotion"] }
+                app.launch()
+                let symptoms = app.buttons["trends.tab.symptoms"]
+                XCTAssertTrue(symptoms.waitForExistence(timeout: 8)); symptoms.tap()
+                let scroll = app.scrollViews["symptomQA.scroll"]
+                let cramps = app.buttons["trends.symptoms.filter.cramps"]
+                let fatigue = app.buttons["trends.symptoms.filter.fatigue"]
+                XCTAssertTrue(cramps.waitForExistence(timeout: 5))
+                XCTAssertTrue(cramps.isSelected); XCTAssertTrue(fatigue.isSelected)
+                for button in [cramps, fatigue] {
+                    for _ in 0..<16 { if button.isHittable { break }; scroll.swipeUp() }
+                    XCTAssertTrue(button.isHittable); button.tap()
+                }
+                let hidden = app.descendants(matching: .any).matching(identifier: "trends.symptoms.hiddenSelection").firstMatch
+                XCTAssertTrue(hidden.waitForExistence(timeout: 5))
+                XCTAssertFalse(cramps.isSelected); XCTAssertFalse(fatigue.isSelected)
+                XCUIDevice.shared.press(.home); app.activate()
+                XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+                XCTAssertTrue(hidden.waitForExistence(timeout: 8))
+                let restore = app.buttons["trends.symptoms.showAll"]
+                for _ in 0..<16 { if restore.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(restore.isHittable); restore.tap()
+                XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "trends.symptoms.graph").firstMatch.waitForExistence(timeout: 5))
+                XCTAssertTrue(cramps.isSelected); XCTAssertTrue(fatigue.isSelected)
+                app.buttons["symptomQA.inspect"].tap()
+                let reads = app.staticTexts["symptomQA.reads"]
+                let readFinished = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "fixture reads: 1"), object: reads)
+                XCTAssertEqual(XCTWaiter.wait(for: [readFinished], timeout: 5), .completed)
+                XCTAssertEqual(app.staticTexts["symptomQA.records"].label, "fixture logs: 2; observations: 4; unchanged: true")
+                XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "symptomQA.issue").firstMatch.exists)
+                captureGame(app, name: "symptom-graph-filters-\(language)-\(reduced)")
+                app.terminate()
+            }
+        }
+    }
+
     func testContactFailureUsesMeasuredModalAndRestoresLinkAccess() {
         for reduced in [false, true] {
             let app = XCUIApplication()

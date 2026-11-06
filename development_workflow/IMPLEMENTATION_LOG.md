@@ -2730,3 +2730,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 947, "new_English_entries": 2, "Apple_hidden_filter_restore": "NOT_RUN; actual harness/regression next", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Add disposable actual Trends/real in-memory repository UI fixture and regression for filter-all-hidden/restore/background and actual unchanged-record readback; distinguish written Apple tests from execution.
 - Commit: containing commit for batch Unified-symptom-hidden-selection-distinct-from-no-history.
+
+## Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression
+
+- Parent checkpoint: 4fc66e2e116da53432e49387db09c904120413df.
+- Source-order requirements: [305, 306, 307, 308, 309, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift, Fruitfolio/Fruitfolio/ContentView.swift.
+- Actual DEBUG graph fixture uses genuine in-memory repository, Trends loader and private cycle/onboarding actors/settings, seeds2 nonclinical logs/4 observations and supports fresh actual full-log equality readback. Four Apple launches written for English/paused-French × Reduce Motion, hide/background/restore/native-selected/readback; NOT_RUN. New actual repository→loader→timeline Foundation case passes retention/no invented assignments/DST/filter/unchanged logs/no forecast. Workflow caught missing private shell QA route; registered flag and unchanged invariant rerun60pass. Full797/819 XCTest +21 SwiftTesting each. No official-model/clinical/SwiftUI runtime certification.
+- Tests added/updated: FruitfolioTests/Prompt1BSymptomTimelineTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 797, "native_CPU_XCTest": 819, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "new_symptom_graph_Apple_launches_written_NOT_RUN": 4, "Apple_measurement_launches_written_NOT_RUN": 22, "Apple_Guide_launches_written_NOT_RUN": 56, "Apple_existing_daily_exit_launches_extended_NOT_RUN": 12, "English_catalog_keys_unchanged": 947, "official_MADLAD": "BLOCKED; syntheticT5 tests are not official inference"}.
+- Next action: Continue original shared responsive scientific artwork and explanation relationships/hotspots, preserving existing canonical artwork and source citations.315–317 external LifeBridge sources remain blocked per register; do independent source work without network bypass.
+- Commit: containing commit for batch Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression.
