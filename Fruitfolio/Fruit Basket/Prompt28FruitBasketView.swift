@@ -1005,7 +1005,9 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var controlModePicker: some View {
-        VStack(
+        let expectedScreen = viewModel.screen
+        let interactionID = viewModel.questionInteractionID
+        return VStack(
             alignment: .center,
             spacing: 7
         ) {
@@ -1022,7 +1024,8 @@ struct Prompt28FruitBasketView: View {
                         isSelected: store.controlMode == mode,
                         width: 136
                     ) {
-                        viewModel.setControlMode(mode)
+                        guard canInteractWithGame else { return }
+                        viewModel.setControlMode(mode, expectedScreen: expectedScreen, expectedInteractionID: interactionID)
                     }
                     .accessibilityIdentifier("fruitBasket.controlMode." + mode.rawValue)
                 }

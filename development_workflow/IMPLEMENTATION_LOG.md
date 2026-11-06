@@ -2939,3 +2939,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 869, "native_CPU_XCTest": 891, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 22, "pre_fix_failed_assertions": 6, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Reproduce control-mode change clearing visible fruit/star state before rejected preference acknowledgement. Stage mode preference ack before presentation replacement; validate active/paused phase ownership and real clock startup where applicable, preserving entering transits/earned counters. Add actual controller tests, run all supported checks and update checklist evidence.
 - Commit: containing commit for batch Setup-session-level-and-difficulty-after-write-acknowledgement.
+
+## Control-mode-acknowledgement-phase-and-owned-clock
+
+- Parent checkpoint: 5db37ffba4e0149c731ac3266b6b96738dbfc6e6.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md.
+- Actual control-mode choice confirms preference before replacing unselected presentations; failed writes preserve choices/session/ledger and stopclock. Actual setup UI passes captured screen/question interaction and active-root gate; stale/background/changed-phase calls reject. Locked active result cannot be interrupted. Accepted live mode switch starts appropriate real clock/classification choice without cancelling unrelated loading research generation. Five controller cases: pre-fix25cases/4assertions incl absentclock; final874/896XCTest+21SwiftTesting each pass. Success-path entering transit conservation separate follow-up, Apple UI/officialmodel notcertified.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 874, "native_CPU_XCTest": 896, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 25, "pre_fix_failed_assertions": 4, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Guard late question/error delivery when store becomes protected during provider await; acknowledge history write before exposing new question. Add deterministic held-provider regressions for external deletion/protection and rejected history readback; preserve original external bytes and phase ownership, run all supported checks and update evidence.
+- Commit: containing commit for batch Control-mode-acknowledgement-phase-and-owned-clock.

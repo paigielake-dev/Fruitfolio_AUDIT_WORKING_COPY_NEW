@@ -116,6 +116,125 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         XCTAssertEqual(store.preferredDifficulty, .hard)
     }
 
+    private func activeModeFixture() throws -> (String, Prompt1BGameWriteFaultDefaults, Prompt28FruitBasketStore, Prompt28FruitBasketViewModel) {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        store.resetCurrentGameLevel(for: "fixture")
+        store.controlMode = .classification; store.persistPreferences()
+        let question = Prompt28Question(id: "credit-fixture", topicQuery: "fixture", normalizedTopic: "fixture", category: "nonclinical test",
+            educationalDifficulty: .easy, questionText: "Which visual item has a star?",
+            answerOptions: [.init(id: "a", text: "Pear"), .init(id: "b", text: "Lemon")],
+            correctAnswerID: "a", explanation: "Nonclinical write-acknowledgement fixture only.",
+            sourceIDs: ["qa-only"], sourceTitles: ["Nonclinical fixture"], catchConceptID: "visual-star",
+            catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
+            contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0))
+        model.currentQuestion = question
+        model.session = model.engine.newSession(topic: "fixture", normalizedTopic: "fixture",
+            difficulty: .easy, startingLevel: 1)
+        model.updatePlayfield(size: CGSize(width: 390, height: 620))
+        model.screen = .question
+        model.answer("a", expectedQuestionID: question.id)
+        model.presentCatchIntro(expectedQuestionID: question.id)
+        model.beginCatch(expectedQuestionID: question.id)
+        return (suite, defaults, store, model)
+    }
+
+    func testRejectedModePreferenceRetainsClassificationFruitAndStarChoices() async throws {
+        for isStar in [false, true] {
+            let (suite, defaults, store, model) = try activeModeFixture()
+            defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+            model.pause()
+            if isStar { model.classificationFruit = nil; model.classificationStarAvailable = true }
+            let fruitID = model.classificationFruit?.id
+            let star = model.classificationStarAvailable
+            let session = model.session
+            let ledger = model.roundLedger
+            let original = defaults.data(forKey: "game")
+            defaults.fault = .drop
+            model.setControlMode(.catchMode)
+            XCTAssertTrue(store.isReadOnly)
+            XCTAssertEqual(store.controlMode, .classification)
+            XCTAssertEqual(model.classificationFruit?.id, fruitID)
+            XCTAssertEqual(model.classificationStarAvailable, star)
+            XCTAssertEqual(model.session, session)
+            XCTAssertEqual(model.roundLedger, ledger)
+            XCTAssertEqual(defaults.data(forKey: "game"), original)
+        }
+    }
+
+    func testRejectedModePreferenceRetainsPausedPhysicalFruitPresentation() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        model.setControlMode(.catchMode); model.pause()
+        model.activeFruit = [.init(fruitID: .pear, classification: .good,
+            x: 0.25, y: 0.4, fallSpeed: 0.2, horizontalDrift: 0.02, rotationDegrees: 0)]
+        let ids = model.activeFruit.map(\.id)
+        let session = model.session
+        let original = defaults.data(forKey: "game")
+        defaults.fault = .drop
+        model.setControlMode(.classification)
+        XCTAssertTrue(store.isReadOnly)
+        XCTAssertEqual(store.controlMode, .catchMode)
+        XCTAssertEqual(model.activeFruit.map(\.id), ids)
+        XCTAssertEqual(model.session, session)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+    }
+
+    func testAcceptedActiveClassificationToCatchModeStartsActualOwnedClock() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        XCTAssertEqual(model.screen, .catchActive)
+        XCTAssertTrue(model.activeFruit.isEmpty)
+        model.setControlMode(.catchMode)
+        let deadline = Date().addingTimeInterval(2)
+        while model.activeFruit.isEmpty && Date() < deadline {
+            try await Task.sleep(nanoseconds: 2_000_000)
+        }
+        XCTAssertEqual(store.controlMode, .catchMode)
+        XCTAssertFalse(model.activeFruit.isEmpty, "Observe an actual owned-clock spawn, not a manually advanced frame")
+    }
+
+    func testModeSetupCallbacksRejectChangedPhaseAndBackgroundIdentity() async throws {
+        let (suite, defaults, store, model) = try setupWriteFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        let ticket = model.questionInteractionID
+        let original = defaults.data(forKey: "game")
+        model.screen = .question
+        model.setControlMode(.classification, expectedScreen: .learningSetup, expectedInteractionID: ticket)
+        XCTAssertEqual(store.controlMode, .catchMode)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        model.screen = .learningSetup
+        model.sceneBecameInactive()
+        model.setControlMode(.classification, expectedScreen: .learningSetup, expectedInteractionID: ticket)
+        XCTAssertEqual(store.controlMode, .catchMode)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        model.setControlMode(.classification, expectedScreen: .learningSetup,
+            expectedInteractionID: model.questionInteractionID)
+        XCTAssertEqual(store.controlMode, .classification)
+        XCTAssertFalse(store.isReadOnly)
+    }
+
+    func testModeChangeCannotInterruptActualPendingSuccessfulRound() async throws {
+        let (suite, defaults, store, model) = try activeModeFixture()
+        defer { model.leaveScreen(); defaults.removePersistentDomain(forName: suite) }
+        for _ in 0..<model.engine.rules.goodFruitTarget {
+            model.classificationStarAvailable = false
+            model.classificationFruit = .init(fruitID: .pear, classification: .good,
+                x: 0.5, fallSpeed: 0, horizontalDrift: 0, rotationDegrees: 0)
+            model.classificationDecision(accept: true)
+            for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+        }
+        XCTAssertEqual(model.roundLedger.terminalSuccess, true)
+        let original = defaults.data(forKey: "game")
+        let ledger = model.roundLedger
+        model.setControlMode(.catchMode)
+        XCTAssertEqual(store.controlMode, .classification)
+        XCTAssertEqual(model.roundLedger, ledger)
+        XCTAssertEqual(defaults.data(forKey: "game"), original)
+        model.sceneBecameInactive()
+        XCTAssertEqual(model.screen, .basketReveal)
+        XCTAssertEqual(model.roundResult?.succeeded, true)
+    }
+
     func testRejectedTerminalStatsCannotPublishPersonalBestOrResult() async throws {
         let suite = "Fruitfolio.terminal-round-ack." + UUID().uuidString
         let defaults = try XCTUnwrap(Prompt1BGameWriteFaultDefaults(suiteName: suite))

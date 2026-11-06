@@ -471,16 +471,26 @@ final class Prompt28FruitBasketViewModel {
         screen = .learningSetup
     }
 
-    func setControlMode(_ mode: Prompt28ControlMode) {
-        guard !store.isReadOnly else { return }
-        guard mode != store.controlMode else { return }
-        // Earned counters and entering objects survive the control change.
-        // Unselected presentations are replaced so no invisible object can catch.
+    func setControlMode(_ mode: Prompt28ControlMode, expectedScreen: Prompt28ScreenState? = nil,
+                        expectedInteractionID: UUID? = nil) {
+        guard !store.isReadOnly,
+              expectedScreen == nil || expectedScreen == screen,
+              expectedInteractionID == nil || expectedInteractionID == questionGeneration,
+              allowsTopicEditing || screen == .paused || screen == .catchActive,
+              mode != store.controlMode else { return }
+        if (screen == .catchActive || screen == .paused) && roundResultLocked { return }
+        store.controlMode = mode
+        guard store.persistPreferences() else { stopGameplay(); return }
+        // Earned counters and entering objects survive the acknowledged change.
+        // Replace unselected presentations so no invisible object can catch.
         activeFruit.removeAll(); activeStars.removeAll()
         classificationFruit = nil; classificationStarAvailable = false
         basketTargetX = basketX; basketResistance = 0; basketIsInPuddle = false
-        store.controlMode = mode
-        store.persistPreferences()
+        if screen == .catchActive, !isPaused {
+            stopGameplay()
+            if mode == .catchMode || !catchTransits.isEmpty { startGameplayLoop() }
+            else { spawnClassificationFruit() }
+        }
     }
 
     func sceneBecameInactive() {

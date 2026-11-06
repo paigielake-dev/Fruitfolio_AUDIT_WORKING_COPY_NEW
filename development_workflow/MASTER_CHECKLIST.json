@@ -17559,7 +17559,8 @@
         "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md",
         "development_workflow/CONTROLLER_CREDIT_ACKNOWLEDGEMENT.md",
         "development_workflow/TERMINAL_ROUND_ACKNOWLEDGEMENT.md",
-        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md"
+        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md",
+        "development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -17576,7 +17577,7 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Setup-session-level-and-difficulty-after-write-acknowledgement (resolve containing commit with git log)",
+      "commit_reference": "batch:Control-mode-acknowledgement-phase-and-owned-clock (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Round completion now owns a UUID and finalizes once before updating persistent totals. Inactivity/exit resolves an already-ended pending result instead of pausing and resurrecting it. Delayed tasks reject superseded rounds. Starting an explicit new attempt resets pause state. Existing engine rule remains exact: no pass ends round; a protected bad catch consumes one pass and continues. Regression cases cover both outcomes plus interruption and duplicate completion.",
         "Replaced production unavailable game adapter with offline exact-source-excerpt practice using actual research package eligibility, full paragraph restoration and exact source IDs/APA/DOI/URL/version. No generated clinical distractor assertions/model memory/network/health context. Explicit vocabulary practice label and clinical-review limitation; conceptual question-depth and atomic localized-quiz validation remain open, not falsely marked complete. Searches all ranked eligible paragraphs and exhausts practice IDs before exhaustion; quarantined/missing citations stay excluded. Literal semantic encoding preserves scientific operators/quantities. Source records now render in feedback/reveal and persist into saved content instead of count-only source labels. Revised founder game menu/instruction/topic wording and conditional star-pass instructions; canonical measured tour popup/background AX exclusion. Owned question tasks + generation/topic/difficulty/screen guards prevent stale results/error/history writes. Safety word-boundary fix avoids grapes/rape false positive while preserving real phrases, flexible whitespace/curly apostrophes. Two actual delayed-view-model regressions Apple-only unrun.",
@@ -17588,37 +17589,39 @@
         "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix.",
         "Actual fruit/star controller stages session and ledger before cumulative progress write, committing score/basket/pass/capture state only on explicit store acknowledgement. Store updateProgress returns discardable Bool without replacing disk adapter. Missing topic included in same candidate. Frame stops physics/spawn/owned clock if write protection appears. Existing explicit reload\u2192topic setup retained; no stale round replay after external reload. Corrected exact-parent16case baseline reproduced4assertions; initial wrong question initializer compiled0tests, corrected and isolated parent sources used without repository rollback. Apple/official model not certified.",
         "Actual success/failure terminal paths finalize only after explicit acknowledged stats write; success personal-best flag likewise follows ack. Valid new catch resets prior round PB without changing duplicate/invalid begin behavior. Pending terminal action remains consumed on failure, preserving explicit reload\u2192topic setup and preventing stale external-data replay. New actual10-settled-fruit failure regression reproduced1assertion before fix; secondactual success\u2192newlegitimate round verifiesPBreset. Full865/887XCTest+21SwiftTesting each passed. Apple timing/publication/official model not certified.",
-        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open."
+        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open.",
+        "Actual control-mode choice confirms preference before replacing unselected presentations; failed writes preserve choices/session/ledger and stopclock. Actual setup UI passes captured screen/question interaction and active-root gate; stale/background/changed-phase calls reject. Locked active result cannot be interrupted. Accepted live mode switch starts appropriate real clock/classification choice without cancelling unrelated loading research generation. Five controller cases: pre-fix25cases/4assertions incl absentclock; final874/896XCTest+21SwiftTesting each pass. Success-path entering transit conservation separate follow-up, Apple UI/officialmodel notcertified."
       ],
-      "last_updated": "2026-11-06T23:35:45.235117+00:00",
+      "last_updated": "2026-11-06T23:42:43.053470+00:00",
       "latest_batch_verification": {
-        "batch": "Setup-session-level-and-difficulty-after-write-acknowledgement",
+        "batch": "Control-mode-acknowledgement-phase-and-owned-clock",
         "executed": {
-          "portable_XCTest": 869,
-          "native_CPU_XCTest": 891,
+          "portable_XCTest": 874,
+          "native_CPU_XCTest": 896,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_XCTest": 22,
-          "pre_fix_failed_assertions": 6,
+          "pre_fix_XCTest": 25,
+          "pre_fix_failed_assertions": 4,
           "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple Combine/native UI selection, recovery, queued-action and physical-device behavior; paused-level6 domain fixture is not physical gameplay",
+          "Apple UIKit/SwiftUI queued taps, Combine publication, picker selection/focus/keyboard and device behavior",
+          "Success-path entering transit conservation across both mode changes is a separate upcoming regression",
           "Official MADLAD/native-language/device/clinical validation"
         ],
         "remaining": [
-          "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-          "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-          "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+          "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+          "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+          "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-        "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-        "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+        "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+        "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+        "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
       ]
     },
     {
@@ -28573,7 +28576,8 @@
         "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md",
         "development_workflow/CONTROLLER_CREDIT_ACKNOWLEDGEMENT.md",
         "development_workflow/TERMINAL_ROUND_ACKNOWLEDGEMENT.md",
-        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md"
+        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md",
+        "development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -28709,7 +28713,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Setup-session-level-and-difficulty-after-write-acknowledgement (resolve containing commit with git log)",
+      "commit_reference": "batch:Control-mode-acknowledgement-phase-and-owned-clock (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28835,37 +28839,39 @@
         "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix.",
         "Actual fruit/star controller stages session and ledger before cumulative progress write, committing score/basket/pass/capture state only on explicit store acknowledgement. Store updateProgress returns discardable Bool without replacing disk adapter. Missing topic included in same candidate. Frame stops physics/spawn/owned clock if write protection appears. Existing explicit reload\u2192topic setup retained; no stale round replay after external reload. Corrected exact-parent16case baseline reproduced4assertions; initial wrong question initializer compiled0tests, corrected and isolated parent sources used without repository rollback. Apple/official model not certified.",
         "Actual success/failure terminal paths finalize only after explicit acknowledged stats write; success personal-best flag likewise follows ack. Valid new catch resets prior round PB without changing duplicate/invalid begin behavior. Pending terminal action remains consumed on failure, preserving explicit reload\u2192topic setup and preventing stale external-data replay. New actual10-settled-fruit failure regression reproduced1assertion before fix; secondactual success\u2192newlegitimate round verifiesPBreset. Full865/887XCTest+21SwiftTesting each passed. Apple timing/publication/official model not certified.",
-        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open."
+        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open.",
+        "Actual control-mode choice confirms preference before replacing unselected presentations; failed writes preserve choices/session/ledger and stopclock. Actual setup UI passes captured screen/question interaction and active-root gate; stale/background/changed-phase calls reject. Locked active result cannot be interrupted. Accepted live mode switch starts appropriate real clock/classification choice without cancelling unrelated loading research generation. Five controller cases: pre-fix25cases/4assertions incl absentclock; final874/896XCTest+21SwiftTesting each pass. Success-path entering transit conservation separate follow-up, Apple UI/officialmodel notcertified."
       ],
-      "last_updated": "2026-11-06T23:35:45.235117+00:00",
+      "last_updated": "2026-11-06T23:42:43.053470+00:00",
       "latest_batch_verification": {
-        "batch": "Setup-session-level-and-difficulty-after-write-acknowledgement",
+        "batch": "Control-mode-acknowledgement-phase-and-owned-clock",
         "executed": {
-          "portable_XCTest": 869,
-          "native_CPU_XCTest": 891,
+          "portable_XCTest": 874,
+          "native_CPU_XCTest": 896,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_XCTest": 22,
-          "pre_fix_failed_assertions": 6,
+          "pre_fix_XCTest": 25,
+          "pre_fix_failed_assertions": 4,
           "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple Combine/native UI selection, recovery, queued-action and physical-device behavior; paused-level6 domain fixture is not physical gameplay",
+          "Apple UIKit/SwiftUI queued taps, Combine publication, picker selection/focus/keyboard and device behavior",
+          "Success-path entering transit conservation across both mode changes is a separate upcoming regression",
           "Official MADLAD/native-language/device/clinical validation"
         ],
         "remaining": [
-          "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-          "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-          "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+          "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+          "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+          "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-        "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-        "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+        "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+        "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+        "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
       ]
     },
     {
@@ -29039,7 +29045,8 @@
         "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md",
         "development_workflow/CONTROLLER_CREDIT_ACKNOWLEDGEMENT.md",
         "development_workflow/TERMINAL_ROUND_ACKNOWLEDGEMENT.md",
-        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md"
+        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md",
+        "development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29221,7 +29228,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Setup-session-level-and-difficulty-after-write-acknowledgement (resolve containing commit with git log)",
+      "commit_reference": "batch:Control-mode-acknowledgement-phase-and-owned-clock (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -29381,37 +29388,39 @@
         "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix.",
         "Actual fruit/star controller stages session and ledger before cumulative progress write, committing score/basket/pass/capture state only on explicit store acknowledgement. Store updateProgress returns discardable Bool without replacing disk adapter. Missing topic included in same candidate. Frame stops physics/spawn/owned clock if write protection appears. Existing explicit reload\u2192topic setup retained; no stale round replay after external reload. Corrected exact-parent16case baseline reproduced4assertions; initial wrong question initializer compiled0tests, corrected and isolated parent sources used without repository rollback. Apple/official model not certified.",
         "Actual success/failure terminal paths finalize only after explicit acknowledged stats write; success personal-best flag likewise follows ack. Valid new catch resets prior round PB without changing duplicate/invalid begin behavior. Pending terminal action remains consumed on failure, preserving explicit reload\u2192topic setup and preventing stale external-data replay. New actual10-settled-fruit failure regression reproduced1assertion before fix; secondactual success\u2192newlegitimate round verifiesPBreset. Full865/887XCTest+21SwiftTesting each passed. Apple timing/publication/official model not certified.",
-        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open."
+        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open.",
+        "Actual control-mode choice confirms preference before replacing unselected presentations; failed writes preserve choices/session/ledger and stopclock. Actual setup UI passes captured screen/question interaction and active-root gate; stale/background/changed-phase calls reject. Locked active result cannot be interrupted. Accepted live mode switch starts appropriate real clock/classification choice without cancelling unrelated loading research generation. Five controller cases: pre-fix25cases/4assertions incl absentclock; final874/896XCTest+21SwiftTesting each pass. Success-path entering transit conservation separate follow-up, Apple UI/officialmodel notcertified."
       ],
-      "last_updated": "2026-11-06T23:35:45.235117+00:00",
+      "last_updated": "2026-11-06T23:42:43.053470+00:00",
       "latest_batch_verification": {
-        "batch": "Setup-session-level-and-difficulty-after-write-acknowledgement",
+        "batch": "Control-mode-acknowledgement-phase-and-owned-clock",
         "executed": {
-          "portable_XCTest": 869,
-          "native_CPU_XCTest": 891,
+          "portable_XCTest": 874,
+          "native_CPU_XCTest": 896,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_XCTest": 22,
-          "pre_fix_failed_assertions": 6,
+          "pre_fix_XCTest": 25,
+          "pre_fix_failed_assertions": 4,
           "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple Combine/native UI selection, recovery, queued-action and physical-device behavior; paused-level6 domain fixture is not physical gameplay",
+          "Apple UIKit/SwiftUI queued taps, Combine publication, picker selection/focus/keyboard and device behavior",
+          "Success-path entering transit conservation across both mode changes is a separate upcoming regression",
           "Official MADLAD/native-language/device/clinical validation"
         ],
         "remaining": [
-          "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-          "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-          "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+          "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+          "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+          "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-        "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-        "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+        "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+        "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+        "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
       ]
     },
     {
@@ -29557,7 +29566,8 @@
         "development_workflow/GAME_STORE_ACKNOWLEDGED_CACHE.md",
         "development_workflow/CONTROLLER_CREDIT_ACKNOWLEDGEMENT.md",
         "development_workflow/TERMINAL_ROUND_ACKNOWLEDGEMENT.md",
-        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md"
+        "development_workflow/GAME_SETUP_WRITE_ACKNOWLEDGEMENT.md",
+        "development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -29693,7 +29703,7 @@
         "FruitfolioTests/Prompt28FruitBasketTests.swift",
         "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift"
       ],
-      "commit_reference": "batch:Setup-session-level-and-difficulty-after-write-acknowledgement (resolve containing commit with git log)",
+      "commit_reference": "batch:Control-mode-acknowledgement-phase-and-owned-clock (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -29799,37 +29809,39 @@
         "Actual observable game store stages topic/history/tour candidates and applies caches only after unchanged disk adapter confirms exact readback. Preference commit failure restores last acknowledged snapshot. Failure does not reload or accept external bytes; only explicit reload clears protection. Existing legacy-name/global-opt-in reload policy preserved. Corrected14-case baseline reproduced7assertion failures; focused14pass and full861/883XCTest+21SwiftTesting each pass. Schema/disk adapter SHA unchanged. Controller-level session/ledger credit before store acknowledgement remains next, not certified by this cache fix.",
         "Actual fruit/star controller stages session and ledger before cumulative progress write, committing score/basket/pass/capture state only on explicit store acknowledgement. Store updateProgress returns discardable Bool without replacing disk adapter. Missing topic included in same candidate. Frame stops physics/spawn/owned clock if write protection appears. Existing explicit reload\u2192topic setup retained; no stale round replay after external reload. Corrected exact-parent16case baseline reproduced4assertions; initial wrong question initializer compiled0tests, corrected and isolated parent sources used without repository rollback. Apple/official model not certified.",
         "Actual success/failure terminal paths finalize only after explicit acknowledged stats write; success personal-best flag likewise follows ack. Valid new catch resets prior round PB without changing duplicate/invalid begin behavior. Pending terminal action remains consumed on failure, preserving explicit reload\u2192topic setup and preventing stale external-data replay. New actual10-settled-fruit failure regression reproduced1assertion before fix; secondactual success\u2192newlegitimate round verifiesPBreset. Full865/887XCTest+21SwiftTesting each passed. Apple timing/publication/official model not certified.",
-        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open."
+        "Actual first/returning topic session creation checks progress acknowledgement/protection before mutation. Store preference/reset APIs return discardable ack Bool; level-reset model fields/phase and educational difficulty/session changes wait for ack. Four actual-controller dropped-write regressions reproduce6assertions in22-case baseline; fresh explicit successful requests afterreload verify score/highest-level preservation and difficulty separate from gamelevel. Domain paused-level6 fixture is not physical-obstacle verification. Full869/891XCTest+21SwiftTesting each passed; Apple/officialmodel acceptance open.",
+        "Actual control-mode choice confirms preference before replacing unselected presentations; failed writes preserve choices/session/ledger and stopclock. Actual setup UI passes captured screen/question interaction and active-root gate; stale/background/changed-phase calls reject. Locked active result cannot be interrupted. Accepted live mode switch starts appropriate real clock/classification choice without cancelling unrelated loading research generation. Five controller cases: pre-fix25cases/4assertions incl absentclock; final874/896XCTest+21SwiftTesting each pass. Success-path entering transit conservation separate follow-up, Apple UI/officialmodel notcertified."
       ],
-      "last_updated": "2026-11-06T23:35:45.235117+00:00",
+      "last_updated": "2026-11-06T23:42:43.053470+00:00",
       "latest_batch_verification": {
-        "batch": "Setup-session-level-and-difficulty-after-write-acknowledgement",
+        "batch": "Control-mode-acknowledgement-phase-and-owned-clock",
         "executed": {
-          "portable_XCTest": 869,
-          "native_CPU_XCTest": 891,
+          "portable_XCTest": 874,
+          "native_CPU_XCTest": 896,
           "SwiftTesting_each": 21,
           "workflow_checks": 60,
           "syntax_files": 311,
-          "pre_fix_XCTest": 22,
-          "pre_fix_failed_assertions": 6,
+          "pre_fix_XCTest": 25,
+          "pre_fix_failed_assertions": 4,
           "Apple_Combine_UI": "NOT_RUN",
           "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
         },
         "not_run": [
-          "Apple Combine/native UI selection, recovery, queued-action and physical-device behavior; paused-level6 domain fixture is not physical gameplay",
+          "Apple UIKit/SwiftUI queued taps, Combine publication, picker selection/focus/keyboard and device behavior",
+          "Success-path entering transit conservation across both mode changes is a separate upcoming regression",
           "Official MADLAD/native-language/device/clinical validation"
         ],
         "remaining": [
-          "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-          "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-          "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+          "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+          "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+          "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Verify actual control-mode preference consumers and stale/active/paused mode changes separately next",
-        "Run Apple topic setup/return/reset/difficulty failure and fresh-request UI recovery; no automatic stale-action replay",
-        "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
+        "Verify actual async question history acknowledgement and read-only delivery after provider await next",
+        "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
+        "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
       ]
     }
   ]
