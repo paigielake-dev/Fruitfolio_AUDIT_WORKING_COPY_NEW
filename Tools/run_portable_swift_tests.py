@@ -7,12 +7,14 @@ for SwiftUI, UIKit, llama linking, model inference, simulator or device testing.
 import argparse
 import json
 import os
+import platform
 from pathlib import Path
 import shutil
 import subprocess
 import tempfile
 
 SOURCES = [
+    "Fruitfolio/Core/Translation/FruitfolioModelChecksum.swift",
     "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
     "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
     "Fruitfolio/Hub/FAQ/Prompt29FAQCatalog.swift",
@@ -148,7 +150,17 @@ def main():
         for name in TESTS:
             shutil.copyfile(root / 'FruitfolioTests' / name, tests / name)
         extra_targets = ''
-        production_target = '.target(name: "Fruitfolio")'
+        crypto_dependency = []
+        crypto_flags = []
+        if platform.system() == 'Linux' and Path('/usr/include/openssl/evp.h').is_file():
+            crypto = work / 'Sources/FruitfolioOpenSSL'
+            crypto.mkdir()
+            (crypto / 'shim.h').write_text('#include <openssl/evp.h>\n')
+            (crypto / 'module.modulemap').write_text('module FruitfolioOpenSSL [system] { header "shim.h" link "crypto" export * }\n')
+            extra_targets = '.systemLibrary(name: "FruitfolioOpenSSL"),'
+            crypto_dependency = ['FruitfolioOpenSSL']
+            crypto_flags = ['-lcrypto']
+        production_target = '.target(name: "Fruitfolio", dependencies: ' + json.dumps(crypto_dependency) + ')'
         language_mode = '.v6'
         if args.native_llama_build:
             build = args.native_llama_build.resolve()
@@ -164,9 +176,9 @@ def main():
                 for header in directory.glob('*.h'):
                     shutil.copyfile(header, include / header.name)
             (module / 'module.modulemap').write_text('module llama [system] { header "include/llama.h" export * }\n')
-            flags = [str(library) for library in libraries] + ['-lstdc++', '-lm', '-lpthread', '-ldl']
-            extra_targets = '.systemLibrary(name: "llama"),'
-            production_target = '.target(name: "Fruitfolio", dependencies: ["llama"], linkerSettings: [.unsafeFlags(' + json.dumps(flags) + ')])'
+            flags = [str(library) for library in libraries] + ['-lstdc++', '-lm', '-lpthread', '-ldl'] + crypto_flags
+            extra_targets += '.systemLibrary(name: "llama"),'
+            production_target = '.target(name: "Fruitfolio", dependencies: ' + json.dumps(crypto_dependency + ['llama']) + ', linkerSettings: [.unsafeFlags(' + json.dumps(flags) + ')])'
             # The application uses SWIFT_VERSION=5; exercise its real C branch
             # in that language mode, without relaxing regular Foundation checks.
             language_mode = '.v5'

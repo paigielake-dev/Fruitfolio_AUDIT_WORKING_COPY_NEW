@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCES = [
     'Core/AppArchitecture/FruitfolioLanguage.swift',
     'Core/Translation/FruitfolioMADLADModels.swift',
+    'Core/Translation/FruitfolioModelChecksum.swift',
     'Core/Translation/FruitfolioMADLADRuntime.swift',
     'Core/Translation/FruitfolioLlamaBackend.swift',
     'Core/Translation/FruitfolioScientificQuantities.swift',
@@ -54,6 +55,14 @@ def build_runner(swift, native_build, output):
         output.parent.mkdir(parents=True, exist_ok=True)
         command = [swift, '-swift-version', '5', '-parse-as-library', '-I', str(include.parent),
                    '-module-cache-path', str(work / 'module-cache')]
+        if platform.system() == 'Linux':
+            if not Path('/usr/include/openssl/evp.h').is_file():
+                raise ValueError('Linux verified-model execution requires the system OpenSSL development headers/library')
+            crypto = work / 'FruitfolioOpenSSL'
+            crypto.mkdir()
+            (crypto / 'shim.h').write_text('#include <openssl/evp.h>\n')
+            (crypto / 'module.modulemap').write_text('module FruitfolioOpenSSL [system] { header "shim.h" link "crypto" export * }\n')
+            command += ['-I', str(crypto), '-lcrypto']
         command += [str(ROOT / 'Fruitfolio' / source) for source in SOURCES]
         command += [str(ROOT / 'Tools/MADLADCatalogRunner.swift')]
         command += [str(library) for library in libraries]

@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(CryptoKit)
-import CryptoKit
-#endif
 
 enum FruitfolioTranslationError: LocalizedError, Equatable {
     case resourcesMissing, invalidManifest, checksumMismatch, incompatibleModel
@@ -54,20 +51,9 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
             throw FruitfolioTranslationError.incompatibleModel
         }
         try file.seek(toOffset: 0)
-        #if canImport(CryptoKit)
-        var hash = SHA256()
-        while let chunk = try file.read(upToCount: 1024 * 1024), !chunk.isEmpty {
-            try Task.checkCancellation()
-            hash.update(data: chunk)
-        }
-        guard hash.finalize().map({ String(format: "%02x", $0) }).joined() == sha256 else {
+        guard try FruitfolioModelChecksum.sha256(file: file) == sha256 else {
             throw FruitfolioTranslationError.checksumMismatch
         }
-        #else
-        // This Apple runtime requires CryptoKit; portable checks do not pretend
-        // to verify model hashes on a platform without that implementation.
-        throw FruitfolioTranslationError.incompatibleModel
-        #endif
     }
 }
 
