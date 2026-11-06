@@ -540,6 +540,7 @@ final class Prompt28FruitBasketViewModel {
             if roundResultLocked { break }
         }
         catchTransits = roundResultLocked ? [] : pending
+        guard !store.isReadOnly else { stopGameplay(); return }
         guard !roundResultLocked else { return }
         if store.controlMode == .classification {
             if catchTransits.isEmpty {
@@ -681,14 +682,16 @@ final class Prompt28FruitBasketViewModel {
     }
 
     private func handleGoodCatch(_ fruit: Prompt28FruitID, eventID: UUID) {
-        guard !store.isReadOnly, !roundResultLocked, var session,
-              roundLedger.recordGoodFruit(fruit, eventID: eventID) else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
+        var ledger = roundLedger
+        guard ledger.recordGoodFruit(fruit, eventID: eventID) else { return }
         let outcome = engine.registerGoodCatch(session: &session)
-        self.session = session
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
+        var progress = store.progress(for: session.normalizedTopicID)
+            ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
         progress.totalFruitCaught += 1
-        store.updateProgress(progress)
-        guard !store.isReadOnly else { return }
+        guard store.updateProgress(progress) else { return }
+        roundLedger = ledger
+        self.session = session
         if outcome == .success {
             roundResultLocked = true
             pendingRoundSuccess = true
@@ -718,14 +721,16 @@ final class Prompt28FruitBasketViewModel {
     }
 
     private func handleStarCatch(eventID: UUID) {
-        guard !store.isReadOnly, !roundResultLocked, var session,
-              roundLedger.recordStar(eventID: eventID) else { return }
+        guard !store.isReadOnly, !roundResultLocked, var session else { return }
+        var ledger = roundLedger
+        guard ledger.recordStar(eventID: eventID) else { return }
         _ = engine.registerStarCatch(session: &session)
-        self.session = session
-
-        var progress = store.ensureProgress(for: session.normalizedTopicID)
+        var progress = store.progress(for: session.normalizedTopicID)
+            ?? Prompt28TopicProgress(normalizedTopicID: session.normalizedTopicID)
         progress.totalStarsEarned += 1
-        store.updateProgress(progress)
+        guard store.updateProgress(progress) else { return }
+        roundLedger = ledger
+        self.session = session
     }
 
     private func handleBadCatch(_ fruit: Prompt28FruitID, eventID: UUID) {

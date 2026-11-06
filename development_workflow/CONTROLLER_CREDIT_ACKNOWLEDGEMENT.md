@@ -1,0 +1,11 @@
+# Controller credit requires acknowledged progress
+
+A settled fruit/star previously advanced the actual controller session and round ledger before the store confirmed the corresponding cumulative progress write. The controller now stages the session and ledger, calls the existing store, and publishes event credit only when updateProgress explicitly returns true. That return reports the unchanged exact-readback persistence boundary. The store still supports existing callers that ignore the result. Missing topic rows are included in the same candidate write instead of a separate empty-row write.
+
+If a write becomes protected during a transit frame, remaining physics/spawning is stopped and the owned clock is cancelled. No unconfirmed score, basket fruit, star pass or capture-ledger event is credited. The existing explicit recovery flow accepts current disk state and returns to topic setup; it does not replay an old round against potentially changed external progress. This is not a cross-object Combine publication transaction or a crash-durability guarantee.
+
+Two actual controller regressions use private real defaults with dropped-write injection. They follow valid question/answer/intro/begin transitions and settle a real fruit/star transit through the shared frame driver. They assert unchanged entire session/ledger, unchanged acknowledged store/cache and original bytes, no result, and actual explicit reload→topic setup recovery. Nonclinical fixture data never claims clinical/source approval.
+
+An initial fixture used the wrong question initializer labels and failed compilation with zero tests executed. After correcting it to the actual API, the failing parent baseline uses exact Git-parent store/controller sources in an isolated temporary runner root; no repository reset or source rollback is performed. Source hashes and final executed results are recorded in the batch evidence.
+
+Genuine Combine/SwiftUI visible storage-failure handling and protected-store recovery, Apple UI/device timing and official MADLAD inference remain unverified on Linux. Terminal-round personal-best/finalization publication is a separate follow-up; this catch-credit change does not certify that path or any whole original checklist item.

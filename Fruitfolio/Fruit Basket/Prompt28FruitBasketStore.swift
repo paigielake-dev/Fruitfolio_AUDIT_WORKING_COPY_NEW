@@ -70,8 +70,9 @@ final class Prompt28FruitBasketStore {
         return created
     }
 
-    func updateProgress(_ progress: Prompt28TopicProgress) {
-        guard !isReadOnly else { return }
+    @discardableResult
+    func updateProgress(_ progress: Prompt28TopicProgress) -> Bool {
+        guard !isReadOnly else { return false }
         var clean = progress
         clean.currentGameLevel = min(max(clean.currentGameLevel, 1), Prompt28FruitBasketEngine.maxGameLevel)
         clean.highestGameLevelReached = min(
@@ -81,7 +82,7 @@ final class Prompt28FruitBasketStore {
         clean.lastPlayedAt = Date()
         var candidate = currentState
         candidate.topicProgress[clean.normalizedTopicID] = clean
-        persist(candidate)
+        return persist(candidate)
     }
 
     func resetCurrentGameLevel(for normalizedTopic: String) {
@@ -167,18 +168,21 @@ final class Prompt28FruitBasketStore {
         if preferredDifficulty != state.preferredDifficulty { preferredDifficulty = state.preferredDifficulty }
     }
 
-    private func persist(_ state: Prompt28PersistedGameState) {
-        guard !isReadOnly else { return }
+    @discardableResult
+    private func persist(_ state: Prompt28PersistedGameState) -> Bool {
+        guard !isReadOnly else { return false }
         do {
             try persistence.save(state)
             apply(state)
             acknowledgedState = currentState
             persistenceMessage = nil
+            return true
         } catch {
             // Restore only the last acknowledged in-memory snapshot. An explicit
             // reload still owns accepting external bytes and clearing protection.
             apply(acknowledgedState)
             persistenceMessage = persistence.failure?.message ?? "game progress could not be saved; reload the current local state."
+            return false
         }
     }
 

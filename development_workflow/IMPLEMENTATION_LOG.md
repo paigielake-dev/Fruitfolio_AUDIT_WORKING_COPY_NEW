@@ -2906,3 +2906,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 861, "native_CPU_XCTest": 883, "SwiftTesting_each": 21, "focused_game_persistence_XCTest": 14, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 7, "earlier_invalid_fixture_executed_tests": 0, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Add actual controller good-fruit/star dropped-progress regressions; stage session/ledger until explicit store acknowledgement, stop further frame work on protected storage, preserve existing explicit-reload→topic-setup behavior (do not replay stale rounds after external reload). Terminal-round ownership remains separate until safe baseline context is verified.
 - Commit: containing commit for batch Game-store-cache-after-readback-acknowledgement.
+
+## Controller-fruit-star-credit-after-progress-acknowledgement
+
+- Parent checkpoint: 98004fae73091dac660dfc4b2fa41b85ba95ef89.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/CONTROLLER_CREDIT_ACKNOWLEDGEMENT.md.
+- Actual fruit/star controller stages session and ledger before cumulative progress write, committing score/basket/pass/capture state only on explicit store acknowledgement. Store updateProgress returns discardable Bool without replacing disk adapter. Missing topic included in same candidate. Frame stops physics/spawn/owned clock if write protection appears. Existing explicit reload→topic setup retained; no stale round replay after external reload. Corrected exact-parent16case baseline reproduced4assertions; initial wrong question initializer compiled0tests, corrected and isolated parent sources used without repository rollback. Apple/official model not certified.
+- Tests added/updated: FruitfolioTests/Prompt1BGamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 863, "native_CPU_XCTest": 885, "SwiftTesting_each": 21, "parent_baseline_XCTest": 16, "parent_baseline_failed_assertions": 4, "earlier_invalid_fixture_executed_tests": 0, "workflow_checks": 60, "syntax_files": 311, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Reproduce terminal-round personal-best flag publication before rejected progress acknowledgement using actual settled10fruit controller. Stage personal-best/finalized marker after ack while preserving explicit-reload→topic-setup (do not introduce stale replay). Verify success/failure paths and checkpoints.
+- Commit: containing commit for batch Controller-fruit-star-credit-after-progress-acknowledgement.
