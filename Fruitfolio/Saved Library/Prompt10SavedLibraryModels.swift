@@ -281,7 +281,7 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
         case .pageNotFound:
             return "that saved page could not be found."
         case .persistenceFailure:
-            return "that change didn’t settle properly."
+            return "that change could not be confirmed as saved. reload the local library before trying again."
         case .unsupportedStorage:
             return "your saved library has fields this version cannot safely update. readable pages remain available. the original data has been kept, and changes are paused."
         case .contentChanged:

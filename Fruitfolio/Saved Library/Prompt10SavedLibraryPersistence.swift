@@ -42,6 +42,13 @@ struct Prompt10SavedLibraryPersistence {
         do { data = try JSONEncoder().encode(candidate) }
         catch { throw Prompt10LibraryError.persistenceFailure }
         defaults.set(data, forKey: key)
+        // The setter returning does not acknowledge persistence. Do not advance
+        // the committed snapshot or overwrite an observed foreign replacement.
+        guard let acknowledged = defaults.object(forKey: key) as? Data,
+              acknowledged == data else {
+            protectionReason = .persistenceFailure
+            throw Prompt10LibraryError.persistenceFailure
+        }
         committed = candidate
         expectedPersistedObject = data as NSData
     }

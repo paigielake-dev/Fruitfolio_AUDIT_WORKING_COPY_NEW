@@ -1,6 +1,16 @@
 #if DEBUG
 import SwiftUI
 
+/// Fault injection is confined to this disposable fixture key; reads remain
+/// genuine UserDefaults reads and all normal cases use the real setter.
+private final class Prompt11GuideFaultDefaults: UserDefaults, @unchecked Sendable {
+    var rejectLibraryWrites = false
+    override func set(_ value: Any?, forKey key: String) {
+        if rejectLibraryWrites, key == "fruitfolio.guideSaveQA.library" { return }
+        super.set(value, forKey: key)
+    }
+}
+
 /// Nonclinical QA content, in a disposable suite. The actual Guide Builder,
 /// popup callbacks and library persistence perform every edit/write.
 @MainActor
@@ -13,7 +23,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
     let token = UUID().uuidString
     private let suite = "Fruitfolio.guideSaveUIQA." + UUID().uuidString
     init() {
-        defaults = UserDefaults(suiteName: suite)!
+        defaults = Prompt11GuideFaultDefaults(suiteName: suite)!
         store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: Self.key)
         let args = ProcessInfo.processInfo.arguments
         let scenario = args.firstIndex(of: "-fruitfolioGuideSaveQAScenario")
@@ -40,6 +50,9 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
             // A real external byte replacement after the store loaded: the
             // normal save baseline guard must reject it, not a fake UI flag.
             defaults.set(Data(#"{"futureSchema":3,"preserve":{"field":null}}"#.utf8), forKey: Self.key)
+        }
+        if scenario == "dropped-description" {
+            (defaults as? Prompt11GuideFaultDefaults)?.rejectLibraryWrites = true
         }
         baselineBytes = defaults.data(forKey: Self.key)
     }

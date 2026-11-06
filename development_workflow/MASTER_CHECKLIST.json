@@ -10493,7 +10493,8 @@
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10515,9 +10516,10 @@
         "Prompt1BSharedLibraryCatalogTests",
         "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10526,40 +10528,38 @@
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
-        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
-          "portable_XCTest": "753 passed, 0 failures",
-          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
-          "SwiftTesting": "21 passed per overlapping run",
-          "workflow": "48 passed",
-          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
-          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
-          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
-          "Official MADLAD and actual foreign-language translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
-          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
-          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
-          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
-          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
-        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
-        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
-        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
-        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -10602,7 +10602,8 @@
         "Fruitfolio/Fruitfolio/ContentView.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
-        "Tools/run_portable_swift_tests.py"
+        "Tools/run_portable_swift_tests.py",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10627,9 +10628,10 @@
         "Prompt1BLibrarySnapshotProtectionTests",
         "Prompt1BModalAccessibilityTests.testUnsupportedSavedLibraryKeepsReadableBooksAndMeasuredReloadAvailable (Apple NOT_RUN)",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10639,40 +10641,38 @@
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
         "Saved Library persistence now captures the exact baseline UserDefaults object and rejects a commit after that record changes or is cleared elsewhere. The existing actual store rolls back its candidate state on failure and exposes a specific protection reason. Explicit reload reads the latest saved baseline without writing or merging it. Protected records cannot create books, and Library, Guide Builder home and Ask save destinations provide the same inline reload notice. This is value comparison in the local process, not a cross-process transaction/ABA guarantee.\n\nAdded a Foundation JSON-field-coverage guard: after a successful typed decode, a temporary typed encoding is inspected recursively for discarded dictionary fields/array members. No scientific scalar values are changed or treated as clinically equivalent. Unknown nested book/page/citation fields prevent writes while known readable pages remain available; no raw record is rewritten. This conservative rule also protects explicit null fields omitted by the typed encoder rather than guessing they are disposable. Unreadable originals retain the existing read-only behavior. Reload does not clear an unsupported record; only a genuinely readable/round-trippable newer baseline re-enables edits.\n\nThe real Saved Library store now conditionally retains genuine Combine/ObservableObject on Apple and runs its identical control flow on Linux. Existing Saved Library tests execute against that actual store. Its physical asset-name enum is also compiled unchanged on Foundation platforms; only the SwiftUI image view is conditionally excluded. No artwork/resources or model implementation is replaced. New actual-store tests prove stale/cleared deletion rollback, exact original byte preservation, known-page/notes readability under unknown nested fields, null protection and read-only reload. A DEBUG private-suite route and an actual UI test exercise the protected notice, large text/Reduce Motion and opening the existing readable book. Apple SDK/publisher/UI/screenshots remain NOT_RUN.\n\nThe new field guard is currently applied to Saved Library only. Remaining measurement/context persistence needs the same stale/unsupported-record review and implementation; this batch does not claim all app stores are protected.",
-        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
-          "portable_XCTest": "753 passed, 0 failures",
-          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
-          "SwiftTesting": "21 passed per overlapping run",
-          "workflow": "48 passed",
-          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
-          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
-          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
-          "Official MADLAD and actual foreign-language translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
-          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
-          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
-          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
-          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
-        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
-        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
-        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
-        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -10739,7 +10739,8 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
         "Tools/run_portable_swift_tests.py",
         "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
-        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift"
+        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10762,9 +10763,10 @@
         "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10774,39 +10776,38 @@
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -22329,7 +22330,10 @@
         "Fruitfolio/Core/Assets/AudioManager.swift",
         "Tools/normalize_control_sound_ownership.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
-        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift"
+        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryPersistence.swift",
+        "Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22339,45 +22343,45 @@
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "development_workflow/tests/test_control_sound_ownership.py",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
         "Legacy Library/Guide pill delegates to canonical adaptive artwork/semantic controls with extra Reduce Motion support. Real SwiftSyntax ownership now handles alias and synchronous nested branches while preserving delayed/named callbacks and raw controls; nine duplicate sites normalized and six raw Guide cues added. Prior nested fixture miss reproduced; two new syntax regressions pass. Twenty existing Apple Guide cases extended with exact interaction counts but NOT_RUN. Original data callbacks/art/audio remain.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -23271,9 +23275,10 @@
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -23323,39 +23328,38 @@
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -24559,9 +24563,10 @@
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -24604,39 +24609,38 @@
         "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -24947,9 +24951,10 @@
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25016,39 +25021,38 @@
         "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
         "Legacy Library/Guide pill delegates to canonical adaptive artwork/semantic controls with extra Reduce Motion support. Real SwiftSyntax ownership now handles alias and synchronous nested branches while preserving delayed/named callbacks and raw controls; nine duplicate sites normalized and six raw Guide cues added. Prior nested fixture miss reproduced; two new syntax regressions pass. Twenty existing Apple Guide cases extended with exact interaction counts but NOT_RUN. Original data callbacks/art/audio remain.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
@@ -25345,9 +25349,10 @@
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt11GuideBuilderTests.swift",
-        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift"
+        "FruitfolioTests/Prompt1BGuideFormOwnershipTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ticketed-Guide-form-lifecycle-and-retained-destination (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-library-write-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25448,39 +25453,38 @@
         "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
         "Legacy Library/Guide pill delegates to canonical adaptive artwork/semantic controls with extra Reduce Motion support. Real SwiftSyntax ownership now handles alias and synchronous nested branches while preserving delayed/named callbacks and raw controls; nine duplicate sites normalized and six raw Guide cues added. Prior nested fixture miss reproduced; two new syntax regressions pass. Twenty existing Apple Guide cases extended with exact interaction counts but NOT_RUN. Original data callbacks/art/audio remain.",
-        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits."
+        "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
+        "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS."
       ],
-      "last_updated": "2026-11-06T18:27:28.458418+00:00",
+      "last_updated": "2026-11-06T18:38:02.965813+00:00",
       "latest_batch_verification": {
-        "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+        "batch": "Canonical-library-write-acknowledgment",
         "executed": {
-          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
-          "portable_XCTest": "757 passed, 0 failures",
-          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
-          "SwiftTesting": "21 passed per overlapping run",
+          "focused_library": "6 passed after actual pre-fix 19 failed assertions; actual UserDefaults fault injection and Store rollback",
+          "portable_XCTest": "761 passed",
+          "native_CPU_XCTest": "783 passed; synthetic native T5 does not establish official MADLAD inference",
+          "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
-          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+          "syntax": "311 files; source references resolved, sound ownership clean, no Apple build"
         },
         "not_run": [
-          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
-          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
-          "Actual AVAudioPlayer playback/physical audio and device performance",
-          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+          "32 Guide Apple UI launch cases, including 4 dropped-description cases",
+          "Apple SDK build/link, physical device, VoiceOver, real audio, localization acceptance",
+          "Official MADLAD weights/tokenizer inference and clinical translation verification"
         ],
         "remaining": [
-          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+          "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+          "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+          "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+          "All applicable clinical, model, localization and device acceptance gates remain open"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
-        "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
-        "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
-        "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        "Execute Guide success/cancel/rejected/drop UI journeys on Apple with independent persisted-byte checks",
+        "Implement one acknowledged multi-page Guide batch; current picker still persists pages separately",
+        "Verify cross-surface synchronization, complete ordering/edits and deletion matrix; readback is not durable fsync/CAS",
+        "All applicable clinical, model, localization and device acceptance gates remain open"
       ]
     },
     {
