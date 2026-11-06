@@ -1,5 +1,6 @@
 #if canImport(SwiftUI) && canImport(Combine)
 import SwiftUI
+import UIKit
 
 @MainActor
 struct Prompt27AMyContextView: View {
@@ -8,6 +9,7 @@ struct Prompt27AMyContextView: View {
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
     @State private var viewIsVisible = false
+    @Environment(\.scenePhase) private var scenePhase
     @State private var pendingClearRevision: UUID?
     @State private var returnClearFocus = false
     @State private var failureNoticeFocus: UUID?
@@ -32,6 +34,13 @@ struct Prompt27AMyContextView: View {
         self.onBack = onBack
     }
 
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canInteractWithContext: Bool {
+        ownerIsActive && popupCoordinator.currentPopup == nil && !showHormoneInformation && !showPersonalHealthContext
+    }
+
     var body: some View {
         ZStack {
             DesignTokens.ColorToken.backgroundCream
@@ -40,6 +49,7 @@ struct Prompt27AMyContextView: View {
             VStack(spacing: 0) {
                 HStack {
                     BackControl {
+                        guard canInteractWithContext else { return }
                         onBack()
                     }
 
@@ -52,8 +62,9 @@ struct Prompt27AMyContextView: View {
                     VStack(alignment: .leading, spacing: 18) {
                         header
                         FruitfolioContextStorageNotice(store: viewModel.store, messageFocusRequest: failureNoticeFocus)
-                        WatercolorPrimaryButton(label: "optional personal health context") { showPersonalHealthContext = true }
+                        WatercolorPrimaryButton(label: "optional personal health context") { guard canInteractWithContext else { return }; showPersonalHealthContext = true }
                         WatercolorPrimaryButton(label: "Hormone Information") {
+                            guard canInteractWithContext else { return }
                             showHormoneInformation = true
                         }
                         .accessibilityIdentifier("myContext.hormoneInformation")
@@ -208,7 +219,7 @@ struct Prompt27AMyContextView: View {
     }
 
     private func requestClearContext() {
-        guard viewIsVisible, let owner = popupOwner else { return }
+        guard canInteractWithContext, let owner = popupOwner else { return }
         let revision = viewModel.store.savedRecordRevision
         returnClearFocus = true
         clearFocused = false
@@ -216,11 +227,11 @@ struct Prompt27AMyContextView: View {
             FruitPopupRequest(id: id, character: .blueberry,
                 message: "clear all My Context selections and personal health notes from this device? this cannot be undone. cycle history and Daily Log entries will be kept.",
                 primaryAction: .init(label: "keep my context") {
-                    guard viewIsVisible else { return }
+                    guard ownerIsActive else { return }
                     _ = owner.consumeAction(for: id)
                 },
                 secondaryAction: .init(label: "clear my context") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     pendingClearRevision = revision
                 }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
                 source: "my-context-clear", deduplicationKey: "my-context-clear-" + popupInstanceID.uuidString,
@@ -339,6 +350,7 @@ struct Prompt27AMyContextView: View {
         action: @escaping () -> Void
     ) -> some View {
         Button {
+            guard canInteractWithContext else { return }
             audioManager.play(.buttonSoftPop)
             action()
         } label: {

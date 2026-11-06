@@ -1701,7 +1701,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<20 { if selected.exists { break }; app.swipeUp() }
         XCTAssertTrue(selected.exists)
         XCTAssertFalse(selected.isEnabled)
-        XCTAssertEqual(selected.value as? String, "selected")
+        XCTAssertTrue(selected.isSelected)
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(selected.waitForExistence(timeout: 3))
+        XCTAssertTrue(selected.isSelected)
+        XCTAssertFalse(selected.isEnabled, "Reactivation must not bypass protected context storage")
         captureGame(app, name: "context-protected-known-selection-large-text")
         app.terminate()
     }

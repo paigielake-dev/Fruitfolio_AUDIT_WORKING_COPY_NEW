@@ -2521,3 +2521,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "catalog_keys_unchanged": 870, "Foundation": "unchanged; prior794 portable/816 native XCTest +21 SwiftTesting each not rerun", "Apple": "NOT_RUN"}.
 - Next action: Continue actual My Context controls and context-aware presentation, checking active owner/draft preservation and localizable safety/accessibility hints without changing clinical policy or prior logs.
 - Commit: containing commit for batch Context-choice-fixed-copy-and-native-selection-semantics.
+
+## Context-active-choice-owner-and-protected-resume-regression
+
+- Parent checkpoint: 565ed6a900e13f4b2cf48b5a1480d08863ff854a.
+- Source-order requirements: [281, 287, 476, 477, 478].
+- Source files: Fruitfolio/Context Personalization/Prompt27AContextViews.swift.
+- Context Back, child-sheet navigation, single/multi selection and clear request require active visible owner with no covering popup/child sheet; confirmed clear actions require active owner while retaining existing frozen revision and dismissal workflow. Choice sound runs only after guard. Existing protected-context UI regression uses native isSelected after prior semantics change and backgrounds/reactivates, requiring retained selected/disabled state. Apple test written not run.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_protected_context_resume": "written, NOT_RUN", "Foundation": "unchanged, full suites not rerun; prior794/816 XCTest +21 SwiftTesting each"}.
+- Next action: Continue context presentation localizable safety/accessibility and optional personal-health editor without changing evidence policy or previous logs; inspect pending source labels and active owner behavior.
+- Commit: containing commit for batch Context-active-choice-owner-and-protected-resume-regression.
