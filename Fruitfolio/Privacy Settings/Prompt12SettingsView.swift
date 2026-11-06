@@ -164,14 +164,16 @@ struct Prompt12SettingsView: View {
 
         }
         .fullScreenCover(isPresented: $showMyContext) {
-            Prompt27AMyContextView(
-                store: prompt27AContextStore,
-                onBack: {
-                    showMyContext = false
-                }
-            )
-            .environmentObject(audioManager)
-            .environmentObject(motionPreferences)
+            FruitfolioPresentedPopupHost {
+                Prompt27AMyContextView(
+                    store: prompt27AContextStore,
+                    onBack: {
+                        showMyContext = false
+                    }
+                )
+                .environmentObject(audioManager)
+                .environmentObject(motionPreferences)
+            }
         }
         .toolbar(
             .hidden,

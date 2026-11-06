@@ -15,7 +15,7 @@ final class Prompt1BContextPersistenceTests: XCTestCase {
             XCTAssertThrowsError(try store.exportJSON())
             if let data = original as? Data { XCTAssertEqual(defaults.data(forKey: "context"), data) }
             else { XCTAssertEqual(defaults.string(forKey: "context"), original as? String) }
-            store.erase()
+            try store.erase()
             XCTAssertNil(defaults.object(forKey: "context"))
             XCTAssertFalse(store.storageUnreadable)
         }
@@ -36,7 +36,7 @@ final class Prompt1BContextPersistenceTests: XCTestCase {
         XCTAssertEqual(store.context, snapshot)
         XCTAssertEqual(defaults.data(forKey: "context"), data)
         XCTAssertEqual(Prompt27ALocalContextPersistence(defaults: defaults, key: "context").context, snapshot)
-        store.erase()
+        try store.erase()
         XCTAssertTrue(Prompt27ALocalContextPersistence(defaults: defaults, key: "context").context.isCompletelyUnspecified)
     }
 }

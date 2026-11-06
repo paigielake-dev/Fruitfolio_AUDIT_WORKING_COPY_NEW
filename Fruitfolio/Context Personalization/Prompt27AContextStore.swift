@@ -1,16 +1,29 @@
-#if canImport(SwiftUI) && canImport(Combine)
 import Foundation
+#if canImport(Combine)
 import Combine
-import SwiftUI
+#endif
 
 @MainActor
-final class Prompt27AContextStore: ObservableObject {
+final class Prompt27AContextStore {
     static let storageKey = "fruitfolio.prompt27a.userReproductiveContext.v1"
 
-    @Published private(set) var context: Prompt27AUserReproductiveContext
-    @Published private(set) var didRecoverCorruptStoredContext = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var context: Prompt27AUserReproductiveContext
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var didRecoverCorruptStoredContext = false
 
-    @Published private(set) var persistenceMessage: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var persistenceMessage: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var storageProtectionReason: Prompt27ALocalContextPersistence.Failure?
     private let persistence: Prompt27ALocalContextPersistence
 
     init(defaults: UserDefaults = .standard, codec: Prompt27AContextCodec = Prompt27AContextCodec(), key: String? = nil) {
@@ -18,6 +31,8 @@ final class Prompt27AContextStore: ObservableObject {
         self.persistence = persistence
         context = persistence.context
         didRecoverCorruptStoredContext = persistence.storageUnreadable
+        storageProtectionReason = persistence.protectionReason
+        persistenceMessage = persistence.protectionReason?.localizedDescription
     }
 
     func setTrackingGoal(_ value: Prompt27ATrackingGoal) { update { $0.setTrackingGoal(value) } }
@@ -29,13 +44,14 @@ final class Prompt27AContextStore: ObservableObject {
     func setInfertilityContext(_ value: Prompt27AInfertilityContext) { update { $0.setInfertilityContext(value) } }
     func setFertilityTreatmentContext(_ value: Prompt27AFertilityTreatmentContext) { update { $0.setFertilityTreatmentContext(value) } }
     func setContraceptionContext(_ value: Prompt27AContraceptionContext) { update { $0.setContraceptionContext(value) } }
-    func clearContext() { eraseLocalContextData() }
+    @discardableResult
+    func clearContext() -> Bool { eraseLocalContextData() }
 
     func savePersonalHealth(_ category: FruitfolioPersonalHealthCategory, text: String,
         status: FruitfolioPersonalHealthStatus = .provided,
         provenance: FruitfolioPersonalHealthProvenance = .userProvided) throws {
+        defer { refresh() }
         try persistence.apply { try $0.setPersonalHealth(category, text: text, status: status, provenance: provenance) }
-        refresh()
     }
 
     /// Synchronizes only exact semantic overlaps from Cycle Onboarding into
@@ -89,21 +105,32 @@ final class Prompt27AContextStore: ObservableObject {
 
     /// Explicit privacy/export bridge. This exports only the user-reported
     /// context object and never reaches into cycle history or other domains.
-    func exportReadableJSON() throws -> Data { try persistence.exportJSON() }
+    func exportReadableJSON() throws -> Data { defer { refresh() }; return try persistence.exportJSON() }
+    var savedRecordRevision: UUID { persistence.revision }
+    func reloadSavedContext() { persistence.reload(); refresh() }
 
     /// Explicit local erase does not rewrite cycle history, logs or predictions.
-    func eraseLocalContextData() {
-        persistence.erase()
-        refresh()
+    @discardableResult
+    func eraseLocalContextData() -> Bool {
+        do { try persistence.erase(); refresh(); return true }
+        catch { refresh(); persistenceMessage = error.localizedDescription; return false }
     }
     private func update(_ mutation: (inout Prompt27AUserReproductiveContext) -> Void) {
         do { try persistence.apply(mutation); refresh() }
-        catch { persistenceMessage = "your context could not be saved. the original local data has been kept." }
+        catch {
+            refresh()
+            persistenceMessage = persistence.protectionReason?.localizedDescription
+                ?? "your context could not be saved. the original local data has been kept."
+        }
     }
     private func refresh() {
         context = persistence.context
         didRecoverCorruptStoredContext = persistence.storageUnreadable
-        persistenceMessage = nil
+        storageProtectionReason = persistence.protectionReason
+        persistenceMessage = persistence.protectionReason?.localizedDescription
     }
 }
+
+#if canImport(Combine)
+extension Prompt27AContextStore: ObservableObject {}
 #endif

@@ -4,7 +4,7 @@ struct ContentView: View {
     #if DEBUG
     @State private var regressionSuite = "fruitfolio.uiQA." + UUID().uuidString
     private var isRegressionRun: Bool {
-        let flags = ["-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
+        let flags = ["-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
                      "-fruitfolioAskPaperQA", "-fruitfolioTourQA", "-fruitfolioModalQA"]
         return flags.contains(where: ProcessInfo.processInfo.arguments.contains)
     }

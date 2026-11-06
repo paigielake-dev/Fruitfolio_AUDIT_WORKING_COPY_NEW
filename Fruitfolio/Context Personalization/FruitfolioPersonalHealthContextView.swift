@@ -14,9 +14,7 @@ struct FruitfolioPersonalHealthContextView: View {
                 Text("entirely optional, user-provided context, stored on this device. explore only what matters to you. skip anything; no biological findings or diagnoses are guessed from your answers. these notes do not replace approved research or clinical advice.")
                 Text("for laboratory artwork, choose a technique or sample category only if it was actually reported or you know it applies. otherwise use other labs / testing.")
                     .font(.callout)
-                if store.didRecoverCorruptStoredContext {
-                    Text("your existing context could not be read. it has been preserved and changes are paused. use My Context’s confirmed clear action only if you want to erase it.")
-                }
+                FruitfolioContextStorageNotice(store: store)
                 ForEach(FruitfolioPersonalHealthGroup.allCases) { group in
                     DisclosureGroup {
                         VStack(spacing: 12) {
@@ -35,7 +33,7 @@ struct FruitfolioPersonalHealthContextView: View {
                                     .frame(minHeight: 64)
                                 }
                                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                                .disabled(store.didRecoverCorruptStoredContext)
+                                .disabled(store.storageProtectionReason != nil)
                                 .accessibilityLabel(category.title)
                                 .accessibilityValue(status(category))
                                 .accessibilityHint("opens an optional editable context field")
@@ -53,7 +51,9 @@ struct FruitfolioPersonalHealthContextView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
         .sheet(item: $editing) { category in
-            FruitfolioPersonalHealthEntryEditor(store: store, category: category, onClose: { editing = nil })
+            FruitfolioPresentedPopupHost {
+                FruitfolioPersonalHealthEntryEditor(store: store, category: category, onClose: { editing = nil })
+            }
         }
     }
     private func status(_ category: FruitfolioPersonalHealthCategory) -> String {
@@ -104,11 +104,15 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
                 if category == .knownOvulation {
                     Text("this remains user-reported history. it does not confirm ovulation or replace Cycle Tracker’s separately labeled estimates.").font(.callout)
                 }
+                FruitfolioContextStorageNotice(store: store)
                 if let errorMessage { Text(errorMessage).foregroundStyle(Color.red) }
                 WatercolorPrimaryButton(label: "save my context") { save(status: .provided) }
+                    .disabled(store.storageProtectionReason != nil)
                 WatercolorSecondaryButton(label: "prefer not to say") { save(status: .preferNotToSay) }
+                    .disabled(store.storageProtectionReason != nil)
                 if store.context.personalHealthEntries[category.rawValue]?.isActive == true {
                     WatercolorSecondaryButton(label: "remove this context") { confirmRemove = true }
+                        .disabled(store.storageProtectionReason != nil)
                 }
                 WatercolorSecondaryButton(label: "skip / close") {
                     if changed { confirmDiscard = true } else { onClose() }

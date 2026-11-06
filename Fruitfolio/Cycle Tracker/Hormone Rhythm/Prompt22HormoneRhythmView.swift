@@ -94,7 +94,9 @@ struct Prompt22HormoneRhythmView: View {
             await load()
         }
         .sheet(isPresented: $showingMeasurements) {
-            FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
+            }
         }
     }
 

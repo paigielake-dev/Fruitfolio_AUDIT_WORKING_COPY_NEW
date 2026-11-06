@@ -58,7 +58,9 @@ struct Prompt14CycleOnboardingView: View {
             contextStore.syncFromCycleOnboarding(newDraft)
         }
         .sheet(isPresented: $showingPersonalHealthContext) {
-            FruitfolioPersonalHealthContextView(store: contextStore, onBack: { showingPersonalHealthContext = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioPersonalHealthContextView(store: contextStore, onBack: { showingPersonalHealthContext = false })
+            }
         }
         .animation(
             motionPreferences.reduceMotionActive ? .easeOut(duration: 0.08) : .easeInOut(duration: 0.24),

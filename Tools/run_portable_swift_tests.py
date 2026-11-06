@@ -69,6 +69,7 @@ SOURCES = [
     'Fruitfolio/Context Personalization/FruitfolioPersonalHealthContext.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextPersistence.swift',
     'Fruitfolio/Context Personalization/Prompt27ALocalContextPersistence.swift',
+    'Fruitfolio/Context Personalization/Prompt27AContextStore.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextPolicyEngine.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextSafety.swift',
     'Fruitfolio/Context Personalization/Prompt27AContextIntegration.swift',
@@ -127,6 +128,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BContextSnapshotProtectionTests.swift',
     'Prompt1BOwnedConfirmationTests.swift',
     'Prompt1BHormoneMeasurementTests.swift',
     'Prompt1BHormoneSnapshotProtectionTests.swift',

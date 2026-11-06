@@ -44,11 +44,7 @@ struct Prompt27AMyContextView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         header
-                        if viewModel.store.didRecoverCorruptStoredContext {
-                            Text("your saved context could not be read. the original data has been preserved; changes are paused until you explicitly clear it.")
-                                .font(Prompt27AType.body)
-                        }
-                        if let message = viewModel.store.persistenceMessage { Text(message).font(Prompt27AType.body) }
+                        FruitfolioContextStorageNotice(store: viewModel.store)
                         WatercolorPrimaryButton(label: "optional personal health context") { showPersonalHealthContext = true }
                         WatercolorPrimaryButton(label: "Hormone Information") {
                             showHormoneInformation = true
@@ -172,10 +168,14 @@ struct Prompt27AMyContextView: View {
             Button("cancel", role: .cancel) {}
         }
         .sheet(isPresented: $showPersonalHealthContext) {
-            FruitfolioPersonalHealthContextView(store: viewModel.store, onBack: { showPersonalHealthContext = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioPersonalHealthContextView(store: viewModel.store, onBack: { showPersonalHealthContext = false })
+            }
         }
         .sheet(isPresented: $showHormoneInformation) {
-            FruitfolioHormoneInformationView(onBack: { showHormoneInformation = false })
+            FruitfolioPresentedPopupHost {
+                FruitfolioHormoneInformationView(onBack: { showHormoneInformation = false })
+            }
         }
         .accessibilityIdentifier("prompt27a.myContext")
     }
@@ -304,7 +304,7 @@ struct Prompt27AMyContextView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             )
         )
-        .disabled(viewModel.store.didRecoverCorruptStoredContext)
+        .disabled(viewModel.store.storageProtectionReason != nil)
         .accessibilityLabel(title)
         .accessibilityValue(selected ? "selected" : "not selected")
         .accessibilityHint("Double tap to select")

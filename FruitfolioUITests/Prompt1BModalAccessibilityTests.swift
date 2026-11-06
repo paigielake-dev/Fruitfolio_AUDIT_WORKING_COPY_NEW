@@ -198,6 +198,27 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testContextUnknownFieldsKeepKnownSelectionAndPauseEditsAfterReadOnlyReload() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioContextStorageQA", "-fruitfolioContextReduceMotion",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch()
+        let reload = app.buttons["myContext.reloadSavedRecord"]
+        XCTAssertTrue(reload.waitForExistence(timeout: 5))
+        for _ in 0..<16 { if reload.isHittable { break }; app.swipeUp() }
+        XCTAssertTrue(reload.isHittable)
+        XCTAssertGreaterThanOrEqual(reload.frame.height, 44)
+        reload.tap()
+        XCTAssertTrue(reload.exists)
+        let selected = app.buttons.matching(NSPredicate(format: "label == %@", "trying to conceive")).firstMatch
+        for _ in 0..<20 { if selected.exists { break }; app.swipeUp() }
+        XCTAssertTrue(selected.exists)
+        XCTAssertFalse(selected.isEnabled)
+        XCTAssertEqual(selected.value as? String, "selected")
+        captureGame(app, name: "context-protected-known-selection-large-text")
+        app.terminate()
+    }
+
     func testMeasurementDeletionUsesOneSharedPaperWithCancelAndConfirmedDelete() {
         let id = "CF310000-0000-0000-0000-000000000001"
         for reduced in [false, true] {
