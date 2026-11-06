@@ -3,13 +3,26 @@ import SwiftUI
 public struct Prompt20DailyLogView: View {
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @Environment(\.dismiss) private var dismiss
     @Environment(\.locale) private var appLocale
 
     @StateObject private var model: Prompt20DailyLogViewModel
     @State private var showCervicalInfo = false
     @State private var showSavedMessage = false
-    @State private var showUnsavedConfirmation = false
+    private enum ConfirmationAction {
+        case saveAndClose, discardAndClose
+        case removeMedication(Prompt20MedicationEntry)
+    }
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var pendingConfirmationAction: ConfirmationAction?
+    @State private var viewIsVisible = false
+    @State private var popupInstanceID = UUID()
+    @State private var confirmationMessage: String?
+    @AccessibilityFocusState private var closeFocused: Bool
+    @AccessibilityFocusState private var medicationFocused: UUID?
+    @State private var returnMedicationFocus: UUID?
+    @State private var returnFocusAfterConfirmation = false
     @State private var savedMessageTask: Task<Void, Never>?
     @State private var repositoryTask: Task<Void, Never>?
 
@@ -52,35 +65,52 @@ public struct Prompt20DailyLogView: View {
                     journal
                 }
             }
-            .fruitfolioModalBlur(
-                active: showUnsavedConfirmation,
-                reduceMotion: motionPreferences.reduceMotionActive
-            )
 
-            if showUnsavedConfirmation {
-                Prompt20UnsavedChangesOverlay(
-                    onKeepEditing: {
-                        withAnimation(.easeOut(duration: motionPreferences.reduceMotionActive ? 0.08 : 0.14)) {
-                            showUnsavedConfirmation = false
-                        }
-                    },
-                    onDiscard: {
-                        showUnsavedConfirmation = false
-                        dismiss()
-                    }
-                )
-                .transition(.opacity)
-                .zIndex(40)
+        }
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .task { await model.load() }
+        .allowsHitTesting(popupCoordinator.currentPopup == nil)
+        .accessibilityHidden(popupCoordinator.currentPopup != nil)
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, returnFocusAfterConfirmation,
+                  popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            let action = pendingConfirmationAction
+            pendingConfirmationAction = nil
+            switch action {
+            case .saveAndClose:
+                repositoryTask = Task { @MainActor in
+                    let saved = await model.save()
+                    guard saved, !Task.isCancelled, viewIsVisible else { return }
+                    onSaved(model.existingLog)
+                    if !model.hasUnsavedChanges { dismiss() }
+                }
+            case .discardAndClose: dismiss()
+            case .removeMedication(let expected):
+                if !model.removeMedication(ifUnchanged: expected) {
+                    confirmationMessage = "that entry changed while confirmation was open. your current entry is still here."
+                }
+            case nil: break
             }
+            if let id = returnMedicationFocus, model.draft.medications.contains(where: { $0.id == id }) {
+                medicationFocused = id
+            } else { closeFocused = true }
+            returnMedicationFocus = nil
+            returnFocusAfterConfirmation = false
         }
-        .task {
-            await model.load()
-        }
+        .onChange(of: model.draft) { _, _ in confirmationMessage = nil }
         .onChange(of: model.hasUnsavedChanges) { _, newValue in
             onDirtyStateChange(newValue)
         }
         .interactiveDismissDisabled(model.hasUnsavedChanges || model.saveState == .saving)
         .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            pendingConfirmationAction = nil
+            returnFocusAfterConfirmation = false
             savedMessageTask?.cancel()
             repositoryTask?.cancel()
         }
@@ -105,6 +135,10 @@ public struct Prompt20DailyLogView: View {
                     section(.notes) { notesContent }
 
                     validationMessages
+                    if let confirmationMessage {
+                        FruitfolioTranslatedText(source: confirmationMessage, font: Prompt20Type.body,
+                            color: Prompt20Palette.burgundy, serious: true)
+                    }
                     saveArea
                 }
             }
@@ -138,6 +172,7 @@ public struct Prompt20DailyLogView: View {
             Spacer(minLength: 8)
 
             CloseControl(action: requestClose)
+                .accessibilityFocused($closeFocused)
                 .disabled(model.saveState == .saving)
         }
     }
@@ -451,13 +486,10 @@ public struct Prompt20DailyLogView: View {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 prompt("what did you notice?")
 
-                Button("info") {
-                    audioManager.play(.buttonSoftPop)
+                FruitfolioControlPillButton(label: "info") {
                     showCervicalInfo.toggle()
                 }
-                .font(Prompt20Type.micro)
-                .foregroundStyle(Prompt20Palette.dustyBlue)
-                .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                .controlSize(.small)
                 .accessibilityHint("explains cervical fluid categories")
             }
 
@@ -517,22 +549,14 @@ public struct Prompt20DailyLogView: View {
             ForEach(model.draft.medications) { medication in
                 Prompt20MedicationRow(
                     medication: medication,
+                    removeFocus: $medicationFocused,
                     validationMessage: medicationValidationMessage(for: medication.id),
                     onChange: { changed in
                         model.updateMedication(id: medication.id) { entry in
                             entry = changed
                         }
                     },
-                    onRemove: {
-                        audioManager.play(.buttonSoftPop)
-                        withAnimation(
-                            motionPreferences.reduceMotionActive
-                                ? .easeOut(duration: 0.08)
-                                : .easeOut(duration: 0.20)
-                        ) {
-                            model.removeMedication(id: medication.id)
-                        }
-                    }
+                    onRemove: { requestMedicationRemoval(medication) }
                 )
                 .transition(
                     motionPreferences.reduceMotionActive
@@ -659,14 +683,8 @@ public struct Prompt20DailyLogView: View {
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 320)
 
-            Button("close") {
-                audioManager.play(.buttonSoftPop)
-                requestClose()
-            }
-            .font(Prompt20Type.button)
-            .foregroundStyle(Prompt20Palette.burgundy)
-            .frame(minWidth: 80, minHeight: 44)
-            .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+            FruitfolioControlPillButton(label: "close", action: requestClose)
+                .controlSize(.small)
 
             Spacer()
         }
@@ -674,17 +692,54 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func requestClose() {
-        guard model.saveState != .saving else { return }
-        if model.hasUnsavedChanges {
-            withAnimation(
-                motionPreferences.reduceMotionActive
-                    ? .easeOut(duration: 0.08)
-                    : .easeOut(duration: 0.14)
-            ) {
-                showUnsavedConfirmation = true
-            }
-        } else {
-            dismiss()
+        guard model.saveState != .saving, viewIsVisible else { return }
+        guard model.hasUnsavedChanges else { dismiss(); return }
+        guard let owner = popupOwner else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        returnMedicationFocus = nil
+        returnFocusAfterConfirmation = true
+        closeFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .peach,
+                message: "save, discard or keep editing this day’s changes? saved observations remain unchanged unless you save.",
+                primaryAction: .init(label: "keep editing") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }, secondaryAction: .init(label: "save and close") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingConfirmationAction = .saveAndClose
+                }, tertiaryAction: .init(label: "discard changes") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingConfirmationAction = .discardAndClose
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "daily-log-draft", deduplicationKey: "daily-log-draft-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
+    private func requestMedicationRemoval(_ entry: Prompt20MedicationEntry) {
+        guard viewIsVisible, let owner = popupOwner, model.saveState != .saving else { return }
+        if let id = owner.requestID, popupCoordinator.containsRequest(id: id) { return }
+        if !entry.hasAnyContent {
+            _ = model.removeMedication(ifUnchanged: entry)
+            return
+        }
+        returnMedicationFocus = entry.id
+        returnFocusAfterConfirmation = true
+        closeFocused = false
+        medicationFocused = nil
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .peach,
+                message: "remove this medication or supplement entry from the current draft? saved observations change only when you save this day.",
+                primaryAction: .init(label: "keep entry") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                }, secondaryAction: .init(label: "remove entry") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    pendingConfirmationAction = .removeMedication(entry)
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "daily-log-medication", deduplicationKey: "daily-log-medication-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
         }
     }
 
@@ -837,83 +892,12 @@ public struct Prompt20DailyLogView: View {
     }
 }
 
-private struct Prompt20UnsavedChangesOverlay: View {
-    let onKeepEditing: () -> Void
-    let onDiscard: () -> Void
-
-    @EnvironmentObject private var audioManager: AudioManager
-    @EnvironmentObject private var motionPreferences: MotionPreferences
-
-    var body: some View {
-        ZStack {
-            Prompt20Palette.paper.opacity(0.70)
-                .ignoresSafeArea()
-
-            Prompt20Palette.burgundy.opacity(0.055)
-                .ignoresSafeArea()
-
-            FruitfolioTapedWhitePopup {
-                VStack(spacing: 10) {
-                    Image("fruit_peach_soft")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 48)
-                        .offset(y: 3)
-                        .accessibilityHidden(true)
-
-                    Text("leave without saving?")
-                        .font(Prompt20Type.sectionTitle)
-                        .foregroundStyle(Prompt20Palette.burgundy)
-
-                    Text("your changes on this page haven’t been saved yet.")
-                        .font(Prompt20Type.summary)
-                        .foregroundStyle(Prompt20Palette.burgundy.opacity(0.68))
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-
-                    HStack(spacing: 18) {
-                        Button("keep editing") {
-                            audioManager.play(.buttonSoftPop)
-                            onKeepEditing()
-                        }
-                        .font(Prompt20Type.button)
-                        .foregroundStyle(Prompt20Palette.burgundy)
-                        .frame(minHeight: 44)
-                        .buttonStyle(
-                            CutePopButtonStyle(
-                                reduceMotion: motionPreferences.reduceMotionActive
-                            )
-                        )
-
-                        Button("discard") {
-                            audioManager.play(.buttonSoftPop)
-                            onDiscard()
-                        }
-                        .font(Prompt20Type.button)
-                        .foregroundStyle(Prompt20Palette.coral)
-                        .frame(minHeight: 44)
-                        .buttonStyle(
-                            CutePopButtonStyle(
-                                reduceMotion: motionPreferences.reduceMotionActive
-                            )
-                        )
-                    }
-                }
-                .padding(.horizontal, 8)
-            }
-        }
-        .accessibilityElement(children: .contain)
-    }
-}
-
 private struct Prompt20MedicationRow: View {
-    @EnvironmentObject private var motionPreferences: MotionPreferences
     let medication: Prompt20MedicationEntry
+    let removeFocus: AccessibilityFocusState<UUID?>.Binding
     let validationMessage: String?
     let onChange: (Prompt20MedicationEntry) -> Void
     let onRemove: () -> Void
-
-    @State private var confirmingRemoval = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -924,17 +908,9 @@ private struct Prompt20MedicationRow: View {
 
                 Spacer()
 
-                Button("remove") {
-                    if medication.hasAnyContent {
-                        confirmingRemoval = true
-                    } else {
-                        onRemove()
-                    }
-                }
-                    .font(Prompt20Type.micro)
-                    .foregroundStyle(Prompt20Palette.coral)
-                    .frame(minHeight: 44)
-                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                FruitfolioControlPillButton(label: "remove", action: onRemove)
+                    .controlSize(.small)
+                    .accessibilityFocused(removeFocus, equals: medication.id)
                     .accessibilityLabel("remove \(medication.name.isEmpty ? "medication entry" : medication.name)")
             }
 
@@ -970,33 +946,7 @@ private struct Prompt20MedicationRow: View {
                     .foregroundStyle(Prompt20Palette.burgundy.opacity(0.70))
             }
 
-            if confirmingRemoval {
-                HStack(spacing: 12) {
-                    Text("remove this entry?")
-                        .font(Prompt20Type.micro)
-                        .foregroundStyle(Prompt20Palette.burgundy.opacity(0.68))
 
-                    Spacer()
-
-                    Button("keep") {
-                        confirmingRemoval = false
-                    }
-                    .font(Prompt20Type.micro)
-                    .foregroundStyle(Prompt20Palette.burgundy)
-                    .frame(minHeight: 44)
-                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-
-                    Button("remove") {
-                        confirmingRemoval = false
-                        onRemove()
-                    }
-                    .font(Prompt20Type.micro)
-                    .foregroundStyle(Prompt20Palette.coral)
-                    .frame(minHeight: 44)
-                    .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                }
-                .transition(.opacity)
-            }
         }
         .padding(12)
         .background {

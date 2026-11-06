@@ -378,4 +378,56 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         XCTAssertFalse(model.hasUnsavedChanges)
         XCTAssertEqual(model.saveState, .saved)
     }
+    func testMedicationConfirmationRejectsChangedEntryAndDoesNotTouchSavedBytes() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now, repository: fixture.repository, calendar: fixture.calendar)
+        await model.load(); model.addMedication()
+        let id = try XCTUnwrap(model.draft.medications.first?.id)
+        model.updateMedication(id: id) { $0.name = "recorded medication"; $0.dose = "original dose" }
+        let expected = try XCTUnwrap(model.draft.medications.first)
+        let bytes = try Data(contentsOf: file)
+        model.updateMedication(id: id) { $0.dose = "updated dose" }
+        XCTAssertFalse(model.removeMedication(ifUnchanged: expected))
+        XCTAssertEqual(model.draft.medications.first?.dose, "updated dose")
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+        let current = try XCTUnwrap(model.draft.medications.first)
+        XCTAssertTrue(model.removeMedication(ifUnchanged: current))
+        XCTAssertTrue(model.draft.medications.isEmpty)
+        XCTAssertEqual(try Data(contentsOf: file), bytes, "Removing a draft entry is not a saved observation rewrite")
+    }
+
+    func testMedicationConfirmationCannotReplayAgainstAnotherEntry() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now, repository: fixture.repository, calendar: fixture.calendar)
+        await model.load(); model.addMedication()
+        let removed = try XCTUnwrap(model.draft.medications.first)
+        XCTAssertTrue(model.removeMedication(ifUnchanged: removed))
+        model.addMedication()
+        let retained = try XCTUnwrap(model.draft.medications.first)
+        XCTAssertFalse(model.removeMedication(ifUnchanged: removed))
+        XCTAssertEqual(model.draft.medications, [retained])
+        XCTAssertEqual(model.draft.generalNote, "saved original")
+    }
+
+    func testMedicationConfirmationCannotMutateEntryDuringSuspendedSave() async throws {
+        let repository = Prompt1BDelayedDailyLogRepository()
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = Date(timeIntervalSince1970: 1_789_516_800)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now, repository: repository, calendar: calendar)
+        await model.load(); model.addMedication()
+        let id = try XCTUnwrap(model.draft.medications.first?.id)
+        model.updateMedication(id: id) { $0.name = "recorded medication" }
+        let expected = try XCTUnwrap(model.draft.medications.first)
+        let save = Task { await model.save() }
+        await repository.waitForWrite()
+        XCTAssertFalse(model.removeMedication(ifUnchanged: expected))
+        XCTAssertEqual(model.draft.medications, [expected])
+        await repository.finish()
+        let saved = await save.value; XCTAssertTrue(saved)
+    }
+
 }

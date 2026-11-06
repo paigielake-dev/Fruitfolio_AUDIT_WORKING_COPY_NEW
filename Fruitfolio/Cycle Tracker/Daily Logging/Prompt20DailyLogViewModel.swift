@@ -275,6 +275,15 @@ public final class Prompt20DailyLogViewModel {
         }
     }
 
+    /// A confirmation applies only to the exact entry shown when it opened.
+    @discardableResult
+    public func removeMedication(ifUnchanged expected: Prompt20MedicationEntry) -> Bool {
+        guard loadState == .loaded, saveState != .saving,
+              draft.medications.contains(expected) else { return false }
+        removeMedication(id: expected.id)
+        return true
+    }
+
     public func updateMedication(
         id: UUID,
         change: (inout Prompt20MedicationEntry) -> Void

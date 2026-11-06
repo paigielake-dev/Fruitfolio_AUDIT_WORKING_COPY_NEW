@@ -158,3 +158,37 @@ package reported8failures across4tests; the current sources pass all4.
 This closes the known self-recovery read-order gap. It does not provide atomic
 cross-file snapshots against unrelated operations after recovery, nor verify Apple
 screen rendering, clinical interpretation or reviewed educational copy.
+
+## Owned cycle confirmations and unsaved exits
+
+The active Daily Log's local two-tint unsaved overlay is removed. Exit and populated
+medication-removal requests now use the existing identity-owned taped-white popup
+coordinator. Actions run only after the owned popup is removed; departing views
+cancel their own request and pending action. A separate focus-return flag prevents
+unrelated popup dismissals from stealing focus. Keep/Escape returns to the invoking
+medication remove control or Close; removing that row falls back to Close. Save
+notifies the parent for an acknowledged record but closes only with no later edits.
+The Daily Log sheet now has FruitfolioPresentedPopupHost, so its popup and blur live
+above the actual presented content rather than behind the sheet.
+
+Medication removal freezes the entry shown in confirmation. The actual view model
+rejects a changed/missing entry and any removal during a pending save. Draft removal
+does not change saved bytes until the day is saved. Removing an empty draft row
+retains its former direct behavior. Remove, info and future-date Close now use the
+canonical small control pill with one press-cue owner; no parent duplicate cue.
+
+Onboarding waits for pending writes with editing frozen before deciding whether
+exit is safe. Failed answers offer keep editing/save-and-leave/discard-local-draft
+through the same owned white-paper pipeline. Save-for-exit never completes setup
+or imports period starts. Discard waits for pending acknowledgments and resets only
+local answers to the saved receipt. It never rolls back an acknowledged file.
+Native back/interactive dismissal are guarded while dirty or finishing. Actions and
+focus restoration check view lifetime and ownership; navigation occurs after popup
+removal. The normal completed Tracker navigation remains intact.
+
+Six new regressions cover three onboarding actual-file exit cases, two actual-file
+medication confirmation cases, and one explicit suspended-save sequencing fixture.
+Existing actual popup ownership/coordinator regressions also pass in the full suite.
+Swift compiler parsing and source ownership checks are not Apple typechecking or
+VoiceOver/Dynamic Type/reduced-motion/sound playback verification. Feature-specific
+Apple UI scenarios remain the next source/test batch and are NOT_RUN on Linux.

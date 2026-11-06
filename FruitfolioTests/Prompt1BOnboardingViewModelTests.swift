@@ -201,4 +201,53 @@ final class Prompt1BOnboardingViewModelTests: XCTestCase {
         XCTAssertEqual(model.draft.bbtUnit, .fahrenheit)
     }
 
+    func testDiscardAfterFailedAnswerKeepsAcknowledgedAnswersAndDoesNotRewriteFile() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = OnboardingWriteBoundary(url)
+        let model = Prompt14CycleOnboardingViewModel(store: Prompt14CycleOnboardingStore(persistence: backend, cycleStore: .inMemory()), calendar: calendar)
+        await model.load(); model.chooseBBTUnit(.fahrenheit)
+        let saved = await model.waitForPendingSaves(); XCTAssertTrue(saved)
+        let bytes = try Data(contentsOf: url)
+        await backend.rejectSave(); model.chooseBBTUnit(.celsius)
+        let failed = await model.waitForPendingSaves(); XCTAssertFalse(failed)
+        let unsafe = await model.prepareToExit(); XCTAssertFalse(unsafe)
+        await model.discardUnsavedAnswers()
+        XCTAssertEqual(model.draft.bbtUnit, .fahrenheit)
+        XCTAssertFalse(model.hasUnsavedChanges); XCTAssertFalse(model.saveFailed)
+        XCTAssertEqual(try Data(contentsOf: url), bytes)
+        let ready = await model.prepareToExit(); XCTAssertTrue(ready)
+        let settled = await model.waitForPendingSaves(); XCTAssertTrue(settled)
+    }
+
+    func testPrepareExitWaitsForHeldAnswerAndFreezesFurtherEdits() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = OnboardingWriteBoundary(url)
+        let model = Prompt14CycleOnboardingViewModel(store: Prompt14CycleOnboardingStore(persistence: backend, cycleStore: .inMemory()), calendar: calendar)
+        await model.load(); await backend.hold()
+        model.chooseBBTUnit(.fahrenheit)
+        await backend.waitUntilHeld()
+        let exit = Task { await model.prepareToExit() }
+        for _ in 0..<1_000 where !model.isFinishing { await Task.yield() }
+        XCTAssertTrue(model.isFinishing)
+        model.chooseBBTUnit(.celsius); XCTAssertEqual(model.draft.bbtUnit, .fahrenheit)
+        await backend.release()
+        let ready = await exit.value; XCTAssertTrue(ready)
+        let disk = try await Prompt14FileOnboardingPersistence(fileURL: url).load()
+        XCTAssertEqual(disk.bbtUnit, .fahrenheit); XCTAssertFalse(disk.isCompleted)
+    }
+
+    func testSaveForExitRetriesAnswerWithoutCompletingOrImportingPeriodHistory() async throws {
+        let url = url(); defer { try? FileManager.default.removeItem(at: url) }
+        let backend = OnboardingWriteBoundary(url), cycle = Prompt13CycleStore.inMemory()
+        let model = Prompt14CycleOnboardingViewModel(store: Prompt14CycleOnboardingStore(persistence: backend, cycleStore: cycle), calendar: calendar)
+        await model.load(); await backend.rejectSave()
+        model.selectLatestPeriod(try suppliedDate())
+        let failed = await model.waitForPendingSaves(); XCTAssertFalse(failed)
+        let ready = await model.saveForExit(); XCTAssertTrue(ready)
+        let disk = try await Prompt14FileOnboardingPersistence(fileURL: url).load()
+        XCTAssertEqual(disk.latestPeriodStart, try Prompt13LocalDate(year: 2026, month: 8, day: 1))
+        XCTAssertFalse(disk.isCompleted); XCTAssertNil(disk.pendingCycleCommit)
+        let archive = try await cycle.snapshot(); XCTAssertTrue(archive.cycleStarts.isEmpty)
+    }
+
 }

@@ -23,6 +23,15 @@ struct Prompt14CycleOnboardingView: View {
     @State private var showingPersonalHealthContext = false
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var contextStore: Prompt27AContextStore
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    private enum ExitAction { case save, discard }
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var popupInstanceID = UUID()
+    @State private var pendingExitAction: ExitAction?
+    @State private var exitTask: Task<Void, Never>?
+    @State private var viewIsVisible = false
+    @State private var returnFocusAfterExitPrompt = false
+    @AccessibilityFocusState private var backFocused: Bool
 
     private let onExit: () -> Void
 
@@ -63,6 +72,44 @@ struct Prompt14CycleOnboardingView: View {
             } else {
                 onboardingContent
                     .disabled(model.isFinishing)
+            }
+        }
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .onDisappear {
+            viewIsVisible = false
+            exitTask?.cancel()
+            popupOwner?.cancel()
+            pendingExitAction = nil
+            returnFocusAfterExitPrompt = false
+        }
+        .allowsHitTesting(popupCoordinator.currentPopup == nil)
+        .accessibilityHidden(popupCoordinator.currentPopup != nil)
+        .interactiveDismissDisabled(model.hasUnsavedChanges || model.isFinishing)
+        .navigationBarBackButtonHidden(true)
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, returnFocusAfterExitPrompt,
+                  popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            let action = pendingExitAction
+            pendingExitAction = nil
+            returnFocusAfterExitPrompt = false
+            switch action {
+            case .save:
+                exitTask = Task { @MainActor in
+                    let saved = await model.saveForExit()
+                    guard !Task.isCancelled, viewIsVisible else { return }
+                    if saved { onExit() } else { backFocused = true }
+                }
+            case .discard:
+                exitTask = Task { @MainActor in
+                    await model.discardUnsavedAnswers()
+                    guard !Task.isCancelled, viewIsVisible else { return }
+                    onExit()
+                }
+            case nil: backFocused = true
             }
         }
         .task {
@@ -137,13 +184,42 @@ struct Prompt14CycleOnboardingView: View {
     private var topBar: some View {
         HStack {
             BackControl {
-                if !model.goBack() { onExit() }
+                if !model.goBack() { requestExit() }
             }
+            .accessibilityFocused($backFocused)
             Spacer()
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)
         .frame(minHeight: 54)
+    }
+
+    private func requestExit() {
+        guard viewIsVisible, !model.isFinishing else { return }
+        exitTask = Task { @MainActor in
+            let ready = await model.prepareToExit()
+            guard !Task.isCancelled, viewIsVisible else { return }
+            if ready { onExit(); return }
+            guard let owner = popupOwner else { return }
+            backFocused = false
+            returnFocusAfterExitPrompt = true
+            owner.present { id in
+                FruitPopupRequest(id: id, character: .peach,
+                    message: "some answers could not be saved. try saving, discard the local draft or keep editing? answers already saved will be kept.",
+                    primaryAction: .init(label: "keep editing") {
+                        guard viewIsVisible else { return }
+                        _ = owner.consumeAction(for: id)
+                    }, secondaryAction: .init(label: "save and leave") {
+                        guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                        pendingExitAction = .save
+                    }, tertiaryAction: .init(label: "discard unsaved answers") {
+                        guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                        pendingExitAction = .discard
+                    }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                    source: "cycle-onboarding-draft", deduplicationKey: "cycle-onboarding-draft-" + popupInstanceID.uuidString,
+                    surface: .tapedWhite)
+            }
+        }
     }
 
     @ViewBuilder

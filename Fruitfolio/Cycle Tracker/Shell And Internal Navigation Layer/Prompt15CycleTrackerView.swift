@@ -84,19 +84,21 @@ struct Prompt15CycleTrackerView: View {
         .sheet(item: $dailyLogRequest, onDismiss: {
             dailyLogHasUnsavedChanges = false
         }) { request in
-            Prompt20DailyLogView(
-                selectedDate: request.selectedDate,
-                initialExpandedSection: request.initialSection,
-                onSaved: { _ in
-                    // Recreate only the calendar presentation after a secured local
-                    // save so Phase 19 reloads the existing metadata hierarchy.
-                    // This does not touch prediction calculations or calendar art.
-                    calendarRefreshID = UUID()
-                },
-                onDirtyStateChange: { isDirty in
-                    dailyLogHasUnsavedChanges = isDirty
-                }
-            )
+            FruitfolioPresentedPopupHost {
+                Prompt20DailyLogView(
+                    selectedDate: request.selectedDate,
+                    initialExpandedSection: request.initialSection,
+                    onSaved: { _ in
+                        // Recreate only the calendar presentation after a secured local
+                        // save so Phase 19 reloads the existing metadata hierarchy.
+                        // This does not touch prediction calculations or calendar art.
+                        calendarRefreshID = UUID()
+                    },
+                    onDirtyStateChange: { isDirty in
+                        dailyLogHasUnsavedChanges = isDirty
+                    }
+                )
+            }
             .interactiveDismissDisabled(dailyLogHasUnsavedChanges)
         }
         .onChange(of: dailyLogRequest) { _, request in

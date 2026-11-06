@@ -433,6 +433,37 @@ final class Prompt14CycleOnboardingViewModel {
         return await waitForPendingSaves()
     }
 
+    func prepareToExit() async -> Bool {
+        guard !isFinishing else { return false }
+        isFinishing = true
+        defer { isFinishing = false }
+        _ = await pendingWrite?.value
+        return !hasUnsavedChanges
+    }
+
+    func saveForExit() async -> Bool {
+        guard savedDraft != nil, !isFinishing else { return false }
+        if hasUnsavedChanges { enqueueSave(draft) }
+        isFinishing = true
+        defer { isFinishing = false }
+        let saved = await waitForPendingSaves()
+        return saved && !hasUnsavedChanges
+    }
+
+    /// Discard affects this editor only. Already acknowledged answers remain
+    /// saved; pending writes finish before the draft is reset to that receipt.
+    func discardUnsavedAnswers() async {
+        guard !isFinishing else { return }
+        isFinishing = true
+        defer { isFinishing = false }
+        _ = await pendingWrite?.value
+        if let savedDraft { draft = savedDraft }
+        pendingWrite = nil
+        hasUnsavedChanges = false
+        saveFailed = false
+        errorMessage = nil
+    }
+
     var selectedBBTTime: Date {
         let minutes = draft.bbtUsualMeasurementMinutesAfterMidnight ?? (7 * 60)
         let start = calendar.startOfDay(for: Date())
