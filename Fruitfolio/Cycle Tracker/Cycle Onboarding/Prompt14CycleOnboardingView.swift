@@ -42,20 +42,36 @@ struct Prompt14CycleOnboardingView: View {
                 ProgressView()
                     .tint(Prompt14Palette.burgundy)
                     .accessibilityLabel("Loading cycle setup")
+            } else if model.savedDraft == nil {
+                VStack(spacing: 16) {
+                    FruitfolioTranslatedText(source: model.errorMessage ?? "cycle setup could not be opened. please try again.",
+                        font: Prompt14Type.helper, color: Prompt14Palette.burgundy, serious: true)
+                    FruitfolioControlPillButton(label: "try again") {
+                        Task {
+                            await model.load()
+                            model.mergeSharedContextIfNeeded(contextStore.context)
+                        }
+                    }
+                    .controlSize(.small)
+                    .accessibilityIdentifier("cycleOnboarding.retryLoad")
+                    BackControl { onExit() }
+                }
+                .padding(24)
             } else if trackerReady || model.draft.isCompleted {
                 Prompt15CycleTrackerView(onBack: onExit)
                     .transition(.opacity)
             } else {
                 onboardingContent
+                    .disabled(model.isFinishing)
             }
         }
         .task {
             await model.load()
             model.mergeSharedContextIfNeeded(contextStore.context)
-            contextStore.syncFromCycleOnboarding(model.draft)
+            if let saved = model.savedDraft { contextStore.syncFromCycleOnboarding(saved) }
         }
-        .onChange(of: model.draft) { _, newDraft in
-            contextStore.syncFromCycleOnboarding(newDraft)
+        .onChange(of: model.savedDraft) { _, saved in
+            if let saved { contextStore.syncFromCycleOnboarding(saved) }
         }
         .sheet(isPresented: $showingPersonalHealthContext) {
             FruitfolioPresentedPopupHost {
@@ -96,12 +112,17 @@ struct Prompt14CycleOnboardingView: View {
                     }
 
                     if let error = model.errorMessage {
-                        Text(error)
-                            .font(Prompt14Type.helper)
-                            .foregroundStyle(Prompt14Palette.burgundy)
+                        FruitfolioTranslatedText(source: error, font: Prompt14Type.helper,
+                            color: Prompt14Palette.burgundy, serious: true)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal, 12)
-                            .accessibilityLabel(error)
+                        if model.saveFailed && model.hasUnsavedChanges {
+                            FruitfolioControlPillButton(label: "try saving again") {
+                                Task { _ = await model.retrySaving() }
+                            }
+                            .controlSize(.small)
+                            .accessibilityIdentifier("cycleOnboarding.retrySave")
+                        }
                     }
                 }
                 .frame(maxWidth: 560)
@@ -525,6 +546,9 @@ struct Prompt14CycleOnboardingView: View {
                 }
             }
             .frame(maxWidth: 320)
+            if model.isFinishing {
+                ProgressView().accessibilityLabel("Saving cycle setup")
+            }
         }
         .padding(.top, 22)
     }

@@ -2,17 +2,27 @@ import Foundation
 import XCTest
 @testable import Fruitfolio
 
-private actor OnboardingWriteBoundary: Prompt14OnboardingPersistence {
+actor OnboardingWriteBoundary: Prompt14OnboardingPersistence {
     private let file: Prompt14FileOnboardingPersistence
     private var failSave = false
     private var failErase = false
     private var acknowledgeFailure = false
+    private var holdNext = false
+    private var held: CheckedContinuation<Void, Never>?
+    private var arrival: CheckedContinuation<Void, Never>?
     private var writeIndex = 0
     private var rejectedWrites: [Int: Bool] = [:]
     init(_ url: URL) { file = Prompt14FileOnboardingPersistence(fileURL: url) }
     func load() async throws -> Prompt14OnboardingDraft { try await file.load() }
     func save(_ draft: Prompt14OnboardingDraft) async throws {
         writeIndex += 1
+        if holdNext {
+            holdNext = false
+            await withCheckedContinuation { continuation in
+                held = continuation
+                arrival?.resume(); arrival = nil
+            }
+        }
         let injected = rejectedWrites.removeValue(forKey: writeIndex)
         if injected == false { throw Prompt14OnboardingPersistenceError.unavailable }
         if failSave { failSave = false; throw Prompt14OnboardingPersistenceError.unavailable }
@@ -27,7 +37,14 @@ private actor OnboardingWriteBoundary: Prompt14OnboardingPersistence {
     func rejectSave(afterCommit: Bool = false) {
         if afterCommit { acknowledgeFailure = true } else { failSave = true }
     }
+    func count() -> Int { writeIndex }
     func rejectErase() { failErase = true }
+    func hold() { holdNext = true }
+    func waitUntilHeld() async {
+        if held != nil { return }
+        await withCheckedContinuation { arrival = $0 }
+    }
+    func release() { held?.resume(); held = nil }
     func rejectWrite(_ upcoming: Int, afterCommit: Bool = false) { rejectedWrites[writeIndex + upcoming] = afterCommit }
 }
 

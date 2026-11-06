@@ -1,15 +1,54 @@
 import Foundation
-import SwiftUI
+#if canImport(Combine)
 import Combine
+#endif
 
 @MainActor
-final class Prompt14CycleOnboardingViewModel: ObservableObject {
-    @Published private(set) var draft = Prompt14OnboardingDraft()
-    @Published var isLoading = true
-    @Published var errorMessage: String?
-    @Published var displayedMonth = Date()
-    @Published var historyPickerVisible = false
-    @Published var historyEditingDate: Prompt13LocalDate?
+final class Prompt14CycleOnboardingViewModel {
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var draft = Prompt14OnboardingDraft()
+    #if canImport(Combine)
+    @Published
+    #endif
+    var isLoading = true
+    #if canImport(Combine)
+    @Published
+    #endif
+    var errorMessage: String?
+    #if canImport(Combine)
+    @Published
+    #endif
+    var displayedMonth = Date()
+    #if canImport(Combine)
+    @Published
+    #endif
+    var historyPickerVisible = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    var historyEditingDate: Prompt13LocalDate?
+
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var savedDraft: Prompt14OnboardingDraft?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var isFinishing = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var saveFailed = false
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var hasUnsavedChanges = false
+
+    private var pendingWrite: Task<Bool, Never>?
+    private var latestEdit = UUID()
 
     private let store: Prompt14CycleOnboardingStore
     private let calendar: Calendar
@@ -23,18 +62,24 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
     }
 
     func load() async {
+        guard !hasUnsavedChanges, !isFinishing else { return }
+        isLoading = true
         do {
-            draft = try await store.snapshot()
-            isLoading = false
+            let loaded = try await store.snapshot()
+            draft = loaded
+            savedDraft = loaded
+            errorMessage = nil
+            saveFailed = false
         } catch {
-            errorMessage = "your cycle setup couldn’t be opened right now ♡"
-            isLoading = false
+            errorMessage = error.localizedDescription
         }
+        isLoading = false
     }
 
     /// Seeds only exact overlaps from My Context into onboarding. Existing
     /// explicit onboarding answers win; this never guesses an ambiguous state.
     func mergeSharedContextIfNeeded(_ context: Prompt27AUserReproductiveContext) {
+        guard savedDraft != nil, !isFinishing else { return }
         var copy = draft
         var changed = false
 
@@ -80,11 +125,7 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
 
         guard changed else { return }
         copy.markUpdated()
-        draft = copy
-        Task {
-            do { try await store.replaceDraft(copy) }
-            catch { await MainActor.run { self.errorMessage = "your shared context couldn’t be synced right now ♡" } }
-        }
+        enqueueSave(copy)
     }
 
     func getStarted() {
@@ -363,13 +404,33 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
     }
 
     func finish() async -> Bool {
+        guard savedDraft != nil, !isFinishing else { return false }
+        isFinishing = true
+        defer { isFinishing = false }
+        if let pendingWrite, !(await pendingWrite.value) { return false }
+        guard let baseline = savedDraft, !hasUnsavedChanges else { return false }
         do {
-            draft = try await store.complete(calendar: calendar)
+            let completed = try await store.complete(calendar: calendar, expecting: baseline)
+            draft = completed
+            savedDraft = completed
+            errorMessage = nil
             return true
         } catch {
-            errorMessage = "your setup is safe, but Fruitfolio couldn’t finish saving it yet ♡"
+            errorMessage = error.localizedDescription
             return false
         }
+    }
+
+    /// Waits for this editor's latest queued answer. Finish uses the same barrier.
+    func waitForPendingSaves() async -> Bool {
+        if let pendingWrite { return await pendingWrite.value }
+        return savedDraft != nil && !hasUnsavedChanges
+    }
+
+    func retrySaving() async -> Bool {
+        guard savedDraft != nil, !isFinishing, hasUnsavedChanges else { return false }
+        enqueueSave(draft)
+        return await waitForPendingSaves()
     }
 
     var selectedBBTTime: Date {
@@ -397,17 +458,54 @@ final class Prompt14CycleOnboardingViewModel: ObservableObject {
         return !draft.historicalPeriodStarts.contains(local) || historyEditingDate == local
     }
 
-    private func mutate(
-        _ transform: (inout Prompt14OnboardingDraft) -> Void
-    ) {
+    private func mutate(_ transform: (inout Prompt14OnboardingDraft) -> Void) {
+        guard savedDraft != nil, !isFinishing else { return }
         var copy = draft
         transform(&copy)
         copy.markUpdated()
+        enqueueSave(copy)
+    }
+
+    private func enqueueSave(_ copy: Prompt14OnboardingDraft) {
         draft = copy
-        Task {
-            do { try await store.replaceDraft(copy) }
-            catch { await MainActor.run { self.errorMessage = "your answer couldn’t be saved right now ♡" } }
+        hasUnsavedChanges = true
+        saveFailed = false
+        let edit = UUID()
+        latestEdit = edit
+        let previous = pendingWrite
+        pendingWrite = Task { @MainActor in
+            _ = await previous?.value
+            guard let baseline = savedDraft else { return false }
+            do {
+                let saved = try await store.saveDraft(copy, expecting: baseline)
+                savedDraft = saved
+                if latestEdit == edit {
+                    hasUnsavedChanges = false
+                    saveFailed = false
+                    errorMessage = nil
+                }
+                return true
+            } catch {
+                if !(error is CancellationError),
+                   let recovered = try? await store.savedReceipt(matching: copy) {
+                    savedDraft = recovered
+                    if latestEdit == edit {
+                        hasUnsavedChanges = false
+                        saveFailed = false
+                        errorMessage = nil
+                    }
+                    return true
+                }
+                if latestEdit == edit {
+                    saveFailed = true
+                    errorMessage = error.localizedDescription
+                }
+                return false
+            }
         }
     }
 }
 
+#if canImport(Combine)
+extension Prompt14CycleOnboardingViewModel: ObservableObject {}
+#endif

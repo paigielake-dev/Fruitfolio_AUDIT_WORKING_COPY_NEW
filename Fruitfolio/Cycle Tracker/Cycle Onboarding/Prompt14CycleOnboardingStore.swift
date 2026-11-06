@@ -93,6 +93,73 @@ actor Prompt14CycleOnboardingStore {
         return draft
     }
 
+    /// The editor acknowledges saved answers and progress before replacing them.
+    /// Comparison respects existing ISO8601 precision and excludes only the
+    /// administrative update clock, including defaults for a missing file.
+    func saveDraft(_ candidate: Prompt14OnboardingDraft, expecting expected: Prompt14OnboardingDraft) async throws -> Prompt14OnboardingDraft {
+        try await withDraftOperation { store in
+            // Refresh before issuing a receipt, including idempotent retries.
+            // Receipt checking never saves the candidate or discards its editor.
+            // An existing journal may resume its separately persisted request.
+            try await store.refreshDraftForReceipt()
+            if try store.snapshotBytes(store.draft) == store.snapshotBytes(candidate) {
+                return store.draft
+            }
+            try store.requireSnapshot(expected)
+            try await store.replaceDraftUnlocked(candidate)
+            return store.draft
+        }
+    }
+
+    /// Receipt recovery never saves the candidate. A different saved draft
+    /// returns nil. Existing persisted journal requests may resume on loading.
+    func savedReceipt(matching candidate: Prompt14OnboardingDraft) async throws -> Prompt14OnboardingDraft? {
+        try await withDraftOperation { store in
+            try await store.refreshDraftForReceipt()
+            return try store.snapshotBytes(store.draft) == store.snapshotBytes(candidate) ? store.draft : nil
+        }
+    }
+
+    private func refreshDraftForReceipt() async throws {
+        draft = try await persistence.load()
+        persistedDuringOperation = draft
+        try await resumePendingCycleCommit()
+    }
+
+    private func persistedBytes(_ value: Prompt14OnboardingDraft) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = [.sortedKeys]
+        return try encoder.encode(value)
+    }
+
+    private func snapshotBytes(_ value: Prompt14OnboardingDraft) throws -> Data {
+        var snapshot = value
+        // A missing file has a fresh default update clock on each read. That
+        // administrative clock is not a change to an answer or progress field.
+        snapshot.updatedAt = Date(timeIntervalSince1970: 0)
+        return try persistedBytes(snapshot)
+    }
+
+    private func requireSnapshot(_ expected: Prompt14OnboardingDraft) throws {
+        guard try snapshotBytes(draft) == snapshotBytes(expected) else {
+            throw Prompt14OnboardingPersistenceError.editingConflict
+        }
+    }
+
+    private func sameAnswers(_ first: Prompt14OnboardingDraft, _ second: Prompt14OnboardingDraft) throws -> Bool {
+        func answers(_ value: Prompt14OnboardingDraft) -> Prompt14OnboardingDraft {
+            var result = value
+            result.step = .intro
+            result.updatedAt = Date(timeIntervalSince1970: 0)
+            result.completedAt = nil
+            result.didCommitCycleStarts = false
+            result.pendingCycleCommit = nil
+            return result
+        }
+        return try persistedBytes(answers(first)) == persistedBytes(answers(second))
+    }
+
     func replaceDraft(_ newDraft: Prompt14OnboardingDraft) async throws {
         return try await withDraftOperation { store in
             try await store.replaceDraftUnlocked(newDraft)
@@ -152,9 +219,18 @@ actor Prompt14CycleOnboardingStore {
 
     /// Commits only user-supplied period starts into Prompt 13.
     /// Existing active starts on the same date are reused so resume/retry cannot create duplicates.
-    func complete(now: Date = Date(), calendar: Calendar = .autoupdatingCurrent) async throws -> Prompt14OnboardingDraft {
+    func complete(now: Date = Date(), calendar: Calendar = .autoupdatingCurrent, expecting expected: Prompt14OnboardingDraft? = nil) async throws -> Prompt14OnboardingDraft {
         return try await withDraftOperation { store in
-            try await store.completeUnlocked(now: now, calendar: calendar)
+            if let expected {
+                try await store.refreshDraftForReceipt()
+                // Retrying an acknowledged/lost-ack completion of the same saved
+                // answers is read-only. Changed answers still require a fresh edit.
+                if store.draft.isCompleted, try store.sameAnswers(store.draft, expected) {
+                    return store.draft
+                }
+                try store.requireSnapshot(expected)
+            }
+            return try await store.completeUnlocked(now: now, calendar: calendar)
         }
     }
 

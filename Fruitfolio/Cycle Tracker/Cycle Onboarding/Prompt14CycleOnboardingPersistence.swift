@@ -7,9 +7,10 @@ nonisolated protocol Prompt14OnboardingPersistence: Sendable {
 }
 
 nonisolated enum Prompt14OnboardingPersistenceError: LocalizedError, Equatable, Sendable {
-    case unavailable, storageChanged, unsupportedFormat
+    case unavailable, storageChanged, unsupportedFormat, editingConflict
     var errorDescription: String? {
         switch self {
+        case .editingConflict: return "saved cycle setup changed while this answer was being edited. your answer is still here; reopen saved setup before replacing it."
         case .unavailable: return "saved cycle setup could not be accessed. please try again."
         case .storageChanged: return "saved cycle setup needs to be reloaded before this change can be saved or erased. the original file is preserved."
         case .unsupportedFormat: return "saved cycle setup contains fields this version cannot safely update. the original file is preserved."

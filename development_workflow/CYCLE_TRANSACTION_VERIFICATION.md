@@ -98,3 +98,42 @@ files or across multiple independent processes. Legacy partial imports created
 before journals existed cannot be assigned an invented intent. Ordered view-model
 autosaves, stale editor baseline protection, Apple UI/device verification and
 clinical review remain separate work.
+
+## Ordered editor saves and saved receipts
+
+The actual onboarding view model now uses conditional genuine Combine observation
+and Foundation state logic in the portable suite. A chain of answer saves uses the
+last acknowledged draft as its expectation. Each store save refreshes the actual
+file before validating answers/progress or issuing an idempotent receipt. The
+comparison preserves all saved fields except the administrative updatedAt clock,
+and uses the original ISO8601 precision. This handles a missing file's fresh default
+clock without treating it as a new answer. It is not a historical revision/ABA test.
+
+A different saved answer rejects with editingConflict. Candidate equality can issue
+a read-only receipt rather than reapply it. After an acknowledgment error the view
+model checks an actual saved receipt without retrying the mutation; a matching
+physical file permits the next queued answer to proceed. A different/unavailable
+receipt preserves the visible draft and reports failure. Receipt loading may resume
+an already persisted journal request; it never creates an intent from the candidate.
+
+Finish freezes editing, waits for the newest queued save and refuses incomplete or
+failed answers. It validates the saved baseline before journaled completion. An
+already completed copy of the same saved answers can be acknowledged without
+re-importing dates. Failed initial loads cannot save defaults; dirty drafts cannot
+be erased by another load call. Retry controls use the existing canonical pill and
+one cue owner. Errors pass through the shared translation view.
+
+The SwiftUI view syncs My Context from acknowledged savedDraft receipts rather than
+uncommitted visible answers, disables the form during Finish, and offers explicit
+load/save retry states. Eleven actual view-model/file regressions exercise rapid queued
+answers, a held save while Finish waits, failed answers/retry, same-store stale
+editors, outside file writers, unsupported initial loads, held receipt publication,
+completion acknowledgment recovery, absent-file default clocks and earlier lost
+acknowledgments followed by a newer answer, and a completed editor refusing a stale
+receipt after outside answers change. Completion receipts refresh actual storage
+before comparison. Foundation tests do not verify Apple
+ObservableObject rendering, keyboard, VoiceOver, Dynamic Type or UI sound playback.
+
+Next integration concern: loaders that concurrently read cycle and onboarding
+snapshots must await onboarding journal recovery before capturing cycle history;
+otherwise they may combine an older archive with a newly recovered draft.
