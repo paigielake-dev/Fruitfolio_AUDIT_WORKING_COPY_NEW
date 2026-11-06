@@ -84,9 +84,12 @@ struct Prompt28GameRegressionHarness: View {
             return
         }
         model.rawTopic = "QA visual fixture"
+        let isExcerpt = scenario == "question-excerpt"
         model.currentQuestion = Prompt28Question(id: "qa-only", topicQuery: "QA visual fixture",
-            normalizedTopic: "qa visual fixture", category: "UI fixture — not medical research",
-            educationalDifficulty: .easy, questionText: "UI fixture only: choose the first option.",
+            normalizedTopic: "qa visual fixture", category: isExcerpt ? Prompt28ExcerptQuestionPresentation.category : "UI fixture — not medical research",
+            educationalDifficulty: .easy, questionText: isExcerpt
+                ? Prompt28ExcerptQuestionPresentation.prefix + "UI fixture only: the selected word is [blank]."
+                : "UI fixture only: choose the first option.",
             answerOptions: [.init(id: "first", text: "first"), .init(id: "second", text: "second")], correctAnswerID: "first",
             explanation: "UI regression fixture only. This is not medical content.", sourceIDs: ["qa-only"],
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
@@ -96,6 +99,7 @@ struct Prompt28GameRegressionHarness: View {
             difficulty: .easy, startingLevel: scenario == "storm" ? 6 : 1)
         if scenario == "storm" { session.currentRound = 3 }
         model.session = session
+        if isExcerpt { model.screen = .question; return }
         model.beginCatch()
         if scenario == "storm" { return } // Real screen-change observer presents the real storm modal.
         if scenario == "star" {

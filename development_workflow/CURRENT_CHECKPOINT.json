@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "6bd4de7ae0750b7850f53a70ed85e62cd8b190b3",
+  "current_HEAD": "55f8fcca515cf7db6c72eec7e0c42c71c6884793",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 393,
-  "current_implementation_batch": "Owned-unshared-translation-release-and-paragraph-cancellation",
+  "current_requirement": 446,
+  "current_implementation_batch": "Exact-excerpt-framing-localization-and-scrollable-question",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,13 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
-    "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
-    "development_workflow/MADLAD_INFLIGHT_REQUEST_OWNERSHIP_VERIFICATION.md",
-    "development_workflow/MADLAD_UNSHARED_RELEASE_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Unshared-release-prior-failure.json"
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Fruit Basket/Prompt28SavedResearchCopy.swift",
+    "Fruitfolio/Localizable.xcstrings",
+    "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
+    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+    "development_workflow/EXACT_EXCERPT_QUESTION_PRESENTATION_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -516,26 +518,26 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+    "actual SwiftSyntax control-sound-ownership --check",
+    "JSON preservation comparison of all prior catalog entries"
   ],
   "last_test_results": {
-    "portable_XCTest": 725,
-    "native_CPU_XCTest": 747,
+    "portable_XCTest": 727,
+    "native_CPU_XCTest": 749,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
-    "catalog_keys": 675,
+    "catalog_keys": 677,
     "nonempty_foreign_units": 0,
     "Foundation_shared_ownership_regressions": 11,
-    "focused_current_ownership_regressions": 11,
-    "prior_release_regression_XCTest": 1,
-    "prior_release_regression_failures": 2
+    "catalog_existing_entries_preserved": 675,
+    "SwiftSyntax_sound_ownership_findings": 0
   },
-  "next_exact_implementation_action": "Localize the fixed source-excerpt game question instruction separately from the literal cloze and original word choices, with a clear original-language notice. Preserve stored question/excerpt bytes, correct-answer mapping and scientific citations; use existing semantic/display controls and add exact-source presentation regressions.",
-  "updated_at": "2026-11-06T14:26:28.727097+00:00",
+  "next_exact_implementation_action": "Remove the manual star chime from the canonical correct-answer catch navigation button, which already owns the soft-pop cue; retain the actual star-bank event chime. Extend actual opt-in audio request diagnostics and add a question-to-catch UI ownership regression without claiming physical audibility.",
+  "updated_at": "2026-11-06T14:38:05.891964+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

@@ -880,6 +880,7 @@ struct Prompt28FruitBasketView: View {
 
     @ViewBuilder
     private var questionFlow: some View {
+        ScrollView {
         VStack(spacing: 14) {
             topBar
 
@@ -905,12 +906,24 @@ struct Prompt28FruitBasketView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         }
 
-                        Text(verbatim: question.questionText)
-                            .prompt28Text(question.category == "source-excerpt practice" ? .body : .screenTitle)
-                            .fixedSize(
-                                horizontal: false,
-                                vertical: true
-                            )
+                        if let excerpt = Prompt28ExcerptQuestionPresentation(question: question) {
+                            FruitfolioTranslatedText(source: Prompt28ExcerptQuestionPresentation.instructionSource,
+                                font: Prompt28TextRole.body.font, serious: true)
+                                .accessibilityIdentifier("fruitBasket.question.instruction")
+                            FruitfolioSemanticText(spans: [.init(text: excerpt.literalExcerpt)],
+                                baseFont: Prompt28TextRole.body.font,
+                                color: DesignTokens.ColorToken.primaryBurgundy)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .accessibilityIdentifier("fruitBasket.question.literalExcerpt")
+                            FruitfolioTranslatedText(source: Prompt28ExcerptQuestionPresentation.noticeSource,
+                                font: Prompt28TextRole.metadata.font, serious: true)
+                                .accessibilityIdentifier("fruitBasket.question.sourceLanguageNotice")
+                        } else {
+                            // Unknown/legacy templates remain complete and unchanged.
+                            Text(verbatim: question.questionText)
+                                .prompt28Text(question.category == Prompt28ExcerptQuestionPresentation.category ? .body : .screenTitle)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
 
                         ForEach(
                             question.answerOptions
@@ -920,7 +933,7 @@ struct Prompt28FruitBasketView: View {
                                 viewModel.answer(answer.id)
                             } label: {
                                 HStack(alignment: .top) {
-                                    Text(answer.text)
+                                    Text(verbatim: answer.text)
                                         .multilineTextAlignment(.leading)
                                         .fixedSize(
                                             horizontal: false,
@@ -955,6 +968,7 @@ struct Prompt28FruitBasketView: View {
                                         motionPreferences.reduceMotionActive
                                 )
                             )
+                            .accessibilityIdentifier("fruitBasket.question.answer." + answer.id)
                             .disabled(
                                 viewModel.selectedAnswerID != nil
                             )
@@ -1027,6 +1041,7 @@ struct Prompt28FruitBasketView: View {
                                 if !question.usesSeriousFeedback { audioManager.play(.starChime) }
                                 viewModel.screen = .catchIntro
                             }
+                            .accessibilityIdentifier("fruitBasket.question.correctContinue")
 
                         } else if viewModel.screen == .catchIntro {
                             Text(question.catchRule)
@@ -1044,6 +1059,7 @@ struct Prompt28FruitBasketView: View {
                             ) {
                                 viewModel.beginCatch()
                             }
+                            .accessibilityIdentifier("fruitBasket.question.continue")
                         }
                     }
                 }
@@ -1052,6 +1068,8 @@ struct Prompt28FruitBasketView: View {
 
             Spacer(minLength: 12)
         }
+        }
+        .accessibilityIdentifier("fruitBasket.question.scroll")
     }
 
     private func answerFill(

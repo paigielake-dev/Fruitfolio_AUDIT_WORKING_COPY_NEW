@@ -191,6 +191,43 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testExactExcerptQuestionScrollsWithoutTranslatingItsWordMatchingChoices() {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "question-excerpt",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let instruction = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.question.instruction").firstMatch
+            XCTAssertTrue(instruction.waitForExistence(timeout: 5))
+            let excerpt = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.question.literalExcerpt").firstMatch
+            XCTAssertEqual(excerpt.label, "UI fixture only: the selected word is [blank].")
+            let notice = app.descendants(matching: .any)
+                .matching(identifier: "fruitBasket.question.sourceLanguageNotice").firstMatch
+            XCTAssertTrue(notice.exists)
+            let scroll = app.scrollViews["fruitBasket.question.scroll"]
+            XCTAssertTrue(scroll.exists)
+            let first = app.buttons["fruitBasket.question.answer.first"]
+            let second = app.buttons["fruitBasket.question.answer.second"]
+            for _ in 0..<24 { if second.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(second.isHittable)
+            XCTAssertEqual(first.label, "first")
+            XCTAssertEqual(second.label, "second")
+            XCTAssertGreaterThanOrEqual(first.frame.height, 44)
+            for _ in 0..<12 { if first.isHittable { break }; scroll.swipeDown() }
+            XCTAssertTrue(first.isHittable)
+            first.tap()
+            XCTAssertTrue(app.buttons["fruitBasket.question.correctContinue"].waitForExistence(timeout: 3))
+            captureGame(app, name: "source-excerpt-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+    }
+
     func testFAQQuestionTranslationFallbackRetainsDisclosureAndSingleCueOwnership() {
         for arabic in [false, true] {
         for reduced in [false, true] {

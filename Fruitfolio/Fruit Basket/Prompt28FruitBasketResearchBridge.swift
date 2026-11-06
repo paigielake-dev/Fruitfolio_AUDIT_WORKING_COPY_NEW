@@ -123,8 +123,8 @@ actor Prompt28BundledResearchProvider: Prompt28ResearchProviding {
                 hadValidQuestion = true
                 guard !excludingQuestionIDs.contains(id) else { continue }
                 let question = Prompt28Question(id: id, topicQuery: topic, normalizedTopic: normalizedTopic,
-                    category: "source-excerpt practice", educationalDifficulty: difficulty,
-                    questionText: "which word completes this exact library excerpt?\n\n" + cloze.text,
+                    category: Prompt28ExcerptQuestionPresentation.category, educationalDifficulty: difficulty,
+                    questionText: Prompt28ExcerptQuestionPresentation.prefix + cloze.text,
                     answerOptions: cloze.options, correctAnswerID: cloze.correctID,
                     explanation: FruitfolioSemanticMarkup.markdown([.init(text: "the omitted word is “\(cloze.originalWord)”.\n\noriginal library excerpt:\n\n" + note.text)]),
                     sourceIDs: sources.map(\.id), sourceTitles: sources.map(\.title),
