@@ -1993,3 +1993,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 733, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13, "catalog_keys": 660, "catalog_existing_entries_preserved": 656, "nonempty_foreign_units": 0, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Exercise real Ask decoder runtime concurrently with synthetic native T5 translation/release using the shared backend, verifying translation resource release does not invalidate the existing separate Ask model. Keep this distinct from official MADLAD/clinical/device approval.
 - Commit: containing commit for batch Leaderboard-label-and-locale-number-separation.
+
+## Retained-Ask-model-through-native-T5-release
+
+- Parent checkpoint: 6d7bec5d24a0511043c57c9c35402a5d9c794252.
+- Source-order requirements: [418, 419, 427, 428, 443, 444, 466, 467, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift, Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift, Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift.
+- New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 714, "native_CPU_XCTest": 734, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 14, "catalog_keys": 660, "catalog_existing_entries_preserved": 656, "nonempty_foreign_units": 0, "cross_model_focused_XCTest": 1}.
+- Next action: Replace FAQ question catalog-only label/state resolution with existing noninteractive control translation state; preserve original answers/copy, single button/sound ownership and expanded bindings. Add isolated large-text/RTL/fallback UI regression route.
+- Commit: containing commit for batch Retained-Ask-model-through-native-T5-release.

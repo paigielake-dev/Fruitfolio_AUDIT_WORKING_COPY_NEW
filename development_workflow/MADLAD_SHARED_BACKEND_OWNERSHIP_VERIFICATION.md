@@ -1,0 +1,7 @@
+# Separate Ask and T5 native resource ownership
+
+A new regression warms the actual existing Ask GGUF runtime with explicitly synthetic nonmedical evidence, retaining its real model/context. It then issues an Ask request concurrently with eight actual synthetic T5 translation/release cycles. Every T5 request must return its exact complete fixed token; the Ask structured draft must equal its warmed result and cross the production evidence validator. A further Ask decode after all T5 releases must remain valid. After releasing Ask, T5 must load and translate again.
+
+The focused case passed against the actual vendored CPU archives and existing Ask GGUF, without native API or scheduler replacements. The test guarantees Ask resources existed before T5 release cycles and validates concurrent requests and subsequent decodes; it does not instrument or guarantee simultaneous C-call timing. It does not test process-global backend destruction in another process, all interleavings or every resource-pressure condition.
+
+The T5 tensors are small, deterministic and untrained, not official MADLAD. The Ask evidence is explicitly a synthetic ownership fixture, not research or medical advice. No translation/clinical quality, 3B simultaneous memory budget, iPhone/device/GPU performance, leak freedom, audio or UI claim follows. Official-model acquisition and Apple validation remain blocked as documented. Final feasible counts are in the batch run log.

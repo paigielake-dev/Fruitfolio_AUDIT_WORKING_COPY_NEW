@@ -17694,7 +17694,7 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
       ],
-      "commit_reference": "batch:Bound-native-input-token-buffer-before-allocation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -17715,9 +17715,10 @@
         "Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.",
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
-        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim."
+        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:35:57.438675+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 419,
@@ -17799,7 +17800,7 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
       ],
-      "commit_reference": "batch:Bound-native-input-token-buffer-before-allocation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -17821,9 +17822,10 @@
         "Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.",
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
-        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim."
+        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:35:57.438675+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 420,
@@ -18439,7 +18441,7 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift"
       ],
-      "commit_reference": "batch:Concurrent-real-native-T5-translation-release-and-reload (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -18459,9 +18461,10 @@
         "DEBUG-only production call-site probes count invoking physical threads before real native model/context/encoder/decoder calls. Actual native synthetic T5 tests assert positive counts and zero Linux physical-main-thread invocations, including main-actor display bridge, reuse/reload, budget and cancellation. No text logs, release overhead, profiling or Apple/official model/clinical claim.",
         "Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.",
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
-        "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim."
+        "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:22:23.847663+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 428,
@@ -18525,7 +18528,7 @@
         "Actual rebuilt native MADLADCatalogRunner resource-error checks",
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift"
       ],
-      "commit_reference": "batch:Bound-native-input-token-buffer-before-allocation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -18539,9 +18542,10 @@
         "Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.",
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
-        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim."
+        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:35:57.438675+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 429,
@@ -19552,7 +19556,9 @@
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -19668,7 +19674,7 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Disposable-root-preference-owner-lifetime (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -19727,9 +19733,10 @@
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
-        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun."
+        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:48:44.733191+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 444,
@@ -19851,7 +19858,9 @@
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -19964,7 +19973,7 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Bound-native-input-token-buffer-before-allocation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -20021,9 +20030,10 @@
         "Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.",
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
-        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim."
+        "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:35:57.438675+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 445,
@@ -21067,7 +21077,8 @@
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Cycle Tracker/Shell And Internal Navigation Layer/Prompt15CycleTrackerView.swift",
         "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21119,7 +21130,7 @@
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Leaderboard-label-and-locale-number-separation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -21152,9 +21163,10 @@
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
         "Fixed leaderboard headings/rules/unavailable-service copy uses the existing translation display with original wording/fonts. Four English source keys added; all 652 original catalog entries preserved exactly, now 656 keys with zero nonempty foreign units. No username/total value sent to translation, no fabricated translation. Apple catalog/UI remains unrun.",
-        "Only fixed category total labels enter shared control translation. Original integer is separately Foundation-formatted with app locale and shown verbatim; model cannot rewrite it. Four English catalog keys added preserving 656 existing entries. Four new English/Arabic Apple UI cases read real private-fixture count with inference deliberately paused for fallback coverage; not executed on Linux."
+        "Only fixed category total labels enter shared control translation. Original integer is separately Foundation-formatted with app locale and shown verbatim; model cannot rewrite it. Four English catalog keys added preserving 656 existing entries. Four new English/Arabic Apple UI cases read real private-fixture count with inference deliberately paused for fallback coverage; not executed on Linux.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:52:30.027803+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 467,
@@ -21261,7 +21273,8 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioWoodenSignPopup.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16PredictionPopupRequest.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21366,9 +21379,10 @@
         "development_workflow/tests/test_control_sound_ownership.py:new actual SwiftSyntax navigation-row case",
         "Existing AccountPersistence/Restoration/Ownership regressions",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift"
       ],
-      "commit_reference": "batch:Disposable-root-preference-owner-lifetime (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -21409,9 +21423,10 @@
         "Active prediction explanation now extends the existing shared host with woodenSign measured surface and identity-owned requests instead of local two-tint/fixed292minwidth/line-limited/shrunken text/30pt-close overlay. Original594x517 wood and Peach/question-mark art preserved; hash2f42b8d3... unchanged. Chosen board writing rect(0.12,0.46,0.76,0.40) was visually reviewed against original PNG and excludes rope/top screws/edges; actualAlpha bounds cover fullcanvas, not an inferred writing contour. Text/actions scroll; close is compact canonical pill. Original info model moved unchanged to Foundation and one production request factory preserves title/body/progress without calculating new predictions. Tracker focus returns to actual explanation button; departed/queued/stale actions cannot dismiss others. Four new Foundation tests plus1actual compiler/PNG workflow test pass. Eight additional Apple UI scenarios use the real factory/host in portrait/landscape,forcedRTL andmotion modes atAXXXL; NOT_RUN. Initial CGFloat test ambiguity and LinuxXCTest synchronousMainActor discovery crash corrected in test harness with explicitCGFloat andasync test entrypoints; no app workaround or false runtime acceptance.",
         "Active account sign-out/delete confirmations now use existing identity-owned white-paper pipeline, frozen identity/auth/pending/local-container expectation, post-dismissal execution, cancellation/lifetime/focus guards and visible translated typed failures. No try?-success or fake remote deletion. Sign-out makes1acknowledged local write, retains pending-local marker and local container/health files, rolls cache back on refused write; keepLocalData:false requires separate local review. Privacy toggles revert after refused actual record writes. Sync/deletion stay unavailable without fabricated cloud success. Existing decoder now protects explicit-null metadata via genuine JSON field coverage. Eight actual private UserDefaults/store/file regressions pass;2old-API probes against parent actualstore reproduced6failures, not mislabeled identicalafter suite. Actual SwiftSyntax tool removed9duplicate row-caller press cues; row nowuses globalCutePopButtonStyle and unbounded detail with accessible hint. Authdevelopment fixtures are not real authentication. UserDefaults readback notfsync/CAS. AppleUI/runtime remainNOT_RUN.",
         "Actual canonical toggle label/on-off values and volume label use shared protected translation state. Actual slider has 44pt minimum. Percentages use selected-locale Foundation formatting with bounds/nonfinite rejection, never translated or written back. Three formatter/private-store tests pass. Disposable registered actual-control QA scene and eight Apple source-only scenarios cover persistence, binding-before-cue, mute/motion/RTL; Apple runtime remains NOT_RUN.",
-        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun."
+        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:48:44.733191+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 468,
@@ -22549,7 +22564,8 @@
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22643,7 +22659,7 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Disposable-root-preference-owner-lifetime (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -22690,9 +22706,10 @@
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
-        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun."
+        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:48:44.733191+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 477,
@@ -22825,7 +22842,8 @@
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22963,7 +22981,7 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Leaderboard-label-and-locale-number-separation (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -23038,9 +23056,10 @@
         "Original chalkboard artwork now has content-owned growing center and preserved corners. Categories wrap with 44pt targets, actual shared control translation state, selected traits and one sound owner. Rank/name/score rows stop shrinking. Four Apple UI scenarios added but unrun; PNG unchanged; global rankings still explicitly unavailable.",
         "Fixed leaderboard headings/rules/unavailable-service copy uses the existing translation display with original wording/fonts. Four English source keys added; all 652 original catalog entries preserved exactly, now 656 keys with zero nonempty foreign units. No username/total value sent to translation, no fabricated translation. Apple catalog/UI remains unrun.",
         "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.",
-        "Only fixed category total labels enter shared control translation. Original integer is separately Foundation-formatted with app locale and shown verbatim; model cannot rewrite it. Four English catalog keys added preserving 656 existing entries. Four new English/Arabic Apple UI cases read real private-fixture count with inference deliberately paused for fallback coverage; not executed on Linux."
+        "Only fixed category total labels enter shared control translation. Original integer is separately Foundation-formatted with app locale and shown verbatim; model cannot rewrite it. Four English catalog keys added preserving 656 existing entries. Four new English/Arabic Apple UI cases read real private-fixture count with inference deliberately paused for fallback coverage; not executed on Linux.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:52:30.027803+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     },
     {
       "sequence": 478,
@@ -23156,7 +23175,9 @@
         "Fruitfolio/Core/AppArchitecture/Prompt1BSettingsControlRegressionHarness.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift",
         "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
-        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift"
+        "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
+        "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
+        "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -23259,7 +23280,7 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift"
       ],
-      "commit_reference": "batch:Disposable-root-preference-owner-lifetime (resolve containing commit with git log)",
+      "commit_reference": "batch:Retained-Ask-model-through-native-T5-release (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -23315,9 +23336,10 @@
         "Actual native parent budget regression failed two allocation assertions. Production now separates model/vocabulary preparation from context/sampler creation after exact tag/token-budget checks. Cancellation/failure cleanup covers partial/full states. Native tests prove model-only budget rejection, later model reuse, partial release/reload checksum protection and rejection of manifest-invented vocabulary tag before context. No zero-model-memory, official-model or iPhone footprint claim.",
         "Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.",
         "Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.",
-        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun."
+        "DEBUG root preferences use a retained unique suite owner, cleaning only on owner deinit rather than transient onDisappear. Two actual Foundation tests prove independent domains, persisted settings across store recreation and cleanup after release. Eight Apple settings UI cases now background/reactivate; six invalid firstMatch chains corrected. Apple StateObject/Combine/lifecycle remains unrun.",
+        "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior."
       ],
-      "last_updated": "2026-11-06T13:48:44.733191+00:00"
+      "last_updated": "2026-11-06T13:57:40.059538+00:00"
     }
   ]
 }

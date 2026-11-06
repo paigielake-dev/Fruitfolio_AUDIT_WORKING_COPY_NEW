@@ -91,6 +91,55 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertFalse(released.resourcesLoaded)
     }
 
+    func testT5ReleaseAndReloadPreserveSeparateLoadedAskModelDuringConcurrentRequests() async throws {
+        let modelURL = try XCTUnwrap(ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"]
+            .map { URL(fileURLWithPath: $0) } ?? Bundle.main.url(forResource: "FruitfolioAI", withExtension: "gguf"))
+        let ask = LlamaFruitfolioLanguageModel(modelURL: modelURL)
+        // Explicitly synthetic source text: this is a resource-ownership test,
+        // not a clinical evidence package or a translation-quality assessment.
+        let text = "This is a synthetic runtime ownership fixture, not medical evidence."
+        let question = "what does the runtime ownership fixture say?"
+        let note = FruitfolioResearchNoteChunk(chunkID: "ownership_note", researchTopicID: "ownership_fixture",
+            heading: "runtime ownership fixture", subheading: nil, text: text,
+            sourceIDs: [], semanticTags: [], domainTags: [])
+        let evidence = FruitfolioEvidencePacket(normalizedQuestion: question,
+            researchNoteChunks: [note], sourceChunks: [],
+            claimEvidenceMap: [.init(claim: .init(id: "ownership_claim", text: question),
+                                     noteChunkIDs: [note.chunkID], sourceChunkIDs: [])],
+            sourceRecords: [], safetyClassification: .init(level: .normal, matchedPatterns: []),
+            permittedContext: nil, contentVersion: "synthetic-resource-ownership-only")
+        let warmed = try await ask.generateDraft(question: question, evidence: evidence)
+        XCTAssertNotNil(FruitfolioGeneratedDraftValidator.validatedText(draft: warmed, evidence: evidence))
+        let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let translation = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        async let draft = ask.generateDraft(question: question, evidence: evidence)
+        async let outputs: [String] = {
+            var results: [String] = []
+            for _ in 0..<8 {
+                results.append(try await translation.translate("fixture", targetTag: "de"))
+                await translation.releaseResources()
+            }
+            return results
+        }()
+        let (concurrent, translated) = try await (draft, outputs)
+        XCTAssertEqual(concurrent, warmed)
+        XCTAssertEqual(translated, Array(repeating: "fixture", count: 8))
+        XCTAssertNotNil(FruitfolioGeneratedDraftValidator.validatedText(draft: concurrent, evidence: evidence))
+        // Ask's model/context existed before every translation resource release.
+        // A further actual decode must remain valid after all eight releases.
+        let afterRelease = try await ask.generateDraft(question: question, evidence: evidence)
+        XCTAssertEqual(afterRelease, warmed)
+        await ask.releaseResources()
+        let afterAskRelease = try await translation.translate("fixture", targetTag: "de")
+        XCTAssertEqual(afterAskRelease, "fixture")
+        let actual = await translation.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 9)
+        XCTAssertEqual(actual.decoderCalls, 18)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
+        await translation.releaseResources()
+    }
+
     func testOversizedInputRejectsBeforeAllocatingItsTokenBufferAndCanRetry() async throws {
         let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
         defer { try? FileManager.default.removeItem(at: directory) }
