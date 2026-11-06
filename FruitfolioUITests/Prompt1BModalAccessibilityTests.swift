@@ -191,6 +191,46 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testFailedAttemptKeepsLedgerValuesWhileLabelsAndNumberLocaleChange() throws {
+        for serious in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", serious ? "failure-serious" : "failure",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let count = app.descendants(matching: .any).matching(identifier: "fruitBasket.result.fruitCount").firstMatch
+            XCTAssertTrue(count.waitForExistence(timeout: 5))
+            let formatter = NumberFormatter()
+            formatter.locale = Locale(identifier: language)
+            formatter.numberStyle = .decimal
+            let seven = try XCTUnwrap(formatter.string(from: 7))
+            let ten = try XCTUnwrap(formatter.string(from: 10))
+            XCTAssertEqual(count.value as? String, seven + " / " + ten)
+            XCTAssertEqual(app.staticTexts["gameQA.rawResultFruit"].label, "raw fruit count: 7 / 10")
+            let retry = app.buttons["fruitBasket.failure.retry"]
+            let scroll = app.scrollViews["fruitBasket.failure.scroll"]
+            for _ in 0..<24 { if retry.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(retry.isHittable)
+            XCTAssertGreaterThanOrEqual(retry.frame.height, 44)
+            if serious { XCTAssertFalse(retry.label.contains("♡")) }
+            if language == "en" {
+                let feedback = serious ? "that catch attempt ended. review the visual catch rule before retrying."
+                    : "oopsie :,) that one didn’t belong in this basket."
+                XCTAssertTrue(app.staticTexts[feedback].exists)
+            }
+            captureGame(app, name: "failed-result-serious-\(serious)-language-\(language)-reduced-\(reduced)")
+            retry.tap()
+            XCTAssertTrue(app.scrollViews["fruitBasket.classification.scroll"].waitForExistence(timeout: 3))
+            XCTAssertFalse(app.staticTexts["gameQA.rawResultFruit"].exists)
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameFeedbackKeepsSeriousSelectionAndExactQuestionAcrossTranslationFallback() {
         for serious in [false, true] {
         for correct in [false, true] {

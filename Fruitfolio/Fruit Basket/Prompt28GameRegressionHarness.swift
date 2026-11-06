@@ -50,15 +50,7 @@ struct Prompt28GameRegressionHarness: View {
     var body: some View {
         Prompt28FruitBasketView(onBack: { backRequests += 1 }, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
             .overlay(alignment: .bottomLeading) {
-                VStack(alignment: .leading) {
-                    Text("back requests: \(backRequests)")
-                        .accessibilityIdentifier("gameQA.backRequests")
-                    Text("stored highest level: \(model.store.leaderboardTotals.highestLevel)")
-                        .accessibilityIdentifier("gameQA.storedHighestLevel")
-                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
-                        FruitfolioInteractionSoundDiagnostics()
-                    }
-                }
+                Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
                 .font(.caption2)
                 .allowsHitTesting(false)
             }
@@ -105,7 +97,7 @@ struct Prompt28GameRegressionHarness: View {
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
             catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
-            seriousFeedback: scenario == "question-excerpt-serious" ? true : nil)
+            seriousFeedback: ["question-excerpt-serious", "failure-serious"].contains(scenario) ? true : nil)
         var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
             difficulty: .easy, startingLevel: scenario == "storm" ? 6 : 1)
         if scenario == "storm" { session.currentRound = 3 }
@@ -116,10 +108,10 @@ struct Prompt28GameRegressionHarness: View {
         if scenario == "star" {
             model.classificationFruit = nil
             model.classificationStarAvailable = true
-        } else if scenario == "success" || scenario == "failure" {
+        } else if ["success", "failure", "failure-serious"].contains(scenario) {
             let count = scenario == "success" ? model.engine.rules.goodFruitTarget : 7
             for _ in 0..<count { catchFruit(.pear, classification: .good) }
-            if scenario == "failure" { catchFruit(.lemon, classification: .bad) }
+            if scenario == "failure" || scenario == "failure-serious" { catchFruit(.lemon, classification: .bad) }
             model.sceneBecameInactive() // Deterministically completes the real queued result.
         } else {
             model.classificationStarAvailable = false
@@ -134,6 +126,29 @@ struct Prompt28GameRegressionHarness: View {
         model.classificationFruit = fruit(id, classification: classification)
         model.classificationDecision(accept: true)
         for _ in 0..<10 { model.advanceGameplayFrame(delta: 0.04, now: Date()) }
+    }
+}
+/// Observe the actual model/store, not merely their enclosing fixture owner.
+/// Readback must follow result creation/retry and acknowledge real store state.
+@MainActor
+private struct Prompt28GameDiagnosticReadback: View {
+    @ObservedObject var model: Prompt28FruitBasketViewModel
+    @ObservedObject var store: Prompt28FruitBasketStore
+    let backRequests: Int
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("back requests: \(backRequests)")
+                .accessibilityIdentifier("gameQA.backRequests")
+            if let result = model.roundResult {
+                Text("raw fruit count: \(result.caughtFruit.count) / \(result.targetFruit)")
+                    .accessibilityIdentifier("gameQA.rawResultFruit")
+            }
+            Text("stored highest level: \(store.leaderboardTotals.highestLevel)")
+                .accessibilityIdentifier("gameQA.storedHighestLevel")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                FruitfolioInteractionSoundDiagnostics()
+            }
+        }
     }
 }
 #endif

@@ -93,3 +93,17 @@ nonisolated struct Prompt28RoundLedger: Equatable, Sendable {
             scoreChange: score - startingScore, cumulativeScore: score)
     }
 }
+
+/// Display-only integer formatting; no counts or scores enter translation.
+nonisolated enum Prompt28GameStatisticFormatting {
+    static func integer(_ value: Int, language: FruitfolioLanguage, signed: Bool = false) -> String {
+        let locale = Locale(identifier: language.localeIdentifier)
+        if signed {
+            return value.formatted(.number.locale(locale).sign(strategy: .always(includingZero: true)))
+        }
+        return value.formatted(.number.locale(locale))
+    }
+    static func fraction(_ count: Int, target: Int, language: FruitfolioLanguage) -> String {
+        integer(count, language: language) + " / " + integer(target, language: language)
+    }
+}

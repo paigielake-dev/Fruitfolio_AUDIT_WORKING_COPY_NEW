@@ -1,0 +1,11 @@
+# Failed-attempt feedback and immutable result values
+
+Round-statistic labels now use shared noninteractive control translation state. Counts, count/target fractions and signed scores are separately formatted with Foundation using the selected app locale, and never enter inference. Original ledger values, score arithmetic, failure capture history and persisted progress are unchanged. Explicit accessibility labels/values retain the original result field identifier and expose the separately formatted value. Label/value text wraps; the existing result/failure scroll layouts remain.
+
+Two actual Foundation formatting regressions cover every app locale with zero, seven, grouping, Int.max/Int.min, all integer digits/signs and fraction separation. English compatibility stays 7 / 10 and +0. The focused seven-case ledger suite passed; the complete suite results are recorded separately. These tests do not verify Apple UI, locale-specific grammar or physical RTL placement.
+
+Existing failed-attempt feedback and catch-rule copy now use display translation with original serious/playful selection and explicit citation context. Serious retry omits the decorative heart; normal copy is retained. The ending fruit is an explicitly contextual complete-name semantic anchor, translated within its full sentence rather than independently translated sentence fragments. Scientific/clinical and linguistic approval is not implied.
+
+Eight new Apple UI launches combine serious/normal failure, English/Arabic fallback and Reduce Motion at accessibility XXXL. They compare displayed fractions against a separate NumberFormatter API and actual raw ledger readback, reach retry, and require the old result readback to disappear on actual retry. The DEBUG readback observes the real model/store, rather than only their enclosing fixture. These Apple scenarios, SDK typechecking, VoiceOver, visual contrast/RTL and actual geometry are NOT_RUN.
+
+Twenty-seven missing English-only source keys bring the catalog from 681 to 708, with every previous entry preserved. No foreign translation is invented or approved. Inference is paused only in the new DEBUG UI fallback scenarios. Official weights, clinical quality and device/runtime acceptance remain externally blocked.

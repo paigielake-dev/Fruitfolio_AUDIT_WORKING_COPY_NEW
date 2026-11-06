@@ -3,6 +3,34 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BRoundLedgerTests: XCTestCase {
+    func testDisplayFormattingPreservesEveryIntegerDigitAcrossAllAppLocales() {
+        for language in FruitfolioLanguage.allCases {
+            for value in [0, 7, 1000, Int.max, Int.min] {
+                let formatted = Prompt28GameStatisticFormatting.integer(value, language: language)
+                let digits = formatted.compactMap(\.wholeNumberValue).map(String.init).joined()
+                XCTAssertEqual(digits, String(value.magnitude), language.rawValue)
+                if value < 0 {
+                    XCTAssertTrue(formatted.contains("-") || formatted.contains("−"), language.rawValue)
+                }
+            }
+            let signedZero = Prompt28GameStatisticFormatting.integer(0, language: language, signed: true)
+            XCTAssertTrue(signedZero.contains("+"), language.rawValue)
+        }
+    }
+
+    func testFractionAndSignedScoreKeepOriginalValuesAndEnglishCompatibility() {
+        XCTAssertEqual(Prompt28GameStatisticFormatting.fraction(7, target: 10, language: .english), "7 / 10")
+        XCTAssertEqual(Prompt28GameStatisticFormatting.integer(0, language: .english, signed: true), "+0")
+        XCTAssertEqual(Prompt28GameStatisticFormatting.integer(-7, language: .english, signed: true), "-7")
+        for language in FruitfolioLanguage.allCases {
+            let value = Prompt28GameStatisticFormatting.fraction(7, target: 10, language: language)
+            let parts = value.components(separatedBy: " / ")
+            XCTAssertEqual(parts.count, 2)
+            XCTAssertEqual(parts[0].compactMap(\.wholeNumberValue), [7])
+            XCTAssertEqual(parts[1].compactMap(\.wholeNumberValue), [1, 0])
+        }
+    }
+
     func testNineGoodFruitCannotCreateACompletedRevealAndDuplicateEventsDoNotCount() throws {
         var ledger = Prompt28RoundLedger()
         var first: UUID?

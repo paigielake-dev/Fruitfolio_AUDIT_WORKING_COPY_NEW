@@ -1499,35 +1499,38 @@ struct Prompt28FruitBasketView: View {
                     .accessibilityLabel("Peach")
 
                     }
-                    Text(
-                        Prompt28FeedbackCopy.unsuccessful(serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
-                    )
-                    .prompt28Text(.sectionHeading)
+                    FruitfolioTranslatedText(
+                        source: Prompt28FeedbackCopy.unsuccessful(serious: viewModel.currentQuestion?.usesSeriousFeedback == true),
+                        font: Prompt28TextRole.sectionHeading.font,
+                        serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
+                    .accessibilityIdentifier("fruitBasket.failure.feedback")
                     .multilineTextAlignment(.center)
 
                     if let question =
                         viewModel.currentQuestion {
 
-                        Text(
-                            "for this round, we were collecting fruits that fit: \(question.catchRule)"
-                        )
-                        .prompt28Text(.body)
+                        FruitfolioTranslatedText(source: "for this round, we were collecting fruits that fit:",
+                            font: Prompt28TextRole.body.font, serious: true)
+                        FruitfolioTranslatedText(source: question.catchRule, protectedLiterals: question.sourceIDs,
+                            font: Prompt28TextRole.body.font, serious: true,
+                            sourceRecords: question.sourceRecords ?? [])
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
                         .multilineTextAlignment(.center)
                     }
 
-                    Text(
-                        viewModel.currentQuestion?.usesSeriousFeedback == true ? "no points were deducted." : "your score didn’t lose any points ♡"
-                    )
-                    .prompt28Text(.secondary)
+                    FruitfolioTranslatedText(
+                        source: viewModel.currentQuestion?.usesSeriousFeedback == true ? "no points were deducted." : "your score didn’t lose any points ♡",
+                        font: Prompt28TextRole.secondary.font,
+                        serious: viewModel.currentQuestion?.usesSeriousFeedback == true)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
                     Prompt28WatercolorButton(
-                        title: "try this round again ♡",
+                        title: viewModel.currentQuestion?.usesSeriousFeedback == true ? "try this round again" : "try this round again ♡",
                         accent: .paleYellow
                     ) {
                         viewModel.retryRound()
                     }
+                    .accessibilityIdentifier("fruitBasket.failure.retry")
 
                     Prompt28WatercolorButton(
                         title: "next question",
@@ -1552,31 +1555,45 @@ struct Prompt28FruitBasketView: View {
         }
         .padding(.horizontal, 20)
         }
+        .accessibilityIdentifier("fruitBasket.failure.scroll")
     }
 
     private func roundStatistics(_ result: Prompt28RoundResult) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(result.succeeded ? "completed catch round" : "catch attempt ended")
-                .prompt28Text(.sectionHeading).accessibilityAddTraits(.isHeader)
-            LabeledContent("fruit caught", value: "\(result.caughtFruit.count) / \(result.targetFruit)")
+        let language = settings.language
+        func number(_ value: Int, signed: Bool = false) -> String {
+            Prompt28GameStatisticFormatting.integer(value, language: language, signed: signed)
+        }
+        return VStack(alignment: .leading, spacing: 8) {
+            FruitfolioTranslatedText(source: result.succeeded ? "completed catch round" : "catch attempt ended",
+                font: Prompt28TextRole.sectionHeading.font, serious: true)
+                .accessibilityAddTraits(.isHeader)
+            Prompt28StatisticRow(label: "fruit caught",
+                value: Prompt28GameStatisticFormatting.fraction(result.caughtFruit.count, target: result.targetFruit, language: language))
                 .accessibilityIdentifier("fruitBasket.result.fruitCount")
-            LabeledContent("passes carried in", value: String(result.starPassesAtStart))
-            LabeledContent("stars caught this round", value: String(result.starsCollected))
-            LabeledContent("star passes used", value: String(result.starPassesSpent))
-            LabeledContent("star passes available", value: String(result.starPassesRemaining))
-            LabeledContent("round points", value: (result.scoreChange >= 0 ? "+" : "") + String(result.scoreChange))
-            LabeledContent("session score", value: String(result.cumulativeScore))
+            Prompt28StatisticRow(label: "passes carried in", value: number(result.starPassesAtStart))
+            Prompt28StatisticRow(label: "stars caught this round", value: number(result.starsCollected))
+            Prompt28StatisticRow(label: "star passes used", value: number(result.starPassesSpent))
+            Prompt28StatisticRow(label: "star passes available", value: number(result.starPassesRemaining))
+            Prompt28StatisticRow(label: "round points", value: number(result.scoreChange, signed: true))
+            Prompt28StatisticRow(label: "session score", value: number(result.cumulativeScore))
             if result.goodFruitPassed > 0 {
-                Text("\(result.goodFruitPassed) good fruit passed; missed good fruit has no penalty.")
+                Prompt28StatisticRow(label: "good fruit passed", value: number(result.goodFruitPassed))
+                FruitfolioTranslatedText(source: "missed good fruit has no penalty.",
+                    font: Prompt28TextRole.body.font, serious: true)
             }
             if result.starPassesSpent > 0 {
-                Text("each protected bad-fruit catch used exactly one star pass, so play continued.")
+                FruitfolioTranslatedText(source: "each protected bad-fruit catch used exactly one star pass, so play continued.",
+                    font: Prompt28TextRole.body.font, serious: true)
             }
             if let fruit = result.endingBadFruit {
-                Text("\(fruit.displayName) was caught with no star passes available; that catch attempt ended.")
+                FruitfolioTranslatedText(
+                    source: "\(fruit.displayName) was caught with no star passes available; that catch attempt ended.",
+                    font: Prompt28TextRole.body.font, serious: true,
+                    semanticSpans: [.init(text: fruit.displayName, emphasis: .anchorBold),
+                        .init(text: " was caught with no star passes available; that catch attempt ended.")])
             }
             if result.nextGameLevel > result.gameLevelPlayed {
-                Text("next catching level: \(result.nextGameLevel)")
+                Prompt28StatisticRow(label: "next catching level", value: number(result.nextGameLevel))
             }
         }
         .prompt28Text(.body)
@@ -2408,6 +2425,46 @@ private struct Prompt28LeaderboardCategoryButton: View {
         .accessibilityHint(Text(display.status.accessibilityDetail(
             original: FruitfolioSemanticDocument.plainText(from: category.rawValue),
             localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+    }
+}
+
+/// The immutable value is formatted before presentation and never sent to
+/// inference. A noninteractive control label keeps the row's AX value explicit.
+@MainActor
+private struct Prompt28StatisticRow: View {
+    let label: String
+    let value: String
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: label, language: settings.language)
+    }
+    var body: some View {
+        let display = translation.presentation(for: key)
+        LabeledContent {
+            Text(verbatim: value).monospacedDigit()
+                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                FruitfolioSemanticText(markdown: display.text, baseFont: Prompt28TextRole.body.font, serious: true)
+                if let status = display.status.captionKey {
+                    Text(LocalizedStringKey(status)).font(.caption)
+                }
+            }
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+        .accessibilityValue(Text(value))
+        .accessibilityHint(Text(display.status.accessibilityDetail(
+            original: label, localized: { settings.localized($0) })))
         .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
             inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
             await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
