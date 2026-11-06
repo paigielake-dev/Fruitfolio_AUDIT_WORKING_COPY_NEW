@@ -98,6 +98,25 @@ final class Prompt28FruitBasketTests: XCTestCase {
         XCTAssertEqual(model.catchTransits.count, 1)
     }
 
+    func testOwnedClockDoesNotRetainDiscardedControllerAfterActualFrame() async throws {
+        var model: Prompt28FruitBasketViewModel? = unansweredModel()
+        model?.store.controlMode = .catchMode
+        model?.updatePlayfield(size: CGSize(width: 390, height: 620))
+        model?.answer("a", expectedQuestionID: "q1")
+        model?.presentCatchIntro(expectedQuestionID: "q1")
+        model?.beginCatch(expectedQuestionID: "q1")
+        let deadline = Date().addingTimeInterval(2)
+        while model?.activeFruit.isEmpty == true && Date() < deadline {
+            try await Task.sleep(nanoseconds: 2_000_000)
+        }
+        XCTAssertFalse(try XCTUnwrap(model).activeFruit.isEmpty,
+            "Must observe an actual owned-clock frame before testing release")
+        weak var releasedModel = model
+        model = nil
+        XCTAssertNil(releasedModel, "The owned clock must not hold the controller across suspension")
+        releasedModel?.leaveScreen() // Release the pre-fix leaking clock after recording failure.
+    }
+
     func testUnknownAnswerCannotMutateQuestionChoiceOrStreak() async {
         let model = unansweredModel(); defer { model.leaveScreen() }
         model.session?.currentStreak = 3

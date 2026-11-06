@@ -2851,3 +2851,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 857, "native_CPU_XCTest": 879, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 2, "Apple_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Reproduce and fix actual owned-gameplay-clock retaining the controller across sleep; verify a real frame ran before asserting release, test actual controller rather than fake timer, execute supported checks, record checklist evidence and local checkpoint.
 - Commit: containing commit for batch Classification-callback-fruit-and-interaction-ownership.
+
+## Owned-game-clock-releases-controller-between-frames
+
+- Parent checkpoint: 5b0096dd15a1ca380df255c0af67d5798057899f.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/GAME_CLOCK_OWNERSHIP.md.
+- Actual owned game clock previously held a strong controller for its entire loop despite weak capture. Acquire only after sleep for the current frame so existing deinit cancellation runs when discarded. Genuine regression observes actual clock fruit spawn before releasing final external reference; pre-fix one test/one assertion fails. Frame cadence/delta/engine/art/score unchanged. Foundation lifetime test does not establish Apple lifecycle or physical performance.
+- Tests added/updated: FruitfolioTests/Prompt28FruitBasketTests.swift.
+- Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_failed_assertions": 1, "Apple_UI_Instruments": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Guard shared native save-destination mutations and completion against inactive/closed presentation, retaining original pending content and citations; preserve actual store acknowledgement/duplicate checks. Add actual Apple UI regression with private game/library fixture and record unexecuted Apple coverage explicitly.
+- Commit: containing commit for batch Owned-game-clock-releases-controller-between-frames.

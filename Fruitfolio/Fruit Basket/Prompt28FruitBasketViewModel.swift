@@ -509,11 +509,11 @@ final class Prompt28FruitBasketViewModel {
     private func startGameplayLoop() {
         gameplayTask?.cancel()
         gameplayTask = Task { [weak self] in
-            guard let self else { return }
             var previous = Date()
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: 33_000_000)
-                guard !Task.isCancelled else { break }
+                // Keep ownership local to this frame, never across the next sleep.
+                guard !Task.isCancelled, let self else { break }
                 let now = Date()
                 let delta = min(max(now.timeIntervalSince(previous), 0.001), 0.08)
                 previous = now
