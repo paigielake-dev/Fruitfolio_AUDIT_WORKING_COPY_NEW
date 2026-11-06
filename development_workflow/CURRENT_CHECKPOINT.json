@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "af96ea6ddb576ada1e5ef95bd257291e72d94e5d",
+  "current_HEAD": "b27352d98543af73a373787cd50f1388adff7870",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 427,
-  "current_implementation_batch": "Owned-Account-username-and-unsubmitted-email-draft-exit",
+  "current_checklist_part": 9,
+  "current_requirement": 419,
+  "current_implementation_batch": "Actual-native-T5-blocking-call-thread-sampling",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,15 +493,9 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioAccountDraftExitRequest.swift",
-    "Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountActionRegressionHarness.swift",
-    "Fruitfolio/Privacy Settings/Prompt12AccountView.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SharedViews.swift",
-    "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/ACCOUNT_DRAFT_EXIT_VERIFICATION.md",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+    "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
+    "development_workflow/MADLAD_NATIVE_THREAD_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -519,7 +513,7 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "actual SwiftSyntax control sound ownership checker over all app Swift files"
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
   ],
   "last_test_results": {
     "portable_XCTest": 712,
@@ -527,13 +521,14 @@
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
-    "sound_ownership_findings": 0,
-    "actual_account_draft_exit_methods": 3,
-    "Apple_UI_typecheck": "NOT_RUN; 32 new draft-exit launch scenarios source only",
-    "official_MADLAD": "BLOCKED; synthetic T5 contracts do not approve official language/clinical/device behavior"
+    "native_T5_contract_methods": 7,
+    "native_blocking_calls_physical_main_thread": "0 in asserted Linux synthetic T5 cases; positive probe counts verified",
+    "actual_C_API_typecheck": "PASS; no Apple link/inference by that command",
+    "Apple_UI_typecheck": "NOT_RUN; Linux thread sampling is not UIKit/iPhone evidence",
+    "official_MADLAD": "BLOCKED; synthetic tensors do not approve official model/language/clinical behavior"
   },
-  "next_exact_implementation_action": "Measure actual native T5 blocking-call execution threads in DEBUG diagnostics and assert encoder/decoder/model/context calls stay off the physical main thread in CPU contract tests; retain separate Apple/device/official-model gates.",
-  "updated_at": "2026-11-06T12:51:56.551707+00:00",
+  "next_exact_implementation_action": "Exercise real native T5 tokenizer dummy-prefix and control/user-defined language-tag metadata variants with Unicode/whitespace input through unchanged production inference; fix only evidence-backed compatibility failures and retain official tokenizer/model gate.",
+  "updated_at": "2026-11-06T12:58:46.285826+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

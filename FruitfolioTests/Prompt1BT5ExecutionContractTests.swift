@@ -19,6 +19,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
                 let actual = await runtime.debugExecutionStatistics()
                 XCTAssertEqual(actual.encoderCalls, iteration)
                 XCTAssertEqual(actual.decoderCalls, iteration)
+                XCTAssertEqual(actual.checkedBlockingCalls, iteration * 4)
+                XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
                 XCTAssertTrue(actual.resourcesLoaded)
                 await runtime.releaseResources()
                 await runtime.releaseResources()
@@ -41,6 +43,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 0)
         XCTAssertEqual(actual.decoderCalls, 0)
+        XCTAssertEqual(actual.checkedBlockingCalls, 2)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
         await runtime.releaseResources()
     }
 
@@ -62,6 +66,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 2)
         XCTAssertEqual(actual.decoderCalls, 4)
+        XCTAssertEqual(actual.checkedBlockingCalls, 8)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
         await service.releaseResources()
     }
 
@@ -103,6 +109,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
             let actual = await runtime.debugExecutionStatistics()
             XCTAssertEqual(actual.encoderCalls, iteration)
             XCTAssertEqual(actual.decoderCalls, iteration * 8)
+            XCTAssertEqual(actual.checkedBlockingCalls, 2 + iteration * 9)
+            XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
         }
         let task = Task {
             withUnsafeCurrentTask { $0?.cancel() }
@@ -132,6 +140,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 1)
         XCTAssertEqual(actual.decoderCalls, 1)
+        XCTAssertEqual(actual.checkedBlockingCalls, 4)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
         XCTAssertFalse(actual.resourcesLoaded)
     }
 
@@ -148,6 +158,8 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 0)
         XCTAssertEqual(actual.decoderCalls, 0)
+        XCTAssertEqual(actual.checkedBlockingCalls, 0)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
         XCTAssertFalse(actual.resourcesLoaded)
     }
 }

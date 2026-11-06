@@ -1872,3 +1872,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 725, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "sound_ownership_findings": 0, "actual_account_draft_exit_methods": 3, "Apple_UI_typecheck": "NOT_RUN; 32 new draft-exit launch scenarios source only", "official_MADLAD": "BLOCKED; synthetic T5 contracts do not approve official language/clinical/device behavior"}.
 - Next action: Measure actual native T5 blocking-call execution threads in DEBUG diagnostics and assert encoder/decoder/model/context calls stay off the physical main thread in CPU contract tests; retain separate Apple/device/official-model gates.
 - Commit: containing commit for batch Owned-Account-username-and-unsubmitted-email-draft-exit.
+
+## Actual-native-T5-blocking-call-thread-sampling
+
+- Parent checkpoint: b27352d98543af73a373787cd50f1388adff7870.
+- Source-order requirements: [418, 419, 427, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift.
+- DEBUG-only production call-site probes count invoking physical threads before real native model/context/encoder/decoder calls. Actual native synthetic T5 tests assert positive counts and zero Linux physical-main-thread invocations, including main-actor display bridge, reuse/reload, budget and cancellation. No text logs, release overhead, profiling or Apple/official model/clinical claim.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 725, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 7, "native_blocking_calls_physical_main_thread": "0 in asserted Linux synthetic T5 cases; positive probe counts verified", "actual_C_API_typecheck": "PASS; no Apple link/inference by that command", "Apple_UI_typecheck": "NOT_RUN; Linux thread sampling is not UIKit/iPhone evidence", "official_MADLAD": "BLOCKED; synthetic tensors do not approve official model/language/clinical behavior"}.
+- Next action: Exercise real native T5 tokenizer dummy-prefix and control/user-defined language-tag metadata variants with Unicode/whitespace input through unchanged production inference; fix only evidence-backed compatibility failures and retain official tokenizer/model gate.
+- Commit: containing commit for batch Actual-native-T5-blocking-call-thread-sampling.

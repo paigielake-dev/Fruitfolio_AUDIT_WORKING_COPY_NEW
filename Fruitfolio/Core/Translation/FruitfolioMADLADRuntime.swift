@@ -15,11 +15,22 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     #if DEBUG
     private var successfulEncoderCalls = 0
     private var successfulDecoderCalls = 0
+    private var checkedBlockingCalls = 0
+    private var mainThreadBlockingCalls = 0
+
+    /// Samples the invoking thread at model load, context allocation, encode and
+    /// decode. No text, tokens or identities are recorded. This is not profiling.
+    private func recordBlockingExecutionThread() {
+        checkedBlockingCalls += 1
+        if Thread.isMainThread { mainThreadBlockingCalls += 1 }
+    }
 
     /// Counts only actual successful native calls, never user content. Synthetic
     /// contract execution does not establish official MADLAD or language quality.
-    func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool) {
-        (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil)
+    func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool,
+                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int) {
+        (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil,
+         checkedBlockingCalls, mainThreadBlockingCalls)
     }
     #endif
 
@@ -69,6 +80,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         defer { llama_batch_free(batch) }
         for (index, token) in input.enumerated() { try add(token, position: index, logits: false, batch: &batch) }
         try Task.checkCancellation()
+        #if DEBUG
+        recordBlockingExecutionThread()
+        #endif
         guard llama_encode(context, batch) == 0 else { throw FruitfolioTranslationError.inferenceFailed }
         #if DEBUG
         successfulEncoderCalls += 1
@@ -81,6 +95,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
             try Task.checkCancellation()
             batch.n_tokens = 0
             try add(decoderToken, position: position, logits: true, batch: &batch)
+            #if DEBUG
+            recordBlockingExecutionThread()
+            #endif
             guard llama_decode(context, batch) == 0 else { throw FruitfolioTranslationError.inferenceFailed }
             #if DEBUG
             successfulDecoderCalls += 1
@@ -113,6 +130,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         // Start with CPU execution on all targets. Enable Metal only after the
         // installed T5 graph passes compatibility and device memory checks.
         parameters.n_gpu_layers = 0
+        #if DEBUG
+        recordBlockingExecutionThread()
+        #endif
         guard let loaded = llama_model_load_from_file(modelURL.path, parameters) else {
             throw FruitfolioTranslationError.incompatibleModel
         }
@@ -135,6 +155,9 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         let threads = Int32(max(1, min(4, ProcessInfo.processInfo.activeProcessorCount - 1)))
         contextParameters.n_threads = threads
         contextParameters.n_threads_batch = threads
+        #if DEBUG
+        recordBlockingExecutionThread()
+        #endif
         guard let loadedContext = llama_init_from_model(loaded, contextParameters) else {
             llama_model_free(loaded)
             throw FruitfolioTranslationError.incompatibleModel

@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-11-06T12:58:46.285826+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+  ],
+  "results": {
+    "portable_XCTest": 712,
+    "native_CPU_XCTest": 725,
+    "SwiftTesting_each_suite": 21,
+    "workflow_checks": 42,
+    "Swift_syntax_files": 306,
+    "native_T5_contract_methods": 7,
+    "native_blocking_calls_physical_main_thread": "0 in asserted Linux synthetic T5 cases; positive probe counts verified",
+    "actual_C_API_typecheck": "PASS; no Apple link/inference by that command",
+    "Apple_UI_typecheck": "NOT_RUN; Linux thread sampling is not UIKit/iPhone evidence",
+    "official_MADLAD": "BLOCKED; synthetic tensors do not approve official model/language/clinical behavior"
+  }
+}
