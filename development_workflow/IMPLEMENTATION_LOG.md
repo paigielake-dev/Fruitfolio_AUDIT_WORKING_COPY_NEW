@@ -1089,3 +1089,21 @@ Available verification:462 portable XCTest +21 Swift Testing passed;467 actual n
 - Verification: {"Swift6": "462 XCTest +21 Swift Testing passed", "nativeSwift5": "467 XCTest +21 Swift Testing passed", "workflow": "24 passed", "syntax": "240 changed Swift files parsed; zero errors", "project": "Build-file references resolved; no Xcode build/link", "Apple": "NOT_RUN four game UI tests and all screenshots/VoiceOver/landscape/motion effects; app typecheck unavailable"}.
 - Next action: Make Mac runtime preflight check the requested simulator/device architecture without unnecessarily requiring an iPhone slice for simulator tests; retain strict both-platform release gate. Preserve unrun Apple screenshot/UI status. Then continue remaining independent verification/source failures and founder applicability reconciliation; do not stop at this batch.
 - Commit: containing commit for batch Actual-game-UI-scenarios-accessible-star-cues-and-serious-failure-feedback.
+
+## Destination-specific-Apple-test-preflight-with-strict-release-coverage
+
+- Parent checkpoint: c6dcdd1c5af03b996191c795ce483bceeff08ec6.
+- Source-order requirements: [409, 441, 466, 468, 469, 476, 477, 478].
+- Source files: Tools/verify_apple_runtime.py, Tools/verify_prompt1b_mac.sh.
+- # Destination-specific Apple test preflight
+
+The Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.
+
+The Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.
+
+Verification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.
+
+- Tests added/updated: development_workflow/tests/test_apple_runtime_packaging.py.
+- Verification: {"workflow": "29 passed", "shell": "Syntax check passed", "actual_metadata": "Both commands correctly fail: configured llama.xcframework is absent; original preserved framework simulator-only", "Swift": "Unchanged since prior462 portable/467 native XCTest +21 Swift Testing passed; no redundant rerun", "Apple": "NOT_RUN Xcode build/link/UI/screenshots; destination fixtures are metadata checks only"}.
+- Next action: Strengthen explicit full-citation/DOI literal protection in display translation, passing actual source records from Ask/saved/Guide/game while keeping original citations/metadata separate. Use immutable request snapshot parameters. Continue independent requirement fixes and remaining founder applicability; Apple configured framework/Xcode and official MADLAD resource gates stay explicit.
+- Commit: containing commit for batch Destination-specific-Apple-test-preflight-with-strict-release-coverage.

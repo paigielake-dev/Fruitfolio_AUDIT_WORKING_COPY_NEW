@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T01:46:26.391371+00:00",
+  "updated_at": "2026-11-06T01:49:04.319341+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1489,6 +1489,24 @@
         "Apple": "NOT_RUN four game UI tests and all screenshots/VoiceOver/landscape/motion effects; app typecheck unavailable"
       },
       "timestamp": "2026-11-06T01:46:26.391371+00:00"
+    },
+    {
+      "batch": "Destination-specific-Apple-test-preflight-with-strict-release-coverage",
+      "commands": [
+        "29 Python workflow tests",
+        "bash -n Tools/verify_prompt1b_mac.sh",
+        "Actual configured simulator metadata preflight (expected missing artifact exit2)",
+        "Actual strict release preflight (expected missing artifact exit2)",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow": "29 passed",
+        "shell": "Syntax check passed",
+        "actual_metadata": "Both commands correctly fail: configured llama.xcframework is absent; original preserved framework simulator-only",
+        "Swift": "Unchanged since prior462 portable/467 native XCTest +21 Swift Testing passed; no redundant rerun",
+        "Apple": "NOT_RUN Xcode build/link/UI/screenshots; destination fixtures are metadata checks only"
+      },
+      "timestamp": "2026-11-06T01:49:04.319341+00:00"
     }
   ]
 }

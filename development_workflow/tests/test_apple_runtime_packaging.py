@@ -38,5 +38,44 @@ class AppleRuntimePackagingTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'missing'):
                 runtime.inspect(root)
 
+    def test_simulator_only_is_allowed_for_explicit_matching_simulator_test_target(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.fixture(root, [self.library('ios-arm64-simulator', 'simulator')])
+            self.assertEqual(runtime.inspect(root, required={'simulator'}, simulator_architecture='arm64'), {'simulator'})
+            with self.assertRaisesRegex(ValueError, 'Both iOS'):
+                runtime.inspect(root)  # Strict release gate remains the default.
+
+    def test_simulator_test_requires_actual_requested_architecture(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.fixture(root, [self.library('ios-arm64-simulator', 'simulator')])
+            with self.assertRaisesRegex(ValueError, 'x86_64'):
+                runtime.inspect(root, required={'simulator'}, simulator_architecture='x86_64')
+
+    def test_device_only_target_cannot_accept_a_simulator_slice(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            self.fixture(root, [self.library('ios-arm64-simulator', 'simulator')])
+            with self.assertRaisesRegex(ValueError, 'device'):
+                runtime.inspect(root, required={'device'})
+            self.fixture(root, [self.library('ios-arm64')])
+            self.assertEqual(runtime.inspect(root, required={'device'}), {'device'})
+
+    def test_invalid_or_empty_target_cannot_disable_checks(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            for required in [set(), {'macos'}]:
+                with self.assertRaisesRegex(ValueError, 'coverage'):
+                    runtime.inspect(Path(temporary), required=required)
+
+    def test_escaping_artifact_remains_rejected_for_simulator_target(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            entry = self.library('ios-arm64-simulator', 'simulator')
+            entry['LibraryPath'] = '../../outside.framework'
+            (root / 'Info.plist').write_bytes(plistlib.dumps({'AvailableLibraries': [entry]}))
+            with self.assertRaisesRegex(ValueError, 'escaping'):
+                runtime.inspect(root, required={'simulator'})
+
 if __name__ == '__main__':
     unittest.main()
