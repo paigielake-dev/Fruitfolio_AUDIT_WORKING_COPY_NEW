@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T18:47:22.695275+00:00",
+  "updated_at": "2026-11-06T18:52:17.459715+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -3958,6 +3958,49 @@
         ]
       },
       "timestamp": "2026-11-06T18:47:22.695275+00:00"
+    },
+    {
+      "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
+      "commands": [
+        "Focused actual library suite: 15 passed",
+        "Full portable/native suites: /tmp/fruitfolio-guide-reorder-{portable,native}.log",
+        "50 workflow checks with actual Swift compiler",
+        "311 Swift files syntax parsed",
+        "Xcode project references resolved; actual SwiftSyntax sound ownership check clean",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 773,
+        "native_CPU_XCTest": 795,
+        "SwiftTesting_each_run": 21,
+        "workflow_checks": 50,
+        "syntax_files": 311,
+        "focused_library_tests": 15,
+        "Apple_Guide_UI_launch_cases_written_NOT_RUN": 52,
+        "official_MADLAD": "BLOCKED; synthetic native tests are not official inference"
+      },
+      "verification": {
+        "executed": {
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
+        },
+        "not_run": [
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
+        ],
+        "remaining": [
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
+        ]
+      },
+      "timestamp": "2026-11-06T18:52:17.459715+00:00"
     }
   ]
 }

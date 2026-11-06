@@ -880,12 +880,12 @@ struct Prompt11MovePagePopup: View {
 
     private func move(to chapterID: UUID) {
         do {
-            try store.movePage(
+            guard try store.movePage(
                 encyclopediaID: encyclopediaID,
                 pageID: pageID,
                 fromChapterID: fromChapterID,
                 toChapterID: chapterID
-            )
+            ) else { return }
             audioManager.play(.pageTurn)
             onMoved()
         } catch {

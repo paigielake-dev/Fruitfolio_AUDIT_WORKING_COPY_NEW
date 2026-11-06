@@ -2312,3 +2312,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 770, "native_CPU_XCTest": 792, "SwiftTesting_each_run": 21, "workflow_checks": 50, "final_syntax_files": 311, "focused_saved_draft_conflict_tests": 6, "Apple_Guide_UI_launch_cases_written_NOT_RUN": 44, "English_catalog_keys": 803, "nonempty_foreign_units": 0, "official_MADLAD": "BLOCKED; synthetic native T5 is not official inference"}.
 - Next action: Continue Guide content/ordering preservation and required localization in original checklist scope. Check actual chapter/page reorder and readback invariants with regression coverage, then route remaining Guide fixed headings and errors through the existing semantic translation owner without translating user titles/citations as fixed copy. Record exact tests and Apple/model blockers per affected checklist entry.
 - Commit: containing commit for batch Shared-Guide-metadata-field-conflicts.
+
+## Acknowledged-Guide-ordering-and-visible-recovery
+
+- Parent checkpoint: c3ea33e05254d57d81b868f7b2474422108656bb.
+- Source-order requirements: [200, 208, 209, 453, 467, 474, 476, 477].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift, Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift.
+- All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.
+- Tests added/updated: FruitfolioTests/Prompt1BLibraryPersistenceTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 773, "native_CPU_XCTest": 795, "SwiftTesting_each_run": 21, "workflow_checks": 50, "syntax_files": 311, "focused_library_tests": 15, "Apple_Guide_UI_launch_cases_written_NOT_RUN": 52, "official_MADLAD": "BLOCKED; synthetic native tests are not official inference"}.
+- Next action: Continue existing Guide form localization through shared semantic translation owners: fixed headings/helper/error copy, preserve actual user names/source citations, add source catalog keys and extend actual Guide UI fallback assertions. Then review remaining original Guide popup/save presentation requirements in order; never certify Apple rendering or official MADLAD from parser/synthetic tests.
+- Commit: containing commit for batch Acknowledged-Guide-ordering-and-visible-recovery.

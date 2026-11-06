@@ -40,7 +40,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                     subtitle: "QA original description", style: .sage).id
             } catch { preconditionFailure("Could not create the private Guide Builder fixture") }
         }
-        if ["pages", "batch-pages", "dropped-batch-pages"].contains(scenario), let guideID = initialGuideID {
+        if ["pages", "batch-pages", "dropped-batch-pages", "reorder", "dropped-reorder"].contains(scenario), let guideID = initialGuideID {
             do {
                 _ = try store.createChapter(in: guideID, name: "QA first section")
                 _ = try store.createChapter(in: guideID, name: "QA second section")
@@ -61,7 +61,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
             // normal save baseline guard must reject it, not a fake UI flag.
             defaults.set(Data(#"{"futureSchema":3,"preserve":{"field":null}}"#.utf8), forKey: Self.key)
         }
-        if ["dropped-description", "dropped-batch-pages"].contains(scenario) {
+        if ["dropped-description", "dropped-batch-pages", "dropped-reorder"].contains(scenario) {
             (defaults as? Prompt11GuideFaultDefaults)?.rejectLibraryWrites = true
         }
         (defaults as? Prompt11GuideFaultDefaults)?.libraryWriteAttempts = 0
@@ -136,6 +136,7 @@ private struct Prompt11GuideSaveReadback: View {
             Text("saved status requests: \(savedStatusRequests)").accessibilityIdentifier("guideQA.savedStatusRequests")
             if let guideID, let guide = persisted.encyclopedia(id: guideID) {
                 let sections = guide.chapters.sorted { $0.order < $1.order }
+                Text("first section name: " + (sections.first?.name ?? "none")).accessibilityIdentifier("guideQA.firstSectionName")
                 Text("first section pages: \(sections.first?.pages.count ?? 0)").accessibilityIdentifier("guideQA.firstSectionPages")
                 Text("second section pages: \(sections.count > 1 ? sections[1].pages.count : 0)").accessibilityIdentifier("guideQA.secondSectionPages")
             }

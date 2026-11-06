@@ -19,6 +19,7 @@ struct Prompt11GuideBuilderView: View {
     @State private var showingReadMode = false
     @State private var showingGuideOptions = false
     @State private var reorderMode = false
+    @State private var reorderErrorMessage: String?
     @State private var savedStatusVisible = false
     @State private var savedStatusTask: Task<Void, Never>?
     @State private var savedStatusGuideID: UUID?
@@ -106,6 +107,7 @@ struct Prompt11GuideBuilderView: View {
             dismissSavedStatus()
         }
         .onChange(of: selectedGuideID) { _, guideID in
+            reorderErrorMessage = nil
             if savedStatusGuideID != guideID { dismissSavedStatus() }
         }
         .toolbar(.hidden, for: .navigationBar)
@@ -309,6 +311,12 @@ struct Prompt11GuideBuilderView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     workspaceHeader(guide)
+                    Prompt10LibraryStorageNotice(store: store)
+                    if let reorderErrorMessage {
+                        FruitfolioTranslatedText(source: reorderErrorMessage,
+                            font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                            .accessibilityIdentifier("guide.reorder.error")
+                    }
 
                     guideCoverEnvironment(guide)
 
@@ -350,6 +358,7 @@ struct Prompt11GuideBuilderView: View {
                                 reorderMode.toggle()
                             }
                         }
+                        .accessibilityIdentifier("guide.reorder.toggle")
                     }
 
                     Button("+ new section") {
@@ -760,11 +769,13 @@ struct Prompt11GuideBuilderView: View {
                     Button("move up") {
                         moveChapter(guide.id, chapter.id, offset: -1)
                     }
+                    .accessibilityIdentifier("guide.section.moveUp." + chapter.id.uuidString)
                     .disabled(isFirst)
 
                     Button("move down") {
                         moveChapter(guide.id, chapter.id, offset: 1)
                     }
+                    .accessibilityIdentifier("guide.section.moveDown." + chapter.id.uuidString)
                     .disabled(isLast)
                 }
             }
@@ -1174,15 +1185,16 @@ struct Prompt11GuideBuilderView: View {
         offset: Int
     ) {
         do {
-            try store.moveChapter(
+            guard try store.moveChapter(
                 encyclopediaID: guideID,
                 chapterID: chapterID,
                 offset: offset
-            )
+            ) else { return }
+            reorderErrorMessage = nil
             audioManager.play(.pageTurn)
             showSavedStatus()
         } catch {
-            return
+            reorderErrorMessage = store.storageProtectionReason == nil ? error.localizedDescription : nil
         }
     }
 
@@ -1193,16 +1205,17 @@ struct Prompt11GuideBuilderView: View {
         offset: Int
     ) {
         do {
-            try store.movePageWithinChapter(
+            guard try store.movePageWithinChapter(
                 encyclopediaID: guideID,
                 chapterID: chapterID,
                 pageID: pageID,
                 offset: offset
-            )
+            ) else { return }
+            reorderErrorMessage = nil
             audioManager.play(.pageTurn)
             showSavedStatus()
         } catch {
-            return
+            reorderErrorMessage = store.storageProtectionReason == nil ? error.localizedDescription : nil
         }
     }
 

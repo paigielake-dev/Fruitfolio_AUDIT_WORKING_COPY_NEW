@@ -258,4 +258,77 @@ final class Prompt1BLibraryPersistenceTests: XCTestCase {
         XCTAssertEqual(defaults.attempts, attempts + 1)
     }
 
+    func testGuideReorderNoOpsNeverWriteOrChangeContentIncludingExtremeOffsets() async throws {
+        let (suite, defaults, store, guide, chapter, pages) = try batchFixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let second = try store.createChapter(in: guide, name: "QA second")
+        let added = try store.prompt11AddSavedMaterials(pages, to: guide, chapterID: chapter)
+        let before = store.encyclopedias
+        let bytes = defaults.data(forKey: "library")
+        let attempts = defaults.attempts
+        for offset in [0, Int.min, Int.max] {
+            XCTAssertFalse(try store.moveChapter(encyclopediaID: guide, chapterID: second.id, offset: offset))
+            XCTAssertFalse(try store.movePageWithinChapter(encyclopediaID: guide, chapterID: chapter, pageID: added[1].id, offset: offset))
+        }
+        XCTAssertFalse(try store.moveChapter(encyclopediaID: guide, chapterID: chapter, offset: -1))
+        XCTAssertFalse(try store.movePageWithinChapter(encyclopediaID: guide, chapterID: chapter, pageID: added[0].id, offset: -1))
+        XCTAssertFalse(try store.movePage(encyclopediaID: guide, pageID: added[0].id, fromChapterID: chapter, toChapterID: chapter))
+        XCTAssertEqual(defaults.attempts, attempts)
+        XCTAssertEqual(defaults.data(forKey: "library"), bytes)
+        XCTAssertEqual(store.encyclopedias, before)
+    }
+
+    func testGuideReorderAndChapterMovePersistExactContentAndContiguousOrder() async throws {
+        let (suite, defaults, store, guide, chapter, pages) = try batchFixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let second = try store.createChapter(in: guide, name: "QA second")
+        let added = try store.prompt11AddSavedMaterials(pages, to: guide, chapterID: chapter)
+        let sourceSnapshot = store.encyclopedias.filter { $0.id != guide }
+        XCTAssertTrue(try store.moveChapter(encyclopediaID: guide, chapterID: second.id, offset: -1))
+        XCTAssertTrue(try store.movePageWithinChapter(encyclopediaID: guide, chapterID: chapter, pageID: added[1].id, offset: -1))
+        var current = try XCTUnwrap(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library").encyclopedia(id: guide))
+        XCTAssertEqual(current.chapters.map(\.id), [second.id, chapter])
+        XCTAssertEqual(current.chapters.map(\.order), [0, 1])
+        XCTAssertEqual(current.chapters[1].pages.map(\.id), [added[1].id, added[0].id])
+        XCTAssertEqual(current.chapters[1].pages.map(\.order), [0, 1])
+        XCTAssertTrue(try store.movePage(encyclopediaID: guide, pageID: added[1].id, fromChapterID: chapter, toChapterID: second.id))
+        let reloaded = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library")
+        current = try XCTUnwrap(reloaded.encyclopedia(id: guide))
+        let moved = try XCTUnwrap(current.chapters[0].pages.first)
+        var expected = added[1]
+        expected.chapterID = second.id; expected.order = 0; expected.updatedAt = moved.updatedAt
+        XCTAssertEqual(moved, expected)
+        XCTAssertEqual(current.chapters[1].pages.map(\.id), [added[0].id])
+        XCTAssertEqual(current.chapters[1].pages.map(\.order), [0])
+        XCTAssertEqual(current.name, "QA guide")
+        XCTAssertEqual(current.subtitle, "QA description")
+        XCTAssertEqual(current.style, .pink)
+        XCTAssertEqual(reloaded.encyclopedias.filter { $0.id != guide }, sourceSnapshot)
+    }
+
+    func testFailedGuideReordersRestoreEntireAcknowledgedOrderAndContent() async throws {
+        for operation in 0..<3 {
+            let (suite, defaults, store, guide, chapter, pages) = try batchFixture()
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let second = try store.createChapter(in: guide, name: "QA second")
+            let added = try store.prompt11AddSavedMaterials(pages, to: guide, chapterID: chapter)
+            let before = store.encyclopedias
+            let bytes = defaults.data(forKey: "library")
+            let attempts = defaults.attempts
+            defaults.fault = .drop
+            XCTAssertThrowsError(try {
+                switch operation {
+                case 0: _ = try store.moveChapter(encyclopediaID: guide, chapterID: second.id, offset: -1)
+                case 1: _ = try store.movePageWithinChapter(encyclopediaID: guide, chapterID: chapter, pageID: added[1].id, offset: -1)
+                default: _ = try store.movePage(encyclopediaID: guide, pageID: added[1].id, fromChapterID: chapter, toChapterID: second.id)
+                }
+            }()) { XCTAssertEqual($0 as? Prompt10LibraryError, .persistenceFailure) }
+            XCTAssertEqual(defaults.attempts, attempts + 1)
+            XCTAssertEqual(store.encyclopedias, before)
+            XCTAssertEqual(defaults.data(forKey: "library"), bytes)
+            XCTAssertEqual(store.storageProtectionReason, .persistenceFailure)
+            XCTAssertEqual(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "library").encyclopedias, before)
+        }
+    }
+
 }

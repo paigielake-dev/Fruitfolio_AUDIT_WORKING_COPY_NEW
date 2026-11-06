@@ -297,6 +297,44 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGuideReorderAcknowledgesPersistenceAndOffersReloadAfterRejectedWrite() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for dropped in [false, true] {
+            let app = launchGuideSave(dropped ? "dropped-reorder" : "reorder", reduced: reduced, rtl: rtl)
+            let toggle = app.buttons["guide.reorder.toggle"]
+            XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+            let scroll = app.scrollViews.firstMatch
+            for _ in 0..<24 { if toggle.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(toggle.isHittable); toggle.tap()
+            let move = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND enabled == true", "guide.section.moveUp.")).firstMatch
+            for _ in 0..<24 { if move.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(move.isHittable); move.tap()
+            let expected = "first section name: " + (dropped ? "QA first section" : "QA second section")
+            let persisted = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: app.staticTexts["guideQA.firstSectionName"])
+            XCTAssertEqual(XCTWaiter.wait(for: [persisted], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 1")
+            XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: \(dropped ? 0 : 1)")
+            if dropped {
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.writeProtected"].label, "write protected: true")
+                let reload = app.buttons["library.reloadSavedRecord"]
+                for _ in 0..<24 { if reload.isHittable { break }; scroll.swipeDown() }
+                XCTAssertTrue(reload.isHittable); reload.tap()
+                let writable = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: false"), object: app.staticTexts["guideQA.writeProtected"])
+                XCTAssertEqual(XCTWaiter.wait(for: [writable], timeout: 3), .completed)
+                XCTAssertEqual(app.staticTexts["guideQA.firstSectionName"].label, expected)
+                XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 1")
+            } else {
+                expectGuidePopupRequests(open: 1, close: 1, in: app)
+            }
+            captureGame(app, name: "guide-reorder-dropped-\(dropped)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGuideFormReplacementClosesAndOpensOneOwnerWithoutSavingOnCancel() {
         for reduced in [false, true] {
         for rtl in [false, true] {

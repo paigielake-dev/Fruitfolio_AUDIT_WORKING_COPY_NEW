@@ -10213,42 +10213,43 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Single-acknowledged-Guide-page-selection (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
         "Added user-authored page creation/editing with chosen chapter, exact user body/notes, optional validated user-supplied address, explicit unverified-material provenance, save/cancel/discard dialog and error-retained drafts. Ask evidence cannot be overwritten through this editor. Updates preserve page identity, creation date and imported images, support moving to another chapter, and commit through existing rollback persistence. Guide snapshots retain user-material metadata. Existing image import now supports ordered atomic replacement with per-image picker ownership and stale-target rejection; detach refreshes UI before best-effort shared-reference-safe file cleanup. Clean note drafts refresh persisted editor changes without replacing dirty drafts. No generative images. User page editor requires an existing chapter; existing guide section creation supplies this. Global navigation/process-death recovery and Apple runtime validation remain open.",
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
-        "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change."
+        "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:43:19.073215+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Single-acknowledged-Guide-page-selection",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "portable_XCTest": "767 passed",
-          "native_CPU_XCTest": "789 passed; native synthetic T5 is not official MADLAD",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
-          "focused_library": "12 passed; final enhanced provenance/span assertions rerun after full-suite source snapshot",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolved, actual SwiftSyntax ownership clean; no Apple build"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "40 actual Guide Apple UI launches, including 8 new two-page accepted/dropped write cases",
-          "Apple typecheck, callback/rendering/AX/RTL/scene/audio/device checks",
-          "Official MADLAD offline inference, language coverage and clinical review"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute eight new actual-picker Apple cases and all existing Guide lifecycle cases; verify accepted count, one-write acknowledgment, failure draft retention and no saved status",
-          "Verify search/filter UI retains and submits hidden selections; Foundation confirms current catalog resolution and missing-source rejection",
-          "Complete shared-view reactive synchronization and all metadata/order/deletion acceptance; one JSON set/readback is not fsync/CAS",
-          "Retain external model, clinical, localization and physical-device verification gates"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute eight new actual-picker Apple cases and all existing Guide lifecycle cases; verify accepted count, one-write acknowledgment, failure draft retention and no saved status",
-        "Verify search/filter UI retains and submits hidden selections; Foundation confirms current catalog resolution and missing-source rejection",
-        "Complete shared-view reactive synchronization and all metadata/order/deletion acceptance; one JSON set/readback is not fsync/CAS",
-        "Retain external model, clinical, localization and physical-device verification gates"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -10745,42 +10746,44 @@
         "Prompt1BSharedLibraryCatalogTests",
         "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -10850,7 +10853,7 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10863,37 +10866,38 @@
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -22468,44 +22472,45 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only.",
         "Legacy Library/Guide pill delegates to canonical adaptive artwork/semantic controls with extra Reduce Motion support. Real SwiftSyntax ownership now handles alias and synchronous nested branches while preserving delayed/named callbacks and raw controls; nine duplicate sites normalized and six raw Guide cues added. Prior nested fixture miss reproduced; two new syntax regressions pass. Twenty existing Apple Guide cases extended with exact interaction counts but NOT_RUN. Original data callbacks/art/audio remain.",
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -23404,7 +23409,7 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -23457,37 +23462,38 @@
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -24696,7 +24702,7 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -24742,37 +24748,38 @@
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -25087,7 +25094,7 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25157,37 +25164,38 @@
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {
@@ -25488,7 +25496,7 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift"
       ],
-      "commit_reference": "batch:Shared-Guide-metadata-field-conflicts (resolve containing commit with git log)",
+      "commit_reference": "batch:Acknowledged-Guide-ordering-and-visible-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -25592,37 +25600,38 @@
         "One ephemeral Guide form session owns logical close/open transitions and captured tickets. Thirty-nine AST-migrated state assignments and twelve actual parent constructions scope eleven children; stale/inactive/replaced callbacks are guarded. Background preserves form while renewing authority on visible resume. Twenty-two child appearance/selected-close cues removed; save closes form before saved card opens. Destination no longer resets on reappearance. Four actual owner/store regressions pass; 28 Apple lifecycle/destination cases written but NOT_RUN. No artwork/science/persistence-schema edits.",
         "Canonical library advances its committed snapshot only after exact UserDefaults Data readback. Dropped/replaced/wrong-type writes block further changes until reload; actual Store restores the last acknowledged in-memory snapshot without rolling back foreign bytes. Four new fault tests reproduce the previous false-success bug and pass after the fix. Guide UI now includes private dropped-write fixtures. Readback is not fsync or cross-process CAS.",
         "Guide multi-page selection is staged into one canonical library write/readback. The existing single-page API delegates compatibly; whole-guide and within-batch source deduplication remain. Picker resolves current selected source keys across the entire shared catalog, independent of visible search/filter; missing keys reject the whole selection. Empty/no-new selection cannot emit page-turn or saved-status success. Source fields, user provenance, notes policy, citations, semantic spans and original source books are preserved. Six new Foundation cases and eight written Apple UI launch cases cover the change.",
-        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries."
+        "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
+        "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN."
       ],
-      "last_updated": "2026-11-06T18:47:22.695275+00:00",
+      "last_updated": "2026-11-06T18:52:17.459715+00:00",
       "latest_batch_verification": {
-        "batch": "Shared-Guide-metadata-field-conflicts",
+        "batch": "Acknowledged-Guide-ordering-and-visible-recovery",
         "executed": {
-          "focused_saved_draft_conflict_XCTest": "6 passed, three new cases include four metadata conflicts and real independent persisted reload",
-          "portable_XCTest": "770 passed",
-          "native_CPU_XCTest": "792 passed; official MADLAD not demonstrated",
+          "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
+          "portable_XCTest": "773 passed",
+          "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "final_source": "311 Swift files syntax parsed; project references resolved and SwiftSyntax sound check clean; all 802 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
         },
         "not_run": [
-          "44 Guide Apple UI launches, including four new live metadata-conflict cases",
-          "Apple SDK typecheck/link, real editor background mutation/callback wiring, draft retention rendering, VoiceOver/RTL/audio/device acceptance",
-          "Official MADLAD offline inference and scientific/localization verification"
+          "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
+          "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
+          "Official MADLAD offline/language/scientific verification"
         ],
         "remaining": [
-          "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-          "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-          "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-          "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+          "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+          "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+          "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+          "Complete external resource, model, clinical, localization and device gates"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute live shared-Store conflict Apple cases; verify newer description survives, draft remains, no false save/cue/write or global storage lock",
-        "Exercise name/cover/section conflicts and live cross-surface propagation on Apple, beyond Foundation projections",
-        "Verify all Guide order/content/deletion operations and saved status under production resources; this batch addresses metadata field conflicts only",
-        "Run all clinical/localization/device acceptance with required external resources; native synthetic tests do not close MADLAD requirements"
+        "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
+        "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
+        "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
+        "Complete external resource, model, clinical, localization and device gates"
       ]
     },
     {

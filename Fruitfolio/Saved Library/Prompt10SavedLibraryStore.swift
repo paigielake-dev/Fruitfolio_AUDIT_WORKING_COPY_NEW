@@ -290,12 +290,13 @@ final class Prompt10SavedLibraryStore {
         try persist()
     }
 
+    @discardableResult
     func movePage(
         encyclopediaID: UUID,
         pageID: UUID,
         fromChapterID: UUID,
         toChapterID: UUID
-    ) throws {
+    ) throws -> Bool {
         guard let encyclopediaIndex = encyclopedias.firstIndex(where: { $0.id == encyclopediaID }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
         }
@@ -311,6 +312,8 @@ final class Prompt10SavedLibraryStore {
             .firstIndex(where: { $0.id == pageID }) else {
             throw Prompt10LibraryError.pageNotFound
         }
+
+        guard fromChapterID != toChapterID else { return false }
 
         var page = encyclopedias[encyclopediaIndex].chapters[fromIndex].pages.remove(at: pageIndex)
         page.chapterID = toChapterID
@@ -330,6 +333,7 @@ final class Prompt10SavedLibraryStore {
 
         encyclopedias[encyclopediaIndex].updatedAt = Date()
         try persist()
+        return true
     }
 
     func encyclopedia(id: UUID) -> Prompt10Encyclopedia? {
@@ -519,11 +523,12 @@ final class Prompt10SavedLibraryStore {
         try persist()
     }
 
+    @discardableResult
     func moveChapter(
         encyclopediaID: UUID,
         chapterID: UUID,
         offset: Int
-    ) throws {
+    ) throws -> Bool {
         guard let encyclopediaIndex = encyclopedias.firstIndex(where: {
             $0.id == encyclopediaID
         }) else {
@@ -538,15 +543,15 @@ final class Prompt10SavedLibraryStore {
             throw Prompt10LibraryError.chapterNotFound
         }
 
-        let destinationIndex =
-            currentIndex + offset
+        let (destinationIndex, overflow) = currentIndex.addingReportingOverflow(offset)
+        guard !overflow, destinationIndex != currentIndex else { return false }
 
         guard encyclopedias[encyclopediaIndex]
             .chapters
             .indices
             .contains(destinationIndex)
         else {
-            return
+            return false
         }
 
         encyclopedias[encyclopediaIndex]
@@ -565,14 +570,16 @@ final class Prompt10SavedLibraryStore {
             .updatedAt = Date()
 
         try persist()
+        return true
     }
 
+    @discardableResult
     func movePageWithinChapter(
         encyclopediaID: UUID,
         chapterID: UUID,
         pageID: UUID,
         offset: Int
-    ) throws {
+    ) throws -> Bool {
         guard let encyclopediaIndex = encyclopedias.firstIndex(where: {
             $0.id == encyclopediaID
         }) else {
@@ -596,8 +603,8 @@ final class Prompt10SavedLibraryStore {
             throw Prompt10LibraryError.pageNotFound
         }
 
-        let destinationIndex =
-            currentIndex + offset
+        let (destinationIndex, overflow) = currentIndex.addingReportingOverflow(offset)
+        guard !overflow, destinationIndex != currentIndex else { return false }
 
         guard encyclopedias[encyclopediaIndex]
             .chapters[chapterIndex]
@@ -605,7 +612,7 @@ final class Prompt10SavedLibraryStore {
             .indices
             .contains(destinationIndex)
         else {
-            return
+            return false
         }
 
         encyclopedias[encyclopediaIndex]
@@ -627,6 +634,7 @@ final class Prompt10SavedLibraryStore {
             .updatedAt = Date()
 
         try persist()
+        return true
     }
 
     func removeAllForTesting() throws {
