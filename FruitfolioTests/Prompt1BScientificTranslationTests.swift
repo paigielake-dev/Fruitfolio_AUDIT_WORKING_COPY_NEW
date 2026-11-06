@@ -5,7 +5,7 @@ final class Prompt1BScientificTranslationTests: XCTestCase {
     func testIntroducedScientificIdentifiersRejectBothInferenceAndCatalogCandidates() throws {
         let source = "my context"
         let envelope = try FruitfolioScientificTranslationEnvelope(source)
-        for identifier in ["AMH", "FSH", "LH", "TSH", "pH", "hCG", "DHEA-S", "HbA1c", "rs123", "HLA-DQB1*06:02"] {
+        for identifier in ["AMH", "FSH", "LH", "TSH", "pH", "hCG", "HCG", "DHEA-S", "HbA1c", "rs123", "HLA-DQB1*06:02"] {
             XCTAssertThrowsError(try envelope.restore(envelope.prepared + " " + identifier), identifier)
             XCTAssertThrowsError(try envelope.validateCatalogCandidate("mi contexto " + identifier), identifier)
         }
@@ -33,6 +33,25 @@ final class Prompt1BScientificTranslationTests: XCTestCase {
         XCTAssertEqual(try present.restore(present.prepared), "Fruitfolio library")
         XCTAssertThrowsError(try present.restore(present.prepared + " Fruitfolio"))
         XCTAssertThrowsError(try present.validateCatalogCandidate("Fruitfolio biblioteca Fruitfolio"))
+    }
+
+    func testBareBibliographicIdentifiersAreProtectedWholeBeforeTheirNumericPrefixes() throws {
+        let sources = ["HCG and hCG", "HCG ≤ 2.5 IU/L", "PMID: 12345678", "PMID 12345678",
+                       "PMCID: PMC1234567", "10.1234/original", "doi: 10.1234/original", "DOI:10.1234/αβ"]
+        for source in sources {
+            let envelope = try FruitfolioScientificTranslationEnvelope(source)
+            XCTAssertEqual(try envelope.restore(envelope.prepared), source)
+            XCTAssertNoThrow(try envelope.validateCatalogCandidate(source))
+            for literal in ["HCG", "hCG", "PMID", "PMCID", "10.1234", "original", "αβ"] {
+                if source.contains(literal) { XCTAssertFalse(envelope.prepared.contains(literal), source) }
+            }
+        }
+        for source in ["10.1234/original", "DOI:10.1234/original"] {
+            let envelope = try FruitfolioScientificTranslationEnvelope(source)
+            XCTAssertThrowsError(try envelope.validateCatalogCandidate(source.replacingOccurrences(of: "original", with: "changed")))
+        }
+        let identifier = try FruitfolioScientificTranslationEnvelope("PMID: 12345678")
+        XCTAssertThrowsError(try identifier.validateCatalogCandidate("PMCID: 12345678"))
     }
 
     func testRoundTripProtectsNumbersUnitsCitationsURLsAndFormatting() throws {
@@ -110,7 +129,7 @@ private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRunt
 
 final class Prompt1BTranslationPipelineTests: XCTestCase {
     func testLateIdentifierOrProtectedBrandInjectionRejectsWholePassage() async throws {
-        for suffix in [" AMH", " Fruitfolio"] {
+        for suffix in [" AMH", " HCG", " PMID: 12345678", " Fruitfolio"] {
             let runtime = Prompt1BIdentifierInjectionFixture(suffix: suffix)
             let service = FruitfolioTranslationService(runtime: runtime)
             let source = "first paragraph\n\nsecond paragraph"

@@ -29,13 +29,13 @@ enum FruitfolioScientificQuantityProtection {
 
     // These are explicit scientific identifiers, unlike ambiguous ordinary
     // words such as "min" which may also be a unit abbreviation.
-    static let identifierPattern = #"\b(?:HLA-[A-Z0-9]+\*[0-9:]+|HbA1c|hCG|pH|FSH|LH|TSH|AMH|DHEA-S|rs[0-9]+|[A-Z][A-Z0-9_-]*[0-9][A-Z0-9_-]*)\b"#
+    static let identifierPattern = #"\b(?:HLA-[A-Z0-9]+\*[0-9:]+|HbA1c|hCG|HCG|pH|FSH|LH|TSH|AMH|DHEA-S|rs[0-9]+|[A-Z][A-Z0-9_-]*[0-9][A-Z0-9_-]*)\b"#
 
     static func identifierSignature(_ text: String) throws -> [String] {
         try matches(identifierPattern, in: text)
     }
 
-    static let referencePattern = #"https?://[^\s<>]+|[\[［][^\]］\n]{1,200}[\]］]|[\(（][^\)）\n]*\b(?:(?:1[6-9]|20|21)\d{2}[a-z]?|(?i:n\.\h*d\.))[^\)）\n]*[\)）]"#
+    static let referencePattern = #"https?://[^\s<>]+|(?i:\bPMID\h*:?\h*\p{N}+|\bPMCID\h*:?\h*PMC\p{N}+|\b(?:doi\h*:\h*)?10\.[0-9]{4,9}/[^\s<>]+)|[\[［][^\]］\n]{1,200}[\]］]|[\(（][^\)）\n]*\b(?:(?:1[6-9]|20|21)\d{2}[a-z]?|(?i:n\.\h*d\.))[^\)）\n]*[\)）]"#
 
     static func quantitySignature(_ text: String) throws -> [String] {
         try matches(quantityPattern, in: text)

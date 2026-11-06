@@ -99,6 +99,23 @@ final class Prompt1BCatalogTranslationTests: XCTestCase {
         XCTAssertEqual(fallbackCalls, 1)
     }
 
+    func testCatalogCannotAlterBareDOISuffixWhileKeepingItsNumericalPrefix() async throws {
+        let source = "source 10.1234/original"
+        let (bundle, root) = try fixture([source: "fuente 10.1234/changed"])
+        defer { try? FileManager.default.removeItem(at: root) }
+        let runtime = CatalogFallbackRuntime()
+        let service = FruitfolioTranslationService(runtime: runtime)
+        do {
+            _ = try await service.translateForDisplay(source, language: .spanish, inferenceAllowed: false, bundle: bundle)
+            XCTFail("Changed identifier cannot display as an accepted catalog translation")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .pausedForMemoryPressure) }
+        let result = try await service.translateForDisplay(source, language: .spanish, bundle: bundle)
+        XCTAssertEqual(result.text, source)
+        XCTAssertEqual(result.origin, .machine)
+        let calls = await runtime.callCount()
+        XCTAssertEqual(calls, 1)
+    }
+
     func testScientificLiteralsAndFullAttributionMustRemainExactInCatalogText() throws {
         let citation = "Doe, A. (2024). Original source title. DOI:10.1000/example."
         let source = "recorded FSH 12.50 mIU/mL [A]\n\n" + citation

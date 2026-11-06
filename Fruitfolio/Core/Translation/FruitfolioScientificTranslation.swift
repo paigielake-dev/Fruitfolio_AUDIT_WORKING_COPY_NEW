@@ -15,10 +15,12 @@ struct FruitfolioScientificTranslationEnvelope: Sendable {
             .sorted { $0.count > $1.count }.map { NSRegularExpression.escapedPattern(for: $0) }
         explicitProtectionPattern = literalPatterns.isEmpty ? nil : literalPatterns.map { "(?:\($0))" }.joined(separator: "|")
         let patterns = literalPatterns + [
+            // A bare DOI starts with a number. Protect the whole identifier
+            // before the general numerical matcher can split its prefix.
+            FruitfolioScientificQuantityProtection.referencePattern,
             FruitfolioScientificQuantityProtection.protectionPattern,
             #"\\[\\*_`\[\]<>]"#,
             #"</?u>"#,
-            FruitfolioScientificQuantityProtection.referencePattern,
             #"\*\*|__|(?<!\*)\*(?!\*)"#
         ]
         let pattern = patterns.map { "(?:\($0))" }.joined(separator: "|")
