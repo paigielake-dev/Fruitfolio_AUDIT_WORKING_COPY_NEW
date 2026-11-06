@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 struct FruitfolioHormoneInformationView: View {
     let onBack: () -> Void
     @Environment(\.locale) private var appLocale
+    @Environment(\.scenePhase) private var scenePhase
     @ObservedObject private var store: FruitfolioHormoneMeasurementStore
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
@@ -27,10 +28,17 @@ struct FruitfolioHormoneInformationView: View {
     @State private var measurementSavedThisVisit = false
     @State private var exportDocument = FruitfolioHormoneExportDocument(data: Data())
 
+    private var ownerIsActive: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active
+    }
+    private var canInteractWithMeasurements: Bool {
+        ownerIsActive && popupCoordinator.currentPopup == nil && editing == nil && !showingLibrary && !showExport
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                BackControl(action: onBack)
+                BackControl(action: { guard canInteractWithMeasurements else { return }; onBack() })
                 HStack {
                     FruitfolioFixedText(source: "hormone information ♡", protectedLiterals: ["♡"], font: .title2, serious: true).fontWeight(.bold)
                         .accessibilityIdentifier("measurements.heading")
@@ -40,13 +48,14 @@ struct FruitfolioHormoneInformationView: View {
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }
-                WatercolorSecondaryButton(label: "explore the hormone library") { showingLibrary = true }
+                WatercolorSecondaryButton(label: "explore the hormone library") { guard canInteractWithMeasurements else { return }; showingLibrary = true }
                     .accessibilityIdentifier("measurements.openLibrary")
                 FruitfolioFixedText(source: "my measurements", font: .headline, serious: true).accessibilityAddTraits(.isHeader)
                 if let reason = store.storageProtectionReason {
                     FruitfolioTranslatedText(source: reason.localizedDescription,
                         font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
                     WatercolorSecondaryButton(label: "reload saved measurements") {
+                        guard canInteractWithMeasurements else { return }
                         measurementSavedThisVisit = false
                         store.reloadSavedMeasurements()
                         errorMessage = store.storageProtectionReason?.localizedDescription
@@ -57,6 +66,7 @@ struct FruitfolioHormoneInformationView: View {
                     FruitfolioFixedText(source: "have hormone results you’d like to keep track of? add them whenever you’re ready.", serious: true)
                 }
                 WatercolorPrimaryButton(label: "Add Measurement") {
+                        guard canInteractWithMeasurements else { return }
                     let record = FruitfolioHormoneMeasurement()
                     editingIntent = .create(record.id)
                     editing = record
@@ -101,6 +111,7 @@ struct FruitfolioHormoneInformationView: View {
                         }
                         if !measurement.notes.isEmpty { Text(verbatim: measurement.notes) }
                         WatercolorSecondaryButton(label: "edit measurement") {
+                        guard canInteractWithMeasurements else { return }
                             editingIntent = .edit(measurement)
                             editing = measurement
                         }
@@ -121,6 +132,7 @@ struct FruitfolioHormoneInformationView: View {
                         font: .custom("Chalkboard SE", size: 13, relativeTo: .footnote), serious: true)
                 }
                 WatercolorSecondaryButton(label: "export my measurements") {
+                        guard canInteractWithMeasurements else { return }
                     do {
                         exportDocument = FruitfolioHormoneExportDocument(data: try store.exportJSON())
                         showExport = true
@@ -191,7 +203,7 @@ struct FruitfolioHormoneInformationView: View {
     }
 
     private func requestDeletion(_ scope: FruitfolioMeasurementDeletionIntent.Scope) {
-        guard viewIsVisible, let owner = popupOwner else { return }
+        guard canInteractWithMeasurements, let owner = popupOwner else { return }
         let intent = FruitfolioMeasurementDeletionIntent(scope: scope, savedRevision: store.savedRecordRevision)
         let all = scope == .all
         switch scope {
@@ -204,11 +216,11 @@ struct FruitfolioHormoneInformationView: View {
                 message: all ? "delete all saved hormone measurements from this device? this cannot be undone. other saved Fruitfolio data will be kept."
                     : "delete this saved hormone measurement from this device? this cannot be undone.",
                 primaryAction: .init(label: "keep measurements") {
-                    guard viewIsVisible else { return }
+                    guard ownerIsActive else { return }
                     _ = owner.consumeAction(for: id)
                 },
                 secondaryAction: .init(label: all ? "delete all measurements" : "delete measurement") {
-                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    guard ownerIsActive, owner.consumeAction(for: id) else { return }
                     do {
                         try intent.perform(in: store)
                         errorMessage = nil

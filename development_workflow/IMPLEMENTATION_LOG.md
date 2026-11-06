@@ -2466,3 +2466,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_UI": "NOT_RUN; no new launch vectors", "Foundation": "unchanged, not rerun; prior793/815 XCTest and21 SwiftTesting each"}.
 - Next action: Continue measurement accessible interaction ownership: guard root navigation/editor/export/reload and deletion actions against inactive/background/covered presentation; preserve drafts and exact persisted measurements.
 - Commit: containing commit for batch Hormone-original-decorative-art-touch-exclusion.
+
+## Measurement-root-active-presentation-ownership
+
+- Parent checkpoint: bea8c0eae542b9064aaf4b7d2ea8c661f4db9f18.
+- Source-order requirements: [261, 265, 476, 477, 478].
+- Source files: Fruitfolio/Hormone Information/HormoneInformationView.swift.
+- Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_UI": "NOT_RUN; no new launch vectors", "Foundation": "unchanged, not rerun; prior793/815 XCTest and21 SwiftTesting each"}.
+- Next action: Inspect non-diagnostic measurement and educational-context output paths for unsupported classification or automatic sharing; implement next independent gap without inventing clinical interpretations.
+- Commit: containing commit for batch Measurement-root-active-presentation-ownership.

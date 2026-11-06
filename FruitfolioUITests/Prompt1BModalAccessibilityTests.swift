@@ -2090,6 +2090,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "measurements.heading").firstMatch.waitForExistence(timeout: 5))
             XCTAssertEqual(app.staticTexts["measurementQA.persistedCount"].label, "persisted measurement count: 1")
             XCTAssertEqual(app.staticTexts["measurementQA.writeAttempts"].label, "write attempts: 0")
+            // Dismissing a native presentation must restore the root action owner.
+            let reopen = app.buttons["measurements.openLibrary"]
+            XCTAssertTrue(reopen.waitForExistence(timeout: 5))
+            if !reopen.isHittable { app.swipeDown() }
+            XCTAssertTrue(reopen.isHittable); reopen.tap()
+            XCTAssertTrue(app.otherElements["hormoneLibrary.article.estradiol"].waitForExistence(timeout: 10))
             captureGame(app, name: "hormone-library-fixed-copy-source-fallback-\(language)")
             app.terminate()
         }
