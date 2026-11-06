@@ -38,12 +38,64 @@ actor Prompt14CycleOnboardingStore {
         )
     }
 
+    // Serializes the draft across suspension points, including cycle-store calls.
+    // This protects one file; cross-file completion remains resumable, not atomic.
+    private var operationActive = false
+    private var operationWaiters: [CheckedContinuation<Void, Never>] = []
+
+    private func acquireOperation() async {
+        if !operationActive { operationActive = true; return }
+        await withCheckedContinuation { operationWaiters.append($0) }
+    }
+
+    private func releaseOperation() {
+        if operationWaiters.isEmpty { operationActive = false }
+        else { operationWaiters.removeFirst().resume() }
+    }
+
+    private func withDraftOperation<T: Sendable>(
+        persistChanges: Bool = true,
+        _ body: (isolated Prompt14CycleOnboardingStore) async throws -> T
+    ) async throws -> T {
+        await acquireOperation()
+        defer { releaseOperation() }
+        try Task.checkCancellation()
+        // Explicit erase may remove an unsupported current file without decoding
+        // it. The file actor still checks the exact baseline before removal.
+        if persistChanges { try await loadIfNeeded() }
+        let baseline = draft
+        do {
+            let result = try await body(self)
+            if persistChanges {
+                try Task.checkCancellation()
+                if draft != baseline { try await persistence.save(draft) }
+            }
+            return result
+        } catch {
+            draft = baseline
+            isLoaded = false
+            throw error
+        }
+    }
+
     func snapshot() async throws -> Prompt14OnboardingDraft {
+        return try await withDraftOperation { store in
+            try await store.snapshotUnlocked()
+        }
+    }
+
+    private func snapshotUnlocked() async throws -> Prompt14OnboardingDraft {
         try await loadIfNeeded()
         return draft
     }
 
     func replaceDraft(_ newDraft: Prompt14OnboardingDraft) async throws {
+        return try await withDraftOperation { store in
+            try await store.replaceDraftUnlocked(newDraft)
+        }
+    }
+
+    private func replaceDraftUnlocked(_ newDraft: Prompt14OnboardingDraft) async throws {
         try await loadIfNeeded()
         let wasCommitted = draft.didCommitCycleStarts
         draft = newDraft
@@ -52,28 +104,46 @@ actor Prompt14CycleOnboardingStore {
             try await reconcileCommittedCycleStarts(referenceDate: draft.allSuppliedCycleStarts.last)
             draft.didCommitCycleStarts = true
         }
-        try await persistence.save(draft)
+        // The enclosing operation commits the complete candidate once.
     }
 
     func update(_ mutate: @Sendable (inout Prompt14OnboardingDraft) -> Void) async throws -> Prompt14OnboardingDraft {
+        return try await withDraftOperation { store in
+            try await store.updateUnlocked(mutate)
+        }
+    }
+
+    private func updateUnlocked(_ mutate: @Sendable (inout Prompt14OnboardingDraft) -> Void) async throws -> Prompt14OnboardingDraft {
         try await loadIfNeeded()
         mutate(&draft)
         draft.markUpdated()
-        try await persistence.save(draft)
+        // The enclosing operation commits the complete candidate once.
         return draft
     }
 
     func markStarted(now: Date = Date()) async throws -> Prompt14OnboardingDraft {
+        return try await withDraftOperation { store in
+            try await store.markStartedUnlocked(now: now)
+        }
+    }
+
+    private func markStartedUnlocked(now: Date = Date()) async throws -> Prompt14OnboardingDraft {
         try await loadIfNeeded()
         if draft.startedAt == nil { draft.startedAt = now }
         draft.markUpdated(at: now)
-        try await persistence.save(draft)
+        // The enclosing operation commits the complete candidate once.
         return draft
     }
 
     /// Commits only user-supplied period starts into Prompt 13.
     /// Existing active starts on the same date are reused so resume/retry cannot create duplicates.
     func complete(now: Date = Date(), calendar: Calendar = .autoupdatingCurrent) async throws -> Prompt14OnboardingDraft {
+        return try await withDraftOperation { store in
+            try await store.completeUnlocked(now: now, calendar: calendar)
+        }
+    }
+
+    private func completeUnlocked(now: Date = Date(), calendar: Calendar = .autoupdatingCurrent) async throws -> Prompt14OnboardingDraft {
         try await loadIfNeeded()
 
         let today = try Prompt13LocalDate(now, calendar: calendar)
@@ -89,11 +159,21 @@ actor Prompt14CycleOnboardingStore {
         draft.step = .complete
         draft.completedAt = draft.completedAt ?? now
         draft.markUpdated(at: now)
-        try await persistence.save(draft)
+        // The enclosing operation commits the complete candidate once.
         return draft
     }
 
     func endCurrentPeriod(
+        on endDate: Prompt13LocalDate,
+        today: Prompt13LocalDate,
+        now: Date = Date()
+    ) async throws -> Prompt14OnboardingDraft {
+        return try await withDraftOperation { store in
+            try await store.endCurrentPeriodUnlocked(on: endDate, today: today, now: now)
+        }
+    }
+
+    private func endCurrentPeriodUnlocked(
         on endDate: Prompt13LocalDate,
         today: Prompt13LocalDate,
         now: Date = Date()
@@ -122,7 +202,7 @@ actor Prompt14CycleOnboardingStore {
         draft.periodEndState = .supplied
         draft.periodEnd = endDate
         draft.markUpdated(at: now)
-        try await persistence.save(draft)
+        // The enclosing operation commits the complete candidate once.
         return draft
     }
 
@@ -167,9 +247,15 @@ actor Prompt14CycleOnboardingStore {
     }
 
     func eraseOnboardingOnly() async throws {
+        return try await withDraftOperation(persistChanges: false) { store in
+            try await store.eraseOnboardingOnlyUnlocked()
+        }
+    }
+
+    private func eraseOnboardingOnlyUnlocked() async throws {
+        try await persistence.erase()
         draft = Prompt14OnboardingDraft()
         isLoaded = true
-        try await persistence.erase()
     }
 
     private func loadIfNeeded() async throws {

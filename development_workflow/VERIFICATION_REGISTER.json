@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T08:05:58.963583+00:00",
+  "updated_at": "2026-11-06T08:09:38.504201+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -2203,6 +2203,28 @@
         "Apple/MADLAD": "Apple UI/device/official T5 output NOT_RUN or resource blocked"
       },
       "timestamp": "2026-11-06T08:05:58.963583+00:00"
+    },
+    {
+      "batch": "Onboarding-actor-serialized-save-erase-and-reload",
+      "commands": [
+        "Full635-test portable suite+21SwiftTesting",
+        "Full641-test native CPU suite+21SwiftTesting",
+        "40workflow tests",
+        "286Swift syntax parses",
+        "Xcode project references (not build)",
+        "6tests against git-show parent onboarding source in isolated package",
+        "git diff --check"
+      ],
+      "results": {
+        "portable": "635 XCTest+21SwiftTesting passed",
+        "native": "641 XCTest+21SwiftTesting passed",
+        "workflow": "40passed",
+        "syntax": "286files parsed,0errors;noAppletypecheck",
+        "project": "References resolved,notbuilt",
+        "before": "6tests,5failures,0unexpected;after6pass",
+        "external": "Apple UI/device,officialMADLAD output notverified"
+      },
+      "timestamp": "2026-11-06T08:09:38.504201+00:00"
     }
   ]
 }

@@ -1630,3 +1630,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable": "629 XCTest+21 SwiftTesting passed", "native": "635 XCTest+21 SwiftTesting passed", "workflow": "40 passed", "syntax": "284 files parsed,0errors; no Apple typecheck", "project": "Build-file references resolved,notbuilt", "before": "6tests7failures(1unexpected missing-file assertion error),after6pass", "Apple/MADLAD": "Apple UI/device/official T5 output NOT_RUN or resource blocked"}.
 - Next action: Protect Prompt14 onboarding actor state with serialized operations and rollback/reload on failed saves or erases. Keep actual cross-file cycle-start import recovery explicit: a committed cycle file cannot be physically rolled back by an onboarding acknowledgment failure. Add actual-file faults/concurrency/retry tests, then continue independent checklist requirements.
 - Commit: containing commit for batch Cycle-actor-serialized-commit-and-failure-recovery.
+
+## Onboarding-actor-serialized-save-erase-and-reload
+
+- Parent checkpoint: e02adc992b8e55cb5ff5096574e0ea859339d55e.
+- Source-order requirements: [443, 444, 461, 467, 474, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Cycle Onboarding/Prompt14CycleOnboardingStore.swift.
+- Seven existing onboarding actor entry points now serialize suspended file/cycle operations. Changed drafts commit at one outer boundary. Failure discards candidate cache state and requires backend reload; explicit erase clears cache only after successful removal and can erase an unsupported current file without lossy decoding. Six real-file tests cover failed save/erase, acknowledgment loss,25concurrent date updates, unsupported erase and unchanged-draft completion retry preserving actual cycle record IDs. Parent-source rerun reproduced5failures across6tests; all now pass. Cross-file completion and arbitrary edits after partial completion remain explicitly unclaimed and are the next task.
+- Tests added/updated: FruitfolioTests/Prompt1BOnboardingTransactionTests.swift.
+- Verification: {"portable": "635 XCTest+21SwiftTesting passed", "native": "641 XCTest+21SwiftTesting passed", "workflow": "40passed", "syntax": "286files parsed,0errors;noAppletypecheck", "project": "References resolved,notbuilt", "before": "6tests,5failures,0unexpected;after6pass", "external": "Apple UI/device,officialMADLAD output notverified"}.
+- Next action: Implement one archive transaction for a complete onboarding date import/reconciliation so validation or file failure cannot partially import/delete period records. Replace Prompt14 per-date cycle-store calls with that API and add actual-file failure/provenance/counting tests. Then implement durable cross-file intent recovery and ordered editor saves without claiming cross-file atomicity.
+- Commit: containing commit for batch Onboarding-actor-serialized-save-erase-and-reload.

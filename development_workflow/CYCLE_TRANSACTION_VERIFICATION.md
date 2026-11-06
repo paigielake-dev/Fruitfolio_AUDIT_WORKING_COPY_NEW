@@ -27,3 +27,20 @@ This is serialization within one store actor, not cross-process atomic compare a
 swap or a transaction across the onboarding and cycle files. Onboarding's separate
 failure/reconciliation workflow remains a subsequent task. Apple application build,
 UI behavior, device data protection and clinical acceptance are NOT_RUN on Linux.
+
+## Onboarding draft boundary
+
+Prompt14 now queues its seven existing public operations across file and cycle
+actor awaits. Changed drafts save once at the outer boundary. Failed operations
+discard candidate cache state and reload the actual saved draft on the next call.
+Explicit onboarding-only erase clears the cache only after backend acknowledgment;
+it can remove a current unsupported file without a lossy decode. The lower-level
+file baseline guard still rejects stale erasure. A lost save acknowledgment reloads
+what was physically committed rather than pretending that it was undone.
+
+Six additional actual-file tests cover failed update/erase, acknowledgment loss,
+25 concurrent date updates, unsupported-file erasure, and completion retry after
+cycle records committed but onboarding save failed. Retrying that unchanged draft
+reuses the same actual cycle record IDs. It does not prove arbitrary draft edits
+after partial cross-file completion are reconciled, or that multiple period imports
+form one archive transaction. Those recovery/import improvements remain next.
