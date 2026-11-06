@@ -16,3 +16,11 @@ Use the existing isolated checkout; do not create a worktree or rebuild the app.
 ### Canonical sound source checker
 
 `Tools/normalize_control_sound_ownership.swift` compiles against the actual toolchain host SwiftSyntax/SwiftParser libraries, outside the iOS target. Set `FRUITFOLIO_SWIFTC=/path/to/swiftc` when running workflow tests to execute its six regression cases. Use a writable module cache (for example `/tmp/fruitfolio-swift-module-cache`); do not retry writes to the read-only home cache. The source check is not iOS audio playback evidence. See CONTROL_SOUND_OWNERSHIP_VERIFICATION.md.
+
+## Mandatory per-batch checklist evidence
+
+For every completed batch, record the source-order requirement IDs, concrete implementation evidence, executed results, tests written but not run, and remaining requirement-wide verification. Use `python3 Tools/record_prompt1b_batch.py --batch <manifest.json>` from this checkout. The manifest must include `verification.executed` (object), `verification.not_run` (list), and `verification.remaining` (list), in addition to the batch/source/test/result/next-action fields used in the implementation log.
+
+The recorder places this information in each targeted master entry's `latest_batch_verification` and `remaining_verification_requirements`, the checkpoint, verification register and unique run log. These are batch-scoped results, not certification of the whole original requirement. Apple tests that are only written must remain explicitly NOT_RUN. Passing Linux contracts must not automatically promote an item to complete. Preserve all existing requirement text, numbering and order; reconcile stale statuses only with individual source/test evidence.
+
+Validate/test the implementation first, record the batch, review its Git diff, then commit locally and create a new uniquely named recovery bundle after the working tree is clean. Existing run logs are not overwritten. If execution interrupts between structured-file writes, inspect and reconcile that uncommitted diff against the manifest and Git checkpoint before resuming; the recorder does not claim a multi-file filesystem transaction. `current_HEAD` and the dirty-file list in a committed checkpoint describe its pre-commit state; current Git HEAD/status and the verified bundle are authoritative.

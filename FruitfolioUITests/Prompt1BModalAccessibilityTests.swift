@@ -194,6 +194,41 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testSeriousBasketRevealRetainsActualBestWithoutCelebrationOrCheer() {
+        for serious in [false, true] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", serious ? "success-serious" : "success",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference", "-fruitfolioAudioDiagnostics",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion", "-fruitfolioAudioMuted"] }
+            app.launch()
+            let heading = app.descendants(matching: .any).matching(identifier: "fruitBasket.result.heading").firstMatch
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(heading.label, serious ? "round complete" : "your basket reveal! ♡")
+            XCTAssertEqual(app.staticTexts["gameQA.actualPersonalBest"].label, "actual personal best: true")
+            let summary = app.descendants(matching: .any).matching(identifier: "fruitBasket.result.basketSummary").firstMatch
+            XCTAssertEqual(summary.label, "completed basket. personal best.")
+            XCTAssertEqual((summary.value as? String ?? "").compactMap(\.wholeNumberValue), [1, 0, 1, 0])
+            let art = app.staticTexts["gameQA.celebrationArtActive"]
+            let expectedArt = "celebration art active: \(!serious)"
+            let visible = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expectedArt), object: art)
+            XCTAssertEqual(XCTWaiter.wait(for: [visible], timeout: 3), .completed)
+            let cheer = "gentle cheer requests: \(serious ? 0 : 1)"
+            XCTAssertEqual(app.staticTexts["audioQA.cheerRequests"].label, cheer)
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(heading.waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["audioQA.cheerRequests"].label, cheer)
+            XCTAssertEqual(app.staticTexts["gameQA.actualPersonalBest"].label, "actual personal best: true")
+            captureGame(app, name: "reveal-serious-\(serious)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testProtectedGameRecoveryReloadAndBackgroundPreserveOriginalBytesAndOwner() {
         for scenario in ["protected-progress-top", "protected-progress-null"] {
         for language in ["en", "ar"] {

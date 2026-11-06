@@ -60,6 +60,7 @@ struct Prompt28GameRegressionHarness: View {
     @State private var configured = false
     @State private var backRequests = 0
     @State private var modalActive = false
+    @State private var celebrationArtActive = false
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     private var model: Prompt28FruitBasketViewModel { fixture.model }
@@ -76,10 +77,13 @@ struct Prompt28GameRegressionHarness: View {
             .onPreferenceChange(Prompt28GameOverlayVisibilityKey.self) { visible in
                 modalActive = visible
             }
+            .onPreferenceChange(Prompt28CelebrationArtVisibilityKey.self) { active in celebrationArtActive = active }
             .overlay(alignment: .bottomLeading) {
                 if !modalActive {
                     VStack(alignment: .leading) {
                         Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
+                        Text("celebration art active: \(celebrationArtActive)")
+                            .accessibilityIdentifier("gameQA.celebrationArtActive")
                         if let original = fixture.protectedOriginal {
                             Prompt28ProtectedGameBlobReadback(store: model.store, defaults: fixture.defaults,
                                 expected: original, token: fixture.recoveryToken)
@@ -132,7 +136,7 @@ struct Prompt28GameRegressionHarness: View {
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
             catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
-            seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious", "good-serious"].contains(scenario) ? true : nil)
+            seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious", "good-serious", "success-serious"].contains(scenario) ? true : nil)
         let isStorm = ["storm", "storm-serious"].contains(scenario)
         let isReset = ["reset-paused", "reset-result"].contains(scenario)
         if isReset {
@@ -156,8 +160,8 @@ struct Prompt28GameRegressionHarness: View {
         if scenario == "star" {
             model.classificationFruit = nil
             model.classificationStarAvailable = true
-        } else if ["success", "failure", "failure-serious"].contains(scenario) {
-            let count = scenario == "success" ? model.engine.rules.goodFruitTarget : 7
+        } else if ["success", "success-serious", "failure", "failure-serious"].contains(scenario) {
+            let count = ["success", "success-serious"].contains(scenario) ? model.engine.rules.goodFruitTarget : 7
             for _ in 0..<count { catchFruit(.pear, classification: .good) }
             if scenario == "failure" || scenario == "failure-serious" { catchFruit(.lemon, classification: .bad) }
             model.sceneBecameInactive() // Deterministically completes the real queued result.
@@ -204,6 +208,8 @@ private struct Prompt28GameDiagnosticReadback: View {
                 .accessibilityIdentifier("gameQA.tourCompleted")
             Text("game screen: \(String(describing: model.screen))")
                 .accessibilityIdentifier("gameQA.screen")
+            Text("actual personal best: \(model.didSetPersonalBestThisRound)")
+                .accessibilityIdentifier("gameQA.actualPersonalBest")
             Text("raw basket count: \(model.basketCount)")
                 .accessibilityIdentifier("gameQA.rawBasketCount")
             Text("raw session score: \(model.score)")
@@ -254,6 +260,12 @@ struct Prompt28GameProgressReadback: View {
                 .accessibilityIdentifier("gameQA.conservedTotals")
         }.font(.caption2).allowsHitTesting(false)
     }
+}
+
+/// Emitted by the actual conditional confetti branch, not a fixture guess.
+nonisolated struct Prompt28CelebrationArtVisibilityKey: PreferenceKey {
+    static let defaultValue = false
+    static func reduce(value: inout Bool, nextValue: () -> Bool) { value = value || nextValue() }
 }
 
 /// Read actual logical overlay visibility rather than infer it from game state.

@@ -66,6 +66,7 @@ struct Prompt28FruitBasketView: View {
     @AccessibilityFocusState private var pauseHeadingFocused: Bool
     @State private var gameplayHeaderContentHeight: CGFloat = 100
     @State private var pauseMenuVisible = false
+    @State private var lastCheeredRoundID: UUID?
     @State private var levelResetSession: Prompt28LevelResetSession?
     @State private var returnLevelResetFocus = false
     @AccessibilityFocusState private var levelResetControlFocused: Bool
@@ -1758,17 +1759,27 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var basketReveal: some View {
-        ScrollView {
+        let serious = viewModel.currentQuestion?.usesSeriousFeedback == true
+        let celebrateBest = viewModel.didSetPersonalBestThisRound && !serious
+        let basketLabel = viewModel.roundResult == nil ? "Round result unavailable."
+            : (viewModel.didSetPersonalBestThisRound ? "completed basket. personal best." : "completed basket.")
+        let basketValue = viewModel.roundResult.map {
+            Prompt28GameStatisticFormatting.fraction($0.caughtFruit.count, target: $0.targetFruit, language: settings.language)
+        } ?? ""
+        return ScrollView {
             VStack(spacing: 14) {
                 topBar
 
                 ZStack {
-                    if viewModel.didSetPersonalBestThisRound {
+                    if celebrateBest {
                         Prompt28WatercolorConfettiBurst(
                             reduceMotion: motionPreferences.reduceMotionActive
                         )
                         .frame(width: 270, height: 190)
                         .accessibilityHidden(true)
+                        #if DEBUG
+                        .preference(key: Prompt28CelebrationArtVisibilityKey.self, value: true)
+                        #endif
 
                         FruitfolioImage(id: .fruitbasket_star_balloons)
                             .frame(width: 150, height: 170)
@@ -1797,40 +1808,39 @@ struct Prompt28FruitBasketView: View {
                 .frame(maxWidth: 300)
                 .frame(height: 210)
                 .overlay(alignment: .top) {
-                    if viewModel.didSetPersonalBestThisRound {
+                    if celebrateBest {
                         FruitfolioImage(id: .fruitbasket_crown)
                             .frame(width: 50, height: 46)
                             .padding(.top, 2)
-                            .accessibilityLabel("Personal best crown")
+                            .accessibilityHidden(true)
                             .onAppear {
                                 Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_crown)
                             }
                     }
                 }
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(
-                    viewModel.roundResult.map { "Basket. \($0.caughtFruit.count) of \($0.targetFruit). Round complete." + (viewModel.didSetPersonalBestThisRound ? " Personal best." : "") }
-                        ?? "Round result unavailable."
-                )
+                .modifier(Prompt28TranslatedAccessibilityLabel(source: basketLabel))
+                .accessibilityValue(Text(basketValue))
+                .accessibilityIdentifier("fruitBasket.result.basketSummary")
 
                 Prompt28PaperPanel {
                     VStack(
                         alignment: .leading,
                         spacing: 11
                     ) {
-                        Text(viewModel.currentQuestion?.usesSeriousFeedback == true ? "round complete" : "your basket reveal! ♡")
-                        .prompt28Text(.screenTitle)
+                        FruitfolioTranslatedContent(source: serious ? "round complete" : "your basket reveal! ♡") { display, _ in
+                            FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.screenTitle.font, serious: serious)
+                                .accessibilityAddTraits(.isHeader)
+                                .accessibilityIdentifier("fruitBasket.result.heading")
+                        }
 
                         if let result = viewModel.roundResult { roundStatistics(result) }
 
                         if let question =
                             viewModel.currentQuestion {
 
-                            Text(
-                                "library explanation"
-                            )
-                            .prompt28Text(.secondary)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
+                            FruitfolioTranslatedText(source: "library explanation", font: Prompt28TextRole.secondary.font,
+                                color: DesignTokens.ColorToken.primaryBurgundy.opacity(0.72), serious: true)
 
                             FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true, sourceRecords: question.sourceRecords ?? [])
                                 .prompt28Text(.body)
@@ -1884,6 +1894,9 @@ struct Prompt28FruitBasketView: View {
             .padding(.bottom, 30)
         }
         .onAppear {
+            guard !serious, let roundID = viewModel.roundResult?.roundID,
+                  lastCheeredRoundID != roundID else { return }
+            lastCheeredRoundID = roundID
             audioManager.play(.gentleCheer)
         }
     }
