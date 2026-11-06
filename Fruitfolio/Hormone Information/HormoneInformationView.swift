@@ -3,14 +3,24 @@ import UniformTypeIdentifiers
 
 struct FruitfolioHormoneInformationView: View {
     let onBack: () -> Void
-    @ObservedObject private var store = FruitfolioHormoneMeasurementStore.shared
+    @ObservedObject private var store: FruitfolioHormoneMeasurementStore
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var viewIsVisible = false
+    @State private var returnDeletionFocus: DeletionFocus?
+    @AccessibilityFocusState private var deletionFocus: DeletionFocus?
+    private enum DeletionFocus: Hashable { case delete(UUID), eraseAll, add, reload }
+    @State private var popupInstanceID = UUID()
+
+    init(onBack: @escaping () -> Void, store: FruitfolioHormoneMeasurementStore = .shared) {
+        self.onBack = onBack
+        self.store = store
+    }
     @State private var showingLibrary = false
     @State private var filter: FruitfolioMeasuredHormone?
     @State private var editing: FruitfolioHormoneMeasurement?
-    @State private var deleting: FruitfolioHormoneMeasurement?
     @State private var errorMessage: String?
     @State private var showExport = false
-    @State private var confirmErase = false
     @State private var measurementSavedThisVisit = false
     @State private var exportDocument = FruitfolioHormoneExportDocument(data: Data())
 
@@ -35,6 +45,7 @@ struct FruitfolioHormoneInformationView: View {
                         store.reloadSavedMeasurements()
                     }
                         .accessibilityIdentifier("measurements.reloadSavedRecord")
+                    .accessibilityFocused($deletionFocus, equals: .reload)
                 } else if store.records.isEmpty {
                     Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                 }
@@ -42,6 +53,8 @@ struct FruitfolioHormoneInformationView: View {
                     editing = FruitfolioHormoneMeasurement()
                 }
                 .disabled(store.storageProtectionReason != nil)
+                .accessibilityIdentifier("measurements.add")
+                .accessibilityFocused($deletionFocus, equals: .add)
                 Picker("filter by hormone", selection: $filter) {
                     Text("all hormones").tag(Optional<FruitfolioMeasuredHormone>.none)
                     ForEach(FruitfolioMeasuredHormone.allCases) { hormone in
@@ -65,9 +78,12 @@ struct FruitfolioHormoneInformationView: View {
                         }
                         if !measurement.notes.isEmpty { Text(verbatim: measurement.notes) }
                         WatercolorSecondaryButton(label: "edit measurement") { editing = measurement }
+                            .accessibilityIdentifier("measurements.edit." + measurement.id.uuidString)
                             .disabled(store.storageProtectionReason != nil)
-                        WatercolorSecondaryButton(label: "delete measurement") { deleting = measurement }
+                        WatercolorSecondaryButton(label: "delete measurement") { requestDeletion(.one(measurement.id)) }
                             .disabled(store.storageProtectionReason != nil)
+                            .accessibilityIdentifier("measurements.delete." + measurement.id.uuidString)
+                            .accessibilityFocused($deletionFocus, equals: .delete(measurement.id))
                     }
                     .padding(16)
                     .background(DesignTokens.ColorToken.softWhite, in: RoundedRectangle(cornerRadius: 16))
@@ -84,8 +100,10 @@ struct FruitfolioHormoneInformationView: View {
                     } catch { errorMessage = error.localizedDescription }
                 }
                 .disabled(store.storageProtectionReason != nil || store.records.isEmpty)
-                WatercolorSecondaryButton(label: "delete all measurements") { confirmErase = true }
+                WatercolorSecondaryButton(label: "delete all measurements") { requestDeletion(.all) }
                 .disabled(store.records.isEmpty && !store.storageUnreadable)
+                .accessibilityIdentifier("measurements.eraseAll")
+                .accessibilityFocused($deletionFocus, equals: .eraseAll)
                 if let errorMessage {
                     FruitfolioTranslatedText(source: errorMessage,
                         font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
@@ -104,35 +122,71 @@ struct FruitfolioHormoneInformationView: View {
             }
         }
         .sheet(item: $editing) { record in
+            FruitfolioPresentedPopupHost {
             FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
                 try store.save(updated)
                 measurementSavedThisVisit = true
                 editing = nil
+            }
             }
         }
         .fileExporter(isPresented: $showExport, document: exportDocument, contentType: .json,
                       defaultFilename: "Fruitfolio-My-Measurements") { result in
             if case .failure(let error) = result { errorMessage = error.localizedDescription }
         }
-        .confirmationDialog(confirmErase ? "delete all hormone measurements from this device?" : "delete this measurement?",
-                            isPresented: Binding(get: { confirmErase || deleting != nil },
-                                                 set: { if !$0 { confirmErase = false; deleting = nil } })) {
-            if confirmErase {
-                Button("delete all measurements", role: .destructive) {
-                    do { try store.eraseAllMeasurements(); measurementSavedThisVisit = false } catch { errorMessage = error.localizedDescription }
-                    confirmErase = false
-                }
-            } else {
-                Button("delete measurement", role: .destructive) {
-                    guard let record = deleting else { return }
-                    do { try store.delete(id: record.id) } catch { errorMessage = error.localizedDescription }
-                    deleting = nil
-                }
-            }
-            Button("cancel", role: .cancel) { confirmErase = false; deleting = nil }
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
         }
-        .accessibilityIdentifier("hormoneInformation.history")
+        .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            returnDeletionFocus = nil
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil,
+                  popupCoordinator.currentPopup == nil, let requestedFocus = returnDeletionFocus else { return }
+            returnDeletionFocus = nil
+            if store.storageProtectionReason != nil { deletionFocus = .reload }
+            else if case .delete(let id) = requestedFocus, !store.records.contains(where: { $0.id == id }) { deletionFocus = .add }
+            else { deletionFocus = requestedFocus }
+        }
     }
+
+    private func requestDeletion(_ scope: FruitfolioMeasurementDeletionIntent.Scope) {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        let intent = FruitfolioMeasurementDeletionIntent(scope: scope, savedRevision: store.savedRecordRevision)
+        let all = scope == .all
+        switch scope {
+        case .one(let id): returnDeletionFocus = .delete(id)
+        case .all: returnDeletionFocus = .eraseAll
+        }
+        deletionFocus = nil
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: all ? "delete all saved hormone measurements from this device? this cannot be undone. other saved Fruitfolio data will be kept."
+                    : "delete this saved hormone measurement from this device? this cannot be undone.",
+                primaryAction: .init(label: "keep measurements") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: all ? "delete all measurements" : "delete measurement") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    do {
+                        try intent.perform(in: store)
+                        measurementSavedThisVisit = false
+                        returnDeletionFocus = .add
+                    } catch {
+                        errorMessage = error.localizedDescription
+                        returnDeletionFocus = store.storageProtectionReason == nil ? .add : .reload
+                    }
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "measurement-deletion", deduplicationKey: "measurement-deletion-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
 }
 
 private struct FruitfolioHormoneMeasurementEditor: View {
@@ -142,7 +196,15 @@ private struct FruitfolioHormoneMeasurementEditor: View {
     @State private var draft: FruitfolioHormoneMeasurement
     @State private var cycleDayText: String
     @State private var errorMessage: String?
-    @State private var confirmDiscard = false
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var popupOwner: FruitfolioOwnedPopupSession?
+    @State private var viewIsVisible = false
+    @State private var discardAfterDismissal = false
+    @State private var returnCancelFocus = false
+    @AccessibilityFocusState private var cancelFocused: Bool
+    @State private var popupInstanceID = UUID()
+    @FocusState private var editorFocus: EditorField?
+    private enum EditorField: Hashable { case otherName, result, unit, sample, cycleDay, reference, notes }
 
     init(original: FruitfolioHormoneMeasurement, captureInitialTestDay: Bool = false, onCancel: @escaping () -> Void,
          onSave: @escaping (FruitfolioHormoneMeasurement) throws -> Void) {
@@ -162,10 +224,14 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 Picker("hormone", selection: $draft.hormone) {
                     ForEach(FruitfolioMeasuredHormone.allCases) { Text(LocalizedStringKey($0.label)).tag($0) }
                 }
-                if draft.hormone == .other { TextField("other hormone name", text: $draft.otherHormoneName) }
+                if draft.hormone == .other {
+                    TextField("other hormone name", text: $draft.otherHormoneName).focused($editorFocus, equals: .otherName)
+                }
                 TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
+                    .accessibilityIdentifier("measurements.editor.result")
+                    .focused($editorFocus, equals: .result)
                     .onChange(of: draft.result) { _, _ in draft.resultLocaleIdentifier = Locale.current.identifier }
-                TextField("unit, exactly as reported", text: $draft.unit)
+                TextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
                 if let shownDate = draft.dateForDisplay() {
                     DatePicker("test date", selection: Binding(
                         get: { draft.dateForDisplay() ?? shownDate },
@@ -186,10 +252,13 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
-                TextField("sample type (optional)", text: $draft.sampleType)
+                TextField("sample type (optional)", text: $draft.sampleType).focused($editorFocus, equals: .sample)
                 TextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
-                TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange)
+                    .focused($editorFocus, equals: .cycleDay)
+                TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange).focused($editorFocus, equals: .reference)
                 TextField("notes (optional)", text: $draft.notes, axis: .vertical)
+                    .accessibilityIdentifier("measurements.editor.notes")
+                    .focused($editorFocus, equals: .notes)
                 if let errorMessage {
                     FruitfolioTranslatedText(source: errorMessage,
                         font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
@@ -205,20 +274,63 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     } catch { errorMessage = error.localizedDescription }
                 }
                 WatercolorSecondaryButton(label: "cancel") {
-                    if hasChanges { confirmDiscard = true } else { onCancel() }
+                    if hasChanges { requestDiscard() } else { onCancel() }
                 }
+                .accessibilityIdentifier("measurements.editor.cancel")
+                .accessibilityFocused($cancelFocused)
             }
             .padding(20)
             .textFieldStyle(.roundedBorder)
         }
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .background(DesignTokens.ColorToken.backgroundCream.ignoresSafeArea())
+        .accessibilityIdentifier("measurements.editor.scroll")
         .interactiveDismissDisabled(hasChanges)
-        .confirmationDialog("discard unsaved measurement changes?", isPresented: $confirmDiscard) {
-            Button("discard changes", role: .destructive, action: onCancel)
-            Button("keep editing", role: .cancel) {}
+        .onAppear {
+            viewIsVisible = true
+            if popupOwner == nil { popupOwner = FruitfolioOwnedPopupSession(coordinator: popupCoordinator) }
+        }
+        .onDisappear {
+            viewIsVisible = false
+            popupOwner?.cancel()
+            discardAfterDismissal = false
+            returnCancelFocus = false
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            popupOwner?.observeDismissal()
+            guard viewIsVisible, popupOwner?.requestID == nil, popupCoordinator.currentPopup == nil else { return }
+            if discardAfterDismissal {
+                discardAfterDismissal = false
+                onCancel()
+            } else if returnCancelFocus {
+                returnCancelFocus = false
+                cancelFocused = true
+            }
         }
     }
+
+    private func requestDiscard() {
+        guard viewIsVisible, let owner = popupOwner else { return }
+        returnCancelFocus = true
+        editorFocus = nil
+        cancelFocused = false
+        owner.present { id in
+            FruitPopupRequest(id: id, character: .blueberry,
+                message: "discard unsaved measurement changes? the saved measurement will be kept unchanged.",
+                primaryAction: .init(label: "keep editing") {
+                    guard viewIsVisible else { return }
+                    _ = owner.consumeAction(for: id)
+                },
+                secondaryAction: .init(label: "discard changes") {
+                    guard viewIsVisible, owner.consumeAction(for: id) else { return }
+                    // Finish the actual shared dismissal before closing its native sheet.
+                    discardAfterDismissal = true
+                }, dismissBehavior: .explicitActionOnly, tone: .cautionary, priority: .sensitive,
+                source: "measurement-editor-discard", deduplicationKey: "measurement-discard-" + popupInstanceID.uuidString,
+                surface: .tapedWhite)
+        }
+    }
+
 }
 
 private struct FruitfolioHormoneExportDocument: FileDocument {

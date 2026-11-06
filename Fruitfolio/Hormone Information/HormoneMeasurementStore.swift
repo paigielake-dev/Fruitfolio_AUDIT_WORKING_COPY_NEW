@@ -29,6 +29,7 @@ final class FruitfolioHormoneMeasurementStore {
         storageUnreadable = persistence.storageUnreadable
         storageProtectionReason = persistence.protectionReason
     }
+    var savedRecordRevision: UUID { persistence.revision }
     func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
         persistence.history(hormone: hormone)
     }

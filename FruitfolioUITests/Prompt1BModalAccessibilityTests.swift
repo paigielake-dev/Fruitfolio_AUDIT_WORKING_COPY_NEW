@@ -198,6 +198,97 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testMeasurementDeletionUsesOneSharedPaperWithCancelAndConfirmedDelete() {
+        let id = "CF310000-0000-0000-0000-000000000001"
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioMeasurementsQA", "-UIPreferredContentSizeCategoryName",
+                "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioMeasurementsReduceMotion"] }
+            app.launch()
+            let delete = app.buttons["measurements.delete." + id]
+            XCTAssertTrue(delete.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if delete.isHittable { break }; app.swipeUp() }
+            delete.tap()
+            let paper = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(paper.waitForExistence(timeout: 5))
+            XCTAssertFalse(delete.exists)
+            let keep = app.buttons["fruitPopup.paper.action.primary"]
+            for _ in 0..<12 { if keep.isHittable { break }; paper.swipeUp() }
+            XCTAssertTrue(keep.isHittable)
+            XCTAssertGreaterThanOrEqual(keep.frame.height, 44)
+            captureGame(app, name: "measurement-delete-cancel-large-text-reduced-\(reduced)")
+            keep.tap()
+            XCTAssertTrue(delete.waitForExistence(timeout: 5))
+            for _ in 0..<16 { if delete.isHittable { break }; app.swipeUp() }
+            delete.tap()
+            XCTAssertTrue(paper.waitForExistence(timeout: 5))
+            let confirm = app.buttons["fruitPopup.paper.action.secondary"]
+            for _ in 0..<16 { if confirm.isHittable { break }; paper.swipeUp() }
+            XCTAssertTrue(confirm.isHittable)
+            confirm.tap()
+            XCTAssertTrue(app.buttons["measurements.add"].waitForExistence(timeout: 5))
+            XCTAssertFalse(delete.exists)
+            app.terminate()
+        }
+    }
+
+    func testMeasurementEditorNativeSheetHostsDirtyDraftPaperWithoutSavingDiscardedText() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion"]
+        app.launch()
+        let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+        edit.tap()
+        let editor = app.scrollViews["measurements.editor.scroll"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let notes = app.descendants(matching: .any).matching(identifier: "measurements.editor.notes").firstMatch
+        for _ in 0..<16 { if notes.isHittable { break }; editor.swipeUp() }
+        XCTAssertTrue(notes.isHittable)
+        notes.tap()
+        notes.typeText(" QA unsaved change")
+        let cancel = app.buttons["measurements.editor.cancel"]
+        for _ in 0..<16 { if cancel.isHittable { break }; editor.swipeUp() }
+        cancel.tap()
+        let paper = app.scrollViews["tapedWhitePopup.scroll"]
+        XCTAssertTrue(paper.waitForExistence(timeout: 5))
+        XCTAssertFalse(cancel.exists)
+        let keep = app.buttons["fruitPopup.paper.action.primary"]
+        for _ in 0..<12 { if keep.isHittable { break }; paper.swipeUp() }
+        keep.tap()
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+        XCTAssertTrue((notes.value as? String)?.contains("QA unsaved change") == true)
+        for _ in 0..<16 { if cancel.isHittable { break }; editor.swipeUp() }
+        cancel.tap()
+        XCTAssertTrue(paper.waitForExistence(timeout: 5))
+        let discard = app.buttons["fruitPopup.paper.action.secondary"]
+        for _ in 0..<16 { if discard.isHittable { break }; paper.swipeUp() }
+        captureGame(app, name: "measurement-editor-native-sheet-discard-paper")
+        discard.tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["QA original note"].exists)
+        XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "QA unsaved change")).firstMatch.exists)
+        app.terminate()
+    }
+
+    func testMeasurementFutureRecordNoticeKeepsExactReadableValue() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsFutureRecord", "-fruitfolioMeasurementsReduceMotion"]
+        app.launch()
+        let reload = app.buttons["measurements.reloadSavedRecord"]
+        XCTAssertTrue(reload.waitForExistence(timeout: 5))
+        for _ in 0..<12 { if reload.isHittable { break }; app.swipeUp() }
+        reload.tap()
+        XCTAssertTrue(reload.exists)
+        XCTAssertFalse(app.buttons["measurements.add"].isEnabled)
+        let value = app.staticTexts["12.50 pg/mL"]
+        for _ in 0..<16 { if value.exists { break }; app.swipeUp() }
+        XCTAssertTrue(value.exists)
+        captureGame(app, name: "measurement-protected-original-value")
+        app.terminate()
+    }
+
     func testUnsupportedSavedLibraryKeepsReadableBooksAndMeasuredReloadAvailable() {
         for reduced in [false, true] {
             let app = XCUIApplication()

@@ -12,6 +12,7 @@ fileprivate extension EnvironmentValues {
 
 struct FruitPopupHost<Content: View>: View {
     @Environment(\.fruitfolioPopupHostPresent) private var hasAncestorHost
+    @AccessibilityFocusState private var paperMessageFocus: UUID?
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject
     private var popupCoordinator: PopupCoordinator
@@ -78,6 +79,7 @@ struct FruitPopupHost<Content: View>: View {
         .onChange(
             of: popupCoordinator.currentPopup?.id
         ) { oldID, newID in
+            paperMessageFocus = nil
             guard
                 newID != nil,
                 newID != oldID,
@@ -158,9 +160,18 @@ struct FruitPopupHost<Content: View>: View {
     private func tapedWhitePopup(_ request: FruitPopupRequest, available: CGSize) -> some View {
         FruitfolioTapedWhitePopup {
             VStack(spacing: 12) {
-                FruitfolioTranslatedText(source: request.message,
-                    font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true)
-                    .textSelection(.enabled)
+                FruitfolioTranslatedContent(source: request.message) { display, _ in
+                    FruitfolioSemanticText(markdown: display,
+                        baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true)
+                        .textSelection(.enabled)
+                        .accessibilityFocused($paperMessageFocus, equals: request.id)
+                }
+                .task(id: request.id) {
+                    await Task.yield()
+                    guard !Task.isCancelled, popupCoordinator.currentPopup?.id == request.id,
+                          popupCoordinator.presentationState != .dismissing else { return }
+                    paperMessageFocus = request.id
+                }
                 if let action = request.primaryAction { paperAction(action, primary: true) }
                 if let action = request.secondaryAction { paperAction(action, primary: false) }
             }
@@ -178,12 +189,9 @@ struct FruitPopupHost<Content: View>: View {
     }
 
     private func paperAction(_ action: FruitPopupAction, primary: Bool) -> some View {
-        Button(settings.localized(action.label)) {
-            audioManager.play(.buttonSoftPop)
+        FruitfolioControlPillButton(label: settings.localized(action.label)) {
             action.handler()
         }
-        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
-        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
         .accessibilityLabel(settings.localized(action.accessibilityLabel ?? action.label))
         .accessibilityIdentifier(primary ? "fruitPopup.paper.action.primary" : "fruitPopup.paper.action.secondary")
     }

@@ -17,6 +17,8 @@ SOURCES = [
     "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
     "Fruitfolio/Fruit Popup Engine/FruitPopupModels.swift",
     "Fruitfolio/Core/AppArchitecture/PopupCoordinator.swift",
+    "Fruitfolio/Core/AppArchitecture/FruitfolioOwnedPopupSession.swift",
+    "Fruitfolio/Hormone Information/HormoneMeasurementDeletionIntent.swift",
     "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
     "Fruitfolio/Privacy Settings/FruitfolioOwnershipVerification.swift",
     "Fruitfolio/Core/Translation/FruitfolioCitationProtection.swift",
@@ -125,6 +127,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BOwnedConfirmationTests.swift',
     'Prompt1BHormoneMeasurementTests.swift',
     'Prompt1BHormoneSnapshotProtectionTests.swift',
     'Prompt10SavedLibraryTests.swift',

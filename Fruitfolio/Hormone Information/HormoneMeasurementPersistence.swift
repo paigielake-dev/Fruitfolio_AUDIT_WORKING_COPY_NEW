@@ -6,6 +6,7 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     private(set) var storageUnreadable = false
     private(set) var protectionReason: FruitfolioHormoneMeasurementError?
     private var expectedPersistedObject: NSObject?
+    private(set) var revision = UUID()
     private let defaults: UserDefaults
     private let key: String
 
@@ -17,6 +18,7 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
 
     /// Read only. Never repair an unsupported/corrupt saved record by writing it.
     func reload() {
+        revision = UUID()
         records = []
         storageUnreadable = false
         protectionReason = nil
@@ -80,6 +82,7 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         try requireCurrentSnapshot()
         defaults.removeObject(forKey: key)
         expectedPersistedObject = nil
+        revision = UUID()
         records = []
         storageUnreadable = false
         protectionReason = nil
@@ -103,5 +106,6 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         defaults.set(data, forKey: key)
         records = updated
         expectedPersistedObject = data as NSData
+        revision = UUID()
     }
 }
