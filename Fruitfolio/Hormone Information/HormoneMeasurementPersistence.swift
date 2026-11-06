@@ -82,6 +82,9 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
 
     func delete(id: UUID) throws {
         try requireWritable()
+        // A repeated deletion must not write unchanged data or invalidate an
+        // unrelated editor's acknowledged revision. Check protection first.
+        guard records.contains(where: { $0.id == id }) else { return }
         try persist(records.filter { $0.id != id })
     }
 

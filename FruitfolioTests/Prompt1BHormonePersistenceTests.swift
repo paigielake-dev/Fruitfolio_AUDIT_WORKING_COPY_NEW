@@ -30,6 +30,34 @@ private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
 }
 
 final class Prompt1BHormonePersistenceTests: XCTestCase {
+    func testDeletingMissingIDDoesNotWriteOrInvalidateAcknowledgedRevision() throws {
+        let suite = "FruitfolioMissingMeasurementDelete." + UUID().uuidString
+        let defaults = try XCTUnwrap(HormoneFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementPersistence(defaults: defaults, key: "measurements")
+        let emptyRevision = store.revision
+        try store.delete(id: UUID())
+        XCTAssertEqual(defaults.writes, 0)
+        XCTAssertNil(defaults.object(forKey: "measurements"))
+        XCTAssertEqual(store.revision, emptyRevision)
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12.50"; record.unit = "ng/mL"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let bytes = defaults.data(forKey: "measurements")
+        let revision = store.revision
+        let writes = defaults.writes
+        try store.delete(id: UUID())
+        XCTAssertEqual(defaults.writes, writes)
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(store.revision, revision)
+        XCTAssertEqual(store.records.map(\.id), [record.id])
+        // A no-op still must detect a foreign snapshot and never hide protection.
+        defaults.set("foreign replacement", forKey: "measurements")
+        XCTAssertThrowsError(try store.delete(id: UUID()))
+        XCTAssertEqual(defaults.string(forKey: "measurements"), "foreign replacement")
+        XCTAssertEqual(store.revision, revision)
+    }
+
     private func withStore(_ operation: (UserDefaults, FruitfolioHormoneMeasurementPersistence) throws -> Void) throws {
         let suite = "FruitfolioHormonePersistenceTests." + UUID().uuidString
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

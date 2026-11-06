@@ -2499,3 +2499,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_consent_test": "extended, NOT_RUN", "Foundation": "unchanged, prior full suites not rerun"}.
 - Next action: Continue remaining measurement deletion and separation requirements in source order, then next independent context adaptation requirements; do not invent adjusted curve clinical methods.
 - Commit: containing commit for batch Ask-context-picker-active-consent-ownership.
+
+## Measurement-missing-ID-delete-preserves-acknowledged-revision
+
+- Parent checkpoint: d7079bc8574a5c9f37a9c0ce5f8afaa78d351275.
+- Source-order requirements: [265, 476, 477, 478].
+- Source files: Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift.
+- Missing-ID deletion now returns without any write or revision advance after checking current/writable storage. Actual counting UserDefaults regression proves nil and existing snapshots remain byte/revision-identical, while foreign storage still blocks and is preserved. Prior11-test focused run had7 failed assertions in new case; full fixed suites pass. Existing-record deletion readback path unchanged.
+- Tests added/updated: FruitfolioTests/Prompt1BHormonePersistenceTests.swift.
+- Verification: {"portable_XCTest": 794, "native_CPU_XCTest": 816, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "official_MADLAD": "BLOCKED; syntheticT5 is not official model", "Apple": "NOT_RUN"}.
+- Next action: Measurement separation remains implemented pending Apple acceptance;267–280 require missing clinically reviewed adjustment method (BLOCKERS.md), do not fabricate curves. Continue next independent original281 context adaptation UI/localization, preserving no-diagnosis/no-confidence-boost policy and previous logs.
+- Commit: containing commit for batch Measurement-missing-ID-delete-preserves-acknowledged-revision.

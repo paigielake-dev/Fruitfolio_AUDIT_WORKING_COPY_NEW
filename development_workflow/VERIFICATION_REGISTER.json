@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T20:59:27.972382+00:00",
+  "updated_at": "2026-11-06T21:03:03.250325+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -4703,6 +4703,45 @@
         ]
       },
       "timestamp": "2026-11-06T20:59:27.972382+00:00"
+    },
+    {
+      "batch": "Measurement-missing-ID-delete-preserves-acknowledged-revision",
+      "commands": [
+        "Pre-fix focused11 XCTest:7 failed assertions",
+        "Full portable and native CPU suites",
+        "60 workflow checks",
+        "311 Swift file syntax parse",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 794,
+        "native_CPU_XCTest": 816,
+        "SwiftTesting_each": 21,
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "official_MADLAD": "BLOCKED; syntheticT5 is not official model",
+        "Apple": "NOT_RUN"
+      },
+      "verification": {
+        "executed": {
+          "portable_XCTest": "794 passed",
+          "native_CPU_XCTest": "816 passed; syntheticT5/independent real Qwen tests, not official MADLAD",
+          "SwiftTesting": "21 passed each run",
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "prior_reproduction": "11 cases, seven failed assertions in new case; SHA receipt preserved"
+        },
+        "not_run": [
+          "Apple SDK build/UI/real-device deletion and physical cold-process durability",
+          "Official MADLAD inference/clinical language acceptance"
+        ],
+        "remaining": [
+          "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+          "Verify actual cold-process durability separately from immediate UserDefaults readback",
+          "Complete whole original requirement acceptance; no clinical/official-model certification implied"
+        ]
+      },
+      "timestamp": "2026-11-06T21:03:03.250325+00:00"
     }
   ]
 }

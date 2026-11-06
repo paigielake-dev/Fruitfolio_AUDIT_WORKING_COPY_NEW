@@ -13909,7 +13909,7 @@
         "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Measurement-root-active-presentation-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Measurement-missing-ID-delete-preserves-acknowledged-revision (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
@@ -13918,31 +13918,35 @@
         "The actual measurement persistence/store now protect the captured saved baseline against later changes/clears before saves, individual deletes, exports and destructive erasure. Unknown fields detected by the shared typed-round-trip field guard keep known readable values available without permitting a lossy rewrite/export. An explicit reload reads the latest baseline without writing. Corrupt/wrong-type/duplicate-ID originals retain read-only protection. Explicit confirmed erase may remove its unchanged unreadable/unsupported baseline, but never a newer baseline. Store refresh occurs on errors as well as success, so the UI sees protection reasons instead of silently retaining an enabled state. The actual store retains real Combine observation on Apple and is now Foundation-executable without observation stubs.\n\nMeasurement UI displays a shared-style inline translated notice/reload action and pauses edit/delete/add/export for unsupported snapshots while keeping exact recorded values, units, notes and dates visible. The existing delete-all confirmation catches a protected erase failure. The specified insufficient-adjustment saved-message now appears only after a successful current-visit save, not merely because an old record exists; explicit reload/erase clears that claim. No adjusted curve, new clinical interpretation or prediction-confidence change is introduced.\n\nExisting actual-store CRUD/unit/locale/corruption tests now execute on Linux alongside existing persistence tests. New actual-store regressions prove stale save/delete/export/erase rejection, unchanged original bytes/old state, read-only reload, unknown assay-field preservation, exact de_DE result string/\u00b5IU/mL/day/notes retention and explicit baseline erasure. A fixture helper initially omitted try for the real throwing civil-date initializer; the compiler caught it and the corrected tests use the actual constructor. No date bypass is used.\n\nThe two existing native confirmation dialogs in measurement deletion/editor discard remain a concrete Part1 source gap; replace them next with owned measured white-paper requests and local sheet host. Current Apple publisher, view/notice/saved-message behavior, accessibility, screenshots and device tests remain NOT_RUN.",
         "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS.",
         "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
-        "Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged."
+        "Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged.",
+        "Missing-ID deletion now returns without any write or revision advance after checking current/writable storage. Actual counting UserDefaults regression proves nil and existing snapshots remain byte/revision-identical, while foreign storage still blocks and is preserved. Prior11-test focused run had7 failed assertions in new case; full fixed suites pass. Existing-record deletion readback path unchanged."
       ],
-      "last_updated": "2026-11-06T20:57:16.029705+00:00",
+      "last_updated": "2026-11-06T21:03:03.250325+00:00",
       "latest_batch_verification": {
-        "batch": "Measurement-root-active-presentation-ownership",
+        "batch": "Measurement-missing-ID-delete-preserves-acknowledged-revision",
         "executed": {
-          "workflow": "60 passed after production edit",
-          "syntax": "311 Swift files parsed after production and UI edit",
-          "diff": "git diff --check clean"
+          "portable_XCTest": "794 passed",
+          "native_CPU_XCTest": "816 passed; syntheticT5/independent real Qwen tests, not official MADLAD",
+          "SwiftTesting": "21 passed each run",
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "prior_reproduction": "11 cases, seven failed assertions in new case; SHA receipt preserved"
         },
         "not_run": [
-          "Existing22 measurement/56 Guide planned Apple launches including extended dismissal/reopen checks",
-          "Apple SDK build, background/foreground and covered presentation callback ordering, VoiceOver and device behavior"
+          "Apple SDK build/UI/real-device deletion and physical cold-process durability",
+          "Official MADLAD inference/clinical language acceptance"
         ],
         "remaining": [
-          "Execute actual repeated native sheet presentation and active/background/covered action rejection on Apple",
-          "Verify frozen deletion intent and exact storage preservation under real UI callbacks",
-          "Whole requirement accessibility/device/clinical acceptance remains incomplete; source guards and syntax do not establish runtime behavior"
+          "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+          "Verify actual cold-process durability separately from immediate UserDefaults readback",
+          "Complete whole original requirement acceptance; no clinical/official-model certification implied"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual repeated native sheet presentation and active/background/covered action rejection on Apple",
-        "Verify frozen deletion intent and exact storage preservation under real UI callbacks",
-        "Whole requirement accessibility/device/clinical acceptance remains incomplete; source guards and syntax do not establish runtime behavior"
+        "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+        "Verify actual cold-process durability separately from immediate UserDefaults readback",
+        "Complete whole original requirement acceptance; no clinical/official-model certification implied"
       ]
     },
     {
@@ -26848,7 +26852,7 @@
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Ask-context-picker-active-consent-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Measurement-missing-ID-delete-preserves-acknowledged-revision (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26934,31 +26938,35 @@
         "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.",
         "Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged.",
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
-        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution."
+        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.",
+        "Missing-ID deletion now returns without any write or revision advance after checking current/writable storage. Actual counting UserDefaults regression proves nil and existing snapshots remain byte/revision-identical, while foreign storage still blocks and is preserved. Prior11-test focused run had7 failed assertions in new case; full fixed suites pass. Existing-record deletion readback path unchanged."
       ],
-      "last_updated": "2026-11-06T20:59:27.972382+00:00",
+      "last_updated": "2026-11-06T21:03:03.250325+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-context-picker-active-consent-ownership",
+        "batch": "Measurement-missing-ID-delete-preserves-acknowledged-revision",
         "executed": {
+          "portable_XCTest": "794 passed",
+          "native_CPU_XCTest": "816 passed; syntheticT5/independent real Qwen tests, not official MADLAD",
+          "SwiftTesting": "21 passed each run",
           "workflow": "60 passed",
-          "syntax": "311 Swift files parsed, including extended UI regression",
-          "diff": "git diff --check clean"
+          "syntax": "311 parsed",
+          "prior_reproduction": "11 cases, seven failed assertions in new case; SHA receipt preserved"
         },
         "not_run": [
-          "Apple SDK build and actual background/reactivation/Attach/Cancel/screen-reader callbacks",
-          "Official MADLAD, native-language consent and clinical translation acceptance"
+          "Apple SDK build/UI/real-device deletion and physical cold-process durability",
+          "Official MADLAD inference/clinical language acceptance"
         ],
         "remaining": [
-          "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-          "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-          "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+          "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+          "Verify actual cold-process durability separately from immediate UserDefaults readback",
+          "Complete whole original requirement acceptance; no clinical/official-model certification implied"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-        "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-        "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+        "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+        "Verify actual cold-process durability separately from immediate UserDefaults readback",
+        "Complete whole original requirement acceptance; no clinical/official-model certification implied"
       ]
     },
     {
@@ -27269,7 +27277,7 @@
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)"
       ],
-      "commit_reference": "batch:Ask-context-picker-active-consent-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Measurement-missing-ID-delete-preserves-acknowledged-revision (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27389,31 +27397,35 @@
         "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.",
         "Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged.",
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
-        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution."
+        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.",
+        "Missing-ID deletion now returns without any write or revision advance after checking current/writable storage. Actual counting UserDefaults regression proves nil and existing snapshots remain byte/revision-identical, while foreign storage still blocks and is preserved. Prior11-test focused run had7 failed assertions in new case; full fixed suites pass. Existing-record deletion readback path unchanged."
       ],
-      "last_updated": "2026-11-06T20:59:27.972382+00:00",
+      "last_updated": "2026-11-06T21:03:03.250325+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-context-picker-active-consent-ownership",
+        "batch": "Measurement-missing-ID-delete-preserves-acknowledged-revision",
         "executed": {
+          "portable_XCTest": "794 passed",
+          "native_CPU_XCTest": "816 passed; syntheticT5/independent real Qwen tests, not official MADLAD",
+          "SwiftTesting": "21 passed each run",
           "workflow": "60 passed",
-          "syntax": "311 Swift files parsed, including extended UI regression",
-          "diff": "git diff --check clean"
+          "syntax": "311 parsed",
+          "prior_reproduction": "11 cases, seven failed assertions in new case; SHA receipt preserved"
         },
         "not_run": [
-          "Apple SDK build and actual background/reactivation/Attach/Cancel/screen-reader callbacks",
-          "Official MADLAD, native-language consent and clinical translation acceptance"
+          "Apple SDK build/UI/real-device deletion and physical cold-process durability",
+          "Official MADLAD inference/clinical language acceptance"
         ],
         "remaining": [
-          "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-          "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-          "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+          "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+          "Verify actual cold-process durability separately from immediate UserDefaults readback",
+          "Complete whole original requirement acceptance; no clinical/official-model certification implied"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-        "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-        "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+        "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+        "Verify actual cold-process durability separately from immediate UserDefaults readback",
+        "Complete whole original requirement acceptance; no clinical/official-model certification implied"
       ]
     },
     {
@@ -27645,9 +27657,10 @@
         "development_workflow/tests/test_recovery_bundle_no_clobber.py",
         "development_workflow/tests/test_batch_recorder.py",
         "FruitfolioTests/Prompt1BHormoneLibraryTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN)",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Ask-context-picker-active-consent-ownership (resolve containing commit with git log)",
+      "commit_reference": "batch:Measurement-missing-ID-delete-preserves-acknowledged-revision (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -27713,31 +27726,35 @@
         "Guard displayed article by selected hormone before task startup, scope async completion/error/retry to immutable request, reject wrong-hormone loader results, and expose an active-owner retry. Production default remains canonical approved provider; DEBUG fixture injects first I/O failure then calls actual provider. Scientific excerpts/citations unchanged. Apple checks written, not executed.",
         "Root measurement Back/library/reload/create/edit/export actions require visible active UIApplication/scene and no covering popup/editor/library/export. Deletion requests use same gate; existing frozen-intent confirmation additionally requires active owner. Existing two language library tests now reopen after dismissal; no new launches. Persistent data and existing editor intents unchanged.",
         "Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.",
-        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution."
+        "Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.",
+        "Missing-ID deletion now returns without any write or revision advance after checking current/writable storage. Actual counting UserDefaults regression proves nil and existing snapshots remain byte/revision-identical, while foreign storage still blocks and is preserved. Prior11-test focused run had7 failed assertions in new case; full fixed suites pass. Existing-record deletion readback path unchanged."
       ],
-      "last_updated": "2026-11-06T20:59:27.972382+00:00",
+      "last_updated": "2026-11-06T21:03:03.250325+00:00",
       "latest_batch_verification": {
-        "batch": "Ask-context-picker-active-consent-ownership",
+        "batch": "Measurement-missing-ID-delete-preserves-acknowledged-revision",
         "executed": {
+          "portable_XCTest": "794 passed",
+          "native_CPU_XCTest": "816 passed; syntheticT5/independent real Qwen tests, not official MADLAD",
+          "SwiftTesting": "21 passed each run",
           "workflow": "60 passed",
-          "syntax": "311 Swift files parsed, including extended UI regression",
-          "diff": "git diff --check clean"
+          "syntax": "311 parsed",
+          "prior_reproduction": "11 cases, seven failed assertions in new case; SHA receipt preserved"
         },
         "not_run": [
-          "Apple SDK build and actual background/reactivation/Attach/Cancel/screen-reader callbacks",
-          "Official MADLAD, native-language consent and clinical translation acceptance"
+          "Apple SDK build/UI/real-device deletion and physical cold-process durability",
+          "Official MADLAD inference/clinical language acceptance"
         ],
         "remaining": [
-          "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-          "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-          "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+          "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+          "Verify actual cold-process durability separately from immediate UserDefaults readback",
+          "Complete whole original requirement acceptance; no clinical/official-model certification implied"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
-        "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
-        "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+        "Execute confirmed deletion/cancel/retry with real Apple UI and persistent storage",
+        "Verify actual cold-process durability separately from immediate UserDefaults readback",
+        "Complete whole original requirement acceptance; no clinical/official-model certification implied"
       ]
     }
   ]
