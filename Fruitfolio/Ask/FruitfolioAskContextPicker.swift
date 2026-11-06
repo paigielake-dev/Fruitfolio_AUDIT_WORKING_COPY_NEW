@@ -22,39 +22,43 @@ struct FruitfolioAskContextPicker: View {
     var body: some View {
         FruitfolioTapedWhitePopup {
             VStack(alignment: .leading, spacing: 14) {
-                Text("context for my next question").font(.headline).accessibilityAddTraits(.isHeader)
-                Text("nothing is shared by default. choose local records, attach them, then press Send. this is user-provided context, not verified research or a diagnosis. it is used for one question only and is not added to the question text or sources.")
-                Text("My Measurements").font(.headline)
-                if measurements.storageUnreadable { Text("measurements are unavailable; their original data has been preserved.") }
-                else if measurements.records.isEmpty { Text("no measurements recorded.") }
+                FruitfolioFixedText(source: "context for my next question", serious: true).font(.headline).accessibilityAddTraits(.isHeader)
+                FruitfolioTranslatedText(source: "nothing is shared by default. choose local records, attach them, then press Send. this is user-provided context, not verified research or a diagnosis. it is used for one question only and is not added to the question text or sources.", serious: true)
+                FruitfolioFixedText(source: "My Measurements", serious: true).font(.headline)
+                if measurements.storageUnreadable { FruitfolioFixedText(source: "measurements are unavailable; their original data has been preserved.", serious: true) }
+                else if measurements.records.isEmpty { FruitfolioFixedText(source: "no measurements recorded.", serious: true) }
                 ForEach(measurements.history()) { record in
                     Toggle(isOn: measurementBinding(record.id)) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(verbatim: record.hormoneName).bold()
+                            Group {
+                                if record.hormone == .other { Text(verbatim: record.otherHormoneName) }
+                                else { FruitfolioFixedText(source: record.hormone.label, protectedLiterals: record.hormone.protectedAbbreviations, serious: true) }
+                            }.fontWeight(.bold)
                             Text(verbatim: record.result + " " + record.unit)
                             if let date = record.dateForDisplay() { Text(date, style: .date) }
-                            else { Text(verbatim: record.reportedTestDay?.description ?? "date unavailable") }
+                            else if let day = record.reportedTestDay?.description { Text(verbatim: day) }
+                            else { FruitfolioFixedText(source: "date unavailable", serious: true) }
                         }
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
-                Text("Personal Health Context").font(.headline)
-                if contextStore.didRecoverCorruptStoredContext { Text("personal context is unavailable; its original data has been preserved.") }
+                FruitfolioFixedText(source: "Personal Health Context", serious: true).font(.headline)
+                if contextStore.didRecoverCorruptStoredContext { FruitfolioFixedText(source: "personal context is unavailable; its original data has been preserved.", serious: true) }
                 ForEach(FruitfolioPersonalHealthCategory.allCases.filter {
                     contextStore.context.personalHealthEntries[$0.rawValue]?.status == .provided
                 }) { category in
                     Toggle(isOn: categoryBinding(category)) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(LocalizedStringKey(category.title)).bold()
+                            FruitfolioFixedText(source: category.title, serious: true).fontWeight(.bold)
                             if let entry = contextStore.context.personalHealthEntries[category.rawValue] {
                                 Text(verbatim: entry.text ?? "").lineLimit(3)
-                                Text(LocalizedStringKey(entry.provenance.label)).font(.caption)
+                                FruitfolioFixedText(source: entry.provenance.label, font: .caption, serious: true)
                             }
                         }
                     }
                     .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                 }
-                if let errorMessage { Text(errorMessage).foregroundStyle(Color.red) }
+                if let errorMessage { FruitfolioFixedText(source: errorMessage, color: .red, serious: true) }
                 WatercolorPrimaryButton(label: "attach selected context") { attach() }
                 WatercolorSecondaryButton(label: "cancel") { onCancel() }
             }

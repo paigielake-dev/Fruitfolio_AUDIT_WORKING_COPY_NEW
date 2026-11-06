@@ -2477,3 +2477,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_UI": "NOT_RUN; no new launch vectors", "Foundation": "unchanged, not rerun; prior793/815 XCTest and21 SwiftTesting each"}.
 - Next action: Inspect non-diagnostic measurement and educational-context output paths for unsupported classification or automatic sharing; implement next independent gap without inventing clinical interpretations.
 - Commit: containing commit for batch Measurement-root-active-presentation-ownership.
+
+## Ask-explicit-context-fixed-copy-localization
+
+- Parent checkpoint: a1bde2e24c9957bbe1d8214058b3605886dfa92e.
+- Source-order requirements: [263, 264, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Ask/FruitfolioAskContextPicker.swift, Fruitfolio/Localizable.xcstrings.
+- Actual context picker fixed headings/status/category/provenance/error copy uses shared compact translation; original consent explanation uses long-form provenance owner. Controlled hormone names protect scientific abbreviations; custom names/results/units/patient text and raw dates remain verbatim. Six English entries added, all864 old entries preserved. Selection/attach logic unchanged; no automatic sharing introduced.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing explicit attach/cancel test; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 870, "prior_entries_preserved": 864, "Apple": "NOT_RUN", "Foundation": "unchanged; full suites not rerun"}.
+- Next action: Guard actual context picker attachment and selection against inactive/dismissed/covered owner; preserve explicit one-question selection and patient values. Add relevant regression assertions and record remaining Apple execution requirements.
+- Commit: containing commit for batch Ask-explicit-context-fixed-copy-localization.
