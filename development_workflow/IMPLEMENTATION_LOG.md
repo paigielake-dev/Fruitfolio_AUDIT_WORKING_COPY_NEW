@@ -2950,3 +2950,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 874, "native_CPU_XCTest": 896, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 25, "pre_fix_failed_assertions": 4, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Guard late question/error delivery when store becomes protected during provider await; acknowledge history write before exposing new question. Add deterministic held-provider regressions for external deletion/protection and rejected history readback; preserve original external bytes and phase ownership, run all supported checks and update evidence.
 - Commit: containing commit for batch Control-mode-acknowledgement-phase-and-owned-clock.
+
+## Question-delivery-after-history-acknowledgement
+
+- Parent checkpoint: 50de8cb0d3383499795fa8a16c7ccc9645ea37c1.
+- Source-order requirements: [326, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift, development_workflow/QUESTION_HISTORY_ACKNOWLEDGEMENT.md.
+- Actual delayed question/error delivery additionally requires writable store. History write now explicitly acknowledged before exposing question/clearing selection. Four deterministic held-provider cases: external deletion/protection before response/error, dropped history write, and accepted response/history surviving reopen without rewrite. Pre-fix7ownership cases6assertions; final878/900XCTest+21SwiftTesting each pass. External deletion stays deleted, no automatic reload/resurrection; fixture nonclinical. Apple Combine/UI/officialmodel notcertified.
+- Tests added/updated: FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift.
+- Verification: {"portable_XCTest": 878, "native_CPU_XCTest": 900, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "pre_fix_XCTest": 7, "pre_fix_failed_assertions": 6, "Apple_Combine_UI": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Verify actual entering good-fruit/star transits survive accepted mode changes and credit exactly once; localize fixed mode-picker heading/help using existing semantic translation helpers while preserving source wording/native selected traits. Extend existing actual-root UI matrix, explicitly NOT_RUN Apple, execute supported checks and record evidence.
+- Commit: containing commit for batch Question-delivery-after-history-acknowledgement.

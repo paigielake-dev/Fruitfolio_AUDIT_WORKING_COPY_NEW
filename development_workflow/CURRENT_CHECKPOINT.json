@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "5db37ffba4e0149c731ac3266b6b96738dbfc6e6",
+  "current_HEAD": "50de8cb0d3383499795fa8a16c7ccc9645ea37c1",
   "latest_verified_commit": null,
   "current_checklist_part": 7,
   "current_requirement": 326,
-  "current_implementation_batch": "Control-mode-acknowledgement-phase-and-owned-clock",
+  "current_implementation_batch": "Question-delivery-after-history-acknowledgement",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,12 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-    "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-    "development_workflow/CONTROL_MODE_ACKNOWLEDGEMENT_AND_CLOCK.md",
+    "FruitfolioTests/Prompt1BFruitBasketQuestionOwnershipTests.swift",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Control-mode-ack-log-receipt.json"
+    "development_workflow/QUESTION_HISTORY_ACKNOWLEDGEMENT.md",
+    "development_workflow/RUN_LOGS/Question-history-ack-log-receipt.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -511,25 +511,25 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Pre-fix25actual persistence cases:4assertions incl2second absent-clock bound",
-    "Full portable/native CPU suites with5newmodelregressions",
+    "Pre-fix7actual held-provider ownership cases:6assertions",
+    "Full portable/native CPU suites with4newactorcontrollerregressions",
     "60workflow checks",
     "311syntax parses",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 874,
-    "native_CPU_XCTest": 896,
+    "portable_XCTest": 878,
+    "native_CPU_XCTest": 900,
     "SwiftTesting_each": 21,
     "workflow_checks": 60,
     "syntax_files": 311,
-    "pre_fix_XCTest": 25,
-    "pre_fix_failed_assertions": 4,
+    "pre_fix_XCTest": 7,
+    "pre_fix_failed_assertions": 6,
     "Apple_Combine_UI": "NOT_RUN",
     "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
   },
-  "next_exact_implementation_action": "Guard late question/error delivery when store becomes protected during provider await; acknowledge history write before exposing new question. Add deterministic held-provider regressions for external deletion/protection and rejected history readback; preserve original external bytes and phase ownership, run all supported checks and update evidence.",
-  "updated_at": "2026-11-06T23:42:43.053470+00:00",
+  "next_exact_implementation_action": "Verify actual entering good-fruit/star transits survive accepted mode changes and credit exactly once; localize fixed mode-picker heading/help using existing semantic translation helpers while preserving source wording/native selected traits. Extend existing actual-root UI matrix, explicitly NOT_RUN Apple, execute supported checks and record evidence.",
+  "updated_at": "2026-11-06T23:47:45.264858+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -539,25 +539,24 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": 874,
-      "native_CPU_XCTest": 896,
+      "portable_XCTest": 878,
+      "native_CPU_XCTest": 900,
       "SwiftTesting_each": 21,
       "workflow_checks": 60,
       "syntax_files": 311,
-      "pre_fix_XCTest": 25,
-      "pre_fix_failed_assertions": 4,
+      "pre_fix_XCTest": 7,
+      "pre_fix_failed_assertions": 6,
       "Apple_Combine_UI": "NOT_RUN",
       "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
     },
     "not_run": [
-      "Apple UIKit/SwiftUI queued taps, Combine publication, picker selection/focus/keyboard and device behavior",
-      "Success-path entering transit conservation across both mode changes is a separate upcoming regression",
+      "Apple Combine/native provider/loading/recovery presentation, background/queued UI and device behavior",
       "Official MADLAD/native-language/device/clinical validation"
     ],
     "remaining": [
-      "Verify actual async question history acknowledgement and read-only delivery after provider await next",
-      "Add success-path entering transit conservation coverage and finish fixed mode-picker copy localization through existing helpers",
-      "Run Apple mode selection/scene/clock/result/accessibility and integrated device checks; whole original requirement acceptance/external model blockers remain open"
+      "Verify accepted mode-change entering transit conservation and fixed mode-picker copy next",
+      "Execute Apple provider history-write failure/external deletion/background and integrated UI checks; Foundation actor tests do not establish UIKit behavior",
+      "Whole original checklist acceptance and official-model/external clinical/device blockers remain open"
     ]
   },
   "current_checklist_section": "Part 7 \u2014 Fruit Basket",

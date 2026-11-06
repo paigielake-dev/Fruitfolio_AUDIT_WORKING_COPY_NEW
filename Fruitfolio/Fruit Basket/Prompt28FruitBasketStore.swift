@@ -97,13 +97,14 @@ final class Prompt28FruitBasketStore {
         return persist(candidate)
     }
 
-    func recordQuestion(_ questionID: String, topic: String) {
-        guard !isReadOnly else { return }
+    @discardableResult
+    func recordQuestion(_ questionID: String, topic: String) -> Bool {
+        guard !isReadOnly else { return false }
         var ids = questionHistory[topic] ?? []
         ids.insert(questionID)
         var candidate = currentState
         candidate.questionHistory[topic] = Array(ids).sorted()
-        persist(candidate)
+        return persist(candidate)
     }
 
     func completeTour() {

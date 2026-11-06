@@ -233,7 +233,7 @@ final class Prompt28FruitBasketViewModel {
         let requestedTopic = rawTopic
         let requestedDifficulty = difficulty
         func isCurrent() -> Bool {
-            !Task.isCancelled && questionGeneration == request && screen == .loading
+            !Task.isCancelled && !store.isReadOnly && questionGeneration == request && screen == .loading
                 && rawTopic == requestedTopic && difficulty == requestedDifficulty
         }
         screen = .loading
@@ -248,9 +248,9 @@ final class Prompt28FruitBasketViewModel {
             )
             guard isCurrent() else { return }
             guard q.isPlayable, q.normalizedTopic == normalized, q.educationalDifficulty == requestedDifficulty else { throw Prompt28ResearchError.invalidQuestion }
+            guard store.recordQuestion(q.id, topic: normalized) else { return }
             currentQuestion = q
             selectedAnswerID = nil
-            store.recordQuestion(q.id, topic: normalized)
             screen = .question
         } catch let error as Prompt28ResearchError {
             guard isCurrent() else { return }
