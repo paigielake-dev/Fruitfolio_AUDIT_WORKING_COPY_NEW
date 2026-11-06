@@ -135,7 +135,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioCitationQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioDataManagementQA") {
+            Prompt12DataManagementRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioCitationQA") {
             FruitfolioCitationRegressionHarness()
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {

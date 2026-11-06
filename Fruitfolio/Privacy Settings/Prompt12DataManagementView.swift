@@ -10,87 +10,31 @@ struct Prompt12DataManagementView: View {
 
     let mode: Prompt12DataManagementMode
     let onBack: () -> Void
+    var onShowMyContext: (() -> Void)? = nil
 
     @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var navigation: NavigationCoordinator
 
-    @State private var message: String?
+    @State private var showingMeasurements = false
     @State private var showLocalDeletionNotice = false
 
     var body: some View {
         content
             .toolbar(.hidden, for: .navigationBar)
+            .sheet(isPresented: $showingMeasurements) {
+                FruitfolioPresentedPopupHost {
+                    FruitfolioHormoneInformationView(onBack: { showingMeasurements = false })
+                }
+            }
     }
 
     private var content: some View {
         Group {
             if mode == .popup {
-                GeometryReader { proxy in
-                    ScrollView {
-                        innerContent
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 24)
-                    }
-                    .scrollIndicators(.hidden)
-                    .frame(
-                        width: min(
-                            350,
-                            max(
-                                280,
-                                proxy.size.width - 32
-                            )
-                        )
-                    )
-                    .frame(
-                        maxHeight: max(
-                            320,
-                            min(
-                                720,
-                                proxy.size.height - 36
-                            )
-                        )
-                    )
-                    .background {
-                        RoundedRectangle(
-                            cornerRadius: 32,
-                            style: .continuous
-                        )
-                        .fill(
-                            DesignTokens
-                                .ColorToken
-                                .backgroundCream
-                                .opacity(0.985)
-                        )
-                        .overlay {
-                            RoundedRectangle(
-                                cornerRadius: 32,
-                                style: .continuous
-                            )
-                            .stroke(
-                                DesignTokens
-                                    .ColorToken
-                                    .primaryBurgundy
-                                    .opacity(0.18),
-                                lineWidth: 1
-                            )
-                        }
-                        .shadow(
-                            color:
-                                Color.black
-                                    .opacity(0.08),
-                            radius: 12,
-                            x: 0,
-                            y: 5
-                        )
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .center
-                    )
-                }
-                .onAppear {
-                    audioManager.play(.popupOpen)
-                }
+                FruitfolioTapedWhitePopup { innerContent.controlSize(.small) }
+                    .accessibilityIdentifier("dataManagement.popup")
+                    .onAppear { audioManager.play(.popupOpen) }
             } else {
                 ZStack {
                     DesignTokens
@@ -115,7 +59,7 @@ struct Prompt12DataManagementView: View {
                 Prompt12RouteHeader(
                     title: "data",
                     subtitle:
-                        "export and manage supported Fruitfolio data",
+                        "manage your saved information",
                     assetName:
                         "ask_source_pages",
                     onBack:
@@ -152,32 +96,6 @@ struct Prompt12DataManagementView: View {
             includedAreasCard
             deletionCard
 
-            if let message {
-                Text(message)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 11
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .fixedSize(
-                        horizontal: false,
-                        vertical: true
-                    )
-                    .frame(
-                        maxWidth: 290,
-                        alignment: .center
-                    )
-            }
-
             if showLocalDeletionNotice {
                 localDeletionNoticeCard
             }
@@ -191,6 +109,7 @@ struct Prompt12DataManagementView: View {
                     )
                     onBack()
                 }
+                .accessibilityIdentifier("dataManagement.close")
             }
         }
         .frame(
@@ -200,20 +119,21 @@ struct Prompt12DataManagementView: View {
     }
 
     private var exportCard: some View {
-        FruitfolioLargeCard {
+        dataSection {
             cardTitle(
-                "export my data"
+                "available exports"
             )
 
             centeredInfoText(
-                "prepare a readable record of supported personal Fruitfolio data. this is separate from exporting a pretty encyclopedia as a PDF."
+                "open Hormone Information to export your measurements as a readable JSON file. choose where to keep the file; it contains the measurements you saved."
             )
 
             FruitfolioControlPillButton(
-                label: "prepare export"
+                label: "open measurement export"
             ) {
-                prepareExport()
+                showingMeasurements = true
             }
+            .accessibilityIdentifier("dataManagement.measurementExport")
             .frame(
                 maxWidth: 260,
                 alignment: .center
@@ -222,9 +142,9 @@ struct Prompt12DataManagementView: View {
     }
 
     private var includedAreasCard: some View {
-        FruitfolioLargeCard {
+        dataSection {
             cardTitle(
-                "included areas"
+                "your saved information"
             )
 
             VStack(
@@ -232,18 +152,17 @@ struct Prompt12DataManagementView: View {
                 spacing: 13
             ) {
                 ForEach(
-                    Prompt12DataScope
-                        .allCases
+                    [Prompt12DataScope.savedLibrary, .guideBuilder, .settings, .cycleTracker]
                 ) { scope in
                     VStack(
                         alignment: .center,
                         spacing: 3
                     ) {
-                        Text(scope.title)
+                        Text(settings.localized(scope.title))
                             .font(
                                 .custom(
                                     "Chalkboard SE",
-                                    size: 11.5
+                                    size: 13, relativeTo: .headline
                                 )
                             )
                             .fontWeight(.bold)
@@ -265,13 +184,8 @@ struct Prompt12DataManagementView: View {
                                 alignment: .center
                             )
 
-                        Text(scope.detail)
-                            .font(
-                                .custom(
-                                    "Chalkboard SE",
-                                    size: 10
-                                )
-                            )
+                        FruitfolioTranslatedText(source: scope.detail,
+                            font: .custom("Chalkboard SE", size: 13, relativeTo: .body), serious: true)
                             .foregroundStyle(
                                 DesignTokens
                                     .ColorToken
@@ -307,7 +221,7 @@ struct Prompt12DataManagementView: View {
     }
 
     private var deletionCard: some View {
-        FruitfolioLargeCard {
+        dataSection {
             HStack(spacing: 6) {
                 Image("popup_warning")
                     .resizable()
@@ -344,7 +258,7 @@ struct Prompt12DataManagementView: View {
             )
 
             centeredInfoText(
-                "destructive actions must explain exactly what disappears. cycle-data erasure must also invalidate dependent calculations, estimates, predictions, and insights so stale derived state is never left behind."
+                "review the saved items in a feature before deleting them. books and their guide organization are managed together; cycle observations and hormone measurements have their own controls."
             )
 
             FruitfolioControlPillButton(
@@ -352,6 +266,7 @@ struct Prompt12DataManagementView: View {
             ) {
                 showLocalDeletionNotice = true
             }
+            .accessibilityIdentifier("dataManagement.reviewDeletion")
             .frame(
                 maxWidth: 260,
                 alignment: .center
@@ -360,15 +275,26 @@ struct Prompt12DataManagementView: View {
     }
 
     private var localDeletionNoticeCard: some View {
-        FruitfolioLargeCard {
+        dataSection {
             cardTitle(
-                "not deleted yet",
+                "choose what to manage",
                 size: 13
             )
 
             centeredInfoText(
-                "this phase defines the safe architecture. it does not erase unrelated domains until their deletion coordinators exist."
+                "open the feature that holds the information you want to review. nothing is deleted by opening these options. Ask conversations stay in their active session; saved answers and selections are managed with your books."
             )
+            WatercolorSecondaryButton(label: "manage saved books") { open(.library) }
+                .accessibilityIdentifier("dataManagement.books")
+            WatercolorSecondaryButton(label: "manage guide organization") { open(.guideBuilder) }
+            WatercolorSecondaryButton(label: "review cycle records") { open(.cycle) }
+            WatercolorSecondaryButton(label: "manage hormone measurements") { showingMeasurements = true }
+            if let onShowMyContext {
+                WatercolorSecondaryButton(label: "review My Context") {
+                    if mode == .popup { audioManager.play(.popupClose) }
+                    onShowMyContext()
+                }
+            }
         }
     }
 
@@ -376,7 +302,7 @@ struct Prompt12DataManagementView: View {
         _ text: String,
         size: CGFloat = 15
     ) -> some View {
-        Text(text)
+        Text(settings.localized(text))
             .font(
                 .custom(
                     "Chalkboard SE",
@@ -404,7 +330,8 @@ struct Prompt12DataManagementView: View {
     private func centeredInfoText(
         _ text: String
     ) -> some View {
-        Prompt12InfoText(text)
+        FruitfolioTranslatedText(source: text, protectedLiterals: ["JSON", "Fruitfolio"],
+            font: .custom("Chalkboard SE", size: 13, relativeTo: .body), serious: true)
             .multilineTextAlignment(.center)
             .lineLimit(nil)
             .fixedSize(
@@ -417,18 +344,18 @@ struct Prompt12DataManagementView: View {
             )
     }
 
-    private func prepareExport() {
-        do {
-            let export =
-                try store.prepareDataExport()
-
-            message =
-                "your data is ready ♡ · \(export.scopes.count) areas included"
-        } catch {
-            message =
-                error.localizedDescription
+    @ViewBuilder
+    private func dataSection<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        if mode == .popup {
+            VStack(spacing: 12) { content() }
+        } else {
+            FruitfolioLargeCard { content() }
         }
     }
+
+    private func open(_ route: FruitfolioRoute) {
+        if mode == .popup { audioManager.play(.popupClose) }
+        onBack()
+        navigation.navigate(to: route)
+    }
 }
-
-

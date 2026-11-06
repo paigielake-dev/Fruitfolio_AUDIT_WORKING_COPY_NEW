@@ -166,6 +166,38 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testDataManagementUsesMeasuredPaperAndTruthfulAvailableActions() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioDataManagementQA", "-UIPreferredContentSizeCategoryName",
+                                    "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioDataReduceMotion"] }
+            app.launch()
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+            XCTAssertFalse(app.buttons["dataQA.background"].exists)
+            let export = app.buttons["dataManagement.measurementExport"]
+            for _ in 0..<12 { if export.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(export.isHittable)
+            XCTAssertGreaterThanOrEqual(export.frame.height, 44)
+            XCTAssertFalse(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "your data is ready")).firstMatch.exists)
+            let review = app.buttons["dataManagement.reviewDeletion"]
+            for _ in 0..<18 { if review.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(review.isHittable)
+            review.tap()
+            let books = app.buttons["dataManagement.books"]
+            for _ in 0..<18 { if books.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(books.isHittable)
+            captureGame(app, name: "data-management-options-reduced-\(reduced)")
+            let close = app.buttons["dataManagement.close"]
+            for _ in 0..<18 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            close.tap()
+            XCTAssertTrue(app.buttons["dataQA.background"].waitForExistence(timeout: 3))
+            app.terminate()
+        }
+    }
+
     func testScrollablePopupIsolatesBackgroundAndRestoresItOnClose() {
         verifyModal(reduceMotion: false)
     }

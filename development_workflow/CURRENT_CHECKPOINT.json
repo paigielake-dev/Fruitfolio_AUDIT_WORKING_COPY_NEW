@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "418c37b72feb12d9e6c0dfc2c800e6ca0a178437",
+  "current_HEAD": "1f218bf7f50441ee728414469228f3d42e8d82c2",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 384,
-  "current_implementation_batch": "Actual-root-and-native-popup-scope-with-owned-citation-dialog",
+  "current_checklist_part": 10,
+  "current_requirement": 389,
+  "current_implementation_batch": "Truthful-data-management-measured-popup-and-actual-account-store-recovery",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,20 +493,24 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/PopupCoordinator.swift",
     "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Core/DesignSystems/FruitfolioCitationRegressionHarness.swift",
-    "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
-    "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
-    "Fruitfolio/Fruit Popup Engine/FruitPopupModels.swift",
     "Fruitfolio/Fruitfolio/ContentView.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-    "FruitfolioTests/Prompt06FruitPopupTests.swift",
+    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
+    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyModels.swift",
+    "Fruitfolio/Privacy Settings/Prompt12AccountPrivacyStore.swift",
+    "Fruitfolio/Privacy Settings/Prompt12DataManagementRegressionHarness.swift",
+    "Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift",
+    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+    "FruitfolioTests/Prompt12AccountPrivacyStoreTests.swift",
+    "FruitfolioTests/Prompt1BAccountRestorationPolicyTests.swift",
+    "FruitfolioTests/Prompt1BOwnershipValidationTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
     "Tools/run_portable_swift_tests.py",
+    "development_workflow/BLOCKERS.md",
+    "development_workflow/DATA_MANAGEMENT_TRUTH_VERIFICATION.md",
+    "development_workflow/IMPLEMENTATION_LOG.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/ROOT_POPUP_SCOPE_VERIFICATION.md"
+    "development_workflow/OWNERSHIP_VERIFICATION.md"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -519,24 +523,30 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Initial full portable suite caught two assertions from leaked queued dedup key",
-    "Final full portable Swift6 suite after actual key-cleanup fix",
-    "Final full actual native-linked Swift5 suite",
+    "Full portable Swift6 suite including actual Foundation account/privacy store and owned tasks",
+    "Full actual native-linked Swift5 suite",
     "29 Python workflow tests",
     "Swift compiler syntax parse",
-    "Xcode project reference validation",
-    "git diff --check"
+    "git diff --check",
+    "Accessible restored-model/LFS path check without network retries"
   ],
   "last_test_results": {
-    "Swift6": "475 XCTest +21 Swift Testing passed after queued dedup cancellation fix",
-    "nativeSwift5": "480 XCTest +21 Swift Testing passed",
+    "Swift6": "489 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "494 XCTest +21 Swift Testing passed",
     "workflow": "29 passed",
-    "syntax": "248 changed Swift files parsed; zero errors",
-    "project": "Build-file references resolve; no Xcode build/link",
-    "Apple": "NOT_RUN observation publisher/UI/sound/focus/native-sheet geometry and actual screenshots",
-    "scope": "Production coordinator decision code executed; conditional Combine observation and SwiftUI host require Apple verification"
+    "syntax": "251 changed Swift files parsed; zero errors",
+    "account": "Actual UserDefaults/async store tests now run on Linux; no fake observation/receipt implementation",
+    "Apple": "NOT_RUN Data popup/compact control rendered layout, actual navigation/export, Combine observers and real StoreKit branch",
+    "open_source": "Combined saved-data/image export remains unimplemented; legacy helper cannot claim readiness",
+    "MADLAD": "No runnable official model recovered in accessible workspace; official download remains blocked, private root cache not retried"
   },
-  "next_exact_implementation_action": "Continue independent UX/source gaps: Data Management currently displays implementation-phase/coordinator language and only a deletion notice. Replace technical placeholder copy with truthful actionable feature-specific management options reusing existing actual deletion flows, without falsely claiming global deletion or export. Preserve privacy/data and native modal scopes; then remaining founder applicability/verification gaps. Do not stop between batches.",
-  "updated_at": "2026-11-06T02:16:25.836315+00:00",
-  "blocker_register": "development_workflow/BLOCKERS.md"
+  "next_exact_implementation_action": "Fix duplicate soft-pop ownership at callers of the canonical control pill (including Contact/Ownership/Account and actual other matching actions); preserve distinct popup-open/close cues. Inspect exact callbacks with AST or targeted source, add actual AudioManager DEBUG invocation/playback evidence UI source without pretending physical playback on Linux. Then harden account persistence against corrupt/future/stale writes and implement actual bounded local combined export rather than leaving a metadata-only placeholder. Official T5/Apple/clinical gates remain unverified.",
+  "updated_at": "2026-11-06T02:47:50.431922+00:00",
+  "blocker_register": "development_workflow/BLOCKERS.md",
+  "open_source_work": [
+    "Remove duplicate canonical button soft-pop calls and validate actual sound request ownership",
+    "Protect account/privacy snapshot against corrupt/future/stale writers across all mutators",
+    "Implement actual combined local saved-data/image export, without metadata-only success",
+    "Reconcile remaining unnumbered founder requirements and full UI/localization/clinical acceptance"
+  ]
 }

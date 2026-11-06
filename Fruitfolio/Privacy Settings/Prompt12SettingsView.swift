@@ -65,6 +65,10 @@ struct Prompt12SettingsView: View {
                     mode: .popup,
                     onBack: {
                         showDataManagement = false
+                    },
+                    onShowMyContext: {
+                        showDataManagement = false
+                        showMyContext = true
                     }
                 )
                 .zIndex(100)

@@ -1,19 +1,48 @@
 import Foundation
+#if canImport(Combine)
 import Combine
+#endif
 
 @MainActor
-final class Prompt12AccountPrivacyStore: ObservableObject {
+final class Prompt12AccountPrivacyStore {
     static let shared = Prompt12AccountPrivacyStore()
 
-    @Published private(set) var ownershipState: Prompt12OwnershipState
-    @Published private(set) var ownershipValidationMessage: String? = nil
-    @Published private(set) var authenticationState: Prompt12AuthenticationState
-    @Published private(set) var syncState: Prompt12SyncState
-    @Published private(set) var account: Prompt12AccountIdentity?
-    @Published private(set) var lastExport: Prompt12DataExportRecord?
-    @Published private(set) var pendingLocalChanges: Bool
-    @Published private(set) var localDataContainerID: UUID
-    @Published var usePrivacyModeOnLockScreen: Bool
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var ownershipState: Prompt12OwnershipState
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var ownershipValidationMessage: String? = nil
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var authenticationState: Prompt12AuthenticationState
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var syncState: Prompt12SyncState
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var account: Prompt12AccountIdentity?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var lastExport: Prompt12DataExportRecord?
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var pendingLocalChanges: Bool
+    #if canImport(Combine)
+    @Published
+    #endif
+    private(set) var localDataContainerID: UUID
+    #if canImport(Combine)
+    @Published
+    #endif
+    var usePrivacyModeOnLockScreen: Bool
 
     private let defaults: UserDefaults
     private let persistenceKey: String
@@ -39,8 +68,9 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
                 from: data
            ) {
             ownershipState = snapshot.ownershipState == .validating ? .validationUnavailable : snapshot.ownershipState
-            authenticationState = snapshot.authenticationState
-            syncState = snapshot.syncState
+            authenticationState = Prompt12SessionRestorationPolicy.authentication(snapshot.authenticationState,
+                                                                                  hasLocalAccount: snapshot.account != nil)
+            syncState = Prompt12SessionRestorationPolicy.sync(snapshot.syncState)
             account = snapshot.account
             lastExport = snapshot.lastExport
             pendingLocalChanges = snapshot.pendingLocalChanges
@@ -206,42 +236,15 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
     }
 
     func prepareDataExport() throws -> Prompt12DataExportRecord {
-        let scopes: [Prompt12DataScope] = [
-            .account,
-            .savedLibrary,
-            .guideBuilder,
-            .settings,
-            .cycleTracker,
-            .askCache
-        ]
-
-        let summary =
-            "Fruitfolio data export prepared from supported local/account domains."
-
-        let export = Prompt12DataExportRecord(
-            scopes: scopes,
-            summary: summary
-        )
-
-        lastExport = export
-        saveSnapshot()
-        return export
+        // A summary/metadata record is not an exported user-data document.
+        // Keep existing historical metadata, but never fabricate a new success.
+        throw Prompt12AccountPrivacyError.consolidatedExportUnavailable
     }
 
     func deleteAccountAndAssociatedRemoteData() throws {
-        guard account != nil else {
-            throw Prompt12AccountPrivacyError.notSignedIn
-        }
-
-        authenticationState = .deletingAccount
-        syncState = .syncing
-        saveSnapshot()
-
-        account = nil
-        authenticationState = .accountDeleted
-        syncState = .localOnly
-        pendingLocalChanges = false
-        saveSnapshot()
+        guard account != nil else { throw Prompt12AccountPrivacyError.notSignedIn }
+        // A local mutation cannot prove an unconfigured remote account was erased.
+        throw Prompt12AccountPrivacyError.remoteDeletionUnavailable
     }
 
     func resetLocalAccountPrivacyStateForTesting() {
@@ -278,6 +281,10 @@ final class Prompt12AccountPrivacyStore: ObservableObject {
         defaults.set(data, forKey: persistenceKey)
     }
 }
+
+#if canImport(Combine)
+extension Prompt12AccountPrivacyStore: ObservableObject {}
+#endif
 
 private struct Prompt12StoreSnapshot: Codable, Equatable, Sendable {
     var ownershipState: Prompt12OwnershipState

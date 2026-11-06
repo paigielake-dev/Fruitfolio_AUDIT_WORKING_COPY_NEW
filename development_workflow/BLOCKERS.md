@@ -27,3 +27,7 @@ The package contains no versioned, clinically reviewed method defining when a se
 ## Legacy civil dates do not identify their original device calendar
 
 Cycle/Daily Log date components are Gregorian civil dates, but older Date-based conversions copied components from the device-selected calendar. New conversion boundaries now preserve Gregorian components and the caller's time zone; calendar UI projection explicitly converts to display keys. Existing valid stored years are never offset or guessed: the old schema contains no calendar identifier that could prove whether a year such as 2569 was originally Buddhist or intentionally entered Gregorian. Historical reconciliation needs explicit original-date evidence/user correction; no silent migration is performed. Impossible dates fail decoding without overwriting the original file. Apple calendar/date-picker runtime acceptance remains unrun.
+
+## Open local implementation: combined data export
+
+The old account helper created only a summary record and no exported document. That false readiness/deletion behavior is removed; the Data screen reaches the real measurement JSON exporter and feature-specific management. A combined saved-data/image archive is not implemented yet. This is remaining source work, not an external permission/backend blocker; do not declare the complete implementation finished on this basis. Remote account deletion separately still needs an actual configured account provider/acknowledgment and never claims success from a local mutation.

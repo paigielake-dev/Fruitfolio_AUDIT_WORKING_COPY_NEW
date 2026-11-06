@@ -1,4 +1,3 @@
-#if canImport(Combine)
 import Foundation
 import XCTest
 @testable import Fruitfolio
@@ -85,4 +84,3 @@ final class Prompt1BOwnershipValidationTests: XCTestCase {
         XCTAssertEqual(defaults.data(forKey: "fruitfolio.prompt12.accountPrivacy.v1"), resetBytes)
     }
 }
-#endif

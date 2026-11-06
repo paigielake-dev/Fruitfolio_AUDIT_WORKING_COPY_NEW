@@ -79,6 +79,27 @@ enum Prompt12SyncState: String, Codable, Equatable, Sendable {
     }
 }
 
+/// Stored UI state is not a verified authenticated session or a current cloud
+/// acknowledgment. Retain the separate local identity and pending-data record.
+nonisolated enum Prompt12SessionRestorationPolicy {
+    static func authentication(_ saved: Prompt12AuthenticationState, hasLocalAccount: Bool) -> Prompt12AuthenticationState {
+        switch saved {
+        case .signedIn, .signingIn, .signingOut, .deletingAccount:
+            return hasLocalAccount ? .sessionExpired : .signedOut
+        case .accountDeleted:
+            return .signedOut
+        default:
+            return saved
+        }
+    }
+    static func sync(_ saved: Prompt12SyncState) -> Prompt12SyncState {
+        switch saved {
+        case .synced, .syncing: return .unavailable
+        default: return saved
+        }
+    }
+}
+
 enum Prompt12DataScope: String, Codable, CaseIterable, Identifiable, Sendable {
     case account
     case savedLibrary
@@ -173,6 +194,8 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
     case serviceNotConfigured
     case notSignedIn
     case exportFailed
+    case consolidatedExportUnavailable
+    case remoteDeletionUnavailable
     case deletionFailed
 
     var errorDescription: String? {
@@ -183,6 +206,10 @@ enum Prompt12AccountPrivacyError: LocalizedError, Equatable {
             return "enter an email before signing in."
         case .notSignedIn:
             return "there isn’t a signed-in account to change."
+        case .consolidatedExportUnavailable:
+            return "a combined export is not available yet. measurements can be exported from Hormone Information."
+        case .remoteDeletionUnavailable:
+            return "account deletion could not be completed because the account service is unavailable. your account record and local information have been preserved."
         case .exportFailed:
             return "we couldn’t prepare your data right now. nothing was deleted."
         case .deletionFailed:

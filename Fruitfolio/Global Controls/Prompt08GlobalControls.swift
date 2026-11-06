@@ -37,6 +37,9 @@ struct FruitfolioControlPillButton: View {
     let label: String
     let action: () -> Void
 
+    @Environment(\.controlSize) private var controlSize
+    private var compact: Bool { controlSize == .small || controlSize == .mini }
+
     @EnvironmentObject
     private var motionPreferences: MotionPreferences
 
@@ -55,9 +58,9 @@ struct FruitfolioControlPillButton: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 36)
-                .padding(.vertical, 24)
-                .frame(maxWidth: 292, minHeight: 82, alignment: .center)
+                .padding(.horizontal, compact ? 18 : 36)
+                .padding(.vertical, compact ? 12 : 24)
+                .frame(maxWidth: 292, minHeight: compact ? 44 : 82, alignment: .center)
                 .background {
                     Image("control_pill_outline")
                         .resizable(
