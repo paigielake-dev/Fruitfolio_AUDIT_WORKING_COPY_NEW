@@ -72,12 +72,15 @@ final class Prompt1BMADLADManifestTests: XCTestCase {
         let config = manifest(hash: "74a4da8c9fdbcd15bd1f6d01d621410d31c6fc00986f5eb687824e7b93d7a9db")
         try JSONEncoder().encode(config).write(to: directory.appendingPathComponent("MADLAD400.manifest.json"))
         let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        await runtime.releaseResources()
+        await runtime.releaseResources()
         do {
             _ = try await runtime.translate("test-only source", targetTag: "es")
             XCTFail("Assistant architecture must never be substituted for MADLAD")
         } catch {
             XCTAssertEqual(error as? FruitfolioTranslationError, .incompatibleModel)
         }
+        await runtime.releaseResources()
     }
     #endif
 

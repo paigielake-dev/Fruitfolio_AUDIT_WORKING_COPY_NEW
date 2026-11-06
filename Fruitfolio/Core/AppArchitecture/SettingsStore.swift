@@ -34,6 +34,8 @@ final class SettingsStore: ObservableObject {
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
+    /// Transient process state, deliberately never written to user preferences.
+    @Published var translationPausedForMemoryPressure = false
     @Published private(set) var languagePreferenceNeedsReview = false
     @Published var language: FruitfolioLanguage {
         didSet {

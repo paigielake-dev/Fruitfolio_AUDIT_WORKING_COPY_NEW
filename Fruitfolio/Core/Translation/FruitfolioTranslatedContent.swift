@@ -9,6 +9,8 @@ struct FruitfolioTranslatedContent<Content: View>: View {
     var sourceLanguage = "en"
     @ViewBuilder let content: (String, String) -> Content
     @EnvironmentObject private var settings: SettingsStore
+    @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var audioManager: AudioManager
     @State private var rendered: String?
     @State private var resolvedKey: Key?
     @State private var failure: String?
@@ -19,6 +21,10 @@ struct FruitfolioTranslatedContent<Content: View>: View {
         let protectedLiterals: [String]
         let enabled: Bool
         let sourceLanguage: String
+    }
+    private struct TaskKey: Hashable {
+        let sourceKey: Key
+        let paused: Bool
     }
     private var key: Key { Key(source: source, language: settings.language, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) }
     private var usesTranslation: Bool { enabled && settings.language.rawValue != sourceLanguage }
@@ -36,13 +42,32 @@ struct FruitfolioTranslatedContent<Content: View>: View {
                 } else if resolvedKey == key, let failure {
                     Text("original text — translation unavailable").font(.caption).bold()
                     Text(LocalizedStringKey(failure)).font(.caption)
+                    if settings.translationPausedForMemoryPressure {
+                        Button("try translation again") {
+                            audioManager.play(.buttonSoftPop)
+                            settings.translationPausedForMemoryPressure = false
+                        }
+                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                        .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
+                        .accessibilityIdentifier("translation.retryAfterMemoryPressure")
+                    }
                 } else {
                     Text("original text — preparing local translation…").font(.caption)
                 }
             }
         }
-        .task(id: key) {
+        .task(id: TaskKey(sourceKey: key, paused: settings.translationPausedForMemoryPressure)) {
             let request = key
+            if usesTranslation && settings.translationPausedForMemoryPressure {
+                // Existing accepted display text is small and remains valid;
+                // release native allocations without discarding that reading.
+                if resolvedKey != request || rendered == nil {
+                    rendered = nil
+                    failure = "local translation is paused to reduce memory use. the original text is preserved."
+                    resolvedKey = request
+                }
+                return
+            }
             rendered = nil
             failure = nil
             resolvedKey = nil

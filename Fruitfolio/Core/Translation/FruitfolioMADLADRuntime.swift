@@ -20,6 +20,20 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         if let model { llama_model_free(model) }
     }
 
+    /// Actor-isolated: synchronous encode/decode cannot be freed mid-call.
+    /// The caller cancels owned translation tasks before requesting release.
+    func releaseResources() {
+        if let sampler { llama_sampler_free(sampler) }
+        sampler = nil
+        if let context { llama_free(context) }
+        context = nil
+        vocab = nil
+        if let model { llama_model_free(model) }
+        model = nil
+        manifest = nil
+        // Process-wide backend registration also serves Ask; never free it here.
+    }
+
     func translate(_ text: String, targetTag: String) async throws -> String {
         try Task.checkCancellation()
         try loadIfNeeded()
@@ -159,6 +173,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
 #else
 actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     static let shared = FruitfolioMADLADRuntime()
+    func releaseResources() {}
     func translate(_ text: String, targetTag: String) async throws -> String {
         throw FruitfolioTranslationError.resourcesMissing
     }

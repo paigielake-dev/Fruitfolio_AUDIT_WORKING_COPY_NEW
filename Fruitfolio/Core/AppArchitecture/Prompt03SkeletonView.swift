@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Prompt 03 deliberately renders restrained, responsive placeholders only.
 /// Final Intro/Hub/feature production interfaces belong to later prompts.
@@ -105,6 +108,16 @@ struct Prompt03SkeletonView: View {
         ) {
             syncMotionPreferences()
         }
+        #if canImport(UIKit)
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
+            settings.translationPausedForMemoryPressure = true
+            Task {
+                async let translation: Void = FruitfolioTranslationService.shared.releaseResources()
+                async let research: Void = LlamaFruitfolioLanguageModel.shared.releaseResources()
+                _ = await (translation, research)
+            }
+        }
+        #endif
         .environmentObject(appState)
         .environmentObject(navigation)
         .environmentObject(settings)

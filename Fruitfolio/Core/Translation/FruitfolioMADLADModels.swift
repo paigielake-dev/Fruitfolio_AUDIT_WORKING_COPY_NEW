@@ -59,4 +59,5 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
 
 protocol FruitfolioLocalTranslationRuntime: Sendable {
     func translate(_ text: String, targetTag: String) async throws -> String
+    func releaseResources() async
 }

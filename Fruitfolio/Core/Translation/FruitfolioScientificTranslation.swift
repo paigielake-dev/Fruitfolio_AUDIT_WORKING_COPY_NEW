@@ -60,6 +60,8 @@ actor FruitfolioTranslationService {
     private let runtime: any FruitfolioLocalTranslationRuntime
     init(runtime: any FruitfolioLocalTranslationRuntime) { self.runtime = runtime }
 
+    func releaseResources() async { await runtime.releaseResources() }
+
     func translate(_ source: String, language: FruitfolioLanguage, protectedLiterals: [String] = [], sourceLanguage: String = "en") async throws -> String {
         guard language.rawValue != sourceLanguage else { return source }
         // Only the simplified Chinese selector maps to the generic zh tag.

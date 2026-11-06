@@ -201,6 +201,16 @@ actor LlamaFruitfolioLanguageModel:
         // Backends are process-owned; another model actor may still be using them.
     }
 
+    /// Serial actor release runs after any synchronous native decode completes.
+    func releaseResources() {
+        if let context { llama_free(context) }
+        context = nil
+        vocab = nil
+        if let model { llama_model_free(model) }
+        model = nil
+        // Keep process-wide backend registration available to translation.
+    }
+
     func availability() async
         -> FruitfolioLanguageModelAvailability
     {
@@ -576,6 +586,7 @@ actor LlamaFruitfolioLanguageModel:
 actor LlamaFruitfolioLanguageModel: FruitfolioLanguageModel {
     nonisolated static let shared = LlamaFruitfolioLanguageModel()
     init() {}
+    func releaseResources() {}
 
     func availability() async -> FruitfolioLanguageModelAvailability {
         .packageNotLinked

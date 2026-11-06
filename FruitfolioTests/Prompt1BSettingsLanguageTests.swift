@@ -36,5 +36,18 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
         XCTAssertEqual(SettingsStore(defaults: defaults).language, .guarani)
     }
 
+    func testMemoryPressurePauseIsTransientAndNeverResetsChosenLanguage() async throws {
+        let suite = "Fruitfolio.SettingsMemory." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.language = .arabic
+        settings.translationPausedForMemoryPressure = true
+        let reloaded = SettingsStore(defaults: defaults)
+        XCTAssertEqual(reloaded.language, .arabic)
+        XCTAssertFalse(reloaded.translationPausedForMemoryPressure)
+        XCTAssertTrue(settings.translationPausedForMemoryPressure)
+    }
+
 }
 #endif

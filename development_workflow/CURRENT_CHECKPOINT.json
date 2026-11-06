@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "c56a4bcbca6ea061322ef9e327233b0384d29244",
+  "current_HEAD": "d1589239b40a2fa7d3488b10406cce25d36bc5e5",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 428,
-  "current_implementation_batch": "Individual-founder-South-American-languages-and-visible-preference-recovery",
+  "current_requirement": 431,
+  "current_implementation_batch": "Memory-pressure-translation-pause-and-native-model-release-reload",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,13 +493,19 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/FruitfolioLanguage.swift",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
     "Fruitfolio/Core/AppArchitecture/SettingsStore.swift",
-    "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
-    "FruitfolioTests/Prompt1BLanguagePreferencesTests.swift",
+    "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+    "Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift",
+    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+    "FruitfolioTests/Prompt1BMADLADManifestTests.swift",
+    "FruitfolioTests/Prompt1BResearchEngineIntegrationTests.swift",
+    "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
     "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/REGIONAL_LANGUAGE_VERIFICATION.md"
+    "development_workflow/LOCAL_INFERENCE_MEMORY_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -513,16 +519,22 @@
   ],
   "last_executed_tests": [
     "Full portable Swift6 suite",
+    "Full actual native-linked Swift5 suite including genuine Ask release/reload generation",
+    "Rebuild actual MADLAD catalog runner with release protocol",
+    "24 Python workflow tests",
     "Swift compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift6": "457 XCTest +21 Swift Testing passed",
+    "Swift6": "458 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "463 XCTest +21 Swift Testing passed, including real native generation after release/reload",
+    "runner": "Actual production MADLAD adapter compiled/linked after protocol change",
+    "workflow": "24 passed",
     "syntax": "238 changed Swift files parsed; zero errors",
-    "Apple": "NOT_RUN actual SettingsStore observer/recovery and process restart/UI/RTL",
-    "language_support": "Individual selectors/persistence added; actual MADLAD tags/clinical translation not verified without official resources"
+    "Apple": "NOT_RUN memory warning delivery/UI pause/retry, transient SettingsStore test and measured device heap",
+    "T5": "Actual allocated official T5 release/inference NOT_RUN; resources unavailable"
   },
-  "next_exact_implementation_action": "Implement bounded native translation resource lifecycle/memory pressure handling without fake hardware budgets; continue translated-layout411\u2013417 and saved/source preservation431\u2013434 actual regressions. Official T5 weights/tokenizer and device/clinical/per-language acceptance remain externally blocked. Continue remaining integrated changes and exact founder paragraphs without repeating completed broad audits.",
-  "updated_at": "2026-11-06T01:31:02.195920+00:00",
+  "next_exact_implementation_action": "Centralize saved-page display-translation eligibility/source-language/semantic selection so user-authored pages never auto-translate, full answers cannot accidentally inherit stale excerpt language/spans, and library/Guide/original viewer agree. Add actual storage/source-metadata preservation regression across display translation and language changes. Then continue full integrated verification and remaining exact founder requirements; official T5/device/clinical gates remain blocked.",
+  "updated_at": "2026-11-06T01:36:29.367408+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

@@ -52,6 +52,9 @@ final class Prompt1BScientificTranslationTests: XCTestCase {
 
 private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRuntime {
     private var tags: [String] = []
+    private var releases = 0
+    func releaseResources() { releases += 1 }
+    func releaseCount() -> Int { releases }
     func translate(_ text: String, targetTag: String) async throws -> String {
         tags.append(targetTag)
         return text
@@ -60,6 +63,19 @@ private actor Prompt1BIdentityTranslationFixture: FruitfolioLocalTranslationRunt
 }
 
 final class Prompt1BTranslationPipelineTests: XCTestCase {
+    func testServiceForwardsExplicitResourceReleaseWithoutChangingSourceText() async throws {
+        let fixture = Prompt1BIdentityTranslationFixture()
+        let service = FruitfolioTranslationService(runtime: fixture)
+        await service.releaseResources()
+        await service.releaseResources()
+        let count = await fixture.releaseCount()
+        XCTAssertEqual(count, 2)
+        let original = "source 12 pg/mL [A]"
+        let translated = try await service.translate(original, language: .spanish)
+        XCTAssertEqual(translated, original)
+        // Contract fixture only; actual T5 allocation release requires the model.
+    }
+
     func testNonEnglishSavedContentCanRequestEnglishTranslation() async throws {
         let fixture = Prompt1BIdentityTranslationFixture()
         let service = FruitfolioTranslationService(runtime: fixture)

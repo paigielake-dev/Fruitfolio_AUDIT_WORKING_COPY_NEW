@@ -77,6 +77,13 @@ final class Prompt1BResearchEngineIntegrationTests: XCTestCase {
         XCTAssertFalse(answer.sourceIDs.isEmpty)
         XCTAssertTrue(answer.answerText.contains("☆"))
         XCTAssertFalse(answer.isDevelopmentPreview)
+        await model.releaseResources()
+        await model.releaseResources()
+        let reloaded = try await engine.answer(question: "how does progesterone affect temperature?", conversation: [])
+        XCTAssertEqual(reloaded.answerPath, .generated, "A released native model must reload and genuinely generate")
+        XCTAssertEqual(reloaded.sourceIDs, answer.sourceIDs)
+        XCTAssertEqual(reloaded.answerText, answer.answerText)
+        await model.releaseResources()
     }
     #endif
 
