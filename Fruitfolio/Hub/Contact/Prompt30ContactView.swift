@@ -5,6 +5,7 @@ struct Prompt30ContactView: View {
 
     @Environment(\.openURL) private var openURL
 
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
     @AccessibilityFocusState private var focusedLink: Prompt30ContactDestination?
@@ -68,12 +69,12 @@ struct Prompt30ContactView: View {
                 .accessibilityHidden(true)
             FruitfolioTapedWhitePopup {
                 VStack(spacing: 12) {
-                    Text("this link could not be opened on this device")
+                    Text(settings.localized("this link could not be opened on this device"))
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($errorHeadingFocused)
                     Text(destination.label)
                         .fixedSize(horizontal: false, vertical: true)
-                    Text("you can copy the destination and open it in another app.")
+                    Text(settings.localized("you can copy the destination and open it in another app."))
                         .fixedSize(horizontal: false, vertical: true)
                     Text(destination.url.absoluteString)
                         .textSelection(.enabled)

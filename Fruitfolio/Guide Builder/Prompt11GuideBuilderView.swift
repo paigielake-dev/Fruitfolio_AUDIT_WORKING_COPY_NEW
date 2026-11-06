@@ -7,6 +7,7 @@ struct Prompt11GuideBuilderView: View {
     let onBack: () -> Void
     let onGoToAsk: () -> Void
 
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
@@ -1179,7 +1180,7 @@ struct Prompt11GuideBuilderView: View {
         savedStatusGuideID = selectedGuideID
         if voiceOverEnabled {
             UIAccessibility.post(notification: .announcement,
-                                 argument: FruitfolioLocalization.localized("saved!"))
+                                 argument: settings.localized("saved!"))
         }
         let delay: Double = voiceOverEnabled ? 4.0 : 1.35
         savedStatusTask = Task { @MainActor in

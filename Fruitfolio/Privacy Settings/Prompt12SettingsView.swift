@@ -25,8 +25,8 @@ struct Prompt12SettingsView: View {
 
             ScrollView {
                 VStack(spacing: 16) {
-                    experienceSection
                     languageSection
+                    experienceSection
                     accessibilitySection
                     accountPrivacySection
                     fruitfolioSection
@@ -247,7 +247,8 @@ struct Prompt12SettingsView: View {
                 .frame(maxWidth: .infinity, minHeight: 44)
                 .contentShape(Rectangle())
             }
-            .accessibilityLabel("language")
+            .accessibilityIdentifier("settings.language")
+            .accessibilityLabel("Language / भाषा / زبان")
             .accessibilityValue(settings.language.nativeDisplayName)
 
             Prompt12InfoText("choose the language Fruitfolio uses throughout the app. language names stay recognizable so you can always change this setting again.")

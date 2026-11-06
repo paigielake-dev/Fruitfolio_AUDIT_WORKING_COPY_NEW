@@ -17,7 +17,6 @@ final class SettingsStore: ObservableObject {
         static let typingVolume = "fruitfolio.settings.typingVolume"
         static let reduceAnimationOverride = "fruitfolio.settings.reduceAnimationOverride"
         static let onboardingCompleted = "fruitfolio.settings.onboardingCompleted"
-        static let language = FruitfolioLanguagePreferences.defaultsKey
     }
 
     private let defaults: UserDefaults
@@ -35,7 +34,7 @@ final class SettingsStore: ObservableObject {
 
     @Published var reduceAnimationOverride: Bool { didSet { defaults.set(reduceAnimationOverride, forKey: Key.reduceAnimationOverride) } }
     @Published var onboardingCompleted: Bool { didSet { defaults.set(onboardingCompleted, forKey: Key.onboardingCompleted) } }
-    @Published var language: FruitfolioLanguage { didSet { defaults.set(language.rawValue, forKey: Key.language) } }
+    @Published var language: FruitfolioLanguage { didSet { FruitfolioLanguagePreferences.save(language, to: defaults) } }
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
@@ -50,7 +49,7 @@ final class SettingsStore: ObservableObject {
         self.typingVolume = Self.double(defaults, key: Key.typingVolume, fallback: 0.08)
         self.reduceAnimationOverride = Self.bool(defaults, key: Key.reduceAnimationOverride, fallback: false)
         self.onboardingCompleted = Self.bool(defaults, key: Key.onboardingCompleted, fallback: false)
-        self.language = defaults.string(forKey: Key.language).flatMap(FruitfolioLanguage.init(rawValue:)) ?? .english
+        self.language = FruitfolioLanguagePreferences.load(from: defaults)
     }
 
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's

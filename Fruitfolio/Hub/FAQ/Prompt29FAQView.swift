@@ -45,12 +45,13 @@ private struct Prompt29FAQSectionCard: View {
     let section: Prompt29FAQSection
     @Binding var expanded: Set<String>
     @State private var showLifeBridge = false
+    @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var audioManager: AudioManager
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(section.title)
+            Text(settings.localized(section.title))
                 .font(
                     .custom(
                         "Chalkboard SE",
@@ -67,7 +68,7 @@ private struct Prompt29FAQSectionCard: View {
                     if isExpanded { expanded.remove(item.id) } else { expanded.insert(item.id) }
                 } label: {
                     HStack(spacing: 10) {
-                        Text(verbatim: item.question)
+                        Text(settings.localized(item.question))
                             .fontWeight(.regular)
                             .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
                             .multilineTextAlignment(.leading)
@@ -82,8 +83,8 @@ private struct Prompt29FAQSectionCard: View {
                 .accessibilityValue(isExpanded ? "expanded" : "collapsed")
                 .accessibilityIdentifier("faq.question.\(item.id)")
                 if isExpanded {
-                    FruitfolioSemanticText(markdown: item.answer,
-                                           baseFont: .custom("Chalkboard SE", size: 12.5, relativeTo: .body))
+                    FruitfolioTranslatedText(source: item.answer,
+                                             font: .custom("Chalkboard SE", size: 12.5, relativeTo: .body), serious: true)
                         .font(.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 8)

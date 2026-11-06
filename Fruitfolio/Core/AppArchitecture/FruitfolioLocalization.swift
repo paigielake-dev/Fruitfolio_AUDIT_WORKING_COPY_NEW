@@ -6,7 +6,7 @@ import Foundation
 enum FruitfolioLocalization {
     static func localized(
         _ key: String,
-        language: FruitfolioLanguage = FruitfolioLanguagePreferences.current,
+        language: FruitfolioLanguage,
         fallback: String? = nil
     ) -> String {
         let locale = Locale(identifier: language.localeIdentifier)

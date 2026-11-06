@@ -106,10 +106,13 @@ enum FruitfolioLanguage: String, CaseIterable, Codable, Identifiable, Sendable {
 enum FruitfolioLanguagePreferences {
     static let defaultsKey = "fruitfolio.settings.language"
 
-    static var current: FruitfolioLanguage {
-        guard let raw = UserDefaults.standard.string(forKey: defaultsKey),
+    static func load(from defaults: UserDefaults) -> FruitfolioLanguage {
+        guard let raw = defaults.string(forKey: defaultsKey),
               let language = FruitfolioLanguage(rawValue: raw) else { return .english }
         return language
     }
-}
 
+    static func save(_ language: FruitfolioLanguage, to defaults: UserDefaults) {
+        defaults.set(language.rawValue, forKey: defaultsKey)
+    }
+}

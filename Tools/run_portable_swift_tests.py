@@ -108,6 +108,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BLanguagePreferencesTests.swift',
     'Prompt1BContactDestinationTests.swift',
     'Prompt1BGameRulesCatalogTests.swift',
     'Prompt1BRoundLedgerTests.swift', 'Prompt1BGameSavedSourceTests.swift',
