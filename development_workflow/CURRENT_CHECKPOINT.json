@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "731baecd77bdcae04c52d09cc5c85aad1d0f54fc",
+  "current_HEAD": "9e966a423a80391a63eadd78e051f10b18205130",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 7,
-  "current_implementation_batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+  "current_requirement": 27,
+  "current_implementation_batch": "Canonical-Library-pill-and-synchronous-one-owner-sound",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,17 +493,19 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
-    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Core/Assets/AudioManager.swift",
+    "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
     "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
-    "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "Tools/run_portable_swift_tests.py",
-    "development_workflow/GUIDE_SAVE_REGRESSION_VERIFICATION.md",
+    "Tools/normalize_control_sound_ownership.swift",
+    "development_workflow/LIBRARY_CANONICAL_PILL_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Guide-existing-tests-prior-compile-failure.json"
+    "development_workflow/RUN_LOGS/Library-pill-synchronous-sound-ownership.json",
+    "development_workflow/tests/test_control_sound_ownership.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -516,19 +518,19 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --test-filter Prompt11GuideBuilderTests (original compile failure then actual eight-case pass)",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "swift Tools/validate_xcode_project.swift",
-    "actual SwiftSyntax control-sound-ownership --check"
+    "real SwiftSyntax --apply nine sites then --check all actual Swift source files",
+    "compiled previous/corrected SwiftSyntax tools on identical known-owner nested contract fixture"
   ],
   "last_test_results": {
     "portable_XCTest": 753,
     "native_CPU_XCTest": 775,
     "SwiftTesting_each_suite": 21,
-    "workflow_checks": 48,
+    "workflow_checks": 50,
     "Swift_syntax_files": 309,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
@@ -541,10 +543,13 @@
     "batch_recorder_integrity_tests": 6,
     "Guide_core_XCTest": 10,
     "Guide_original_focused_XCTest": 8,
-    "Apple_UI_Guide_save_launches_added_NOT_RUN": 20
+    "SwiftSyntax_sound_tool_tests": 9,
+    "normalized_soft_pop_sites": 9,
+    "explicit_missing_raw_Guide_cues_added": 6,
+    "Apple_UI_Guide_one_pop_launches_extended_NOT_RUN": 20
   },
-  "next_exact_implementation_action": "Replace the remaining fixed-height Prompt10PillArtButton renderer with the canonical watercolor control while preserving its existing call-site API and respecting additional Reduce Motion requests. Extend actual SwiftSyntax one-owner sound checks to this alias and synchronous nested do/if branches while excluding delayed callbacks; normalize only duplicate soft pops and preserve operation/modal cues. Add real syntax regressions and Guide UI request-count assertions, then execute supported checks and update each relevant checklist entry.",
-  "updated_at": "2026-11-06T17:38:36.657274+00:00",
+  "next_exact_implementation_action": "Own Guide Builder logical form open/close cues at its actual overlay state setter, removing child per-appearance/per-selected-cancel cue duplication while retaining canonical interaction pops and distinct operations. Ensure save closes its form before opening the saved-status card, replacements close/open once, and backgrounding preserves draft/owner without replay. Extend real Guide UI counts for successful/canceled/rejected paths; preserve all store callbacks and record remaining Apple/device acceptance.",
+  "updated_at": "2026-11-06T17:55:10.912813+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -554,25 +559,25 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
-      "portable_XCTest": "753 passed, 0 failures",
-      "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+      "portable_XCTest": "753 passed, 0 failures; UI rendering/AVFoundation excluded",
+      "native_CPU_XCTest": "775 passed, 0 failures; official MADLAD still untested",
       "SwiftTesting": "21 passed per overlapping run",
-      "workflow": "48 passed",
-      "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
-      "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+      "workflow": "50 passed including nine actual SwiftSyntax sound-ownership cases",
+      "syntax": "309 Swift files parsed; project references resolved; no Apple build",
+      "source_migration": "Nine synchronous soft-pop sites normalized; all other cue order preserved across affected files; final actual SwiftSyntax check has zero findings",
+      "empirical_tool_regression": "Prior compiled known-owner tool finds 0 nested sites; corrected tool finds 2"
     },
     "not_run": [
-      "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
-      "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
-      "Official MADLAD and actual foreign-language translation acceptance"
+      "20 existing Guide Apple UI launches extended with one-pop request assertions",
+      "Apple typecheck/build, actual wrapping/artwork/VoiceOver/RTL and Reduce Motion animations",
+      "AVAudioPlayer runtime starts, physical audibility, input latency and device performance",
+      "Official MADLAD and actual foreign-language control-label review"
     ],
     "remaining": [
-      "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
-      "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
-      "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
-      "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
-      "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      "Execute real Library/Guide controls at large text and RTL, including explicit extra Reduce Motion and globally enabled Reduce Motion; inspect artwork and text without clipping",
+      "Run all extended Guide UI save/cancel/rejected-save cases; distinguish interaction requests from physical playback and modal/operation cues",
+      "Correct remaining logical Guide popup open/close ownership and inspect all other app-wide button paths before whole-requirement acceptance",
+      "Verify approved official translations and clinical meaning only with genuine resources/review; canonical source fallback is not language certification"
     ]
   }
 }

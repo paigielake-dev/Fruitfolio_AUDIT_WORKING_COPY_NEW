@@ -362,9 +362,6 @@ struct Prompt10RenameEncyclopediaPopup: View {
                             to: title
                         )
 
-                        audioManager.play(
-                            .buttonSoftPop
-                        )
 
                         onDismiss()
 

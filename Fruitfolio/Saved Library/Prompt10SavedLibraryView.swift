@@ -240,9 +240,6 @@ struct Prompt10SavedLibraryView: View {
                 reduceMotion:
                     motionPreferences.reduceMotionActive
             ) {
-                audioManager.play(
-                    .buttonSoftPop
-                )
 
                 popup = .create
             }
@@ -543,68 +540,15 @@ struct Prompt10SavedLibraryView: View {
 
 // MARK: - Prompt 10 Pill Art Button
 
+/// Compatibility API for existing Library/Guide call sites. The canonical
+/// control owns wrapping artwork, semantic localization, hit target and pop.
 struct Prompt10PillArtButton: View {
     let label: String
     let reduceMotion: Bool
     let action: () -> Void
 
     var body: some View {
-        Button(
-            action: action
-        ) {
-            ZStack {
-                Image(
-                    "control_pill_outline"
-                )
-                .resizable()
-                .frame(
-                    maxWidth: .infinity
-                )
-                .frame(height: 62)
-                .accessibilityHidden(true)
-
-                Text(label)
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 14
-                        )
-                    )
-                    .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens.ColorToken.primaryBurgundy
-                    )
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.78)
-                    .padding(
-                        .horizontal,
-                        30
-                    )
-            }
-            .frame(
-                maxWidth: .infinity
-            )
-            .frame(height: 62)
-            .contentShape(
-                RoundedRectangle(
-                    cornerRadius: 31,
-                    style: .continuous
-                )
-            )
-        }
-        .buttonStyle(
-            CutePopButtonStyle(
-                reduceMotion:
-                    reduceMotion
-            )
-        )
-        .frame(
-            minHeight:
-                DesignTokens.Layout.minimumHitTarget
-        )
-        .accessibilityLabel(
-            label
-        )
+        FruitfolioControlPillButton(label: label, reduceMotionOverride: reduceMotion, action: action)
+            .controlSize(.small)
     }
 }

@@ -45,9 +45,13 @@ struct Prompt11GuideSaveRegressionHarness: View {
         Prompt11GuideBuilderView(store: fixture.store, onBack: {}, onGoToAsk: {}, initialGuideID: fixture.initialGuideID)
             .onPreferenceChange(Prompt11GuideSavedStatusRequestKey.self) { savedStatusRequests = $0 }
             .overlay(alignment: .bottomLeading) {
-                Prompt11GuideSaveReadback(store: fixture.store, defaults: fixture.defaults,
-                    baseline: fixture.baselineBytes, token: fixture.token, savedStatusRequests: savedStatusRequests)
-                    .font(.caption2).allowsHitTesting(false)
+                VStack(alignment: .leading) {
+                    Prompt11GuideSaveReadback(store: fixture.store, defaults: fixture.defaults,
+                        baseline: fixture.baselineBytes, token: fixture.token, savedStatusRequests: savedStatusRequests)
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        FruitfolioInteractionSoundDiagnostics()
+                    }
+                }.font(.caption2).allowsHitTesting(false)
             }
             .task {
                 guard !configured else { return }

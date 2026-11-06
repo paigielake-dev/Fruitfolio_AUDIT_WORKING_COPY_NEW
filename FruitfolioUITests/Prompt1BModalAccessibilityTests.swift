@@ -196,9 +196,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
 
     private func launchGuideSave(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments += ["-fruitfolioGuideSaveQA", "-fruitfolioGuideSaveQAScenario", scenario,
+        app.launchArguments += ["-fruitfolioGuideSaveQA", "-fruitfolioGuideSaveQAScenario", scenario, "-fruitfolioAudioDiagnostics",
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
-        if reduced { app.launchArguments += ["-fruitfolioGuideSaveReduceMotion"] }
+        if reduced { app.launchArguments += ["-fruitfolioGuideSaveReduceMotion", "-fruitfolioAudioMuted"] }
         if rtl { app.launchArguments += ["-fruitfolioGuideSaveRTL"] }
         app.launch()
         return app
@@ -243,6 +243,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertEqual(app.staticTexts["guideQA.persistedName"].label, "persisted name: QA created guide")
                 XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA created description")
             } else { XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists) }
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
             captureGame(app, name: "guide-create-save-\(save)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
         }
@@ -296,6 +297,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 }
             }
             XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, expected)
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 3")
             captureGame(app, name: "guide-description-\(action)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
         }

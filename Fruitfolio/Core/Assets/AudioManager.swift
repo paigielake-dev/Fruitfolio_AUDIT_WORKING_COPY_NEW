@@ -54,8 +54,9 @@ final class AudioManager: ObservableObject {
 
         #if DEBUG
         let args = ProcessInfo.processInfo.arguments
-        let gameDiagnostics = args.contains("-fruitfolioGameQA") && args.contains("-fruitfolioAudioDiagnostics")
-        if gameDiagnostics {
+        let qaInteractionDiagnostics = (args.contains("-fruitfolioGameQA") || args.contains("-fruitfolioGuideSaveQA"))
+            && args.contains("-fruitfolioAudioDiagnostics")
+        if qaInteractionDiagnostics {
             // The QA root injects its disposable authority. Capture first-run
             // popup requests before child onAppear/task callbacks can fire.
             settings?.globallyMuted = args.contains("-fruitfolioAudioMuted")

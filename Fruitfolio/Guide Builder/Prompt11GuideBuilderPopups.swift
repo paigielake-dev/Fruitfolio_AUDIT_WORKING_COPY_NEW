@@ -90,6 +90,7 @@ struct Prompt11CreateGuidePopup: View {
                 HStack(spacing: 7) {
                     ForEach(Prompt10BookStyle.allCases, id: \.self) { option in
                         Button {
+                            audioManager.play(.buttonSoftPop)
                             style = option
                         } label: {
                             Image(option.assetName)
@@ -255,7 +256,6 @@ struct Prompt11RenameGuidePopup: View {
                             id: encyclopediaID,
                             to: name
                         )
-                        audioManager.play(.buttonSoftPop)
                         onSaved()
                     } catch {
                         errorMessage = error.localizedDescription
@@ -352,7 +352,6 @@ struct Prompt11DescriptionPopup: View {
                             id: encyclopediaID,
                             description: guideDescription
                         )
-                        audioManager.play(.buttonSoftPop)
                         onSaved()
                     } catch {
                         errorMessage = error.localizedDescription
@@ -422,6 +421,7 @@ struct Prompt11ChangeCoverPopup: View {
                 HStack(spacing: 7) {
                     ForEach(Prompt10BookStyle.allCases, id: \.self) { option in
                         Button {
+                            audioManager.play(.buttonSoftPop)
                             style = option
                         } label: {
                             Image(option.assetName)
@@ -475,7 +475,6 @@ struct Prompt11ChangeCoverPopup: View {
                             id: encyclopediaID,
                             to: style
                         )
-                        audioManager.play(.buttonSoftPop)
                         onSaved()
                     } catch {
                         errorMessage = error.localizedDescription
@@ -648,7 +647,6 @@ struct Prompt11SectionPopup: View {
                             )
                         }
 
-                        audioManager.play(.buttonSoftPop)
                         onSaved()
                     } catch {
                         errorMessage = error.localizedDescription
@@ -751,7 +749,6 @@ struct Prompt11NotePopup: View {
                             pageID: pageID,
                             notes: note
                         )
-                        audioManager.play(.buttonSoftPop)
                         onSaved()
                     } catch {
                         errorMessage = error.localizedDescription

@@ -11,13 +11,43 @@ private struct Finding: Codable {
     let start: Int
     let end: Int
 }
+/// Follow synchronous branches of one action, while leaving nested callbacks
+/// and other buttons responsible for their own later/distinct interactions.
+private final class ActionSoundVisitor: SyntaxVisitor {
+    let path: String
+    let control: String
+    let locations: SourceLocationConverter
+    var findings: [Finding] = []
+    init(path: String, control: String, locations: SourceLocationConverter) {
+        self.path = path; self.control = control; self.locations = locations
+        super.init(viewMode: .sourceAccurate)
+    }
+    override func visit(_ node: ClosureExprSyntax) -> SyntaxVisitorContinueKind { .skipChildren }
+    override func visit(_ node: FunctionDeclSyntax) -> SyntaxVisitorContinueKind { .skipChildren }
+    override func visit(_ node: MemberBlockSyntax) -> SyntaxVisitorContinueKind { .skipChildren }
+    override func visit(_ node: AccessorBlockSyntax) -> SyntaxVisitorContinueKind { .skipChildren }
+    override func visit(_ call: FunctionCallExprSyntax) -> SyntaxVisitorContinueKind {
+        guard let statement = call.parent?.as(CodeBlockItemSyntax.self),
+              let member = call.calledExpression.as(MemberAccessExprSyntax.self), member.declName.baseName.text == "play",
+              let receiver = member.base?.as(DeclReferenceExprSyntax.self), receiver.baseName.text == "audioManager",
+              call.arguments.count == 1, let argument = call.arguments.first,
+              let cue = argument.expression.as(MemberAccessExprSyntax.self), cue.base == nil,
+              cue.declName.baseName.text == "buttonSoftPop" else { return .visitChildren }
+        findings.append(Finding(path: path, control: control,
+            line: locations.location(for: statement.positionAfterSkippingLeadingTrivia).line,
+            start: statement.positionAfterSkippingLeadingTrivia.utf8Offset,
+            end: statement.endPositionBeforeTrailingTrivia.utf8Offset))
+        return .skipChildren
+    }
+}
+
 private final class ControlVisitor: SyntaxVisitor {
     let path: String
     let locations: SourceLocationConverter
     var findings: [Finding] = []
     // These controls own one buttonSoftPop directly or through the canonical
     // pill. Other Buttons and distinct operation/modal cues remain untouched.
-    private let owners: Set<String> = ["FruitfolioControlPillButton", "WatercolorPrimaryButton", "WatercolorSecondaryButton", "BackControl", "CloseControl", "Prompt28WatercolorButton", "Prompt28MiniControlPill", "Prompt12NavigationRow"]
+    private let owners: Set<String> = ["FruitfolioControlPillButton", "WatercolorPrimaryButton", "WatercolorSecondaryButton", "BackControl", "CloseControl", "Prompt28WatercolorButton", "Prompt28MiniControlPill", "Prompt12NavigationRow", "Prompt10PillArtButton"]
     init(path: String, tree: SourceFileSyntax) {
         self.path = path
         locations = SourceLocationConverter(fileName: path, tree: tree)
@@ -32,18 +62,9 @@ private final class ControlVisitor: SyntaxVisitor {
             if let closure = argument.expression.as(ClosureExprSyntax.self) { closures.append(closure) }
         }
         for closure in closures {
-            for statement in closure.statements {
-                guard let call = statement.item.as(FunctionCallExprSyntax.self),
-                      let member = call.calledExpression.as(MemberAccessExprSyntax.self), member.declName.baseName.text == "play",
-                      let receiver = member.base?.as(DeclReferenceExprSyntax.self), receiver.baseName.text == "audioManager",
-                      call.arguments.count == 1, let argument = call.arguments.first,
-                      let cue = argument.expression.as(MemberAccessExprSyntax.self), cue.base == nil,
-                      cue.declName.baseName.text == "buttonSoftPop" else { continue }
-                findings.append(Finding(path: path, control: callee.baseName.text,
-                    line: locations.location(for: statement.positionAfterSkippingLeadingTrivia).line,
-                    start: statement.positionAfterSkippingLeadingTrivia.utf8Offset,
-                    end: statement.endPositionBeforeTrailingTrivia.utf8Offset))
-            }
+            let action = ActionSoundVisitor(path: path, control: callee.baseName.text, locations: locations)
+            action.walk(closure.statements)
+            findings.append(contentsOf: action.findings)
         }
         return .visitChildren
     }

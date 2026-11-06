@@ -124,5 +124,56 @@ WatercolorSecondaryButton(label: "audioManager.play(.buttonSoftPop)") {
             self.assertEqual(self.invoke(path, '--check').returncode, 0)
 
 
+    def testLibraryAliasNormalizesSynchronousBranchesButPreservesDelayedAndRawButtonCues(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'library.swift'
+            source = '''Prompt10PillArtButton(label: "save", reduceMotion: true) {
+ do {
+  try save()
+  audioManager.play(.buttonSoftPop)
+  if changed { audioManager.play(.buttonSoftPop) }
+ } catch { audioManager.play(.buttonSoftPop) }
+ Task { audioManager.play(.buttonSoftPop) }
+ Button("raw") { audioManager.play(.buttonSoftPop) }
+ func callback() { audioManager.play(.buttonSoftPop) }
+ performLater(callback)
+ audioManager.play(.bookClose)
+}
+'''
+            path.write_text(source)
+            check = self.invoke(path, '--check')
+            self.assertEqual(check.returncode, 1, check.stderr)
+            self.assertEqual(len(json.loads(check.stdout)), 3)
+            self.assertEqual(path.read_text(), source)
+            applied = self.invoke(path, '--apply')
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            self.assertEqual(path.read_text().count('audioManager.play(.buttonSoftPop)'), 3)
+            self.assertIn('Task { audioManager.play(.buttonSoftPop) }', path.read_text())
+            self.assertIn('Button("raw") { audioManager.play(.buttonSoftPop) }', path.read_text())
+            self.assertIn('func callback() { audioManager.play(.buttonSoftPop) }', path.read_text())
+            self.assertIn('audioManager.play(.bookClose)', path.read_text())
+            self.assertIn('try save()', path.read_text())
+            self.assertEqual(self.invoke(path, '--check').returncode, 0)
+
+    def testExistingCanonicalOwnerAlsoRemovesNestedDoCatchDuplicates(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'nested-existing-owner.swift'
+            path.write_text('''WatercolorPrimaryButton(label: "save") {
+ do { try save(); audioManager.play(.buttonSoftPop) }
+ catch { audioManager.play(.buttonSoftPop); showFailure() }
+ performLater { audioManager.play(.buttonSoftPop) }
+ audioManager.play(.popupClose)
+}
+''')
+            result = self.invoke(path, '--apply')
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(len(json.loads(result.stdout)), 2)
+            self.assertEqual(path.read_text().count('.buttonSoftPop'), 1)
+            self.assertIn('performLater { audioManager.play(.buttonSoftPop) }', path.read_text())
+            self.assertIn('showFailure()', path.read_text())
+            self.assertIn('audioManager.play(.popupClose)', path.read_text())
+            self.assertEqual(self.invoke(path, '--check').returncode, 0)
+
+
 if __name__ == '__main__':
     unittest.main()

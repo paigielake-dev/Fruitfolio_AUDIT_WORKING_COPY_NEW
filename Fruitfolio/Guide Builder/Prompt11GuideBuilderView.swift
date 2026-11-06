@@ -231,7 +231,6 @@ struct Prompt11GuideBuilderView: View {
                 label: "make my first guide",
                 reduceMotion: motionPreferences.reduceMotionActive
             ) {
-                audioManager.play(.buttonSoftPop)
                 overlay = .createGuide
             }
             .accessibilityIdentifier("guide.create.open")
@@ -314,7 +313,6 @@ struct Prompt11GuideBuilderView: View {
                             label: "+ add saved pages",
                             reduceMotion: motionPreferences.reduceMotionActive
                         ) {
-                            audioManager.play(.buttonSoftPop)
                             overlay = .addSavedPages(guide.id)
                         }
 
@@ -484,6 +482,7 @@ struct Prompt11GuideBuilderView: View {
         VStack(spacing: 8) {
             HStack(spacing: 10) {
                 Button {
+                    audioManager.play(.buttonSoftPop)
                     overlay = .renameGuide(guide.id, guide.name)
                 } label: {
                     HStack(spacing: 5) {
@@ -498,10 +497,12 @@ struct Prompt11GuideBuilderView: View {
                 }
 
                 Button("change cover") {
+                    audioManager.play(.buttonSoftPop)
                     overlay = .changeCover(guide.id, guide.style)
                 }
 
                 Button("description") {
+                    audioManager.play(.buttonSoftPop)
                     overlay = .editDescription(
                         guide.id,
                         guide.subtitle ?? ""
@@ -511,6 +512,7 @@ struct Prompt11GuideBuilderView: View {
             }
 
             Button {
+                audioManager.play(.buttonSoftPop)
                 overlay = .deleteGuide(guide.id)
             } label: {
                 HStack(spacing: 5) {

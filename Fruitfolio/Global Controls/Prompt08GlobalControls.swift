@@ -39,11 +39,14 @@ struct FruitfolioControlPillButton: View {
     let action: () -> Void
     let isSelected: Bool?
     let artworkOpacity: Double
+    let reduceMotionOverride: Bool?
 
-    init(label: String, isSelected: Bool? = nil, artworkOpacity: Double = 1, action: @escaping () -> Void) {
+    init(label: String, isSelected: Bool? = nil, artworkOpacity: Double = 1,
+         reduceMotionOverride: Bool? = nil, action: @escaping () -> Void) {
         self.label = label
         self.isSelected = isSelected
         self.artworkOpacity = artworkOpacity
+        self.reduceMotionOverride = reduceMotionOverride
         self.action = action
     }
 
@@ -99,7 +102,7 @@ struct FruitfolioControlPillButton: View {
         .buttonStyle(
             CutePopButtonStyle(
                 reduceMotion:
-                    motionPreferences.reduceMotionActive
+                    motionPreferences.reduceMotionActive || (reduceMotionOverride == true)
             )
         )
         .accessibilityAddTraits(isSelected == true ? .isSelected : [])
