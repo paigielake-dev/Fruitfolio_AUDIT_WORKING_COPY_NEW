@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "0d12fd190e32194bff8e290eacc9dd3f841809a5",
+  "current_HEAD": "9018a71da51d70a14c414fae25954bef1b1ae4d6",
   "latest_verified_commit": null,
   "current_checklist_part": 8,
-  "current_requirement": 366,
-  "current_implementation_batch": "Reset-safe-game-progression-and-protected-existing-state",
+  "current_requirement": 368,
+  "current_implementation_batch": "Exact-round-results-and-preserved-source-versions",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -497,13 +497,14 @@
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketStore.swift",
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift",
-    "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
-    "Fruitfolio/Fruit Basket/Prompt28ProgressionPolicy.swift",
+    "Fruitfolio/Fruit Basket/Prompt28RoundLedger.swift",
+    "Fruitfolio/Fruit Basket/Prompt28SavedResearchCopy.swift",
+    "FruitfolioTests/Prompt1BCatchViewModelTests.swift",
     "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-    "FruitfolioTests/Prompt1BProgressionPolicyTests.swift",
-    "FruitfolioTests/Prompt28FruitBasketTests.swift",
+    "FruitfolioTests/Prompt1BGameSavedSourceTests.swift",
+    "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
     "Tools/run_portable_swift_tests.py",
-    "development_workflow/FRUIT_BASKET_PROGRESSION_VERIFICATION.md",
+    "development_workflow/FRUIT_BASKET_RESULT_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -518,22 +519,17 @@
   ],
   "last_executed_tests": [
     "Full portable Swift6 suite",
-    "Full native-linked Swift5 suite before final E2E addition",
-    "Final13 production game persistence/progression tests linked with actual native llama",
-    "Swift compiler syntax parse",
-    "18 Python workflow tests",
+    "Full native-linked Swift5 suite",
+    "Compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "Swift_6_headless": "437 XCTest +21 Swift Testing passed",
-    "Swift_5_native_full": "440 XCTest +21 Swift Testing passed before final reset/storage E2E case",
-    "Swift_5_native_final_targeted": "13 production persistence/progression tests passed with final Foundation sources",
-    "workflow": "18 Python tests passed",
-    "Swift_syntax": "224 changed Swift files parsed; zero errors",
-    "Apple": "NOT_RUN: Combine store/controller integration, updated owner tests, recovery focus/scroll, actual cross-window behavior and physical cap/cozy evaluation",
-    "storage_scope": "Original bytes/values retained in actual UserDefaults tests; reinitialization is not physical process restart, fingerprint guard is not a cross-process atomic transaction"
+    "Swift6": "445 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "449 XCTest +21 Swift Testing passed",
+    "syntax": "228 changed Swift files parsed, zero errors",
+    "Apple": "NOT_RUN: actual controller regression and UI/VoiceOver/runtime; Xcode unavailable"
   },
-  "next_exact_implementation_action": "Implement an exact per-round capture ledger/result snapshot for366\u2013367: actual caught fruit, stars, passes spent, misses/consequences and earned versus cumulative score; count actual captures in failed as well as successful attempts without double counting or inventing legacy history. Render truthful success/failure summaries and source explanation separate from visual catch classification; make classification content scroll on short/large-text viewports. Then continue corrected rules/FAQ/accessibility368\u2013372 and remaining sections.",
-  "updated_at": "2026-11-06T00:53:08.203224+00:00",
+  "next_exact_implementation_action": "Continue leaderboard rules, shared username and accessibility requirements368\u2013372; then FAQ and Contact in original source order. Preserve exact result/source separation and do not claim Apple runtime verification.",
+  "updated_at": "2026-11-06T01:11:54.785322+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

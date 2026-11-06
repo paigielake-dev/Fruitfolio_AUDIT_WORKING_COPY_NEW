@@ -1251,6 +1251,7 @@ struct Prompt28FruitBasketView: View {
         height: CGFloat,
         xOffset: CGFloat
     ) -> some View {
+        ScrollView {
         VStack(spacing: 14) {
             Spacer()
                 .frame(height: 92)
@@ -1323,11 +1324,12 @@ struct Prompt28FruitBasketView: View {
             Spacer()
                 .frame(height: 20)
         }
-        .frame(
-            width: width,
-            height: height
-        )
+        .frame(width: width)
+        .frame(minHeight: height)
+        }
+        .frame(width: width, height: height)
         .offset(x: xOffset)
+        .accessibilityIdentifier("fruitBasket.classification.scroll")
     }
 
     private var classificationYesButton: some View {
@@ -1393,8 +1395,11 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var unsuccessful: some View {
+        ScrollView {
         VStack(spacing: 14) {
             topBar
+
+            if let result = viewModel.roundResult { roundStatistics(result).padding(.horizontal, 20) }
 
             Spacer()
 
@@ -1461,6 +1466,37 @@ struct Prompt28FruitBasketView: View {
             Spacer()
         }
         .padding(.horizontal, 20)
+        }
+    }
+
+    private func roundStatistics(_ result: Prompt28RoundResult) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(result.succeeded ? "completed catch round" : "catch attempt ended")
+                .prompt28Text(.sectionHeading).accessibilityAddTraits(.isHeader)
+            LabeledContent("fruit caught", value: "\(result.caughtFruit.count) / \(result.targetFruit)")
+            LabeledContent("passes carried in", value: String(result.starPassesAtStart))
+            LabeledContent("stars caught this round", value: String(result.starsCollected))
+            LabeledContent("star passes used", value: String(result.starPassesSpent))
+            LabeledContent("star passes available", value: String(result.starPassesRemaining))
+            LabeledContent("round points", value: (result.scoreChange >= 0 ? "+" : "") + String(result.scoreChange))
+            LabeledContent("session score", value: String(result.cumulativeScore))
+            if result.goodFruitPassed > 0 {
+                Text("\(result.goodFruitPassed) good fruit passed; missed good fruit has no penalty.")
+            }
+            if result.starPassesSpent > 0 {
+                Text("each protected bad-fruit catch used exactly one star pass, so play continued.")
+            }
+            if let fruit = result.endingBadFruit {
+                Text("\(fruit.displayName) was caught with no star passes available; that catch attempt ended.")
+            }
+            if result.nextGameLevel > result.gameLevelPlayed {
+                Text("next catching level: \(result.nextGameLevel)")
+            }
+        }
+        .prompt28Text(.body)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("fruitBasket.roundStatistics")
     }
 
     private var basketReveal: some View {
@@ -1494,8 +1530,8 @@ struct Prompt28FruitBasketView: View {
                     }
 
                     Prompt28BasketProgressView(
-                        count: 10,
-                        fruitIDs: viewModel.collectedFruit
+                        count: viewModel.roundResult?.caughtFruit.count ?? 0,
+                        fruitIDs: viewModel.roundResult?.caughtFruit ?? []
                     )
                     .frame(width: 210, height: 180)
                     .accessibilityHidden(true)
@@ -1515,9 +1551,8 @@ struct Prompt28FruitBasketView: View {
                 }
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(
-                    viewModel.didSetPersonalBestThisRound
-                    ? "Basket full. 10 of 10. Round complete. Personal best."
-                    : "Basket full. 10 of 10. Round complete."
+                    viewModel.roundResult.map { "Basket. \($0.caughtFruit.count) of \($0.targetFruit). Round complete." + (viewModel.didSetPersonalBestThisRound ? " Personal best." : "") }
+                        ?? "Round result unavailable."
                 )
 
                 Prompt28PaperPanel {
@@ -1525,16 +1560,16 @@ struct Prompt28FruitBasketView: View {
                         alignment: .leading,
                         spacing: 11
                     ) {
-                        Text(
-                            "your basket reveal! ♡"
-                        )
+                        Text(viewModel.currentQuestion?.usesSeriousFeedback == true ? "round complete" : "your basket reveal! ♡")
                         .prompt28Text(.screenTitle)
+
+                        if let result = viewModel.roundResult { roundStatistics(result) }
 
                         if let question =
                             viewModel.currentQuestion {
 
                             Text(
-                                "these fit the basket because…"
+                                "library explanation"
                             )
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
@@ -1598,6 +1633,11 @@ struct Prompt28FruitBasketView: View {
         ScrollView {
             VStack(spacing: 14) {
                 topBar
+                if store.hasLegacyCaptureTotals {
+                    Text("totals saved before this update may omit fruit from failed or unfinished attempts. existing totals are retained; new captures are counted as they happen.")
+                        .font(.footnote).fixedSize(horizontal: false, vertical: true)
+                }
+
 
                 ZStack {
                     FruitfolioImage(id: .fruitbasket_chalkboard)

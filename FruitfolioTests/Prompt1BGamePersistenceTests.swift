@@ -99,6 +99,7 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         json.removeValue(forKey: "schemaVersion")
         var topics = try XCTUnwrap(json["topicProgress"] as? [String: [String: Any]])
         topics["fixture"]?.removeValue(forKey: "successesInCurrentLevel")
+        topics["fixture"]?.removeValue(forKey: "captureTotalsCompleteFromStart")
         json["topicProgress"] = topics
         let bytes = try JSONSerialization.data(withJSONObject: json)
         defaults.set(bytes, forKey: "game")
@@ -106,6 +107,7 @@ final class Prompt1BGamePersistenceTests: XCTestCase {
         let loaded = try XCTUnwrap(store.load())
         XCTAssertNil(loaded.schemaVersion)
         XCTAssertNil(loaded.topicProgress["fixture"]?.successesInCurrentLevel)
+        XCTAssertNil(loaded.topicProgress["fixture"]?.captureTotalsCompleteFromStart)
         XCTAssertEqual(defaults.data(forKey: "game"), bytes)
     }
     func testBlindWriteBeforeLoadingIsRefused() async throws {

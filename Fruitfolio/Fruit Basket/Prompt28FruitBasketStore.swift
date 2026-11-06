@@ -23,6 +23,8 @@ final class Prompt28FruitBasketStore: ObservableObject {
         reload()
     }
 
+    var hasLegacyCaptureTotals: Bool { topicProgress.values.contains { $0.captureTotalsCompleteFromStart != true } }
+
     var leaderboardTotals: Prompt28LeaderboardTotals {
         Prompt28LeaderboardTotals(progress: topicProgress)
     }

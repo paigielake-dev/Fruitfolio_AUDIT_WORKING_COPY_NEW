@@ -134,6 +134,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
     var totalStarsEarned: Int
     var totalSuccessfulRounds: Int
     var successesInCurrentLevel: Int?
+    var captureTotalsCompleteFromStart: Bool?
     var bestScore: Int
     var bestStreak: Int
     var lastPlayedAt: Date
@@ -151,7 +152,8 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         bestScore: Int = 0,
         bestStreak: Int = 0,
         lastPlayedAt: Date = Date(),
-        successesInCurrentLevel: Int? = 0
+        successesInCurrentLevel: Int? = 0,
+        captureTotalsCompleteFromStart: Bool? = true
     ) {
         self.normalizedTopicID = normalizedTopicID
         self.currentGameLevel = currentGameLevel
@@ -161,6 +163,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         self.totalStarsEarned = totalStarsEarned
         self.totalSuccessfulRounds = totalSuccessfulRounds
         self.successesInCurrentLevel = successesInCurrentLevel
+        self.captureTotalsCompleteFromStart = captureTotalsCompleteFromStart
         self.bestScore = bestScore
         self.bestStreak = bestStreak
         self.lastPlayedAt = lastPlayedAt
@@ -169,7 +172,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case normalizedTopicID, currentGameLevel, highestGameLevelReached
         case totalRoundsCompleted, totalFruitCaught, totalStarsEarned
-        case totalSuccessfulRounds, bestScore, bestStreak, lastPlayedAt, successesInCurrentLevel
+        case totalSuccessfulRounds, bestScore, bestStreak, lastPlayedAt, successesInCurrentLevel, captureTotalsCompleteFromStart
     }
 
     init(from decoder: Decoder) throws {
@@ -182,6 +185,7 @@ struct Prompt28TopicProgress: Identifiable, Hashable, Codable, Sendable {
         totalStarsEarned = try c.decodeIfPresent(Int.self, forKey: .totalStarsEarned) ?? 0
         totalSuccessfulRounds = try c.decode(Int.self, forKey: .totalSuccessfulRounds)
         successesInCurrentLevel = try c.decodeIfPresent(Int.self, forKey: .successesInCurrentLevel)
+        captureTotalsCompleteFromStart = try c.decodeIfPresent(Bool.self, forKey: .captureTotalsCompleteFromStart)
         bestScore = try c.decode(Int.self, forKey: .bestScore)
         bestStreak = try c.decode(Int.self, forKey: .bestStreak)
         lastPlayedAt = try c.decode(Date.self, forKey: .lastPlayedAt)
