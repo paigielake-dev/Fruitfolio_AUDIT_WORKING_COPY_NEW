@@ -35,6 +35,7 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
 struct Prompt28GameRegressionHarness: View {
     @StateObject private var fixture = Prompt28GameRegressionFixture()
     @State private var configured = false
+    @State private var backRequests = 0
     @EnvironmentObject private var settings: SettingsStore
     private var model: Prompt28FruitBasketViewModel { fixture.model }
     private var scenario: String {
@@ -46,7 +47,13 @@ struct Prompt28GameRegressionHarness: View {
     }
 
     var body: some View {
-        Prompt28FruitBasketView(onBack: {}, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
+        Prompt28FruitBasketView(onBack: { backRequests += 1 }, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
+            .overlay(alignment: .bottomLeading) {
+                Text("back requests: \(backRequests)")
+                    .font(.caption2)
+                    .accessibilityIdentifier("gameQA.backRequests")
+                    .allowsHitTesting(false)
+            }
             .task {
                 guard !configured else { return }
                 configured = true

@@ -2,7 +2,7 @@ import Foundation
 import CoreFoundation
 
 nonisolated final class FruitfolioUsernamePersistence {
-    struct Snapshot: Equatable {
+    struct Snapshot: Equatable, Sendable {
         let username: String
         let confirmedNonIdentifying: Bool
     }

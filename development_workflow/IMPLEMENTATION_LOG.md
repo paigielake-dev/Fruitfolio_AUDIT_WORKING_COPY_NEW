@@ -1850,3 +1850,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 703, "native_CPU_XCTest": 716, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 302, "sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; eight Game username launch scenarios source only", "official_MADLAD": "BLOCKED; no official language/clinical/device acceptance from synthetic T5"}.
 - Next action: Replace unconditional whole-game Back with owned shared-paper save/discard/keep confirmation for dirty username drafts; freeze intent, wait for actual dismissal, preserve drafts/other records and add actual Foundation request/intent and Apple UI coverage.
 - Commit: containing commit for batch Fruit-Basket-frozen-username-editor-and-safe-QA-lifetime.
+
+## Owned-game-username-save-discard-keep-exit-session
+
+- Parent checkpoint: f859c438fb87a0cdc952885ad8172c2513e487f5.
+- Source-order requirements: [26, 63, 229, 230, 369, 370, 443, 444, 447, 463, 468, 471, 472, 474, 476, 477, 478].
+- Source files: Fruitfolio/Core/AppArchitecture/FruitfolioUsernameExitSession.swift, Fruitfolio/Core/AppArchitecture/FruitfolioUsernamePersistence.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift.
+- Actual Game Back now uses owned shared measured white-paper save/discard/keep for dirty username. Actual Foundation session freezes intent and delivers once after dismissal/all other popups, with protected Review, stale/replay/cancel guards. UI commits only acknowledged frozen intent and keeps errors/draft; discard is in-memory only. Six actual session/intent tests pass, 20 Apple launch scenarios added but NOT_RUN.
+- Tests added/updated: FruitfolioTests/Prompt1BUsernameExitSessionTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 709, "native_CPU_XCTest": 722, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 304, "sound_ownership_findings": 0, "actual_username_exit_methods": 6, "Apple_UI_typecheck": "NOT_RUN; 20 new exit launch scenarios source only", "official_MADLAD": "BLOCKED; synthetic T5 contracts do not approve official language/clinical/device behavior"}.
+- Next action: Protect Account Back from silently losing username and unsubmitted email drafts using the existing owned coordinator and shared paper; save only the username when available, never fabricate an email sign-in/save, preserve both drafts on errors and test all source choice variants.
+- Commit: containing commit for batch Owned-game-username-save-discard-keep-exit-session.

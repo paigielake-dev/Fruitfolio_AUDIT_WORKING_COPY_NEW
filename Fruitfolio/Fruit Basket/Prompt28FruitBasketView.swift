@@ -55,6 +55,13 @@ struct Prompt28FruitBasketView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
     @EnvironmentObject private var settings: SettingsStore
     @StateObject private var usernameLabel = FruitfolioControlTranslationState()
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    @State private var usernameExitSession: FruitfolioUsernameExitSession?
+    @State private var rootIsVisible = false
+    @State private var returnExitFocus = false
+    private enum UsernameFocus: Hashable { case back, input, error }
+    @AccessibilityFocusState private var usernameFocus: UsernameFocus?
+    @FocusState private var usernameKeyboardFocused: Bool
     private var usernameLabelKey: FruitfolioControlTranslationState.Key {
         .init(source: "public username", language: settings.language)
     }
@@ -150,6 +157,8 @@ struct Prompt28FruitBasketView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
         .onAppear {
+            rootIsVisible = true
+            if usernameExitSession == nil { usernameExitSession = .init(coordinator: popupCoordinator) }
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
@@ -159,10 +168,23 @@ struct Prompt28FruitBasketView: View {
             }
         }
         .onDisappear {
+            rootIsVisible = false
+            returnExitFocus = false
+            usernameExitSession?.cancel()
             questionOperationTask?.cancel()
             viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
+        }
+        .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
+            guard rootIsVisible, let session = usernameExitSession else { return }
+            if let choice = session.takeCompletedChoice() {
+                returnExitFocus = false
+                completeUsernameExit(choice)
+            } else if returnExitFocus, session.requestID == nil, popupCoordinator.currentPopup == nil {
+                returnExitFocus = false
+                usernameFocus = .back
+            }
         }
         .onChange(of: store.isReadOnly) { _, blocked in
             if blocked {
@@ -355,9 +377,9 @@ struct Prompt28FruitBasketView: View {
 
     private var topBar: some View {
         HStack {
-            BackControl {
-                onBack()
-            }
+            BackControl { requestLeavingGame() }
+                .accessibilityFocused($usernameFocus, equals: .back)
+                .accessibilityIdentifier("fruitBasket.back")
 
             Spacer()
 
@@ -1770,6 +1792,8 @@ struct Prompt28FruitBasketView: View {
                             await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
                         }
                         .accessibilityIdentifier("fruitBasket.publicUsername")
+                        .accessibilityFocused($usernameFocus, equals: .input)
+                        .focused($usernameKeyboardFocused)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
                         .prompt28Text(.body)
@@ -1832,6 +1856,8 @@ struct Prompt28FruitBasketView: View {
                         if let leaderboardValidationMessage {
                             FruitfolioTranslatedText(source: leaderboardValidationMessage,
                                 font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline), serious: true)
+                                .accessibilityFocused($usernameFocus, equals: .error)
+                                .accessibilityIdentifier("fruitBasket.usernameMessage")
                                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.78))
                                 .multilineTextAlignment(.center)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -1902,6 +1928,62 @@ struct Prompt28FruitBasketView: View {
                 usernameNonIdentifying = false
                 leaderboardValidationMessage = "the saved username changed in Account. your unsaved draft is still here; confirm it again before saving."
             }
+        }
+    }
+
+    private func requestLeavingGame() {
+        guard rootIsVisible else { return }
+        guard usernameEditorHasLoaded, let baseline = usernameBaseline,
+              leaderboardUsernameDraft != baseline.username else { onBack(); return }
+        guard let session = usernameExitSession else { return }
+        usernameKeyboardFocused = false
+        usernameFocus = nil
+        returnExitFocus = true
+        session.present(intent: .init(raw: leaderboardUsernameDraft,
+            confirmedNonIdentifying: usernameNonIdentifying, expected: baseline),
+            canSave: usernameStore.canPersistUsername)
+    }
+
+    private func completeUsernameExit(_ choice: FruitfolioUsernameExitSession.Choice) {
+        guard rootIsVisible else { return }
+        switch choice {
+        case .keepEditing:
+            viewModel.screen = .leaderboard
+            focusUsername(.input)
+        case .review:
+            usernameStore.reloadSavedUsername()
+            usernameNonIdentifying = false
+            leaderboardValidationMessage = usernameStore.persistenceMessage ??
+                "review the current saved username before confirming your edit again."
+            viewModel.screen = .leaderboard
+            focusUsername(.error)
+        case .discard:
+            leaderboardUsernameDraft = usernameStore.username
+            usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+            usernameBaseline = usernameStore.snapshot
+            leaderboardValidationMessage = nil
+            onBack()
+        case .save(let intent):
+            if let error = intent.commit(to: usernameStore) {
+                leaderboardValidationMessage = error
+                usernameNonIdentifying = false
+                viewModel.screen = .leaderboard
+                focusUsername(.error)
+            } else {
+                leaderboardUsernameDraft = usernameStore.username
+                usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+                usernameBaseline = usernameStore.snapshot
+                leaderboardValidationMessage = "saved on this device only."
+                onBack()
+            }
+        }
+    }
+
+    private func focusUsername(_ target: UsernameFocus) {
+        Task { @MainActor in
+            await Task.yield()
+            guard rootIsVisible, popupCoordinator.currentPopup == nil, viewModel.screen == .leaderboard else { return }
+            usernameFocus = target
         }
     }
 

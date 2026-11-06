@@ -1231,6 +1231,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     }
 
     private func tapAccountPaperAction(_ slot: String, label: String, app: XCUIApplication) {
+        let context = "account-" + qaArgument("-fruitfolioAccountActionQAScenario", in: app)
+            + "-override-" + String(app.launchArguments.contains("-fruitfolioAccountActionReduceMotion"))
+            + "-rtl-" + String(app.launchArguments.contains("-fruitfolioAccountActionRTL"))
+        tapMeasuredPaperAction(slot, label: label, app: app, context: context)
+    }
+
+    private func tapMeasuredPaperAction(_ slot: String, label: String, app: XCUIApplication, context: String) {
         let scroll = app.scrollViews["tapedWhitePopup.scroll"]
         let action = app.buttons["fruitPopup.paper.action." + slot]
         for _ in 0..<25 { if action.isHittable { break }; scroll.swipeUp() }
@@ -1241,15 +1248,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(action.frame.minY, scroll.frame.minY - 1)
         XCTAssertLessThanOrEqual(action.frame.maxY, scroll.frame.maxY + 1)
         let screenshot = XCTAttachment(screenshot: app.screenshot())
-        screenshot.name = "account-" + qaArgument("-fruitfolioAccountActionQAScenario", in: app)
-            + "-override-" + String(app.launchArguments.contains("-fruitfolioAccountActionReduceMotion"))
-            + "-rtl-" + String(app.launchArguments.contains("-fruitfolioAccountActionRTL")) + "-" + slot + "-" + label
+        screenshot.name = context + "-" + slot + "-" + label
         screenshot.lifetime = .keepAlways
         add(screenshot)
         action.tap()
     }
 
-    private func waitForAccountValue(_ identifier: String, value: String, app: XCUIApplication) {
+    private func waitForLabelValue(_ identifier: String, value: String, app: XCUIApplication) {
         let element = app.staticTexts[identifier]
         expectation(for: NSPredicate(format: "label == %@", value), evaluatedWith: element)
         waitForExpectations(timeout: 5)
@@ -1262,6 +1267,85 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<25 { if message.isHittable { break }; scroll.swipeUp() }
         XCTAssertTrue(message.isHittable)
         XCTAssertTrue(message.label.contains(fragment), message.label)
+    }
+
+    private func launchGameUsernameExit(reduced: Bool, rtl: Bool, future: Bool = false) -> XCUIApplication {
+        XCUIDevice.shared.orientation = .portrait
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario",
+            future ? "leaderboard-username-future" : "leaderboard",
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+        app.launch()
+        XCTAssertTrue(app.textFields["fruitBasket.publicUsername"].waitForExistence(timeout: 5))
+        return app
+    }
+
+    private func openGameUsernameExit(_ app: XCUIApplication) {
+        let back = app.buttons["fruitBasket.back"]
+        revealLeaderboardInput(back, app: app)
+        back.tap()
+        XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.textFields["fruitBasket.publicUsername"].exists)
+        expectation(for: NSPredicate { _, _ in app.keyboards.count == 0 }, evaluatedWith: app)
+        waitForExpectations(timeout: 5)
+    }
+
+    func testGameUsernameExitKeepsSavesOrDiscardsOnlyItsDraft() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for choice in ["keep", "save", "discard"] {
+            let app = launchGameUsernameExit(reduced: reduced, rtl: rtl)
+            let field = app.textFields["fruitBasket.publicUsername"]
+            revealLeaderboardInput(field, app: app)
+            field.tap(); field.typeText("sprout_one")
+            if choice == "save" {
+                let confirm = app.descendants(matching: .any)["fruitBasket.usernameConfirmation"].firstMatch
+                revealLeaderboardInput(confirm, app: app); confirm.tap()
+            }
+            openGameUsernameExit(app)
+            let context = "game-username-exit-" + choice + "-reduced-\(reduced)-rtl-\(rtl)"
+            let slot = choice == "keep" ? "primary" : (choice == "save" ? "secondary" : "tertiary")
+            let label = choice == "keep" ? "keep editing" : (choice == "save" ? "save + leave" : "discard edit + leave")
+            tapMeasuredPaperAction(slot, label: label, app: app, context: context)
+            waitForLabelValue("gameQA.backRequests", value: "back requests: \(choice == "keep" ? 0 : 1)", app: app)
+            revealLeaderboardInput(field, app: app)
+            if choice == "discard" { XCTAssertNotEqual(field.value as? String, "sprout_one") }
+            else { XCTAssertEqual(field.value as? String, "sprout_one") }
+            let saved = app.staticTexts["fruitBasket.qa.savedUsername"].label
+            XCTAssertEqual(saved.contains("sprout_one"), choice == "save")
+            captureGame(app, name: context + "-after-dismissal")
+            app.terminate()
+        }
+        }
+        }
+    }
+
+    func testGameUsernameExitCannotSaveUnconfirmedOrProtectedNames() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for future in [false, true] {
+            let app = launchGameUsernameExit(reduced: reduced, rtl: rtl, future: future)
+            let field = app.textFields["fruitBasket.publicUsername"]
+            revealLeaderboardInput(field, app: app)
+            field.tap(); field.typeText(future ? "_draft" : "sprout_one")
+            let draft = field.value as? String ?? ""
+            XCTAssertFalse(draft.isEmpty)
+            openGameUsernameExit(app)
+            let context = "game-username-exit-failure-future-\(future)-reduced-\(reduced)-rtl-\(rtl)"
+            tapMeasuredPaperAction("secondary", label: future ? "review saved username" : "save + leave",
+                app: app, context: context)
+            waitForLabelValue("gameQA.backRequests", value: "back requests: 0", app: app)
+            let message = app.descendants(matching: .any)["fruitBasket.usernameMessage"].firstMatch
+            XCTAssertTrue(message.waitForExistence(timeout: 5))
+            revealLeaderboardInput(field, app: app)
+            XCTAssertEqual(field.value as? String, draft)
+            if future { XCTAssertFalse(app.buttons["fruitBasket.saveUsername"].isEnabled) }
+            app.terminate()
+        }
+        }
+        }
     }
 
     private func revealLeaderboardInput(_ element: XCUIElement, app: XCUIApplication) {
@@ -1376,7 +1460,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertEqual(app.staticTexts["account.qa.savedUsername"].label, "saved username: sprout_one")
             openAccountAction("account.signOut", app: app)
             tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
-            waitForAccountValue("accountQA.identity", value: "none", app: app)
+            waitForLabelValue("accountQA.identity", value: "none", app: app)
             let email = app.textFields["account.email"]
             revealAccountInput(email, app: app)
             XCTAssertEqual(email.label, "email")
@@ -1422,13 +1506,13 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 openAccountAction("account.signOut", app: app)
                 tapAccountPaperAction("primary", label: "cancel", app: app)
                 XCTAssertTrue(app.buttons["account.signOut"].waitForExistence(timeout: 5))
-                waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
-                waitForAccountValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
+                waitForLabelValue("accountQA.recordUnchanged", value: "yes", app: app)
+                waitForLabelValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
                 openAccountAction("account.signOut", app: app)
                 tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
-                waitForAccountValue("accountQA.identity", value: "none", app: app)
-                waitForAccountValue("accountQA.pending", value: "yes", app: app)
-                waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                waitForLabelValue("accountQA.identity", value: "none", app: app)
+                waitForLabelValue("accountQA.pending", value: "yes", app: app)
+                waitForLabelValue("accountQA.healthUnchanged", value: "yes", app: app)
                 XCTAssertFalse(app.buttons["account.deleteAccount"].exists)
                 app.terminate()
             }
@@ -1444,15 +1528,15 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                         openAccountAction("account.deleteAccount", app: app)
                         tapAccountPaperAction("secondary", label: "request account deletion", app: app)
                         assertReadableAccountFailure("could not be completed", app: app)
-                        waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
+                        waitForLabelValue("accountQA.recordUnchanged", value: "yes", app: app)
                     } else {
                         openAccountAction("account.signOut", app: app)
                         tapAccountPaperAction("tertiary", label: "try cloud sync", app: app)
                         assertReadableAccountFailure("not available yet", app: app)
                     }
-                    waitForAccountValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
-                    waitForAccountValue("accountQA.pending", value: "yes", app: app)
-                    waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                    waitForLabelValue("accountQA.identity", value: "fixture-a@example.invalid", app: app)
+                    waitForLabelValue("accountQA.pending", value: "yes", app: app)
+                    waitForLabelValue("accountQA.healthUnchanged", value: "yes", app: app)
                     app.terminate()
                 }
             }
@@ -1467,10 +1551,10 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                     openAccountAction("account.signOut", app: app)
                     tapAccountPaperAction("secondary", label: "keep on this device + sign out", app: app)
                     assertReadableAccountFailure(scenario == "stale-sign-out" ? "changed" : "preserved", app: app)
-                    waitForAccountValue("accountQA.identity", value: scenario == "stale-sign-out" ? "fixture-b@example.invalid" : "fixture-a@example.invalid", app: app)
-                    waitForAccountValue("accountQA.recordUnchanged", value: "yes", app: app)
-                    waitForAccountValue("accountQA.pending", value: "yes", app: app)
-                    waitForAccountValue("accountQA.healthUnchanged", value: "yes", app: app)
+                    waitForLabelValue("accountQA.identity", value: scenario == "stale-sign-out" ? "fixture-b@example.invalid" : "fixture-a@example.invalid", app: app)
+                    waitForLabelValue("accountQA.recordUnchanged", value: "yes", app: app)
+                    waitForLabelValue("accountQA.pending", value: "yes", app: app)
+                    waitForLabelValue("accountQA.healthUnchanged", value: "yes", app: app)
                     app.terminate()
                 }
             }
