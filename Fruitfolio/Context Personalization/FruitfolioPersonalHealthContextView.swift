@@ -10,9 +10,9 @@ struct FruitfolioPersonalHealthContextView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 BackControl(action: onBack)
-                Text("personal health context").font(.title2.bold()).accessibilityAddTraits(.isHeader)
-                Text("entirely optional, user-provided context, stored on this device. explore only what matters to you. skip anything; no biological findings or diagnoses are guessed from your answers. these notes do not replace approved research or clinical advice.")
-                Text("for laboratory artwork, choose a technique or sample category only if it was actually reported or you know it applies. otherwise use other labs / testing.")
+                FruitfolioFixedText(source: "personal health context", font: .title2.bold(), serious: true).accessibilityAddTraits(.isHeader)
+                FruitfolioTranslatedText(source: "entirely optional, user-provided context, stored on this device. explore only what matters to you. skip anything; no biological findings or diagnoses are guessed from your answers. these notes do not replace approved research or clinical advice.", serious: true)
+                FruitfolioTranslatedText(source: "for laboratory artwork, choose a technique or sample category only if it was actually reported or you know it applies. otherwise use other labs / testing.", font: .callout, serious: true)
                     .font(.callout)
                 FruitfolioContextStorageNotice(store: store)
                 ForEach(FruitfolioPersonalHealthGroup.allCases) { group in
@@ -22,11 +22,11 @@ struct FruitfolioPersonalHealthContextView: View {
                                 Button { editing = category } label: {
                                     HStack(alignment: .center, spacing: 14) {
                                         if let asset = category.asset {
-                                            FruitfolioImage(id: asset).scaledToFit().frame(width: 64, height: 64).accessibilityHidden(true)
+                                            FruitfolioImage(id: asset).scaledToFit().frame(width: 64, height: 64).allowsHitTesting(false).accessibilityHidden(true)
                                         }
                                         VStack(alignment: .leading, spacing: 5) {
-                                            Text(LocalizedStringKey(category.title)).multilineTextAlignment(.leading)
-                                            Text(status(category)).font(.caption)
+                                            FruitfolioFixedText(source: category.title, protectedLiterals: category == .dna ? ["DNA"] : category == .rna ? ["RNA"] : [], serious: true).multilineTextAlignment(.leading)
+                                            FruitfolioFixedText(source: status(category), font: .caption, serious: true)
                                         }
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                     }
@@ -35,14 +35,12 @@ struct FruitfolioPersonalHealthContextView: View {
                                 .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                                 .disabled(store.storageProtectionReason != nil)
                                 .accessibilityIdentifier("personalHealth.category." + category.rawValue)
-                                .accessibilityLabel(category.title)
-                                .accessibilityValue(status(category))
-                                .accessibilityHint("opens an optional editable context field")
+                                .accessibilityElement(children: .combine)
                             }
                         }
                         .padding(.vertical, 12)
                     } label: {
-                        Text(LocalizedStringKey(group.title)).font(.headline).frame(minHeight: 44)
+                        FruitfolioFixedText(source: group.title, font: .headline, serious: true).frame(minHeight: 44)
                     }
                 }
             }
@@ -103,21 +101,21 @@ private struct FruitfolioPersonalHealthEntryEditor: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(LocalizedStringKey(category.title)).font(.title2.bold()).accessibilityAddTraits(.isHeader)
+                FruitfolioFixedText(source: category.title, protectedLiterals: category == .dna ? ["DNA"] : category == .rna ? ["RNA"] : [], font: .title2.bold(), serious: true).accessibilityAddTraits(.isHeader)
                 if let asset = category.asset {
-                    FruitfolioImage(id: asset).scaledToFit().frame(maxWidth: 100, maxHeight: 100).accessibilityHidden(true)
+                    FruitfolioImage(id: asset).scaledToFit().frame(maxWidth: 100, maxHeight: 100).allowsHitTesting(false).accessibilityHidden(true)
                 }
-                Text("anything you want Fruitfolio to know? this is your report, not something Fruitfolio has verified.")
+                FruitfolioTranslatedText(source: "anything you want Fruitfolio to know? this is your report, not something Fruitfolio has verified.", serious: true)
                 TextEditor(text: $text).frame(minHeight: 180).accessibilityLabel("optional personal health context")
                     .accessibilityIdentifier("personalHealth.editor.text")
                     .focused($textFocused)
                 Text("\(text.count) / 10000 characters").font(.caption)
-                Toggle("a clinician confirmed this information, as i report it", isOn: $clinicianConfirmed)
+                Toggle(isOn: $clinicianConfirmed) { FruitfolioFixedText(source: "a clinician confirmed this information, as i report it", serious: true) }
                 if category.group == .genetics {
-                    Text("record only findings or history you choose to supply. Fruitfolio will not infer a genotype, inheritance pattern, disease risk or diagnosis.").font(.callout)
+                    FruitfolioTranslatedText(source: "record only findings or history you choose to supply. Fruitfolio will not infer a genotype, inheritance pattern, disease risk or diagnosis.", font: .callout, serious: true).font(.callout)
                 }
                 if category == .knownOvulation {
-                    Text("this remains user-reported history. it does not confirm ovulation or replace Cycle Tracker’s separately labeled estimates.").font(.callout)
+                    FruitfolioTranslatedText(source: "this remains user-reported history. it does not confirm ovulation or replace Cycle Tracker’s separately labeled estimates.", font: .callout, serious: true).font(.callout)
                 }
                 FruitfolioContextStorageNotice(store: store)
                 if let errorMessage {

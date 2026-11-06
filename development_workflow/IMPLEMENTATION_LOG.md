@@ -2532,3 +2532,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_protected_context_resume": "written, NOT_RUN", "Foundation": "unchanged, full suites not rerun; prior794/816 XCTest +21 SwiftTesting each"}.
 - Next action: Continue context presentation localizable safety/accessibility and optional personal-health editor without changing evidence policy or previous logs; inspect pending source labels and active owner behavior.
 - Commit: containing commit for batch Context-active-choice-owner-and-protected-resume-regression.
+
+## Personal-context-controlled-copy-and-scientific-label-preservation
+
+- Parent checkpoint: 570dbdc19b0ed58435c36d396dab7406eba301d9.
+- Source-order requirements: [281, 285, 286, 287, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual personal-health groups/category/status/provenance copy uses shared compact translation; unchanged original optional/no-inferred-diagnosis/reporting warnings use long-form source owner. DNA/RNA controlled titles explicitly protect those literals. Category button inherits translated child content instead of English-only label/value overrides. Native patient TextEditor binding, initial values, save logic, original artwork preserved; decorative art rejects touches. Fifty English source entries added,870 old entries preserved,920 total; no foreign medical signoff.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing optional add/edit/remove test; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 920, "preserved_entries": 870, "new_English_entries": 50, "Apple": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21 SwiftTesting each not rerun"}.
+- Next action: Continue actual personal-health editor ownership, localizable native labels and unsaved-draft preservation; preserve frozen original record revision and existing source/clinical boundaries.
+- Commit: containing commit for batch Personal-context-controlled-copy-and-scientific-label-preservation.
