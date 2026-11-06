@@ -2488,3 +2488,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 870, "prior_entries_preserved": 864, "Apple": "NOT_RUN", "Foundation": "unchanged; full suites not rerun"}.
 - Next action: Guard actual context picker attachment and selection against inactive/dismissed/covered owner; preserve explicit one-question selection and patient values. Add relevant regression assertions and record remaining Apple execution requirements.
 - Commit: containing commit for batch Ask-explicit-context-fixed-copy-localization.
+
+## Ask-context-picker-active-consent-ownership
+
+- Parent checkpoint: 76d0c635c3df84c425f1fbbd5c316f29bb27d439.
+- Source-order requirements: [263, 264, 476, 477, 478].
+- Source files: Fruitfolio/Ask/FruitfolioAskContextPicker.swift.
+- Actual Attach/Cancel and both selection bindings require visible active scene/UIKit owner without a covering popup. Existing selection sets and explicit one-question attach logic preserved. Existing Apple consent test now backgrounds/reactivates with a selected unsent record, requires retained toggle and no automatic attachment before explicit Attach. Written only, no Apple execution.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_consent_test": "extended, NOT_RUN", "Foundation": "unchanged, prior full suites not rerun"}.
+- Next action: Continue remaining measurement deletion and separation requirements in source order, then next independent context adaptation requirements; do not invent adjusted curve clinical methods.
+- Commit: containing commit for batch Ask-context-picker-active-consent-ownership.

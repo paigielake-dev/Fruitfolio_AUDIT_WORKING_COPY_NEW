@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-11-06T20:59:27.972382+00:00",
+  "commands": [
+    "311-file Swift syntax parse",
+    "60 actual-compiler workflow checks",
+    "git diff --check"
+  ],
+  "results": {
+    "workflow_checks": 60,
+    "syntax_files": 311,
+    "Apple_consent_test": "extended, NOT_RUN",
+    "Foundation": "unchanged, prior full suites not rerun"
+  },
+  "verification": {
+    "executed": {
+      "workflow": "60 passed",
+      "syntax": "311 Swift files parsed, including extended UI regression",
+      "diff": "git diff --check clean"
+    },
+    "not_run": [
+      "Apple SDK build and actual background/reactivation/Attach/Cancel/screen-reader callbacks",
+      "Official MADLAD, native-language consent and clinical translation acceptance"
+    ],
+    "remaining": [
+      "Run actual background selection preservation and explicit Attach/Cancel Apple regression",
+      "Verify covered/dismissed/inactive action rejection and existing one-question consumption in integrated Apple app",
+      "All whole original requirements remain IN_PROGRESS pending individual acceptance"
+    ]
+  }
+}

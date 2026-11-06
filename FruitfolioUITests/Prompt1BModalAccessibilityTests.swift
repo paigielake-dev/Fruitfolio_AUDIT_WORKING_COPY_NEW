@@ -2387,6 +2387,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         attach.tap()
         XCTAssertTrue(measurement.waitForExistence(timeout: 3))
         measurement.tap()
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
+        XCTAssertTrue(measurement.waitForExistence(timeout: 3))
+        XCTAssertEqual(measurement.value as? String, "1", "Backgrounding preserves the unsent selection")
+        XCTAssertFalse(app.staticTexts["1 selected for one question"].exists, "Selection is not attachment")
         let done = app.buttons["attach selected context"]
         for _ in 0..<10 { if done.isHittable { break }; app.swipeUp() }
         done.tap()

@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// Selection alone never invokes Ask. Done attaches only the selected IDs to
 /// the next unsent question; the request snapshot is resolved again at Send.
@@ -10,6 +11,12 @@ struct FruitfolioAskContextPicker: View {
     @State private var measurementIDs: Set<UUID>
     @State private var categories: Set<FruitfolioPersonalHealthCategory>
     @State private var errorMessage: String?
+    @State private var viewIsVisible = false
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var popupCoordinator: PopupCoordinator
+    private var canInteract: Bool {
+        viewIsVisible && scenePhase == .active && UIApplication.shared.applicationState == .active && popupCoordinator.currentPopup == nil
+    }
 
     init(measurements: FruitfolioHormoneMeasurementStore, contextStore: Prompt27AContextStore,
         selectedMeasurements: Set<UUID>, selectedCategories: Set<FruitfolioPersonalHealthCategory>,
@@ -60,22 +67,27 @@ struct FruitfolioAskContextPicker: View {
                 }
                 if let errorMessage { FruitfolioFixedText(source: errorMessage, color: .red, serious: true) }
                 WatercolorPrimaryButton(label: "attach selected context") { attach() }
-                WatercolorSecondaryButton(label: "cancel") { onCancel() }
+                WatercolorSecondaryButton(label: "cancel") { guard canInteract else { return }; onCancel() }
             }
             .font(.custom("Chalkboard SE", size: 13, relativeTo: .body))
         }
+        .onAppear { viewIsVisible = true }
+        .onDisappear { viewIsVisible = false }
     }
     private func measurementBinding(_ id: UUID) -> Binding<Bool> {
         Binding(get: { measurementIDs.contains(id) }, set: { selected in
+            guard canInteract else { return }
             if selected { measurementIDs.insert(id) } else { measurementIDs.remove(id) }
         })
     }
     private func categoryBinding(_ category: FruitfolioPersonalHealthCategory) -> Binding<Bool> {
         Binding(get: { categories.contains(category) }, set: { selected in
+            guard canInteract else { return }
             if selected { categories.insert(category) } else { categories.remove(category) }
         })
     }
     private func attach() {
+        guard canInteract else { return }
         let validIDs = measurementIDs.intersection(Set(measurements.records.map(\.id)))
         let validCategories = categories.filter { contextStore.context.personalHealthEntries[$0.rawValue]?.status == .provided }
         do {
