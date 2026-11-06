@@ -86,12 +86,8 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     private func loadIfNeeded() throws {
         if model != nil { return }
         let directory = resourceDirectory ?? Bundle.main.resourceURL
-        guard let directory,
-              let data = try? Data(contentsOf: directory.appendingPathComponent("MADLAD400.manifest.json")) else {
-            throw FruitfolioTranslationError.resourcesMissing
-        }
-        let config = try JSONDecoder().decode(FruitfolioMADLADManifest.self, from: data)
-        try config.validate()
+        guard let directory else { throw FruitfolioTranslationError.resourcesMissing }
+        let config = try FruitfolioMADLADManifest.load(at: directory.appendingPathComponent("MADLAD400.manifest.json"))
         let modelURL = directory.appendingPathComponent(config.modelFile)
         try config.verifyModel(at: modelURL)
         try config.verifyExecutableMetadata(at: modelURL)

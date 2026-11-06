@@ -1,0 +1,33 @@
+{
+  "binarySHA256": "258ba851202fea23901d5b694ed08be168d7972e361f858b12f2b18abcebb46f",
+  "actualProductionSources": true,
+  "actualNativeCPUArchives": true,
+  "requestsContainUserData": false,
+  "fixture": "Manifest-only contract fixture; repeated a/b hashes are not official model/source provenance. No model installed or inference output claimed.",
+  "results": [
+    {
+      "scenario": "missing-manifest",
+      "result": {
+        "id": "missing-manifest",
+        "error": "translation resources are not available on this device. the original text is preserved."
+      },
+      "exitCode": 0
+    },
+    {
+      "scenario": "malformed-manifest",
+      "result": {
+        "error": "the translation model could not be verified. the original text is preserved.",
+        "id": "malformed-manifest"
+      },
+      "exitCode": 0
+    },
+    {
+      "scenario": "missing-model",
+      "result": {
+        "error": "translation resources are not available on this device. the original text is preserved.",
+        "id": "missing-model"
+      },
+      "exitCode": 0
+    }
+  ]
+}

@@ -90,6 +90,48 @@ final class Prompt1BMADLADManifestTests: XCTestCase {
         try await task.value
     }
 
+    func testManifestLoaderDistinguishesMissingMalformedOversizedAndInvalidResources() throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        XCTAssertThrowsError(try FruitfolioMADLADManifest.load(at: url)) {
+            XCTAssertEqual($0 as? FruitfolioTranslationError, .resourcesMissing)
+        }
+        for data in [Data(), Data("not JSON".utf8), try JSONEncoder().encode(manifest(hash: "invalid"))] {
+            try data.write(to: url)
+            XCTAssertThrowsError(try FruitfolioMADLADManifest.load(at: url)) {
+                XCTAssertEqual($0 as? FruitfolioTranslationError, .invalidManifest)
+            }
+        }
+        let encoded = try JSONEncoder().encode(manifest())
+        try (encoded + Data(repeating: 32, count: 65_536)).write(to: url)
+        XCTAssertThrowsError(try FruitfolioMADLADManifest.load(at: url)) {
+            XCTAssertEqual($0 as? FruitfolioTranslationError, .invalidManifest)
+        }
+        // The inclusive resource boundary accepts valid JSON plus whitespace.
+        try (encoded + Data(repeating: 32, count: 65_536 - encoded.count)).write(to: url)
+        XCTAssertEqual(try FruitfolioMADLADManifest.load(at: url), manifest())
+        try encoded.write(to: url)
+        XCTAssertEqual(try FruitfolioMADLADManifest.load(at: url), manifest())
+    }
+
+    func testCancelledManifestLoaderCannotAcceptValidResources() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        try JSONEncoder().encode(manifest()).write(to: url)
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            XCTAssertThrowsError(try FruitfolioMADLADManifest.load(at: url)) { XCTAssertTrue($0 is CancellationError) }
+        }
+        try await task.value
+    }
+
+    func testAbsentModelFileReportsMissingResourcesInsteadOfAnOpaqueFileError() {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        XCTAssertThrowsError(try manifest().verifyModel(at: url)) {
+            XCTAssertEqual($0 as? FruitfolioTranslationError, .resourcesMissing)
+        }
+    }
+
     func testUnverifiedDigestAndEscapingResourcePathsAreRejected() {
         XCTAssertThrowsError(try manifest(file: "../model.gguf").validate())
         XCTAssertThrowsError(try manifest(hash: "unverified").validate())
@@ -140,6 +182,25 @@ final class Prompt1BMADLADManifestTests: XCTestCase {
     }
 
     #if canImport(llama)
+    func testActualNativeRuntimeRecoversFromMissingAndMalformedResourcesWithoutFakeOutput() async throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        let url = directory.appendingPathComponent("MADLAD400.manifest.json")
+        let cases: [(Data?, FruitfolioTranslationError)] = [
+            (nil, .resourcesMissing), (Data("not JSON".utf8), .invalidManifest),
+            (try JSONEncoder().encode(manifest()), .resourcesMissing)]
+        for (data, expected) in cases {
+            if let data { try data.write(to: url) }
+            do {
+                _ = try await runtime.translate("source text", targetTag: "es")
+                XCTFail("Missing/invalid resources cannot produce a translation")
+            } catch { XCTAssertEqual(error as? FruitfolioTranslationError, expected) }
+            await runtime.releaseResources()
+        }
+    }
+
     func testNativeMADLADRejectsActualAssistantArchitectureAfterChecksumVerification() async throws {
         guard let path = ProcessInfo.processInfo.environment["FRUITFOLIO_TEST_MODEL_PATH"],
               FileManager.default.fileExists(atPath: path) else {

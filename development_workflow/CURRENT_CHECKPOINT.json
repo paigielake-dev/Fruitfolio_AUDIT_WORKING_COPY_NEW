@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "fc8d9a7bbcbebcaa1d4fa891e4d4385b798cbe1f",
+  "current_HEAD": "ac9e0e99be0d90b28182ee1e5b1bbf2a7c4e0ba2",
   "latest_verified_commit": null,
-  "current_checklist_part": 1,
-  "current_requirement": 425,
-  "current_implementation_batch": "Canonical-source-citation-control-and-owned-link-failure",
+  "current_checklist_part": 9,
+  "current_requirement": 410,
+  "current_implementation_batch": "MADLAD-bounded-manifest-loading-and-typed-resource-recovery",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,9 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/DesignSystems/FruitfolioSourceCitationList.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "Fruitfolio/Core/Translation/FruitfolioMADLADModels.swift",
+    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
+    "FruitfolioTests/Prompt1BMADLADManifestTests.swift",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/MADLAD-actual-CLI-resource-error-check.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -510,20 +512,22 @@
   "last_executed_tests": [
     "Full portable Swift6 suite",
     "Full actual native-linked Swift5 suite",
-    "39 workflow tests including9 real SwiftSyntax cases",
-    "278 Swift compiler syntax parses",
-    "All-app canonical press-cue SwiftSyntax check",
+    "39 workflow tests including9 real SwiftSyntax",
+    "278 Swift syntax parses",
+    "Actual supplied-header Swift/C API typecheck",
+    "Rebuilt actual native CLI missing/malformed resource checks",
     "git diff --check"
   ],
   "last_test_results": {
-    "portable": "571 XCTest +21 Swift Testing passed",
-    "native": "576 XCTest +21 Swift Testing passed with actual CPU llama",
+    "portable": "574 XCTest +21 Swift Testing passed",
+    "native": "580 XCTest +21 Swift Testing passed with actual CPU llama",
     "workflow": "39 passed including9 real SwiftSyntax cases",
-    "syntax": "278 Swift files parsed,0errors; all-app direct cue scan clean",
-    "Apple": "NOT_RUN expanded citation UI reopen/width assertions, real openURL/audio/layout/VO/DT"
+    "syntax": "278 Swift files parsed,0errors",
+    "CLI/API": "Actual rebuilt CPU-linked CLI rejects3 resource scenarios with no value; actual header API typecheck passes",
+    "T5/Apple": "NOT_RUN official T5 output/tokenizer/clinical/device quality and Apple SDK/UI"
   },
-  "next_exact_implementation_action": "Continue MADLAD missing-resource behavior: replace unbounded/opaque JSON decoding with a bounded, cancellation-aware actual manifest loader that returns precise invalidManifest/resourcesMissing errors; preserve actual checksum/metadata gates. Cover malformed/oversized/missing manifests and missing model files through Foundation and actual native runtime tests. Then continue independent original-order requirements.",
-  "updated_at": "2026-11-06T05:56:20.724490+00:00",
+  "next_exact_implementation_action": "Correct shared character/Tour RTL artwork orientation: HStack mirrors child order in right-to-left layout, while the speech-bubble shell currently uses the unchanged physical left/right tail. Separate logical character placement from physical tail orientation, preserve native text direction/artwork proportions and add actual Foundation direction/layout regressions plus Apple UI coverage without claiming unrun screenshots.",
+  "updated_at": "2026-11-06T05:59:39.693407+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

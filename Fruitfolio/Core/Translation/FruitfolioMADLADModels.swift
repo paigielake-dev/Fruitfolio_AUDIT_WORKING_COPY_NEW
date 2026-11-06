@@ -28,6 +28,35 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
     let contextLength: Int
     let maximumOutputTokens: Int
 
+    /// Small local configuration only. A corrupt resource must not allocate an
+    /// arbitrarily large JSON buffer or expose an opaque decoder error to UI.
+    static func load(at url: URL) throws -> Self {
+        try Task.checkCancellation()
+        let file: FileHandle
+        do { file = try FileHandle(forReadingFrom: url) }
+        catch { throw FruitfolioTranslationError.resourcesMissing }
+        defer { try? file.close() }
+        let limit = 64 * 1024
+        var data = Data()
+        do {
+            while true {
+                try Task.checkCancellation()
+                guard let chunk = try file.read(upToCount: min(4096, limit + 1 - data.count)),
+                      !chunk.isEmpty else { break }
+                data.append(chunk)
+                guard data.count <= limit else { throw FruitfolioTranslationError.invalidManifest }
+            }
+        } catch let error as CancellationError { throw error }
+        catch let error as FruitfolioTranslationError { throw error }
+        catch { throw FruitfolioTranslationError.resourcesMissing }
+        let config: Self
+        do { config = try JSONDecoder().decode(Self.self, from: data) }
+        catch { throw FruitfolioTranslationError.invalidManifest }
+        try config.validate()
+        try Task.checkCancellation()
+        return config
+    }
+
     func validate() throws {
         let hex = CharacterSet(charactersIn: "0123456789abcdef")
         guard architecture == "t5", tokenizer == "embedded-sentencepiece",
@@ -61,7 +90,9 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
 
     func verifyModel(at url: URL) throws {
         try validate()
-        let file = try FileHandle(forReadingFrom: url)
+        let file: FileHandle
+        do { file = try FileHandle(forReadingFrom: url) }
+        catch { throw FruitfolioTranslationError.resourcesMissing }
         defer { try? file.close() }
         guard try file.read(upToCount: 4) == Data("GGUF".utf8) else {
             throw FruitfolioTranslationError.incompatibleModel
