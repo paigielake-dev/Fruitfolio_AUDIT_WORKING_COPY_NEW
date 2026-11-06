@@ -8,6 +8,9 @@ struct FruitfolioScientificIllustration: View {
     let accessibilityDescription: String
     var maximumWidth: CGFloat = 310
     var maximumHeight: CGFloat = 360
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var descriptionTranslation = FruitfolioControlTranslationState()
+
 
     init(imageName: String, accessibilityDescription: String, maximumWidth: CGFloat = 310, maximumHeight: CGFloat = 360) {
         image = UIImage(named: imageName)
@@ -23,20 +26,27 @@ struct FruitfolioScientificIllustration: View {
     }
 
     var body: some View {
+        let source = image == nil ? "Required scientific artwork unavailable. " + accessibilityDescription : accessibilityDescription
+        let literals = ["DNA", "RNA", "E2", "LH", "FSH", "AMH", "BBT", "hCG"].filter { source.contains($0) }
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language, protectedLiterals: literals)
+        let description = descriptionTranslation.presentation(for: key)
         Group {
             if let image {
                 FruitfolioScientificPlateLayout(intrinsic: image.size, maximumWidth: maximumWidth, maximumHeight: maximumHeight) {
                     Image(uiImage: image).resizable()
                 }
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel(accessibilityDescription)
+                .accessibilityLabel(Text(verbatim: description.text))
             } else {
-                Text("required scientific artwork unavailable")
-                    .font(.footnote)
-                    .accessibilityLabel("Required scientific artwork unavailable. " + accessibilityDescription)
+                FruitfolioFixedText(source: "required scientific artwork unavailable", font: .footnote, serious: true)
+                    .accessibilityLabel(Text(verbatim: description.text))
             }
         }
         .allowsHitTesting(false)
+        .accessibilityHint(Text(description.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await descriptionTranslation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 

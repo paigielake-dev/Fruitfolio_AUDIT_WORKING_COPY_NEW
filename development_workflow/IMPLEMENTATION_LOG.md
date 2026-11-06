@@ -2741,3 +2741,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 797, "native_CPU_XCTest": 819, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "new_symptom_graph_Apple_launches_written_NOT_RUN": 4, "Apple_measurement_launches_written_NOT_RUN": 22, "Apple_Guide_launches_written_NOT_RUN": 56, "Apple_existing_daily_exit_launches_extended_NOT_RUN": 12, "English_catalog_keys_unchanged": 947, "official_MADLAD": "BLOCKED; syntheticT5 tests are not official inference"}.
 - Next action: Continue original shared responsive scientific artwork and explanation relationships/hotspots, preserving existing canonical artwork and source citations.315–317 external LifeBridge sources remain blocked per register; do independent source work without network bypass.
 - Commit: containing commit for batch Actual-symptom-graph-UI-fixture-and-repository-dataflow-regression.
+
+## Canonical-scientific-art-keyed-accessible-description
+
+- Parent checkpoint: 0a9692b0e207adbd15d8ec2f4b906962f5100b7b.
+- Source-order requirements: [310, 311, 312, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Core/DesignSystems/FruitfolioScientificIllustration.swift, Fruitfolio/Localizable.xcstrings.
+- Shared canonical science image accessible description now uses existing keyed control translation with protected present medical abbreviations and source/machine/unavailable hints. Missing-art state retains canonical description and localized fixed status. Existing image constructors, plate sizing and no-hit-testing unchanged; five genuine callers/sizing sources byte-preserved with SHA receipt. One English addition preserves947 old entries,948 total. Apple VoiceOver/medical description accuracy unverified.
+- Tests added/updated: FruitfolioTests/Prompt1BScientificArtSizingTests.swift (unchanged/not rerun this UI batch).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 948, "new_English_entries": 1, "source_call_site_sizing_files_unchanged": 5, "Apple_science_art_AX": "NOT_RUN", "Foundation": "unchanged; prior797/819 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue shared semantic/generated education explanations and sensitive qualifications in existing Body Biology/Fertilization/Pregnancy source paths, preserve exact evidence/citation ownership and do not introduce unsupported personalization. LifeBridge315–317 externally blocked, continue independent requirements.
+- Commit: containing commit for batch Canonical-scientific-art-keyed-accessible-description.
