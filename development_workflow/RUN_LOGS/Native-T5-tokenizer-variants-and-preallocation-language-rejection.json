@@ -1,0 +1,24 @@
+{
+  "timestamp": "2026-11-06T13:08:37.854831+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "python3 Tools/typecheck_madlad_api.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc"
+  ],
+  "results": {
+    "portable_XCTest": 712,
+    "native_CPU_XCTest": 727,
+    "SwiftTesting_each_suite": 21,
+    "workflow_checks": 42,
+    "Swift_syntax_files": 306,
+    "actual_C_API_typecheck": "PASS; not Apple ABI/link",
+    "native_T5_contract_methods": 9,
+    "before_unsupported_regression": "1 actual native test, 2 failures on parent 759f8f4",
+    "current_unsupported_language": "zero native load/context calls, no resources loaded",
+    "native_tokenizer_variants": 4,
+    "Apple_UI_typecheck": "NOT_RUN",
+    "official_MADLAD": "BLOCKED; synthetic graph and metadata contracts are not official tokenizer, language or clinical verification"
+  }
+}

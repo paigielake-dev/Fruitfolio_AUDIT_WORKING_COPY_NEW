@@ -1883,3 +1883,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 725, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 7, "native_blocking_calls_physical_main_thread": "0 in asserted Linux synthetic T5 cases; positive probe counts verified", "actual_C_API_typecheck": "PASS; no Apple link/inference by that command", "Apple_UI_typecheck": "NOT_RUN; Linux thread sampling is not UIKit/iPhone evidence", "official_MADLAD": "BLOCKED; synthetic tensors do not approve official model/language/clinical behavior"}.
 - Next action: Exercise real native T5 tokenizer dummy-prefix and control/user-defined language-tag metadata variants with Unicode/whitespace input through unchanged production inference; fix only evidence-backed compatibility failures and retain official tokenizer/model gate.
 - Commit: containing commit for batch Actual-native-T5-blocking-call-thread-sampling.
+
+## Native-T5-tokenizer-variants-and-preallocation-language-rejection
+
+- Parent checkpoint: 759f8f47a69c58986ed1a4a17ab1aa793a0ba391.
+- Source-order requirements: [418, 419, 425, 427, 428, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift.
+- Actual native untrained T5 graph accepts Unicode/whitespace with dummy-prefix on/off and CONTROL/USER_DEFINED language tags. Parent actual-native regression failed two allocation assertions. Production now rejects negative manifest language membership before checksum/model/context allocation while retaining every positive verification gate. Nine native methods pass; no official-tokenizer/language/device claim.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 727, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "native_T5_contract_methods": 9, "before_unsupported_regression": "1 actual native test, 2 failures on parent 759f8f4", "current_unsupported_language": "zero native load/context calls, no resources loaded", "native_tokenizer_variants": 4, "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic graph and metadata contracts are not official tokenizer, language or clinical verification"}.
+- Next action: Delay actual native context/sampler allocation until exact language-token and input-token budget checks pass, preserving model/vocabulary loading and cancellation/free safety. Verify over-budget requests allocate no context and later valid requests reuse the model correctly.
+- Commit: containing commit for batch Native-T5-tokenizer-variants-and-preallocation-language-rejection.

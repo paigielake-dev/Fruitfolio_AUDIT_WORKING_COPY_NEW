@@ -57,7 +57,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
 
     func translate(_ text: String, targetTag: String) async throws -> String {
         try Task.checkCancellation()
-        try loadIfNeeded()
+        try loadIfNeeded(targetTag: targetTag)
         guard let model, let context, let vocab, let sampler, let manifest else {
             throw FruitfolioTranslationError.resourcesMissing
         }
@@ -116,11 +116,17 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         throw FruitfolioTranslationError.truncatedOutput
     }
 
-    private func loadIfNeeded() throws {
+    private func loadIfNeeded(targetTag: String) throws {
         if model != nil { return }
         let directory = resourceDirectory ?? Bundle.main.resourceURL
         guard let directory else { throw FruitfolioTranslationError.resourcesMissing }
         let config = try FruitfolioMADLADManifest.load(at: directory.appendingPathComponent("MADLAD400.manifest.json"))
+        // A negative declaration needs no model allocation or multi-gigabyte
+        // checksum pass. Positive membership still requires all actual model,
+        // tokenizer and inference checks below; this does not verify a language.
+        guard config.supportedLanguageTags.contains(targetTag) else {
+            throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
+        }
         let modelURL = directory.appendingPathComponent(config.modelFile)
         try config.verifyModel(at: modelURL)
         try config.verifyExecutableMetadata(at: modelURL)

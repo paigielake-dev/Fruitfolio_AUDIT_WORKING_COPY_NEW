@@ -30,16 +30,47 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         }
     }
 
-    func testUnsupportedLanguageAndInputBudgetNeverExecuteNativeGraph() async throws {
+    func testActualT5DummyPrefixAndLanguageTagTypesAcceptUnicodeInput() async throws {
+        for prefix in [false, true] {
+            for tagType in [3, 4] { // Actual GGUF CONTROL / USER_DEFINED vocabulary types.
+                let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true,
+                    addSpacePrefix: prefix, languageTagType: tagType)
+                defer { try? FileManager.default.removeItem(at: directory) }
+                let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+                let result = try await runtime.translate("  épreuve 中\n\tfixture  ", targetTag: "de")
+                XCTAssertEqual(result, "fixture", "Deterministic token plumbing, not a translation")
+                let actual = await runtime.debugExecutionStatistics()
+                XCTAssertEqual(actual.encoderCalls, 1)
+                XCTAssertEqual(actual.decoderCalls, 2)
+                XCTAssertEqual(actual.checkedBlockingCalls, 5)
+                XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
+                await runtime.releaseResources()
+            }
+        }
+    }
+
+    func testManifestUnsupportedLanguageAvoidsNativeAllocation() async throws {
         let directory = try SyntheticT5Contract.write(gated: false)
         defer { try? FileManager.default.removeItem(at: directory) }
         let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
-        for (text, tag, expected) in [
-            ("fixture", "fr", FruitfolioTranslationError.unsupportedLanguage("fr")),
-            (String(repeating: "fixture ", count: 100), "de", .inputTooLong)] {
-            do { _ = try await runtime.translate(text, targetTag: tag); XCTFail("Expected rejection") }
-            catch { XCTAssertEqual(error as? FruitfolioTranslationError, expected) }
-        }
+        do { _ = try await runtime.translate("fixture", targetTag: "fr"); XCTFail("Unsupported tag") }
+        catch { XCTAssertEqual(error as? FruitfolioTranslationError, .unsupportedLanguage("fr")) }
+        let actual = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 0)
+        XCTAssertEqual(actual.decoderCalls, 0)
+        XCTAssertEqual(actual.checkedBlockingCalls, 0)
+        XCTAssertFalse(actual.resourcesLoaded)
+        await runtime.releaseResources()
+    }
+
+    func testInputBudgetRejectsBeforeEncoderDecoderExecution() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        do {
+            _ = try await runtime.translate(String(repeating: "fixture ", count: 100), targetTag: "de")
+            XCTFail("Over-budget input")
+        } catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inputTooLong) }
         let actual = await runtime.debugExecutionStatistics()
         XCTAssertEqual(actual.encoderCalls, 0)
         XCTAssertEqual(actual.decoderCalls, 0)
@@ -178,12 +209,14 @@ private enum SyntheticT5Contract {
         for value in values { data += integer(UInt64(value.bitPattern), bytes: 4) }
         return data
     }
-    static func write(gated: Bool, repeatToken: Bool = false, oneTokenThenEOS: Bool = false) throws -> URL {
+    static func write(gated: Bool, repeatToken: Bool = false, oneTokenThenEOS: Bool = false,
+                      addSpacePrefix: Bool = false, languageTagType: Int = 4) throws -> URL {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("fruitfolio-SYNTHETIC-T5-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         do {
             let url = directory.appendingPathComponent("SYNTHETIC-UNTRAINED-NOT-MADLAD.gguf")
-            try model(gated: gated, repeatToken: repeatToken, oneTokenThenEOS: oneTokenThenEOS).write(to: url)
+            try model(gated: gated, repeatToken: repeatToken, oneTokenThenEOS: oneTokenThenEOS,
+                addSpacePrefix: addSpacePrefix, languageTagType: languageTagType).write(to: url)
             let file = try FileHandle(forReadingFrom: url)
             defer { try? file.close() }
             let hash = try FruitfolioModelChecksum.sha256(file: file)
@@ -195,7 +228,8 @@ private enum SyntheticT5Contract {
             return directory
         } catch { try? FileManager.default.removeItem(at: directory); throw error }
     }
-    static func model(gated: Bool, repeatToken: Bool, oneTokenThenEOS: Bool) -> Data {
+    static func model(gated: Bool, repeatToken: Bool, oneTokenThenEOS: Bool,
+                      addSpacePrefix: Bool, languageTagType: Int) -> Data {
         var metadata: [(String, UInt64, Data)] = []
         func text(_ key: String, _ value: String) { metadata.append((key, 8, string(value))) }
         func number(_ key: String, _ value: UInt64) { metadata.append((key, 4, integer(value, bytes: 4))) }
@@ -218,14 +252,14 @@ private enum SyntheticT5Contract {
         metadata.append(("tokenizer.ggml.tokens", 9, vocabulary))
         metadata.append(("tokenizer.ggml.scores", 9,
                          integer(6, bytes: 4) + integer(UInt64(tokens.count)) + floats([Float](repeating: 0, count: tokens.count))))
-        let types = [3, 3, 2, 4, 4, 1, 1] + [Int](repeating: 6, count: 256)
+        let types = [3, 3, 2, languageTagType, languageTagType, 1, 1] + [Int](repeating: 6, count: 256)
         var typeData = integer(5, bytes: 4) + integer(UInt64(types.count))
         for type in types { typeData += integer(UInt64(type), bytes: 4) }
         metadata.append(("tokenizer.ggml.token_type", 9, typeData))
         for (key, value) in [("eos_token_id", 1), ("padding_token_id", 0), ("unknown_token_id", 2)] {
             number("tokenizer.ggml." + key, UInt64(value))
         }
-        for (key, value) in [("add_bos_token", false), ("add_eos_token", true), ("add_space_prefix", false)] {
+        for (key, value) in [("add_bos_token", false), ("add_eos_token", true), ("add_space_prefix", addSpacePrefix)] {
             metadata.append(("tokenizer.ggml." + key, 7, Data([value ? 1 : 0])))
         }
         var tensors: [(String, [Int], [Float])] = []
