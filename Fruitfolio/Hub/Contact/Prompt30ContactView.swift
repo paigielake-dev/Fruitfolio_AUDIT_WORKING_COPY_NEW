@@ -59,6 +59,13 @@ struct Prompt30ContactView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .toolbar(.hidden, for: .navigationBar)
+        .overlay(alignment: .topTrailing) {
+            #if DEBUG
+            if linkState.failedDestination == nil && ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                FruitfolioInteractionSoundDiagnostics()
+            }
+            #endif
+        }
         .onAppear { linkState.appear() }
         .onDisappear { linkState.disappear() }
     }
@@ -83,24 +90,33 @@ struct Prompt30ContactView: View {
                         .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
                         .buttonStyle(CutePopButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
                         .accessibilityIdentifier("contact.linkFailure.close")
+                    #if DEBUG
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        FruitfolioInteractionSoundDiagnostics()
+                    }
+                    #endif
                 }
                 .multilineTextAlignment(.center)
             }
             .accessibilityIdentifier("contact.linkFailure")
             .accessibilityAddTraits(.isModal)
-            .accessibilityAction(.escape) { dismissFailure(destination) }
-            .onAppear { errorHeadingFocused = true }
+            .accessibilityAction(.escape) { dismissFailure(destination, buttonFeedback: false) }
+            .onAppear {
+                errorHeadingFocused = true
+                audioManager.play(.popupOpen)
+            }
         }
     }
 
-    private func dismissFailure(_ destination: Prompt30ContactDestination) {
-        audioManager.play(.buttonSoftPop)
+    private func dismissFailure(_ destination: Prompt30ContactDestination, buttonFeedback: Bool = true) {
+        guard linkState.failedDestination != nil else { return }
+        if buttonFeedback { audioManager.play(.buttonSoftPop) }
+        audioManager.play(.popupClose)
         linkState.dismiss()
         focusedLink = destination
     }
 
     private func openContact(_ destination: Prompt30ContactDestination) {
-        audioManager.play(.buttonSoftPop)
         guard let request = linkState.begin(destination) else { return }
         openURL(destination.url) { accepted in
             linkState.complete(request, accepted: accepted)

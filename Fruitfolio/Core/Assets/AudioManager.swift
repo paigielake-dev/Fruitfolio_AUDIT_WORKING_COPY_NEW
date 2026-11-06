@@ -22,6 +22,32 @@ final class AudioManager: ObservableObject {
     private var applicationIsActive = true
     private var notificationObservers: [NSObjectProtocol] = []
 
+    #if DEBUG
+    @Published private(set) var debugInteractionRequests: [String: Int] = [:]
+    @Published private(set) var debugInteractionPlaybackStarts: [String: Int] = [:]
+    private var debugInteractionRecording = false
+
+    func debugRecordInteractions(_ enabled: Bool) {
+        guard enabled != debugInteractionRecording else { return }
+        debugInteractionRecording = enabled
+        if enabled {
+            debugInteractionRequests = [:]
+            debugInteractionPlaybackStarts = [:]
+        }
+    }
+    private func debugTracks(_ id: FruitfolioAudioID) -> Bool {
+        id == .buttonSoftPop || id == .popupOpen || id == .popupClose
+    }
+    private func debugRequested(_ id: FruitfolioAudioID) {
+        guard debugInteractionRecording, debugTracks(id) else { return }
+        debugInteractionRequests[id.rawValue, default: 0] += 1
+    }
+    private func debugPlaybackStarted(_ id: FruitfolioAudioID) {
+        guard debugInteractionRecording, debugTracks(id) else { return }
+        debugInteractionPlaybackStarts[id.rawValue, default: 0] += 1
+    }
+    #endif
+
     init(settings: SettingsStore? = nil) {
         configureAudioSession()
         observeAudioLifecycle()
@@ -48,6 +74,9 @@ final class AudioManager: ObservableObject {
         loop: Bool = false,
         bundle: Bundle = .main
     ) {
+        #if DEBUG
+        debugRequested(id)
+        #endif
         let category = category(for: id)
 
         if loop || isContinuousCategory(category) {
@@ -627,6 +656,10 @@ final class AudioManager: ObservableObject {
 
             let didPlay =
                 player.play()
+
+            #if DEBUG
+            if didPlay { debugPlaybackStarted(id) }
+            #endif
 
             debugLog(
                 "one-shot \(semanticKey(for: id)) = \(didPlay)"

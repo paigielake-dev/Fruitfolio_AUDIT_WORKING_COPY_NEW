@@ -3,6 +3,29 @@ import XCTest
 
 @MainActor
 final class Prompt1BAudioSettingsTests: XCTestCase {
+    #if DEBUG
+    func testInteractionDiagnosticsAreOptInAndMuteDoesNotBecomePlaybackEvidence() async throws {
+        let suite = "Fruitfolio.AudioDiagnostics." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.globallyMuted = true
+        let audio = AudioManager(settings: settings)
+        defer { audio.resetAllAudio() }
+        audio.play(.buttonSoftPop)
+        XCTAssertTrue(audio.debugInteractionRequests.isEmpty)
+        audio.debugRecordInteractions(true)
+        audio.play(.buttonSoftPop)
+        audio.play(.typingSoft, loop: true)
+        XCTAssertEqual(audio.debugInteractionRequests[FruitfolioAudioID.buttonSoftPop.rawValue], 1)
+        XCTAssertNil(audio.debugInteractionRequests[FruitfolioAudioID.typingSoft.rawValue])
+        XCTAssertEqual(audio.debugInteractionPlaybackStarts[FruitfolioAudioID.buttonSoftPop.rawValue, default: 0], 0)
+        audio.debugRecordInteractions(false)
+        audio.play(.buttonSoftPop)
+        XCTAssertEqual(audio.debugInteractionRequests[FruitfolioAudioID.buttonSoftPop.rawValue], 1)
+    }
+    #endif
+
     func testGlobalMuteBlocksAllChannelsAndPreservesIndividualPreferences() throws {
         let suite = "Prompt1BAudio.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

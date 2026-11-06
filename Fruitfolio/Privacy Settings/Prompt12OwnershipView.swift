@@ -64,7 +64,6 @@ struct Prompt12OwnershipView: View {
                         )
 
                         WatercolorSecondaryButton(label: "check ownership") {
-                            audioManager.play(.buttonSoftPop)
                             store.beginQuietOwnershipValidation()
                         }
                         .disabled(store.ownershipState == .validating)

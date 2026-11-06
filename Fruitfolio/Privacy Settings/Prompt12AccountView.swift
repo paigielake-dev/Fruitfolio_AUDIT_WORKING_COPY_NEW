@@ -144,7 +144,6 @@ struct Prompt12AccountView: View {
             }
 
             WatercolorSecondaryButton(label: "save username") {
-                audioManager.play(.buttonSoftPop)
                 if let error = usernameStore.setUsername(usernameDraft, confirmedNonIdentifying: usernameNonIdentifying, identifyingText: [email, store.account?.email ?? ""]) {
                     usernameMessage = error
                 } else {
@@ -244,7 +243,6 @@ struct Prompt12AccountView: View {
 
             if store.pendingLocalChanges {
                 WatercolorSecondaryButton(label: "sync now") {
-                    audioManager.play(.buttonSoftPop)
                     store.syncNow()
                 }
             }

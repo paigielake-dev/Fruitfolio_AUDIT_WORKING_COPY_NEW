@@ -145,7 +145,6 @@ struct Prompt10EncyclopediaDetailView: View {
             ZStack {
                 HStack {
                     BackControl {
-                        audioManager.play(.buttonSoftPop)
                         onBack()
                     }
 
@@ -374,7 +373,6 @@ struct Prompt10SavedPageView: View {
                 ZStack {
                     HStack {
                         BackControl {
-                            audioManager.play(.buttonSoftPop)
                             if hasUnsavedNotes { confirmDiscardNotes = true } else { onBack() }
                         }
 

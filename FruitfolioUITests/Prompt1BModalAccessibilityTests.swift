@@ -198,6 +198,32 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testContactButtonOwnsOneSoftPopAndMutePreventsSoftwarePlayback() {
+        for muted in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioContactQA", "-fruitfolioContactReduceMotion", "-fruitfolioAudioDiagnostics"]
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            app.launch()
+            let link = app.buttons["contact.link.instagram"]
+            XCTAssertTrue(link.waitForExistence(timeout: 5))
+            link.tap()
+            let close = app.buttons["contact.linkFailure.close"]
+            XCTAssertTrue(close.waitForExistence(timeout: 3))
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 1)")
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            captureGame(app, name: "contact-audio-muted-\(muted)")
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            close.tap()
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 2)")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 1")
+            app.terminate()
+        }
+    }
+
     func testScrollablePopupIsolatesBackgroundAndRestoresItOnClose() {
         verifyModal(reduceMotion: false)
     }

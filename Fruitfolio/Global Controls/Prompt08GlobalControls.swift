@@ -60,7 +60,7 @@ struct FruitfolioControlPillButton: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, compact ? 18 : 36)
                 .padding(.vertical, compact ? 12 : 24)
-                .frame(maxWidth: 292, minHeight: compact ? 44 : 82, alignment: .center)
+                .frame(maxWidth: 292, minHeight: compact ? DesignTokens.Layout.minimumHitTarget : 82, alignment: .center)
                 .background {
                     Image("control_pill_outline")
                         .resizable(

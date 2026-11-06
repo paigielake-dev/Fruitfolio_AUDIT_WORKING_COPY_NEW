@@ -314,9 +314,6 @@ struct Prompt16TodayView: View {
                 FruitfolioControlPillButton(
                     label: "see what’s happening"
                 ) {
-                    audioManager.play(
-                        .buttonSoftPop
-                    )
 
                     onSeeBiology()
                 }
@@ -431,9 +428,6 @@ struct Prompt16TodayView: View {
             FruitfolioControlPillButton(
                 label: "log today +"
             ) {
-                audioManager.play(
-                    .buttonSoftPop
-                )
 
                 onLogToday()
             }

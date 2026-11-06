@@ -611,7 +611,6 @@ public struct Prompt20DailyLogView: View {
                 label: model.saveState == .saving ? "saving…" : model.saveButtonTitle
             ) {
                 guard model.canSave else { return }
-                audioManager.play(.buttonSoftPop)
 
                 saveLog()
             }

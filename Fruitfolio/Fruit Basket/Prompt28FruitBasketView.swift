@@ -172,6 +172,7 @@ struct Prompt28FruitBasketView: View {
             lastStormNoteKey = key
             showStormNote = true
             viewModel.pause()
+            audioManager.play(.popupOpen)
         }
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
@@ -419,6 +420,8 @@ struct Prompt28FruitBasketView: View {
     }
 
     private func dismissStormNote() {
+        guard showStormNote else { return }
+        audioManager.play(.popupClose)
         showStormNote = false
         if viewModel.screen == .paused { viewModel.resume() }
     }

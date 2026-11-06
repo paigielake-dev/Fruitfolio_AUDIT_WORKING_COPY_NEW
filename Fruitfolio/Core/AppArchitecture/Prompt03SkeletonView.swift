@@ -147,6 +147,15 @@ struct Prompt03SkeletonView: View {
                 .environment(\.openURL, OpenURLAction { _ in .discarded })
                 .onAppear {
                     settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioContactReduceMotion")
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        settings.globallyMuted = ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioMuted")
+                        audioManager.debugRecordInteractions(true)
+                    }
+                }
+                .onDisappear {
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        audioManager.debugRecordInteractions(false)
+                    }
                 }
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelQA") {
             Prompt18WheelRegressionHarness()

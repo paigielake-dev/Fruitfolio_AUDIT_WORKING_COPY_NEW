@@ -947,7 +947,6 @@ struct Prompt09AskView: View {
                        viewModel.selectedEducationalAssets.isEmpty,
                        !viewModel.availableEducationalAssets.isEmpty {
                         WatercolorSecondaryButton(label: "view educational illustration") {
-                            audioManager.play(.buttonSoftPop)
                             viewModel.revealEducationalIllustration()
                             sessionIllustrations[answer.id] = viewModel.selectedEducationalAssets.map(\.assetID)
                         }
