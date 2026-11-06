@@ -137,6 +137,20 @@ struct Prompt10SavedPage: Identifiable, Codable, Equatable, Sendable {
             (excerptLanguage ?? "en") == (candidate.excerptLanguage ?? "en") && excerptText == candidate.excerptText
     }
 
+    /// Display translation never changes persisted source/user-authored fields.
+    var allowsAutomaticDisplayTranslation: Bool {
+        originalAnswerID != nil && userMaterial == nil
+    }
+    var displaySourceLanguage: String {
+        saveType == .excerpt ? (excerptLanguage ?? "en") : "en"
+    }
+    var displaySemanticSpans: [FruitfolioSemanticSpan]? {
+        guard userMaterial == nil, saveType == .excerpt,
+              let spans = excerptSemanticSpans,
+              spans.map(\.text).joined() == displayBody else { return nil }
+        return spans
+    }
+
     var displayBody: String {
         switch saveType {
         case .fullAnswer:

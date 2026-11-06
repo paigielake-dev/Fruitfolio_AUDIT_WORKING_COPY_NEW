@@ -965,8 +965,8 @@ struct Prompt11OriginalAnswerPopup: View {
                         VStack(alignment: .leading, spacing: 12) {
                             if !sourcePage.displayBody.isEmpty {
                                 FruitfolioTranslatedText(source: sourcePage.displayBody, protectedLiterals: sourcePage.sourceIDs,
-                                    enabled: sourcePage.originalAnswerID != nil, font: .custom("Chalkboard SE", size: 12, relativeTo: .body),
-                                    sourceLanguage: sourcePage.excerptLanguage ?? "en", semanticSpans: sourcePage.excerptSemanticSpans)
+                                    enabled: sourcePage.allowsAutomaticDisplayTranslation, font: .custom("Chalkboard SE", size: 12, relativeTo: .body),
+                                    sourceLanguage: sourcePage.displaySourceLanguage, semanticSpans: sourcePage.displaySemanticSpans)
                             }
                             FruitfolioSavedScientificIllustrations(assetIDs: sourcePage.educationalAssetIDs ?? [])
                             if let records = sourcePage.sourceRecords, !records.isEmpty {

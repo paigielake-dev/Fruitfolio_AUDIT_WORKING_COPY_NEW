@@ -409,10 +409,10 @@ struct Prompt10SavedPageView: View {
                 if !page.displayBody.isEmpty {
                 FruitfolioTranslatedText(
                     source: page.displayBody, protectedLiterals: page.sourceIDs,
-                    enabled: page.originalAnswerID != nil,
+                    enabled: page.allowsAutomaticDisplayTranslation,
                     font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
-                    sourceLanguage: page.saveType == .excerpt ? (page.excerptLanguage ?? "en") : "en",
-                    semanticSpans: page.saveType == .excerpt ? page.excerptSemanticSpans : nil
+                    sourceLanguage: page.displaySourceLanguage,
+                    semanticSpans: page.displaySemanticSpans
                 )
                     .font(
                         .custom(

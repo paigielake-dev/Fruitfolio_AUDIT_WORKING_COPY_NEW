@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T01:36:29.367408+00:00",
+  "updated_at": "2026-11-06T01:39:36.086781+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1451,6 +1451,24 @@
         "T5": "Actual allocated official T5 release/inference NOT_RUN; resources unavailable"
       },
       "timestamp": "2026-11-06T01:36:29.367408+00:00"
+    },
+    {
+      "batch": "Shared-saved-display-translation-policy-and-original-storage-boundary",
+      "commands": [
+        "Full portable Swift6 suite with final semantic mismatch regression",
+        "Full actual native-linked Swift5 suite",
+        "Swift compiler syntax parse",
+        "git diff --check"
+      ],
+      "results": {
+        "Swift6": "462 XCTest +21 Swift Testing passed",
+        "nativeSwift5": "467 XCTest +21 Swift Testing passed",
+        "syntax": "239 changed Swift files parsed; zero errors",
+        "storage": "Actual UserDefaults saved bytes and reinitialized original source/citation/note metadata unchanged across fixture display translations/preferences",
+        "Apple": "NOT_RUN saved display/selection/VoiceOver and complete per-language app acceptance",
+        "MADLAD": "Official T5 inference/clinical quality NOT_RUN; fixture tests are storage/display policy only"
+      },
+      "timestamp": "2026-11-06T01:39:36.086781+00:00"
     }
   ]
 }
