@@ -838,3 +838,14 @@
 - Verification: {"Swift_6_headless": "408 XCTest +21 Swift Testing passed", "Swift_5_native": "412 XCTest +21 Swift Testing passed", "workflow": "16 Python tests passed;36 exact supplemental entries preserved", "Swift_syntax": "213 changed Swift files parsed; zero errors", "Apple": "NOT_RUN: classification input, clock suspension and settlement visuals/VoiceOver await Apple SDK/runtime"}.
 - Next action: Correct overly broad sensitive-topic exclusion in new game provider: retain serious sourced educational feedback while preserving urgent-request bypass. Then immediately continue wind/rain/puddle/branch/vine requirements339 onward.
 - Commit: containing commit for batch Classification-stars-and-shared-settlement-parity.
+
+## Serious-game-education-without-blanket-topic-exclusion
+
+- Parent checkpoint: e67d22c0d26e4503602fc961d54cf12109d10aa9.
+- Source-order requirements: [325, 338, 378, 379].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketResearchBridge.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketViewModel.swift.
+- Corrected initial overly broad provider boundary: sensitive educational topics/paragraphs remain eligible and retain their full source trail, with serious neutral feedback instead of blanket exclusion. Urgent phrase requests retain canonical safety bypass. Query/source safety cannot be overridden by false tone metadata. Serious question feedback suppresses playful characters/emoticons/celebratory chime; ordinary correct copy now matches founder exact YAYYY! catch your fruit! :-). Distinguishes eligible-research-but-no-fair-vocabulary-question from no eligible source, avoiding false research-absence claims. Added source-retention/unavailability regressions and updated current verification document. This remains excerpt practice, not reviewed conceptual question-depth or jointly verified quiz localization.
+- Tests added/updated: Prompt1BFruitBasketResearchTests.
+- Verification: {"Swift_6_headless": "410 XCTest +21 Swift Testing passed; final8 game research tests also passed", "Swift_5_native": "414 XCTest +21 Swift Testing passed", "workflow": "16 Python tests passed", "Swift_syntax": "213 changed Swift files parsed; zero errors", "Apple": "NOT_RUN: feedback presentation, copy/tone/interaction and full app typechecking remain behind Mac/runtime gate"}.
+- Next action: Implement wind/rain/puddle/branch/vine mechanics using preserved source art and shared painted-footprint geometry, actual code trajectories, rustle audio/contact strain, physically localized basket inertia, and specified Strawberry storm note. Continue original-order progression requirements afterward.
+- Commit: containing commit for batch Serious-game-education-without-blanket-topic-exclusion.

@@ -167,7 +167,7 @@ final class Prompt28FruitBasketViewModel: ObservableObject {
             switch error {
             case .topicExhausted:
                 screen = .topicExhausted
-            case .unsupportedTopic, .providerUnavailable, .urgentTopic, .sensitiveTopic:
+            case .unsupportedTopic, .providerUnavailable, .urgentTopic, .practiceUnavailable:
                 screen = .topicUnsupported
             default:
                 screen = .error

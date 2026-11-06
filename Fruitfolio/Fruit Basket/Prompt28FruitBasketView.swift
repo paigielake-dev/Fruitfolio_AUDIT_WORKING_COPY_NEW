@@ -820,6 +820,7 @@ struct Prompt28FruitBasketView: View {
                                 alignment: .top,
                                 spacing: 10
                             ) {
+                                if !question.usesSeriousFeedback {
                                 FruitfolioImage(
                                     id: .fruit_peach_soft
                                 )
@@ -828,13 +829,14 @@ struct Prompt28FruitBasketView: View {
                                     height: 64
                                 )
                                 .accessibilityLabel("Peach")
+                                }
 
                                 VStack(
                                     alignment: .leading,
                                     spacing: 5
                                 ) {
                                     Text(
-                                        "not quite :,) here’s the little reason why."
+                                        Prompt28FeedbackCopy.incorrect(serious: question.usesSeriousFeedback)
                                     )
                                     .prompt28Text(.body)
 
@@ -849,7 +851,7 @@ struct Prompt28FruitBasketView: View {
                             }
 
                             Prompt28WatercolorButton(
-                                title: "got it ♡",
+                                title: question.usesSeriousFeedback ? "review question" : "got it ♡",
                                 accent: .mint
                             ) {
                                 viewModel.selectedAnswerID = nil
@@ -858,6 +860,7 @@ struct Prompt28FruitBasketView: View {
 
                         } else if viewModel.screen == .correctFeedback {
                             HStack(spacing: 10) {
+                                if !question.usesSeriousFeedback {
                                 FruitfolioImage(
                                     id: .fruit_strawberry_silly
                                 )
@@ -866,8 +869,9 @@ struct Prompt28FruitBasketView: View {
                                     height: 62
                                 )
                                 .accessibilityLabel("Strawberry")
+                                }
 
-                                Text("YAYYY! catch your fruit! ♡")
+                                Text(Prompt28FeedbackCopy.correct(serious: question.usesSeriousFeedback))
                                     .prompt28Text(.body)
                             }
 
@@ -875,7 +879,7 @@ struct Prompt28FruitBasketView: View {
                                 title: "catch",
                                 accent: .paleYellow
                             ) {
-                                audioManager.play(.starChime)
+                                if !question.usesSeriousFeedback { audioManager.play(.starChime) }
                                 viewModel.screen = .catchIntro
                             }
 
@@ -890,7 +894,7 @@ struct Prompt28FruitBasketView: View {
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
                             Prompt28WatercolorButton(
-                                title: "ready ♡",
+                                title: question.usesSeriousFeedback ? "ready" : "ready ♡",
                                 accent: .paleYellow
                             ) {
                                 viewModel.beginCatch()

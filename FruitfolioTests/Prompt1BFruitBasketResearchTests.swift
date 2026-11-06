@@ -3,7 +3,7 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BFruitBasketResearchTests: XCTestCase {
-    private func fixture(approved: Bool = true, eligible: Bool = true, includeParagraph: Bool = true) throws -> (URL, Prompt28BundledResearchProvider) {
+    private func fixture(approved: Bool = true, eligible: Bool = true, includeParagraph: Bool = true, sensitiveExcerpt: Bool = false) throws -> (URL, Prompt28BundledResearchProvider) {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         let source = FruitfolioResearchSource(sourceID: "fixture", title: "Nonclinical test fixture", authors: nil, organization: nil,
@@ -14,7 +14,7 @@ final class Prompt1BFruitBasketResearchTests: XCTestCase {
         note.sourceParagraphID = "paragraph"
         var package = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: "fixture", generatedFrom: "test", generationNote: "no medical assertion",
             researchNoteChunks: [note], sources: [source], sourceChunks: [])
-        package.sourceParagraphs = includeParagraph ? ["paragraph": "fixture vocabulary: blood body. quantities 2–4 mg; no medical assertion."] : [:]
+        package.sourceParagraphs = includeParagraph ? ["paragraph": (sensitiveExcerpt ? "pregnancy loss — " : "") + "fixture vocabulary: blood body. quantities 2–4 mg; no medical assertion."] : [:]
         let url = directory.appendingPathComponent("package.json")
         try JSONEncoder().encode(package).write(to: url)
         return (directory, Prompt28BundledResearchProvider(packageStore: .init(resourceURL: url)))
@@ -71,12 +71,11 @@ final class Prompt1BFruitBasketResearchTests: XCTestCase {
         }
     }
 
-    func testUrgentAndSensitiveTopicsAreNotGamifiedBeforePackageLoading() async throws {
+    func testUrgentTopicUsesSafetyBeforePackageLoading() async throws {
         let provider = Prompt28BundledResearchProvider(packageStore: .init(resourceURL: URL(fileURLWithPath: "/nonexistent/research.json")))
         do { _ = try await provider.question(topic: "I can’t breathe", normalizedTopic: "breathing", difficulty: .easy, excludingQuestionIDs: []); XCTFail("urgent topic must bypass game") }
         catch Prompt28ResearchError.urgentTopic { }
-        do { _ = try await provider.question(topic: "pregnancy loss", normalizedTopic: "pregnancy loss", difficulty: .easy, excludingQuestionIDs: []); XCTFail("sensitive topic must bypass game") }
-        catch Prompt28ResearchError.sensitiveTopic { }
+
     }
 
     func testClozeOnlyReplacesWholeWordAndPreservesOperatorsAndQuantities() throws {
@@ -97,4 +96,26 @@ final class Prompt1BFruitBasketResearchTests: XCTestCase {
         invalid.sourceRecords = []
         XCTAssertFalse(invalid.isPlayable)
     }
+    func testSensitiveEducationRetainsEligibleEvidenceWithSeriousFeedback() async throws {
+        let (directory, provider) = try fixture(sensitiveExcerpt: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let question = try await provider.question(topic: "pregnancy loss fixture", normalizedTopic: "pregnancy loss fixture", difficulty: .easy, excludingQuestionIDs: [])
+        XCTAssertTrue(question.isPlayable)
+        XCTAssertTrue(question.usesSeriousFeedback)
+        var cannotOverrideSourceTone = question
+        cannotOverrideSourceTone.seriousFeedback = false
+        XCTAssertTrue(cannotOverrideSourceTone.usesSeriousFeedback)
+        XCTAssertTrue(question.sourceExcerpt?.contains("pregnancy loss") == true)
+        XCTAssertFalse(Prompt28FeedbackCopy.correct(serious: true).contains("YAY"))
+        XCTAssertFalse(Prompt28FeedbackCopy.incorrect(serious: true).contains(":,)"))
+        XCTAssertEqual(Prompt28FeedbackCopy.correct(serious: false), "YAYYY! catch your fruit! :-)")
+    }
+
+    func testEligibleExcerptWithoutVocabularyDoesNotClaimResearchIsAbsent() async throws {
+        let (directory, provider) = try fixture()
+        defer { try? FileManager.default.removeItem(at: directory) }
+        do { _ = try await provider.question(topic: "fixture", normalizedTopic: "fixture", difficulty: .hard, excludingQuestionIDs: []); XCTFail("The fixture has no advanced practice vocabulary") }
+        catch Prompt28ResearchError.practiceUnavailable { }
+    }
+
 }

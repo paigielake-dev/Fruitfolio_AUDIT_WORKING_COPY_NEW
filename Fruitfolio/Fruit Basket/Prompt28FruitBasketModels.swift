@@ -102,6 +102,10 @@ struct Prompt28Question: Identifiable, Hashable, Codable, Sendable {
     let createdAt: Date
     var sourceRecords: [AskSourceRecord]? = nil
     var sourceExcerpt: String? = nil
+    var seriousFeedback: Bool? = nil
+    var usesSeriousFeedback: Bool {
+        seriousFeedback == true || Prompt34LocalSafetyRouter.classify(topicQuery + " " + questionText + " " + explanation).requiresSeriousTone
+    }
 
     var isPlayable: Bool {
         answerOptions.count >= 2
@@ -431,5 +435,18 @@ struct Prompt28LeaderboardTotals: Equatable, Sendable {
         starsEarned = entries.reduce(0) { $0 + max(0, $1.totalStarsEarned) }
         basketReveals = entries.reduce(0) { $0 + max(0, $1.totalSuccessfulRounds) }
         highestLevel = entries.map(\.highestGameLevelReached).max() ?? 0
+    }
+}
+
+/// Neutral feedback for serious education; the ordinary founder celebration is
+/// retained for nonsensitive game questions. This does not classify a diagnosis.
+nonisolated enum Prompt28FeedbackCopy {
+    static func incorrect(serious: Bool) -> String {
+        serious ? "that answer does not match the original source. review the excerpt and its citations below."
+            : "not quite :,) here’s the little reason why."
+    }
+    static func correct(serious: Bool) -> String {
+        serious ? "that answer matches the source. continue when you’re ready."
+            : "YAYYY! catch your fruit! :-)"
     }
 }

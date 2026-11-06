@@ -14,7 +14,7 @@ protocol Prompt28ResearchProviding: Sendable {
 enum Prompt28ResearchError: LocalizedError, Equatable, Sendable {
     case providerUnavailable
     case urgentTopic
-    case sensitiveTopic
+    case practiceUnavailable
     case unsupportedTopic
     case topicExhausted
     case invalidQuestion
@@ -24,8 +24,8 @@ enum Prompt28ResearchError: LocalizedError, Equatable, Sendable {
         switch self {
         case .urgentTopic:
             return Prompt34LocalSafetyRouter.urgentResponseText()
-        case .sensitiveTopic:
-            return "this topic deserves serious educational support rather than a game. you can explore it through Ask or the approved library."
+        case .practiceUnavailable:
+            return "there are eligible library excerpts for this topic, but this practice mode could not build a fair question at this vocabulary level. try another difficulty or explore the excerpts in Ask."
         case .providerUnavailable:
             return "the approved FruitsofLife.xo research library is not connected to Fruit Basket in this build yet."
         case .unsupportedTopic:
@@ -95,7 +95,6 @@ actor Prompt28BundledResearchProvider: Prompt28ResearchProviding {
         try Task.checkCancellation()
         let safety = Prompt34LocalSafetyRouter.classify(topic)
         if safety.level == .urgent { throw Prompt28ResearchError.urgentTopic }
-        if safety.level == .sensitive { throw Prompt28ResearchError.sensitiveTopic }
         guard !FruitfolioQueryNormalizer.tokens(normalizedTopic).isEmpty else { throw Prompt28ResearchError.unsupportedTopic }
         let retriever = try await packageStore.retriever()
         let package = retriever.package
@@ -106,13 +105,15 @@ actor Prompt28BundledResearchProvider: Prompt28ResearchProviding {
         let notes = retriever.contextualizedNotes(ranked)
         var seenParagraphs: Set<String> = []
         var hadValidQuestion = false
+        var hadEligibleExcerpt = false
         for note in notes {
             try Task.checkCancellation()
             guard seenParagraphs.insert(note.text).inserted,
                   !note.sourceIDs.isEmpty, note.sourceIDs.allSatisfy({ approved[$0] != nil }),
-                  Prompt34LocalSafetyRouter.classify(note.text).level == .normal,
                   FruitfolioEvidenceCopyPolicy.validatedPresentation(note.text, original: note.text) != nil
             else { continue }
+            hadEligibleExcerpt = true
+            let serious = safety.requiresSeriousTone || Prompt34LocalSafetyRouter.classify(note.text).requiresSeriousTone
             let sources = note.sourceIDs.compactMap { approved[$0] }.map {
                 AskSourceRecord(id: $0.sourceID, title: $0.apa7Reference ?? $0.title, sourceText: $0.apa7Reference,
                     urlString: $0.canonicalURL, doi: $0.doi, publicationData: $0.publicationDate, contentVersion: $0.contentVersion)
@@ -131,12 +132,13 @@ actor Prompt28BundledResearchProvider: Prompt28ResearchProviding {
                     goodFruitIDs: [.strawberry, .blueberry, .orange, .apple, .pear],
                     badFruitIDs: [.grape, .peach, .watermelon, .plum, .lemon],
                     contentVersion: package.contentVersion, reviewStatus: "exact_founder_attributed_excerpt_not_independent_clinical_review",
-                    createdAt: Date(), sourceRecords: sources, sourceExcerpt: note.text)
+                    createdAt: Date(), sourceRecords: sources, sourceExcerpt: note.text, seriousFeedback: serious)
                 guard question.isPlayable else { throw Prompt28ResearchError.invalidQuestion }
                 return question
             }
         }
-        throw hadValidQuestion ? Prompt28ResearchError.topicExhausted : Prompt28ResearchError.unsupportedTopic
+        if hadValidQuestion { throw Prompt28ResearchError.topicExhausted }
+        throw hadEligibleExcerpt ? Prompt28ResearchError.practiceUnavailable : Prompt28ResearchError.unsupportedTopic
     }
 }
 
