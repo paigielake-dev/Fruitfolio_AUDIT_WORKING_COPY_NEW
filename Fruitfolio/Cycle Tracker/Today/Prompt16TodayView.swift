@@ -997,10 +997,18 @@ private enum Prompt16LocalDateBridge {
 
 private struct Prompt16LimitedDataCycleWheel: View {
     @Environment(\.locale) private var appLocale
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var descriptionTranslation = FruitfolioControlTranslationState()
+    @StateObject private var dayTranslation = FruitfolioControlTranslationState()
+    private let descriptionSource = "Cycle wheel. Fruitfolio needs more completed cycle history before showing personalized phase geometry."
     let cycleDay: Int?
     let revealProgress: CGFloat
 
     var body: some View {
+        let descriptionKey = FruitfolioControlTranslationState.Key(source: descriptionSource, language: settings.language)
+        let dayKey = FruitfolioControlTranslationState.Key(source: "cycle day", language: settings.language)
+        let description = descriptionTranslation.presentation(for: descriptionKey)
+        let day = dayTranslation.presentation(for: dayKey)
         ZStack {
             Circle()
                 .trim(
@@ -1162,12 +1170,18 @@ private struct Prompt16LimitedDataCycleWheel: View {
         .accessibilityElement(
             children: .ignore
         )
-        .accessibilityLabel(
-            cycleDay.map {
-                "Cycle wheel. Cycle day \($0). Fruitfolio needs more completed cycle history before showing personalized phase geometry."
-            }
-            ?? "Cycle wheel. Fruitfolio needs more completed cycle history before showing personalized phase geometry."
-        )
+        .accessibilityLabel(Text(verbatim: description.text))
+        .accessibilityValue(cycleDay.map { Text(verbatim: day.text + " ") + Text($0, format: .number.locale(appLocale)) } ?? Text(verbatim: ""))
+        .accessibilityHint(Text([
+            description.status.accessibilityDetail(original: descriptionSource, localized: { settings.localized($0) }),
+            cycleDay == nil ? "" : day.status.accessibilityDetail(original: "cycle day", localized: { settings.localized($0) })
+        ].filter { !$0.isEmpty }.joined(separator: ". ")))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: descriptionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await descriptionTranslation.resolve(descriptionKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: dayKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await dayTranslation.resolve(dayKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 
@@ -1179,9 +1193,14 @@ private enum Prompt16LoadState {
 
 private struct Prompt16DayIndicator: View {
     @Environment(\.locale) private var appLocale
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var labelTranslation = FruitfolioControlTranslationState()
     let cycleDay: Int?
 
     var body: some View {
+        let source = cycleDay == nil ? "cycle day not available yet" : "cycle day"
+        let key = FruitfolioControlTranslationState.Key(source: source, language: settings.language)
+        let label = labelTranslation.presentation(for: key)
         ZStack {
             Image(
                 "cycle_day_circle"
@@ -1226,12 +1245,11 @@ private struct Prompt16DayIndicator: View {
         .accessibilityElement(
             children: .ignore
         )
-        .accessibilityLabel(
-            cycleDay.map {
-                "cycle day \($0)"
-            }
-            ?? "cycle day not available yet"
-        )
+        .accessibilityLabel(cycleDay.map { Text(verbatim: label.text + " ") + Text($0, format: .number.locale(appLocale)) } ?? Text(verbatim: label.text))
+        .accessibilityHint(Text(label.status.accessibilityDetail(original: source, localized: { settings.localized($0) })))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key, inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await labelTranslation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 

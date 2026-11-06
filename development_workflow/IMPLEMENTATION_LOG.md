@@ -2598,3 +2598,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_number_display": "NOT_RUN", "Foundation": "unchanged; last794/816 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Localize fixed wheel/day accessibility descriptions via existing keyed control translation state while keeping optional cycleDay separately native-formatted; retain uncertainty and source/machine disclosure.
 - Commit: containing commit for batch Today-cycle-day-native-locale-integer-display.
+
+## Today-wheel-fixed-accessibility-labels-and-native-day-values
+
+- Parent checkpoint: 3e3b8cad9d1b23716bbc2a29c4ccd5466e5faea8.
+- Source-order requirements: [292, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift.
+- Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys_unchanged": 924, "Apple_VoiceOver": "NOT_RUN", "Foundation": "unchanged; prior794/816 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue original responsive wheel artwork/control behavior then Today canonical interaction treatment; inspect active owner and fixed accessibility labels without changing scientific estimates.
+- Commit: containing commit for batch Today-wheel-fixed-accessibility-labels-and-native-day-values.
