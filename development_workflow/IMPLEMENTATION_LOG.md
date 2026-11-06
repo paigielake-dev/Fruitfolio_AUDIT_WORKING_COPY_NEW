@@ -2873,3 +2873,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "written_Apple_UI_launch_vectors": 2, "executed_new_Apple_UI_launch_vectors": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
 - Next action: Localize fixed save-sheet labels and native field/accessibility selection presentation through existing translation helpers, keeping typed book/chapter names and saved source/citation payload verbatim; preserve owner guards and explicitly record Apple/official-model verification gaps.
 - Commit: containing commit for batch Native-save-destination-scene-and-terminal-ownership.
+
+## Save-fixed-copy-and-shared-art-accessibility
+
+- Parent checkpoint: 51cc9b29280944c667ffc63afe4f39c47b99cd41.
+- Source-order requirements: [48, 61, 125, 167, 169, 324, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift, Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Saved Library/Prompt10AskSaveDestination.swift, Fruitfolio/Localizable.xcstrings, development_workflow/SAVE_DESTINATION_FIXED_COPY.md.
+- Fixed save-sheet labels/native field prompt use existing compact semantic translation. Private saved names remain verbatim and typed Binding exact; book titles wrap fully, native book/chapter selected traits added. Existing game image accessibility helper moved unchanged (normalized SHA receipt) into existing shared translation file for reuse by fixed cover labels. Known library errors translated; unknown system errors remain verbatim. Exactly6English keys added, all959old entries/formatting retained:965English/0foreign. Actual UI matrix extended to4paused-English/French×ReduceMotion vectors, NOT_RUN. Linux Foundation pass does not execute SwiftUI or establish official MADLAD inference.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 858, "native_CPU_XCTest": 880, "SwiftTesting_each": 21, "workflow_checks": 60, "syntax_files": 311, "English_catalog_entries": 965, "nonempty_foreign_units": 0, "written_Apple_UI_launch_vectors": 4, "executed_new_Apple_UI_launch_vectors": 0, "Apple_SDK": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"}.
+- Next action: Reject already-cancelled reveal continuation before round/session mutation, with actual successful-round regression. Keep frozen save-presentation ownership through actual native onDismiss (pending payload remains nonnil while closing), preventing queued root save reentry. Execute supported checks and record remaining Apple acceptance.
+- Commit: containing commit for batch Save-fixed-copy-and-shared-art-accessibility.

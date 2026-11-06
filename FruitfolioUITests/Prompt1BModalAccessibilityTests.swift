@@ -4,9 +4,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
     func testGameSaveDestinationRetainsDraftAcrossBackgroundAndSavesOriginalMetadataOnce() {
+        for language in ["en", "fr"] {
         for reduced in [false, true] {
             let app = XCUIApplication()
             app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "success",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
                 "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
             if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
             app.launch()
@@ -17,11 +19,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             let newBook = app.buttons["library.saveDestination.newBook"]
             XCTAssertTrue(newBook.waitForExistence(timeout: 5)); newBook.tap()
             let field = app.textFields["library.saveDestination.bookName"]
-            XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("QA private 42")
+            XCTAssertTrue(field.waitForExistence(timeout: 5)); field.tap(); field.typeText("QA private library 42 with a longer book title")
             XCUIDevice.shared.press(.home); app.activate()
             XCTAssertTrue(app.wait(for: .runningForeground, timeout: 5))
             XCTAssertTrue(field.waitForExistence(timeout: 5))
-            XCTAssertEqual(field.value as? String, "QA private 42")
+            XCTAssertEqual(field.value as? String, "QA private library 42 with a longer book title")
             let create = app.buttons["library.saveDestination.createBook"]
             for _ in 0..<16 { if create.isHittable { break }; app.swipeUp() }
             XCTAssertTrue(create.isHittable); create.tap()
@@ -35,14 +37,19 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(open.isHittable); open.tap()
             let save = app.buttons["library.saveDestination.save"]
             XCTAssertTrue(save.waitForExistence(timeout: 5))
+            let book = app.buttons.matching(identifier: "library.saveDestination.bookRow").firstMatch
+            let chapter = app.buttons.matching(identifier: "library.saveDestination.chapterRow").firstMatch
+            XCTAssertTrue(book.isSelected); XCTAssertTrue(chapter.isSelected)
+            XCTAssertTrue(book.label.contains("QA private library 42 with a longer book title"))
             for _ in 0..<16 { if save.isHittable { break }; app.swipeUp() }
             XCTAssertTrue(save.isHittable); XCTAssertTrue(save.isEnabled); save.tap()
             let saved = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@",
                 "saved pages: 1; books: 1; metadata intact: true"), object: readback)
             XCTAssertEqual(XCTWaiter.wait(for: [saved], timeout: 5), .completed)
             XCTAssertFalse(save.exists)
-            captureGame(app, name: "game-save-original-metadata-reduced-\(reduced)")
+            captureGame(app, name: "game-save-original-metadata-\(language)-reduced-\(reduced)")
             app.terminate()
+        }
         }
     }
 

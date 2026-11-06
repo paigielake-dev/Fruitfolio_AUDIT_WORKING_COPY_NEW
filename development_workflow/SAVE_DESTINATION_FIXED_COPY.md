@@ -1,0 +1,9 @@
+# Save destination fixed interface copy
+
+Existing fixed labels use compact semantic translation helpers, including the native field prompt. Typed book names remain in the original guarded Binding; existing saved book/chapter names render verbatim. Both destination selections now expose native selected traits. Cover artwork, sizing, selection actions, save schema and source/citation payload remain unchanged.
+
+The existing game image-accessibility modifier was moved unchanged into the existing translation file and renamed FruitfolioFixedAccessibilityLabel. Its translation/provenance implementation is byte-identical after normalizing the name and access level. Game callers and fixed cover labels share that owner. Only the fixed cover name enters its translation key. Moving coordinates, live game counts, private names and saved research do not.
+
+Known library errors and the fixed duplicate message use semantic long-form translation. Unexpected system errors remain verbatim because their text can contain paths or authored values. Six English catalog keys were added; all 959 existing entries and file formatting are preserved. Catalog now has 965 English entries and zero nonempty foreign units. No foreign acceptance or official model inference is claimed.
+
+The existing actual-root save UI matrix now has four launch vectors: English/French with inference paused, Reduce Motion off/on and accessibility XXXL. They are written but NOT RUN on Linux. Paused French verifies source fallback/ownership/metadata when executed; it cannot verify French translations or official MADLAD. Execute Apple SDK/VoiceOver/focus/keyboard/selection-phrase and layout tests plus official-weight/native-language/device review before full acceptance. Full supported Foundation suites and final workflow/syntax results are recorded in matching run logs/checklist evidence; they do not run these SwiftUI views.

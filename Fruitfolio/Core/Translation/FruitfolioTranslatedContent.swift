@@ -250,3 +250,26 @@ struct FruitfolioTranslationDisclosureRegressionHarness: View {
     }
 }
 #endif
+
+/// Fixed accessible copy for existing artwork and controls; uses the same
+/// translation owner and explicit provenance as other compact interface copy.
+@MainActor
+struct FruitfolioFixedAccessibilityLabel: ViewModifier {
+    let source: String
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key {
+        .init(source: source, language: settings.language)
+    }
+    func body(content: Content) -> some View {
+        let display = translation.presentation(for: key)
+        content
+            .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+            .accessibilityHint(Text(display.status.accessibilityDetail(original: source,
+                localized: { settings.localized($0) })))
+            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+            }
+    }
+}

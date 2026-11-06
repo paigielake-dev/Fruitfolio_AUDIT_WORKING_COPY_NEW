@@ -35,12 +35,13 @@ struct Prompt10AskSaveDestination: View {
     @State private var newEncyclopediaName = ""
     @State private var selectedNewEncyclopediaStyle: Prompt10BookStyle = .sage
     @State private var errorMessage: String?
+    @State private var errorIsFixedCopy = false
 
     var body: some View {
         let interactionID = presentationGeneration
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                Text("where should i tuck it?")
+                FruitfolioFixedText(source: "where should i tuck it?", font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .font(
                         .custom(
                             "Chalkboard SE",
@@ -58,9 +59,8 @@ struct Prompt10AskSaveDestination: View {
                     // no write or automatic destination change is attempted.
                     EmptyView()
                 } else if store.encyclopedias.isEmpty {
-                    Text(
-                        "make your first little encyclopedia ♡"
-                    )
+                    FruitfolioFixedText(source: "make your first little encyclopedia ♡",
+                        font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                     .font(
                         .custom(
                             "Chalkboard SE",
@@ -97,7 +97,7 @@ struct Prompt10AskSaveDestination: View {
                                         .frame(width: 34)
                                         .accessibilityHidden(true)
 
-                                        Text(encyclopedia.name)
+                                        Text(verbatim: encyclopedia.name)
                                             .font(
                                                 .custom(
                                                     "Chalkboard SE",
@@ -107,7 +107,7 @@ struct Prompt10AskSaveDestination: View {
                                             .foregroundStyle(
                                                 DesignTokens.ColorToken.primaryBurgundy
                                             )
-                                            .lineLimit(2)
+                                            .fixedSize(horizontal: false, vertical: true)
 
                                         Spacer()
 
@@ -121,6 +121,8 @@ struct Prompt10AskSaveDestination: View {
                                             DesignTokens.Layout.minimumHitTarget
                                     )
                                 }
+                                .accessibilityIdentifier("library.saveDestination.bookRow")
+                                .accessibilityAddTraits(selectedEncyclopediaID == encyclopedia.id ? .isSelected : [])
                                 .buttonStyle(
                                     CutePopButtonStyle(
                                         reduceMotion:
@@ -134,7 +136,7 @@ struct Prompt10AskSaveDestination: View {
 
                     if let encyclopedia = selectedEncyclopedia {
                         VStack(alignment: .leading, spacing: 5) {
-                            Text("chapter")
+                            FruitfolioFixedText(source: "chapter", font: .custom("Chalkboard SE", size: 10.5, relativeTo: .caption))
                                 .font(
                                     .custom(
                                         "Chalkboard SE",
@@ -157,7 +159,7 @@ struct Prompt10AskSaveDestination: View {
                                     selectedChapterID = chapter.id
                                 } label: {
                                     HStack {
-                                        Text(chapter.name)
+                                        Text(verbatim: chapter.name)
                                             .font(
                                                 .custom(
                                                     "Chalkboard SE",
@@ -180,6 +182,8 @@ struct Prompt10AskSaveDestination: View {
                                             DesignTokens.Layout.minimumHitTarget
                                     )
                                 }
+                                .accessibilityIdentifier("library.saveDestination.chapterRow")
+                                .accessibilityAddTraits(selectedChapterID == chapter.id ? .isSelected : [])
                                 .buttonStyle(
                                     CutePopButtonStyle(
                                         reduceMotion:
@@ -191,9 +195,11 @@ struct Prompt10AskSaveDestination: View {
                     }
                 }
 
-                Button("+ new encyclopedia") {
+                Button {
                     guard canEditDestination, ownsInteraction(interactionID) else { return }
                     showingNewEncyclopedia.toggle()
+                } label: {
+                    FruitfolioFixedText(source: "+ new encyclopedia", font: .custom("Chalkboard SE", size: 11, relativeTo: .body))
                 }
                 .accessibilityIdentifier("library.saveDestination.newBook")
                 .font(
@@ -218,7 +224,7 @@ struct Prompt10AskSaveDestination: View {
                 )
 
                 if showingNewEncyclopedia {
-                    TextField(
+                    FruitfolioFixedTextField(
                         "encyclopedia name",
                         text: Binding(get: { newEncyclopediaName }, set: { if canEditDestination && ownsInteraction(interactionID) { newEncyclopediaName = $0 } })
                     )
@@ -287,7 +293,7 @@ struct Prompt10AskSaveDestination: View {
                                         motionPreferences.reduceMotionActive
                                 )
                             )
-                            .accessibilityLabel("\(style.displayName) book")
+                            .modifier(FruitfolioFixedAccessibilityLabel(source: "\(style.displayName) book"))
                             .accessibilityAddTraits(
                                 selectedNewEncyclopediaStyle == style ? .isSelected : []
                             )
@@ -304,17 +310,19 @@ struct Prompt10AskSaveDestination: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 10
-                            )
-                        )
-                        .foregroundStyle(
-                            DesignTokens.ColorToken.secondaryBurgundy
-                        )
-                        .multilineTextAlignment(.center)
+                    Group {
+                        if errorIsFixedCopy {
+                            FruitfolioTranslatedText(source: errorMessage,
+                                font: .custom("Chalkboard SE", size: 10, relativeTo: .caption), serious: true)
+                        } else {
+                            // Unknown system errors may contain paths or authored values.
+                            Text(verbatim: errorMessage)
+                                .font(.custom("Chalkboard SE", size: 10, relativeTo: .caption))
+                        }
+                    }
+                    .foregroundStyle(DesignTokens.ColorToken.secondaryBurgundy)
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("library.saveDestination.error")
                 }
 
                 WatercolorPrimaryButton(
@@ -399,6 +407,7 @@ struct Prompt10AskSaveDestination: View {
             audioManager.play(.buttonSoftPop)
 
         } catch {
+            errorIsFixedCopy = error is Prompt10LibraryError
             errorMessage =
                 error.localizedDescription
         }
@@ -441,6 +450,7 @@ struct Prompt10AskSaveDestination: View {
 
             if let selected = store.encyclopedia(id: encyclopediaID),
                selected.chapters.flatMap(\.pages).contains(where: { $0.isDuplicateSave(of: page) }) {
+                errorIsFixedCopy = true
                 errorMessage = "that content is already tucked into this encyclopedia ♡"
                 return
             }
@@ -456,6 +466,7 @@ struct Prompt10AskSaveDestination: View {
             onSaved()
 
         } catch {
+            errorIsFixedCopy = error is Prompt10LibraryError
             errorMessage =
                 error.localizedDescription
         }

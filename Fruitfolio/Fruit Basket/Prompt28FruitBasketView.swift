@@ -1459,7 +1459,7 @@ struct Prompt28FruitBasketView: View {
                     .rotationEffect(.degrees(motionPreferences.reduceMotionActive ? 0 : star.rotationDegrees + (star.isInVines ? sin(star.vineContactTime * 13) * 4 : 0)))
                     .position(x: xOffset + width * star.x, y: height * star.y)
                     .zIndex(11)
-                    .modifier(Prompt28TranslatedAccessibilityLabel(source: "star pass"))
+                    .modifier(FruitfolioFixedAccessibilityLabel(source: "star pass"))
                     .accessibilityIdentifier("fruitBasket.round.star")
             }
 
@@ -1872,7 +1872,7 @@ struct Prompt28FruitBasketView: View {
                     }
                 }
                 .accessibilityElement(children: .ignore)
-                .modifier(Prompt28TranslatedAccessibilityLabel(source: basketLabel))
+                .modifier(FruitfolioFixedAccessibilityLabel(source: basketLabel))
                 .accessibilityValue(Text(basketValue))
                 .accessibilityIdentifier("fruitBasket.result.basketSummary")
 
@@ -2464,31 +2464,8 @@ private struct Prompt28MovingFruit: View {
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
         .accessibilityElement(children: .ignore)
-        .modifier(Prompt28TranslatedAccessibilityLabel(source: accessibilitySource
+        .modifier(FruitfolioFixedAccessibilityLabel(source: accessibilitySource
             ?? "\(fruit.fruitID.displayName), \(fruit.classification == .good ? "belongs in basket" : "does not belong in basket")"))
-    }
-}
-
-/// One owner for image-only accessibility copy; moving coordinates and count
-/// changes never become part of a translation key. Fallback remains explicit.
-@MainActor
-private struct Prompt28TranslatedAccessibilityLabel: ViewModifier {
-    let source: String
-    @EnvironmentObject private var settings: SettingsStore
-    @StateObject private var translation = FruitfolioControlTranslationState()
-    private var key: FruitfolioControlTranslationState.Key {
-        .init(source: source, language: settings.language)
-    }
-    func body(content: Content) -> some View {
-        let display = translation.presentation(for: key)
-        content
-            .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
-            .accessibilityHint(Text(display.status.accessibilityDetail(original: source,
-                localized: { settings.localized($0) })))
-            .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
-                inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
-                await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
-            }
     }
 }
 
