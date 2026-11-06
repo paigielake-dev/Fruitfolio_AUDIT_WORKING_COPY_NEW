@@ -3,6 +3,8 @@
 import argparse
 import hashlib
 import json
+import os
+import tempfile
 from pathlib import Path
 import subprocess
 from datetime import datetime, timezone
@@ -23,11 +25,19 @@ def create(repo, output, branch='development/prompt-1b-complete', base_ref='refs
     base = git(repo, 'merge-base', 'HEAD', base_ref)
     if base == head:
         raise ValueError('No checkpoint commits exist beyond the verified prerequisite.')
-    output = Path(output).resolve()
+    requested_output = Path(output)
+    if requested_output.is_symlink():
+        raise ValueError('Preserve the existing output symlink; choose a unique regular-file path.')
+    output = requested_output.resolve()
+    manifest_path = output.with_suffix(output.suffix + '.json')
+    if output.exists() or manifest_path.exists() or manifest_path.is_symlink():
+        raise ValueError('Existing recovery output or sidecar must be preserved; choose a unique output path.')
     if output.is_relative_to(repo):
         raise ValueError('Place the recovery bundle outside the checkout so it cannot stage itself.')
     output.parent.mkdir(parents=True, exist_ok=True)
-    temporary = output.with_suffix(output.suffix + '.tmp')
+    descriptor, temporary_name = tempfile.mkstemp(prefix=output.name + '.owned-', suffix='.tmp', dir=output.parent)
+    os.close(descriptor)
+    temporary = Path(temporary_name)
     try:
         subprocess.run(['git', '-C', str(repo), 'bundle', 'create', str(temporary), branch, '^' + base],
                        check=True, capture_output=True, text=True)
@@ -36,7 +46,9 @@ def create(repo, output, branch='development/prompt-1b-complete', base_ref='refs
         refs = git(repo, 'bundle', 'list-heads', str(temporary)).splitlines()
         if f'{head} refs/heads/{branch}' not in refs:
             raise ValueError('Recovery bundle does not contain the expected branch tip.')
-        temporary.replace(output)
+        # Same-directory hard-link publication is atomic and refuses an
+        # existing destination, including one created after the preflight.
+        os.link(temporary, output)
     finally:
         temporary.unlink(missing_ok=True)
     digest = hashlib.sha256()
@@ -53,7 +65,14 @@ def create(repo, output, branch='development/prompt-1b-complete', base_ref='refs
                     f'git fetch <bundle-path> refs/heads/{branch}:refs/heads/{branch}',
                     f'git switch {branch}', 'Read development_workflow/CURRENT_CHECKPOINT.json; actual git log is authoritative.'],
     }
-    output.with_suffix(output.suffix + '.json').write_text(json.dumps(manifest, indent=2) + '\n')
+    descriptor, manifest_temporary_name = tempfile.mkstemp(prefix=manifest_path.name + '.owned-', suffix='.tmp', dir=output.parent)
+    manifest_temporary = Path(manifest_temporary_name)
+    try:
+        with os.fdopen(descriptor, 'w', encoding='utf-8') as destination:
+            destination.write(json.dumps(manifest, indent=2) + '\n')
+        os.link(manifest_temporary, manifest_path)
+    finally:
+        manifest_temporary.unlink(missing_ok=True)
     return manifest
 
 
@@ -62,7 +81,10 @@ def main():
     parser.add_argument('--repo', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    manifest = create(args.repo, args.output)
+    try:
+        manifest = create(args.repo, args.output)
+    except (ValueError, FileExistsError) as error:
+        parser.exit(2, f'Recovery checkpoint was not completed: {error}. Existing artifacts were preserved; choose a fresh unique output path.\n')
     print(json.dumps({key: manifest[key] for key in ['HEAD', 'bundle', 'sha256', 'bytes', 'checkpoint_commits']}))
 
 

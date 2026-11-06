@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "dc39e30f3c6a1b71b9617df0c684645b5bc84431",
+  "current_HEAD": "05482475db3440f9b461b1f41f64aa25aa5bb2cb",
   "latest_verified_commit": null,
   "current_checklist_part": 5,
-  "current_requirement": 476,
-  "current_implementation_batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+  "current_requirement": 242,
+  "current_implementation_batch": "No-clobber-recovery-artifacts-and-original-next-section",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,17 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Hormone Information/HormoneInformationView.swift",
-    "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-    "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
-    "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/CONTROLLED_HORMONE_LABEL_PROTECTION.md",
-    "development_workflow/HORMONE_REPORT_FORMAT_RECOGNITION.md",
+    "Tools/create_local_recovery_bundle.py",
+    "Tools/record_prompt1b_batch.py",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/MEASUREMENT_DRAFT_RELOAD_RECOVERY.md",
-    "development_workflow/MEASUREMENT_WRITE_ERASE_ACKNOWLEDGMENT.md",
-    "development_workflow/NATIVE_FIELD_PROMPT_LOCALIZATION.md",
-    "development_workflow/RUN_LOGS/Measurement-UI-launch-accounting-correction.json"
+    "development_workflow/RECOVERY_ARTIFACT_PRESERVATION.md",
+    "development_workflow/RUN_LOGS/Checkpoint-next-section-prior-failure.json",
+    "development_workflow/RUN_LOGS/Original-recovery-bundle-preserved-after-helper-fix.json",
+    "development_workflow/RUN_LOGS/Recovery-tool-preservation-prior-failure.json",
+    "development_workflow/tests/test_batch_recorder.py",
+    "development_workflow/tests/test_recovery_bundle_no_clobber.py"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -516,30 +514,34 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Focused actual measurement persistence/reload suite:10 passed",
-    "Full portable/native suites: /tmp/fruitfolio-measurement-reload-{portable,native}.log",
-    "50 workflow checks with actual Swift compiler",
-    "311 final syntax files parsed after error locator/active-app guard; Xcode references resolve and actual SwiftSyntax sound ownership clean",
-    "Current source matrix:18 measurement/56 Guide written launches, all NOT_RUN; historical +2 overcount corrected",
-    "git diff --check"
+    "Isolated real-Git bundle tests: before5 cases/3 failures/1 error; after8 passed",
+    "Actual recorder tests: before8 cases/2 failures; after8 passed",
+    "Full workflow suite with actual Swift compiler:60 passed",
+    "Read-only original bundle SHA256 matches initial verified digest",
+    "git diff --check",
+    "Unchanged Swift suites not rerun; last confirmed 0548247:790 portable/812 native XCTest +21 Swift Testing each;311 Swift syntax files",
+    "Fresh unique real workspace recovery bundle will be verified after clean local commit"
   ],
   "last_test_results": {
-    "portable_XCTest": 790,
-    "native_CPU_XCTest": 812,
-    "SwiftTesting_each_run": 21,
-    "workflow_checks": 50,
-    "final_syntax_files": 311,
-    "focused_measurement_persistence_XCTest": 10,
+    "workflow_checks": 60,
+    "recovery_bundle_preservation_tests": 8,
+    "batch_recorder_integrity_tests": 8,
+    "recovery_prior_tests": 5,
+    "recovery_prior_failures": 3,
+    "recovery_prior_errors": 1,
+    "recorder_prior_tests": 8,
+    "recorder_prior_failures": 2,
+    "original_recovery_bundle_SHA256_unchanged": "4304714e7d5f2f5fcfa5ec8139b307d804f9d7a9e8c0b4f892bcedaf75b1caac",
+    "portable_XCTest_last_confirmed_parent": 790,
+    "native_CPU_XCTest_last_confirmed_parent": 812,
+    "SwiftTesting_each_last_confirmed_parent": 21,
+    "Swift_suites_rerun_this_tool_only_batch": false,
     "Apple_measurement_UI_launches_written_NOT_RUN": 18,
-    "new_measurement_UI_launches_NOT_RUN": 8,
     "Apple_Guide_UI_launches_written_NOT_RUN": 56,
-    "English_catalog_keys_unchanged": 842,
-    "nonempty_foreign_units": 0,
-    "measurement_UI_prior_count_correction": "6c6db6f 8->6; cbfe03d 10->8; 00063ea/dc39e30 12->10. Current 18 from literal source vectors; historical logs preserved. None executed.",
-    "official_MADLAD": "BLOCKED; synthetic native T5 is not official inference"
+    "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
   },
-  "next_exact_implementation_action": "Make the reusable recovery-bundle helper itself refuse existing output, sidecars and symlinks, not just callers checking unique names. Use an owned unique temporary file and no-clobber publication so existing recovery artifacts cannot be overwritten; add isolated real-Git regression tests and keep original bundles untouched. Then immediately continue Part 5 measurement/library fixed date/status/instruction localization and source/clinical safeguards. Do not push/merge or certify unexecuted Apple/official-model tests.",
-  "updated_at": "2026-11-06T19:54:23.007781+00:00",
+  "next_exact_implementation_action": "Immediately continue Part 5 measurement/library fixed date/status/instruction localization: use compact owners for interface labels and protected format examples; preserve raw measurement values, units, report days and opaque legacy metadata. Keep scientific excerpt/citation long-form owners. Add actual UI assertions, run relevant supported checks, update individual evidence and local checkpoint. All Apple/cold-restart/official-model/clinical gates remain explicit; do not push or merge.",
+  "updated_at": "2026-11-06T20:04:28.874524+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -549,26 +551,24 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
-      "portable_XCTest": "790 passed",
-      "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
-      "SwiftTesting": "21 passed per run",
-      "workflow": "50 passed",
-      "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
-      "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+      "recovery_preservation": "8 passed using actual isolated Git repos and real bundles; includes exclusive-publication races and CLI error path",
+      "recorder_integrity": "8 passed including two new reproduced next-section/missing-metadata cases",
+      "workflow": "60 passed with actual Swift compiler",
+      "original_artifact": "Original bundle bytes match initial SHA256; no original bundle passed to failing fixtures",
+      "Swift": "Unchanged, not rerun this tool-only batch. Latest parent790 portable/812 native XCTest +21 Swift Testing each;311 parsed Swift files"
     },
     "not_run": [
-      "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
-      "56 Guide Apple UI launches",
-      "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
-      "Cold-app restart/process-kill persistence durability",
-      "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+      "Actual off-machine restoration with LFS artwork/model assets and prerequisite availability",
+      "Apple SDK builds,18 measurement/56 Guide UI launch cases,physical-device and cold-app restart/process-interruption verification",
+      "Official MADLAD/offline/language/scientific and clinical/native-review acceptance"
     ],
     "remaining": [
-      "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-      "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-      "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-      "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+      "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+      "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+      "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+      "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
     ]
-  }
+  },
+  "current_checklist_section": "Part 5 \u2014 Settings, Account, My Context, and Hormone Information",
+  "last_recorded_batch_part": 10
 }

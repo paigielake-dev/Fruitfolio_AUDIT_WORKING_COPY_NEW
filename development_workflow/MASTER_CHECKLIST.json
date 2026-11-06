@@ -26359,7 +26359,8 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
         "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
-        "Fruitfolio/Hormone Information/HormoneLibraryView.swift"
+        "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+        "Tools/create_local_recovery_bundle.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26464,9 +26465,10 @@
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "development_workflow/tests/test_recovery_bundle_no_clobber.py"
       ],
-      "commit_reference": "batch:Native-measurement-draft-preserving-reload-and-conflict-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:No-clobber-recovery-artifacts-and-original-next-section (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26545,40 +26547,37 @@
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS.",
-        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs."
+        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
+        "Recovery helper refuses existing outputs/sidecars/symlinks, uses only unique owned temporaries and exclusive per-file publication. Real isolated Git tests reproduced old artifact overwrites and lost prior temp files; eight final cases pass including races/CLI behavior. Original Fruitfolio bundle hash unchanged. Recorder now derives next section from original next requirement and preserves recorded batch part separately; two reproduced metadata regressions fixed, eight recorder cases pass. No Swift source/model/artwork changes this batch."
       ],
-      "last_updated": "2026-11-06T19:54:23.007781+00:00",
+      "last_updated": "2026-11-06T20:04:28.874524+00:00",
       "latest_batch_verification": {
-        "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+        "batch": "No-clobber-recovery-artifacts-and-original-next-section",
         "executed": {
-          "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
-          "portable_XCTest": "790 passed",
-          "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
-          "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          "recovery_preservation": "8 passed using actual isolated Git repos and real bundles; includes exclusive-publication races and CLI error path",
+          "recorder_integrity": "8 passed including two new reproduced next-section/missing-metadata cases",
+          "workflow": "60 passed with actual Swift compiler",
+          "original_artifact": "Original bundle bytes match initial SHA256; no original bundle passed to failing fixtures",
+          "Swift": "Unchanged, not rerun this tool-only batch. Latest parent790 portable/812 native XCTest +21 Swift Testing each;311 parsed Swift files"
         },
         "not_run": [
-          "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
-          "Cold-app restart/process-kill persistence durability",
-          "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          "Actual off-machine restoration with LFS artwork/model assets and prerequisite availability",
+          "Apple SDK builds,18 measurement/56 Guide UI launch cases,physical-device and cold-app restart/process-interruption verification",
+          "Official MADLAD/offline/language/scientific and clinical/native-review acceptance"
         ],
         "remaining": [
-          "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-          "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-          "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-          "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+          "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+          "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+          "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-        "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-        "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-        "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+        "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+        "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+        "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+        "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
       ]
     },
     {
@@ -26730,7 +26729,8 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideFormSession.swift",
-        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift"
+        "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
+        "Tools/create_local_recovery_bundle.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -26881,9 +26881,10 @@
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
-        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift",
+        "development_workflow/tests/test_recovery_bundle_no_clobber.py"
       ],
-      "commit_reference": "batch:Native-measurement-draft-preserving-reload-and-conflict-recovery (resolve containing commit with git log)",
+      "commit_reference": "batch:No-clobber-recovery-artifacts-and-original-next-section (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26996,40 +26997,37 @@
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
         "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
         "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS.",
-        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs."
+        "Actual native editor reload preserves draft and original frozen intent; newer record values cannot be implicitly authorized. Actions/error focus require visible/active application/scene and no foreign modal. Stale root errors clear after successful reload/save/delete. Private actual-UserDefaults drop/substitute fixtures and independent byte readback support eight new Apple launches, all NOT_RUN. One new Foundation conflict case plus retained-draft retry pass. Prior measurement written-launch counts overstated by two are explicitly corrected with preserved historical logs.",
+        "Recovery helper refuses existing outputs/sidecars/symlinks, uses only unique owned temporaries and exclusive per-file publication. Real isolated Git tests reproduced old artifact overwrites and lost prior temp files; eight final cases pass including races/CLI behavior. Original Fruitfolio bundle hash unchanged. Recorder now derives next section from original next requirement and preserves recorded batch part separately; two reproduced metadata regressions fixed, eight recorder cases pass. No Swift source/model/artwork changes this batch."
       ],
-      "last_updated": "2026-11-06T19:54:23.007781+00:00",
+      "last_updated": "2026-11-06T20:04:28.874524+00:00",
       "latest_batch_verification": {
-        "batch": "Native-measurement-draft-preserving-reload-and-conflict-recovery",
+        "batch": "No-clobber-recovery-artifacts-and-original-next-section",
         "executed": {
-          "measurement_persistence_reload": "10 passed; retained-draft retry and frozen-intent conflict after reload use actual Store and backing bytes",
-          "portable_XCTest": "790 passed",
-          "native_CPU_XCTest": "812 passed; synthetic T5 is not official MADLAD",
-          "SwiftTesting": "21 passed per run",
-          "workflow": "50 passed",
-          "final_source": "311 syntax parsed, Xcode references resolve and actual SwiftSyntax sound ownership clean",
-          "UI_source_accounting": "18 measurement/56 Guide planned launches only; literal source vectors and hash recorded; no Apple execution"
+          "recovery_preservation": "8 passed using actual isolated Git repos and real bundles; includes exclusive-publication races and CLI error path",
+          "recorder_integrity": "8 passed including two new reproduced next-section/missing-metadata cases",
+          "workflow": "60 passed with actual Swift compiler",
+          "original_artifact": "Original bundle bytes match initial SHA256; no original bundle passed to failing fixtures",
+          "Swift": "Unchanged, not rerun this tool-only batch. Latest parent790 portable/812 native XCTest +21 Swift Testing each;311 parsed Swift files"
         },
         "not_run": [
-          "18 measurement Apple UI launches including eight new actual fault/reload/deletion/conflict cases",
-          "56 Guide Apple UI launches",
-          "Apple SDK typecheck, native-sheet input/focus/scroll/scene/error/callback behavior and physical device",
-          "Cold-app restart/process-kill persistence durability",
-          "Official MADLAD offline/language/scientific/citation and clinical/native-review acceptance"
+          "Actual off-machine restoration with LFS artwork/model assets and prerequisite availability",
+          "Apple SDK builds,18 measurement/56 Guide UI launch cases,physical-device and cold-app restart/process-interruption verification",
+          "Official MADLAD/offline/language/scientific and clinical/native-review acceptance"
         ],
         "remaining": [
-          "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-          "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-          "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-          "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+          "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+          "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+          "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+          "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute all actual native fault/reload/retry and newer-record conflict UI cases, preserving raw result/unit/day/draft and validating independent persisted bytes",
-        "Verify no stale inactive/foreign-modal actions mutate state; test keyboard, focus, VoiceOver/RTL and background/foreground behavior on Apple",
-        "Confirm failed save/delete never shows success, successful retry clears errors, and cold restart/process interruption preserves acknowledged data",
-        "Complete remaining measurement/library localization, clinical, official-model and device verification; source vectors and Foundation policies are not Apple runtime evidence"
+        "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+        "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+        "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+        "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
       ]
     },
     {
@@ -27150,7 +27148,9 @@
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Tools/create_local_recovery_bundle.py",
+        "Tools/record_prompt1b_batch.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -27253,9 +27253,11 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-        "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "development_workflow/tests/test_recovery_bundle_no_clobber.py",
+        "development_workflow/tests/test_batch_recorder.py"
       ],
-      "commit_reference": "batch:Game-persistence-readback-and-unknown-field-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:No-clobber-recovery-artifacts-and-original-next-section (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -27315,9 +27317,38 @@
         "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior.",
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
-        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims."
+        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
+        "Recovery helper refuses existing outputs/sidecars/symlinks, uses only unique owned temporaries and exclusive per-file publication. Real isolated Git tests reproduced old artifact overwrites and lost prior temp files; eight final cases pass including races/CLI behavior. Original Fruitfolio bundle hash unchanged. Recorder now derives next section from original next requirement and preserves recorded batch part separately; two reproduced metadata regressions fixed, eight recorder cases pass. No Swift source/model/artwork changes this batch."
       ],
-      "last_updated": "2026-11-06T16:53:04.677968+00:00"
+      "last_updated": "2026-11-06T20:04:28.874524+00:00",
+      "latest_batch_verification": {
+        "batch": "No-clobber-recovery-artifacts-and-original-next-section",
+        "executed": {
+          "recovery_preservation": "8 passed using actual isolated Git repos and real bundles; includes exclusive-publication races and CLI error path",
+          "recorder_integrity": "8 passed including two new reproduced next-section/missing-metadata cases",
+          "workflow": "60 passed with actual Swift compiler",
+          "original_artifact": "Original bundle bytes match initial SHA256; no original bundle passed to failing fixtures",
+          "Swift": "Unchanged, not rerun this tool-only batch. Latest parent790 portable/812 native XCTest +21 Swift Testing each;311 parsed Swift files"
+        },
+        "not_run": [
+          "Actual off-machine restoration with LFS artwork/model assets and prerequisite availability",
+          "Apple SDK builds,18 measurement/56 Guide UI launch cases,physical-device and cold-app restart/process-interruption verification",
+          "Official MADLAD/offline/language/scientific and clinical/native-review acceptance"
+        ],
+        "remaining": [
+          "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+          "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+          "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+          "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+        "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+        "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+        "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
+      ]
     }
   ]
 }

@@ -14,7 +14,7 @@ class BatchRecorderTests(unittest.TestCase):
         self.workflow = self.root / 'development_workflow'
         self.workflow.mkdir()
         (self.workflow / 'RUN_LOGS').mkdir()
-        self.rows = [dict(sequence=n, original_requirement_id=str(n), description=f'Original {n}',
+        self.rows = [dict(sequence=n, original_requirement_id=str(n), original_checklist_part=f'Part {1 if n <= 70 else 2} — fixture section', description=f'Original {n}',
             implementation_status='NOT_STARTED', verification_status='NOT_RUN',
             relevant_source_files=[], related_tests=[], evidence_of_implementation=[]) for n in range(1,479)]
         (self.workflow / 'MASTER_CHECKLIST.json').write_text(json.dumps({'requirements':self.rows}))
@@ -92,3 +92,23 @@ class BatchRecorderTests(unittest.TestCase):
             self.batch['entry_evidence']=entries
             self.assertNotEqual(self.run_recorder().returncode,0)
             self.assertEqual(self.snapshots(),before)
+
+    def testRecoverySectionComesFromNextOriginalRequirementAcrossPartTransition(self):
+        self.batch['part'] = 1
+        self.batch['next_requirement'] = 71
+        result = self.run_recorder()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        checkpoint = json.loads((self.workflow / 'CURRENT_CHECKPOINT.json').read_text())
+        self.assertEqual(checkpoint['current_checklist_part'], 2)
+        self.assertEqual(checkpoint['current_checklist_section'], 'Part 2 — fixture section')
+        self.assertEqual(checkpoint['last_recorded_batch_part'], 1)
+        self.assertEqual(checkpoint['current_requirement'], 71)
+
+    def testMissingOriginalNextSectionCannotPartiallyWriteRecoveryRecords(self):
+        master = self.workflow / 'MASTER_CHECKLIST.json'
+        rows = json.loads(master.read_text())
+        rows['requirements'][62].pop('original_checklist_part')
+        master.write_text(json.dumps(rows))
+        before = self.snapshots()
+        self.assertNotEqual(self.run_recorder().returncode, 0)
+        self.assertEqual(self.snapshots(), before)

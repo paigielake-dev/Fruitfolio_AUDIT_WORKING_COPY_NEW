@@ -1,0 +1,11 @@
+# Recovery artifact preservation and exact next section
+
+The bundle helper now rejects existing output, existing sidecars and output symlinks before creating artifacts. Each temporary file is uniquely owned; previous deterministic .bundle.tmp files are never consumed or removed. Bundle and complete JSON sidecar publish with exclusive same-directory hard links, so a destination created after preflight is preserved. If sidecar publication loses a race, the verified new bundle is retained and the CLI reports incomplete checkpoint creation without success JSON. No existing artifact is rolled back or replaced.
+
+Actual isolated real-Git pre-fix suite: five cases, three failures and one error; it reproduced overwritten existing output/sidecar/symlink targets and deletion of an older temporary file. Eight final cases pass, including actual Git tip/prerequisite/hash verification, publication races, cleanup of owned temporaries and CLI failure reporting. All fixtures use temporary repositories; no Fruitfolio recovery artifact was passed to the failing helper. The original bundle still hashes to 4304714e7d5f2f5fcfa5ec8139b307d804f9d7a9e8c0b4f892bcedaf75b1caac.
+
+The recorder now derives current_checklist_part and current_checklist_section from the next requirement's original section. last_recorded_batch_part separately retains the completed batch section. It validates this metadata before writing recovery records. Two new real-recorder regressions reproduced the earlier cross-section mismatch/missing-metadata acceptance; all eight recorder cases now pass. Full workflow suite: 60 tests passed with the actual Swift compiler.
+
+Swift production/tests are unchanged in this batch and were not repeated. Latest confirmed at 0548247: 790 portable/812 native CPU XCTest plus 21 Swift Testing per overlapping run, 311 parsed Swift files. All 18 measurement and 56 Guide UI launches remain NOT_RUN, with prior measurement accounting corrections preserved.
+
+Recovery is locally verified Git objects with a required prerequisite, not an off-machine backup or LFS/model payload archive. Exclusive publication is per artifact, not a cross-file crash transaction or fsync claim. Apple SDK/device, official MADLAD and clinical/native-language acceptance remain open.

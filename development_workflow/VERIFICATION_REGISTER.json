@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T19:54:23.007781+00:00",
+  "updated_at": "2026-11-06T20:04:28.874524+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -4385,6 +4385,57 @@
         ]
       },
       "timestamp": "2026-11-06T19:54:23.007781+00:00"
+    },
+    {
+      "batch": "No-clobber-recovery-artifacts-and-original-next-section",
+      "commands": [
+        "Isolated real-Git bundle tests: before5 cases/3 failures/1 error; after8 passed",
+        "Actual recorder tests: before8 cases/2 failures; after8 passed",
+        "Full workflow suite with actual Swift compiler:60 passed",
+        "Read-only original bundle SHA256 matches initial verified digest",
+        "git diff --check",
+        "Unchanged Swift suites not rerun; last confirmed 0548247:790 portable/812 native XCTest +21 Swift Testing each;311 Swift syntax files",
+        "Fresh unique real workspace recovery bundle will be verified after clean local commit"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "recovery_bundle_preservation_tests": 8,
+        "batch_recorder_integrity_tests": 8,
+        "recovery_prior_tests": 5,
+        "recovery_prior_failures": 3,
+        "recovery_prior_errors": 1,
+        "recorder_prior_tests": 8,
+        "recorder_prior_failures": 2,
+        "original_recovery_bundle_SHA256_unchanged": "4304714e7d5f2f5fcfa5ec8139b307d804f9d7a9e8c0b4f892bcedaf75b1caac",
+        "portable_XCTest_last_confirmed_parent": 790,
+        "native_CPU_XCTest_last_confirmed_parent": 812,
+        "SwiftTesting_each_last_confirmed_parent": 21,
+        "Swift_suites_rerun_this_tool_only_batch": false,
+        "Apple_measurement_UI_launches_written_NOT_RUN": 18,
+        "Apple_Guide_UI_launches_written_NOT_RUN": 56,
+        "official_MADLAD": "BLOCKED; synthetic T5 is not official inference"
+      },
+      "verification": {
+        "executed": {
+          "recovery_preservation": "8 passed using actual isolated Git repos and real bundles; includes exclusive-publication races and CLI error path",
+          "recorder_integrity": "8 passed including two new reproduced next-section/missing-metadata cases",
+          "workflow": "60 passed with actual Swift compiler",
+          "original_artifact": "Original bundle bytes match initial SHA256; no original bundle passed to failing fixtures",
+          "Swift": "Unchanged, not rerun this tool-only batch. Latest parent790 portable/812 native XCTest +21 Swift Testing each;311 parsed Swift files"
+        },
+        "not_run": [
+          "Actual off-machine restoration with LFS artwork/model assets and prerequisite availability",
+          "Apple SDK builds,18 measurement/56 Guide UI launch cases,physical-device and cold-app restart/process-interruption verification",
+          "Official MADLAD/offline/language/scientific and clinical/native-review acceptance"
+        ],
+        "remaining": [
+          "Verify a fresh unique workspace bundle after the local commit and continue source implementation; preserve all earlier bundles",
+          "Exercise recovery from another machine with the known prerequisite and separately restored LFS/model payloads; local bundles are not remote durability",
+          "Complete full integrated Apple/device/official-model/clinical verification; portable/tool suites do not close original integrated-test requirements",
+          "Continue all remaining original478/founder requirements; this batch only hardens checkpoint preservation and metadata"
+        ]
+      },
+      "timestamp": "2026-11-06T20:04:28.874524+00:00"
     }
   ]
 }
