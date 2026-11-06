@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "a183bcd68d01b657a2d8820dfaf577faaa2004a0",
+  "current_HEAD": "e8eef92e37775b4caf42bfbd9e9c002ade6654eb",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 26,
-  "current_implementation_batch": "Catch-object-single-owner-accessibility-localization",
+  "current_requirement": 474,
+  "current_implementation_batch": "Game-level-reset-owned-shared-confirmation",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,11 +493,15 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
     "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
     "Fruitfolio/Localizable.xcstrings",
+    "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/CATCH_OBJECT_ACCESSIBILITY_VERIFICATION.md",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/GAME_LEVEL_RESET_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -516,26 +520,29 @@
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "actual SwiftSyntax control-sound-ownership --check",
-    "JSON preservation comparison of all prior catalog entries"
+    "JSON preservation comparison of all prior catalog entries",
+    "swift Tools/validate_xcode_project.swift"
   ],
   "last_test_results": {
-    "portable_XCTest": 732,
-    "native_CPU_XCTest": 754,
+    "portable_XCTest": 739,
+    "native_CPU_XCTest": 761,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
-    "Swift_syntax_files": 306,
+    "Swift_syntax_files": 308,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
-    "catalog_keys": 785,
+    "catalog_keys": 786,
     "nonempty_foreign_units": 0,
     "Foundation_shared_ownership_regressions": 11,
     "SwiftSyntax_sound_ownership_findings": 0,
-    "catalog_existing_entries_preserved": 765,
-    "Apple_UI_catch_object_launches_added_NOT_RUN": 4
+    "catalog_existing_entries_preserved": 785,
+    "focused_reset_ownership_XCTest": 7,
+    "Apple_UI_reset_launches_added_NOT_RUN": 16,
+    "Xcode_project_references": "PASS; not an Apple build"
   },
-  "next_exact_implementation_action": "Bring the remaining Fruit Basket game-level reset confirmation into shared measured accessible popup ownership. Preserve original source copy, topic-specific reset semantics, lifetime scores/resources, originating pause/result screen and actual cancellation. Guard stale/replayed/queued choices and verify the underlying reset transaction where the environment supports it.",
-  "updated_at": "2026-11-06T16:40:09.343962+00:00",
+  "next_exact_implementation_action": "Fault-test actual Prompt28GamePersistence acknowledgment and preservation before further game mutations: inject rejected UserDefaults writes and unknown same-version top-level/nested/null fields, record the current failure, then enforce strict coverage and exact readback without overwriting external/newer data. Verify load/recovery and existing game regressions. Continue independent requirements after blocked Apple/runtime checks.",
+  "updated_at": "2026-11-06T16:47:08.749552+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

@@ -66,6 +66,9 @@ struct Prompt28FruitBasketView: View {
     @AccessibilityFocusState private var pauseHeadingFocused: Bool
     @State private var gameplayHeaderContentHeight: CGFloat = 100
     @State private var pauseMenuVisible = false
+    @State private var levelResetSession: Prompt28LevelResetSession?
+    @State private var returnLevelResetFocus = false
+    @AccessibilityFocusState private var levelResetControlFocused: Bool
     private enum GameplayFocus: Hashable { case pause, classificationProgress }
     @AccessibilityFocusState private var gameplayFocus: GameplayFocus?
     @FocusState private var usernameKeyboardFocused: Bool
@@ -169,6 +172,7 @@ struct Prompt28FruitBasketView: View {
         .onAppear {
             rootIsVisible = true
             if usernameExitSession == nil { usernameExitSession = .init(coordinator: popupCoordinator) }
+            if levelResetSession == nil { levelResetSession = .init(coordinator: popupCoordinator) }
             Prompt28AssetUsageRegistrar.markProductionRoutes()
             Prompt28AssetUsageRegistrar.markRendered(.fruitbasket_background)
             audioManager.fadeIn(.fruitBasketMusicbox, duration: 0.35)
@@ -182,13 +186,27 @@ struct Prompt28FruitBasketView: View {
             setPauseMenuVisible(false)
             returnExitFocus = false
             usernameExitSession?.cancel()
+            levelResetSession?.cancel()
+            returnLevelResetFocus = false
             questionOperationTask?.cancel()
             viewModel.leaveScreen()
             audioManager.fadeOut(category: .music, duration: 0.25)
             audioManager.fadeOut(category: .rainAmbience, duration: 0.20)
         }
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
-            guard rootIsVisible, let session = usernameExitSession else { return }
+            guard rootIsVisible else { return }
+            if let choice = levelResetSession?.takeCompletedChoice() {
+                switch choice {
+                case .reset(let expected):
+                    returnLevelResetFocus = false
+                    if !store.isReadOnly, expected.matches(currentLevelResetContext) { viewModel.resetGameLevel() }
+                case .cancel: restoreLevelResetFocus()
+                }
+            } else if returnLevelResetFocus, levelResetSession?.requestID == nil,
+                      popupCoordinator.currentPopup == nil {
+                restoreLevelResetFocus()
+            }
+            guard let session = usernameExitSession else { return }
             if let choice = session.takeCompletedChoice() {
                 returnExitFocus = false
                 completeUsernameExit(choice)
@@ -199,6 +217,9 @@ struct Prompt28FruitBasketView: View {
         }
         .onChange(of: store.isReadOnly) { _, blocked in
             if blocked {
+                levelResetSession?.cancel()
+                returnLevelResetFocus = false
+                levelResetControlFocused = false
                 questionOperationTask?.cancel()
                 viewModel.leaveScreen()
                 showStormNote = false
@@ -392,8 +413,6 @@ struct Prompt28FruitBasketView: View {
             case .leaderboard:
                 leaderboard
 
-            case .resetConfirmation:
-                resetConfirmation
             }
         }
     }
@@ -1543,6 +1562,7 @@ struct Prompt28FruitBasketView: View {
 
                 #if DEBUG
                 if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+                    Prompt28GameProgressReadback(model: viewModel, store: store)
                     if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQAEscape") {
                         FruitfolioControlPillButton(label: "QA accessibility escape", action: resumeGameFromPause)
                             .controlSize(.small).accessibilityIdentifier("gameQA.pauseEscape")
@@ -1571,8 +1591,10 @@ struct Prompt28FruitBasketView: View {
                     title: "start catching easy again",
                     accent: .peach
                 ) {
-                    viewModel.screen = .resetConfirmation
+                    requestLevelReset()
                 }
+                .accessibilityIdentifier("fruitBasket.pause.resetLevel")
+                .accessibilityFocused($levelResetControlFocused)
 
                 Prompt28WatercolorButton(
                     title: "exit fruit basket",
@@ -1826,9 +1848,10 @@ struct Prompt28FruitBasketView: View {
                             title: "start catching easy again",
                             accent: .peach
                         ) {
-                            viewModel.screen =
-                                .resetConfirmation
+                            requestLevelReset()
                         }
+                        .accessibilityIdentifier("fruitBasket.result.resetLevel")
+                        .accessibilityFocused($levelResetControlFocused)
                     }
                 }
             }
@@ -2151,47 +2174,25 @@ struct Prompt28FruitBasketView: View {
         )
     }
 
-    private var resetConfirmation: some View {
-        VStack(spacing: 14) {
-            topBar
+    private var currentLevelResetContext: Prompt28LevelResetContext {
+        .init(normalizedTopic: viewModel.normalizedTopic, sessionID: viewModel.session?.id, origin: viewModel.screen)
+    }
 
-            Spacer()
+    private func requestLevelReset() {
+        guard rootIsVisible, !store.isReadOnly, currentLevelResetContext.isEligible else { return }
+        levelResetControlFocused = false
+        levelResetSession?.present(context: currentLevelResetContext)
+        returnLevelResetFocus = levelResetSession?.requestID != nil
+    }
 
-            Prompt28PaperPanel {
-                VStack(spacing: 11) {
-                    Text(
-                        "start this topic’s game level over?"
-                    )
-                    .prompt28Text(.sectionHeading)
-                    .multilineTextAlignment(.center)
-
-                    Text(
-                        "the catching will go back to the gentlest level. your learning topic, question difficulty, saved encyclopedia entries, and scores won’t disappear."
-                    )
-                    .prompt28Text(.body)
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
-                    .multilineTextAlignment(.center)
-
-                    Prompt28WatercolorButton(
-                        title: "yes, reset level",
-                        accent: .paleYellow
-                    ) {
-                        viewModel.resetGameLevel()
-                    }
-
-                    Prompt28WatercolorButton(
-                        title: "never mind",
-                        accent: .mint
-                    ) {
-                        viewModel.screen = .paused
-                    }
-                }
-            }
-            .frame(maxWidth: 400)
-
-            Spacer()
+    private func restoreLevelResetFocus() {
+        returnLevelResetFocus = false
+        Task { @MainActor in
+            await Task.yield()
+            guard rootIsVisible, !store.isReadOnly, popupCoordinator.currentPopup == nil,
+                  currentLevelResetContext.isEligible else { return }
+            levelResetControlFocused = true
         }
-        .padding(.horizontal, 20)
     }
 
     private func rule(

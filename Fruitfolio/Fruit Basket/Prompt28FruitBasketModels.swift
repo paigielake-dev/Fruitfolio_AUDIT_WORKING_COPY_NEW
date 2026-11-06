@@ -357,7 +357,6 @@ enum Prompt28ScreenState: Equatable, Sendable {
     case basketReveal
     case leaderboard
     case paused
-    case resetConfirmation
     case topicUnsupported
     case topicExhausted
     case error

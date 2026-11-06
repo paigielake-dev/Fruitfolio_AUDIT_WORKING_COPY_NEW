@@ -194,6 +194,49 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testSharedGameLevelResetPreservesOriginAndConservedProgress() {
+        for origin in ["paused", "result"] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+        for confirm in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "reset-" + origin,
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let reset = app.buttons[origin == "paused" ? "fruitBasket.pause.resetLevel" : "fruitBasket.result.resetLevel"]
+            XCTAssertTrue(reset.waitForExistence(timeout: 5))
+            let scroll = origin == "paused" ? app.scrollViews["fruitBasket.pause.scroll"] : app.scrollViews.firstMatch
+            for _ in 0..<24 { if reset.isHittable { break }; scroll.swipeUp() }
+            let level = app.staticTexts["gameQA.storedCurrentLevel"]
+            let originalLevel = level.label
+            let totals = app.staticTexts["gameQA.conservedTotals"].label
+            XCTAssertNotEqual(originalLevel, "stored current level: 1")
+            XCTAssertFalse(totals.isEmpty)
+            reset.tap()
+            XCTAssertTrue(app.scrollViews["tapedWhitePopup.scroll"].waitForExistence(timeout: 3))
+            XCTAssertFalse(reset.exists)
+            tapSharedPaperAction(confirm ? "secondary" : "primary", in: app)
+            let expected = confirm ? "stored current level: 1" : originalLevel
+            let updated = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: level)
+            XCTAssertEqual(XCTWaiter.wait(for: [updated], timeout: 5), .completed)
+            XCTAssertEqual(app.staticTexts["gameQA.conservedTotals"].label, totals)
+            if confirm {
+                XCTAssertFalse(reset.exists)
+                XCTAssertEqual(app.staticTexts["gameQA.screen"].label, "game screen: learningSetup")
+            } else {
+                XCTAssertTrue(reset.waitForExistence(timeout: 3))
+                XCTAssertFalse(app.scrollViews["tapedWhitePopup.scroll"].exists)
+            }
+            captureGame(app, name: "reset-origin-\(origin)-language-\(language)-reduced-\(reduced)-confirm-\(confirm)")
+            app.terminate()
+        }
+        }
+        }
+        }
+    }
+
     func testMovingFruitAndStandaloneStarRetainDistinctTranslatedAccessibility() {
         for language in ["en", "ar"] {
         for reduced in [false, true] {

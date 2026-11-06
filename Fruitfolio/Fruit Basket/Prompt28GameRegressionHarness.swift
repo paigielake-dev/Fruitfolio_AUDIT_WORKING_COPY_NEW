@@ -109,13 +109,25 @@ struct Prompt28GameRegressionHarness: View {
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
             seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious", "good-serious"].contains(scenario) ? true : nil)
         let isStorm = ["storm", "storm-serious"].contains(scenario)
+        let isReset = ["reset-paused", "reset-result"].contains(scenario)
+        if isReset {
+            model.store.updateProgress(.init(normalizedTopicID: model.normalizedTopic,
+                currentGameLevel: 6, highestGameLevelReached: 8, totalFruitCaught: 20,
+                totalStarsEarned: 3, bestScore: 90))
+        }
         var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
-            difficulty: .easy, startingLevel: isStorm ? 6 : 1)
+            difficulty: .easy, startingLevel: (isStorm || isReset) ? 6 : 1)
         if isStorm { session.currentRound = 3 }
         model.session = session
         if isExcerpt { model.screen = .question; return }
         model.beginCatch()
         if isStorm { return } // Real screen-change observer presents the real storm modal.
+        if scenario == "reset-paused" { model.pause(); return }
+        if scenario == "reset-result" {
+            for _ in 0..<model.engine.rules.goodFruitTarget { catchFruit(.pear, classification: .good) }
+            model.sceneBecameInactive()
+            return
+        }
         if scenario == "star" {
             model.classificationFruit = nil
             model.classificationStarAvailable = true
@@ -175,12 +187,29 @@ private struct Prompt28GameDiagnosticReadback: View {
                 Text("raw fruit count: \(result.caughtFruit.count) / \(result.targetFruit)")
                     .accessibilityIdentifier("gameQA.rawResultFruit")
             }
+            Prompt28GameProgressReadback(model: model, store: store)
             Text("stored highest level: \(store.leaderboardTotals.highestLevel)")
                 .accessibilityIdentifier("gameQA.storedHighestLevel")
             if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
                 FruitfolioInteractionSoundDiagnostics()
             }
         }
+    }
+}
+
+/// Read only the disposable QA store; never mutates or fabricates progress.
+@MainActor
+struct Prompt28GameProgressReadback: View {
+    @ObservedObject var model: Prompt28FruitBasketViewModel
+    @ObservedObject var store: Prompt28FruitBasketStore
+    var body: some View {
+        let progress = store.progress(for: model.normalizedTopic)
+        VStack {
+            Text("stored current level: \(progress?.currentGameLevel ?? 0)")
+                .accessibilityIdentifier("gameQA.storedCurrentLevel")
+            Text("stored conserved totals: highest \(progress?.highestGameLevelReached ?? 0); fruit \(progress?.totalFruitCaught ?? 0); stars \(progress?.totalStarsEarned ?? 0); best \(progress?.bestScore ?? 0)")
+                .accessibilityIdentifier("gameQA.conservedTotals")
+        }.font(.caption2).allowsHitTesting(false)
     }
 }
 
