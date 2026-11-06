@@ -3,6 +3,65 @@ import XCTest
 
 @MainActor
 final class Prompt1BHormoneMeasurementTests: XCTestCase {
+    func testCycleDayAcceptsDecimalScriptsAndRejectsPartialOrOverflowingValues() throws {
+        for text in ["12", "١٢", "۱۲", "१२", "１２", " ١٢\n"] {
+            XCTAssertEqual(try FruitfolioHormoneMeasurement.parseCycleDay(text), 12)
+        }
+        XCTAssertNil(try FruitfolioHormoneMeasurement.parseCycleDay("  "))
+        for text in ["0", "٠", "-1", "+2", "1.5", "١٫٥", "1,000", "²", "½", "12x", "1 2", String(repeating: "9", count: 100)] {
+            XCTAssertThrowsError(try FruitfolioHormoneMeasurement.parseCycleDay(text), text)
+        }
+    }
+
+    func testLegacyUnknownFormatSurvivesNotesEditAndRequiresExplicitFormatForChangedResult() async throws {
+        let suite = "Prompt1BHormoneLegacyFormat.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "١٢٫٥٠"; record.unit = "pg/mL"
+        defaults.set(try JSONEncoder().encode([record]), forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        record = try XCTUnwrap(store.records.first)
+        record.notes = "exact report retained"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        XCTAssertNil(store.records.first?.resultLocaleIdentifier)
+        XCTAssertEqual(store.records.first?.result, "١٢٫٥٠")
+        let baseline = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        record.result = "١٣٫٥٠"
+        XCTAssertThrowsError(try store.save(record, locale: Locale(identifier: "en_US"))) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .resultFormatRequired)
+        }
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), baseline)
+        record.resultLocaleIdentifier = "ar_EG"
+        record.cycleDay = try FruitfolioHormoneMeasurement.parseCycleDay("١٢")
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let restored = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        XCTAssertEqual(restored.records.first?.result, "١٣٫٥٠")
+        XCTAssertEqual(restored.records.first?.resultLocaleIdentifier, "ar_EG")
+        XCTAssertEqual(restored.records.first?.cycleDay, 12)
+        XCTAssertEqual(restored.records.first?.unit, "pg/mL")
+    }
+
+    func testKnownFormatIsNotReplacedByLaterAppLocaleOrMissingDraftMetadata() async throws {
+        let suite = "Prompt1BHormoneKnownFormat.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12,50"; record.unit = "nmol/L"
+        try store.save(record, locale: Locale(identifier: "fr_FR"))
+        record.notes = "notes after language change"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        XCTAssertEqual(store.records.first?.resultLocaleIdentifier, "fr_FR")
+        XCTAssertEqual(store.records.first?.result, "12,50")
+        record.result = "13.50"
+        XCTAssertThrowsError(try store.save(record, locale: Locale(identifier: "en_US")))
+        record.resultLocaleIdentifier = "en_US"
+        try store.save(record, locale: Locale(identifier: "fr_FR"))
+        XCTAssertEqual(store.records.first?.resultLocaleIdentifier, "en_US")
+        XCTAssertEqual(store.records.first?.result, "13.50")
+    }
+
     func testCreateEditDeletePreservesExactUnitsAndPersists() async throws {
         let suite = "Prompt1BHormone.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))

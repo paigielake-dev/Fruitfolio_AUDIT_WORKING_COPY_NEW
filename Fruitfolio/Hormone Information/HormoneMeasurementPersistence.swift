@@ -54,8 +54,19 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current) throws {
         try requireWritable()
         var recorded = measurement
-        if recorded.resultLocaleIdentifier == nil { recorded.resultLocaleIdentifier = locale.identifier }
-        try recorded.validate(locale: locale)
+        let previous = records.first { $0.id == recorded.id }
+        if recorded.resultLocaleIdentifier == nil, let previous, previous.resultLocaleIdentifier == nil {
+            guard recorded.result == previous.result, recorded.unit == previous.unit else {
+                throw FruitfolioHormoneMeasurementError.resultFormatRequired
+            }
+            // Preserve the historical unknown; do not reinterpret its number.
+            try recorded.validateRequiredMetadata()
+        } else {
+            if recorded.resultLocaleIdentifier == nil {
+                recorded.resultLocaleIdentifier = previous?.resultLocaleIdentifier ?? locale.identifier
+            }
+            try recorded.validate(locale: locale)
+        }
         var updated = records
         if let index = updated.firstIndex(where: { $0.id == recorded.id }) { updated[index] = recorded }
         else { updated.append(recorded) }

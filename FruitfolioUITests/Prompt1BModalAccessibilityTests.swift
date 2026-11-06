@@ -479,6 +479,35 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         app.terminate()
     }
 
+    func testMeasurementEditorSavesArabicDecimalCycleDayAndKeepsReportedResult() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsReduceMotion"]
+        app.launch()
+        let edit = app.buttons["measurements.edit.CF310000-0000-0000-0000-000000000001"]
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        for _ in 0..<16 { if edit.isHittable { break }; app.swipeUp() }
+        edit.tap()
+        let editor = app.scrollViews["measurements.editor.scroll"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let day = app.textFields["measurements.editor.cycleDay"]
+        for _ in 0..<20 { if day.isHittable { break }; editor.swipeUp() }
+        XCTAssertTrue(day.isHittable)
+        day.tap(); day.typeText("١٢")
+        let save = app.buttons["measurements.editor.save"]
+        for _ in 0..<20 { if save.isHittable { break }; editor.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+        save.tap()
+        XCTAssertTrue(edit.waitForExistence(timeout: 5))
+        for _ in 0..<20 { if edit.isHittable { break }; app.swipeUp() }
+        edit.tap()
+        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        let result = app.textFields["measurements.editor.result"]
+        for _ in 0..<20 { if result.isHittable { break }; editor.swipeDown() }
+        XCTAssertEqual(result.value as? String, "12.50")
+        for _ in 0..<20 { if day.isHittable { break }; editor.swipeUp() }
+        XCTAssertEqual(day.value as? String, "12")
+    }
+
     func testMeasurementFutureRecordNoticeKeepsExactReadableValue() {
         let app = XCUIApplication()
         app.launchArguments += ["-fruitfolioMeasurementsQA", "-fruitfolioMeasurementsFutureRecord", "-fruitfolioMeasurementsReduceMotion"]

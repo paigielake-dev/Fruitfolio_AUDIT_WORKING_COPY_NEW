@@ -3,6 +3,7 @@ import UniformTypeIdentifiers
 
 struct FruitfolioHormoneInformationView: View {
     let onBack: () -> Void
+    @Environment(\.locale) private var appLocale
     @ObservedObject private var store: FruitfolioHormoneMeasurementStore
     @EnvironmentObject private var popupCoordinator: PopupCoordinator
     @State private var popupOwner: FruitfolioOwnedPopupSession?
@@ -124,7 +125,7 @@ struct FruitfolioHormoneInformationView: View {
         .sheet(item: $editing) { record in
             FruitfolioPresentedPopupHost {
             FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
-                try store.save(updated)
+                try store.save(updated, locale: appLocale)
                 measurementSavedThisVisit = true
                 editing = nil
             }
@@ -191,6 +192,7 @@ struct FruitfolioHormoneInformationView: View {
 
 private struct FruitfolioHormoneMeasurementEditor: View {
     let original: FruitfolioHormoneMeasurement
+    @Environment(\.locale) private var appLocale
     let onCancel: () -> Void
     let onSave: (FruitfolioHormoneMeasurement) throws -> Void
     @State private var draft: FruitfolioHormoneMeasurement
@@ -230,7 +232,23 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 TextField("numerical result", text: $draft.result).keyboardType(.decimalPad)
                     .accessibilityIdentifier("measurements.editor.result")
                     .focused($editorFocus, equals: .result)
-                    .onChange(of: draft.result) { _, _ in draft.resultLocaleIdentifier = Locale.current.identifier }
+                    .onChange(of: draft.result) { _, _ in
+                        if original.result.isEmpty && draft.resultLocaleIdentifier == nil {
+                            draft.resultLocaleIdentifier = appLocale.identifier
+                        }
+                    }
+                Picker("decimal separator on the report", selection: $draft.resultLocaleIdentifier) {
+                    Text("not recorded — preserve original").tag(Optional<String>.none)
+                    Text("point (1.5)").tag(Optional("en_US"))
+                    Text("comma (1,5)").tag(Optional("fr_FR"))
+                    Text("Arabic decimal separator (١٫٥)").tag(Optional("ar_EG"))
+                    if let identifier = draft.resultLocaleIdentifier,
+                       !["en_US", "fr_FR", "ar_EG"].contains(identifier) {
+                        Text("recorded format: \(Locale(identifier: identifier).decimalSeparator ?? ".")")
+                            .tag(Optional(identifier))
+                    }
+                }
+                .accessibilityIdentifier("measurements.editor.resultFormat")
                 TextField("unit, exactly as reported", text: $draft.unit).focused($editorFocus, equals: .unit)
                 if let shownDate = draft.dateForDisplay() {
                     DatePicker("test date", selection: Binding(
@@ -254,6 +272,7 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 }
                 TextField("sample type (optional)", text: $draft.sampleType).focused($editorFocus, equals: .sample)
                 TextField("cycle day (optional)", text: $cycleDayText).keyboardType(.numberPad)
+                    .accessibilityIdentifier("measurements.editor.cycleDay")
                     .focused($editorFocus, equals: .cycleDay)
                 TextField("laboratory reference range (optional)", text: $draft.laboratoryReferenceRange).focused($editorFocus, equals: .reference)
                 TextField("notes (optional)", text: $draft.notes, axis: .vertical)
@@ -265,14 +284,11 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                 }
                 WatercolorPrimaryButton(label: "save measurement") {
                     do {
-                        let day = cycleDayText.trimmingCharacters(in: .whitespacesAndNewlines)
-                        if !day.isEmpty && (Int(day) == nil || Int(day)! <= 0) {
-                            throw FruitfolioHormoneMeasurementError.invalidRequiredFields
-                        }
-                        draft.cycleDay = day.isEmpty ? nil : Int(day)
+                        draft.cycleDay = try FruitfolioHormoneMeasurement.parseCycleDay(cycleDayText)
                         try onSave(draft)
                     } catch { errorMessage = error.localizedDescription }
                 }
+                .accessibilityIdentifier("measurements.editor.save")
                 WatercolorSecondaryButton(label: "cancel") {
                     if hasChanges { requestDiscard() } else { onCancel() }
                 }

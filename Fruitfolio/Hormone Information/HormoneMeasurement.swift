@@ -55,6 +55,36 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
         reportedTestDay ?? (try? Prompt13LocalDate(testDate, calendar: calendar))
     }
 
+    /// Accept decimal digits from any script, but never signs, fractions,
+    /// separators or a partial/overflowing integer for a reported cycle day.
+    static func parseCycleDay(_ text: String) throws -> Int? {
+        let input = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !input.isEmpty else { return nil }
+        var ascii = ""
+        for scalar in input.unicodeScalars {
+            guard CharacterSet.decimalDigits.contains(scalar),
+                  let digit = Character(String(scalar)).wholeNumberValue else {
+                throw FruitfolioHormoneMeasurementError.invalidRequiredFields
+            }
+            ascii += String(digit)
+        }
+        guard let day = Int(ascii), day > 0 else {
+            throw FruitfolioHormoneMeasurementError.invalidRequiredFields
+        }
+        return day
+    }
+
+    // A notes-only edit may preserve an unknown legacy result format without
+    // treating the current device language as historical laboratory evidence.
+    func validateRequiredMetadata() throws {
+        guard testDate.timeIntervalSinceReferenceDate.isFinite,
+              !unit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              hormone != .other || !otherHormoneName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              cycleDay == nil || cycleDay! > 0 else {
+            throw FruitfolioHormoneMeasurementError.invalidRequiredFields
+        }
+    }
+
     func validate(locale: Locale = .current) throws {
         let input = result.trimmingCharacters(in: .whitespacesAndNewlines)
         let parsingLocale = resultLocaleIdentifier.map { Locale(identifier: $0) } ?? locale
@@ -75,17 +105,16 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
               !unit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             throw FruitfolioHormoneMeasurementError.invalidRequiredFields
         }
-        guard hormone != .other || !otherHormoneName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
-              cycleDay == nil || cycleDay! > 0 else {
-            throw FruitfolioHormoneMeasurementError.invalidRequiredFields
-        }
+        try validateRequiredMetadata()
     }
 }
 
 enum FruitfolioHormoneMeasurementError: LocalizedError, Equatable {
-    case invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
+    case resultFormatRequired, invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
     var errorDescription: String? {
         switch self {
+        case .resultFormatRequired:
+            return "choose the decimal separator used on the report before changing this result. the original value and unknown format have been preserved."
         case .invalidRequiredFields:
             return "enter a hormone, a valid non-negative numerical result, and its unit. cycle day, when provided, must be positive."
         case .confirmationChanged:
