@@ -4,7 +4,7 @@ struct ContentView: View {
     #if DEBUG
     @StateObject private var regressionPreferences = FruitfolioRegressionPreferenceSuite()
     private var isRegressionRun: Bool {
-        let flags = ["-fruitfolioTranslationDisclosureQA", "-fruitfolioFAQQA", "-fruitfolioSettingsControlsQA", "-fruitfolioAccountActionQA", "-fruitfolioCycleModalQA", "-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
+        let flags = ["-fruitfolioGuideSaveQA", "-fruitfolioTranslationDisclosureQA", "-fruitfolioFAQQA", "-fruitfolioSettingsControlsQA", "-fruitfolioAccountActionQA", "-fruitfolioCycleModalQA", "-fruitfolioMeasurementsQA", "-fruitfolioLibraryStorageQA", "-fruitfolioContextStorageQA", "-fruitfolioDataManagementQA", "-fruitfolioCitationQA", "-fruitfolioGameQA", "-fruitfolioContactQA", "-fruitfolioWheelQA", "-fruitfolioPersonalHealthQA", "-fruitfolioHormoneLibraryQA", "-fruitfolioBookQA",
                      "-fruitfolioAskPaperQA", "-fruitfolioTourQA", "-fruitfolioModalQA"]
         return flags.contains(where: ProcessInfo.processInfo.arguments.contains)
     }

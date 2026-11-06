@@ -24,7 +24,8 @@ struct Prompt03SkeletonView: View {
         let args = ProcessInfo.processInfo.arguments
         // Layout-only QA keeps English fixture labels while exercising the real
         // outer popup host. Child-view environment overrides cannot reach it.
-        if (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
+        if (args.contains("-fruitfolioGuideSaveQA") && args.contains("-fruitfolioGuideSaveRTL")) ||
+           (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
            (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) ||
            (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) ||
            (args.contains("-fruitfolioSettingsControlsQA") && args.contains("-fruitfolioSettingsControlsRTL")) ||
@@ -153,7 +154,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioSettingsControlsQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGuideSaveQA") {
+            Prompt11GuideSaveRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioSettingsControlsQA") {
             Prompt1BSettingsControlRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
             Prompt12AccountActionRegressionHarness()

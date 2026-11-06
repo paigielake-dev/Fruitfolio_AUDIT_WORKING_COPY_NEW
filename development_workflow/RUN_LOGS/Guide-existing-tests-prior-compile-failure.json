@@ -1,0 +1,19 @@
+{
+  "parent_commit": "731baecd77bdcae04c52d09cc5c85aad1d0f54fc",
+  "test_source_sha256": "4edbe47a2b941ccaaf632c31115e3fb4cb9f14b1859b94f3fc431288786ec7f3",
+  "compiler_log": "/tmp/fruitfolio-guide-existing-focused.log",
+  "compiler_log_sha256": "5303699b1bb82c9a49f04bc4aa8e6044f5440e3fb893bb4b5a2bb8bd632e7e0d",
+  "result": "Compilation failed before tests could execute: synchronous XCTest setup/teardown accessed MainActor fixture state under Swift 6",
+  "diagnostic_excerpts": [
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:12:9: error: main actor-isolated property 'suiteName' can not be mutated from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:13:9: error: main actor-isolated property 'defaults' can not be mutated from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:13:44: error: main actor-isolated property 'suiteName' can not be referenced from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:14:9: error: main actor-isolated property 'store' can not be mutated from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:14:17: error: call to main actor-isolated initializer 'init(defaults:persistenceKey:)' in a synchronous nonisolated context [#ActorIsolatedCall]",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:15:23: error: main actor-isolated property 'defaults' can not be referenced from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:21:16: error: main actor-isolated property 'suiteName' can not be referenced from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:25:9: error: main actor-isolated property 'store' can not be mutated from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:26:9: error: main actor-isolated property 'defaults' can not be mutated from a nonisolated context",
+    "/tmp/fruitfolio-portable-g9h0pv3v/Tests/FruitfolioTests/Prompt11GuideBuilderTests.swift:27:9: error: main actor-isolated property 'suiteName' can not be mutated from a nonisolated context"
+  ]
+}

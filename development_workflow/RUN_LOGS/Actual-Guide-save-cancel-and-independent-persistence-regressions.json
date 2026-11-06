@@ -1,0 +1,54 @@
+{
+  "timestamp": "2026-11-06T17:38:36.657274+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --test-filter Prompt11GuideBuilderTests (original compile failure then actual eight-case pass)",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "swift Tools/validate_xcode_project.swift",
+    "actual SwiftSyntax control-sound-ownership --check"
+  ],
+  "results": {
+    "portable_XCTest": 753,
+    "native_CPU_XCTest": 775,
+    "SwiftTesting_each_suite": 21,
+    "workflow_checks": 48,
+    "Swift_syntax_files": 309,
+    "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+    "official_MADLAD": "BLOCKED; see BLOCKERS.md",
+    "native_T5_contract_methods": 16,
+    "catalog_keys": 801,
+    "nonempty_foreign_units": 0,
+    "Foundation_shared_ownership_regressions": 11,
+    "SwiftSyntax_sound_ownership_findings": 0,
+    "Xcode_project_references": "PASS; not an Apple build",
+    "batch_recorder_integrity_tests": 6,
+    "Guide_core_XCTest": 10,
+    "Guide_original_focused_XCTest": 8,
+    "Apple_UI_Guide_save_launches_added_NOT_RUN": 20
+  },
+  "verification": {
+    "executed": {
+      "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+      "portable_XCTest": "753 passed, 0 failures",
+      "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+      "SwiftTesting": "21 passed per overlapping run",
+      "workflow": "48 passed",
+      "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+      "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+    },
+    "not_run": [
+      "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+      "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+      "Official MADLAD and actual foreign-language translation acceptance"
+    ],
+    "remaining": [
+      "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+      "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+      "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+      "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+      "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+    ]
+  }
+}

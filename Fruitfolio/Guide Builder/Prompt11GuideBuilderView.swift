@@ -19,6 +19,9 @@ struct Prompt11GuideBuilderView: View {
     @State private var savedStatusVisible = false
     @State private var savedStatusTask: Task<Void, Never>?
     @State private var savedStatusGuideID: UUID?
+    #if DEBUG
+    @State private var savedStatusRequests = 0
+    #endif
     @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
     @State private var searchText = ""
 
@@ -90,6 +93,9 @@ struct Prompt11GuideBuilderView: View {
             if savedStatusGuideID != guideID { dismissSavedStatus() }
         }
         .toolbar(.hidden, for: .navigationBar)
+        #if DEBUG
+        .preference(key: Prompt11GuideSavedStatusRequestKey.self, value: savedStatusRequests)
+        #endif
     }
 
     private var home: some View {
@@ -228,6 +234,7 @@ struct Prompt11GuideBuilderView: View {
                 audioManager.play(.buttonSoftPop)
                 overlay = .createGuide
             }
+            .accessibilityIdentifier("guide.create.open")
 
             Button("go to ask") {
                 audioManager.play(.buttonSoftPop)
@@ -408,6 +415,7 @@ struct Prompt11GuideBuilderView: View {
                             showingGuideOptions.toggle()
                         }
                     }
+                    .accessibilityIdentifier("guide.options.open")
                     .font(.custom("Chalkboard SE", size: 10.5))
                     .fontWeight(.bold)
                     .foregroundStyle(
@@ -499,6 +507,7 @@ struct Prompt11GuideBuilderView: View {
                         guide.subtitle ?? ""
                     )
                 }
+                .accessibilityIdentifier("guide.description.open")
             }
 
             Button {
@@ -1174,6 +1183,9 @@ struct Prompt11GuideBuilderView: View {
     }
 
     private func showSavedStatus() {
+        #if DEBUG
+        savedStatusRequests += 1
+        #endif
         savedStatusTask?.cancel()
         if !savedStatusVisible { audioManager.play(.popupOpen) }
         savedStatusVisible = true

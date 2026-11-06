@@ -10186,7 +10186,12 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift"
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10206,9 +10211,11 @@
         "Prompt1BLibraryPersistenceTests",
         "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
         "Prompt1BSharedLibraryCatalogTests",
-        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack"
+        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Guides-shared-catalog-and-original-source-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10216,9 +10223,42 @@
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
-        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified."
+        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-05T21:59:02.765920+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 207,
@@ -10256,7 +10296,11 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryAssets.swift",
         "Fruitfolio/Saved Library/Prompt10LibraryStorageNotice.swift",
         "Fruitfolio/Saved Library/Prompt10LibraryStorageRegressionHarness.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10279,9 +10323,11 @@
         "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
         "Prompt10SavedLibraryTests (actual store, now executable on Foundation)",
         "Prompt1BLibrarySnapshotProtectionTests",
-        "Prompt1BModalAccessibilityTests.testUnsupportedSavedLibraryKeepsReadableBooksAndMeasuredReloadAvailable (Apple NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testUnsupportedSavedLibraryKeepsReadableBooksAndMeasuredReloadAvailable (Apple NOT_RUN)",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Saved-library-stale-and-unknown-field-protection-with-readable-pages (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10290,9 +10336,42 @@
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
         "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
-        "Saved Library persistence now captures the exact baseline UserDefaults object and rejects a commit after that record changes or is cleared elsewhere. The existing actual store rolls back its candidate state on failure and exposes a specific protection reason. Explicit reload reads the latest saved baseline without writing or merging it. Protected records cannot create books, and Library, Guide Builder home and Ask save destinations provide the same inline reload notice. This is value comparison in the local process, not a cross-process transaction/ABA guarantee.\n\nAdded a Foundation JSON-field-coverage guard: after a successful typed decode, a temporary typed encoding is inspected recursively for discarded dictionary fields/array members. No scientific scalar values are changed or treated as clinically equivalent. Unknown nested book/page/citation fields prevent writes while known readable pages remain available; no raw record is rewritten. This conservative rule also protects explicit null fields omitted by the typed encoder rather than guessing they are disposable. Unreadable originals retain the existing read-only behavior. Reload does not clear an unsupported record; only a genuinely readable/round-trippable newer baseline re-enables edits.\n\nThe real Saved Library store now conditionally retains genuine Combine/ObservableObject on Apple and runs its identical control flow on Linux. Existing Saved Library tests execute against that actual store. Its physical asset-name enum is also compiled unchanged on Foundation platforms; only the SwiftUI image view is conditionally excluded. No artwork/resources or model implementation is replaced. New actual-store tests prove stale/cleared deletion rollback, exact original byte preservation, known-page/notes readability under unknown nested fields, null protection and read-only reload. A DEBUG private-suite route and an actual UI test exercise the protected notice, large text/Reduce Motion and opening the existing readable book. Apple SDK/publisher/UI/screenshots remain NOT_RUN.\n\nThe new field guard is currently applied to Saved Library only. Remaining measurement/context persistence needs the same stale/unsupported-record review and implementation; this batch does not claim all app stores are protected."
+        "Saved Library persistence now captures the exact baseline UserDefaults object and rejects a commit after that record changes or is cleared elsewhere. The existing actual store rolls back its candidate state on failure and exposes a specific protection reason. Explicit reload reads the latest saved baseline without writing or merging it. Protected records cannot create books, and Library, Guide Builder home and Ask save destinations provide the same inline reload notice. This is value comparison in the local process, not a cross-process transaction/ABA guarantee.\n\nAdded a Foundation JSON-field-coverage guard: after a successful typed decode, a temporary typed encoding is inspected recursively for discarded dictionary fields/array members. No scientific scalar values are changed or treated as clinically equivalent. Unknown nested book/page/citation fields prevent writes while known readable pages remain available; no raw record is rewritten. This conservative rule also protects explicit null fields omitted by the typed encoder rather than guessing they are disposable. Unreadable originals retain the existing read-only behavior. Reload does not clear an unsupported record; only a genuinely readable/round-trippable newer baseline re-enables edits.\n\nThe real Saved Library store now conditionally retains genuine Combine/ObservableObject on Apple and runs its identical control flow on Linux. Existing Saved Library tests execute against that actual store. Its physical asset-name enum is also compiled unchanged on Foundation platforms; only the SwiftUI image view is conditionally excluded. No artwork/resources or model implementation is replaced. New actual-store tests prove stale/cleared deletion rollback, exact original byte preservation, known-page/notes readability under unknown nested fields, null protection and read-only reload. A DEBUG private-suite route and an actual UI test exercise the protected notice, large text/Reduce Motion and opening the existing readable book. Apple SDK/publisher/UI/screenshots remain NOT_RUN.\n\nThe new field guard is currently applied to Saved Library only. Remaining measurement/context persistence needs the same stale/unsupported-record review and implementation; this batch does not claim all app stores are protected.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T03:53:36.229582+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 208,
@@ -10351,7 +10430,12 @@
         "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
         "Fruitfolio/Saved Library/Prompt10SavedLibraryView.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift"
+        "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10371,9 +10455,11 @@
         "Prompt1BLibraryPersistenceTests",
         "Prompt10SavedLibraryTests/testFailedPageSaveRollsBackPublishedLibraryAndPreservesPriorBytes",
         "Prompt1BSharedLibraryCatalogTests",
-        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack"
+        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Guides-shared-catalog-and-original-source-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
         "Canonical semantic markup preserves explicit underline and combined emphasis through translated excerpt display. Literal Markdown syntax and underline tags are protected from translation. Stored original text and semantic spans remain unchanged. Portable serialization/protection checks pass; Foundation Markdown rendering round-trip tests require Apple SDK and remain unrun.",
@@ -10381,9 +10467,42 @@
         "Added backward-compatible optional citation records to saved pages and pending-save payloads. Ask full/excerpt/historical saves and guide snapshots now retain exact original titles, APA reference text, publication details, IDs, DOI/URL and content versions beyond the Ask session. Shared source rendering displays original metadata verbatim and provides explicit source-open actions plus visible failure handling. Destinations use only supplied credential-free HTTPS addresses or syntactically valid DOI resolver paths; no invented search links or source metadata. Legacy records keep their original IDs fallback. Portable persistence and URL/DOI tests pass, including reserved suffix characters and invalid schemes; Apple UI/openURL and guide-store integration remain unrun. Network reachability and source-content approval are not inferred from URL parsing.",
         "Implemented founder 3G/3I image-save choices in addition to the numbered checklist: opened canonical scientific art can be saved alone or explicitly included with selected text/full-answer saves. Default text saves omit images. Optional canonical image IDs persist with citation records, copy into guide snapshots and render on reopening; image-only saves retain no unsaved answer text. Opened art remains associated with its earlier answer during the active session. Excerpt save identity/de-duplication distinguishes illustrated and text-only payloads and recognizes repeated image-only saves. Existing records decode without the optional field. Whole-answer session badges still represent the answer-level save rather than each image variant; the independent image-only action remains available. Native selection/save UI and guide integration need Apple execution.",
         "Added a shared Foundation persistence snapshot for the existing library. Candidates encode successfully before the stored bytes/committed snapshot change; Store.persist rolls published mutations back on failure, so failed saves/media attachments do not linger as successful in-memory copies. Malformed JSON and wrong-type stored originals now remain untouched and read-only rather than being silently replaced by an empty library. Library, Guide home and Ask save destination show a recovery notice and suppress empty-state creation paths when storage is unreadable. Portable tests verify original bytes, snapshot rollback, reinitialization and wrong-type protection. UserDefaults.set still does not expose filesystem flush errors; actual app-restart durability and UI recovery require Apple testing. No user data was erased or migrated.",
-        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified."
+        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-05T21:59:02.765920+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 210,
@@ -10617,7 +10736,13 @@
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
         "Fruitfolio/Saved Library/Prompt10SharedLibraryCatalog.swift",
         "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
-        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift"
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -10626,14 +10751,49 @@
       "related_tests": [
         "Prompt1BPopupLayoutTests/testCompactSaveCardUsesOriginalAspectRatioAndWritingBounds",
         "Prompt1BSharedLibraryCatalogTests",
-        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack"
+        "Prompt1BModalAccessibilityTests.testLibraryCreatedBookIsSameGuideAndRenamePropagatesBack",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
       ],
-      "commit_reference": "batch:Guides-shared-catalog-and-original-source-identity (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Guide save feedback now uses the actual control_large_card artwork with Strawberry above the exact saved! caption, sized from measured 634x667 proportions. Removed the competing bookmark/extra celebration overlays. Save-feedback tasks cancel on replacement/disappearance and are scoped to the selected guide; open/close audio and VoiceOver announcement occur for successful saves. New compact-card geometry regression executes in portable Swift; rendered layout/audio remains pending on Apple hardware.",
-        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified."
+        "Guide Builder now projects all existing shared book records, including legacy Ask/library-created books, without a separate feature copy or flag-based visibility exclusion. Original-page lookup never substitutes a retained guide snapshot for a deleted original. Candidate dedup includes own-page IDs, and duplicate insertion returns the actual existing target page. Exact founder shelf/section text applied; selected guide no longer layers the initial-state folder. User material remains labeled unverified in shared guide reading paper. Added pure real-model catalog/provenance regression tests and a production-view cross-entry rename UI test (not run on Linux). Existing shared persistence and popup system retained; full Apple observation, deletion/recolor synchronization, sorting/accessibility acceptance remain unverified.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-05T21:59:02.765920+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 218,
@@ -20600,7 +20760,10 @@
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -20719,9 +20882,10 @@
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -20798,35 +20962,41 @@
         "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -20953,7 +21123,10 @@
         "Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift",
         "Fruitfolio/Core/Intelligence/FruitfolioResearchIntelligence.swift",
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
-        "Fruitfolio/Localizable.xcstrings"
+        "Fruitfolio/Localizable.xcstrings",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -21066,9 +21239,10 @@
         "FruitfolioTests/Prompt1BUsernameExitSessionTests.swift",
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
-        "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Game-persistence-readback-and-unknown-field-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -21129,9 +21303,42 @@
         "New actual native cross-model regression retains a warmed Ask model, concurrently requests structured Ask output and eight T5 translation/release cycles, validates retained Ask decode afterward, then releases Ask and reloads T5. Focused and full CPU suites pass. Does not guarantee simultaneous C-call timing, official 3B memory budget, linguistic/clinical or device behavior.",
         "Concurrent identical eligible machine requests share one validated operation, keyed by exact source/protection/language bytes. Per-owner cancellation, last-owner cancellation, generation guards and memory release preserve ownership. Bounded metadata overflows use original uncached caller path, never truncate/reject. No completed result/failure cache. Nine Foundation scheduling regressions plus actual native eight-owner decode/release/reload contract pass; no official-model/clinical/device memory claim.",
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
-        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims."
+        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T16:53:04.677968+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 445,
@@ -21759,15 +21966,61 @@
       "original_checklist_part": "Part 10 \u2014 Testing, integration, and final verification",
       "original_section": null,
       "description": "Test successful and canceled Guide saves.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Tools/run_portable_swift_tests.py"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift",
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+      ],
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
+      ],
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 454,
@@ -22542,7 +22795,11 @@
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
-        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift"
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22652,9 +22909,10 @@
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-        "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Game-persistence-readback-and-unknown-field-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -22702,9 +22960,42 @@
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
-        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims."
+        "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T16:53:04.677968+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 468,
@@ -22803,7 +23094,11 @@
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22864,9 +23159,10 @@
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -22913,35 +23209,41 @@
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -23201,7 +23503,11 @@
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
         "Fruitfolio/Core/Assets/FruitfolioInteractionSoundDiagnostics.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -23261,9 +23567,10 @@
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -23308,35 +23615,41 @@
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -23421,7 +23734,11 @@
         "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
         "Fruitfolio/Fruit Basket/Prompt28CatchPresentation.swift",
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -23477,9 +23794,10 @@
         "FruitfolioTests/Prompt1BAccountDraftExitTests.swift",
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -23522,35 +23840,41 @@
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -23593,7 +23917,13 @@
         "Fruitfolio/Core/Assets/AudioManager.swift",
         "Fruitfolio/Localizable.xcstrings",
         "Fruitfolio/Core/Assets/FruitfolioInteractionSoundDiagnostics.swift",
-        "Tools/record_prompt1b_batch.py"
+        "Tools/record_prompt1b_batch.py",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift",
+        "Tools/run_portable_swift_tests.py"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -23616,9 +23946,10 @@
         "FruitfolioTests/Prompt1BUsernamePersistenceTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "development_workflow/tests/test_ui_qa_preference_isolation.py",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Serious-basket-reveal-and-mandatory-batch-evidence (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Replaced the two remaining native measurement confirmation dialogs (one/all deletion and dirty-editor discard) with owned shared taped-white requests. The existing editor native sheet now has its own PresentedPopupHost above the sheet, preventing presentation behind it/double root hosts. Shared canonical blur/dim/hit/VoiceOver exclusion and Reduce Motion govern these requests. Shared paper actions now use the canonical control pill and its single soft-pop owner rather than plain raw buttons/manual cue calls. Paper message focus is requested after mounting and guarded by the current request identity/cancellation; translation disclosure/retry controls remain separate accessible children.\n\nThe actual Foundation FruitfolioOwnedPopupSession owns one queued/current request, cancels only that request on departure, ignores queued/old/replaced/dismissing actions, and keeps the first confirmation through rapid repeated presses. Its closing identity remains owned until real dismissal finishes, avoiding the deduplication race that could otherwise drop a replacement. Escape is cancellation and cannot turn into confirmation. Measurement UI restores focus only after the shared host is empty, choosing a surviving control/reload rather than a deleted row. Dirty-editor Keep/Escape retains draft text; explicit discard waits for the actual shared dismissal before closing its sheet. Text-field keyboard focus is released locally before requesting discard; no global keyboard action or extra timer is used.\n\nDeletion intents contain only the target UUID/scope and an opaque in-memory saved revision. The actual persistence changes that revision on saves, reloads and erasure. A changed same-store record/reload invalidates an old confirmation; a separate writer still trips the exact saved-baseline guard. Successful deletion changes the revision, so replay fails. Missing targets do not become false success. No laboratory values are copied into popup ownership metadata or stored as analytics.\n\nSix new actual-core regressions execute ownership/queue cancellation, single-use/Escape, repeated presentation through dismissal, priority replacement, same-store revision/replay and reload/external-writer preservation. New DEBUG measurement fixtures use only a private suite and inject the actual store into the actual existing screen. Three Apple UI regressions cover delete/cancel/confirm at large text with normal/Reduce Motion, dirty draft Keep/discard inside the native sheet, and readable original values under an unsupported future record. Those UI tests, real VoiceOver focus order, screenshots, native-sheet interaction and sound/listening acceptance remain NOT_RUN on Linux.\n\nAvailable verification:540 portable XCTest +21 Swift Testing and545 native-linked XCTest +21 Swift Testing passed;35 workflow tests passed with all6 actual SwiftSyntax cases. All app Swift sources pass the bounded canonical immediate-cue ownership checker with zero findings. Compiler syntax parsed271 changed Swift files; Xcode project references resolve. These do not constitute an Apple build or device acceptance. The portable harness initially omitted its two new production sources; the resulting compile failure was corrected by adding the exact files, not substitutes.",
@@ -23630,38 +23961,41 @@
         "Storm note gains modal scope and actual heading focus/return path, logical open/close cue ownership covering forced closes, and guarded close/acknowledge/shared-escape handling preserving pause/resume/storm key. Serious context uses neutral heading/hidden playful character. Actual overlay visibility places QA diagnostics inside the owner scope. Twelve Apple paired-mode background/dismissal cases added but unrun; one English-only key preserves 731 prior entries.",
         "Rendered pause menu owns idempotent open/close cue requests, separate from storm-induced model pauses; actual disappearance/root teardown close once. Background clears focus, foreground restores heading focus, canceled/inactive tasks cannot focus. Actual private overlay diagnostics follow menu scope. Eight Apple reopen/background/resume/shared-escape cue cases added but NOT_RUN; no assets, schemas, inference or physics changed.",
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
-        "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute."
+        "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:10:09.584767+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Serious-basket-reveal-and-mandatory-batch-evidence",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed, 0 failed; Foundation/source contracts, not SwiftUI behavior",
-          "native_CPU_XCTest": "765 passed, 0 failed; includes synthetic T5 contract execution, not official MADLAD",
-          "SwiftTesting": "21 passed in each suite; overlapping tests",
-          "workflow": "46 passed including four actual recorder integrity tests",
-          "Swift_parser": "308 files passed syntax only",
-          "catalog": "790 existing entries preserved; five English additions; zero nonempty foreign entries"
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight newly written serious-reveal Apple UI launches",
-          "Apple SDK typecheck/build/link and existing whole UI suite",
-          "Physical VoiceOver, screenshots, device audio, animation/lifecycle behavior",
-          "Official MADLAD weights/tokenizer inference and linguistic/clinical review"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real result-screen success/serious/ordinary/RTL/Dynamic Type/Reduce Motion/background cases on Apple; confirm no celebratory branch or cheer in serious context and exactly one ordinary request per result",
-          "Inspect actual screenshots and VoiceOver completion/personal-best label plus immutable fraction; verify physical audio separately from request counters",
-          "Reconcile all other affected app-wide paths against each original requirement; these batch results do not close the entire requirement",
-          "Run official MADLAD translation and clinical/language acceptance after genuine resources and Apple/device tooling are available"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real result-screen success/serious/ordinary/RTL/Dynamic Type/Reduce Motion/background cases on Apple; confirm no celebratory branch or cheer in serious context and exactly one ordinary request per result",
-        "Inspect actual screenshots and VoiceOver completion/personal-best label plus immutable fraction; verify physical audio separately from request counters",
-        "Reconcile all other affected app-wide paths against each original requirement; these batch results do not close the entire requirement",
-        "Run official MADLAD translation and clinical/language acceptance after genuine resources and Apple/device tooling are available"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -23756,7 +24090,10 @@
         "Fruitfolio/Fruit Basket/Prompt28LevelResetSession.swift",
         "Fruitfolio/Fruit Basket/Prompt28FruitBasketModels.swift",
         "Fruitfolio/Localizable.xcstrings",
-        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift"
+        "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -23835,9 +24172,10 @@
         "FruitfolioTests/Prompt1BScientificTranslationTests.swift",
         "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
-        "FruitfolioTests/Prompt1BGamePersistenceTests.swift"
+        "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Protected-game-recovery-semantic-focus-and-byte-readback (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -23878,9 +24216,42 @@
         "Overflow requests now have active cancellation handles, never source/result cache entries. Service release cancels shared and independent work before native release; caller cancellation affects only its owner. Exact prior service reproduced two real regression failures continuing after release into second paragraph. Eleven Foundation ownership cases and actual native pre-entry/post-first-paragraph release/reload cases pass. No official 3B/device/clinical claim.",
         "Existing level reset triggers use owned measured shared confirmation, preserving source wording and underlying pause/result origin. Frozen topic/session/origin context, actual dismissal and protected-store checks gate the original reset method; replay/queued/foreign/departure/cancel ownership is tested. Seven focused Foundation cases pass; sixteen Apple actual-store conservation cases added but NOT_RUN. One English key preserves 785 entries. Obsolete unpersisted dedicated confirmation state removed; no asset/research/score-schema edits.",
         "Actual pre-fix game persistence produced 32 assertions across four new fault/coverage cases; receipt records exact source/test/log hashes. Exact post-set Data readback gates acknowledgment/baseline advance, mismatches block until reload and never roll back foreign replacements. Shared structural field coverage protects unknown top/topic/tour/null fields before accepting writable load. Twelve focused cases now pass; legacy/stale/delete/reset behavior retained. One truthful English key preserves 786 prior entries; no durability/CAS or Apple runtime claims.",
-        "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes."
+        "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T16:57:39.165710+00:00"
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
+      "latest_batch_verification": {
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
+        "executed": {
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "48 passed",
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
+        },
+        "not_run": [
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
+      ]
     },
     {
       "sequence": 475,
@@ -24084,7 +24455,11 @@
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
         "Tools/record_prompt1b_batch.py",
         "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.md",
-        "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.json"
+        "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.json",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24181,9 +24556,10 @@
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -24247,35 +24623,41 @@
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
         "Preserved the exact read-only 16b5e42 assessment and its explicit uncertainty, all 478 original IDs and all 36 indexed additions. Per-entry recorder keeps unrelated source/tests/results from spreading between requirements; no source-only completion percentage is invented.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {
@@ -24421,7 +24803,10 @@
         "Fruitfolio/Fruit Basket/Prompt28GamePersistence.swift",
         "Tools/record_prompt1b_batch.py",
         "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.md",
-        "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.json"
+        "development_workflow/ASSESSMENTS/Fruitfolio_Prompt1B_Status_16b5e42.json",
+        "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderModels.swift",
+        "Fruitfolio/Guide Builder/Prompt11GuideBuilderStoreBridge.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -24564,9 +24949,10 @@
         "FruitfolioTests/Prompt1BCatchPresentationTests.swift",
         "FruitfolioTests/Prompt1BLevelResetSessionTests.swift",
         "FruitfolioTests/Prompt1BGamePersistenceTests.swift",
-        "development_workflow/tests/test_batch_recorder.py"
+        "development_workflow/tests/test_batch_recorder.py",
+        "FruitfolioTests/Prompt11GuideBuilderTests.swift"
       ],
-      "commit_reference": "batch:Actual-game-help-card-semantic-localization (resolve containing commit with git log)",
+      "commit_reference": "batch:Actual-Guide-save-cancel-and-independent-persistence-regressions (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -24664,35 +25050,41 @@
         "Read-only game recovery uses shared semantic translation, neutral failure copy and guarded actual heading focus on presentation/foreground/failed reload. Genuine top-object/nested-null private future blobs enter the real store before load; readback observes actual backing bytes and stable fixture owner. Eight Apple repeated-reload/background/preservation cases added but NOT_RUN. Three English keys preserve 787 entries; no art/research/persistence-format/physics changes.",
         "Explicit serious-feedback context suppresses successful-reveal celebration artwork and cheer without changing actual personal-best/score/ledger. Ordinary cheer is guarded once per round. Result heading/explanation and aggregate basket AX use shared translation with independently formatted counts. Eight actual Apple cue/metadata/lifecycle cases added but NOT_RUN; five English keys preserve 790 entries. New persistent recorder requires per-entry executed/not-run/remaining evidence and protects original identities and existing logs; four recorder integrity tests execute.",
         "Preserved the exact read-only 16b5e42 assessment and its explicit uncertainty, all 478 original IDs and all 36 indexed additions. Per-entry recorder keeps unrelated source/tests/results from spreading between requirements; no source-only completion percentage is invented.",
-        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes."
+        "Actual how-it-works heading/four compact titles and bodies/level note use shared semantic translation with content-owned wrapping and original glyphs/card geometry. Four numbered calls and RulesCopy source remain byte-equal. Replay and home callbacks retain behavior. Eight Apple complete-source fallback/action cases added but NOT_RUN; six English keys preserve 795 entries. No rule, art, science or persistence changes.",
+        "Enabled actual Foundation Guide models/bridge and eight existing tests; corrected genuine Swift 6 actor fixture compile failure without weakening original assertions. Two new real-store save/reload/stale-byte regressions pass. Disposable real-root Guide create/description UI route, independent backing-byte reload and actual save-status counter support 20 save/cancel/rejection/lifecycle cases written but NOT_RUN. Production callbacks/formats/art/research retained; stable IDs/DEBUG diagnostics only."
       ],
-      "last_updated": "2026-11-06T17:20:09.822797+00:00",
+      "last_updated": "2026-11-06T17:38:36.657274+00:00",
       "latest_batch_verification": {
-        "batch": "Actual-game-help-card-semantic-localization",
+        "batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
         "executed": {
-          "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-          "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-          "SwiftTesting": "21 passed per run, overlapping",
+          "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+          "portable_XCTest": "753 passed, 0 failures",
+          "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+          "SwiftTesting": "21 passed per overlapping run",
           "workflow": "48 passed",
-          "parser": "308 Swift files syntax parsed; not Apple typecheck",
-          "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+          "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+          "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
         },
         "not_run": [
-          "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-          "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-          "Official MADLAD translation and actual foreign-language acceptance"
+          "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+          "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+          "Official MADLAD and actual foreign-language translation acceptance"
         ],
         "remaining": [
-          "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-          "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-          "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+          "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+          "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+          "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+          "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+          "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-        "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-        "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+        "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+        "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+        "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+        "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+        "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
       ]
     },
     {

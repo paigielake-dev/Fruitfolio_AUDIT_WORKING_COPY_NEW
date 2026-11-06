@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1eb1dce05a2ea94c57487a1d3fb930882323831f",
+  "current_HEAD": "731baecd77bdcae04c52d09cc5c85aad1d0f54fc",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 453,
-  "current_implementation_batch": "Actual-game-help-card-semantic-localization",
+  "current_requirement": 7,
+  "current_implementation_batch": "Actual-Guide-save-cancel-and-independent-persistence-regressions",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,12 +493,17 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
-    "Fruitfolio/Localizable.xcstrings",
+    "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+    "Fruitfolio/Fruitfolio/ContentView.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
+    "FruitfolioTests/Prompt11GuideBuilderTests.swift",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/GAME_RULE_CARD_LOCALIZATION_VERIFICATION.md",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/GUIDE_SAVE_REGRESSION_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/Game-rules-original-copy-preservation.json"
+    "development_workflow/RUN_LOGS/Guide-existing-tests-prior-compile-failure.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -511,20 +516,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --test-filter Prompt11GuideBuilderTests (original compile failure then actual eight-case pass)",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
     "swift Tools/validate_xcode_project.swift",
-    "actual SwiftSyntax control-sound-ownership --check",
-    "byte comparison of four original card call sites / RulesCopy hash and all 795 catalog entries"
+    "actual SwiftSyntax control-sound-ownership --check"
   ],
   "last_test_results": {
-    "portable_XCTest": 743,
-    "native_CPU_XCTest": 765,
+    "portable_XCTest": 753,
+    "native_CPU_XCTest": 775,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 48,
-    "Swift_syntax_files": 308,
+    "Swift_syntax_files": 309,
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
@@ -534,11 +539,12 @@
     "SwiftSyntax_sound_ownership_findings": 0,
     "Xcode_project_references": "PASS; not an Apple build",
     "batch_recorder_integrity_tests": 6,
-    "catalog_existing_entries_preserved": 795,
-    "Apple_UI_game_rules_launches_added_NOT_RUN": 8
+    "Guide_core_XCTest": 10,
+    "Guide_original_focused_XCTest": 8,
+    "Apple_UI_Guide_save_launches_added_NOT_RUN": 20
   },
-  "next_exact_implementation_action": "Add the missing actual Guide Builder save/cancel regression coverage using the existing real store and overlay callbacks. Establish a disposable root QA route with real Guide Builder, seed only nonclinical fixture content, exercise successful/canceled saves and compare actual stored metadata/source bytes. Make required source corrections if those tests expose real gaps; document Apple-only execution and continue independent work.",
-  "updated_at": "2026-11-06T17:20:09.822797+00:00",
+  "next_exact_implementation_action": "Replace the remaining fixed-height Prompt10PillArtButton renderer with the canonical watercolor control while preserving its existing call-site API and respecting additional Reduce Motion requests. Extend actual SwiftSyntax one-owner sound checks to this alias and synchronous nested do/if branches while excluding delayed callbacks; normalize only duplicate soft pops and preserve operation/modal cues. Add real syntax regressions and Guide UI request-count assertions, then execute supported checks and update each relevant checklist entry.",
+  "updated_at": "2026-11-06T17:38:36.657274+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -548,22 +554,25 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "portable_XCTest": "743 passed; SwiftUI help renderer excluded on Linux",
-      "native_CPU_XCTest": "765 passed; synthetic T5 contract and separate actual Ask model evidence, not official MADLAD",
-      "SwiftTesting": "21 passed per run, overlapping",
+      "Guide_core": "10 actual Guide model/store tests passed (eight original assertions retained; two added independent-save/stale-write regressions)",
+      "portable_XCTest": "753 passed, 0 failures",
+      "native_CPU_XCTest": "775 passed, 0 failures; synthetic T5 contracts are not official MADLAD",
+      "SwiftTesting": "21 passed per overlapping run",
       "workflow": "48 passed",
-      "parser": "308 Swift files syntax parsed; not Apple typecheck",
-      "source_preservation": "Four original ordered card call sites and unchanged RulesCopy hash; 795 existing catalog entries preserved"
+      "Swift_parser": "309 files syntax only; project references resolve, no Apple build",
+      "prior_failure": "Real Swift 6 compile failure of original synchronous actor-isolated test fixtures recorded before correction"
     },
     "not_run": [
-      "Eight actual Apple rules-card original-fallback/scroll/replay/home cases",
-      "Apple SDK build/typecheck and VoiceOver/RTL/Dynamic Type/rendered card screenshot validation",
-      "Official MADLAD translation and actual foreign-language acceptance"
+      "20 new Apple UI launches through actual Guide create/description/save/cancel/rejection paths",
+      "Apple SDK typecheck/build/link, keyboard, VoiceOver/DT/RTL/screenshots and physical-device behavior",
+      "Official MADLAD and actual foreign-language translation acceptance"
     ],
     "remaining": [
-      "Execute real help cards at accessibility text sizes and RTL on Apple, inspect wrapping/inline art/status messages and all replay/home states",
-      "Verify actual selected-language translations with approved catalog or official MADLAD; paused English fallback is not foreign translation proof",
-      "Reconcile remaining app-wide text/control/semantic paths and clause-specific acceptance before completing any original requirement"
+      "Execute all 20 Apple cases; verify persisted success, byte-preserving cancellation, failed-save draft retention, no false success indication, owner survival after backgrounding and real keyboard behavior",
+      "Inspect actual Strawberry saved-card visual composition and VoiceOver separately from a saved-status request counter",
+      "Extend coverage to remaining Guide rename/cover/sections/media/read-mode saves and failure paths; confirm shared Library/Ask propagation through the real app",
+      "Correct the remaining legacy fixed-height/shrinking Guide/Library pill and one-owner sound behavior, then verify actual animation/audio on Apple",
+      "No whole original requirement is certified complete by this batch; reconcile all its clauses and remaining app-wide paths"
     ]
   }
 }

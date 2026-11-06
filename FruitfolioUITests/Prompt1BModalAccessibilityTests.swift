@@ -194,6 +194,115 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    private func launchGuideSave(_ scenario: String, reduced: Bool, rtl: Bool) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-fruitfolioGuideSaveQA", "-fruitfolioGuideSaveQAScenario", scenario,
+            "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        if reduced { app.launchArguments += ["-fruitfolioGuideSaveReduceMotion"] }
+        if rtl { app.launchArguments += ["-fruitfolioGuideSaveRTL"] }
+        app.launch()
+        return app
+    }
+
+    private func tapGuideFormAction(_ identifier: String, in app: XCUIApplication) {
+        let action = app.buttons[identifier]
+        let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+        for _ in 0..<24 { if action.isHittable { break }; scroll.swipeUp() }
+        XCTAssertTrue(action.isHittable)
+        XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+        action.tap()
+    }
+
+    func testGuideCreationSaveAndCancelUseActualPersistenceAndCallbacks() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for save in [false, true] {
+            let app = launchGuideSave("create", reduced: reduced, rtl: rtl)
+            let open = app.buttons["guide.create.open"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            let home = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; home.swipeUp() }
+            open.tap()
+            let name = app.descendants(matching: .any).matching(identifier: "guide.create.name").firstMatch
+            XCTAssertTrue(name.waitForExistence(timeout: 3))
+            name.tap(); name.typeText("QA created guide")
+            let description = app.descendants(matching: .any).matching(identifier: "guide.create.description").firstMatch
+            let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+            for _ in 0..<24 { if description.isHittable { break }; scroll.swipeUp() }
+            description.tap(); description.typeText("QA created description")
+            tapGuideFormAction(save ? "guide.create.save" : "guide.create.cancel", in: app)
+            let requestCount = app.staticTexts["guideQA.savedStatusRequests"]
+            let expected = "saved status requests: \(save ? 1 : 0)"
+            let settled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: requestCount)
+            XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 3), .completed)
+            let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: name)
+            XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["guideQA.persistedCount"].label, "persisted guide count: \(save ? 1 : 0)")
+            XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: \(!save)")
+            if save {
+                XCTAssertEqual(app.staticTexts["guideQA.persistedName"].label, "persisted name: QA created guide")
+                XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA created description")
+            } else { XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists) }
+            captureGame(app, name: "guide-create-save-\(save)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
+    func testGuideDescriptionSaveCancelAndRejectedSavePreserveActualDataAndDraft() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+        for action in ["save", "cancel", "rejected"] {
+            let app = launchGuideSave(action == "rejected" ? "stale-description" : "description", reduced: reduced, rtl: rtl)
+            let options = app.buttons["guide.options.open"]
+            XCTAssertTrue(options.waitForExistence(timeout: 5))
+            options.tap()
+            let open = app.buttons["guide.description.open"]
+            let workspace = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; workspace.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let input = app.descendants(matching: .any).matching(identifier: "guide.description.input").firstMatch
+            XCTAssertTrue(input.waitForExistence(timeout: 3))
+            input.tap(); input.typeText("QAedit")
+            let draft = input.value as? String ?? ""
+            XCTAssertTrue(draft.contains("QAedit"))
+            let owner = app.staticTexts["guideQA.owner"].label
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(input.waitForExistence(timeout: 5))
+            XCTAssertEqual(input.value as? String, draft)
+            XCTAssertEqual(app.staticTexts["guideQA.owner"].label, owner)
+            tapGuideFormAction(action == "cancel" ? "guide.description.cancel" : "guide.description.save", in: app)
+            let expected = "saved status requests: \(action == "save" ? 1 : 0)"
+            let settled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: app.staticTexts["guideQA.savedStatusRequests"])
+            XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 3), .completed)
+            if action == "save" {
+                let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: input)
+                XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+                XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: " + draft)
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: false")
+            } else {
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists)
+                if action == "cancel" {
+                    let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: input)
+                    XCTAssertEqual(XCTWaiter.wait(for: [closed], timeout: 3), .completed)
+                    XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA original description")
+                } else {
+                    XCTAssertTrue(input.exists)
+                    XCTAssertEqual(input.value as? String, draft)
+                    let protected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: true"), object: app.staticTexts["guideQA.writeProtected"])
+                    XCTAssertEqual(XCTWaiter.wait(for: [protected], timeout: 3), .completed)
+                }
+            }
+            XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, expected)
+            captureGame(app, name: "guide-description-\(action)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameRulesRetainCompleteSourceFallbackAndReplayReturnActionsAtAccessibilitySize() {
         for language in ["en", "ar"] {
         for reduced in [false, true] {

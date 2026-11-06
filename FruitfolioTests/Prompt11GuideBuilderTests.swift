@@ -7,17 +7,16 @@ final class Prompt11GuideBuilderTests: XCTestCase {
     private var defaults: UserDefaults!
     private var store: Prompt10SavedLibraryStore!
 
-    override func setUp() {
-        super.setUp()
+    private func prepareGuideFixture() throws {
         suiteName = "Prompt11GuideBuilderTests.\(UUID().uuidString)"
-        defaults = UserDefaults(suiteName: suiteName)
+        defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
         store = Prompt10SavedLibraryStore(
             defaults: defaults,
             persistenceKey: "prompt11.tests"
         )
     }
 
-    override func tearDown() {
+    private func removeGuideFixture() {
         if let suiteName {
             UserDefaults.standard.removePersistentDomain(forName: suiteName)
         }
@@ -25,10 +24,11 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         store = nil
         defaults = nil
         suiteName = nil
-        super.tearDown()
     }
 
-    func testGuideUsesSamePrompt10EncyclopediaObject() throws {
+    func testGuideUsesSamePrompt10EncyclopediaObject() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let guide = try store.createGuideEncyclopedia(
             name: "my hormone guide",
             subtitle: "things i want to remember",
@@ -40,7 +40,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertEqual(store.prompt11Guides.first?.id, guide.id)
     }
 
-    func testNewGuideStartsWithoutSyntheticSection() throws {
+    func testNewGuideStartsWithoutSyntheticSection() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let guide = try store.createGuideEncyclopedia(
             name: "cycles",
             subtitle: "",
@@ -50,7 +52,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertTrue(guide.chapters.isEmpty)
     }
 
-    func testGuideMetadataPersistsAcrossStoreReload() throws {
+    func testGuideMetadataPersistsAcrossStoreReload() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let guide = try store.createGuideEncyclopedia(
             name: "cycles",
             subtitle: "things i want to remember",
@@ -74,7 +78,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         )
     }
 
-    func testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate() throws {
+    func testAddingSavedMaterialCreatesReferenceAndPreventsDuplicate() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let sourceLibrary = try store.createEncyclopedia(
             name: "saved things",
             style: .sage
@@ -130,7 +136,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertEqual(store.encyclopedia(id: guide.id)?.savedPageCount, 1)
     }
 
-    func testDeletingGuideDoesNotDeleteSourceSavedMaterial() throws {
+    func testDeletingGuideDoesNotDeleteSourceSavedMaterial() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let sourceLibrary = try store.createEncyclopedia(
             name: "saved things",
             style: .sage
@@ -171,7 +179,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertNotNil(store.prompt11SourcePage(sourceKey: savedSource.id))
     }
 
-    func testSectionAndPageReorderPersist() throws {
+    func testSectionAndPageReorderPersist() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let guide = try store.createGuideEncyclopedia(
             name: "guide",
             subtitle: "",
@@ -222,7 +232,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertEqual(updatedFirstChapter.pages.last?.id, savedOne.id)
     }
 
-    func testPersonalNoteRemainsAttachedToGuidePage() throws {
+    func testPersonalNoteRemainsAttachedToGuidePage() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let guide = try store.createGuideEncyclopedia(
             name: "guide",
             subtitle: "",
@@ -253,7 +265,9 @@ final class Prompt11GuideBuilderTests: XCTestCase {
         XCTAssertEqual(updated?.notes, "ask about this later")
     }
 
-    func testAllNineGuideBuilderAssetsUseExactCanonicalNames() {
+    func testAllNineGuideBuilderAssetsUseExactCanonicalNames() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
         let assets = [
             "guide_rename",
             "guide_folder_add",
@@ -268,4 +282,40 @@ final class Prompt11GuideBuilderTests: XCTestCase {
 
         XCTAssertEqual(Set(assets).count, 9)
     }
+    func testGuideDescriptionSaveIsAcknowledgedByIndependentReloadWithoutChangingPages() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
+        let guide = try store.createGuideEncyclopedia(name: "QA guide", subtitle: "original", style: .sage)
+        let section = try store.createChapter(in: guide.id, name: "QA section")
+        let page = Prompt10SavedPage(chapterID: section.id, question: "nonclinical fixture",
+            answer: "source content remains unchanged", saveType: .fullAnswer,
+            sourceRecords: [.init(id: "qa-source", title: "Synthetic fixture, not research")])
+        _ = try store.savePage(page, to: guide.id, chapterID: section.id)
+        let before = try XCTUnwrap(store.encyclopedia(id: guide.id))
+        try store.updateEncyclopediaDescription(id: guide.id, description: "QA updated description")
+        let reloaded = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "prompt11.tests")
+        let saved = try XCTUnwrap(reloaded.encyclopedia(id: guide.id))
+        XCTAssertEqual(saved.subtitle, "QA updated description")
+        XCTAssertEqual(saved.name, before.name)
+        XCTAssertEqual(saved.style, before.style)
+        XCTAssertEqual(saved.chapters, before.chapters)
+        XCTAssertEqual(saved.guideBuilderEnabled, true)
+        XCTAssertNil(reloaded.storageProtectionReason)
+    }
+    func testFailedGuideDescriptionSavePreservesExternalBytesAndCommittedMemory() async throws {
+        try prepareGuideFixture()
+        defer { removeGuideFixture() }
+        let guide = try store.createGuideEncyclopedia(name: "QA guide", subtitle: "original", style: .sage)
+        let original = try XCTUnwrap(store.encyclopedia(id: guide.id))
+        let external = Data(#"{"futureSchema":3,"preserve":{"field":null}}"#.utf8)
+        defaults.set(external, forKey: "prompt11.tests")
+        XCTAssertThrowsError(try store.updateEncyclopediaDescription(id: guide.id, description: "unsaved draft"))
+        XCTAssertEqual(store.encyclopedia(id: guide.id), original)
+        XCTAssertEqual(defaults.data(forKey: "prompt11.tests"), external)
+        XCTAssertNotNil(store.storageProtectionReason)
+        let reloaded = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "prompt11.tests")
+        XCTAssertNotNil(reloaded.storageProtectionReason)
+        XCTAssertEqual(defaults.data(forKey: "prompt11.tests"), external)
+    }
+
 }

@@ -39,6 +39,7 @@ struct Prompt11CreateGuidePopup: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 TextField("ex. my hormone guide", text: $name)
+                .accessibilityIdentifier("guide.create.name")
                 .bookLabelGuidance(text: name, maximum: Prompt10BookLabelPolicy.maximumTitleLength)
                     .font(.custom("Chalkboard SE", size: 12.5))
                     .foregroundStyle(
@@ -68,6 +69,7 @@ struct Prompt11CreateGuidePopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
+                .accessibilityIdentifier("guide.create.description")
                 .bookLabelGuidance(text: guideDescription, maximum: Prompt10BookLabelPolicy.maximumDescriptionLength)
                 .font(.custom("Chalkboard SE", size: 12))
                 .foregroundStyle(
@@ -139,6 +141,7 @@ struct Prompt11CreateGuidePopup: View {
                 ) {
                     createGuide()
                 }
+                .accessibilityIdentifier("guide.create.save")
 
                 WatercolorSecondaryButton(
                     label: "not yet"
@@ -146,10 +149,12 @@ struct Prompt11CreateGuidePopup: View {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
+                .accessibilityIdentifier("guide.create.cancel")
             }
             .padding(.top, 26)
             .padding(.bottom, 18)
         }
+        .accessibilityIdentifier("guide.create.form")
         .onAppear {
             audioManager.play(.popupOpen)
         }
@@ -313,6 +318,7 @@ struct Prompt11DescriptionPopup: View {
                     text: $guideDescription,
                     axis: .vertical
                 )
+                .accessibilityIdentifier("guide.description.input")
                 .bookLabelGuidance(text: guideDescription, maximum: Prompt10BookLabelPolicy.maximumDescriptionLength)
                 .font(.custom("Chalkboard SE", size: 12.5))
                 .foregroundStyle(
@@ -352,13 +358,16 @@ struct Prompt11DescriptionPopup: View {
                         errorMessage = error.localizedDescription
                     }
                 }
+                .accessibilityIdentifier("guide.description.save")
 
                 WatercolorSecondaryButton(label: "cancel") {
                     audioManager.play(.popupClose)
                     onDismiss()
                 }
+                .accessibilityIdentifier("guide.description.cancel")
             }
         }
+        .accessibilityIdentifier("guide.description.form")
         .onAppear {
             audioManager.play(.popupOpen)
         }
