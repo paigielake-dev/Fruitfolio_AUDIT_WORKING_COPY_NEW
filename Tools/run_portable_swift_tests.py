@@ -133,6 +133,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioLlamaBackend.swift',
     'Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift',
     'Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift',
+    'Fruitfolio/Core/AppArchitecture/FruitfolioSettingsPercentage.swift',
     'Fruitfolio/Core/Translation/FruitfolioScientificTranslation.swift',
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]

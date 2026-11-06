@@ -26,7 +26,8 @@ struct Prompt03SkeletonView: View {
         // outer popup host. Child-view environment overrides cannot reach it.
         if (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
            (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) ||
-           (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) {
+           (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) ||
+           (args.contains("-fruitfolioSettingsControlsQA") && args.contains("-fruitfolioSettingsControlsRTL")) {
             return .rightToLeft
         }
         #endif
@@ -150,7 +151,9 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioSettingsControlsQA") {
+            Prompt1BSettingsControlRegressionHarness()
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioAccountActionQA") {
             Prompt12AccountActionRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioCycleModalQA") {
             Prompt1BCycleModalRegressionHarness()

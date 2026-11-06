@@ -105,6 +105,13 @@ final class SettingsStore {
         self.languagePreferenceNeedsReview = FruitfolioLanguagePreferences.needsReview(in: defaults)
     }
 
+    #if DEBUG
+    /// Actual private-suite readback for disposable control QA; no health data.
+    var debugStoredEffects: (enabled: Bool, volume: Double) {
+        (defaults.bool(forKey: Key.soundEffectsEnabled), defaults.double(forKey: Key.soundEffectsVolume))
+    }
+    #endif
+
     /// Resolve a catalog string for an explicit Fruitfolio language. SwiftUI's
     /// environment locale handles most Text/Button literals automatically; this
     /// helper is for runtime/deterministic strings that are built outside a View.

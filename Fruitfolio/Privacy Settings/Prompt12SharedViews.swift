@@ -321,19 +321,38 @@ struct Prompt12InfoText: View {
 }
 
 
+@MainActor
 struct Prompt12VolumeRow: View {
     let title: String
     @Binding var value: Double
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private var key: FruitfolioControlTranslationState.Key { .init(source: title, language: settings.language) }
     var body: some View {
+        let display = translation.presentation(for: key)
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.custom("Chalkboard SE", size: 14, relativeTo: .body))
-                .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
+            FruitfolioSemanticText(markdown: display.text,
+                baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                color: DesignTokens.ColorToken.primaryBurgundy)
+            if let caption = display.status.captionKey {
+                Text(LocalizedStringKey(caption))
+                    .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+            }
             Slider(value: $value, in: 0...1)
+                .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+                .contentShape(Rectangle())
                 .tint(DesignTokens.ColorToken.primaryBurgundy)
-                .accessibilityLabel(title)
-                .accessibilityValue("\(Int(value * 100)) percent")
-        }.frame(minHeight: 44)
+                .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+                .accessibilityHint(Text(display.status.accessibilityDetail(
+                    original: FruitfolioSemanticDocument.plainText(from: title), localized: { settings.localized($0) })))
+                .accessibilityValue(Text(FruitfolioSettingsPercentage.string(value,
+                    locale: Locale(identifier: settings.language.localeIdentifier)) ?? settings.localized("volume unavailable")))
+        }
+        .frame(minHeight: 44)
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: key,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(key, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 

@@ -939,6 +939,7 @@ private struct FruitfolioWatercolorToggleStyle: ToggleStyle {
     }
 }
 
+@MainActor
 struct WatercolorToggle: View {
     let label: String
 
@@ -947,6 +948,12 @@ struct WatercolorToggle: View {
 
     var isDisabled: Bool = false
 
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var labelTranslation = FruitfolioControlTranslationState()
+    @StateObject private var valueTranslation = FruitfolioControlTranslationState()
+    private var labelKey: FruitfolioControlTranslationState.Key { .init(source: label, language: settings.language) }
+    private var valueKey: FruitfolioControlTranslationState.Key { .init(source: isOn ? "on" : "off", language: settings.language) }
+
     @EnvironmentObject
     private var audioManager: AudioManager
 
@@ -954,20 +961,19 @@ struct WatercolorToggle: View {
     private var motionPreferences: MotionPreferences
 
     var body: some View {
+        let display = labelTranslation.presentation(for: labelKey)
+        let state = valueTranslation.presentation(for: valueKey)
         Toggle(isOn: $isOn) {
-            Text(LocalizedStringKey(label))
-                .font(
-                    .custom(
-                        "Chalkboard SE",
-                        size: 14,
-                        relativeTo: .body
-                    )
-                )
-                .foregroundStyle(
-                    isDisabled
-                        ? DesignTokens.ColorToken.disabledInk
-                        : DesignTokens.ColorToken.primaryBurgundy
-                )
+            VStack(alignment: .leading, spacing: 4) {
+                FruitfolioSemanticText(markdown: display.text,
+                    baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body),
+                    color: isDisabled ? DesignTokens.ColorToken.disabledInk : DesignTokens.ColorToken.primaryBurgundy)
+                if let caption = display.status.captionKey {
+                    Text(LocalizedStringKey(caption))
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
         }
         .toggleStyle(
             FruitfolioWatercolorToggleStyle(
@@ -979,10 +985,21 @@ struct WatercolorToggle: View {
             )
         )
         .disabled(isDisabled)
-        .accessibilityLabel(Text(LocalizedStringKey(label)))
-        .accessibilityValue(
-            Text(isOn ? "on" : "off")
-        )
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+        .accessibilityHint(Text(display.status.accessibilityDetail(
+            original: FruitfolioSemanticDocument.plainText(from: label), localized: { settings.localized($0) })))
+        .accessibilityValue(Text([
+            FruitfolioSemanticDocument.plainText(from: state.text),
+            state.status.captionKey.map { settings.localized($0) } ?? ""
+        ].filter { !$0.isEmpty }.joined(separator: ". ")))
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: labelKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await labelTranslation.resolve(labelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+        .task(id: FruitfolioControlTranslationState.TaskKey(key: valueKey,
+            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+            await valueTranslation.resolve(valueKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
     }
 }
 

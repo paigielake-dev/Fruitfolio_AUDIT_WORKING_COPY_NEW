@@ -90,3 +90,42 @@ final class Prompt1BSettingsLanguageTests: XCTestCase {
     }
 
 }
+
+final class Prompt1BSettingsPercentageTests: XCTestCase {
+    func testPercentageUsesSelectedLocaleDigitsAndSymbol() throws {
+        XCTAssertEqual(FruitfolioSettingsPercentage.string(0.25, locale: Locale(identifier: "en_US")), "25%")
+        let arabic = try XCTUnwrap(FruitfolioSettingsPercentage.string(0.25, locale: Locale(identifier: "ar")))
+        XCTAssertTrue(arabic.contains("٢٥"))
+        XCTAssertTrue(arabic.contains("٪"))
+        let french = try XCTUnwrap(FruitfolioSettingsPercentage.string(0.25, locale: Locale(identifier: "fr")))
+        XCTAssertTrue(french.contains("25"))
+        XCTAssertTrue(french.contains("%"))
+        XCTAssertNotEqual(arabic, "25 percent")
+    }
+    func testPercentageBoundsAndRoundingRejectInvalidValues() {
+        let source = 0.375
+        XCTAssertEqual(FruitfolioSettingsPercentage.string(source, locale: Locale(identifier: "en_US")), "38%")
+        XCTAssertEqual(FruitfolioSettingsPercentage.string(0, locale: Locale(identifier: "en_US")), "0%")
+        XCTAssertEqual(FruitfolioSettingsPercentage.string(1, locale: Locale(identifier: "en_US")), "100%")
+        for invalid in [Double.nan, .infinity, -.infinity, -0.1, 1.1] {
+            XCTAssertNil(FruitfolioSettingsPercentage.string(invalid, locale: Locale(identifier: "en_US")))
+        }
+    }
+    @MainActor
+    func testActualPrivateSettingsReadbackPreservesStoredVolumeAfterFormatting() async throws {
+        let suite = "Fruitfolio.SettingsPercentage." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let settings = SettingsStore(defaults: defaults)
+        settings.soundEffectsEnabled = false
+        settings.soundEffectsVolume = 0.375
+        _ = FruitfolioSettingsPercentage.string(settings.soundEffectsVolume, locale: Locale(identifier: "ar"))
+        let reloaded = SettingsStore(defaults: defaults)
+        XCTAssertEqual(reloaded.soundEffectsVolume, 0.375)
+        XCTAssertFalse(reloaded.soundEffectsEnabled)
+        #if DEBUG
+        XCTAssertEqual(settings.debugStoredEffects.volume, 0.375)
+        XCTAssertFalse(settings.debugStoredEffects.enabled)
+        #endif
+    }
+}

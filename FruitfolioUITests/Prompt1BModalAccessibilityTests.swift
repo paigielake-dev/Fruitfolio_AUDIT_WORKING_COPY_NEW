@@ -191,6 +191,45 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testSettingsToggleEnablesBeforeItsSingleCueAndVolumePersists() {
+        for reduced in [false, true] {
+        for muted in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioSettingsControlsQA",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioSettingsControlsReduceMotion"] }
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            if rtl { app.launchArguments += ["-fruitfolioSettingsControlsRTL"] }
+            app.launch()
+            let toggle = app.descendants(matching: .any)["settingsControls.effects"].firstMatch
+            XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+            XCTAssertTrue(toggle.isHittable)
+            XCTAssertGreaterThanOrEqual(toggle.frame.height, 44)
+            XCTAssertEqual(toggle.value as? String, "off")
+            toggle.tap()
+            XCTAssertEqual(toggle.value as? String, "on")
+            XCTAssertEqual(app.staticTexts["settingsControls.savedEffects"].label, "saved effects: true")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label, "soft pop starts: \(muted ? 0 : 1)")
+            let volume = app.sliders.firstMatch
+            for _ in 0..<12 { if volume.isHittable { break }; app.swipeUp() }
+            XCTAssertTrue(volume.isHittable)
+            XCTAssertGreaterThanOrEqual(volume.frame.height, 44)
+            XCTAssertEqual(volume.value as? String, "25%")
+            volume.adjust(toNormalizedSliderPosition: 0.75)
+            let saved = app.staticTexts["settingsControls.savedVolume"]
+            for _ in 0..<8 { if saved.exists { break }; app.swipeUp() }
+            let amount = Double(saved.label.replacingOccurrences(of: "saved volume: ", with: ""))
+            XCTAssertNotNil(amount)
+            XCTAssertEqual(amount ?? -1, 0.75, accuracy: 0.05)
+            captureGame(app, name: "settings-toggle-volume-muted-\(muted)-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testDataManagementReopeningOwnsExactlyOneOpenAndCloseRequest() {
         for reduced in [false, true] {
         for muted in [false, true] {
