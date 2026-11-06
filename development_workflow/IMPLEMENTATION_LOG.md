@@ -2708,3 +2708,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_queued_filters_and_refresh": "NOT_RUN; requires actual SwiftUI event tests", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue actual unified graph accessible/localized fixed labels, filter state and observation/interpretation disclosures. Add actual Apple regression harness if feasible; never substitute a pure mirrored test for real UI execution.
 - Commit: containing commit for batch Trends-live-symptom-selection-and-request-scoped-refresh.
+
+## Unified-symptom-fixed-copy-and-native-filter-selection
+
+- Parent checkpoint: e3c5ca4eaf97472d4166f4a540e101fd122e5ec2.
+- Source-order requirements: [305, 306, 307, 308, 309, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged.
+- Tests added/updated: FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 945, "new_English_entries": 3, "Apple_graph_filter_AX": "NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Distinguish all-hidden symptom filter from genuinely absent logged history in actual empty graph presentation; preserve current selection/snapshot owner and every recorded observation. Then continue graph accessibility/source distinction requirements.
+- Commit: containing commit for batch Unified-symptom-fixed-copy-and-native-filter-selection.

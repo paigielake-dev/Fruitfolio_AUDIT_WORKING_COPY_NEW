@@ -16031,7 +16031,8 @@
       "description": "Replace separate symptom-specific trend presentations with the requested unified symptom-pattern graph.",
       "relevant_source_files": [
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -16042,37 +16043,40 @@
         "Prompt24TrendsCoreTests",
         "Prompt20CoreTests",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -16083,7 +16087,8 @@
       "description": "Ensure the graph presents recorded symptom information accurately.",
       "relevant_source_files": [
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -16094,37 +16099,40 @@
         "Prompt24TrendsCoreTests",
         "Prompt20CoreTests",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -16135,82 +16143,8 @@
       "description": "Preserve distinctions between actual observations and interpretations.",
       "relevant_source_files": [
         "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
-      ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
-      "dependencies": [],
-      "blockers": [],
-      "related_tests": [
-        "Prompt1BSymptomTimelineTests",
-        "Prompt24TrendsCoreTests",
-        "Prompt20CoreTests",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)"
-      ],
-      "commit_reference": "batch:Unified-symptom-timeline-explicit-record-calendar (resolve containing commit with git log)",
-      "evidence_of_implementation": [
-        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
-        "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple."
-      ],
-      "last_updated": "2026-11-06T21:29:38.170225+00:00",
-      "latest_batch_verification": {
-        "batch": "Unified-symptom-timeline-explicit-record-calendar",
-        "executed": {
-          "workflow": "60 passed",
-          "syntax": "311 parsed",
-          "source": "Actual timeline constructor uses explicit loader calendar; record/model/calculation files unchanged"
-        },
-        "not_run": [
-          "Apple plotted/footer/list dates under differing loader/device zones, DST, calendar and locale",
-          "Actual graph VoiceOver/scrolling/Dynamic Type and plotted observation association"
-        ],
-        "remaining": [
-          "Execute cross-zone/DST Apple timeline and native date-label/list consistency cases",
-          "Verify every actual recorded observation remains reachable with no inferred absence or diagnosis",
-          "Whole unified graph/accessibility/runtime requirements remain IN_PROGRESS; source wiring not runtime proof"
-        ],
-        "scope": "Evidence for this batch only; does not certify the entire original requirement."
-      },
-      "remaining_verification_requirements": [
-        "Execute cross-zone/DST Apple timeline and native date-label/list consistency cases",
-        "Verify every actual recorded observation remains reachable with no inferred absence or diagnosis",
-        "Whole unified graph/accessibility/runtime requirements remain IN_PROGRESS; source wiring not runtime proof"
-      ]
-    },
-    {
-      "sequence": 308,
-      "original_requirement_id": "4",
-      "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
-      "original_section": null,
-      "description": "Do not manufacture trends when insufficient data exists.",
-      "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
-      ],
-      "implementation_status": "IN_PROGRESS",
-      "verification_status": "SOURCE_REVIEWED",
-      "dependencies": [],
-      "blockers": [],
-      "related_tests": [
-        "Prompt1BSymptomTimelineTests",
-        "Prompt24TrendsCoreTests",
-        "Prompt20CoreTests"
-      ],
-      "commit_reference": "batch:Dated-unified-symptom-timeline-and-readable-observations (resolve containing commit with git log)",
-      "evidence_of_implementation": [
-        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified."
-      ],
-      "last_updated": "2026-11-05T23:30:16.516482+00:00"
-    },
-    {
-      "sequence": 309,
-      "original_requirement_id": "5",
-      "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
-      "original_section": null,
-      "description": "Make the graph responsive and accessible.",
-      "relevant_source_files": [
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
-        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -16221,37 +16155,146 @@
         "Prompt24TrendsCoreTests",
         "Prompt20CoreTests",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
+      ]
+    },
+    {
+      "sequence": 308,
+      "original_requirement_id": "4",
+      "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
+      "original_section": null,
+      "description": "Do not manufacture trends when insufficient data exists.",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Localizable.xcstrings"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
+      "dependencies": [],
+      "blockers": [],
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
+      ],
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
+      ],
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
+      "latest_batch_verification": {
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
+        },
+        "not_run": [
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
+        ],
+        "remaining": [
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
+      ]
+    },
+    {
+      "sequence": 309,
+      "original_requirement_id": "5",
+      "original_checklist_part": "Part 6 \u2014 Cycle Tracker and scientific education",
+      "original_section": null,
+      "description": "Make the graph responsive and accessible.",
+      "relevant_source_files": [
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsModels.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift",
+        "Fruitfolio/Localizable.xcstrings"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
+      "dependencies": [],
+      "blockers": [],
+      "related_tests": [
+        "Prompt1BSymptomTimelineTests",
+        "Prompt24TrendsCoreTests",
+        "Prompt20CoreTests",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
+      ],
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "Replaced overlapping cycle-day x coordinates with actual recorded civil dates; retains observations without cycle assignment, distinguishes same cycle day across months and uses civil-day spacing across DST. All logged symptom types initially visible, selected observations available in a readable expandable list with date/symptom/optional cycle day. Shared graph retains every selected point with bounded scroll width; missing days never become absence/zero/severity and no connecting trend is invented. Calculated recurrence summaries named per symptom, distinguished from raw dots and qualified as descriptive rather than diagnoses/predictions. Seven production timeline tests added; eight existing trends tests now portable with assertions preserved and async actor-safe signatures. UI and physical-device performance remain unverified.",
+        "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
+      ],
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
+      "latest_batch_verification": {
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
+        },
+        "not_run": [
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
+        ],
+        "remaining": [
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -22739,7 +22782,8 @@
         "Fruitfolio/Context Personalization/FruitfolioPersonalHealthContextView.swift",
         "Fruitfolio/Cycle Tracker/Today/Prompt16TodayView.swift",
         "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
-        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift"
+        "Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -22782,9 +22826,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN)",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (unchanged; no Foundation rerun this UI batch)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Journal-limitations-source-display-and-fixed-validation-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -22816,32 +22861,33 @@
         "Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.",
         "Actual calendar previous/next labels use shared compact semantic translation with original arrow images/style. Decorative arrow AX hiding lets translated label remain authoritative. Context clarification and early/failure original explanations use existing long-form source/provenance owner; English-only AX override removed. Bottom status uses minHeight82 rather than fixed height to permit expanded text/disclosure. Existing catalog already has all keys. No calculation/data/source wording/artwork changed.",
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
-        "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified."
+        "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:27:35.261257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Journal-limitations-source-display-and-fixed-validation-copy",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Original explanations preserved; controlled fixed validation strings; no clinical rules or patient observations changed",
-          "catalog": "935 entries structurally preserved, seven English additions"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple source/original warning disclosure, long translation layout and logging validation UI",
-          "Official MADLAD warning polarity/scientific semantics and qualified native/clinical review"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual warning/validation/source controls at accessibility sizes on Apple",
-          "Review clinical negation/uncertainty and exact meaning with official model and qualified reviewers; lexical preservation alone insufficient",
-          "Whole limitation/semantic/localization/device requirements remain IN_PROGRESS"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual warning/validation/source controls at accessibility sizes on Apple",
-        "Review clinical negation/uncertainty and exact meaning with official model and qualified reviewers; lexical preservation alone insufficient",
-        "Whole limitation/semantic/localization/device requirements remain IN_PROGRESS"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -25571,7 +25617,8 @@
         "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
         "Fruitfolio/Hormone Information/HormoneLibraryProvider.swift",
         "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
-        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift"
+        "Fruitfolio/Cycle Tracker/Calendar/Prompt19CalendarView.swift",
+        "Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -25700,9 +25747,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing wheel/source tests; NOT_RUN)",
         "FruitfolioTests/Prompt1BCalendarPresentationPolicyTests.swift (unchanged; no Foundation rerun this UI batch)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Journal-limitations-source-display-and-fixed-validation-copy (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -25774,32 +25822,33 @@
         "Limited-data wheel description and optional day indicator label resolve fixed source through existing keyed control translation owners. CycleDay remains separately native-formatted and is never translated. Both description and day-label machine/unavailable provenance enter accessible hints; original insufficient-history meaning retained. Existing catalog already has all keys; no data/geometry/artwork/model changes.",
         "Actual calendar previous/next labels use shared compact semantic translation with original arrow images/style. Decorative arrow AX hiding lets translated label remain authoritative. Context clarification and early/failure original explanations use existing long-form source/provenance owner; English-only AX override removed. Bottom status uses minHeight82 rather than fixed height to permit expanded text/disclosure. Existing catalog already has all keys. No calculation/data/source wording/artwork changed.",
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
-        "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified."
+        "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:27:35.261257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Journal-limitations-source-display-and-fixed-validation-copy",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Original explanations preserved; controlled fixed validation strings; no clinical rules or patient observations changed",
-          "catalog": "935 entries structurally preserved, seven English additions"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple source/original warning disclosure, long translation layout and logging validation UI",
-          "Official MADLAD warning polarity/scientific semantics and qualified native/clinical review"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual warning/validation/source controls at accessibility sizes on Apple",
-          "Review clinical negation/uncertainty and exact meaning with official model and qualified reviewers; lexical preservation alone insufficient",
-          "Whole limitation/semantic/localization/device requirements remain IN_PROGRESS"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual warning/validation/source controls at accessibility sizes on Apple",
-        "Review clinical negation/uncertainty and exact meaning with official model and qualified reviewers; lexical preservation alone insufficient",
-        "Whole limitation/semantic/localization/device requirements remain IN_PROGRESS"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -27486,9 +27535,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -27593,31 +27643,33 @@
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -27942,9 +27994,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -28083,31 +28136,33 @@
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     },
     {
@@ -28356,9 +28411,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN)",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing logging exit matrix; NOT_RUN)",
         "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch)",
-        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)"
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; no UI ownership coverage claim)",
+        "FruitfolioTests/Prompt1BSymptomTimelineTests.swift (unchanged; UI rendering NOT_RUN)"
       ],
-      "commit_reference": "batch:Trends-live-symptom-selection-and-request-scoped-refresh (resolve containing commit with git log)",
+      "commit_reference": "batch:Unified-symptom-fixed-copy-and-native-filter-selection (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
         "# Destination-specific Apple test preflight\n\nThe Mac test script now checks the actual requested destination: an iOS Simulator run needs a declared simulator slice for its selected host architecture, while a physical-device run needs iOS arm64. A simulator test is no longer blocked solely because a device slice is absent. The standalone verifier's default remains the strict release gate requiring both device and simulator. Missing/escaping declared artifacts remain errors regardless of requested target; invalid/empty requested coverage cannot disable validation.\n\nThe Mac script records the exact xcresult path before launching tests so failures leave a findable recovery artifact. Simulator architecture defaults to `uname -m` and can be explicitly supplied with FRUITFOLIO_SIMULATOR_ARCHITECTURE when needed. The target check inspects metadata and artifact existence; it never claims Mach-O compatibility, SDK linkage, execution or inference.\n\nVerification:29 workflow tests passed, including five added destination/architecture/strict-release/path-escape cases using explicit metadata fixtures. `bash -n Tools/verify_prompt1b_mac.sh` passed. Actual simulator and strict-release commands both correctly report missing configured `Fruitfolio/Frameworks/llama.xcframework` in this workspace (expected exit2). The preserved original framework is simulator-only; the supplied Mac build script still needs to create the configured XCFramework. No native artifacts were synthesized or substituted. Xcode/iOS UI tests, captures and physical-device acceptance remain NOT_RUN. The last unchanged Swift app suite remains462 portable and467 native-linked XCTest +21 Swift Testing each.\n",
@@ -28443,31 +28499,33 @@
         "Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.",
         "Three actual unchanged fixed explanations for bleeding versus period starts, cervical-fluid uncertainty and future-day logging use existing serious long-form translation/source disclosure. Validation display uses fixed compact owner; all seven underlying validation strings are controlled messages with no patient result interpolation. Seven English catalog additions preserve935 old entries,942 total. No rules, observations, drafts, model or repository changes; clinical meaning remains unverified.",
         "Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.",
-        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed."
+        "Actual symptom filter action reads live selected state instead of rendered captured set, preserving successive queued toggles. Captured accepted snapshot ID plus loaded/active/visible/no-popup owner reject stale filter actions. Tabs use active owner. Refresh task captures request UUID and guards entry/completion/failure before state changes; accepted snapshot rotates ephemeral UI identity. No recorded observation, model, calculation or persistence changes. SwiftUI behavior not executed.",
+        "Actual unified graph unchanged recorded-versus-calculated/no-inferred-absence warning uses long-form source/provenance owner. Fixed filter headings/controlled symptom labels and unavailable-date/day list labels use compact translation. Filter dot glyph hidden from AX and native selected trait replaces English shown/hidden override, preserving translated child labels. Three English additions preserve942 entries,945 total. Exact observation dates/values, pattern calculations and canvas geometry unchanged."
       ],
-      "last_updated": "2026-11-06T21:30:55.372257+00:00",
+      "last_updated": "2026-11-06T21:32:44.378850+00:00",
       "latest_batch_verification": {
-        "batch": "Trends-live-symptom-selection-and-request-scoped-refresh",
+        "batch": "Unified-symptom-fixed-copy-and-native-filter-selection",
         "executed": {
           "workflow": "60 passed",
           "syntax": "311 parsed",
-          "source": "Action reads live State; immutable request/snapshot guards; model/data files unchanged"
+          "source": "Original observation/interpretation wording, dates, models and calculations unchanged; native selected trait used",
+          "catalog": "942 prior entries preserved,3English additions"
         },
         "not_run": [
-          "Apple rapid queued filter toggles/stale snapshot/refresh/background and tab actions",
-          "Apple SDK build and actual graph VoiceOver/selection behavior"
+          "Apple translated filter label/native selected announcements and observation warning/source controls",
+          "Official MADLAD/native-language clinical negation/uncertainty review"
         ],
         "remaining": [
-          "Execute actual successive different/same filter taps and refresh race cases on Apple",
-          "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-          "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+          "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+          "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+          "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute actual successive different/same filter taps and refresh race cases on Apple",
-        "Verify accepted recorded observations/selection remain correct through background/tab/data changes",
-        "Whole graph/accessibility/runtime requirements remain IN_PROGRESS; pure timeline tests do not verify SwiftUI event ownership"
+        "Execute actual graph filter/list/source controls and VoiceOver at accessibility sizes",
+        "Review scientific warning meaning and absence-versus-unlogged distinction with qualified native/clinical reviewers",
+        "Complete actual graph/calendar/selection/runtime acceptance; no source-only whole requirement certification"
       ]
     }
   ]

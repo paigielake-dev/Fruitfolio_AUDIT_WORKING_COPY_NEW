@@ -317,23 +317,23 @@ struct Prompt24TrendsView: View {
                 )
             }
 
-            Text("dots are recorded observations. unlogged days do not mean a symptom was absent. timing summaries below are calculated descriptions, not diagnoses or predictions.")
+            FruitfolioTranslatedText(source: "dots are recorded observations. unlogged days do not mean a symptom was absent. timing summaries below are calculated descriptions, not diagnoses or predictions.", font: .footnote, serious: true)
                 .font(.footnote)
                 .foregroundStyle(Prompt24Palette.burgundy.opacity(0.72))
 
             DisclosureGroup("recorded observations (\(occurrences.count))") {
                 ForEach(Array(occurrences.enumerated()), id: \.offset) { _, occurrence in
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(occurrence.symptomID.displayName)
+                        FruitfolioFixedText(source: occurrence.symptomID.displayName, serious: true)
                         if occurrence.date.timeIntervalSinceReferenceDate.isFinite {
                             Text(occurrence.date, format: .dateTime.year().month().day())
                         } else {
-                            Text("date unavailable; this observation cannot be plotted")
+                            FruitfolioFixedText(source: "date unavailable; this observation cannot be plotted", serious: true)
                         }
                         if let day = occurrence.cycleDay {
                             Text("recorded cycle day \(day)")
                         } else {
-                            Text("cycle day unavailable; observation retained")
+                            FruitfolioFixedText(source: "cycle day unavailable; observation retained", serious: true)
                         }
                     }
                     .font(.body)
@@ -351,7 +351,7 @@ struct Prompt24TrendsView: View {
     private func symptomToggleGrid(available: Set<Prompt20SymptomID>) -> some View {
         let selection = selectedSymptoms ?? available
         return VStack(alignment: .leading, spacing: 8) {
-            Text("show logged symptoms")
+            FruitfolioFixedText(source: "show logged symptoms", font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline), serious: true)
                 .font(Font.custom("Chalkboard SE", size: 13, relativeTo: .subheadline))
                 .fontWeight(.semibold)
 
@@ -367,8 +367,8 @@ struct Prompt24TrendsView: View {
                     selectedSymptoms = updated
                 } label: {
                     HStack {
-                        Text(selection.contains(item.symptomID) ? "●" : "○")
-                        Text(item.displayLabel)
+                        Text(verbatim: selection.contains(item.symptomID) ? "●" : "○").accessibilityHidden(true)
+                        FruitfolioFixedText(source: item.displayLabel, font: .custom("Chalkboard SE", size: 12.5, relativeTo: .body), serious: true)
                         Spacer()
                     }
                     .font(Font.custom("Chalkboard SE", size: 12.5, relativeTo: .body))
@@ -376,8 +376,7 @@ struct Prompt24TrendsView: View {
                     .contentShape(Rectangle())
                 }
                 .buttonStyle(Prompt24SoftPressButtonStyle(reduceMotion: motionPreferences.reduceMotionActive))
-                .accessibilityLabel(item.displayLabel)
-                .accessibilityValue(selection.contains(item.symptomID) ? "shown" : "hidden")
+                .accessibilityAddTraits(selection.contains(item.symptomID) ? .isSelected : [])
             }
         }
     }
