@@ -17,7 +17,8 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
         let scenarioIndex = args.firstIndex(of: "-fruitfolioGameQAScenario")
         let isTour = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "tour" } ?? false
         if !isTour { store.completeTour() }
-        store.controlMode = .classification
+        let isCatchLayout = scenarioIndex.map { $0 + 1 < args.count && args[$0 + 1] == "hud-catch" } ?? false
+        store.controlMode = isCatchLayout ? .catchMode : .classification
         store.persistPreferences()
         model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
         if let index = args.firstIndex(of: "-fruitfolioGameQAScenario"), index + 1 < args.count,
@@ -126,6 +127,11 @@ struct Prompt28GameRegressionHarness: View {
         } else {
             model.classificationStarAvailable = false
             model.classificationFruit = fruit(.pear, classification: .good)
+        }
+        if scenario == "hud-catch" || scenario == "hud-classification" {
+            // Layout-only fixture: hold the real frame-advance guard while the
+            // active renderer stays visible. This does not verify live physics.
+            model.isPaused = true
         }
     }
     private func fruit(_ id: Prompt28FruitID, classification: Prompt28FruitClassification) -> Prompt28FallingFruit {

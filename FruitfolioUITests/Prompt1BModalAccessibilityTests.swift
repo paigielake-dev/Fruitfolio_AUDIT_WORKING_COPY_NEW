@@ -191,6 +191,53 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testGameplayHeaderReservesASeparateVisiblePlayfieldAtAccessibilitySize() {
+        for scenario in ["hud-catch", "hud-classification"] {
+        for language in ["en", "ar"] {
+        for landscape in [false, true] {
+        for reduced in [false, true] {
+            XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", scenario,
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            app.launch()
+            let header = app.scrollViews["fruitBasket.gameplayHeader.scroll"]
+            XCTAssertTrue(header.waitForExistence(timeout: 5))
+            let field = app.descendants(matching: .any).matching(identifier: "fruitBasket.playfield").firstMatch
+            XCTAssertTrue(field.exists)
+            XCTAssertGreaterThanOrEqual(field.frame.height, 132)
+            XCTAssertGreaterThanOrEqual(field.frame.minY, header.frame.maxY - 1)
+            XCTAssertLessThanOrEqual(field.frame.maxY, app.frame.maxY + 1)
+            if scenario == "hud-catch" {
+                let basket = app.descendants(matching: .any).matching(identifier: "fruitBasket.round.basket").firstMatch
+                XCTAssertTrue(basket.exists)
+                XCTAssertGreaterThanOrEqual(basket.frame.minY, field.frame.minY - 1)
+                XCTAssertLessThanOrEqual(basket.frame.maxY, field.frame.maxY + 1)
+            }
+            let pause = app.buttons["fruitBasket.gameplay.pause"]
+            for _ in 0..<12 { if pause.isHittable { break }; header.swipeDown() }
+            XCTAssertTrue(pause.isHittable)
+            XCTAssertGreaterThanOrEqual(pause.frame.height, 44)
+            captureGame(app, name: "hud-\(scenario)-language-\(language)-landscape-\(landscape)-reduced-\(reduced)")
+            pause.tap()
+            let menu = app.scrollViews["fruitBasket.pause.scroll"]
+            XCTAssertTrue(menu.waitForExistence(timeout: 3))
+            XCTAssertFalse(pause.exists)
+            let resume = app.buttons["fruitBasket.pause.resume"]
+            for _ in 0..<12 { if resume.isHittable { break }; menu.swipeDown() }
+            XCTAssertTrue(resume.isHittable)
+            resume.tap()
+            XCTAssertTrue(header.waitForExistence(timeout: 3))
+            app.terminate()
+        }
+        }
+        }
+        }
+        XCUIDevice.shared.orientation = .portrait
+    }
+
     func testStormModalOwnsFocusBoundaryAndOneCloseAcrossAllDismissalHandlers() {
         for serious in [false, true] {
         for actionID in ["fruitBasket.storm.close", "fruitBasket.storm.acknowledge", "gameQA.stormEscape"] {

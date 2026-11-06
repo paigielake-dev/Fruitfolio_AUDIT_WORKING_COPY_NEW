@@ -3,6 +3,34 @@ import XCTest
 @testable import Fruitfolio
 
 final class Prompt1BCatchPresentationTests: XCTestCase {
+    func testMeasuredHUDNeverOverlapsOrConsumesTheMinimumRealPlayfield() {
+        for size in [CGSize(width: 390, height: 780), CGSize(width: 320, height: 480),
+                     CGSize(width: 844, height: 320), CGSize(width: 620, height: 176)] {
+            for content: CGFloat in [0, 44, 92, 300, 5000, .nan] {
+                let viewport = Prompt28GameplayViewport(available: size, headerContentHeight: content)
+                XCTAssertTrue(viewport.canPresentPlayfield)
+                XCTAssertGreaterThanOrEqual(viewport.headerHeight, 44)
+                XCTAssertGreaterThanOrEqual(viewport.playfieldHeight, 132)
+                XCTAssertEqual(viewport.headerHeight + viewport.playfieldHeight, size.height)
+                let geometry = Prompt28CatchGeometry(playfield: .init(width: min(size.width, 620), height: viewport.playfieldHeight))
+                XCTAssertTrue(geometry.isValid)
+                let basket = geometry.artRect(basketX: 0.5).offsetBy(dx: 0, dy: viewport.headerHeight)
+                XCTAssertGreaterThanOrEqual(basket.minY, viewport.headerHeight)
+                XCTAssertLessThanOrEqual(basket.maxY, size.height + 0.001)
+            }
+        }
+    }
+
+    func testInsufficientOrNonfiniteViewportDoesNotFabricatePlayableGeometry() {
+        for size in [CGSize.zero, CGSize(width: 390, height: 175), CGSize(width: 0, height: 700),
+                     CGSize(width: CGFloat.infinity, height: 700), CGSize(width: 390, height: CGFloat.nan)] {
+            let viewport = Prompt28GameplayViewport(available: size, headerContentHeight: 92)
+            XCTAssertFalse(viewport.canPresentPlayfield)
+            XCTAssertEqual(viewport.headerHeight, 0)
+            XCTAssertEqual(viewport.playfieldHeight, 0)
+        }
+    }
+
     func testOldHighCenterThresholdDoesNotAwardAnAboveBasketObject() {
         let geometry = Prompt28CatchGeometry(playfield: CGSize(width: 390, height: 700))
         XCTAssertFalse(geometry.crossedMouth(x: 0.5, previousY: 0.80, currentY: 0.83, basketX: 0.5, objectSize: geometry.starSize))

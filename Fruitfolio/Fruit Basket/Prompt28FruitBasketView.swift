@@ -63,6 +63,8 @@ struct Prompt28FruitBasketView: View {
     @AccessibilityFocusState private var usernameFocus: UsernameFocus?
     @AccessibilityFocusState private var tourHeadingFocused: Bool
     @AccessibilityFocusState private var stormHeadingFocused: Bool
+    @AccessibilityFocusState private var pauseHeadingFocused: Bool
+    @State private var gameplayHeaderContentHeight: CGFloat = 100
     private enum GameplayFocus: Hashable { case pause, classificationProgress }
     @AccessibilityFocusState private var gameplayFocus: GameplayFocus?
     @FocusState private var usernameKeyboardFocused: Bool
@@ -1156,100 +1158,111 @@ struct Prompt28FruitBasketView: View {
             .opacity(0.62)
     }
 
+    private var gameplayHeader: some View {
+        let language = settings.language
+        func number(_ value: Int) -> String {
+            Prompt28GameStatisticFormatting.integer(value, language: language)
+        }
+        return VStack(spacing: 6) {
+            HStack(alignment: .top, spacing: 8) {
+                FruitfolioControlPillButton(label: "pause") { viewModel.pause() }
+                    .controlSize(.small).frame(maxWidth: 160)
+                    .accessibilityIdentifier("fruitBasket.gameplay.pause")
+                    .accessibilityFocused($gameplayFocus, equals: .pause)
+                Prompt28StatisticRow(label: "score", value: number(viewModel.score), font: Prompt28TextRole.metadata.font)
+                    .accessibilityIdentifier("fruitBasket.gameplay.score")
+            }
+            HStack(alignment: .top, spacing: 12) {
+                Prompt28StatisticRow(label: "round", value: number(viewModel.currentRound), font: Prompt28TextRole.metadata.font)
+                    .accessibilityIdentifier("fruitBasket.gameplay.round")
+                Prompt28StatisticRow(label: "game level", value: number(viewModel.gameLevel), font: Prompt28TextRole.metadata.font)
+            }
+            HStack(alignment: .top, spacing: 12) {
+                Prompt28StatisticRow(label: "basket",
+                    value: Prompt28GameStatisticFormatting.fraction(viewModel.basketCount,
+                        target: viewModel.engine.rules.goodFruitTarget, language: language), font: Prompt28TextRole.metadata.font)
+                Prompt28StatisticRow(label: "star passes", value: number(viewModel.session?.availableStarPasses ?? 0),
+                    font: Prompt28TextRole.metadata.font)
+            }
+        }
+        .padding(.horizontal, 20).padding(.vertical, 8)
+        .frame(maxWidth: 620).frame(maxWidth: .infinity)
+        .fixedSize(horizontal: false, vertical: true)
+    }
+
     private var gameplay: some View {
-        GeometryReader { proxy in
-            let width = min(
-                proxy.size.width,
-                620
-            )
-
-            let xOffset =
-                (proxy.size.width - width) / 2
-            let fieldHeight = max(0, proxy.size.height - proxy.safeAreaInsets.bottom)
-
-            ZStack(alignment: .topLeading) {
-                gameplayDecor(
-                    width: width,
-                    height: fieldHeight,
-                    xOffset: xOffset
-                )
-
-                VStack(spacing: 6) {
-                    HStack(spacing: 8) {
-                        Button("pause") {
-                            audioManager.play(.buttonSoftPop)
-                            viewModel.pause()
+        GeometryReader { outer in
+            let available = CGSize(width: outer.size.width,
+                height: max(0, outer.size.height - outer.safeAreaInsets.bottom))
+            let viewport = Prompt28GameplayViewport(available: available, headerContentHeight: gameplayHeaderContentHeight)
+            if viewport.canPresentPlayfield {
+                ZStack {
+                    VStack(spacing: 0) {
+                        ScrollView(.vertical) {
+                            gameplayHeader.background {
+                                GeometryReader { header in
+                                    Color.clear.preference(key: Prompt28GameplayHeaderHeightKey.self, value: header.size.height)
+                                }
+                            }
                         }
-                        .prompt28Text(.button)
-                        .accessibilityFocused($gameplayFocus, equals: .pause)
-                        .frame(width: 58, alignment: .leading)
-                        .frame(minHeight: 44)
-
-                        Spacer(minLength: 4)
-
-                        Text(
-                            "round \(viewModel.currentRound)  ·  game level \(viewModel.gameLevel)"
-                        )
-                        .prompt28Text(.metadata)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.74)
-                        .frame(maxWidth: .infinity)
-
-                        Spacer(minLength: 4)
-
-                        Text("\(viewModel.score)")
-                            .prompt28Text(.metadata)
-                            .monospacedDigit()
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.75)
-                            .frame(width: 58, alignment: .trailing)
+                        .scrollBounceBehavior(.basedOnSize)
+                        .frame(height: viewport.headerHeight)
+                        .accessibilityIdentifier("fruitBasket.gameplayHeader.scroll")
+                        GeometryReader { field in
+                            let width = min(field.size.width, 620)
+                            let xOffset = (field.size.width - width) / 2
+                            ZStack(alignment: .topLeading) {
+                                gameplayDecor(width: width, height: field.size.height, xOffset: xOffset)
+                                if viewModel.screen != .paused {
+                                    if store.controlMode == .classification {
+                                        classificationGameplay(width: width, height: field.size.height, xOffset: xOffset)
+                                    } else {
+                                        catchGameplay(width: width, height: field.size.height, xOffset: xOffset)
+                                    }
+                                }
+                            }
+                            .frame(width: field.size.width, height: field.size.height)
+                            .accessibilityElement(children: .contain)
+                            .accessibilityIdentifier("fruitBasket.playfield")
+                        }
                     }
-                    .padding(.horizontal, 20)
-
-                    Text("\(viewModel.basketCount) / 10 · star passes: \(viewModel.session?.availableStarPasses ?? 0)")
-                        .font(
-                            .custom(
-                                "Chalkboard SE",
-                                size: 16
-                            )
-                        )
-                        .fontWeight(.bold)
+                    .fruitfolioModalBlur(active: viewModel.screen == .paused && !showStormNote,
+                        reduceMotion: motionPreferences.reduceMotionActive)
+                    .allowsHitTesting(viewModel.screen != .paused)
+                    .accessibilityHidden(viewModel.screen == .paused)
+                    if viewModel.screen == .paused && !showStormNote {
+                        ScrollView {
+                            pausePanel.frame(maxWidth: .infinity, minHeight: max(0, available.height - 32))
+                        }
+                        .frame(width: min(max(0, available.width - 40), 380), height: max(0, available.height - 32))
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+                        .accessibilityIdentifier("fruitBasket.pause.scroll")
+                        .accessibilityAction(.escape) { resumeGameFromPause() }
+                        .task {
+                            await Task.yield()
+                            guard rootIsVisible, viewModel.screen == .paused, !showStormNote else { return }
+                            pauseHeadingFocused = true
+                        }
+                    }
                 }
-                .frame(width: width)
-                .offset(
-                    x: xOffset,
-                    y: 8
-                )
-                .zIndex(20)
-
-                if viewModel.screen == .paused {
-                    pausePanel
-                        .frame(
-                            width: min(
-                                width - 40,
-                                380
-                            )
-                        )
-                        .position(
-                            x: proxy.size.width / 2,
-                            y: proxy.size.height / 2
-                        )
-                        .zIndex(80)
-
-                } else if store.controlMode == .classification {
-                    classificationGameplay(
-                        width: width,
-                        height: fieldHeight,
-                        xOffset: xOffset
-                    )
-
-                } else {
-                    catchGameplay(
-                        width: width,
-                        height: fieldHeight,
-                        xOffset: xOffset
-                    )
+                .frame(width: available.width, height: available.height)
+                .onPreferenceChange(Prompt28GameplayHeaderHeightKey.self) { height in
+                    if height.isFinite, height > 0, abs(height - gameplayHeaderContentHeight) > 0.5 {
+                        gameplayHeaderContentHeight = height
+                    }
                 }
+            } else {
+                ScrollView {
+                    VStack(spacing: 12) {
+                        FruitfolioTranslatedText(source: "the play area needs more room. rotate your device or use a larger window.",
+                            font: Prompt28TextRole.body.font, serious: true)
+                        FruitfolioControlPillButton(label: "change topic") { viewModel.changeTopic() }
+                        FruitfolioControlPillButton(label: "exit fruit basket", action: onBack)
+                    }.padding(20)
+                }
+                .accessibilityIdentifier("fruitBasket.playfield.unavailable")
+                .task { if viewModel.screen == .catchActive { viewModel.pause() } }
             }
         }
         .ignoresSafeArea(edges: .bottom)
@@ -1261,6 +1274,17 @@ struct Prompt28FruitBasketView: View {
         }
         .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.starChime) }
+        }
+    }
+
+    private func resumeGameFromPause() {
+        guard viewModel.screen == .paused, !showStormNote else { return }
+        pauseHeadingFocused = false
+        viewModel.resume()
+        Task { @MainActor in
+            await Task.yield()
+            guard rootIsVisible, viewModel.screen == .catchActive, !showStormNote else { return }
+            gameplayFocus = .pause
         }
     }
 
@@ -1382,8 +1406,6 @@ struct Prompt28FruitBasketView: View {
     ) -> some View {
         ScrollView {
         VStack(spacing: 14) {
-            Spacer()
-                .frame(height: 92)
             Text("basket \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget); star passes \(viewModel.session?.availableStarPasses ?? 0)")
                 .prompt28Text(.secondary)
                 .accessibilityIdentifier("fruitBasket.classification.progress")
@@ -1488,15 +1510,19 @@ struct Prompt28FruitBasketView: View {
     private var pausePanel: some View {
         Prompt28PaperPanel {
             VStack(spacing: 10) {
-                Text("little game menu")
-                    .prompt28Text(.sectionHeading)
+                FruitfolioTranslatedContent(source: viewModel.currentQuestion?.usesSeriousFeedback == true ? "game menu" : "little game menu") { display, _ in
+                    FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.sectionHeading.font, serious: true)
+                        .accessibilityAddTraits(.isHeader)
+                        .accessibilityFocused($pauseHeadingFocused)
+                }
 
                 Prompt28WatercolorButton(
                     title: "resume",
                     accent: .paleYellow
                 ) {
-                    viewModel.resume()
+                    resumeGameFromPause()
                 }
+                .accessibilityIdentifier("fruitBasket.pause.resume")
 
                 Prompt28WatercolorButton(
                     title: "change topic",
@@ -2278,6 +2304,12 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var tourPage: Prompt28TourPage { Prompt28TourCatalog.pages[tourStep] }
+}
+
+/// Header content is measured independently of its bounded scroll viewport.
+nonisolated private struct Prompt28GameplayHeaderHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) { value = max(value, nextValue()) }
 }
 
 private struct Prompt28MovingFruit: View {

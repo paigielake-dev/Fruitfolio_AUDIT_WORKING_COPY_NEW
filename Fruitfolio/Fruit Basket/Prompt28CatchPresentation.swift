@@ -8,7 +8,7 @@ nonisolated struct Prompt28CatchGeometry: Sendable {
     var basketCenterY: CGFloat { min(playfield.height * 0.89, max(66, playfield.height - 78)) }
     var basketWidth: CGFloat { min(playfield.width * 0.36, 150) }
     var basketArtSize: CGSize { .init(width: basketWidth * 0.90, height: basketWidth * 0.90 * 380 / 398) }
-    var isValid: Bool { playfield.width.isFinite && playfield.height.isFinite && playfield.width > 0 && playfield.height >= 132 }
+    var isValid: Bool { playfield.width.isFinite && playfield.height.isFinite && playfield.width > 0 && playfield.height >= Prompt28GameplayViewport.minimumPlayfieldHeight }
     var fruitSize: CGFloat { min(max(playfield.width * 0.13, 46), 66) }
     var starSize: CGFloat { min(max(playfield.width * 0.10, 34), 52) }
 
@@ -91,5 +91,26 @@ nonisolated struct Prompt28RareStarPlanner: Sendable {
         // This spacing counter is not a cap on earned stars or banked passes.
         fruitDropsSinceStar = min(fruitDropsSinceStar + 1, Self.minimumFruitSpacing)
         return false
+    }
+}
+
+/// Reserve real playfield space below a separately scrollable, measured HUD.
+/// This changes layout only; collision/progression still use the actual field.
+nonisolated struct Prompt28GameplayViewport: Equatable, Sendable {
+    static let minimumPlayfieldHeight: CGFloat = 132
+    static let minimumHeaderHeight: CGFloat = 44
+    let available: CGSize
+    let headerContentHeight: CGFloat
+    var canPresentPlayfield: Bool {
+        available.width.isFinite && available.height.isFinite && available.width > 0
+            && available.height >= Self.minimumPlayfieldHeight + Self.minimumHeaderHeight
+    }
+    var headerHeight: CGFloat {
+        guard canPresentPlayfield else { return 0 }
+        let measured = headerContentHeight.isFinite ? headerContentHeight : Self.minimumHeaderHeight
+        return min(max(measured, Self.minimumHeaderHeight), available.height - Self.minimumPlayfieldHeight)
+    }
+    var playfieldHeight: CGFloat {
+        canPresentPlayfield ? available.height - headerHeight : 0
     }
 }
