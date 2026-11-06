@@ -153,6 +153,16 @@ nonisolated enum Prompt14OnboardingStep: String, Codable, CaseIterable, Sendable
     case complete
 }
 
+/// A local, explicit user request saved before the separate cycle-file commit.
+/// Recovery reuses precisely these dates; it never fills missing period history.
+nonisolated struct Prompt14PendingCycleCommit: Codable, Equatable, Sendable {
+    let dates: [Prompt13LocalDate]
+    let replacingCommittedHistory: Bool
+    let completionRequestedAt: Date?
+    let requestedAt: Date
+    let today: Prompt13LocalDate
+}
+
 nonisolated struct Prompt14OnboardingDraft: Codable, Equatable, Sendable {
     var schemaVersion: Int = 1
     var step: Prompt14OnboardingStep = .intro
@@ -194,8 +204,9 @@ nonisolated struct Prompt14OnboardingDraft: Codable, Equatable, Sendable {
     var updatedAt: Date = Date()
     var completedAt: Date?
     var didCommitCycleStarts: Bool = false
+    var pendingCycleCommit: Prompt14PendingCycleCommit?
 
-    var isCompleted: Bool { completedAt != nil }
+    var isCompleted: Bool { completedAt != nil && pendingCycleCommit == nil }
 
     var allSuppliedCycleStarts: [Prompt13LocalDate] {
         var values = historicalPeriodStarts

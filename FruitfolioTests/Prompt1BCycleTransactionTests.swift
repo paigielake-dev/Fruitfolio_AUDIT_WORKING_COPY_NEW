@@ -4,7 +4,7 @@ import XCTest
 
 // Faults and suspension are injected only at the persistence boundary; every
 // successful read/write below uses the actual production file actor and codec.
-private actor CycleWriteBoundary: Prompt13CyclePersistence {
+actor CycleWriteBoundary: Prompt13CyclePersistence {
     let file: Prompt13FileCyclePersistence
     private var writes = 0
     private var failNext = false

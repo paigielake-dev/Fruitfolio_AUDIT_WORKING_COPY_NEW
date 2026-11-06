@@ -64,3 +64,37 @@ second-precision timestamps; this batch does not change that codec.
 
 This still does not commit the cycle and onboarding files atomically. A durable
 intent/recovery phase and ordered editor autosaves remain subsequent tasks.
+
+## Durable cross-file intent and restart recovery
+
+The existing onboarding draft now has an optional typed pendingCycleCommit field.
+Old drafts without it remain decodable. Completion and committed-date edits first
+save the exact supplied dates, operation mode, request time, completion request
+(if any), and captured civil today. They then apply the single cycle archive
+transaction and clear the intent in a final onboarding save. A resumed snapshot
+finishes an already persisted explicit request before exposing the draft. It does
+not infer unrecorded periods. Pending intents must exactly match the draft's
+normalized supplied dates and contain no future dates against captured today;
+invalid journals preserve both files and report unsupportedFormat.
+
+The outer save boundary recognizes acknowledged intermediate/final draft writes,
+avoiding a redundant third save and avoiding a cancellation error after successful
+final acknowledgment. An error forces a real reload, including when an injected
+error follows a physical commit. Explicit onboarding-only erase skips resumption,
+allowing that specific pending request to be canceled without importing it.
+Committed-date changes through update also use the same journal path.
+
+Six additional regression methods exercise all three physical writes (intent,
+cycle archive, final draft), failures before and after each commit, recreation of
+both actors from real files, invalid/mismatched/duplicate-date journals, committed
+history edit recovery followed by another edit, explicit pending-intent erase,
+and completed-draft updates. Earlier final-save retry coverage now verifies the
+persisted intent before automatic recovery rather than expecting recovery to leave
+an intentionally unfinished cache. Cycle boundaries count successful real writes;
+no fake backend is used to claim actual persistence.
+
+This is a resumable local two-file workflow, not atomic visibility across the
+files or across multiple independent processes. Legacy partial imports created
+before journals existed cannot be assigned an invented intent. Ordered view-model
+autosaves, stale editor baseline protection, Apple UI/device verification and
+clinical review remain separate work.

@@ -40,6 +40,7 @@ actor Prompt14CycleOnboardingStore {
 
     // Serializes the draft across suspension points, including cycle-store calls.
     // This protects one file; cross-file completion remains resumable, not atomic.
+    private var persistedDuringOperation: Prompt14OnboardingDraft?
     private var operationActive = false
     private var operationWaiters: [CheckedContinuation<Void, Never>] = []
 
@@ -58,7 +59,11 @@ actor Prompt14CycleOnboardingStore {
         _ body: (isolated Prompt14CycleOnboardingStore) async throws -> T
     ) async throws -> T {
         await acquireOperation()
-        defer { releaseOperation() }
+        persistedDuringOperation = nil
+        defer {
+            persistedDuringOperation = nil
+            releaseOperation()
+        }
         try Task.checkCancellation()
         // Explicit erase may remove an unsupported current file without decoding
         // it. The file actor still checks the exact baseline before removal.
@@ -66,9 +71,8 @@ actor Prompt14CycleOnboardingStore {
         let baseline = draft
         do {
             let result = try await body(self)
-            if persistChanges {
-                try Task.checkCancellation()
-                if draft != baseline { try await persistence.save(draft) }
+            if persistChanges, draft != (persistedDuringOperation ?? baseline) {
+                try await persistCurrentDraft()
             }
             return result
         } catch {
@@ -97,6 +101,9 @@ actor Prompt14CycleOnboardingStore {
 
     private func replaceDraftUnlocked(_ newDraft: Prompt14OnboardingDraft) async throws {
         try await loadIfNeeded()
+        guard newDraft.pendingCycleCommit == nil else {
+            throw Prompt14OnboardingPersistenceError.unsupportedFormat
+        }
         let wasCommitted = draft.didCommitCycleStarts
         draft = newDraft
         draft.markUpdated()
@@ -115,9 +122,17 @@ actor Prompt14CycleOnboardingStore {
 
     private func updateUnlocked(_ mutate: @Sendable (inout Prompt14OnboardingDraft) -> Void) async throws -> Prompt14OnboardingDraft {
         try await loadIfNeeded()
+        let previousDates = draft.allSuppliedCycleStarts
+        let wasCommitted = draft.didCommitCycleStarts
         mutate(&draft)
+        guard draft.pendingCycleCommit == nil else {
+            throw Prompt14OnboardingPersistenceError.unsupportedFormat
+        }
         draft.markUpdated()
-        // The enclosing operation commits the complete candidate once.
+        if wasCommitted && draft.allSuppliedCycleStarts != previousDates {
+            try await reconcileCommittedCycleStarts(referenceDate: draft.allSuppliedCycleStarts.last)
+        }
+        // Ordinary draft changes commit at the enclosing boundary.
         return draft
     }
 
@@ -147,18 +162,12 @@ actor Prompt14CycleOnboardingStore {
         try await loadIfNeeded()
 
         let today = try Prompt13LocalDate(now, calendar: calendar)
-        try await cycleStore.reconcileOnboardingCycleStarts(
-            dates: Set(draft.allSuppliedCycleStarts),
+        try await commitCycleHistory(
             replacingCommittedHistory: false,
+            completionRequestedAt: now,
             now: now,
             today: today
         )
-
-        draft.didCommitCycleStarts = true
-        draft.step = .complete
-        draft.completedAt = draft.completedAt ?? now
-        draft.markUpdated(at: now)
-        // The enclosing operation commits the complete candidate once.
         return draft
     }
 
@@ -214,9 +223,9 @@ actor Prompt14CycleOnboardingStore {
         calendar: Calendar = .autoupdatingCurrent
     ) async throws {
         let today = try Prompt13LocalDate(now, calendar: calendar)
-        try await cycleStore.reconcileOnboardingCycleStarts(
-            dates: Set(draft.allSuppliedCycleStarts),
+        try await commitCycleHistory(
             replacingCommittedHistory: true,
+            completionRequestedAt: nil,
             now: now,
             today: today
         )
@@ -234,9 +243,66 @@ actor Prompt14CycleOnboardingStore {
         isLoaded = true
     }
 
+    private func persistCurrentDraft() async throws {
+        try Task.checkCancellation()
+        try await persistence.save(draft)
+        persistedDuringOperation = draft
+    }
+
+    private func commitCycleHistory(
+        replacingCommittedHistory: Bool,
+        completionRequestedAt: Date?,
+        now: Date,
+        today: Prompt13LocalDate
+    ) async throws {
+        let dates = draft.allSuppliedCycleStarts
+        guard dates.allSatisfy({ $0 <= today }) else {
+            throw Prompt13CycleError.futureObservationNotAllowed
+        }
+        draft.pendingCycleCommit = Prompt14PendingCycleCommit(
+            dates: dates,
+            replacingCommittedHistory: replacingCommittedHistory,
+            completionRequestedAt: completionRequestedAt,
+            requestedAt: now,
+            today: today
+        )
+        // Persist the explicit request before touching the other file. A restart
+        // can safely resume any phase without inventing dates or duplicating IDs.
+        try await persistCurrentDraft()
+        try await resumePendingCycleCommit()
+    }
+
+    private func resumePendingCycleCommit() async throws {
+        guard let pending = draft.pendingCycleCommit else { return }
+        guard pending.dates == draft.allSuppliedCycleStarts,
+              pending.dates.allSatisfy({ $0 <= pending.today }) else {
+            throw Prompt14OnboardingPersistenceError.unsupportedFormat
+        }
+        try await cycleStore.reconcileOnboardingCycleStarts(
+            dates: Set(pending.dates),
+            replacingCommittedHistory: pending.replacingCommittedHistory,
+            now: pending.requestedAt,
+            today: pending.today
+        )
+        draft.didCommitCycleStarts = true
+        if let completedAt = pending.completionRequestedAt {
+            draft.step = .complete
+            draft.completedAt = draft.completedAt ?? completedAt
+        }
+        draft.pendingCycleCommit = nil
+        draft.markUpdated(at: pending.requestedAt)
+        try await persistCurrentDraft()
+    }
+
     private func loadIfNeeded() async throws {
         guard !isLoaded else { return }
-        draft = try await persistence.load()
-        isLoaded = true
+        do {
+            draft = try await persistence.load()
+            try await resumePendingCycleCommit()
+            isLoaded = true
+        } catch {
+            isLoaded = false
+            throw error
+        }
     }
 }
