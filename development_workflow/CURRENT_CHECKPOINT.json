@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "c3ea33e05254d57d81b868f7b2474422108656bb",
+  "current_HEAD": "946d4c0602afbfa66594f8e4a1c1052923c3e09e",
   "latest_verified_commit": null,
-  "current_checklist_part": 4,
-  "current_requirement": 217,
-  "current_implementation_batch": "Acknowledged-Guide-ordering-and-visible-recovery",
+  "current_checklist_part": 9,
+  "current_requirement": 218,
+  "current_implementation_batch": "Guide-form-shared-fixed-copy-translation",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -494,13 +494,12 @@
   ],
   "uncommitted_changes": [
     "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideBuilderView.swift",
-    "Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift",
-    "Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift",
-    "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
+    "Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift",
+    "Fruitfolio/Localizable.xcstrings",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/GUIDE_ORDERING_ACKNOWLEDGMENT.md",
-    "development_workflow/MASTER_CHECKLIST.json"
+    "development_workflow/GUIDE_FORM_COPY_LOCALIZATION.md",
+    "development_workflow/MASTER_CHECKLIST.json",
+    "development_workflow/RUN_LOGS/Guide-form-fixed-copy-preservation.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -513,25 +512,27 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "Focused actual library suite: 15 passed",
-    "Full portable/native suites: /tmp/fruitfolio-guide-reorder-{portable,native}.log",
     "50 workflow checks with actual Swift compiler",
-    "311 Swift files syntax parsed",
-    "Xcode project references resolved; actual SwiftSyntax sound ownership check clean",
-    "git diff --check"
+    "311 Swift files parsed",
+    "Xcode project references resolved; actual SwiftSyntax sound ownership clean",
+    "Exact parsed comparison preserves 803 catalog entries; 12 English additions, zero nonempty foreign units",
+    "git diff --check",
+    "Unchanged Foundation suites not rerun; latest confirmed at 946d4c0: 773 portable/795 native XCTest +21 Swift Testing each"
   ],
   "last_test_results": {
-    "portable_XCTest": 773,
-    "native_CPU_XCTest": 795,
-    "SwiftTesting_each_run": 21,
     "workflow_checks": 50,
     "syntax_files": 311,
-    "focused_library_tests": 15,
+    "portable_XCTest_last_confirmed_parent": 773,
+    "native_CPU_XCTest_last_confirmed_parent": 795,
+    "SwiftTesting_each_last_confirmed_parent": 21,
+    "Foundation_rerun_this_UI_only_batch": false,
     "Apple_Guide_UI_launch_cases_written_NOT_RUN": 52,
-    "official_MADLAD": "BLOCKED; synthetic native tests are not official inference"
+    "English_catalog_keys": 815,
+    "nonempty_foreign_units": 0,
+    "official_MADLAD": "BLOCKED; no official inference verification"
   },
-  "next_exact_implementation_action": "Continue existing Guide form localization through shared semantic translation owners: fixed headings/helper/error copy, preserve actual user names/source citations, add source catalog keys and extend actual Guide UI fallback assertions. Then review remaining original Guide popup/save presentation requirements in order; never certify Apple rendering or official MADLAD from parser/synthetic tests.",
-  "updated_at": "2026-11-06T18:52:17.459715+00:00",
+  "next_exact_implementation_action": "Continue original Guide saved-status presentation requirements 218-221: route saved text through shared translation, verify original Strawberry/card resource ownership, measured writing bounds and adaptive accessibility content. Preserve acknowledged success-only entry and logical popup timer ownership; extend actual UI assertions, run relevant supported checks and document Apple/model limitations.",
+  "updated_at": "2026-11-06T18:54:50.665118+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",
@@ -541,23 +542,21 @@
   ],
   "last_batch_verification": {
     "executed": {
-      "focused_library_XCTest": "15 passed; three new cases exercise actual Store plus real UserDefaults write faults",
-      "portable_XCTest": "773 passed",
-      "native_CPU_XCTest": "795 passed; synthetic T5 is not official MADLAD",
-      "SwiftTesting": "21 passed per run",
-      "workflow": "50 passed",
-      "source_checks": "311 syntax parsed; project references resolved and SwiftSyntax sound ownership clean; no Apple build"
+      "workflow": "50 passed with actual Swift compiler",
+      "source_checks": "311 syntax parsed; project references resolved; SwiftSyntax sound ownership clean",
+      "catalog_preservation": "All 803 old entries unchanged; 12 English additions, total 815; no nonempty foreign translations",
+      "Foundation": "Unchanged; not rerun this UI-only batch. Latest parent passed 773 portable/795 native XCTest +21 Swift Testing each"
     },
     "not_run": [
-      "52 Guide Apple UI launches, eight new accepted/rejected reorder and explicit reload cases",
-      "Apple SDK build/link, runtime renderer/callbacks/error focus, VoiceOver/DT/RTL and physical audio/device",
-      "Official MADLAD offline/language/scientific verification"
+      "All 52 Guide Apple UI launch cases, now with source fallback heading/error assertions",
+      "Apple SDK typecheck, actual UI wrapping/accessibility/RTL, input lifecycle and error announcements",
+      "Foreign translation coverage, official MADLAD resources/offline inference and clinical acceptance"
     ],
     "remaining": [
-      "Execute actual reorder success/drop/reload UI cases and verify no false success, preserved order/content and visible accessible recovery",
-      "Verify all Guide title/cover/content/media/deletion propagation and repeated navigation on Apple; Foundation projections do not establish rendered synchronization",
-      "Check error focus/announcement and unrelated operations following failed writes and explicit reload",
-      "Complete external resource, model, clinical, localization and device gates"
+      "Run actual Guide source fallback and translated-heading/error UI cases on Apple, checking complete wrapping and exact retained user drafts",
+      "Complete remaining Guide screen/saved-status/placeholder translation paths; this batch does not close whole app-wide localization",
+      "Verify each supported language using official model/tokenizer and native reviewers, including scientific terminology/citations",
+      "Complete app-wide accessibility, RTL, physical-device and clinical verification beyond this source-only change"
     ]
   }
 }

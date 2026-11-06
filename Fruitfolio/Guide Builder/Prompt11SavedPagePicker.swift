@@ -36,17 +36,15 @@ struct Prompt11SavedPagePicker: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                Text("what should we add?")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "what should we add?",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                Text(
-                    "choose from your saved answers, excerpts and your own material."
-                )
-                .font(.custom("Chalkboard SE", size: 11.5))
+                FruitfolioTranslatedText(source: "choose from your saved answers, excerpts and your own material.",
+                    font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: false)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
@@ -129,8 +127,8 @@ struct Prompt11SavedPagePicker: View {
 
                 } else {
                     VStack(spacing: 6) {
-                        Text("make a section first so these pages have somewhere to settle.")
-                            .font(.custom("Chalkboard SE", size: 11))
+                        FruitfolioTranslatedText(source: "make a section first so these pages have somewhere to settle.",
+                                font: .custom("Chalkboard SE", size: 11, relativeTo: .body), serious: false)
                             .foregroundStyle(
                                 DesignTokens.ColorToken.secondaryBurgundy
                             )
@@ -157,12 +155,10 @@ struct Prompt11SavedPagePicker: View {
                 }
 
                 if candidates.isEmpty {
-                    Text(
-                        store.prompt11AllSavedMaterial().isEmpty
+                    FruitfolioTranslatedText(source: store.prompt11AllSavedMaterial().isEmpty
                             ? "nothing has been saved from Ask yet."
-                            : "nothing matched this little search."
-                    )
-                    .font(.custom("Chalkboard SE", size: 11))
+                            : "nothing matched this little search.",
+                        font: .custom("Chalkboard SE", size: 11, relativeTo: .body))
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
@@ -181,8 +177,9 @@ struct Prompt11SavedPagePicker: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -251,12 +248,15 @@ struct Prompt11SavedPagePicker: View {
                 .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(
-                        candidate.page.question.isEmpty
-                            ? "saved page"
-                            : candidate.page.question
-                    )
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                    Group {
+                        if candidate.page.question.isEmpty {
+                            FruitfolioTranslatedText(source: "saved page",
+                                font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body))
+                        } else {
+                            Text(verbatim: candidate.page.question)
+                        }
+                    }
+                    .font(.custom("Chalkboard SE", size: 11.5, relativeTo: .body))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -271,11 +271,8 @@ struct Prompt11SavedPagePicker: View {
                         .lineLimit(3)
 
                     HStack(spacing: 7) {
-                        Text(
-                            candidate.page.saveType == .excerpt
-                                ? "excerpt"
-                                : "full answer"
-                        )
+                        FruitfolioTranslatedText(source: candidate.page.saveType == .excerpt ? "excerpt" : "full answer",
+                            font: .custom("Chalkboard SE", size: 9.5, relativeTo: .caption))
 
                         Text(
                             candidate.page.savedAt,
@@ -283,7 +280,7 @@ struct Prompt11SavedPagePicker: View {
                         )
 
                         if candidate.isAlreadyInGuide {
-                            Text("already in this guide")
+                            FruitfolioTranslatedText(source: "already in this guide", font: .custom("Chalkboard SE", size: 9.5, relativeTo: .caption))
                                 .fontWeight(.bold)
                         }
                     }

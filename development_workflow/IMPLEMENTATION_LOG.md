@@ -2323,3 +2323,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 773, "native_CPU_XCTest": 795, "SwiftTesting_each_run": 21, "workflow_checks": 50, "syntax_files": 311, "focused_library_tests": 15, "Apple_Guide_UI_launch_cases_written_NOT_RUN": 52, "official_MADLAD": "BLOCKED; synthetic native tests are not official inference"}.
 - Next action: Continue existing Guide form localization through shared semantic translation owners: fixed headings/helper/error copy, preserve actual user names/source citations, add source catalog keys and extend actual Guide UI fallback assertions. Then review remaining original Guide popup/save presentation requirements in order; never certify Apple rendering or official MADLAD from parser/synthetic tests.
 - Commit: containing commit for batch Acknowledged-Guide-ordering-and-visible-recovery.
+
+## Guide-form-shared-fixed-copy-translation
+
+- Parent checkpoint: 946d4c0602afbfa66594f8e4a1c1052923c3e09e.
+- Source-order requirements: [217, 394, 395, 397, 443, 444, 446, 453, 468, 471, 472, 473, 476, 477].
+- Source files: Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift, Fruitfolio/Guide Builder/Prompt11SavedPagePicker.swift, Fruitfolio/Localizable.xcstrings.
+- 27 direct Guide fixed/error renderers plus fixed branch labels now use the existing shared semantic translation owner, with original source strings/font sizes and relative text styles. User titles/bindings and scientific body/source/citation ownership remain. Twelve English keys added; all 803 prior entries unchanged, 815 total, zero nonempty foreign units. Existing Apple UI assertions extended for source headings and readable conflicts, not executed.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"workflow_checks": 50, "syntax_files": 311, "portable_XCTest_last_confirmed_parent": 773, "native_CPU_XCTest_last_confirmed_parent": 795, "SwiftTesting_each_last_confirmed_parent": 21, "Foundation_rerun_this_UI_only_batch": false, "Apple_Guide_UI_launch_cases_written_NOT_RUN": 52, "English_catalog_keys": 815, "nonempty_foreign_units": 0, "official_MADLAD": "BLOCKED; no official inference verification"}.
+- Next action: Continue original Guide saved-status presentation requirements 218-221: route saved text through shared translation, verify original Strawberry/card resource ownership, measured writing bounds and adaptive accessibility content. Preserve acknowledged success-only entry and logical popup timer ownership; extend actual UI assertions, run relevant supported checks and document Apple/model limitations.
+- Commit: containing commit for batch Guide-form-shared-fixed-copy-translation.

@@ -21,8 +21,9 @@ struct Prompt11CreateGuidePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                Text("let’s make your guide ♡")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "let’s make your guide ♡",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.create")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -34,8 +35,8 @@ struct Prompt11CreateGuidePopup: View {
                     .frame(width: 68, height: 88)
                     .accessibilityHidden(true)
 
-                Text("guide name")
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                FruitfolioTranslatedText(source: "guide name",
+                        font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -60,8 +61,8 @@ struct Prompt11CreateGuidePopup: View {
                         )
                     )
 
-                Text("little description")
-                    .font(.custom("Chalkboard SE", size: 10.5))
+                FruitfolioTranslatedText(source: "little description",
+                        font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: false)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
@@ -133,8 +134,9 @@ struct Prompt11CreateGuidePopup: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -222,8 +224,9 @@ struct Prompt11RenameGuidePopup: View {
                     .frame(width: 54)
                     .accessibilityHidden(true)
 
-                Text("rename guide")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "rename guide",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.rename")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -247,8 +250,9 @@ struct Prompt11RenameGuidePopup: View {
                     )
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -315,8 +319,9 @@ struct Prompt11DescriptionPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text("edit little description")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "edit little description",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.description")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -345,8 +350,9 @@ struct Prompt11DescriptionPopup: View {
                 )
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -416,8 +422,9 @@ struct Prompt11ChangeCoverPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text("choose a cover")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "choose a cover",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.cover")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -471,8 +478,9 @@ struct Prompt11ChangeCoverPopup: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -526,25 +534,25 @@ struct Prompt11DeleteGuidePopup: View {
                     .frame(width: 52)
                     .accessibilityHidden(true)
 
-                Text("delete this guide?")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "delete this guide?",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: true)
+                    .accessibilityIdentifier("guide.form.heading.delete")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
 
-                Text(
-                    "the guide will disappear, but the things you saved from Ask will stay in your saved library."
-                )
-                .font(.custom("Chalkboard SE", size: 11.5))
+                FruitfolioTranslatedText(source: "the guide will disappear, but the things you saved from Ask will stay in your saved library.",
+                    font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: true)
                 .foregroundStyle(
                     DesignTokens.ColorToken.secondaryBurgundy
                 )
                 .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -611,8 +619,8 @@ struct Prompt11SectionPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text(chapterID == nil ? "name this section" : "rename section")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: chapterID == nil ? "name this section" : "rename section",
+                    font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -635,8 +643,9 @@ struct Prompt11SectionPopup: View {
                     )
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -719,8 +728,9 @@ struct Prompt11NotePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text("my note")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "my note",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.note")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -747,8 +757,9 @@ struct Prompt11NotePopup: View {
                 )
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -804,8 +815,9 @@ struct Prompt11MovePagePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 10) {
-                Text("move this page to…")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "move this page to…",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: false)
+                    .accessibilityIdentifier("guide.form.heading.move")
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -826,8 +838,8 @@ struct Prompt11MovePagePopup: View {
                                 Spacer()
 
                                 if chapter.id == fromChapterID {
-                                    Text("current")
-                                        .font(.custom("Chalkboard SE", size: 9.5))
+                                    FruitfolioTranslatedText(source: "current",
+                                            font: .custom("Chalkboard SE", size: 9.5, relativeTo: .body), serious: false)
                                 }
                             }
                             .foregroundStyle(
@@ -847,8 +859,9 @@ struct Prompt11MovePagePopup: View {
                 }
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -912,24 +925,25 @@ struct Prompt11RemovePagePopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(spacing: 12) {
-                Text("remove this page from your guide?")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: "remove this page from your guide?",
+                        font: .custom("Chalkboard SE", size: 16, relativeTo: .headline), serious: true)
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
                     )
                     .multilineTextAlignment(.center)
 
-                Text("it’ll stay safely in your saved library.")
-                    .font(.custom("Chalkboard SE", size: 11.5))
+                FruitfolioTranslatedText(source: "it’ll stay safely in your saved library.",
+                        font: .custom("Chalkboard SE", size: 11.5, relativeTo: .body), serious: false)
                     .foregroundStyle(
                         DesignTokens.ColorToken.secondaryBurgundy
                     )
                     .multilineTextAlignment(.center)
 
                 if let errorMessage {
-                    Text(errorMessage)
-                        .font(.custom("Chalkboard SE", size: 10.5))
+                    FruitfolioTranslatedText(source: errorMessage,
+                            font: .custom("Chalkboard SE", size: 10.5, relativeTo: .body), serious: true)
+                        .accessibilityIdentifier("guide.form.error")
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )
@@ -972,8 +986,8 @@ struct Prompt11OriginalAnswerPopup: View {
     var body: some View {
         Prompt10WatercolorPopup {
             VStack(alignment: .leading, spacing: 10) {
-                Text(sourcePage?.saveType == .excerpt ? "saved selection" : "original answer")
-                    .font(.custom("Chalkboard SE", size: 16))
+                FruitfolioTranslatedText(source: sourcePage?.saveType == .excerpt ? "saved selection" : "original answer",
+                    font: .custom("Chalkboard SE", size: 16, relativeTo: .headline))
                     .fontWeight(.bold)
                     .foregroundStyle(
                         DesignTokens.ColorToken.primaryBurgundy
@@ -996,8 +1010,8 @@ struct Prompt11OriginalAnswerPopup: View {
                     }
                     .frame(maxHeight: 330)
                 } else {
-                    Text("this saved page is no longer in your library")
-                        .font(.custom("Chalkboard SE", size: 12))
+                    FruitfolioTranslatedText(source: "this saved page is no longer in your library",
+                            font: .custom("Chalkboard SE", size: 12, relativeTo: .body), serious: true)
                         .foregroundStyle(
                             DesignTokens.ColorToken.secondaryBurgundy
                         )

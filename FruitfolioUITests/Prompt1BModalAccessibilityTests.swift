@@ -370,6 +370,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             open.tap()
             let name = app.descendants(matching: .any).matching(identifier: "guide.create.name").firstMatch
             XCTAssertTrue(name.waitForExistence(timeout: 3))
+            let heading = app.descendants(matching: .any).matching(identifier: "guide.form.heading.create").firstMatch
+            XCTAssertTrue(heading.exists)
+            XCTAssertEqual(heading.label, "let’s make your guide ♡", "English source fallback is not foreign translation verification")
             expectGuidePopupRequests(open: 1, close: 0, in: app)
             name.tap(); name.typeText("QA created guide")
             let description = app.descendants(matching: .any).matching(identifier: "guide.create.description").firstMatch
@@ -413,6 +416,9 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(open.isHittable); open.tap()
             let input = app.descendants(matching: .any).matching(identifier: "guide.description.input").firstMatch
             XCTAssertTrue(input.waitForExistence(timeout: 3))
+            let heading = app.descendants(matching: .any).matching(identifier: "guide.form.heading.description").firstMatch
+            XCTAssertTrue(heading.exists)
+            XCTAssertEqual(heading.label, "edit little description")
             input.tap(); input.typeText("QAedit")
             let draft = input.value as? String ?? ""
             XCTAssertTrue(draft.contains("QAedit"))
@@ -441,6 +447,11 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 } else {
                     XCTAssertTrue(input.exists)
                     XCTAssertEqual(input.value as? String, draft)
+                    let error = app.descendants(matching: .any).matching(identifier: "guide.form.error").firstMatch
+                    XCTAssertTrue(error.waitForExistence(timeout: 3))
+                    if action == "conflict" {
+                        XCTAssertEqual(error.label, "this saved item changed while you were editing. your draft is still here, and nothing was overwritten. review the current saved item before trying again.")
+                    }
                     let protected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: \(action == "conflict" ? "false" : "true")"), object: app.staticTexts["guideQA.writeProtected"])
                     XCTAssertEqual(XCTWaiter.wait(for: [protected], timeout: 3), .completed)
                     if action == "conflict" {
