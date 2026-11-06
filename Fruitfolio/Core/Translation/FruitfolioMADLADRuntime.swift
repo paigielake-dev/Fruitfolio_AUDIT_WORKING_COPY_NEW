@@ -17,6 +17,7 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
     private var successfulDecoderCalls = 0
     private var checkedBlockingCalls = 0
     private var mainThreadBlockingCalls = 0
+    private var largestTokenBuffer = 0
 
     /// Samples the invoking thread at model load, context allocation, encode and
     /// decode. No text, tokens or identities are recorded. This is not profiling.
@@ -25,12 +26,12 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         if Thread.isMainThread { mainThreadBlockingCalls += 1 }
     }
 
-    /// Counts only actual successful native calls, never user content. Synthetic
-    /// contract execution does not establish official MADLAD or language quality.
+    /// Actual call/resource counters and largest Swift token-buffer allocation,
+    /// never user content. Synthetic execution does not establish language quality.
     func debugExecutionStatistics() -> (encoderCalls: Int, decoderCalls: Int, resourcesLoaded: Bool,
-                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int, modelLoaded: Bool) {
+                                         checkedBlockingCalls: Int, mainThreadBlockingCalls: Int, modelLoaded: Bool, largestTokenBuffer: Int) {
         (successfulEncoderCalls, successfulDecoderCalls, model != nil && context != nil,
-         checkedBlockingCalls, mainThreadBlockingCalls, model != nil)
+         checkedBlockingCalls, mainThreadBlockingCalls, model != nil, largestTokenBuffer)
     }
     #endif
 
@@ -71,7 +72,8 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
                 .trimmingCharacters(in: .whitespacesAndNewlines) == tag else {
             throw FruitfolioTranslationError.unsupportedLanguage(targetTag)
         }
-        let input = try tokenize("\(tag) \(text)", vocab: vocab, addSpecial: true)
+        let input = try tokenize("\(tag) \(text)", vocab: vocab, addSpecial: true,
+                                 maximumTokens: manifest.contextLength - 1)
         guard input.count < manifest.contextLength else { throw FruitfolioTranslationError.inputTooLong }
         try prepareContextIfNeeded(model: model, config: manifest)
         guard let context, let sampler else { throw FruitfolioTranslationError.inferenceFailed }
@@ -213,12 +215,26 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         sampler = loadedSampler
     }
 
-    private func tokenize(_ text: String, vocab: OpaquePointer, addSpecial: Bool) throws -> [llama_token] {
-        let required = llama_tokenize(vocab, text, Int32(text.utf8.count), nil, 0, addSpecial, true)
+    private func tokenize(_ text: String, vocab: OpaquePointer, addSpecial: Bool,
+                          maximumTokens: Int? = nil) throws -> [llama_token] {
+        guard let byteCount = Int32(exactly: text.utf8.count) else {
+            throw FruitfolioTranslationError.inputTooLong
+        }
+        let required = llama_tokenize(vocab, text, byteCount, nil, 0, addSpecial, true)
         guard required < 0 else { throw FruitfolioTranslationError.inferenceFailed }
-        var tokens = [llama_token](repeating: 0, count: Int(-required))
-        let capacity = Int32(tokens.count)
-        let count = llama_tokenize(vocab, text, Int32(text.utf8.count), &tokens, capacity, addSpecial, true)
+        // Widen before negation: INT32_MIN must never overflow Swift arithmetic.
+        let needed = -Int64(required)
+        guard let capacity = Int32(exactly: needed),
+              maximumTokens.map({ needed <= Int64($0) }) ?? true else {
+            throw FruitfolioTranslationError.inputTooLong
+        }
+        var tokens = [llama_token](repeating: 0, count: Int(capacity))
+        #if DEBUG
+        // Allocation count only, never token values or source content. Native
+        // tokenizer internals and the input string are outside this measurement.
+        largestTokenBuffer = max(largestTokenBuffer, tokens.count)
+        #endif
+        let count = llama_tokenize(vocab, text, byteCount, &tokens, capacity, addSpecial, true)
         guard count > 0, Int(count) <= tokens.count else { throw FruitfolioTranslationError.inferenceFailed }
         return Array(tokens.prefix(Int(count)))
     }

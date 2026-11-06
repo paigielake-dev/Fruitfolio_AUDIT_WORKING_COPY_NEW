@@ -1938,3 +1938,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "SwiftSyntax_sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md"}.
 - Next action: Bound native T5 tokenizer allocation using actual reported token count before allocating the token buffer; preserve exact context validation, source and failure behavior. Add actual native oversized-input regression.
 - Commit: containing commit for batch Wrapping-localized-suggested-topic-controls.
+
+## Bound-native-input-token-buffer-before-allocation
+
+- Parent checkpoint: 8dffb3e6c52ba6adbf5db00bca87224ef84b4234.
+- Source-order requirements: [418, 419, 425, 426, 428, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift.
+- Actual tokenizer required count is checked against context before Swift token-buffer allocation. Checked UTF-8 Int32 conversion and widened negation avoid Swift integer traps. Real native synthetic regression rejects oversized ASCII/Unicode with target-tag-only buffer and no compute context, then successfully retries. No official model/clinical/device quality claim.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 731, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 13}.
+- Next action: Make existing leaderboard category controls wrap and retain at least 44pt targets without changing the original chalkboard artwork or suggesting unavailable worldwide rankings are configured. Add large-text selection regression scenarios.
+- Commit: containing commit for batch Bound-native-input-token-buffer-before-allocation.

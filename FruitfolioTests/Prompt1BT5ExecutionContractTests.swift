@@ -91,6 +91,33 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         XCTAssertFalse(released.resourcesLoaded)
     }
 
+    func testOversizedInputRejectsBeforeAllocatingItsTokenBufferAndCanRetry() async throws {
+        let directory = try SyntheticT5Contract.write(gated: false, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        for text in [String(repeating: "fixture ", count: 4096),
+                     String(repeating: "🧬漢字 ", count: 4096)] {
+            do { _ = try await runtime.translate(text, targetTag: "de"); XCTFail("Oversized input") }
+            catch { XCTAssertEqual(error as? FruitfolioTranslationError, .inputTooLong) }
+            let rejected = await runtime.debugExecutionStatistics()
+            XCTAssertEqual(rejected.largestTokenBuffer, 1, "Only the target-tag buffer may have been allocated")
+            XCTAssertEqual(rejected.encoderCalls, 0)
+            XCTAssertEqual(rejected.decoderCalls, 0)
+            XCTAssertEqual(rejected.checkedBlockingCalls, 1)
+            XCTAssertTrue(rejected.modelLoaded)
+            XCTAssertFalse(rejected.resourcesLoaded)
+        }
+        let result = try await runtime.translate("fixture", targetTag: "de")
+        XCTAssertEqual(result, "fixture")
+        let retried = await runtime.debugExecutionStatistics()
+        XCTAssertGreaterThan(retried.largestTokenBuffer, 1)
+        XCTAssertLessThan(retried.largestTokenBuffer, 64)
+        XCTAssertEqual(retried.encoderCalls, 1)
+        XCTAssertEqual(retried.decoderCalls, 2)
+        XCTAssertEqual(retried.mainThreadBlockingCalls, 0)
+        await runtime.releaseResources()
+    }
+
     func testModelOnlyReleaseRevalidatesChangedBytesBeforeReload() async throws {
         let directory = try SyntheticT5Contract.write(gated: false)
         defer { try? FileManager.default.removeItem(at: directory) }
