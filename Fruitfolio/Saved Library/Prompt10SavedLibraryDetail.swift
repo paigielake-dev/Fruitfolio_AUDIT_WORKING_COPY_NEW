@@ -412,7 +412,7 @@ struct Prompt10SavedPageView: View {
                     enabled: page.allowsAutomaticDisplayTranslation,
                     font: .custom("Chalkboard SE", size: 14, relativeTo: .body),
                     sourceLanguage: page.displaySourceLanguage,
-                    semanticSpans: page.displaySemanticSpans
+                    semanticSpans: page.displaySemanticSpans, sourceRecords: page.sourceRecords ?? []
                 )
                     .font(
                         .custom(

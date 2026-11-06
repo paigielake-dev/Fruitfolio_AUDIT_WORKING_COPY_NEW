@@ -947,7 +947,7 @@ struct Prompt28FruitBasketView: View {
                                     )
                                     .prompt28Text(.body)
 
-                                    FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true)
+                                    FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true, sourceRecords: question.sourceRecords ?? [])
                                         .prompt28Text(.body)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
@@ -1601,7 +1601,7 @@ struct Prompt28FruitBasketView: View {
                             .prompt28Text(.secondary)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.72))
 
-                            FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true)
+                            FruitfolioTranslatedText(source: question.explanation, protectedLiterals: question.sourceIDs, font: Prompt28TextRole.body.font, serious: true, sourceRecords: question.sourceRecords ?? [])
                                 .prompt28Text(.body)
 
                             questionSources(question)

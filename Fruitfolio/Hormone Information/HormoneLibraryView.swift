@@ -30,7 +30,7 @@ struct FruitfolioHormoneLibraryView: View {
                             if let excerpt = article.excerpts.first(where: { $0.section == section }) {
                                 Text(verbatim: excerpt.heading).font(.caption.bold())
                                 FruitfolioTranslatedText(source: excerpt.presentation, protectedLiterals: excerpt.sources.map(\.id),
-                                    font: .custom("Chalkboard SE", size: 15, relativeTo: .body))
+                                    font: .custom("Chalkboard SE", size: 15, relativeTo: .body), serious: true, sourceRecords: excerpt.sources)
                                 FruitfolioSourceCitationList(sources: excerpt.sources)
                             } else {
                                 Text("details not available in the approved library yet.").font(.callout)

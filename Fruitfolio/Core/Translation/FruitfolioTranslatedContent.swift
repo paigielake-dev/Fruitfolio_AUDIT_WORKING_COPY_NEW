@@ -5,6 +5,7 @@ import SwiftUI
 struct FruitfolioTranslatedContent<Content: View>: View {
     let source: String
     var protectedLiterals: [String] = []
+    var sourceRecords: [AskSourceRecord] = []
     var enabled = true
     var sourceLanguage = "en"
     @ViewBuilder let content: (String, String) -> Content
@@ -26,7 +27,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
         let sourceKey: Key
         let paused: Bool
     }
-    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) }
+    private var key: Key { Key(source: source, language: settings.language, protectedLiterals: FruitfolioCitationProtection.literals(ids: protectedLiterals, records: sourceRecords), enabled: enabled, sourceLanguage: sourceLanguage) }
     private var usesTranslation: Bool { enabled && settings.language.rawValue != sourceLanguage }
 
     var body: some View {
@@ -74,7 +75,7 @@ struct FruitfolioTranslatedContent<Content: View>: View {
             guard usesTranslation else { return }
             do {
                 let result = try await FruitfolioTranslationService.shared.translate(
-                    source, language: request.language, protectedLiterals: protectedLiterals,
+                    request.source, language: request.language, protectedLiterals: request.protectedLiterals,
                     sourceLanguage: request.sourceLanguage)
                 try Task.checkCancellation()
                 rendered = result
@@ -97,9 +98,10 @@ struct FruitfolioTranslatedText: View {
     var serious = false
     var sourceLanguage = "en"
     var semanticSpans: [FruitfolioSemanticSpan]?
+    var sourceRecords: [AskSourceRecord] = []
     var body: some View {
         let translationSource = semanticSpans.map(FruitfolioSemanticMarkup.markdown) ?? source
-        FruitfolioTranslatedContent(source: translationSource, protectedLiterals: protectedLiterals, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
+        FruitfolioTranslatedContent(source: translationSource, protectedLiterals: protectedLiterals, sourceRecords: sourceRecords, enabled: enabled, sourceLanguage: sourceLanguage) { display, _ in
             if let semanticSpans, display == translationSource {
                 FruitfolioSemanticText(spans: FruitfolioSemanticPolicy.normalized(semanticSpans, serious: serious), baseFont: font, color: color)
             } else {

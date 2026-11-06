@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "c6dcdd1c5af03b996191c795ce483bceeff08ec6",
+  "current_HEAD": "e32ff31b5fdfdc8a95f422b3a960a8302231ead6",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 422,
-  "current_implementation_batch": "Destination-specific-Apple-test-preflight-with-strict-release-coverage",
+  "current_requirement": 477,
+  "current_implementation_batch": "Full-bibliographic-literal-protection-and-immutable-translation-request",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,11 +493,18 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Tools/verify_apple_runtime.py",
-    "Tools/verify_prompt1b_mac.sh",
-    "development_workflow/APPLE_TEST_PREFLIGHT_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/tests/test_apple_runtime_packaging.py"
+    "Fruitfolio/Ask/Prompt09AskView.swift",
+    "Fruitfolio/Core/Translation/FruitfolioCitationProtection.swift",
+    "Fruitfolio/Core/Translation/FruitfolioTranslatedContent.swift",
+    "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderComponents.swift",
+    "Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift",
+    "Fruitfolio/Hormone Information/HormoneLibraryView.swift",
+    "Fruitfolio/Saved Library/Prompt10SavedLibraryDetail.swift",
+    "FruitfolioTests/Prompt1BCitationTranslationTests.swift",
+    "Tools/run_portable_swift_tests.py",
+    "development_workflow/CITATION_TRANSLATION_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -510,20 +517,20 @@
     "Clinical translation-quality and physical-device performance review not completed"
   ],
   "last_executed_tests": [
-    "29 Python workflow tests",
-    "bash -n Tools/verify_prompt1b_mac.sh",
-    "Actual configured simulator metadata preflight (expected missing artifact exit2)",
-    "Actual strict release preflight (expected missing artifact exit2)",
+    "Full portable Swift6 suite",
+    "Full actual native-linked Swift5 suite",
+    "Compiler syntax parse",
     "git diff --check"
   ],
   "last_test_results": {
-    "workflow": "29 passed",
-    "shell": "Syntax check passed",
-    "actual_metadata": "Both commands correctly fail: configured llama.xcframework is absent; original preserved framework simulator-only",
-    "Swift": "Unchanged since prior462 portable/467 native XCTest +21 Swift Testing passed; no redundant rerun",
-    "Apple": "NOT_RUN Xcode build/link/UI/screenshots; destination fixtures are metadata checks only"
+    "Swift6": "465 XCTest +21 Swift Testing passed",
+    "nativeSwift5": "470 XCTest +21 Swift Testing passed",
+    "syntax": "242 changed Swift files parsed; zero errors",
+    "citation": "Full APA/bare DOI/escaped citation guards tested with fixture; actual source metadata unchanged",
+    "Apple": "NOT_RUN source propagation and UI language handling",
+    "MADLAD": "Official T5 output/clinical semantic equivalence NOT_RUN; literal fidelity alone is insufficient"
   },
-  "next_exact_implementation_action": "Strengthen explicit full-citation/DOI literal protection in display translation, passing actual source records from Ask/saved/Guide/game while keeping original citations/metadata separate. Use immutable request snapshot parameters. Continue independent requirement fixes and remaining founder applicability; Apple configured framework/Xcode and official MADLAD resource gates stay explicit.",
-  "updated_at": "2026-11-06T01:49:04.319341+00:00",
+  "next_exact_implementation_action": "Continue independent source/test gaps; investigate the existing ownership check stub as an applicable founder paid-app requirement and integrate real StoreKit AppTransaction verification without adding a paywall or fake purchased state. Preserve existing architecture/data, gate Apple runtime acceptance, and keep auth/sync and official MADLAD/clinical gates explicit. Reconcile remaining founder prose requirements as work continues.",
+  "updated_at": "2026-11-06T01:54:04.036917+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md"
 }

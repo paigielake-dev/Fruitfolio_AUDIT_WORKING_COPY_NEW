@@ -1,0 +1,9 @@
+# Full bibliographic literals and immutable translation requests
+
+Display translation now derives protection from actual source records as well as citation IDs: exact original APA/source text, its semantic-escaped representation, bare DOI identifiers and source URLs remain verbatim. Ordinary source-title words/concepts are deliberately not frozen everywhere in prose. Duplicate/empty literals are removed without altering attribution spelling, case or metadata. Existing numeric/unit/reference/order checks remain.
+
+Ask's current and historical answers, saved Library pages, Guide pages/original-source viewers, Fruit Basket explanations and Hormone Library excerpts pass their actual source records into the common display wrapper. The wrapper's task key includes the resulting literals, and the service receives the captured request's source/literals/language rather than separate live property lookups. No original source record, answer, user note or measurement is rewritten.
+
+Three new portable regressions use an explicitly named text-changing fixture to verify that ordinary prose may change while complete APA author/title text and a bare DOI remain exact, escaped citation variants round-trip, duplicates stay stable, ordinary concept titles stay eligible for translation, and legacy records do not acquire invented attribution. These are protection-pipeline tests, not model/clinical equivalence tests.
+
+Verification:465 portable XCTest +21 Swift Testing passed;470 actual native-linked XCTest +21 Swift Testing passed. Compiler parsed242 changed Swift files without syntax errors. Apple display/source-record propagation and actual selected-language UI remain NOT_RUN. Official MADLAD T5 output, linguistic/clinical equivalence and offline device behavior remain blocked by missing official resources and the Apple/device gate. Literal preservation cannot prove absence of semantic/negation errors; those review gates remain open.

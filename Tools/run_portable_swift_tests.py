@@ -14,6 +14,7 @@ import subprocess
 import tempfile
 
 SOURCES = [
+    "Fruitfolio/Core/Translation/FruitfolioCitationProtection.swift",
     "Fruitfolio/Core/Translation/FruitfolioModelChecksum.swift",
     "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
     "Fruitfolio/Fruit Basket/Prompt28RulesCopy.swift",
@@ -110,6 +111,7 @@ SOURCES = [
     'Fruitfolio/Core/Translation/FruitfolioScientificQuantities.swift',
 ]
 TESTS = [
+    'Prompt1BCitationTranslationTests.swift',
     'Prompt1BSavedTranslationBoundaryTests.swift',
     'Prompt1BLanguagePreferencesTests.swift',
     'Prompt1BContactDestinationTests.swift',

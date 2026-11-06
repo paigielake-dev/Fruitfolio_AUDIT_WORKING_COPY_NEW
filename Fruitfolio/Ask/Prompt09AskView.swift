@@ -858,7 +858,7 @@ struct Prompt09AskView: View {
 
                     } else {
                         FruitfolioTranslatedContent(source: viewModel.displayedAnswerText,
-                                                     protectedLiterals: answer.sourceIDs) { display, displayLanguage in
+                                                     protectedLiterals: answer.sourceIDs, sourceRecords: answer.sources) { display, displayLanguage in
                             Prompt09MaroonSelectableAnswerText(
                                 text: display,
                                 selectedText: $viewModel.selectedExcerptText,
@@ -1103,7 +1103,7 @@ struct Prompt09AskView: View {
 
     private func historicalAnswerView(_ answer: AskAnswer) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs) { display, displayLanguage in
+            FruitfolioTranslatedContent(source: answer.answerText, protectedLiterals: answer.sourceIDs, sourceRecords: answer.sources) { display, displayLanguage in
                 Prompt09SelectableAnswerText(
                     text: display,
                     selectedText: Binding(get: { historicalSelections[answer.id] },
