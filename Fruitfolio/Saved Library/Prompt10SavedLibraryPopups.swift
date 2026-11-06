@@ -359,7 +359,8 @@ struct Prompt10RenameEncyclopediaPopup: View {
                     do {
                         try store.renameEncyclopedia(
                             id: encyclopediaID,
-                            to: title
+                            to: title,
+                            expectedName: currentName
                         )
 
 

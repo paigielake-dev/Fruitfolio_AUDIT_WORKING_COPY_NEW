@@ -80,7 +80,8 @@ final class Prompt10SavedLibraryStore {
 
     func renameEncyclopedia(
         id: UUID,
-        to rawName: String
+        to rawName: String,
+        expectedName: String? = nil
     ) throws {
         let cleanName = try Prompt10BookLabelPolicy.title(rawName)
 
@@ -90,6 +91,10 @@ final class Prompt10SavedLibraryStore {
 
         guard let index = encyclopedias.firstIndex(where: { $0.id == id }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
+        }
+
+        if let expectedName, encyclopedias[index].name != expectedName {
+            throw Prompt10LibraryError.contentChanged
         }
 
         encyclopedias[index].name = cleanName
@@ -136,7 +141,8 @@ final class Prompt10SavedLibraryStore {
     func renameChapter(
         encyclopediaID: UUID,
         chapterID: UUID,
-        to rawName: String
+        to rawName: String,
+        expectedName: String? = nil
     ) throws {
         let cleanName = rawName.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -150,6 +156,10 @@ final class Prompt10SavedLibraryStore {
 
         guard let chapterIndex = encyclopedias[encyclopediaIndex].chapters.firstIndex(where: { $0.id == chapterID }) else {
             throw Prompt10LibraryError.chapterNotFound
+        }
+
+        if let expectedName, encyclopedias[encyclopediaIndex].chapters[chapterIndex].name != expectedName {
+            throw Prompt10LibraryError.contentChanged
         }
 
         encyclopedias[encyclopediaIndex].chapters[chapterIndex].name = cleanName
@@ -396,10 +406,15 @@ final class Prompt10SavedLibraryStore {
 
     func updateEncyclopediaDescription(
         id: UUID,
-        description rawDescription: String
+        description rawDescription: String,
+        expectedDescription: String? = nil
     ) throws {
         guard let index = encyclopedias.firstIndex(where: { $0.id == id }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
+        }
+
+        if let expectedDescription, (encyclopedias[index].subtitle ?? "") != expectedDescription {
+            throw Prompt10LibraryError.contentChanged
         }
 
         let cleaned = try Prompt10BookLabelPolicy.description(rawDescription)
@@ -414,10 +429,15 @@ final class Prompt10SavedLibraryStore {
 
     func changeEncyclopediaStyle(
         id: UUID,
-        to style: Prompt10BookStyle
+        to style: Prompt10BookStyle,
+        expectedStyle: Prompt10BookStyle? = nil
     ) throws {
         guard let index = encyclopedias.firstIndex(where: { $0.id == id }) else {
             throw Prompt10LibraryError.encyclopediaNotFound
+        }
+
+        if let expectedStyle, encyclopedias[index].style != expectedStyle {
+            throw Prompt10LibraryError.contentChanged
         }
 
         encyclopedias[index].style = style

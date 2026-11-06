@@ -262,7 +262,8 @@ struct Prompt11RenameGuidePopup: View {
                     do {
                         try store.renameEncyclopedia(
                             id: encyclopediaID,
-                            to: name
+                            to: name,
+                            expectedName: currentName
                         )
                         onSaved()
                     } catch {
@@ -359,7 +360,8 @@ struct Prompt11DescriptionPopup: View {
                     do {
                         try store.updateEncyclopediaDescription(
                             id: encyclopediaID,
-                            description: guideDescription
+                            description: guideDescription,
+                            expectedDescription: currentDescription
                         )
                         onSaved()
                     } catch {
@@ -484,7 +486,8 @@ struct Prompt11ChangeCoverPopup: View {
                     do {
                         try store.changeEncyclopediaStyle(
                             id: encyclopediaID,
-                            to: style
+                            to: style,
+                            expectedStyle: currentStyle
                         )
                         onSaved()
                     } catch {
@@ -649,7 +652,8 @@ struct Prompt11SectionPopup: View {
                             try store.renameChapter(
                                 encyclopediaID: encyclopediaID,
                                 chapterID: chapterID,
-                                to: name
+                                to: name,
+                                expectedName: initialName
                             )
                         } else {
                             _ = try store.createChapter(

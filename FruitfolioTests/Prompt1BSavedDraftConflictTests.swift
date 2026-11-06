@@ -93,4 +93,75 @@ final class Prompt1BSavedDraftConflictTests: XCTestCase {
             existingPageID: page.id, expectedBaseline: currentBaseline))
         XCTAssertEqual(defaults.data(forKey: "fixture"), movedBytes)
     }
+    func testOldBookAndSectionMetadataDraftsCannotOverwriteNewerSharedEdits() async throws {
+        for field in 0..<4 {
+            let suite = "Fruitfolio.MetadataConflict." + UUID().uuidString
+            let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
+            let guide = try store.createGuideEncyclopedia(name: "QA original", subtitle: "original description", style: .sage)
+            let chapter = try store.createChapter(in: guide.id, name: "original section")
+            switch field {
+            case 0: try store.renameEncyclopedia(id: guide.id, to: "newer name")
+            case 1: try store.updateEncyclopediaDescription(id: guide.id, description: "newer description")
+            case 2: try store.changeEncyclopediaStyle(id: guide.id, to: .pink)
+            default: try store.renameChapter(encyclopediaID: guide.id, chapterID: chapter.id, to: "newer section")
+            }
+            let current = store.encyclopedias
+            let bytes = defaults.data(forKey: "fixture")
+            XCTAssertThrowsError(try {
+                switch field {
+                case 0: try store.renameEncyclopedia(id: guide.id, to: "stale name", expectedName: guide.name)
+                case 1: try store.updateEncyclopediaDescription(id: guide.id, description: "stale description", expectedDescription: guide.subtitle)
+                case 2: try store.changeEncyclopediaStyle(id: guide.id, to: .coral, expectedStyle: guide.style)
+                default: try store.renameChapter(encyclopediaID: guide.id, chapterID: chapter.id, to: "stale section", expectedName: chapter.name)
+                }
+            }()) { XCTAssertEqual($0 as? Prompt10LibraryError, .contentChanged) }
+            XCTAssertEqual(store.encyclopedias, current)
+            XCTAssertEqual(defaults.data(forKey: "fixture"), bytes)
+            XCTAssertNil(store.storageProtectionReason, "A field conflict must not poison unrelated writes")
+            XCTAssertEqual(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture").encyclopedias, current)
+        }
+    }
+
+    func testMetadataEditorsMergeOnlyTheirFieldAndRetainUnrelatedSharedContent() async throws {
+        let suite = "Fruitfolio.MetadataMerge." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
+        let guide = try store.createGuideEncyclopedia(name: "QA original", subtitle: "original description", style: .sage)
+        let chapter = try store.createChapter(in: guide.id, name: "original section")
+        let page = try store.savePage(.init(chapterID: chapter.id, question: "QA question", answer: "QA exact answer", saveType: .fullAnswer, sourceIDs: ["qa-source"]), to: guide.id, chapterID: chapter.id)
+        try store.changeEncyclopediaStyle(id: guide.id, to: .pink, expectedStyle: guide.style)
+        try store.updateEncyclopediaDescription(id: guide.id, description: "edited description", expectedDescription: guide.subtitle)
+        try store.renameEncyclopedia(id: guide.id, to: "edited name", expectedName: guide.name)
+        try store.renameChapter(encyclopediaID: guide.id, chapterID: chapter.id, to: "edited section", expectedName: chapter.name)
+        let reloaded = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
+        let current = try XCTUnwrap(reloaded.encyclopedia(id: guide.id))
+        XCTAssertEqual(current.name, "edited name")
+        XCTAssertEqual(current.subtitle, "edited description")
+        XCTAssertEqual(current.style, .pink)
+        XCTAssertEqual(current.chapters.first?.name, "edited section")
+        XCTAssertEqual(current.chapters.first?.pages, [page])
+        XCTAssertEqual(reloaded.prompt11Guides.first, current)
+        XCTAssertEqual(reloaded.sorted(by: .alphabetical).first, current)
+    }
+
+    func testEmptyDescriptionBaselineIsCheckedAndConflictCanBeExplicitlyReopened() async throws {
+        let suite = "Fruitfolio.EmptyMetadata." + UUID().uuidString
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture")
+        let guide = try store.createGuideEncyclopedia(name: "QA original", subtitle: "", style: .sage)
+        XCTAssertNil(guide.subtitle)
+        try store.updateEncyclopediaDescription(id: guide.id, description: "newer description", expectedDescription: "")
+        let bytes = defaults.data(forKey: "fixture")
+        XCTAssertThrowsError(try store.updateEncyclopediaDescription(id: guide.id, description: "stale draft", expectedDescription: "")) {
+            XCTAssertEqual($0 as? Prompt10LibraryError, .contentChanged)
+        }
+        XCTAssertEqual(defaults.data(forKey: "fixture"), bytes)
+        try store.updateEncyclopediaDescription(id: guide.id, description: "explicitly reviewed draft", expectedDescription: "newer description")
+        XCTAssertEqual(Prompt10SavedLibraryStore(defaults: defaults, persistenceKey: "fixture").encyclopedia(id: guide.id)?.subtitle, "explicitly reviewed draft")
+    }
+
 }

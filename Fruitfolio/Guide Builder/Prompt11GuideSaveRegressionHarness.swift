@@ -25,6 +25,7 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
     let initialGuideID: UUID?
     let baselineBytes: Data?
     let token = UUID().uuidString
+    private var pendingConcurrentDescription = false
     private let suite = "Fruitfolio.guideSaveUIQA." + UUID().uuidString
     init() {
         defaults = Prompt11GuideFaultDefaults(suiteName: suite)!
@@ -64,7 +65,15 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
             (defaults as? Prompt11GuideFaultDefaults)?.rejectLibraryWrites = true
         }
         (defaults as? Prompt11GuideFaultDefaults)?.libraryWriteAttempts = 0
+        pendingConcurrentDescription = scenario == "live-description"
         baselineBytes = defaults.data(forKey: Self.key)
+    }
+    func applyConcurrentDescriptionIfRequested() {
+        guard pendingConcurrentDescription, let guideID = initialGuideID else { return }
+        pendingConcurrentDescription = false
+        do {
+            try store.updateEncyclopediaDescription(id: guideID, description: "QA newer description")
+        } catch { preconditionFailure("Could not apply private concurrent Guide metadata fixture") }
     }
     deinit { UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite) }
 }
@@ -75,8 +84,12 @@ struct Prompt11GuideSaveRegressionHarness: View {
     @State private var savedStatusRequests = 0
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audio: AudioManager
+    @Environment(\.scenePhase) private var scenePhase
     var body: some View {
         Prompt11GuideBuilderView(store: fixture.store, onBack: {}, onGoToAsk: {}, initialGuideID: fixture.initialGuideID)
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .background { fixture.applyConcurrentDescriptionIfRequested() }
+            }
             .onPreferenceChange(Prompt11GuideSavedStatusRequestKey.self) { savedStatusRequests = $0 }
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading) {

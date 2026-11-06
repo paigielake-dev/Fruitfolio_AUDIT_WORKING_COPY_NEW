@@ -363,8 +363,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
     func testGuideDescriptionSaveCancelAndRejectedSavePreserveActualDataAndDraft() {
         for reduced in [false, true] {
         for rtl in [false, true] {
-        for action in ["save", "cancel", "rejected", "dropped"] {
-            let scenario = action == "rejected" ? "stale-description" : (action == "dropped" ? "dropped-description" : "description")
+        for action in ["save", "cancel", "rejected", "dropped", "conflict"] {
+            let scenario = action == "rejected" ? "stale-description" : (action == "dropped" ? "dropped-description" : (action == "conflict" ? "live-description" : "description"))
             let app = launchGuideSave(scenario, reduced: reduced, rtl: rtl)
             let options = app.buttons["guide.options.open"]
             XCTAssertTrue(options.waitForExistence(timeout: 5))
@@ -394,7 +394,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: " + draft)
                 XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: false")
             } else {
-                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+                XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: \(action == "conflict" ? "false" : "true")")
                 XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists)
                 if action == "cancel" {
                     let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: input)
@@ -403,8 +403,12 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 } else {
                     XCTAssertTrue(input.exists)
                     XCTAssertEqual(input.value as? String, draft)
-                    let protected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: true"), object: app.staticTexts["guideQA.writeProtected"])
+                    let protected = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "write protected: \(action == "conflict" ? "false" : "true")"), object: app.staticTexts["guideQA.writeProtected"])
                     XCTAssertEqual(XCTWaiter.wait(for: [protected], timeout: 3), .completed)
+                    if action == "conflict" {
+                        XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA newer description")
+                        XCTAssertEqual(app.staticTexts["guideQA.writeAttempts"].label, "library write attempts: 1", "Only the newer background edit may write")
+                    }
                     if action == "dropped" {
                         XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA original description")
                         XCTAssertEqual(app.staticTexts["guideQA.persistedCount"].label, "persisted guide count: 1")

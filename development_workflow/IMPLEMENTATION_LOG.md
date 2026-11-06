@@ -2301,3 +2301,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 767, "native_CPU_XCTest": 789, "SwiftTesting_each_run": 21, "workflow_checks": 50, "syntax_files": 311, "focused_library_tests": 12, "Apple_Guide_UI_cases_written_NOT_RUN": 40, "official_MADLAD": "BLOCKED; no official inference demonstrated"}.
 - Next action: Protect Guide metadata edits against concurrent changes within the shared live Store. Inspect existing rename/description/cover editor baselines and add expected-field checks where missing, preserving drafts on failure and unrelated metadata changes. Add real Store regressions, run supported suites, update individual checklist evidence and checkpoint locally.
 - Commit: containing commit for batch Single-acknowledged-Guide-page-selection.
+
+## Shared-Guide-metadata-field-conflicts
+
+- Parent checkpoint: 51caecd161be0c6cbebb67b37f07e41aaec93df9.
+- Source-order requirements: [203, 204, 208, 209, 453, 467, 474, 476, 477].
+- Source files: Fruitfolio/Saved Library/Prompt10SavedLibraryStore.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryModels.swift, Fruitfolio/Saved Library/Prompt10SavedLibraryPopups.swift, Fruitfolio/Guide Builder/Prompt11GuideBuilderPopups.swift, Fruitfolio/Guide Builder/Prompt11GuideSaveRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.
+- Tests added/updated: FruitfolioTests/Prompt1BSavedDraftConflictTests.swift, FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 770, "native_CPU_XCTest": 792, "SwiftTesting_each_run": 21, "workflow_checks": 50, "final_syntax_files": 311, "focused_saved_draft_conflict_tests": 6, "Apple_Guide_UI_launch_cases_written_NOT_RUN": 44, "English_catalog_keys": 803, "nonempty_foreign_units": 0, "official_MADLAD": "BLOCKED; synthetic native T5 is not official inference"}.
+- Next action: Continue Guide content/ordering preservation and required localization in original checklist scope. Check actual chapter/page reorder and readback invariants with regression coverage, then route remaining Guide fixed headings and errors through the existing semantic translation owner without translating user titles/citations as fixed copy. Record exact tests and Apple/model blockers per affected checklist entry.
+- Commit: containing commit for batch Shared-Guide-metadata-field-conflicts.

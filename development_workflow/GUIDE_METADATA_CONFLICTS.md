@@ -1,0 +1,9 @@
+# Shared Guide metadata conflict checks
+
+Guide and Library name editors, Guide description and cover editors, and section renaming now pass the opening field value to the canonical Store. The Store compares that one field before mutating. A stale field throws contentChanged without writing, changing the latest saved value or poisoning unrelated saves. Independent field changes and page/media content remain intact. Optional expected-value parameters retain compatibility with existing non-editor callers; an empty description baseline explicitly checks a nil stored description as the same displayed empty value.
+
+Three new actual Foundation cases cover all four stale metadata fields with independent persisted reload, cross-field merging while preserving exact saved page content and shared catalog projections, and empty-description conflict/reopen behavior. All six focused saved-draft-conflict tests pass. Full supported suite results are in the batch run log.
+
+Four additional Apple UI launch cases use a private real Store command on background to change the description after the actual editor opened. The intended assertions require the older draft to remain, newer persisted description to survive, no saved status, no extra write, and no storage-wide protection. All 44 Guide UI launch cases remain written but NOT_RUN. Apple typecheck, runtime lifecycle and cross-surface rendering require macOS/Xcode/device verification.
+
+The generic saved-item conflict copy now applies to book and section fields as well as pages. One English catalog key was added, preserving all 802 previous entries; there are no nonempty foreign translations. Full Swift suite source snapshots preceded this final copy-only change; the final complete Swift syntax pass includes it. This batch does not establish official MADLAD inference or whole-requirement completion.

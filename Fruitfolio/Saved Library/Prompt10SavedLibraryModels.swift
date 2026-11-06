@@ -285,7 +285,7 @@ enum Prompt10LibraryError: LocalizedError, Equatable {
         case .unsupportedStorage:
             return "your saved library has fields this version cannot safely update. readable pages remain available. the original data has been kept, and changes are paused."
         case .contentChanged:
-            return "this saved page changed while you were editing. your unsaved text is still here, and nothing was overwritten. review the current saved page before trying again."
+            return "this saved item changed while you were editing. your draft is still here, and nothing was overwritten. review the current saved item before trying again."
         case .storageChanged:
             return "your saved library changed or was cleared elsewhere. the latest saved data has been preserved. reload it before making changes."
         case .unreadableStorage:
