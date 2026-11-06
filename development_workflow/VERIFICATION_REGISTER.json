@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T19:29:57.682690+00:00",
+  "updated_at": "2026-11-06T19:38:33.769319+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -4282,6 +4282,58 @@
         ]
       },
       "timestamp": "2026-11-06T19:29:57.682690+00:00"
+    },
+    {
+      "batch": "Canonical-measurement-write-and-erase-acknowledgment",
+      "commands": [
+        "Actual focused pre-fix:9 tests/34 failed assertions; after:9 passed",
+        "Full portable/native suites: /tmp/fruitfolio-measurement-ack-{portable,native}.log",
+        "50 workflow checks with actual Swift compiler",
+        "311 Swift files parsed; Xcode project references resolve and actual SwiftSyntax sound ownership clean",
+        "All 841 old catalog entries preserved; 1 English addition, zero foreign nonempty units",
+        "git diff --check"
+      ],
+      "results": {
+        "portable_XCTest": 789,
+        "native_CPU_XCTest": 811,
+        "SwiftTesting_each_run": 21,
+        "workflow_checks": 50,
+        "syntax_files": 311,
+        "focused_hormone_persistence_XCTest": 9,
+        "prior_focused_tests": 9,
+        "prior_focused_failed_assertions": 34,
+        "prior_focused_unexpected": 0,
+        "new_fault_cases": 6,
+        "Apple_measurement_UI_launches_written_NOT_RUN": 12,
+        "Apple_Guide_UI_launches_written_NOT_RUN": 56,
+        "English_catalog_keys": 842,
+        "nonempty_foreign_units": 0,
+        "official_MADLAD": "BLOCKED; synthetic native T5 is not official inference"
+      },
+      "verification": {
+        "executed": {
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
+        },
+        "not_run": [
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
+          "56 Guide Apple UI launches",
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+        ]
+      },
+      "timestamp": "2026-11-06T19:38:33.769319+00:00"
     }
   ]
 }

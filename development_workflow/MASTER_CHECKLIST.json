@@ -12841,47 +12841,50 @@
         "Prompt1BHormoneMeasurementTests5newactualstore/save-intentregressions",
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -12915,9 +12918,10 @@
         "Prompt1BHormoneMeasurementTests5newactualstore/save-intentregressions",
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
@@ -12925,38 +12929,40 @@
         "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
         "The actual editor now uses the app-selected locale for newly typed results rather than Locale.current, keeps known report formats through later edits/language changes and offers explicit decimal-separator selection. Persistence no longer stamps unknown legacy result formats with the current locale on notes-only saves: exact original result/unit and missing provenance remain missing. Changing an unknown-format result or unit requires explicit format selection; rejected saves preserve bytes. Existing known format is retained even if a draft omits its metadata, rather than silently switching locale. Required nonnumeric metadata validation is separated so preserving an unparsed historical number does not assert its numeric interpretation. Unicode decimal-script cycle days are accepted through an exact positive integer parser; fractional/signed/separated/overflowing values reject. Three production persistence/parser regressions verify Arabic/Persian/Devanagari/fullwidth digits, malformed inputs, unchanged legacy provenance, rejected-write byte identity, explicit format confirmation, app-language changes and reload preservation. A real editor UI regression was added but NOT_RUN. Raw report values/units are never rewritten or converted.",
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -12989,47 +12995,50 @@
         "Prompt1BHormoneMeasurementTests5newactualstore/save-intentregressions",
         "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
         "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
-        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift"
+        "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
         "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
         "The actual editor now uses the app-selected locale for newly typed results rather than Locale.current, keeps known report formats through later edits/language changes and offers explicit decimal-separator selection. Persistence no longer stamps unknown legacy result formats with the current locale on notes-only saves: exact original result/unit and missing provenance remain missing. Changing an unknown-format result or unit requires explicit format selection; rejected saves preserve bytes. Existing known format is retained even if a draft omits its metadata, rather than silently switching locale. Required nonnumeric metadata validation is separated so preserving an unparsed historical number does not assert its numeric interpretation. Unicode decimal-script cycle days are accepted through an exact positive integer parser; fractional/signed/separated/overflowing values reject. Three production persistence/parser regressions verify Arabic/Persian/Devanagari/fullwidth digits, malformed inputs, unchanged legacy provenance, rejected-write byte identity, explicit format confirmation, app-language changes and reload preservation. A real editor UI regression was added but NOT_RUN. Raw report values/units are never rewritten or converted.",
         "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -13045,7 +13054,8 @@
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
         "Fruitfolio/Ask/FruitfolioAskUserContext.swift",
-        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift"
+        "Fruitfolio/Ask/FruitfolioAskContextPicker.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13060,18 +13070,51 @@
         "Prompt1BHormoneSnapshotProtectionTests",
         "Prompt1BModalAccessibilityTests.testMeasurementEditorSavesArabicDecimalCycleDayAndKeepsReportedResult",
         "Prompt1BHormoneMeasurementTests5newactualstore/save-intentregressions",
-        "Existing measurement UI save/discard/Unicode regressions NOT_RUN"
+        "Existing measurement UI save/discard/Unicode regressions NOT_RUN",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Record-specific-measurement-editor-save-conflict-protection (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
         "New hormone entries preserve the explicitly reported Gregorian civil test day and date-entry timezone; no clinical collection time or lab location is invented. History sorts reported days with deterministic same-day IDs. Existing legacy entries remain unchanged unless the user explicitly confirms a displayed day. Ask attachments disclose day-only precision and legacy uncertainty instead of transmitting a fabricated timestamp. A civil day skipped in the display timezone remains explicit and is never silently replaced. Regression tests exercise actual model persistence and Ask snapshot semantics. Apple UI behavior remains unverified.",
         "The actual measurement persistence/store now protect the captured saved baseline against later changes/clears before saves, individual deletes, exports and destructive erasure. Unknown fields detected by the shared typed-round-trip field guard keep known readable values available without permitting a lossy rewrite/export. An explicit reload reads the latest baseline without writing. Corrupt/wrong-type/duplicate-ID originals retain read-only protection. Explicit confirmed erase may remove its unchanged unreadable/unsupported baseline, but never a newer baseline. Store refresh occurs on errors as well as success, so the UI sees protection reasons instead of silently retaining an enabled state. The actual store retains real Combine observation on Apple and is now Foundation-executable without observation stubs.\n\nMeasurement UI displays a shared-style inline translated notice/reload action and pauses edit/delete/add/export for unsupported snapshots while keeping exact recorded values, units, notes and dates visible. The existing delete-all confirmation catches a protected erase failure. The specified insufficient-adjustment saved-message now appears only after a successful current-visit save, not merely because an old record exists; explicit reload/erase clears that claim. No adjusted curve, new clinical interpretation or prediction-confidence change is introduced.\n\nExisting actual-store CRUD/unit/locale/corruption tests now execute on Linux alongside existing persistence tests. New actual-store regressions prove stale save/delete/export/erase rejection, unchanged original bytes/old state, read-only reload, unknown assay-field preservation, exact de_DE result string/\u00b5IU/mL/day/notes retention and explicit baseline erasure. A fixture helper initially omitted try for the real throwing civil-date initializer; the compiler caught it and the corrected tests use the actual constructor. No date bypass is used.\n\nThe two existing native confirmation dialogs in measurement deletion/editor discard remain a concrete Part1 source gap; replace them next with owned measured white-paper requests and local sheet host. Current Apple publisher, view/notice/saved-message behavior, accessibility, screenshots and device tests remain NOT_RUN.",
         "The actual editor now uses the app-selected locale for newly typed results rather than Locale.current, keeps known report formats through later edits/language changes and offers explicit decimal-separator selection. Persistence no longer stamps unknown legacy result formats with the current locale on notes-only saves: exact original result/unit and missing provenance remain missing. Changing an unknown-format result or unit requires explicit format selection; rejected saves preserve bytes. Existing known format is retained even if a draft omits its metadata, rather than silently switching locale. Required nonnumeric metadata validation is separated so preserving an unparsed historical number does not assert its numeric interpretation. Unicode decimal-script cycle days are accepted through an exact positive integer parser; fractional/signed/separated/overflowing values reject. Three production persistence/parser regressions verify Arabic/Persian/Devanagari/fullwidth digits, malformed inputs, unchanged legacy provenance, rejected-write byte identity, explicit format confirmation, app-language changes and reload preservation. A real editor UI regression was added but NOT_RUN. Raw report values/units are never rewritten or converted.",
-        "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs."
+        "The actual measurement editor now carries a frozen create/edit intent captured at the Add/Edit action, instead of inferring whether a record is new from the changing store when a sheet redraws. Actual persistence checks candidate identity and current saved record before applying an edit; new writes require their allocated ID to be absent. A stale same-store update, deleted target, differently recreated target, mismatched ID or repeated creation is rejected before any persistence mutation. Unrelated measurements can change independently and remain preserved. Existing outside-writer and unknown-schema guards still run first. Editor original/intent are State snapshots, preventing parent publications from silently rebasing an old draft. Conflicts retain the draft and report an explicit recovery message; form errors use the existing protected translation pipeline and guarded accessibility focus after layout without stealing another popup focus. Exact result/unit/locale/date metadata and independent records remain unchanged. Five new actual-store regressions verify rejected-write bytes/revisions, creation replay/identity, deleted/recreated targets, independent edits/metadata/reload and outside writer followed by explicit reload/current-baseline recovery. Final585 portable XCTest+21 SwiftTesting and591 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and279 syntax parses passed. Apple sheet redraws, focus/keyboard/draft UI and SDK typechecking remain NOT_RUN. Record equality is a current-content snapshot check, not a claim to detect a historical delete/recreate that restores every identical field; normal new records use distinct UUIDs.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T06:32:24.075047+00:00"
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
+      "latest_batch_verification": {
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
+        "executed": {
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
+        },
+        "not_run": [
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
+          "56 Guide Apple UI launches",
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+      ]
     },
     {
       "sequence": 252,
@@ -13092,7 +13135,8 @@
         "Fruitfolio/Fruit Popup Engine/FruitPopupHost.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementDeletionIntent.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurementRegressionHarness.swift",
-        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift"
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13109,18 +13153,51 @@
         "Prompt1BOwnedConfirmationTests",
         "Prompt1BModalAccessibilityTests.testMeasurementDeletionUsesOneSharedPaperWithCancelAndConfirmedDelete (Apple NOT_RUN)",
         "Prompt1BModalAccessibilityTests.testMeasurementEditorNativeSheetHostsDirtyDraftPaperWithoutSavingDiscardedText (Apple NOT_RUN)",
-        "Prompt1BModalAccessibilityTests.testMeasurementFutureRecordNoticeKeepsExactReadableValue (Apple NOT_RUN)"
+        "Prompt1BModalAccessibilityTests.testMeasurementFutureRecordNoticeKeepsExactReadableValue (Apple NOT_RUN)",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Owned-measurement-white-paper-confirmations-and-canonical-shared-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
         "The actual measurement persistence/store now protect the captured saved baseline against later changes/clears before saves, individual deletes, exports and destructive erasure. Unknown fields detected by the shared typed-round-trip field guard keep known readable values available without permitting a lossy rewrite/export. An explicit reload reads the latest baseline without writing. Corrupt/wrong-type/duplicate-ID originals retain read-only protection. Explicit confirmed erase may remove its unchanged unreadable/unsupported baseline, but never a newer baseline. Store refresh occurs on errors as well as success, so the UI sees protection reasons instead of silently retaining an enabled state. The actual store retains real Combine observation on Apple and is now Foundation-executable without observation stubs.\n\nMeasurement UI displays a shared-style inline translated notice/reload action and pauses edit/delete/add/export for unsupported snapshots while keeping exact recorded values, units, notes and dates visible. The existing delete-all confirmation catches a protected erase failure. The specified insufficient-adjustment saved-message now appears only after a successful current-visit save, not merely because an old record exists; explicit reload/erase clears that claim. No adjusted curve, new clinical interpretation or prediction-confidence change is introduced.\n\nExisting actual-store CRUD/unit/locale/corruption tests now execute on Linux alongside existing persistence tests. New actual-store regressions prove stale save/delete/export/erase rejection, unchanged original bytes/old state, read-only reload, unknown assay-field preservation, exact de_DE result string/\u00b5IU/mL/day/notes retention and explicit baseline erasure. A fixture helper initially omitted try for the real throwing civil-date initializer; the compiler caught it and the corrected tests use the actual constructor. No date bypass is used.\n\nThe two existing native confirmation dialogs in measurement deletion/editor discard remain a concrete Part1 source gap; replace them next with owned measured white-paper requests and local sheet host. Current Apple publisher, view/notice/saved-message behavior, accessibility, screenshots and device tests remain NOT_RUN.",
-        "Replaced the two remaining native measurement confirmation dialogs (one/all deletion and dirty-editor discard) with owned shared taped-white requests. The existing editor native sheet now has its own PresentedPopupHost above the sheet, preventing presentation behind it/double root hosts. Shared canonical blur/dim/hit/VoiceOver exclusion and Reduce Motion govern these requests. Shared paper actions now use the canonical control pill and its single soft-pop owner rather than plain raw buttons/manual cue calls. Paper message focus is requested after mounting and guarded by the current request identity/cancellation; translation disclosure/retry controls remain separate accessible children.\n\nThe actual Foundation FruitfolioOwnedPopupSession owns one queued/current request, cancels only that request on departure, ignores queued/old/replaced/dismissing actions, and keeps the first confirmation through rapid repeated presses. Its closing identity remains owned until real dismissal finishes, avoiding the deduplication race that could otherwise drop a replacement. Escape is cancellation and cannot turn into confirmation. Measurement UI restores focus only after the shared host is empty, choosing a surviving control/reload rather than a deleted row. Dirty-editor Keep/Escape retains draft text; explicit discard waits for the actual shared dismissal before closing its sheet. Text-field keyboard focus is released locally before requesting discard; no global keyboard action or extra timer is used.\n\nDeletion intents contain only the target UUID/scope and an opaque in-memory saved revision. The actual persistence changes that revision on saves, reloads and erasure. A changed same-store record/reload invalidates an old confirmation; a separate writer still trips the exact saved-baseline guard. Successful deletion changes the revision, so replay fails. Missing targets do not become false success. No laboratory values are copied into popup ownership metadata or stored as analytics.\n\nSix new actual-core regressions execute ownership/queue cancellation, single-use/Escape, repeated presentation through dismissal, priority replacement, same-store revision/replay and reload/external-writer preservation. New DEBUG measurement fixtures use only a private suite and inject the actual store into the actual existing screen. Three Apple UI regressions cover delete/cancel/confirm at large text with normal/Reduce Motion, dirty draft Keep/discard inside the native sheet, and readable original values under an unsupported future record. Those UI tests, real VoiceOver focus order, screenshots, native-sheet interaction and sound/listening acceptance remain NOT_RUN on Linux.\n\nAvailable verification:540 portable XCTest +21 Swift Testing and545 native-linked XCTest +21 Swift Testing passed;35 workflow tests passed with all6 actual SwiftSyntax cases. All app Swift sources pass the bounded canonical immediate-cue ownership checker with zero findings. Compiler syntax parsed271 changed Swift files; Xcode project references resolve. These do not constitute an Apple build or device acceptance. The portable harness initially omitted its two new production sources; the resulting compile failure was corrected by adding the exact files, not substitutes."
+        "Replaced the two remaining native measurement confirmation dialogs (one/all deletion and dirty-editor discard) with owned shared taped-white requests. The existing editor native sheet now has its own PresentedPopupHost above the sheet, preventing presentation behind it/double root hosts. Shared canonical blur/dim/hit/VoiceOver exclusion and Reduce Motion govern these requests. Shared paper actions now use the canonical control pill and its single soft-pop owner rather than plain raw buttons/manual cue calls. Paper message focus is requested after mounting and guarded by the current request identity/cancellation; translation disclosure/retry controls remain separate accessible children.\n\nThe actual Foundation FruitfolioOwnedPopupSession owns one queued/current request, cancels only that request on departure, ignores queued/old/replaced/dismissing actions, and keeps the first confirmation through rapid repeated presses. Its closing identity remains owned until real dismissal finishes, avoiding the deduplication race that could otherwise drop a replacement. Escape is cancellation and cannot turn into confirmation. Measurement UI restores focus only after the shared host is empty, choosing a surviving control/reload rather than a deleted row. Dirty-editor Keep/Escape retains draft text; explicit discard waits for the actual shared dismissal before closing its sheet. Text-field keyboard focus is released locally before requesting discard; no global keyboard action or extra timer is used.\n\nDeletion intents contain only the target UUID/scope and an opaque in-memory saved revision. The actual persistence changes that revision on saves, reloads and erasure. A changed same-store record/reload invalidates an old confirmation; a separate writer still trips the exact saved-baseline guard. Successful deletion changes the revision, so replay fails. Missing targets do not become false success. No laboratory values are copied into popup ownership metadata or stored as analytics.\n\nSix new actual-core regressions execute ownership/queue cancellation, single-use/Escape, repeated presentation through dismissal, priority replacement, same-store revision/replay and reload/external-writer preservation. New DEBUG measurement fixtures use only a private suite and inject the actual store into the actual existing screen. Three Apple UI regressions cover delete/cancel/confirm at large text with normal/Reduce Motion, dirty draft Keep/discard inside the native sheet, and readable original values under an unsupported future record. Those UI tests, real VoiceOver focus order, screenshots, native-sheet interaction and sound/listening acceptance remain NOT_RUN on Linux.\n\nAvailable verification:540 portable XCTest +21 Swift Testing and545 native-linked XCTest +21 Swift Testing passed;35 workflow tests passed with all6 actual SwiftSyntax cases. All app Swift sources pass the bounded canonical immediate-cue ownership checker with zero findings. Compiler syntax parsed271 changed Swift files; Xcode project references resolve. These do not constitute an Apple build or device acceptance. The portable harness initially omitted its two new production sources; the resulting compile failure was corrected by adding the exact files, not substitutes.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T04:10:18.285575+00:00"
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
+      "latest_batch_verification": {
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
+        "executed": {
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
+        },
+        "not_run": [
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
+          "56 Guide Apple UI launches",
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+      ]
     },
     {
       "sequence": 253,
@@ -13591,7 +13668,8 @@
         "Fruitfolio/Introduction/Prompt04IntroView.swift",
         "Fruitfolio/Saved Library/Prompt10ImagePreparation.swift",
         "Fruitfolio/Hormone Information/HormoneMeasurement.swift",
-        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift"
+        "Fruitfolio/Hormone Information/HormoneMeasurementPersistence.swift",
+        "Fruitfolio/Localizable.xcstrings"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13604,17 +13682,50 @@
         "Prompt1BHormonePersistenceTests",
         "Prompt1BHormoneValidationTests",
         "Prompt1BHormoneMeasurementTests (actual store now Foundation-executable)",
-        "Prompt1BHormoneSnapshotProtectionTests"
+        "Prompt1BHormoneSnapshotProtectionTests",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Exact-measurement-snapshot-protection-and-truthful-save-feedback (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added optional My Context -> Hormone Information with seven specified hormones and controlled Other, required/optional fields, decimal validation, exact result/unit preservation, local chronological/filterable history, edit/delete confirmation and unsaved-edit protection. Corrupt storage is retained and cannot be silently overwritten. Measurements are separate from Ask, predictions and educational curves; insufficient-method explanation is shown instead of inventing calibration. Educational Hormone Library, full localization and richer device accessibility verification remain unfinished.",
         "Measurement history now offers explicit JSON file export and confirmed local erasure, scoped only to its own records. Corrupt records can be erased only through the explicit confirmation path. Added existing estrogen artwork beside the header, hidden from accessibility. No automatic sharing, unit conversion or prediction linkage added.",
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Extracted the actual hormone local storage implementation for Foundation regression coverage and kept its ObservableObject API. Wrong-type, malformed and duplicate-ID records are preserved read-only until explicitly erased; saves encode before publishing, repeated IDs edit in place, exports and deletion are exercised across restart. Regression found Scanner.scanDecimal ignores decimal-comma locale on this runtime. Full-string validation now supports locale-specific separators and decimal digits, leading fractions and scientific notation while preserving original result/unit text. Optional result-entry locale prevents reinterpreting new records after device-language changes; legacy data is not guessed or rewritten. No Ask sharing, diagnostic interpretation, adjusted curves or prediction confidence changes introduced. UserDefaults flush durability, Apple editing/Photos/VoiceOver runtime and legacy missing-locale ambiguity remain unverified.",
-        "The actual measurement persistence/store now protect the captured saved baseline against later changes/clears before saves, individual deletes, exports and destructive erasure. Unknown fields detected by the shared typed-round-trip field guard keep known readable values available without permitting a lossy rewrite/export. An explicit reload reads the latest baseline without writing. Corrupt/wrong-type/duplicate-ID originals retain read-only protection. Explicit confirmed erase may remove its unchanged unreadable/unsupported baseline, but never a newer baseline. Store refresh occurs on errors as well as success, so the UI sees protection reasons instead of silently retaining an enabled state. The actual store retains real Combine observation on Apple and is now Foundation-executable without observation stubs.\n\nMeasurement UI displays a shared-style inline translated notice/reload action and pauses edit/delete/add/export for unsupported snapshots while keeping exact recorded values, units, notes and dates visible. The existing delete-all confirmation catches a protected erase failure. The specified insufficient-adjustment saved-message now appears only after a successful current-visit save, not merely because an old record exists; explicit reload/erase clears that claim. No adjusted curve, new clinical interpretation or prediction-confidence change is introduced.\n\nExisting actual-store CRUD/unit/locale/corruption tests now execute on Linux alongside existing persistence tests. New actual-store regressions prove stale save/delete/export/erase rejection, unchanged original bytes/old state, read-only reload, unknown assay-field preservation, exact de_DE result string/\u00b5IU/mL/day/notes retention and explicit baseline erasure. A fixture helper initially omitted try for the real throwing civil-date initializer; the compiler caught it and the corrected tests use the actual constructor. No date bypass is used.\n\nThe two existing native confirmation dialogs in measurement deletion/editor discard remain a concrete Part1 source gap; replace them next with owned measured white-paper requests and local sheet host. Current Apple publisher, view/notice/saved-message behavior, accessibility, screenshots and device tests remain NOT_RUN."
+        "The actual measurement persistence/store now protect the captured saved baseline against later changes/clears before saves, individual deletes, exports and destructive erasure. Unknown fields detected by the shared typed-round-trip field guard keep known readable values available without permitting a lossy rewrite/export. An explicit reload reads the latest baseline without writing. Corrupt/wrong-type/duplicate-ID originals retain read-only protection. Explicit confirmed erase may remove its unchanged unreadable/unsupported baseline, but never a newer baseline. Store refresh occurs on errors as well as success, so the UI sees protection reasons instead of silently retaining an enabled state. The actual store retains real Combine observation on Apple and is now Foundation-executable without observation stubs.\n\nMeasurement UI displays a shared-style inline translated notice/reload action and pauses edit/delete/add/export for unsupported snapshots while keeping exact recorded values, units, notes and dates visible. The existing delete-all confirmation catches a protected erase failure. The specified insufficient-adjustment saved-message now appears only after a successful current-visit save, not merely because an old record exists; explicit reload/erase clears that claim. No adjusted curve, new clinical interpretation or prediction-confidence change is introduced.\n\nExisting actual-store CRUD/unit/locale/corruption tests now execute on Linux alongside existing persistence tests. New actual-store regressions prove stale save/delete/export/erase rejection, unchanged original bytes/old state, read-only reload, unknown assay-field preservation, exact de_DE result string/\u00b5IU/mL/day/notes retention and explicit baseline erasure. A fixture helper initially omitted try for the real throwing civil-date initializer; the compiler caught it and the corrected tests use the actual constructor. No date bypass is used.\n\nThe two existing native confirmation dialogs in measurement deletion/editor discard remain a concrete Part1 source gap; replace them next with owned measured white-paper requests and local sheet host. Current Apple publisher, view/notice/saved-message behavior, accessibility, screenshots and device tests remain NOT_RUN.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T03:58:34.882485+00:00"
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
+      "latest_batch_verification": {
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
+        "executed": {
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
+          "SwiftTesting": "21 passed per run",
+          "workflow": "50 passed",
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
+        },
+        "not_run": [
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
+          "56 Guide Apple UI launches",
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
+        ],
+        "remaining": [
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+        ],
+        "scope": "Evidence for this batch only; does not certify the entire original requirement."
+      },
+      "remaining_verification_requirements": [
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
+      ]
     },
     {
       "sequence": 266,
@@ -21508,9 +21619,10 @@
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -21531,38 +21643,40 @@
         "The actual temperature validator and recorded-value constructor now share one finite decimal parser. Unicode decimal digits normalize for parsing only, retaining the existing point/comma decimal meaning and supporting Arabic/fullwidth decimal separators. Draft text is unchanged; malformed/mixed separators, grouping marks, fractions, hexadecimal and nonfinite values reject, and existing broad typo bounds remain unchanged. Actual tests exercise Arabic/Persian/Devanagari/fullwidth/Thai/Bengali inputs and real view-model/file saves/reloads while preserving numerical values, chosen units and unknown reading type. The existing Double schema still does not retain original numeric script/trailing-zero formatting across reopening; that is not reconstructed or claimed. Daily-log date labels now use the actual app locale and the captured Gregorian civil day/timezone rather than hardcoded en_US_POSIX plus a potentially different-era calendar. English lowercase styling remains; other languages retain native capitalization/order. A skipped day keeps its exact ISO label instead of becoming a different date. Tests verify English/French/German labels, Arabic/Thai/Japanese Gregorian year stability under non-Gregorian calendars/timezone, and the Samoa skipped-day fallback. Four new production-source regressions pass with the complete suites:615 portable XCTest+21 SwiftTesting,621 actual native-linked XCTest+21 SwiftTesting,40 workflow tests and280 syntax parses. Apple rendering/bidi/keyboard/VO/DT and complete catalog/T5 localization remain NOT_RUN or externally blocked; no official MADLAD output is claimed.",
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -21649,9 +21763,10 @@
         "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Implemented a local serialized T5 path using llama_encode, decoder-start token and autoregressive llama_decode, deterministic sampling, cancellation, UTF-8 decoding and truncation rejection. Manifests require official checkpoint identity/revision, SHA-256 GGUF integrity and actual language-tag membership plus tokenizer round-trip checks. Shared process backend ownership prevents one model from freeing another's backend. Scientific placeholders reject lost/reordered tokens or added numerical claims. Runtime has not compiled or executed: official model access is denied by proxy and draft network edit was rejected as uneditable. No unsupported language or inference success is claimed.",
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
@@ -21668,38 +21783,40 @@
         "Existing correct/incorrect feedback and catch instructions/legend use shared display translation with original copy, serious-tone choice and explicit source protection. Domain questions, literal choices, scoring and metadata unchanged. Sixteen synthetic Apple UI launch cases added for correct/incorrect, serious, English/Arabic fallback and motion; unrun. Four English-only keys preserve all 677 prior entries.",
         "Fixed statistic labels use shared control translation, integers/fractions/signed scores use display-only Foundation locale formatting and never enter inference. Failure copy preserves serious/story choice; serious retry omits heart. Ending fruit is an explicit whole-name semantic anchor within a full sentence. Two Foundation formatting regressions across all locales and integer limits pass; eight Apple UI ledger/readback/retry scenarios added but unrun. Real QA model/store are observed. Twenty-seven English-only keys preserve 681 prior entries.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -21800,9 +21917,10 @@
         "FruitfolioTests/Prompt1BRoundLedgerTests.swift",
         "FruitfolioTests/Prompt1BSettingsLanguageTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Added display-only, language-reactive translation to completed/current and historical Ask answers, app-generated saved pages and guide reading. Original source/provenance and user notes/measurements remain unchanged; failures visibly retain original text. Selection badge identity includes display language. Shared action labels now resolve catalog keys. Added a local F16-to-Q4_K_M conversion script and a manifest packager deriving coverage solely from GGUF tokenizer tags. Pipeline has not converted or inferred with real weights because model retrieval is blocked. Static translations, clinical quality, long-input chunking beyond paragraphs and physical-device acceptance remain incomplete.",
         "Native selection now captures exact semantic spans and actual rendered language, including when unavailable translation falls back to the English original. Optional backward-compatible page fields preserve excerpt style, language and occurrence through save/reopen/guide references. Fixed the destination's answer-only duplicate guard, which previously blocked every second excerpt from an answer; de-duplication now distinguishes full answers, exact known occurrences, text and language. Legacy unknown occurrences are not guessed. Display translation can target English from a non-English saved excerpt without overwriting the stored original. Translated structured emphasis still needs annotation round-trip work; Apple UI selection integration remains unrun.",
@@ -21827,38 +21945,40 @@
         "Shared original-source disclosure and memory-retry use canonical compact wrapping cue/motion-owned pills, explicit show/hide and selected state. Saved/source/origin data preserved. Genuine temporary nonclinical catalog fixture resolves protected markup through production service while inference paused; default bundle remains main and bundle path joins request key. Eight Apple size/RTL/mute/motion UI scenarios added but unrun. Two English-only keys preserve 708 prior entries.",
         "Preserved all ten actual title/body pairs and page-five demo in one ordered Foundation catalog, with actual source-copy comparison receipt. Title/body use shared translation; locale-formatted counter never enters inference. Canonical skip preserves existing skip-to-rules/completion behavior. Eight Apple full-progression/skip/Arabic fallback/motion UI cases added but unrun. Twenty-one English-only keys preserve all 710 prior catalog entries.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -24523,9 +24643,10 @@
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
         "Restored and SHA-verified the actual 491 MB Ask GGUF, built vendored CPU runtime outside the checkout, and executed local load/generation successfully. MADLAD's real Swift/C API path typechecks against supplied headers. Corrected absolute/stale Xcode references and added reproducible static device/simulator XCFramework packaging plus metadata preflight. Existing framework is simulator-only; actual Apple build/link remains blocked. Portable source isolation also includes Foundation semantic slice models/tests for the next streaming integration batch. In-progress Ask UI/view-model streaming changes remain uncommitted for the immediately following batch; recovery must preserve them.",
@@ -24583,38 +24704,40 @@
         "Short fixed Guide copy now uses the existing label translation-state owner through a compact semantic view with provenance and no long-form action buttons. Scientific source bodies retain citation-aware long-form owner. Save card retains original Strawberry/large-card artwork, translates saved! underneath, bounds scroll to writing area and expands only for accessibility/other language. Read time becomes four seconds for those cases. Two new geometry tests pass; four additional paused-French/source-fallback Apple UI cases and bounds assertions are written but NOT_RUN.",
         "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -25215,9 +25338,10 @@
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
         "FruitfolioTests/Prompt1BControlTranslationStateTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "# Actual Fruit Basket UI scenarios and capture source\n\nA DEBUG-only route now presents the production Fruit Basket view/controller inside the real root environment. Deterministic nonclinical fixtures expose good-fruit classification, a standalone star, storm note, seven-fruit failure, ten-fruit success, rules and leaderboard. Actual entry/settlement, engine, round ledger and finalization produce the result states. No fake medical material or results enter production research.\n\nGame progress, username and even the reveal save destination use the same disposable QA-owned defaults suite; the normal route keeps the existing shared authorities. An owned StateObject fixture holds suite lifetime consistently through root redraws. It requests cleanup on disappearance; OS termination cannot guarantee disappearance delivery, so leftover QA suites may remain isolated under the random QA prefix. No fixture is written to the user's normal library.\n\nClassification now exposes actual fruit/target/pass progress as readable text and a stable accessibility target. Its fruit description announces whether the visible attached star marker is present, preserving equivalence with the visual cue without confusing it with a standalone protection star. Stable catch/pass/result identifiers support actual UI assertions. Unsuccessful sensitive-education rounds now use neutral feedback/no Peach face and no playful point-loss line; ordinary founder copy remains.\n\nFour added Apple UI test methods exercise actual classification awards, exact failed/successful result counts, storm modal exclusion/acknowledgment, and portrait/landscape rules/leaderboard capture at accessibility XXXL, with motion settings covered. Actual screenshot attachments are generated only when those tests run and are kept in the xcresult. No screenshots have been fabricated or claimed here. Badge visibility, alpha registration, artwork placement, VoiceOver focus and device feel still require rendered inspection.\n\nAvailable verification:462 portable XCTest +21 Swift Testing passed;467 actual native-linked XCTest +21 Swift Testing passed, including the updated serious feedback assertion. Twenty-four workflow tests pass. Compiler parsed240 changed Swift files with zero errors. Xcode project build-file references parse/resolve. ALL added Apple UI/capture routes remain NOT_RUN on Linux; parser/reference checks are not app typechecking, linking or runtime acceptance.\n",
@@ -25271,38 +25395,40 @@
         "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -25864,9 +25990,10 @@
         "FruitfolioTests/Prompt1BLibraryPersistenceTests.swift",
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "# Shared saved display policy and immutable stored content\n\nLibrary, Guide pages and the Guide original-source viewer now share the saved page's translation eligibility, source language and semantic-span policy. User-authored material is never automatically translated, including an inconsistent legacy record that also contains an original-answer identity. Unattributed pages remain original. Full answers consistently use original English and ignore stale excerpt-language/span metadata; actual saved excerpts retain their recorded display language.\n\nA saved excerpt's semantic spans are used only when their complete plain text exactly matches its actual saved excerpt. Stale/different semantic metadata cannot replace the user's actual saved words, and user-authored material cannot acquire this source-excerpt styling. Mismatched metadata is retained unchanged in storage and simply not used for display. This is a display policy, not a source-data migration or guessed historical language correction.\n\nFour new source regressions exercise full-answer versus excerpt behavior, conflicting user provenance, stale semantic refusal and the actual UserDefaults saved-library persistence boundary. The last test uses an explicitly named translation fixture that changes ordinary prose while retaining protected units/citations; switching Spanish, Arabic, Quechua and English leaves the exact persisted document bytes, original answer, user note, citation records and per-source versions unchanged after reinitialization. This is not proof of actual MT quality. Existing actual Ask rendering already waits until validated answer/typewriter completion before starting display translation; the targeted check found that guard and does not replace it.\n\nFinal full suites:462 XCTest +21 Swift Testing portable;467 XCTest +21 Swift Testing with real native libraries, including unchanged genuine native release/reload generation. Compiler parsed239 changed Swift files with zero syntax errors. Apple source-view layout/VoiceOver/selection and language-switch runtime remain NOT_RUN. Actual official MADLAD T5 offline output and clinical/per-language acceptance are still blocked by missing official resources and the Apple/device gate.\n",
         "# Real optional StoreKit app-transaction adapter\n\nThe existing ownership check now calls StoreKit AppTransaction.shared and accepts only a verified app transaction matching this app's bundle identifier. Production and sandbox/Xcode test installations are distinct; unknown environments, invalid signatures/wrong apps, unavailable records and platform errors do not become verified production status. Test installations have an explicit test-only display state. No IAP product, purchase dialog, subscription, backend receipt upload, account prerequisite or second paywall is added. Existing installed paid-app access/default policy and canonical design price are preserved; app-transaction validation does not independently establish an actual charged amount.\n\nThe actual observable store owns/coalesces the task, recovers a persisted interrupted `validating` state as unavailable, and suppresses canceled/reset/late results. Unreadable original account/settings bytes are preserved when checking ownership. A sequential raw-byte fingerprint prevents the asynchronous completion from resurrecting a cleared record or overwriting a newer writer. It is not a cross-process atomic transaction or a general migration of the existing account persistence implementation. The legacy markPurchasedForInstalledApp entry point now invokes verification instead of creating a new unverified record.\n\nThree portable tests execute the production record policy and actual Linux unavailable adapter. Three additional actual-store/continuation tests exercise coalescing, test-state persistence, corrupt/cleared/newer-record preservation and reset cancellation; these are Apple/Combine-only and NOT_RUN here. The production StoreKit API branch itself also requires Apple SDK compilation and signed receipt/sandbox/device execution; none is claimed verified by Linux tests. No real receipt was fabricated or used by a fixture.\n\nAvailable verification:468 portable XCTest +21 Swift Testing passed;473 actual native-linked XCTest +21 Swift Testing passed;246 changed Swift files compiler-parsed without syntax errors. Actual Foundation ownership models now compile in those portable targets. Auth/cloud sync still have no configured service. StoreKit is now source-integrated and awaits Apple API/transaction verification, rather than an authentication backend.\n",
@@ -25915,38 +26042,40 @@
         "Actual Guide/Library metadata editors now pass opening name, description, cover or section name to canonical Store field guards. Stale saves preserve latest memory/bytes and draft; unrelated fields remain mergeable. Three new Foundation cases cover four field conflicts, unrelated edits/source preservation, empty description and explicit reopen. Four additional real-Store background-conflict Apple UI cases are written but not executed. Generic conflict wording includes metadata; one English key added preserving 802 existing entries.",
         "All three actual Guide move commands return whether canonical content changed; no-op, out-of-range and overflowing offsets do not write. Saved status/page-turn require acknowledged change. Actual selected Guide workspace now displays shared storage-protection/reload notice instead of silently ignoring reorder failures. Three actual Foundation cases cover complete persisted ordering/content and dropped-write restoration; eight actual-control Apple UI launches written but NOT_RUN.",
         "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -26263,9 +26392,10 @@
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26342,38 +26472,40 @@
         "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {
@@ -26675,9 +26807,10 @@
         "FruitfolioTests/Prompt1BSavedDraftConflictTests.swift",
         "FruitfolioTests/Prompt1BPopupLayoutTests.swift",
         "FruitfolioTests/Prompt1BAudioSettingsTests.swift",
-        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift"
+        "FruitfolioTests/Prompt1BHormoneMeasurementTests.swift",
+        "FruitfolioTests/Prompt1BHormonePersistenceTests.swift"
       ],
-      "commit_reference": "batch:Recognized-hormone-report-format-without-guessed-separators (resolve containing commit with git log)",
+      "commit_reference": "batch:Canonical-measurement-write-and-erase-acknowledgment (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "During integration review, added missing bottom-left control_next skip control with caption and accessible 44-point action. Skipping cancels old sequence generations and completes at most once; disappearing intro views cancel remaining progression. Unified measurement delete/all-delete presentation to avoid competing confirmation dialogs, and made Core Foundation image-output bridging explicit. No build/runtime pass is inferred from syntax checks.",
         "Installed official Swift 6.2.1 after checking its detached signature with the Swift project's published release key (fingerprint 52BB7E3DE28A71BE22EC05FFEF80A866B47A981F). Isolated existing Foundation model/policy declarations without changing their type names or data keys. Portable runner compiles exact production source copies with existing/new XCTest and Swift Testing suites. Initial harness missing-source/cache issues and an ambiguous CGFloat.infinity test literal were diagnosed and fixed. Portable algorithms now compile and tests execute; Apple UI/framework/model inference remains unrun.",
@@ -26788,38 +26921,40 @@
         "Actual audio observers reconcile after @Published stores preferences. All four volume sinks use current finite gated policy, music/rain/effects enables honor global mute, and all disabled loop categories pause while retaining logical requests. Two portable actual-settings tests cover finite volume/gates/persistence. Three real Combine/AVAudioPlayer regressions are written; all seven Apple audio unit cases NOT_RUN. No resources or preference keys changed.",
         "15 actual native input prompts use one existing label-state owner per field while forwarding unchanged original bindings/axes and external native modifiers. User-entered values are not translation sources or outputs. Seven English keys added, all 815 old entries preserved. Private measurement fixture now survives appearance changes; existing Arabic cycle-day UI test extends to English/paused-French with exact result/unit assertions. All Apple cases remain NOT_RUN.",
         "Immutable compact label key now includes caller-protected literals, preventing changed protection from reusing accepted output. Controlled hormone labels use the existing owner and explicit E2/LH/FSH/AMH literals in filter/editor/fixed record/library picker; custom names and lab metadata stay verbatim. Two new ownership/literal-rejection Foundation cases pass; protected temporary DNA catalog acceptance also checked. Twelve English additions preserve 822 old entries. Ten measurement/56 Guide Apple UI launches NOT_RUN; clinical meaning and official MADLAD not established.",
-        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run."
+        "Only recognized platform report formats and supported normalized regional aliases may interpret results; stored identifiers/values stay exact. Unknown legacy format allows metadata-only edits while retaining original result/unit/marker; changed result/unit/opaque marker requires explicit recognized format. Actual pre-fix 16 tests/30 failures (two unexpected) become 16 passed. Picker no longer displays a guessed period and protects numeric examples. Seven English additions preserve 834 old entries; two new Apple UI launches written, not run.",
+        "Canonical measurements advance records/bytes/revision only after exact Data readback; confirmed erasure must read absent. Dropped or replaced writes/removals retain last acknowledged memory/revision, never roll back foreign bytes, and block mutation/repeated erasure until reload. Actual pre-fix 9 tests/34 failed assertions become 9 passed; six new fault cases include actual Store refresh. One truthful English key added preserving 841 entries. API acknowledgment is not crash durability/CAS."
       ],
-      "last_updated": "2026-11-06T19:29:57.682690+00:00",
+      "last_updated": "2026-11-06T19:38:33.769319+00:00",
       "latest_batch_verification": {
-        "batch": "Recognized-hormone-report-format-without-guessed-separators",
+        "batch": "Canonical-measurement-write-and-erase-acknowledgment",
         "executed": {
-          "hormone_measurement": "16 passed after real 30-failure reproduction; no invented test red state",
-          "portable_XCTest": "783 passed",
-          "native_CPU_XCTest": "805 passed; synthetic T5 is not official MADLAD",
+          "measurement_persistence": "9 passed, including six new actual UserDefaults/Store fault cases after 34-assertion reproduction",
+          "portable_XCTest": "789 passed",
+          "native_CPU_XCTest": "811 passed; synthetic T5 is not official MADLAD",
           "SwiftTesting": "21 passed per run",
           "workflow": "50 passed",
-          "source_checks": "311 syntax parsed; project references resolve, SwiftSyntax sound ownership clean; all 834 existing catalog entries preserved"
+          "source_checks": "311 syntax parsed; Xcode references resolve and actual SwiftSyntax sound ownership clean; 841 previous catalog entries preserved"
         },
         "not_run": [
-          "12 measurement Apple UI launches including two new metadata-only-save/changed-result-rejection cases",
+          "12 measurement Apple UI launches and actual failed-save/erase recovery UI not yet added",
           "56 Guide Apple UI launches",
-          "Apple SDK typecheck, platform locale variants/extensions, picker/field/keyboard/focus/AX and exact UI persistence",
-          "Official MADLAD offline inference and language/clinical accuracy review"
+          "Apple SDK typecheck, native-sheet draft/reload/focus/callback and physical-device verification",
+          "Cold-app restart/process interruption durability; immediate API readback is not a disk durability test",
+          "Official MADLAD/offline/language/clinical acceptance"
         ],
         "remaining": [
-          "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-          "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-          "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-          "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+          "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+          "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+          "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+          "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
         ],
         "scope": "Evidence for this batch only; does not certify the entire original requirement."
       },
       "remaining_verification_requirements": [
-        "Execute unknown-format Apple UI cases and verify exact retained draft/value/unit/marker, correct error focus and explicit reviewed-format recovery",
-        "Verify recognized locale identifiers/aliases on Apple; unlisted extensions remain opaque and need explicit separator selection rather than guessed interpretation",
-        "Implement exact measurement persistence write/erase readback acknowledgment; current normal storage tests do not certify silent-failure handling",
-        "Complete all remaining localization, clinical, official-model, Apple and device gates; numeric-format validation is not whole feature verification"
+        "Implement and execute draft-preserving editor reload/retry plus actual save/delete fault UI with independent persisted bytes",
+        "Verify confirmed erasure, single deletion, blocked writes and explicit reload through Apple views, including newer-record conflict after reload",
+        "Verify cold-app restart/process kill, device persistence and integration beyond same-process UserDefaults API cache/readback; no CAS/fsync claim",
+        "Complete all clinical, official model, language, Apple and device gates; this batch does not close entire data persistence requirements"
       ]
     },
     {

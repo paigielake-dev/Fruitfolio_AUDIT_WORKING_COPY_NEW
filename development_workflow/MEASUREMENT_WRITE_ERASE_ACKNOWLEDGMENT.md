@@ -1,0 +1,9 @@
+# Canonical measurement write and erase acknowledgment
+
+Measurement persistence now advances records, expected bytes and revision only after an exact Data readback following a write. Explicit erasure requires the key to read absent before clearing the acknowledged cache/protection/revision. Dropped operations, foreign replacements and wrong types fail with a distinct truthful persistenceFailure reason. Cached records and revision remain at their last acknowledgment; foreign bytes are never rolled back. Mutations/export and repeated erasure remain blocked until explicit reload. Existing confirmed erasure of unchanged unreadable/future data remains supported.
+
+Actual pre-fix fault suite: nine tests, 34 failed assertions and no unexpected failures. The source/log hash receipt is RUN_LOGS/Measurement-write-erase-ack-prior-failure.json. After fix nine focused cases pass. Six new cases cover dropped first save, edits/single deletion and explicit reload, post-write Data/wrong-type replacement, dropped erasure/retry, post-erase foreign replacement and actual MainActor Store cache/revision refresh. Final full suites: 789 portable XCTest, 811 native CPU XCTest, 21 Swift Testing per overlapping run; 50 workflow checks. 311 files parsed, references resolved and SwiftSyntax sound ownership clean.
+
+One English error key added, preserving all 841 prior entries: 842 total, no nonempty foreign translations. No storage schema, units/results/dates, source/citation data, artwork or model resources changed.
+
+This is UserDefaults API readback, not fsync, cross-process CAS or proof of cold-app restart/process-kill durability. All 12 measurement and 56 Guide Apple UI launches remain NOT_RUN. Actual save/erase fault UI and draft-preserving in-editor reload are the next local implementation batch. Apple SDK typecheck, real native-sheet focus/callback/persistence behavior, physical device and official MADLAD/clinical acceptance remain open.

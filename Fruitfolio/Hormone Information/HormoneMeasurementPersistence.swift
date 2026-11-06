@@ -97,8 +97,13 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
     func eraseAllMeasurements() throws {
         // Explicit erasure may remove the unreadable baseline the user confirmed,
         // but must not erase a newer record that appeared after confirmation.
+        if protectionReason == .persistenceFailure { throw FruitfolioHormoneMeasurementError.persistenceFailure }
         try requireCurrentSnapshot()
         defaults.removeObject(forKey: key)
+        guard defaults.object(forKey: key) == nil else {
+            protectionReason = .persistenceFailure
+            throw FruitfolioHormoneMeasurementError.persistenceFailure
+        }
         expectedPersistedObject = nil
         revision = UUID()
         records = []
@@ -122,6 +127,10 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         let data = try JSONEncoder().encode(updated)
         try requireWritable()
         defaults.set(data, forKey: key)
+        guard let acknowledged = defaults.object(forKey: key) as? Data, acknowledged == data else {
+            protectionReason = .persistenceFailure
+            throw FruitfolioHormoneMeasurementError.persistenceFailure
+        }
         records = updated
         expectedPersistedObject = data as NSData
         revision = UUID()

@@ -1,6 +1,34 @@
 import XCTest
 @testable import Fruitfolio
 
+private final class HormoneFaultDefaults: UserDefaults, @unchecked Sendable {
+    enum Fault { case accept, drop, replace(Data), wrongType }
+    var writeFault: Fault = .accept
+    var eraseFault: Fault = .accept
+    private(set) var writes = 0
+    private(set) var erasures = 0
+    override func set(_ value: Any?, forKey key: String) {
+        guard key == "measurements" else { super.set(value, forKey: key); return }
+        writes += 1
+        switch writeFault {
+        case .accept: super.set(value, forKey: key)
+        case .drop: break
+        case .replace(let bytes): super.set(bytes, forKey: key)
+        case .wrongType: super.set("foreign replacement", forKey: key)
+        }
+    }
+    override func removeObject(forKey key: String) {
+        guard key == "measurements" else { super.removeObject(forKey: key); return }
+        erasures += 1
+        switch eraseFault {
+        case .accept: super.removeObject(forKey: key)
+        case .drop: break
+        case .replace(let bytes): super.removeObject(forKey: key); super.set(bytes, forKey: key)
+        case .wrongType: super.removeObject(forKey: key); super.set("foreign replacement", forKey: key)
+        }
+    }
+}
+
 final class Prompt1BHormonePersistenceTests: XCTestCase {
     private func withStore(_ operation: (UserDefaults, FruitfolioHormoneMeasurementPersistence) throws -> Void) throws {
         let suite = "FruitfolioHormonePersistenceTests." + UUID().uuidString
@@ -57,4 +85,138 @@ final class Prompt1BHormonePersistenceTests: XCTestCase {
             XCTAssertEqual(defaults.data(forKey: "measurements"), data)
         }
     }
+    private func faultFixture() throws -> (String, HormoneFaultDefaults, FruitfolioHormoneMeasurementPersistence) {
+        let suite = "Fruitfolio.MeasurementAck." + UUID().uuidString
+        let defaults = try XCTUnwrap(HormoneFaultDefaults(suiteName: suite))
+        return (suite, defaults, FruitfolioHormoneMeasurementPersistence(defaults: defaults, key: "measurements"))
+    }
+    private func faultRecord() -> FruitfolioHormoneMeasurement {
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12.500"; record.unit = " pg/mL "; record.resultLocaleIdentifier = "en_US"
+        record.notes = "QA exact original"
+        return record
+    }
+
+    func testDroppedFirstMeasurementWriteCannotAdvanceCacheOrRevision() throws {
+        let (suite, defaults, store) = try faultFixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let revision = store.revision
+        defaults.writeFault = .drop
+        XCTAssertThrowsError(try store.save(faultRecord()))
+        XCTAssertTrue(store.records.isEmpty)
+        XCTAssertNil(defaults.object(forKey: "measurements"))
+        XCTAssertEqual(store.revision, revision)
+        XCTAssertEqual(store.protectionReason, .persistenceFailure)
+        XCTAssertEqual(defaults.writes, 1)
+    }
+
+    func testDroppedMeasurementEditAndSingleDeleteKeepAcknowledgmentUntilExplicitReload() throws {
+        let (suite, defaults, store) = try faultFixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let original = faultRecord()
+        try store.save(original)
+        let bytes = defaults.data(forKey: "measurements")
+        let revision = store.revision
+        var draft = original; draft.notes = "unsaved draft"
+        defaults.writeFault = .drop
+        XCTAssertThrowsError(try store.save(draft, intent: .edit(original)))
+        XCTAssertEqual(store.records, [original])
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(store.revision, revision)
+        let writes = defaults.writes
+        XCTAssertThrowsError(try store.delete(id: original.id))
+        XCTAssertEqual(defaults.writes, writes, "No write may retry without explicit reload")
+        store.reload()
+        XCTAssertNil(store.protectionReason)
+        let reloadedRevision = store.revision
+        XCTAssertThrowsError(try store.delete(id: original.id))
+        XCTAssertEqual(store.records, [original])
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(store.revision, reloadedRevision)
+    }
+
+    func testMeasurementForeignPostWriteDataOrWrongTypeIsNeverRolledBack() throws {
+        for wrongType in [false, true] {
+            let (suite, defaults, store) = try faultFixture()
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let original = faultRecord()
+            try store.save(original)
+            let revision = store.revision
+            let foreign = Data("{\"futureSchema\":3,\"retain\":null}".utf8)
+            defaults.writeFault = wrongType ? .wrongType : .replace(foreign)
+            var draft = original; draft.notes = "unacknowledged draft"
+            XCTAssertThrowsError(try store.save(draft))
+            XCTAssertEqual(store.records, [original])
+            XCTAssertEqual(store.revision, revision)
+            XCTAssertEqual(store.protectionReason, .persistenceFailure)
+            XCTAssertEqual(defaults.writes, 2, "No rollback may overwrite observed replacement data")
+            if wrongType { XCTAssertEqual(defaults.string(forKey: "measurements"), "foreign replacement") }
+            else { XCTAssertEqual(defaults.data(forKey: "measurements"), foreign) }
+        }
+    }
+
+    func testDroppedMeasurementErasureCannotClearCacheOrClaimDeletion() throws {
+        let (suite, defaults, store) = try faultFixture()
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let original = faultRecord()
+        try store.save(original)
+        let bytes = defaults.data(forKey: "measurements")
+        let revision = store.revision
+        defaults.eraseFault = .drop
+        XCTAssertThrowsError(try store.eraseAllMeasurements())
+        XCTAssertEqual(store.records, [original])
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(store.revision, revision)
+        XCTAssertEqual(store.protectionReason, .persistenceFailure)
+        let erasures = defaults.erasures
+        XCTAssertThrowsError(try store.eraseAllMeasurements())
+        XCTAssertEqual(defaults.erasures, erasures, "A failed erase requires explicit reload")
+        store.reload()
+        defaults.eraseFault = .accept
+        try store.eraseAllMeasurements()
+        XCTAssertTrue(store.records.isEmpty)
+        XCTAssertNil(defaults.object(forKey: "measurements"))
+        XCTAssertNil(store.protectionReason)
+    }
+
+    func testMeasurementPostEraseForeignReplacementIsPreservedWithoutRollback() throws {
+        for wrongType in [false, true] {
+            let (suite, defaults, store) = try faultFixture()
+            defer { defaults.removePersistentDomain(forName: suite) }
+            let original = faultRecord()
+            try store.save(original)
+            let revision = store.revision
+            let foreign = Data("{\"futureField\":{\"keep\":null}}".utf8)
+            defaults.eraseFault = wrongType ? .wrongType : .replace(foreign)
+            XCTAssertThrowsError(try store.eraseAllMeasurements())
+            XCTAssertEqual(store.records, [original])
+            XCTAssertEqual(store.revision, revision)
+            XCTAssertEqual(defaults.erasures, 1)
+            XCTAssertEqual(defaults.writes, 1, "Only the original seed write; no rollback")
+            XCTAssertEqual(store.protectionReason, .persistenceFailure)
+            if wrongType { XCTAssertEqual(defaults.string(forKey: "measurements"), "foreign replacement") }
+            else { XCTAssertEqual(defaults.data(forKey: "measurements"), foreign) }
+        }
+    }
+
+    @MainActor
+    func testActualMeasurementStoreRefreshRetainsLastAcknowledgedRecordAfterRejectedSave() async throws {
+        let suite = "Fruitfolio.MeasurementStoreAck." + UUID().uuidString
+        let defaults = try XCTUnwrap(HormoneFaultDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults, key: "measurements")
+        let original = faultRecord()
+        try store.save(original)
+        let revision = store.savedRecordRevision
+        let bytes = defaults.data(forKey: "measurements")
+        var draft = original; draft.result = "13.500"
+        defaults.writeFault = .drop
+        XCTAssertThrowsError(try store.save(draft, intent: .edit(original)))
+        XCTAssertEqual(store.records, [original])
+        XCTAssertEqual(store.savedRecordRevision, revision)
+        XCTAssertEqual(store.storageProtectionReason, .persistenceFailure)
+        XCTAssertEqual(defaults.data(forKey: "measurements"), bytes)
+        XCTAssertEqual(FruitfolioHormoneMeasurementStore(defaults: defaults, key: "measurements").records, [original])
+    }
+
 }

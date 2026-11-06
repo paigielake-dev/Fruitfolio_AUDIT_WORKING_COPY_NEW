@@ -160,7 +160,7 @@ enum FruitfolioMeasurementSaveIntent: Equatable, Sendable {
 }
 
 enum FruitfolioHormoneMeasurementError: LocalizedError, Equatable {
-    case editingConflict, resultFormatRequired, invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
+    case editingConflict, resultFormatRequired, invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged, persistenceFailure
     var errorDescription: String? {
         switch self {
         case .editingConflict:
@@ -177,6 +177,8 @@ enum FruitfolioHormoneMeasurementError: LocalizedError, Equatable {
             return "saved measurements changed or were cleared elsewhere. the latest saved data has been preserved. reload it before making changes or exporting."
         case .unreadableStorage:
             return "saved measurements could not be read. the original data has been preserved."
+        case .persistenceFailure:
+            return "this measurement change could not be confirmed. reload saved measurements before trying again."
         }
     }
 }

@@ -1,0 +1,17 @@
+{
+  "parent": "00063ea888d695bd844234ab1ef99e18d9061a75",
+  "executed_tests": 9,
+  "failed_assertions": 34,
+  "unexpected_failures": 0,
+  "log_sha256": "92ff7b751d726005a756bdc12f64e9814f9bcba8e8f0f166458630b53dc73e30",
+  "production_source_sha256": "324a6b85e26a1927f1c682c43ed88cc1b1fe7e6e36a1db8c49088f289448c836",
+  "failed_cases": [
+    "Prompt1BHormonePersistenceTests.testActualMeasurementStoreRefreshRetainsLastAcknowledgedRecordAfterRejectedSave",
+    "Prompt1BHormonePersistenceTests.testDroppedFirstMeasurementWriteCannotAdvanceCacheOrRevision",
+    "Prompt1BHormonePersistenceTests.testDroppedMeasurementEditAndSingleDeleteKeepAcknowledgmentUntilExplicitReload",
+    "Prompt1BHormonePersistenceTests.testDroppedMeasurementErasureCannotClearCacheOrClaimDeletion",
+    "Prompt1BHormonePersistenceTests.testMeasurementForeignPostWriteDataOrWrongTypeIsNeverRolledBack",
+    "Prompt1BHormonePersistenceTests.testMeasurementPostEraseForeignReplacementIsPreservedWithoutRollback"
+  ],
+  "scope": "Actual canonical Foundation persistence and Store fault injection; no Apple or official-model verification"
+}
