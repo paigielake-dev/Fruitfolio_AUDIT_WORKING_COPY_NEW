@@ -13,7 +13,7 @@ struct Prompt12AccountView: View {
 
     @State private var email = ""
     @State private var message: String?
-    private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message }
+    private enum AccountControl: Hashable { case signOut, deleteAccount, sync, message, dataExport }
     private enum AccountAction {
         case signOut(Prompt12AccountActionSnapshot)
         case sync(Prompt12AccountActionSnapshot)
@@ -117,6 +117,8 @@ struct Prompt12AccountView: View {
                 DesignTokens.ColorToken.backgroundCream
                     .opacity(FruitfolioModalBlurSpec.dimOpacity)
                     .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                     .zIndex(90)
             }
 
@@ -133,6 +135,16 @@ struct Prompt12AccountView: View {
             popupOwner?.cancel()
             pendingAccountAction = nil
             returnAccountFocus = nil
+        }
+        .onChange(of: showDataExport) { _, presented in
+            if presented { accountFocus = nil }
+            else {
+                Task { @MainActor in
+                    await Task.yield()
+                    guard viewIsVisible, !showDataExport, popupCoordinator.currentPopup == nil else { return }
+                    accountFocus = .dataExport
+                }
+            }
         }
         .onChange(of: popupCoordinator.currentPopup?.id) { _, _ in
             popupOwner?.observeDismissal()
@@ -328,6 +340,8 @@ struct Prompt12AccountView: View {
                     if let onShowDataExport { onShowDataExport() } else { showDataExport = true }
                 }
             )
+            .accessibilityFocused($accountFocus, equals: .dataExport)
+            .accessibilityIdentifier("account.dataExport")
 
             if store.isSignedIn {
                 Divider()

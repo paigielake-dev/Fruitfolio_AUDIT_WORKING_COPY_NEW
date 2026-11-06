@@ -25,7 +25,8 @@ struct Prompt03SkeletonView: View {
         // Layout-only QA keeps English fixture labels while exercising the real
         // outer popup host. Child-view environment overrides cannot reach it.
         if (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
-           (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) {
+           (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) ||
+           (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) {
             return .rightToLeft
         }
         #endif

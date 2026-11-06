@@ -191,6 +191,43 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testDataManagementReopeningOwnsExactlyOneOpenAndCloseRequest() {
+        for reduced in [false, true] {
+        for muted in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioAudioDiagnostics",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioDataReduceMotion"] }
+            if muted { app.launchArguments += ["-fruitfolioAudioMuted"] }
+            if rtl { app.launchArguments += ["-fruitfolioDataRTL"] }
+            app.launch()
+            for count in 1...2 {
+                let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+                XCTAssertTrue(scroll.waitForExistence(timeout: 5))
+                XCTAssertFalse(app.buttons["dataQA.background"].exists)
+                XCTAssertTrue(app.staticTexts["dataManagement.heading"].exists)
+                XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: \(count)")
+                let close = app.buttons["dataManagement.close"]
+                for _ in 0..<24 { if close.isHittable { break }; scroll.swipeUp() }
+                XCTAssertTrue(close.isHittable)
+                XCTAssertGreaterThanOrEqual(close.frame.height, 44)
+                close.tap()
+                let background = app.buttons["dataQA.background"]
+                XCTAssertTrue(background.waitForExistence(timeout: 3))
+                XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: \(count)")
+                XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: \(count)")
+                XCTAssertEqual(app.staticTexts["audioQA.softPopStarts"].label,
+                               "soft pop starts: \(muted ? 0 : count)")
+                captureGame(app, name: "data-popup-reopen-\(count)-muted-\(muted)-reduced-\(reduced)-rtl-\(rtl)")
+                if count == 1 { background.tap() }
+            }
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testDataManagementUsesMeasuredPaperAndTruthfulAvailableActions() {
         for reduced in [false, true] {
             let app = XCUIApplication()
@@ -567,7 +604,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
 
     func testLocalDataExportOpensRealSavePickerAndCancellationDoesNotClaimSaved() {
         let app = XCUIApplication()
-        app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataReduceMotion",
+        app.launchArguments += ["-fruitfolioDataManagementQA", "-fruitfolioDataReduceMotion", "-fruitfolioAudioDiagnostics",
             "-AppleLanguages", "(en)", "-AppleLocale", "en_US",
             "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
         app.launch()
@@ -587,6 +624,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         for _ in 0..<12 { if cancelled.exists { break }; scroll.swipeUp() }
         XCTAssertTrue(cancelled.exists)
         XCTAssertFalse(app.staticTexts["your local data export was saved."].exists)
+        XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+        XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 0")
         app.terminate()
     }
 

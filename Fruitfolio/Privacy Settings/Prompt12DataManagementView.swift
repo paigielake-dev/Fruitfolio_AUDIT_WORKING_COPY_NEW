@@ -1,4 +1,7 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 enum Prompt12DataManagementMode: Equatable {
     case fullPage
@@ -31,6 +34,9 @@ struct Prompt12DataManagementView: View {
         let result: FruitfolioLocalDataExport.Result
     }
 
+    @State private var didOpenPopup = false
+    @State private var popupClosing = false
+    @AccessibilityFocusState private var popupHeadingFocused: Bool
     @State private var showingMeasurements = false
     @State private var showLocalDeletionNotice = false
 
@@ -68,7 +74,21 @@ struct Prompt12DataManagementView: View {
             if mode == .popup {
                 FruitfolioTapedWhitePopup { innerContent.controlSize(.small) }
                     .accessibilityIdentifier("dataManagement.popup")
-                    .onAppear { audioManager.play(.popupOpen) }
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+                    .accessibilityAction(.escape) { dismissPopup() }
+                    .task {
+                        guard !didOpenPopup else { return }
+                        didOpenPopup = true
+                        #if canImport(UIKit)
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                            to: nil, from: nil, for: nil)
+                        #endif
+                        audioManager.play(.popupOpen)
+                        await Task.yield()
+                        guard !Task.isCancelled, !popupClosing else { return }
+                        popupHeadingFocused = true
+                    }
             } else {
                 ZStack {
                     DesignTokens
@@ -100,24 +120,15 @@ struct Prompt12DataManagementView: View {
                         onBack
                 )
             } else {
-                Text("data")
-                    .font(
-                        .custom(
-                            "Chalkboard SE",
-                            size: 18
-                        )
-                    )
+                FruitfolioTranslatedText(source: "data",
+                    font: .custom("Chalkboard SE", size: 18, relativeTo: .headline),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
                     .fontWeight(.bold)
-                    .foregroundStyle(
-                        DesignTokens
-                            .ColorToken
-                            .primaryBurgundy
-                    )
                     .multilineTextAlignment(.center)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .center
-                    )
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .accessibilityAddTraits(.isHeader)
+                    .accessibilityFocused($popupHeadingFocused)
+                    .accessibilityIdentifier("dataManagement.heading")
 
                 Image("ask_source_pages")
                     .resizable()
@@ -139,10 +150,7 @@ struct Prompt12DataManagementView: View {
                 WatercolorSecondaryButton(
                     label: "close"
                 ) {
-                    audioManager.play(
-                        .popupClose
-                    )
-                    onBack()
+                    dismissPopup()
                 }
                 .accessibilityIdentifier("dataManagement.close")
             }
@@ -151,6 +159,18 @@ struct Prompt12DataManagementView: View {
             maxWidth: .infinity,
             alignment: .center
         )
+    }
+
+    @discardableResult
+    private func dismissPopup() -> Bool {
+        // A presented child owns its own dismissal; Escape cannot close the
+        // underlying data panel or leave an active document picker behind.
+        guard mode == .popup, !popupClosing, !showingMeasurements, exportDocument == nil else { return false }
+        popupClosing = true
+        popupHeadingFocused = false
+        audioManager.play(.popupClose)
+        onBack()
+        return true
     }
 
     private var exportCard: some View {
@@ -393,7 +413,7 @@ struct Prompt12DataManagementView: View {
             WatercolorSecondaryButton(label: "manage hormone measurements") { showingMeasurements = true }
             if let onShowMyContext {
                 WatercolorSecondaryButton(label: "review My Context") {
-                    if mode == .popup { audioManager.play(.popupClose) }
+                    if mode == .popup, !dismissPopup() { return }
                     onShowMyContext()
                 }
             }
@@ -456,8 +476,9 @@ struct Prompt12DataManagementView: View {
     }
 
     private func open(_ route: FruitfolioRoute) {
-        if mode == .popup { audioManager.play(.popupClose) }
-        onBack()
+        if mode == .popup {
+            guard dismissPopup() else { return }
+        } else { onBack() }
         navigation.navigate(to: route)
     }
 }

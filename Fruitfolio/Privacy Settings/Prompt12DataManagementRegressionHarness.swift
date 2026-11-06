@@ -24,26 +24,53 @@ private final class Prompt12DataRegressionFixture: ObservableObject {
 /// invoked by setup. Feature-management buttons keep their production actions.
 struct Prompt12DataManagementRegressionHarness: View {
     @StateObject private var fixture = Prompt12DataRegressionFixture()
-    @State private var presented = true
+    @State private var presented = false
+    @State private var initialized = false
+    @EnvironmentObject private var audio: AudioManager
+    @AccessibilityFocusState private var openerFocused: Bool
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var motion: MotionPreferences
     var body: some View {
         ZStack {
-            Button("data QA background") { presented = true }
+            Button("data QA background") { openerFocused = false; presented = true }
+                .accessibilityFocused($openerFocused)
                 .accessibilityIdentifier("dataQA.background")
                 .fruitfolioModalBlur(active: presented, reduceMotion: motion.reduceMotionActive)
             if presented {
                 DesignTokens.ColorToken.backgroundCream.opacity(FruitfolioModalBlurSpec.dimOpacity)
-                    .ignoresSafeArea().accessibilityHidden(true)
-                Prompt12DataManagementView(store: fixture.store, mode: .popup, onBack: { presented = false },
+                    .ignoresSafeArea().accessibilityHidden(true).allowsHitTesting(false)
+                Prompt12DataManagementView(store: fixture.store, mode: .popup, onBack: {
+                    presented = false
+                    Task { @MainActor in
+                        await Task.yield()
+                        guard !presented else { return }
+                        openerFocused = true
+                    }
+                },
                     exportPreferences: { try FruitfolioLocalDataExport.capturePreferences(defaults: fixture.defaults) },
                     exportApplicationSupport: fixture.support)
             }
         }
-        .onAppear {
-            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioDataReduceMotion")
+        .overlay(alignment: .bottomTrailing) {
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                FruitfolioInteractionSoundDiagnostics()
+            }
         }
-        .onDisappear { fixture.cleanUp() }
+        .task {
+            guard !initialized else { return }
+            initialized = true
+            settings.language = .english
+            settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioDataReduceMotion")
+            if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                settings.globallyMuted = ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioMuted")
+                audio.debugRecordInteractions(true)
+            }
+            presented = true
+        }
+        .onDisappear {
+            audio.debugRecordInteractions(false)
+            fixture.cleanUp()
+        }
     }
 }
 #endif

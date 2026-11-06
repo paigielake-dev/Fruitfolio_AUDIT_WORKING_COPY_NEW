@@ -1762,3 +1762,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 680, "portable_status": "unchanged production Foundation branches; complete suite passed immediately preceding batch", "native_CPU_XCTest": 692, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "native_T5_contract_methods": 6, "official_MADLAD": "BLOCKED; no linguistic/clinical acceptance from synthetic untrained tensors", "Apple_UI_device": "NOT_RUN"}.
 - Next action: Complete local data-management popup modal identity, entry/return accessibility focus, Escape and one-opening-cue lifecycle using existing measured paper; preserve existing background blur/hit-testing and export behavior.
 - Commit: containing commit for batch Actual-native-T5-output-scientific-envelope-contract.
+
+## Data-popup-modal-focus-and-single-opening-lifecycle
+
+- Parent checkpoint: 545621340ed66beefcf4b16bf0e62bdcec1af46f.
+- Source-order requirements: [26, 63, 443, 444, 446, 447, 468, 471, 472, 476, 477, 478].
+- Source files: Fruitfolio/Privacy Settings/Prompt12AccountView.swift, Fruitfolio/Privacy Settings/Prompt12DataManagementView.swift, Fruitfolio/Privacy Settings/Prompt12DataManagementRegressionHarness.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift.
+- Retains existing canonical background exclusion. Existing local data panel now has modal semantics, translated scalable heading focus, guarded accessibility Escape/once-only close path, account opener focus return and no repeated open cue on retained view reappearance. Eight source-only Apple UI scenarios plus real-picker-return cue assertions added; Apple runtime/typecheck NOT_RUN.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 680, "native_CPU_XCTest": 692, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "sound_ownership_findings": 0, "project_references": "resolved; not Apple build", "Apple_UI": "NOT_RUN; 8 new data popup scenarios and picker-return assertions are source only", "official_MADLAD": "BLOCKED; synthetic T5 evidence does not verify translations"}.
+- Next action: Integrate display-only catalog/MADLAD translation into canonical control labels without nesting interactive disclosure controls inside buttons or changing saved source labels; test actual state ownership, stale/cancelled results and original-preserving failure.
+- Commit: containing commit for batch Data-popup-modal-focus-and-single-opening-lifecycle.
