@@ -87,6 +87,8 @@ struct Prompt24TrendsView: View {
                 refreshID = UUID()
             }
         }
+        .environment(\.calendar, FruitfolioCanonicalCalendar.gregorian(timeZone: loader.todayLoader.calendar.timeZone))
+        .environment(\.timeZone, loader.todayLoader.calendar.timeZone)
         .accessibilityIdentifier("prompt24.trends")
     }
 
@@ -300,7 +302,8 @@ struct Prompt24TrendsView: View {
             ) {
                 Prompt24UnifiedSymptomChart(
                     occurrences: occurrences,
-                    selectedSymptoms: visible
+                    selectedSymptoms: visible,
+                    calendar: loader.todayLoader.calendar
                 )
             }
 
@@ -997,10 +1000,11 @@ private struct Prompt24BBTChart: View {
 private struct Prompt24UnifiedSymptomChart: View {
     let occurrences: [Prompt24SymptomOccurrence]
     let selectedSymptoms: Set<Prompt20SymptomID>
+    let calendar: Calendar
     @ScaledMetric(relativeTo: .body) private var rowHeight: CGFloat = 44
 
     var body: some View {
-        let timeline = Prompt24SymptomTimeline(occurrences: occurrences, selected: selectedSymptoms)
+        let timeline = Prompt24SymptomTimeline(occurrences: occurrences, selected: selectedSymptoms, calendar: calendar)
         GeometryReader { viewport in
             // Keep the viewport bounded while allowing large text and long histories to scroll.
             let plotWidth = max(viewport.size.width, Prompt24LongTermLayout.minimumPlotWidth,

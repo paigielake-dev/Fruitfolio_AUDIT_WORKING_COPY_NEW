@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T21:27:35.261257+00:00",
+  "updated_at": "2026-11-06T21:29:38.170225+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -5280,6 +5280,38 @@
         ]
       },
       "timestamp": "2026-11-06T21:27:35.261257+00:00"
+    },
+    {
+      "batch": "Unified-symptom-timeline-explicit-record-calendar",
+      "commands": [
+        "60 workflow checks",
+        "311 Swift syntax parses",
+        "Inspect exact chart constructor now passes loader calendar and root timezone/calendar environment",
+        "git diff --check"
+      ],
+      "results": {
+        "workflow_checks": 60,
+        "syntax_files": 311,
+        "Apple_cross_timezone_graph": "NOT_RUN",
+        "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"
+      },
+      "verification": {
+        "executed": {
+          "workflow": "60 passed",
+          "syntax": "311 parsed",
+          "source": "Actual timeline constructor uses explicit loader calendar; record/model/calculation files unchanged"
+        },
+        "not_run": [
+          "Apple plotted/footer/list dates under differing loader/device zones, DST, calendar and locale",
+          "Actual graph VoiceOver/scrolling/Dynamic Type and plotted observation association"
+        ],
+        "remaining": [
+          "Execute cross-zone/DST Apple timeline and native date-label/list consistency cases",
+          "Verify every actual recorded observation remains reachable with no inferred absence or diagnosis",
+          "Whole unified graph/accessibility/runtime requirements remain IN_PROGRESS; source wiring not runtime proof"
+        ]
+      },
+      "timestamp": "2026-11-06T21:29:38.170225+00:00"
     }
   ]
 }

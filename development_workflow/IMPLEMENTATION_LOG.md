@@ -2686,3 +2686,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 942, "new_English_entries": 7, "Apple_logging_limitations": "NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue unified symptom-pattern graph requirements in original order using existing Trends architecture and real recorded observations; preserve uncertainty, no diagnosis and required graph distinctions. No synthetic clinical trends or unsupported forecasts.
 - Commit: containing commit for batch Journal-limitations-source-display-and-fixed-validation-copy.
+
+## Unified-symptom-timeline-explicit-record-calendar
+
+- Parent checkpoint: b078cdb734337832a577fb267df36a649f5d867e.
+- Source-order requirements: [305, 306, 307, 309, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Trends Engine/Prompt24TrendsView.swift.
+- Actual unified timeline receives Trends loader calendar instead of implicit device calendar; root calendar/timezone environment explicitly aligns native presentation with source calendar, canonical Gregorian in same timezone. Existing timeline civil-day/DST algorithm, exact occurrence records, selected IDs, no-invented-days semantics and graph geometry unchanged. Pure timeline tests previously passed; UI timezone propagation not executed on Apple.
+- Tests added/updated: FruitfolioTests/Prompt1BSymptomTimelineTests.swift (seven existing parent-tested cases; unchanged/not rerun UI batch).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_cross_timezone_graph": "NOT_RUN", "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue unified graph current-state selection/active owner and localization, preserving all exact recorded observations and missing-day uncertainty; verify actual UI separately from Foundation projection.
+- Commit: containing commit for batch Unified-symptom-timeline-explicit-record-calendar.
