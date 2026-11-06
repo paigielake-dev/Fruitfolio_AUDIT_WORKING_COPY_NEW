@@ -564,6 +564,19 @@ public enum Prompt20DailyLogSection: String, CaseIterable, Identifiable, Sendabl
     }
 }
 
+/// Editor expectation for one active day record. Legacy explicit repository
+/// writes remain available; editor paths must supply their captured snapshot.
+public nonisolated enum Prompt20DailyLogSaveExpectation: Equatable, Sendable {
+    case unchecked
+    case activeSnapshot(Prompt20DailyLog?)
+
+    public func validate(current: Prompt20DailyLog?) throws {
+        if case .activeSnapshot(let expected) = self, current != expected {
+            throw Prompt20DailyLogDomainError.recordChanged
+        }
+    }
+}
+
 /// One immutable repository write. Only an identical retry may reuse its ID;
 /// edits made while awaiting storage never become part of that saved baseline.
 struct Prompt20DailyLogWrite: Equatable, Sendable {

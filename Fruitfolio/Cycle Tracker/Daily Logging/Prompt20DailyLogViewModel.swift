@@ -65,6 +65,7 @@ public final class Prompt20DailyLogViewModel {
     private let repository: any Prompt20DailyLogRepository
     private let nowProvider: @Sendable () -> Date
     private let initialExpandedSection: Prompt20DailyLogSection?
+    private var baselineSavedLog: Prompt20DailyLog?
     private var baselineDraft: Prompt20DailyLogDraft
     private var pendingWrite: Prompt20DailyLogWrite?
 
@@ -145,6 +146,7 @@ public final class Prompt20DailyLogViewModel {
             }
 
             existingLog = log
+            baselineSavedLog = log
 
             if let log {
                 let loadedDraft = Prompt20DailyLogDraft(
@@ -350,8 +352,15 @@ public final class Prompt20DailyLogViewModel {
                     date: selectedDay,
                     draft: write.draft,
                     now: nowProvider(),
-                    requestID: write.id
+                    requestID: write.id,
+                    expectation: .activeSnapshot(baselineSavedLog)
                 )
+
+            guard Prompt20DailyLogRules.savedContentMatches(saved, draft: write.draft,
+                                                            ownerID: ownerID, date: selectedDay) else {
+                throw Prompt20DailyLogDomainError.recordChanged
+            }
+            baselineSavedLog = saved
 
             // Storage may have committed even if the presentation was cancelled.
             // Reconcile the exact written snapshot, preserving subsequent edits.

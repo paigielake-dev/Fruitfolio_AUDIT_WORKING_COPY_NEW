@@ -11,12 +11,23 @@ public protocol Prompt20DailyLogRepository: Sendable {
         date: Prompt20LocalDay,
         draft: Prompt20DailyLogDraft,
         now: Date,
-        requestID: UUID
+        requestID: UUID,
+        expectation: Prompt20DailyLogSaveExpectation
     ) async throws -> Prompt20DailyLog?
 
     func allActiveLogs(
         ownerID: Prompt20DailyLogOwnerID
     ) async throws -> [Prompt20DailyLog]
+}
+
+/// Compatibility for existing explicit programmatic writes. User editors use
+/// the required snapshot-bearing method instead of silently opting out.
+public extension Prompt20DailyLogRepository {
+    func save(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay,
+              draft: Prompt20DailyLogDraft, now: Date, requestID: UUID) async throws -> Prompt20DailyLog? {
+        try await save(ownerID: ownerID, date: date, draft: draft, now: now,
+                       requestID: requestID, expectation: .unchecked)
+    }
 }
 
 /// Explicit read-only recovery capability; reload never rewrites a saved file.
@@ -137,7 +148,8 @@ public actor Prompt20CycleDailyLogStore:
         now:
             Date = Date(),
         requestID:
-            UUID = UUID()
+            UUID = UUID(),
+        expectation: Prompt20DailyLogSaveExpectation = .unchecked
     ) async throws
         -> Prompt20DailyLog? {
 
@@ -194,6 +206,8 @@ public actor Prompt20CycleDailyLogStore:
             logsByKey[
                 key
             ]
+
+        try expectation.validate(current: previousLog?.isDeleted == false ? previousLog : nil)
 
         let previousRequestIDs =
             processedRequestIDs
@@ -659,7 +673,8 @@ public actor
         now:
             Date,
         requestID:
-            UUID
+            UUID,
+        expectation: Prompt20DailyLogSaveExpectation = .unchecked
     ) async throws
         -> Prompt20DailyLog? {
 
@@ -702,6 +717,8 @@ public actor
             logs[
                 storageKey
             ]
+
+        try expectation.validate(current: existing?.isDeleted == false ? existing : nil)
 
         let candidate = try Prompt20DailyLogRules.makeLog(
             ownerID: ownerID, date: date, draft: draft, existing: existing, now: now)

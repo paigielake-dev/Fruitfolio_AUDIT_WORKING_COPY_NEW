@@ -11,7 +11,10 @@ private actor Prompt1BDelayedDailyLogRepository: Prompt20DailyLogRepository {
     func load(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay) async throws -> Prompt20DailyLog? { nil }
     func allActiveLogs(ownerID: Prompt20DailyLogOwnerID) async throws -> [Prompt20DailyLog] { [] }
     func save(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay,
-              draft: Prompt20DailyLogDraft, now: Date, requestID: UUID) async throws -> Prompt20DailyLog? {
+              draft: Prompt20DailyLogDraft, now: Date, requestID: UUID,
+              expectation: Prompt20DailyLogSaveExpectation) async throws -> Prompt20DailyLog? {
+        // Sequencing-only fixture: these tests begin without a saved record.
+        try expectation.validate(current: nil)
         writtenDraft = draft
         await withCheckedContinuation { continuation in
             self.continuation = continuation
@@ -29,6 +32,27 @@ private actor Prompt1BDelayedDailyLogRepository: Prompt20DailyLogRepository {
     func finish() { continuation?.resume(); continuation = nil }
 }
 
+/// Injects an acknowledgement failure after the actual file actor commits.
+/// Storage is real; this fixture controls only the response boundary.
+private actor Prompt1BCommitThenFailDailyLogRepository: Prompt20DailyLogRepository {
+    let base: Prompt20CycleDailyLogStore
+    private var failOnce = true
+    init(base: Prompt20CycleDailyLogStore) { self.base = base }
+    func load(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay) async throws -> Prompt20DailyLog? {
+        try await base.load(ownerID: ownerID, date: date)
+    }
+    func allActiveLogs(ownerID: Prompt20DailyLogOwnerID) async throws -> [Prompt20DailyLog] {
+        try await base.allActiveLogs(ownerID: ownerID)
+    }
+    func save(ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay, draft: Prompt20DailyLogDraft,
+              now: Date, requestID: UUID, expectation: Prompt20DailyLogSaveExpectation) async throws -> Prompt20DailyLog? {
+        let saved = try await base.save(ownerID: ownerID, date: date, draft: draft,
+            now: now, requestID: requestID, expectation: expectation)
+        if failOnce { failOnce = false; throw Prompt20DailyLogDomainError.persistenceUnavailable }
+        return saved
+    }
+}
+
 @MainActor
 final class Prompt1BDailyLogViewModelTests: XCTestCase {
     private func savedFixture(_ file: URL) async throws -> (repository: Prompt20CycleDailyLogStore, now: Date, day: Prompt20LocalDay, calendar: Calendar) {
@@ -39,6 +63,131 @@ final class Prompt1BDailyLogViewModelTests: XCTestCase {
         var draft = Prompt20DailyLogDraft(); draft.generalNote = "saved original"
         _ = try await repository.save(ownerID: .localDevice, date: selected, draft: draft, now: now)
         return (repository, now, selected, calendar)
+    }
+
+    func testTwoEditorsCannotOverwriteNewerSameStoreDayOrSilentlyRebase() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let first = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        let second = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        await first.load(); await second.load()
+        first.mutateDraft { $0.generalNote = "newer saved observation" }
+        let accepted = await first.save(); XCTAssertTrue(accepted)
+        let bytes = try Data(contentsOf: file)
+        second.mutateDraft { $0.generalNote = "old editor draft" }
+        let rejected = await second.save(); XCTAssertFalse(rejected)
+        XCTAssertEqual(second.saveFailureMessage, Prompt20DailyLogDomainError.recordChanged.errorDescription)
+        XCTAssertEqual(second.existingLog?.generalNote?.text, "saved original")
+        XCTAssertEqual(second.draft.generalNote, "old editor draft")
+        XCTAssertTrue(second.hasUnsavedChanges)
+        second.mutateDraft { $0.generalNote = "changed old draft still requires review" }
+        let rejectedAgain = await second.save(); XCTAssertFalse(rejectedAgain)
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+    }
+
+    func testOldEditorCannotResurrectClearedDayAfterAnotherClientReloads() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let old = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        await old.load(); old.mutateDraft { $0.generalNote = "old unsaved edit" }
+        try FileManager.default.removeItem(at: file)
+        try await fixture.repository.reloadSavedLogs()
+        let rejected = await old.save(); XCTAssertFalse(rejected)
+        XCTAssertEqual(old.saveFailureMessage, Prompt20DailyLogDomainError.recordChanged.errorDescription)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file.path))
+        XCTAssertEqual(old.draft.generalNote, "old unsaved edit")
+        let fresh = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        await fresh.load(); fresh.mutateDraft { $0.generalNote = "freshly entered record" }
+        let created = await fresh.save(); XCTAssertTrue(created)
+        let bytes = try Data(contentsOf: file)
+        let rejectedAgain = await old.retrySave(); XCTAssertFalse(rejectedAgain)
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+    }
+
+    func testTwoEmptyDayEditorsCannotReplaceTheFirstCreatedRecord() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!
+        let repository = Prompt20CycleDailyLogStore(fileURL: nil, calendar: calendar)
+        let first = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: repository, calendar: calendar, nowProvider: { now })
+        let second = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: repository, calendar: calendar, nowProvider: { now })
+        await first.load(); await second.load()
+        first.mutateDraft { $0.generalNote = "first new record" }
+        let created = await first.save(); XCTAssertTrue(created)
+        second.mutateDraft { $0.generalNote = "must not replace it" }
+        let rejected = await second.save(); XCTAssertFalse(rejected)
+        let actual = try await repository.load(ownerID: .localDevice, date: first.selectedDay)
+        XCTAssertEqual(actual?.generalNote?.text, "first new record")
+        XCTAssertEqual(actual?.revision, 1)
+    }
+
+    func testEditorsForIndependentDaysCanSaveWithoutDroppingEachOther() async throws {
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let fixture = try await savedFixture(file)
+        let otherDate = fixture.calendar.date(from: DateComponents(year: 2026, month: 9, day: 6, hour: 12))!
+        let first = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: fixture.now,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        let other = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: otherDate,
+            repository: fixture.repository, calendar: fixture.calendar, nowProvider: { fixture.now })
+        await first.load(); await other.load()
+        first.mutateDraft { $0.generalNote = "updated first day" }
+        other.mutateDraft { $0.generalNote = "independent second day" }
+        let firstSaved = await first.save(); XCTAssertTrue(firstSaved)
+        let otherSaved = await other.save(); XCTAssertTrue(otherSaved)
+        let restored = Prompt20CycleDailyLogStore(fileURL: file, calendar: fixture.calendar)
+        let active = try await restored.allActiveLogs(ownerID: .localDevice)
+        XCTAssertEqual(Set(active.compactMap { $0.generalNote?.text }), ["updated first day", "independent second day"])
+    }
+
+    func testCommittedWriteRetryReconcilesWithoutAnotherRevision() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let base = Prompt20CycleDailyLogStore(fileURL: file, calendar: calendar)
+        let boundary = Prompt1BCommitThenFailDailyLogRepository(base: base)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: boundary, calendar: calendar, nowProvider: { now })
+        await model.load(); model.mutateDraft { $0.generalNote = "committed despite failed acknowledgement" }
+        let reported = await model.save(); XCTAssertFalse(reported)
+        let bytes = try Data(contentsOf: file)
+        let retried = await model.retrySave(); XCTAssertTrue(retried)
+        XCTAssertFalse(model.hasUnsavedChanges)
+        XCTAssertEqual(model.existingLog?.revision, 1)
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
+    }
+
+    func testSupersededCommittedRetryCannotSilentlyRebaseOldDraftOrOverwriteNewerRecord() async throws {
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let now = calendar.date(from: DateComponents(year: 2026, month: 9, day: 7, hour: 12))!
+        let selected = Prompt20LocalDay(date: now, calendar: calendar)
+        let file = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".json")
+        defer { try? FileManager.default.removeItem(at: file) }
+        let base = Prompt20CycleDailyLogStore(fileURL: file, calendar: calendar)
+        let boundary = Prompt1BCommitThenFailDailyLogRepository(base: base)
+        let model = Prompt20DailyLogViewModel(ownerID: .localDevice, selectedDate: now,
+            repository: boundary, calendar: calendar, nowProvider: { now })
+        await model.load(); model.mutateDraft { $0.generalNote = "old committed draft" }
+        let reported = await model.save(); XCTAssertFalse(reported)
+        var newer = Prompt20DailyLogDraft(); newer.generalNote = "newer saved observation"
+        _ = try await base.save(ownerID: .localDevice, date: selected, draft: newer, now: now)
+        let bytes = try Data(contentsOf: file)
+        let retry = await model.retrySave(); XCTAssertFalse(retry)
+        XCTAssertTrue(model.hasUnsavedChanges)
+        XCTAssertEqual(model.draft.generalNote, "old committed draft")
+        XCTAssertNil(model.existingLog)
+        XCTAssertEqual(model.saveFailureMessage, Prompt20DailyLogDomainError.recordChanged.errorDescription)
+        model.mutateDraft { $0.generalNote = "new text in still-unreviewed old editor" }
+        let editedRetry = await model.save(); XCTAssertFalse(editedRetry)
+        XCTAssertEqual(try Data(contentsOf: file), bytes)
     }
 
     func testInitialFailedLoadRecoversReadOnlyWithoutReplacingAnAlreadyLoadedDraft() async throws {

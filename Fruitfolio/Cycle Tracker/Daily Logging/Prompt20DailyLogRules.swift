@@ -183,6 +183,18 @@ public nonisolated enum Prompt20DailyLogRules {
         )
     }
 
+    /// A retried request can return a newer current record. Confirm its saved
+    /// clinical payload before rebasing an editor; metadata/time need not match.
+    public static func savedContentMatches(_ saved: Prompt20DailyLog?, draft: Prompt20DailyLogDraft,
+                                           ownerID: Prompt20DailyLogOwnerID, date: Prompt20LocalDay) -> Bool {
+        guard let expected = try? makeLog(ownerID: ownerID, date: date, draft: draft,
+                                          existing: nil, now: .distantPast) else { return false }
+        guard expected.hasRecordedContent else { return saved == nil }
+        guard let saved, !saved.isDeleted, saved.ownerID == ownerID, saved.date == date else { return false }
+        return Prompt20DailyLogDraft(log: saved, displayTemperatureUnit: draft.temperatureUnit)
+            == Prompt20DailyLogDraft(log: expected, displayTemperatureUnit: draft.temperatureUnit)
+    }
+
     public static func summary(for log: Prompt20DailyLog) -> Prompt20DailyLogSummary {
         Prompt20DailyLogSummary(
             hasBleedingObservation: log.bleeding != nil,
@@ -230,6 +242,7 @@ public nonisolated enum Prompt20DailyLogDomainError: LocalizedError, Equatable, 
     case corruptPersistence
     case unsupportedPersistence
     case storageChanged
+    case recordChanged
 
     public var errorDescription: String? {
         switch self {
@@ -238,6 +251,7 @@ public nonisolated enum Prompt20DailyLogDomainError: LocalizedError, Equatable, 
         case .persistenceUnavailable: return "saved logs could not be accessed. please try again."
         case .corruptPersistence: return "saved logs could not be read safely. the original file is preserved."
         case .unsupportedPersistence: return "saved logs contain fields or a format this version cannot safely update. the original file is preserved."
+        case .recordChanged: return "this day’s saved log changed while you were editing. your draft is still here. close this page to review the latest record before trying again."
         case .storageChanged: return "saved logs changed or were cleared elsewhere. close this page and reopen it to review and reload the current record."
         }
     }

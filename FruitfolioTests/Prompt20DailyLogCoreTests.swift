@@ -190,6 +190,27 @@ final class Prompt20CoreTests: XCTestCase {
         XCTAssertEqual(original?.generalNote?.text, "original observation")
     }
 
+    func testInMemoryRepositoryChecksActiveSnapshotAfterIdempotentRetryLookup() async throws {
+        let cal = calendar(); let now = date(2026, 9, 7, calendar: cal); let selected = day(2026, 9, 7)
+        let repository = Prompt20InMemoryDailyLogRepository(calendar: cal)
+        var first = Prompt20DailyLogDraft(); first.generalNote = "first"
+        let saved = try await repository.save(ownerID: .localDevice, date: selected, draft: first,
+            now: now, requestID: UUID(), expectation: .activeSnapshot(nil))
+        var next = first; next.generalNote = "newer"
+        let request = UUID()
+        let newer = try await repository.save(ownerID: .localDevice, date: selected, draft: next,
+            now: now, requestID: request, expectation: .activeSnapshot(saved))
+        do {
+            _ = try await repository.save(ownerID: .localDevice, date: selected, draft: first,
+                now: now, requestID: UUID(), expectation: .activeSnapshot(saved))
+            XCTFail("Old active snapshot must reject")
+        } catch { XCTAssertEqual(error as? Prompt20DailyLogDomainError, .recordChanged) }
+        let retried = try await repository.save(ownerID: .localDevice, date: selected, draft: next,
+            now: now, requestID: request, expectation: .activeSnapshot(saved))
+        XCTAssertEqual(retried, newer)
+        XCTAssertEqual(retried?.revision, 2)
+    }
+
     private func seedPersistenceFile(_ file: URL) async throws -> (store: Prompt20CycleDailyLogStore, log: Prompt20DailyLog, bytes: Data, now: Date, calendar: Calendar) {
         let cal = calendar("UTC")
         let now = date(2026, 9, 7, calendar: cal)
