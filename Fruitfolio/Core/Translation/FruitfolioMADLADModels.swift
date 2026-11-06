@@ -44,6 +44,21 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
         }
     }
 
+    /// Header/tokenizer compatibility is independent of digest acceptance. This
+    /// bounded check rejects incompatible resources before native allocation;
+    /// only actual encode/decode can establish executable graph compatibility.
+    func verifyExecutableMetadata(at url: URL) throws {
+        do {
+            let reader = try FruitfolioGGUFCompatibilityReader(url: url)
+            let metadata = try reader.compatibilityMetadata()
+            guard metadata["general.architecture"] == architecture,
+                  metadata["tokenizer.ggml.model"] == "t5" else {
+                throw FruitfolioTranslationError.incompatibleModel
+            }
+        } catch let error as CancellationError { throw error }
+        catch { throw FruitfolioTranslationError.incompatibleModel }
+    }
+
     func verifyModel(at url: URL) throws {
         try validate()
         let file = try FileHandle(forReadingFrom: url)
@@ -61,4 +76,98 @@ struct FruitfolioMADLADManifest: Codable, Equatable, Sendable {
 protocol FruitfolioLocalTranslationRuntime: Sendable {
     func translate(_ text: String, targetTag: String) async throws -> String
     func releaseResources() async
+}
+
+/// Reads only GGUF metadata, never tensor payloads or a vocabulary-sized buffer.
+/// Unneeded values are skipped with file-bound/overflow checks. This is not a
+/// replacement for llama's graph loader or verification of official provenance.
+private final class FruitfolioGGUFCompatibilityReader {
+    private let file: FileHandle
+    private let length: UInt64
+    private var offset: UInt64 = 0
+    private let maximumEntries: UInt64 = 1_000_000
+
+    init(url: URL) throws {
+        let opened = try FileHandle(forReadingFrom: url)
+        do {
+            length = try opened.seekToEnd()
+            try opened.seek(toOffset: 0)
+            file = opened
+        } catch { try? opened.close(); throw error }
+    }
+    deinit { try? file.close() }
+
+    func compatibilityMetadata() throws -> [String: String] {
+        guard try bytes(4) == Data("GGUF".utf8) else { throw invalid }
+        let version = try unsigned(4)
+        guard version == 2 || version == 3 else { throw invalid }
+        _ = try unsigned(8) // Tensor count: the native loader owns tensor checks.
+        let count = try unsigned(8)
+        guard count <= 4096 else { throw invalid }
+        var result: [String: String] = [:]
+        var seenKeys = Set<String>()
+        for _ in 0..<count {
+            try Task.checkCancellation()
+            let key = try string(maximumBytes: 1024)
+            guard seenKeys.insert(key).inserted else { throw invalid }
+            let type = try unsigned(4)
+            if key == "general.architecture" || key == "tokenizer.ggml.model" {
+                guard type == 8 else { throw invalid }
+                result[key] = try string(maximumBytes: 64)
+            } else { try skipValue(type) }
+        }
+        return result
+    }
+
+    private var invalid: FruitfolioTranslationError { .incompatibleModel }
+    private func bytes(_ count: UInt64) throws -> Data {
+        try Task.checkCancellation()
+        guard count <= length - offset, count <= UInt64(Int.max),
+              let data = try file.read(upToCount: Int(count)), data.count == Int(count) else { throw invalid }
+        offset += count
+        return data
+    }
+    private func unsigned(_ width: UInt64) throws -> UInt64 {
+        let data = try bytes(width)
+        return data.enumerated().reduce(UInt64(0)) { $0 | (UInt64($1.element) << (8 * $1.offset)) }
+    }
+    private func string(maximumBytes: UInt64) throws -> String {
+        let count = try unsigned(8)
+        guard count <= maximumBytes, let value = String(data: try bytes(count), encoding: .utf8) else { throw invalid }
+        return value
+    }
+    private func skip(_ count: UInt64) throws {
+        try Task.checkCancellation()
+        guard count <= length - offset else { throw invalid }
+        offset += count
+        try file.seek(toOffset: offset)
+    }
+    private func fixedWidth(_ type: UInt64) -> UInt64? {
+        switch type {
+        case 0, 1, 7: return 1
+        case 2, 3: return 2
+        case 4, 5, 6: return 4
+        case 10, 11, 12: return 8
+        default: return nil
+        }
+    }
+    private func skipValue(_ type: UInt64) throws {
+        if let width = fixedWidth(type) { try skip(width); return }
+        switch type {
+        case 8:
+            try skip(unsigned(8))
+        case 9:
+            let elementType = try unsigned(4)
+            let count = try unsigned(8)
+            guard count <= maximumEntries else { throw invalid }
+            if let width = fixedWidth(elementType) {
+                let (size, overflow) = count.multipliedReportingOverflow(by: width)
+                guard !overflow else { throw invalid }
+                try skip(size)
+            } else if elementType == 8 {
+                for _ in 0..<count { try skip(unsigned(8)) }
+            } else { throw invalid } // GGUF arrays cannot contain arrays.
+        default: throw invalid
+        }
+    }
 }

@@ -8,6 +8,88 @@ final class Prompt1BMADLADManifestTests: XCTestCase {
             architecture: "t5", tokenizer: "embedded-sentencepiece", supportedLanguageTags: ["en", "es"],
             contextLength: 512, maximumOutputTokens: 256)
     }
+    private func integer(_ value: UInt64, bytes: Int = 8) -> Data {
+        Data((0..<bytes).map { UInt8(truncatingIfNeeded: value >> ($0 * 8)) })
+    }
+    private func ggufString(_ text: String) -> Data {
+        integer(UInt64(text.utf8.count)) + Data(text.utf8)
+    }
+    private func header(_ entries: [(String, UInt64, Data)], version: UInt64 = 3) -> Data {
+        var data = Data("GGUF".utf8) + integer(version, bytes: 4) + integer(0) + integer(UInt64(entries.count))
+        for (key, type, value) in entries {
+            data += ggufString(key) + integer(type, bytes: 4) + value
+        }
+        return data
+    }
+    private func verifyHeader(_ data: Data) throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        try data.write(to: url)
+        try manifest().verifyExecutableMetadata(at: url)
+    }
+
+    func testHeaderPreflightRequiresActualT5ArchitectureAndTokenizer() throws {
+        let architecture = ("general.architecture", UInt64(8), ggufString("t5"))
+        let tokenizer = ("tokenizer.ggml.model", UInt64(8), ggufString("t5"))
+        XCTAssertNoThrow(try verifyHeader(header([architecture, tokenizer])))
+        XCTAssertNoThrow(try verifyHeader(header([architecture, tokenizer], version: 2)))
+        for entries in [[], [architecture], [tokenizer],
+                        [("general.architecture", UInt64(8), ggufString("qwen2")), tokenizer],
+                        [architecture, ("tokenizer.ggml.model", UInt64(8), ggufString("llama"))],
+                        [architecture, tokenizer, architecture],
+                        [("general.architecture", UInt64(4), integer(5, bytes: 4)), tokenizer]] {
+            XCTAssertThrowsError(try verifyHeader(header(entries))) {
+                XCTAssertEqual($0 as? FruitfolioTranslationError, .incompatibleModel)
+            }
+        }
+        // A metadata-only fixture is not a model and does not prove inference.
+    }
+
+    func testHeaderPreflightSkipsVocabularyArraysWithoutLosingFollowingMetadata() throws {
+        let vocabulary = integer(8, bytes: 4) + integer(3) + ggufString("<pad>") + ggufString("é") + ggufString("<2es>")
+        let scores = integer(6, bytes: 4) + integer(3) + Data(repeating: 0, count: 12)
+        let data = header([
+            ("tokenizer.ggml.tokens", 9, vocabulary),
+            ("general.name", 8, ggufString("test fixture only")),
+            ("tokenizer.ggml.scores", 9, scores),
+            ("general.architecture", 8, ggufString("t5")),
+            ("tokenizer.ggml.model", 8, ggufString("t5"))])
+        XCTAssertNoThrow(try verifyHeader(data))
+        for length in [0, 4, 12, 23, data.count - 1] {
+            XCTAssertThrowsError(try verifyHeader(Data(data.prefix(length))))
+        }
+    }
+
+    func testHeaderPreflightRejectsUnsupportedAndUnboundedMetadata() throws {
+        let valid: [(String, UInt64, Data)] = [
+            ("general.architecture", 8, ggufString("t5")),
+            ("tokenizer.ggml.model", 8, ggufString("t5"))]
+        let invalidValues: [(String, UInt64, Data)] = [
+            ("oversized.string", 8, integer(UInt64.max)),
+            ("oversized.array", 9, integer(8, bytes: 4) + integer(UInt64.max)),
+            ("nested.array", 9, integer(9, bytes: 4) + integer(1)),
+            ("unknown.type", 99, Data())]
+        for value in invalidValues {
+            XCTAssertThrowsError(try verifyHeader(header(valid + [value])))
+        }
+        XCTAssertThrowsError(try verifyHeader(header(valid, version: 1)))
+        XCTAssertThrowsError(try verifyHeader(Data("GGUF".utf8) + integer(3, bytes: 4) + integer(0) + integer(UInt64.max)))
+        XCTAssertThrowsError(try verifyHeader(header([(String(repeating: "k", count: 1025), 8, ggufString("x"))] + valid)))
+    }
+
+    func testCancelledHeaderPreflightCannotAcceptCompatibleMetadata() async throws {
+        let data = header([("general.architecture", 8, ggufString("t5")), ("tokenizer.ggml.model", 8, ggufString("t5"))])
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: url) }
+        try data.write(to: url)
+        let config = manifest()
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            XCTAssertThrowsError(try config.verifyExecutableMetadata(at: url)) { XCTAssertTrue($0 is CancellationError) }
+        }
+        try await task.value
+    }
+
     func testUnverifiedDigestAndEscapingResourcePathsAreRejected() {
         XCTAssertThrowsError(try manifest(file: "../model.gguf").validate())
         XCTAssertThrowsError(try manifest(hash: "unverified").validate())

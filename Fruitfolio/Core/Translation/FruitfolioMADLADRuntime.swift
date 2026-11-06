@@ -94,6 +94,8 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         try config.validate()
         let modelURL = directory.appendingPathComponent(config.modelFile)
         try config.verifyModel(at: modelURL)
+        try config.verifyExecutableMetadata(at: modelURL)
+        try Task.checkCancellation()
         FruitfolioLlamaBackend.initialize()
         var parameters = llama_model_default_params()
         // Start with CPU execution on all targets. Enable Metal only after the
@@ -101,6 +103,10 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         parameters.n_gpu_layers = 0
         guard let loaded = llama_model_load_from_file(modelURL.path, parameters) else {
             throw FruitfolioTranslationError.incompatibleModel
+        }
+        guard !Task.isCancelled else {
+            llama_model_free(loaded)
+            throw CancellationError()
         }
         var architecture = [CChar](repeating: 0, count: 64)
         let architectureCapacity = architecture.count
@@ -119,6 +125,14 @@ actor FruitfolioMADLADRuntime: FruitfolioLocalTranslationRuntime {
         contextParameters.n_threads_batch = threads
         guard let loadedContext = llama_init_from_model(loaded, contextParameters) else {
             llama_model_free(loaded)
+            throw FruitfolioTranslationError.incompatibleModel
+        }
+        guard !Task.isCancelled else {
+            llama_free(loadedContext); llama_model_free(loaded)
+            throw CancellationError()
+        }
+        guard llama_n_ctx(loadedContext) >= UInt32(config.contextLength) else {
+            llama_free(loadedContext); llama_model_free(loaded)
             throw FruitfolioTranslationError.incompatibleModel
         }
         guard let loadedVocab = llama_model_get_vocab(loaded) else {
