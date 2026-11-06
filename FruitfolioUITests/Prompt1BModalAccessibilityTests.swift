@@ -3,6 +3,31 @@ import XCTest
 final class Prompt1BModalAccessibilityTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
+    func testContactFailureUsesMeasuredModalAndRestoresLinkAccess() {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioContactQA", "-UIPreferredContentSizeCategoryName",
+                                    "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioContactReduceMotion"] }
+            app.launch()
+            let link = app.buttons["contact.link.instagram"]
+            XCTAssertTrue(link.waitForExistence(timeout: 5))
+            for _ in 0..<8 { if link.isHittable { break }; app.swipeUp() }
+            link.tap()
+            let close = app.buttons["contact.linkFailure.close"]
+            let scroll = app.scrollViews["tapedWhitePopup.scroll"]
+            XCTAssertTrue(scroll.waitForExistence(timeout: 3))
+            XCTAssertFalse(app.buttons["contact.link.email"].exists)
+            for _ in 0..<12 { if close.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(close.isHittable)
+            XCTAssertGreaterThanOrEqual(close.frame.minY, app.frame.minY)
+            XCTAssertLessThanOrEqual(close.frame.maxY, app.frame.maxY)
+            close.tap()
+            XCTAssertTrue(link.waitForExistence(timeout: 3))
+            app.terminate()
+        }
+    }
+
     func testScrollablePopupIsolatesBackgroundAndRestoresItOnClose() {
         verifyModal(reduceMotion: false)
     }

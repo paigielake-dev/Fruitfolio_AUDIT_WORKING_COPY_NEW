@@ -13275,7 +13275,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13284,14 +13287,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 376,
@@ -13304,7 +13310,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13313,14 +13322,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 377,
@@ -13333,7 +13345,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13342,14 +13357,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 378,
@@ -13362,7 +13380,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13371,14 +13392,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 379,
@@ -13391,7 +13415,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13400,14 +13427,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 380,
@@ -13420,7 +13450,10 @@
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioDecorativeArtLayout.swift",
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13429,14 +13462,17 @@
       "related_tests": [
         "Prompt1BFAQSafetyTests",
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
         "FAQ disclosure buttons now use shared pop/sound behavior and expose expanded/collapsed values plus stable IDs. Answers use canonical semantic rendering. Fruit Basket FAQ explicitly states both final bad-fruit outcomes. Contact actions now report an unavailable device handler instead of silently doing nothing. Approved destination URLs/content are retained; no messages are sent automatically.",
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 381,
@@ -13449,7 +13485,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13457,13 +13496,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 382,
@@ -13476,7 +13518,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13484,13 +13529,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 383,
@@ -13503,7 +13551,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13511,13 +13562,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 384,
@@ -13527,20 +13581,28 @@
       "description": "Remove remaining inconsistent gray/red buttons.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 385,
@@ -13553,7 +13615,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13561,13 +13626,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 386,
@@ -13580,7 +13648,10 @@
         "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift",
         "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
         "Fruitfolio/Hub/FAQ/Prompt29FAQView.swift",
-        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift"
+        "Fruitfolio/Privacy Settings/Prompt12SettingsView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
@@ -13588,13 +13659,16 @@
       "blockers": [],
       "related_tests": [
         "Prompt1BDecorativeLayoutTests",
-        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets"
+        "WorkflowIntegrityTests/test_header_art_dimensions_match_all_bundled_assets",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-responsive-approved-header-art (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux."
+        "Shared decorative geometry is now used by sticky Contact, Settings and FAQ headers. Reserved columns protect text/back controls; artwork retains measured aspect ratios, uses bounded sizes and protected-region collision checks, and remains static while content scrolls. Contact uses green flecks/plum/sparkles; Settings uses lavender droplets/white flower/sparkles. FAQ removes conflicting fruit assignments but its required tulip remains an explicit missing-asset blocker; no unrelated flower or rain cloud is substituted. Converted geometry inputs to Foundation-only insets so its real tests compile on Linux.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:24:10.061533+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 387,
@@ -13602,15 +13676,26 @@
       "original_checklist_part": "Part 8 \u2014 FAQ, Contact, and remaining visual corrections",
       "original_section": null,
       "description": "Correct popup text that exceeds its writing area.",
-      "relevant_source_files": [],
-      "implementation_status": "NOT_STARTED",
-      "verification_status": "NOT_RUN",
+      "relevant_source_files": [
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift"
+      ],
+      "implementation_status": "IN_PROGRESS",
+      "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
-      "related_tests": [],
-      "commit_reference": null,
-      "evidence_of_implementation": [],
-      "last_updated": "2026-11-05T18:26:00.127735+00:00"
+      "related_tests": [
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
+      ],
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
+      "evidence_of_implementation": [
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
+      ],
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 388,
@@ -13636,20 +13721,28 @@
       "description": "Correct inconsistent button animations and popup sounds.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 390,
@@ -13659,20 +13752,28 @@
       "description": "Apply the updated accessibility behavior to all affected states.",
       "relevant_source_files": [
         "Fruitfolio/Global Controls/Prompt08GlobalControls.swift",
-        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift"
+        "Fruitfolio/Fruit Popup Engine/FruitfolioHoldIdentify.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactView.swift",
+        "Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift",
+        "Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift",
+        "Fruitfolio/Fruitfolio/ContentView.swift",
+        "Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift"
       ],
       "implementation_status": "IN_PROGRESS",
       "verification_status": "SOURCE_REVIEWED",
       "dependencies": [],
       "blockers": [],
       "related_tests": [
-        "Prompt08GlobalControlsTests"
+        "Prompt08GlobalControlsTests",
+        "Prompt1BContactDestinationTests",
+        "Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN)"
       ],
-      "commit_reference": "batch:P1-shared-icon-artwork-and-disabled-actions (resolve containing commit with git log)",
+      "commit_reference": "batch:Contact-measured-link-failure-modal-and-owned-request-recovery (resolve containing commit with git log)",
       "evidence_of_implementation": [
-        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending."
+        "Back/Close/Add/Confirm and bookmark controls now use the supplied canonical artwork rather than SF Symbol substitutes. The shared gesture surface respects both its local enabled flag and inherited disabled state for touch and accessibility actions. Hold-label tasks are owned/cancelled and Reduced Motion uses an opacity-only identification transition. Device interaction/screenshot regression execution remains pending.",
+        "# Contact link failure and approved composition\n\nThe existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.\n\nThe former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.\n\nThe view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.\n\nApple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.\n"
       ],
-      "last_updated": "2026-11-05T19:15:10.749488+00:00"
+      "last_updated": "2026-11-06T01:18:12.495531+00:00"
     },
     {
       "sequence": 391,

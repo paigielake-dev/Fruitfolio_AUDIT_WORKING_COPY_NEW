@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T01:14:24.919234+00:00",
+  "updated_at": "2026-11-06T01:18:12.495531+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -1341,6 +1341,23 @@
         "native": "Prior actual native-linked suite449+21 passed; current copy/catalog/UI changes do not change native model code"
       },
       "timestamp": "2026-11-06T01:14:24.919234+00:00"
+    },
+    {
+      "batch": "Contact-measured-link-failure-modal-and-owned-request-recovery",
+      "commands": [
+        "Full native-linked Swift5 suite with final request-state regressions",
+        "Full Swift6 portable suite before additional request-state regression",
+        "Swift compiler syntax parse",
+        "git diff --check"
+      ],
+      "results": {
+        "nativeSwift5": "453 XCTest +21 Swift Testing passed with final Foundation sources and actual native library",
+        "Swift6": "448 XCTest +21 Swift Testing passed before final additional request-state regression",
+        "syntax": "233 changed Swift files parsed; zero errors",
+        "Apple": "NOT_RUN actual Contact failure UI, OS URL actions, VoiceOver focus and physical artwork layout",
+        "FAQart": "Canonical tulip/cloud absent; approved sparkles retained without substitute"
+      },
+      "timestamp": "2026-11-06T01:18:12.495531+00:00"
     }
   ]
 }

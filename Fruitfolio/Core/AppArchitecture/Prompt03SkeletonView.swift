@@ -120,7 +120,13 @@ struct Prompt03SkeletonView: View {
     @ViewBuilder
     private var initialContent: some View {
         #if DEBUG
-        if ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelQA") {
+        if ProcessInfo.processInfo.arguments.contains("-fruitfolioContactQA") {
+            Prompt30ContactView(onBack: {})
+                .environment(\.openURL, OpenURLAction { _ in .discarded })
+                .onAppear {
+                    settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioContactReduceMotion")
+                }
+        } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioWheelQA") {
             Prompt18WheelRegressionHarness()
         } else if ProcessInfo.processInfo.arguments.contains("-fruitfolioPersonalHealthQA") {
             FruitfolioPersonalHealthRegressionHarness()

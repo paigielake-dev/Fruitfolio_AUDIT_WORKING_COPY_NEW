@@ -908,3 +908,23 @@ Five portable ledger regressions check premature completion, duplicate/late even
 - Verification: {"Swift6": "447 XCTest +21 Swift Testing passed", "workflow": "18 tests passed", "syntax": "231 changed Swift files parsed; zero errors", "supplemental": "36 exact source requirements retained", "Apple": "NOT_RUN: observer drafts, actual FAQ/rules dynamic text and VoiceOver; no Apple SDK", "native": "Prior actual native-linked suite449+21 passed; current copy/catalog/UI changes do not change native model code"}.
 - Next action: FAQ tulip remains unavailable: preserve approved sparkle/no unrelated rain cloud; proceed Contact378–383 shared link-failure modal, focus/Reduce Motion, responsive approved green flecks/plum/sparkles; then next original section.
 - Commit: containing commit for batch Consistent-game-rules-FAQ-and-shared-username-drafts.
+
+## Contact-measured-link-failure-modal-and-owned-request-recovery
+
+- Parent checkpoint: d958e4d4c3ee53a7ab8f32ee173b8fedda568e99.
+- Source-order requirements: [375, 376, 377, 378, 379, 380, 381, 382, 383, 384, 385, 386, 387, 389, 390].
+- Source files: Fruitfolio/Hub/Contact/Prompt30ContactView.swift, Fruitfolio/Hub/Contact/Prompt30ContactDestination.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift, Fruitfolio/Fruitfolio/ContentView.swift, Fruitfolio/Core/DesignSystems/FruitfolioHeaderArtwork.swift.
+- # Contact link failure and approved composition
+
+The existing founder Instagram, TikTok, email and Carrd destinations are unchanged. Contact uses the existing green flecks, plum and sparkles header palette with the shared responsive protected-region placement. FAQ keeps its existing approved sparkle and omits an unavailable canonical tulip/cloud; no unrelated rain cloud or substitute flower is introduced.
+
+The former system link-failure alert now uses the shared measured taped-white writing aperture, scrollable content, shared blur/dim/Reduce Motion policy and shared button sound/press style. Background art, header and links are excluded from interaction/accessibility while the dialog is visible. The destination remains selectable for copying, with explicit close/Escape and focus requested back to the initiating link. There is no timed dismissal.
+
+The view owns actual request-identity state. A superseded, duplicate or post-disappearance external-app callback cannot present/reopen an obsolete failure. A failed request cannot be replaced by background links behind the modal. Portable regressions exercise the production state and all exact original destinations. A DEBUG-only route injects OpenURLAction.discarded into the actual Contact view inside the normal app shell/disposable preferences, without opening an external service. The added UI regression checks the modal writing area, background exclusion and restored link access at accessibility XXXL in both motion settings.
+
+Apple tests, actual OpenURL completion behavior, VoiceOver focus restoration, smallest-screen rendering and physical app opening are NOT_RUN on Linux. Foundation execution and compiler parsing do not verify these runtime effects. The shared palette was preserved; no claim of rendered artwork inspection is made.
+
+- Tests added/updated: Prompt1BContactDestinationTests, Prompt1BModalAccessibilityTests.testContactFailureUsesMeasuredModalAndRestoresLinkAccess (Apple NOT_RUN).
+- Verification: {"nativeSwift5": "453 XCTest +21 Swift Testing passed with final Foundation sources and actual native library", "Swift6": "448 XCTest +21 Swift Testing passed before final additional request-state regression", "syntax": "233 changed Swift files parsed; zero errors", "Apple": "NOT_RUN actual Contact failure UI, OS URL actions, VoiceOver focus and physical artwork layout", "FAQart": "Canonical tulip/cloud absent; approved sparkles retained without substitute"}.
+- Next action: Strengthen existing single language preference persistence and explicit-language resolution; keep global selector recognizable/reachable. Wire selected language into remaining dynamic FAQ/Contact/game UI and preserve original scientific/source fields through MADLAD display translation. Official model acquisition/device verification still blocked; continue independent localization and remaining source-order requirements.
+- Commit: containing commit for batch Contact-measured-link-failure-modal-and-owned-request-recovery.
