@@ -40,15 +40,18 @@ nonisolated struct FruitfolioHormoneLibraryArticle: Sendable {
 
 nonisolated enum FruitfolioHormoneResearchMatch {
     static func contains(_ hormone: FruitfolioMeasuredHormone, in text: String) -> Bool {
+        // Typography in an original medical name may use a Unicode hyphen or
+        // nonbreaking space. This lookup never rewrites the quoted evidence.
+        let compoundSeparator = #"[\p{Pd}\p{Zs}\t\r\n]+"#
         let alternatives: String
         switch hormone {
         case .estradiol: alternatives = "estradiol|estrogen|oestrogen|e2"
         case .progesterone: alternatives = "progesterone"
         case .lh: alternatives = "luteinizing|luteinising|lh"
-        case .fsh: alternatives = "follicle[- ]+stimulating|fsh"
+        case .fsh: alternatives = "follicle" + compoundSeparator + "stimulating|fsh"
         case .testosterone: alternatives = "testosterone"
         case .prolactin: alternatives = "prolactin"
-        case .amh: alternatives = "anti[- ]+mullerian|amh"
+        case .amh: alternatives = "anti" + compoundSeparator + "mullerian|amh"
         case .other: return false
         }
         let folded = text.folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))

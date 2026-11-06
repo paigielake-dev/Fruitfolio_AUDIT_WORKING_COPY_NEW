@@ -52,4 +52,54 @@ final class Prompt1BHormoneLibraryTests: XCTestCase {
         do { _ = try await provider.article(for: .other); XCTFail("Other is not a specified educational hormone") }
         catch FruitfolioHormoneLibraryProvider.Failure.unspecifiedHormone { }
     }
+    func testFullHormoneNamesAcceptUnicodeMedicalHyphensAndSpacing() {
+        for separator in ["-", " ", "\u{2010}", "\u{2011}", "\u{2012}", "\u{2013}", "\u{2014}", "\u{00A0}", "\u{202F}", "\u{2009}"] {
+            XCTAssertTrue(FruitfolioHormoneResearchMatch.contains(.amh, in: "Anti\(separator)Müllerian hormone testing context"), "Missed literal AMH name with separator \(separator.unicodeScalars.map(\.value))")
+            XCTAssertTrue(FruitfolioHormoneResearchMatch.contains(.fsh, in: "follicle\(separator)stimulating hormone testing context"), "Missed literal FSH name with separator \(separator.unicodeScalars.map(\.value))")
+        }
+    }
+
+    func testUnicodeNameSeparatorsDoNotRelaxClinicalWordBoundariesOrInventAliases() {
+        for text in ["preanti–mullerian", "anti–mulleriansuffix", "mullerian development", "anti signal and mullerian mention", "anti/mullerian"] {
+            XCTAssertFalse(FruitfolioHormoneResearchMatch.contains(.amh, in: text))
+        }
+        for text in ["prefollicle–stimulating", "follicle–stimulatingness", "a follicle grows", "follicle/stimulating", "FSHword"] {
+            XCTAssertFalse(FruitfolioHormoneResearchMatch.contains(.fsh, in: text))
+        }
+        XCTAssertFalse(FruitfolioHormoneResearchMatch.contains(.other, in: "Anti–Müllerian hormone"))
+    }
+
+    func testActualProviderPreservesUnicodeParagraphBytesAndCannotBypassEligibilityOrApproval() async throws {
+        for approved in [true, false] {
+        for eligible in [true, false] {
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            defer { try? FileManager.default.removeItem(at: directory) }
+            let paragraph = "Anti\u{2011}Müllerian hormone testing context fixture label. No medical assertion."
+            let source = FruitfolioResearchSource(sourceID: "punctuation-fixture", title: "Nonclinical punctuation fixture", authors: nil, organization: nil,
+                publicationDate: nil, publicationType: nil, canonicalURL: nil, doi: nil,
+                apa7Reference: approved ? "Fixture reference, not medical evidence" : nil,
+                verificationStatus: approved ? "verified" : "unresolved", retrievalEligibility: approved,
+                sourceVersion: "fixture-v1", verifiedAt: nil, contentVersion: "fixture-v1")
+            let note = FruitfolioResearchNoteChunk(chunkID: "punctuation-note", researchTopicID: "punctuation-fixture", heading: "Nonclinical punctuation label", subheading: nil,
+                text: paragraph, sourceIDs: [source.sourceID], semanticTags: [], domainTags: [], retrievalEligibility: eligible, sourceParagraphID: "punctuation-paragraph")
+            var package = FruitfolioResearchPackage(schemaVersion: 1, contentVersion: "fixture-v1", generatedFrom: "test", generationNote: "Synthetic punctuation/approval boundary only, not clinical evidence",
+                researchNoteChunks: [note], sources: [source], sourceChunks: [])
+            package.sourceParagraphs = ["punctuation-paragraph": paragraph]
+            let url = directory.appendingPathComponent("research.json")
+            try JSONEncoder().encode(package).write(to: url)
+            let provider = FruitfolioHormoneLibraryProvider(packageStore: .init(resourceURL: url))
+            let article = try await provider.article(for: .amh)
+            XCTAssertEqual(article.excerpts.count, approved && eligible ? 1 : 0)
+            if let excerpt = article.excerpts.first {
+                XCTAssertEqual(Data(excerpt.originalText.utf8), Data(paragraph.utf8))
+                XCTAssertEqual(excerpt.heading, note.heading)
+                XCTAssertEqual(excerpt.sources.map(\.id), [source.sourceID])
+                XCTAssertEqual(excerpt.sources.first?.title, source.apa7Reference)
+                XCTAssertEqual(excerpt.section, .testingContext)
+            }
+        }
+        }
+    }
+
 }
