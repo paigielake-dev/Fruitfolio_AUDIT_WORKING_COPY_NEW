@@ -43,6 +43,7 @@ private struct Prompt28InlineArtGlyph: View {
 }
 
 
+@MainActor
 struct Prompt28FruitBasketView: View {
     let onBack: () -> Void
     private let libraryStore: Prompt10SavedLibraryStore
@@ -52,6 +53,11 @@ struct Prompt28FruitBasketView: View {
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var usernameLabel = FruitfolioControlTranslationState()
+    private var usernameLabelKey: FruitfolioControlTranslationState.Key {
+        .init(source: "public username", language: settings.language)
+    }
     @ObservedObject private var usernameStore: FruitfolioUsernameStore
     @Environment(\.scenePhase) private var scenePhase
 
@@ -64,6 +70,8 @@ struct Prompt28FruitBasketView: View {
     @State private var leaderboardValidationMessage: String?
     @State private var leaderboardUsernameDraft = ""
     @State private var usernameNonIdentifying = false
+    @State private var usernameBaseline: FruitfolioUsernamePersistence.Snapshot?
+    @State private var usernameEditorHasLoaded = false
     @State private var selectedLeaderboardCategory: Prompt28LeaderboardCategory = .fruit
 
     init(
@@ -365,6 +373,7 @@ struct Prompt28FruitBasketView: View {
                     )
                 )
                 .frame(minHeight: 44)
+                .accessibilityIdentifier("fruitBasket.home")
             }
         }
         .padding(.horizontal, 18)
@@ -518,6 +527,7 @@ struct Prompt28FruitBasketView: View {
                 ) {
                     viewModel.screen = .leaderboard
                 }
+                .accessibilityIdentifier("fruitBasket.openLeaderboard")
             }
             .frame(maxWidth: 292)
 
@@ -1660,7 +1670,8 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var leaderboard: some View {
-        ScrollView {
+        let input = usernameLabel.presentation(for: usernameLabelKey)
+        return ScrollView {
             VStack(spacing: 14) {
                 topBar
                 if store.hasLegacyCaptureTotals {
@@ -1747,14 +1758,17 @@ struct Prompt28FruitBasketView: View {
 
                 Prompt28PaperPanel {
                     VStack(spacing: 10) {
-                        Text("fruit basket leaderboard")
-                            .prompt28Text(.sectionHeading)
+                        FruitfolioTranslatedText(source: "fruit basket leaderboard",
+                            font: .custom("Chalkboard SE", size: 17, relativeTo: .headline))
                             .multilineTextAlignment(.center)
 
-                        TextField(
-                            "public username",
-                            text: $leaderboardUsernameDraft
-                        )
+                        TextField("", text: $leaderboardUsernameDraft,
+                            prompt: Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: input.text)))
+                        .task(id: FruitfolioControlTranslationState.TaskKey(key: usernameLabelKey,
+                            inferenceAllowed: !settings.translationPausedForMemoryPressure)) {
+                            await usernameLabel.resolve(usernameLabelKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+                        }
                         .accessibilityIdentifier("fruitBasket.publicUsername")
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
@@ -1769,18 +1783,42 @@ struct Prompt28FruitBasketView: View {
                             RoundedRectangle(cornerRadius: 15, style: .continuous)
                                 .stroke(DesignTokens.ColorToken.primaryBurgundy.opacity(0.18), lineWidth: 1)
                         }
-                        .accessibilityHint(
-                            "Three to sixteen characters. Letters, numbers, periods, and underscores only. Public usernames cannot be explicit."
-                        )
-
-                        Toggle("this is not my real or legal name and contains no identifying details", isOn: $usernameNonIdentifying)
-                            .prompt28Text(.metadata)
-                        Button("save username") {
-                            leaderboardValidationMessage = usernameStore.setUsername(leaderboardUsernameDraft,
-                                confirmedNonIdentifying: usernameNonIdentifying)
-                            if leaderboardValidationMessage == nil { leaderboardValidationMessage = "saved on this device only." }
+                        .accessibilityHint(Text([
+                            settings.localized("Three to sixteen characters. Letters, numbers, periods, and underscores only. Public usernames cannot be explicit."),
+                            input.status.accessibilityDetail(original: usernameLabelKey.source, localized: { settings.localized($0) })
+                        ].filter { !$0.isEmpty }.joined(separator: ". ")))
+                        if let status = input.status.captionKey {
+                            Text(LocalizedStringKey(status)).prompt28Text(.metadata).accessibilityHidden(true)
                         }
-                        .frame(minHeight: DesignTokens.Layout.minimumHitTarget)
+
+                        WatercolorToggle(label: "this is not my real or legal name and contains no identifying details",
+                            isOn: $usernameNonIdentifying)
+                            .accessibilityIdentifier("fruitBasket.usernameConfirmation")
+                        if let issue = usernameStore.persistenceMessage {
+                            FruitfolioTranslatedText(source: issue,
+                                font: .custom("Chalkboard SE", size: 13, relativeTo: .body), serious: true)
+                            WatercolorSecondaryButton(label: "reload saved username") { usernameStore.reloadSavedUsername() }
+                                .controlSize(.small)
+                                .accessibilityIdentifier("fruitBasket.reloadUsername")
+                        }
+                        WatercolorSecondaryButton(label: "save username") {
+                            leaderboardValidationMessage = usernameStore.setUsername(leaderboardUsernameDraft,
+                                confirmedNonIdentifying: usernameNonIdentifying, expecting: usernameBaseline)
+                            if leaderboardValidationMessage == nil {
+                                leaderboardUsernameDraft = usernameStore.username
+                                usernameBaseline = usernameStore.snapshot
+                                leaderboardValidationMessage = "saved on this device only."
+                            } else { usernameNonIdentifying = false }
+                        }
+                        .controlSize(.small)
+                        .disabled(!usernameStore.canPersistUsername || usernameBaseline == nil)
+                        .accessibilityIdentifier("fruitBasket.saveUsername")
+                        #if DEBUG
+                        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+                            Text("saved username: \(usernameStore.debugStoredUsername.username)")
+                                .accessibilityIdentifier("fruitBasket.qa.savedUsername")
+                        }
+                        #endif
 
                         HStack {
                             Text("3–\(Prompt28LeaderboardUsernamePolicy.maximumLength) characters")
@@ -1792,8 +1830,8 @@ struct Prompt28FruitBasketView: View {
                         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.68))
 
                         if let leaderboardValidationMessage {
-                            Text(leaderboardValidationMessage)
-                                .prompt28Text(.secondary)
+                            FruitfolioTranslatedText(source: leaderboardValidationMessage,
+                                font: .custom("Chalkboard SE", size: 13, relativeTo: .subheadline), serious: true)
                                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy.opacity(0.78))
                                 .multilineTextAlignment(.center)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -1805,16 +1843,16 @@ struct Prompt28FruitBasketView: View {
                         )
                         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
 
-                        if Prompt28LeaderboardUsernamePolicy.isValid(usernameStore.username) {
+                        if usernameStore.confirmedNonIdentifying, Prompt28LeaderboardUsernamePolicy.isValid(usernameStore.username) {
                             HStack(spacing: 6) {
                                 Text("public name")
                                     .prompt28Text(.metadata)
                                 Spacer(minLength: 8)
-                                Text(usernameStore.username)
+                                Text(verbatim: usernameStore.username)
                                     .prompt28Text(.body)
                                     .fontWeight(.semibold)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.80)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
                             }
                             .frame(maxWidth: .infinity)
                         }
@@ -1833,6 +1871,11 @@ struct Prompt28FruitBasketView: View {
             .padding(.horizontal, 20)
             .padding(.bottom, 30)
         }
+        .scrollDismissesKeyboard(.interactively)
+        .accessibilityIdentifier("fruitBasket.leaderboard.scroll")
+        .onChange(of: usernameNonIdentifying) { _, confirmed in
+            if confirmed { usernameBaseline = usernameStore.snapshot }
+        }
         .onChange(of: leaderboardUsernameDraft) { _, newValue in
             usernameNonIdentifying = newValue == usernameStore.username && usernameStore.confirmedNonIdentifying
         }
@@ -1840,17 +1883,25 @@ struct Prompt28FruitBasketView: View {
             if leaderboardUsernameDraft == oldValue || leaderboardUsernameDraft == newValue {
                 leaderboardUsernameDraft = newValue
                 usernameNonIdentifying = usernameStore.confirmedNonIdentifying
+                usernameBaseline = usernameStore.snapshot
             } else {
                 usernameNonIdentifying = false
                 leaderboardValidationMessage = "the saved username changed in Account. your unsaved draft is still here; confirm it again before saving."
             }
         }
         .onAppear {
-            leaderboardUsernameDraft = usernameStore.username
-            usernameNonIdentifying = usernameStore.confirmedNonIdentifying
-            leaderboardValidationMessage = usernameStore.username.isEmpty
-                ? nil
-                : Prompt28LeaderboardUsernamePolicy.validationMessage(for: usernameStore.username)
+            let current = usernameStore.snapshot
+            if !usernameEditorHasLoaded || usernameBaseline.map({ leaderboardUsernameDraft == $0.username }) == true {
+                usernameEditorHasLoaded = true
+                leaderboardUsernameDraft = current.username
+                usernameNonIdentifying = current.confirmedNonIdentifying
+                usernameBaseline = current
+                leaderboardValidationMessage = current.username.isEmpty ? nil :
+                    Prompt28LeaderboardUsernamePolicy.validationMessage(for: current.username)
+            } else if usernameBaseline != current {
+                usernameNonIdentifying = false
+                leaderboardValidationMessage = "the saved username changed in Account. your unsaved draft is still here; confirm it again before saving."
+            }
         }
     }
 

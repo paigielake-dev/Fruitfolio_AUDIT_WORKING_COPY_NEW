@@ -1839,3 +1839,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 703, "native_CPU_XCTest": 716, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 302, "sound_ownership_findings": 0, "before_actual_parent_fault_tests": "2 tests, 2 failures against 7140173", "focused_username_current": "11 tests, 0 failures", "original_recovery_bundle": "verified and unchanged; 7140173", "Apple_UI_typecheck": "NOT_RUN; no Apple SDK", "official_MADLAD": "BLOCKED; synthetic T5 evidence does not approve official translations"}.
 - Next action: Apply frozen-name baseline, protected-record message/reload and dirty reappearance handling to existing Fruit Basket username editor using the same shared authority; preserve local-only/public-service-unavailable semantics and original typed draft.
 - Commit: containing commit for batch Recovered-workspace-and-acknowledged-shared-username-record.
+
+## Fruit-Basket-frozen-username-editor-and-safe-QA-lifetime
+
+- Parent checkpoint: 0b37c0543180bc585c1b2f7d35ac8dbe32619376.
+- Source-order requirements: [18, 24, 63, 229, 230, 231, 369, 370, 371, 393, 395, 397, 443, 444, 446, 463, 466, 468, 471, 472, 473, 474, 476, 477, 478].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Core/AppArchitecture/Prompt03SkeletonView.swift.
+- Existing Game editor now passes frozen expected username, protects future records/reload, retains dirty drafts on reappearance and only reports acknowledged saves. Source-only label translation/canonical confirmation/save controls, original wrapping public name and confirmed-only display. Private QA future record and deinit-owned lifetime avoid transient background cleanup. Eight actual Apple source-only launch scenarios added; no Apple runtime/typecheck success inferred.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift, FruitfolioTests/Prompt1BUsernamePersistenceTests.swift.
+- Verification: {"portable_XCTest": 703, "native_CPU_XCTest": 716, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 302, "sound_ownership_findings": 0, "Apple_UI_typecheck": "NOT_RUN; eight Game username launch scenarios source only", "official_MADLAD": "BLOCKED; no official language/clinical/device acceptance from synthetic T5"}.
+- Next action: Replace unconditional whole-game Back with owned shared-paper save/discard/keep confirmation for dirty username drafts; freeze intent, wait for actual dismissal, preserve drafts/other records and add actual Foundation request/intent and Apple UI coverage.
+- Commit: containing commit for batch Fruit-Basket-frozen-username-editor-and-safe-QA-lifetime.

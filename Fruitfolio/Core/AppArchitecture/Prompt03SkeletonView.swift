@@ -27,7 +27,8 @@ struct Prompt03SkeletonView: View {
         if (args.contains("-fruitfolioCycleModalQA") && args.contains("-fruitfolioCycleModalRTL")) ||
            (args.contains("-fruitfolioAccountActionQA") && args.contains("-fruitfolioAccountActionRTL")) ||
            (args.contains("-fruitfolioDataManagementQA") && args.contains("-fruitfolioDataRTL")) ||
-           (args.contains("-fruitfolioSettingsControlsQA") && args.contains("-fruitfolioSettingsControlsRTL")) {
+           (args.contains("-fruitfolioSettingsControlsQA") && args.contains("-fruitfolioSettingsControlsRTL")) ||
+           (args.contains("-fruitfolioGameQA") && args.contains("-fruitfolioGameRTL")) {
             return .rightToLeft
         }
         #endif

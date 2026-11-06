@@ -1264,6 +1264,87 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         XCTAssertTrue(message.label.contains(fragment), message.label)
     }
 
+    private func revealLeaderboardInput(_ element: XCUIElement, app: XCUIApplication) {
+        let scroll = app.scrollViews["fruitBasket.leaderboard.scroll"]
+        for _ in 0..<28 {
+            if element.isHittable { break }
+            if element.exists, element.frame.midY < scroll.frame.midY { scroll.swipeDown() }
+            else { scroll.swipeUp() }
+        }
+        XCTAssertTrue(element.isHittable)
+    }
+
+    func testFruitBasketUsernameDraftSurvivesReappearanceAndSavesToActualAuthority() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "leaderboard",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+            app.launch()
+            let field = app.textFields["fruitBasket.publicUsername"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            revealLeaderboardInput(field, app: app)
+            field.tap(); field.typeText("sprout_one")
+            let home = app.buttons["fruitBasket.home"]
+            revealLeaderboardInput(home, app: app)
+            home.tap()
+            let open = app.buttons["fruitBasket.openLeaderboard"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            for _ in 0..<12 { if open.isHittable { break }; app.swipeUp() }
+            open.tap()
+            revealLeaderboardInput(field, app: app)
+            XCTAssertEqual(field.value as? String, "sprout_one")
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            revealLeaderboardInput(field, app: app)
+            XCTAssertEqual(field.value as? String, "sprout_one")
+            let confirm = app.descendants(matching: .any)["fruitBasket.usernameConfirmation"].firstMatch
+            revealLeaderboardInput(confirm, app: app)
+            confirm.tap()
+            let save = app.buttons["fruitBasket.saveUsername"]
+            revealLeaderboardInput(save, app: app)
+            XCTAssertTrue(save.isEnabled)
+            XCTAssertGreaterThanOrEqual(save.frame.height, 44)
+            save.tap()
+            XCTAssertEqual(app.staticTexts["fruitBasket.qa.savedUsername"].label, "saved username: sprout_one")
+            captureGame(app, name: "game-username-draft-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
+    func testFruitBasketFutureUsernameRecordKeepsDraftAndBlocksSaveAfterReload() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "leaderboard-username-future",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion"] }
+            if rtl { app.launchArguments += ["-fruitfolioGameRTL"] }
+            app.launch()
+            let field = app.textFields["fruitBasket.publicUsername"]
+            XCTAssertTrue(field.waitForExistence(timeout: 5))
+            revealLeaderboardInput(field, app: app)
+            XCTAssertEqual(field.value as? String, "future_berry")
+            field.tap(); field.typeText("_draft")
+            let draft = field.value as? String ?? ""
+            XCTAssertTrue(draft.contains("_draft"))
+            let reload = app.buttons["fruitBasket.reloadUsername"]
+            revealLeaderboardInput(reload, app: app)
+            reload.tap()
+            let save = app.buttons["fruitBasket.saveUsername"]
+            revealLeaderboardInput(save, app: app)
+            XCTAssertFalse(save.isEnabled)
+            revealLeaderboardInput(field, app: app)
+            XCTAssertEqual(field.value as? String, draft)
+            captureGame(app, name: "game-username-future-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     private func revealAccountInput(_ element: XCUIElement, app: XCUIApplication) {
         let scroll = app.scrollViews["account.scroll"]
         for _ in 0..<24 {

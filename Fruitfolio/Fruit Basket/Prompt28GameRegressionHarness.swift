@@ -17,10 +17,19 @@ private final class Prompt28GameRegressionFixture: ObservableObject {
         store.controlMode = .classification
         store.persistPreferences()
         model = Prompt28FruitBasketViewModel(store: store, researchProvider: Prompt28UnavailableResearchProvider())
+        let args = ProcessInfo.processInfo.arguments
+        if let index = args.firstIndex(of: "-fruitfolioGameQAScenario"), index + 1 < args.count,
+           args[index + 1] == "leaderboard-username-future" {
+            defaults.set(Data(#"{"schemaVersion":3,"username":"future_berry","confirmedNonIdentifying":true,"future":null}"#.utf8),
+                forKey: FruitfolioUsernamePersistence.recordKey())
+        }
         username = FruitfolioUsernameStore(defaults: defaults)
         library = Prompt10SavedLibraryStore(defaults: defaults)
     }
-    func cleanUp() { defaults.removePersistentDomain(forName: suite) }
+    deinit {
+        // A transient disappearance/background event does not end this fixture.
+        UserDefaults(suiteName: suite)?.removePersistentDomain(forName: suite)
+    }
 }
 
 struct Prompt28GameRegressionHarness: View {
@@ -41,15 +50,18 @@ struct Prompt28GameRegressionHarness: View {
             .task {
                 guard !configured else { return }
                 configured = true
+                settings.language = .english
                 settings.reduceAnimationOverride = ProcessInfo.processInfo.arguments.contains("-fruitfolioGameReduceMotion")
                 configure()
             }
-            .onDisappear { fixture.cleanUp() }
     }
 
     private func configure() {
         if scenario == "rules" { model.screen = .howItWorks; return }
-        if scenario == "leaderboard" { model.screen = .leaderboard; return }
+        if scenario == "leaderboard" || scenario == "leaderboard-username-future" {
+            model.screen = .leaderboard
+            return
+        }
         model.rawTopic = "QA visual fixture"
         model.currentQuestion = Prompt28Question(id: "qa-only", topicQuery: "QA visual fixture",
             normalizedTopic: "qa visual fixture", category: "UI fixture — not medical research",
