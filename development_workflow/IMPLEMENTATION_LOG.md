@@ -1773,3 +1773,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 680, "native_CPU_XCTest": 692, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 298, "sound_ownership_findings": 0, "project_references": "resolved; not Apple build", "Apple_UI": "NOT_RUN; 8 new data popup scenarios and picker-return assertions are source only", "official_MADLAD": "BLOCKED; synthetic T5 evidence does not verify translations"}.
 - Next action: Integrate display-only catalog/MADLAD translation into canonical control labels without nesting interactive disclosure controls inside buttons or changing saved source labels; test actual state ownership, stale/cancelled results and original-preserving failure.
 - Commit: containing commit for batch Data-popup-modal-focus-and-single-opening-lifecycle.
+
+## Canonical-control-label-catalog-MADLAD-display-state
+
+- Parent checkpoint: 998d8adba7e6f45b54a5d9fcf5c46d8803c9f90f.
+- Source-order requirements: [393, 394, 395, 397, 418, 419, 422, 425, 426, 427, 429, 443, 444, 446, 466, 476, 477, 478].
+- Source files: Fruitfolio/Global Controls/Prompt08GlobalControls.swift, Fruitfolio/Core/Translation/FruitfolioControlTranslationState.swift.
+- Canonical controls now resolve app-generated labels with actual catalog/scientific/MADLAD service, explicit original/machine/unavailable state, exact source/language ownership, cancellation and accepted-display retention after resource release. Root remains one genuine button with unchanged cue owner, shared semantic rendering/plain VoiceOver label and protected Fruitfolio/LifeBridge names. Eight actual-state tests and seventh native T5 contract method pass. Synthetic graph execution is not official MADLAD, language/clinical or Apple UI acceptance.
+- Tests added/updated: FruitfolioTests/Prompt1BControlTranslationStateTests.swift, FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 688, "native_CPU_XCTest": 701, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 300, "sound_ownership_findings": 0, "control_state_methods": 8, "native_T5_contract_methods": 7, "Apple_UI_typecheck": "NOT_RUN; no Apple SDK", "official_MADLAD": "BLOCKED; actual synthetic T5 contracts are not linguistic or clinical acceptance"}.
+- Next action: Apply the same protected display-only resolution to actual account navigation title/detail controls; retain single genuine button, artwork/cues, explicit source fallback, and accessibility identity. Then proceed to the next independent source-order requirement.
+- Commit: containing commit for batch Canonical-control-label-catalog-MADLAD-display-state.

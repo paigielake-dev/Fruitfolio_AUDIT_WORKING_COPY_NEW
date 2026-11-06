@@ -17,7 +17,7 @@ explicitly identify SYNTHETIC UNTRAINED / NOT MADLAD. The runtime's production
 manifest, actual streaming digest, T5 metadata, actual loader, context, exact
 language-token round trip and inference code run without validation bypasses.
 
-Six native-only XCTest methods verify:
+Six initial native-only XCTest methods verify:
 
 - Both graph variants successfully encode/decode, then reject immediate EOS with
   empty output. Explicit release is repeatable, and a later request reloads and
@@ -47,3 +47,5 @@ MADLAD compatibility, language quality and scientific meaning remain NOT_RUN.
 Final complete verification: 680 portable XCTest +21 Swift Testing; 691 native CPU XCTest +21 Swift Testing; 42 workflow checks; 298 Swift files parsed. Actual C-header API typecheck passed. Apple SDK typechecking/linking/UI/device behavior remains NOT_RUN.
 
 Nonempty-output follow-up: all 692 native XCTest +21 Swift Testing cases pass, with 42 workflow checks and 298 parsed Swift files. The unchanged portable Foundation branches retain the preceding complete 680 +21 result. No official model/language/device gate is closed.
+
+Control-label follow-up adds a seventh native method executing the actual display state through this same production service/runtime. Synthetic output losing protected lab values/citations remains original/unavailable. It does not approve a language or clinical translation.

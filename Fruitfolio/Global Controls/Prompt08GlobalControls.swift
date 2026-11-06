@@ -33,10 +33,21 @@ struct WatercolorSecondaryButton: View {
 
 /// Canonical action using the bundled watercolor pill. The live label drives
 /// height; resizable center regions allow wrapping without clipping the label.
+@MainActor
 struct FruitfolioControlPillButton: View {
     let label: String
     let action: () -> Void
 
+    @EnvironmentObject private var settings: SettingsStore
+    @StateObject private var translation = FruitfolioControlTranslationState()
+    private struct TranslationTask: Hashable {
+        let source: String
+        let language: FruitfolioLanguage
+        let paused: Bool
+    }
+    private var translationKey: FruitfolioControlTranslationState.Key {
+        .init(source: label, language: settings.language)
+    }
     @Environment(\.controlSize) private var controlSize
     private var compact: Bool { controlSize == .small || controlSize == .mini }
 
@@ -47,11 +58,20 @@ struct FruitfolioControlPillButton: View {
     private var audioManager: AudioManager
 
     var body: some View {
+        let display = translation.presentation(for: translationKey)
         Button {
             audioManager.play(.buttonSoftPop)
             action()
         } label: {
-            Text(LocalizedStringKey(label))
+            VStack(spacing: 4) {
+                FruitfolioSemanticText(markdown: display.text,
+                    baseFont: .custom("Chalkboard SE", size: 15, relativeTo: .headline),
+                    color: DesignTokens.ColorToken.primaryBurgundy)
+                if let status = statusText(display.status) {
+                    Text(LocalizedStringKey(status))
+                        .font(.custom("Chalkboard SE", size: 11, relativeTo: .caption))
+                }
+            }
                 .font(.custom("Chalkboard SE", size: 15, relativeTo: .headline))
                 .fontWeight(.semibold)
                 .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
@@ -77,7 +97,29 @@ struct FruitfolioControlPillButton: View {
                     motionPreferences.reduceMotionActive
             )
         )
-        .accessibilityLabel(Text(LocalizedStringKey(label)))
+        .accessibilityLabel(Text(FruitfolioSemanticDocument.plainText(from: display.text)))
+        .accessibilityHint(Text(accessibilityDetail(display.status)))
+        .task(id: TranslationTask(source: label, language: settings.language,
+                                  paused: settings.translationPausedForMemoryPressure)) {
+            await translation.resolve(translationKey, inferenceAllowed: !settings.translationPausedForMemoryPressure)
+        }
+    }
+
+    private func statusText(_ status: FruitfolioControlTranslationState.Presentation.Status) -> String? {
+        switch status {
+        case .source, .catalog: return nil
+        case .preparing: return "original text"
+        case .machine: return "local machine translation"
+        case .unavailable: return "original text — translation unavailable"
+        }
+    }
+    private func accessibilityDetail(_ status: FruitfolioControlTranslationState.Presentation.Status) -> String {
+        switch status {
+        case .source, .catalog: return ""
+        case .preparing: return settings.localized("original text — preparing local translation…")
+        case .machine: return settings.localized("local machine translation") + ". " + settings.localized("original text") + ": " + FruitfolioSemanticDocument.plainText(from: label)
+        case .unavailable: return settings.localized("original text — translation unavailable")
+        }
     }
 }
 

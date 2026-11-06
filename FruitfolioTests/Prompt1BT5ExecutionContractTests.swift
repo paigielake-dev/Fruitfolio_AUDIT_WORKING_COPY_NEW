@@ -44,6 +44,27 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         await runtime.releaseResources()
     }
 
+    @MainActor
+    func testActualControlStateRejectsScientificLossAfterNativeOutput() async throws {
+        let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        let service = FruitfolioTranslationService(runtime: runtime)
+        let state = FruitfolioControlTranslationState(service: service)
+        let plain = FruitfolioControlTranslationState.Key(source: "confirm", language: .german)
+        await state.resolve(plain, inferenceAllowed: true)
+        XCTAssertEqual(state.presentation(for: plain).text, "fixture")
+        XCTAssertEqual(state.presentation(for: plain).status, .machine)
+        let scientific = FruitfolioControlTranslationState.Key(source: "LH 5.0 mIU/mL [1]", language: .german)
+        await state.resolve(scientific, inferenceAllowed: true)
+        XCTAssertEqual(state.presentation(for: scientific).text, scientific.source)
+        XCTAssertEqual(state.presentation(for: scientific).status, .unavailable)
+        let actual = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 2)
+        XCTAssertEqual(actual.decoderCalls, 4)
+        await service.releaseResources()
+    }
+
     func testActualNativeTokenOutputAndScientificEnvelopeRejection() async throws {
         let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true)
         defer { try? FileManager.default.removeItem(at: directory) }
