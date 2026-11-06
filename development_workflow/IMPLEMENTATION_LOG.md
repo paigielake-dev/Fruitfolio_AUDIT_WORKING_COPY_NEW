@@ -2114,3 +2114,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 731, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0}.
 - Next action: Apply the same modal scope/heading focus and logical cue ownership to the existing storm note; keep pause/resume and guarded dismissal intact. Use actual overlay visibility for private diagnostic placement and add close/acknowledge/escape/background regression cases without OS-gesture or physical-sound claims.
 - Commit: containing commit for batch Tutorial-modal-focus-escape-cues-and-reappearance.
+
+## Storm-note-modal-focus-tone-and-logical-cues
+
+- Parent checkpoint: f5255f38614ff81d1c3b3964ed93ff17c83027e4.
+- Source-order requirements: [6, 9, 11, 18, 23, 26, 27, 42, 59, 63, 443, 446, 447, 468, 471, 472, 473, 476, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift, Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift, Fruitfolio/Localizable.xcstrings.
+- Storm note gains modal scope and actual heading focus/return path, logical open/close cue ownership covering forced closes, and guarded close/acknowledge/shared-escape handling preserving pause/resume/storm key. Serious context uses neutral heading/hidden playful character. Actual overlay visibility places QA diagnostics inside the owner scope. Twelve Apple paired-mode background/dismissal cases added but unrun; one English-only key preserves 731 prior entries.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 730, "native_CPU_XCTest": 752, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 732, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 731}.
+- Next action: Replace the gameplay HUD fixed-width single-line shrinking text with wrapping canonical controls and separately formatted numeric metadata. Reserve a measured header viewport and keep real playfield geometry synchronized below it, preserving collision/ledger logic; add available geometry regressions and Apple layout cases.
+- Commit: containing commit for batch Storm-note-modal-focus-tone-and-logical-cues.

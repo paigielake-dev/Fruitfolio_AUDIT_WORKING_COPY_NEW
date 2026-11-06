@@ -38,6 +38,7 @@ struct Prompt28GameRegressionHarness: View {
     @StateObject private var fixture = Prompt28GameRegressionFixture()
     @State private var configured = false
     @State private var backRequests = 0
+    @State private var modalActive = false
     @EnvironmentObject private var settings: SettingsStore
     @EnvironmentObject private var audioManager: AudioManager
     private var model: Prompt28FruitBasketViewModel { fixture.model }
@@ -51,10 +52,15 @@ struct Prompt28GameRegressionHarness: View {
 
     var body: some View {
         Prompt28FruitBasketView(onBack: { backRequests += 1 }, regressionModel: model, usernameStore: fixture.username, libraryStore: fixture.library)
+            .onPreferenceChange(Prompt28GameOverlayVisibilityKey.self) { visible in
+                modalActive = visible
+            }
             .overlay(alignment: .bottomLeading) {
-                Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
-                .font(.caption2)
-                .allowsHitTesting(false)
+                if !modalActive {
+                    Prompt28GameDiagnosticReadback(model: model, store: model.store, backRequests: backRequests)
+                        .font(.caption2)
+                        .allowsHitTesting(false)
+                }
             }
             .task {
                 guard !configured else { return }
@@ -100,14 +106,15 @@ struct Prompt28GameRegressionHarness: View {
             sourceTitles: ["UI fixture — not medical research"], catchConceptID: "visual-starred-fruit",
             catchRule: "starred fruit", goodFruitIDs: [.pear], badFruitIDs: [.lemon],
             contentVersion: "qa-only", reviewStatus: "test-only", createdAt: Date(timeIntervalSince1970: 0),
-            seriousFeedback: ["question-excerpt-serious", "failure-serious"].contains(scenario) ? true : nil)
+            seriousFeedback: ["question-excerpt-serious", "failure-serious", "storm-serious"].contains(scenario) ? true : nil)
+        let isStorm = ["storm", "storm-serious"].contains(scenario)
         var session = model.engine.newSession(topic: model.rawTopic, normalizedTopic: "qa visual fixture",
-            difficulty: .easy, startingLevel: scenario == "storm" ? 6 : 1)
-        if scenario == "storm" { session.currentRound = 3 }
+            difficulty: .easy, startingLevel: isStorm ? 6 : 1)
+        if isStorm { session.currentRound = 3 }
         model.session = session
         if isExcerpt { model.screen = .question; return }
         model.beginCatch()
-        if scenario == "storm" { return } // Real screen-change observer presents the real storm modal.
+        if isStorm { return } // Real screen-change observer presents the real storm modal.
         if scenario == "star" {
             model.classificationFruit = nil
             model.classificationStarAvailable = true
@@ -139,7 +146,6 @@ private struct Prompt28GameDiagnosticReadback: View {
     @ObservedObject var store: Prompt28FruitBasketStore
     let backRequests: Int
     var body: some View {
-        if store.tourState.hasCompletedTour {
         VStack(alignment: .leading) {
             Text("back requests: \(backRequests)")
                 .accessibilityIdentifier("gameQA.backRequests")
@@ -157,7 +163,14 @@ private struct Prompt28GameDiagnosticReadback: View {
                 FruitfolioInteractionSoundDiagnostics()
             }
         }
-        }
+    }
+}
+
+/// Read actual logical overlay visibility rather than infer it from game state.
+nonisolated struct Prompt28GameOverlayVisibilityKey: PreferenceKey {
+    static let defaultValue = false
+    static func reduce(value: inout Bool, nextValue: () -> Bool) {
+        value = value || nextValue()
     }
 }
 #endif

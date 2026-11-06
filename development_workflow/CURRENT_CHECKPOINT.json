@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "1435d1db8f1ced41e1a08bcc2312e82e8305467a",
+  "current_HEAD": "f5255f38614ff81d1c3b3964ed93ff17c83027e4",
   "latest_verified_commit": null,
   "current_checklist_part": 1,
-  "current_requirement": 26,
-  "current_implementation_batch": "Tutorial-modal-focus-escape-cues-and-reappearance",
+  "current_requirement": 18,
+  "current_implementation_batch": "Storm-note-modal-focus-tone-and-logical-cues",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,11 +493,11 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Assets/AudioManager.swift",
     "Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift",
     "Fruitfolio/Fruit Basket/Prompt28GameRegressionHarness.swift",
+    "Fruitfolio/Localizable.xcstrings",
     "FruitfolioUITests/Prompt1BModalAccessibilityTests.swift",
-    "development_workflow/FRUIT_BASKET_TUTORIAL_MODAL_VERIFICATION.md",
+    "development_workflow/FRUIT_BASKET_STORM_MODAL_VERIFICATION.md",
     "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
@@ -515,7 +515,8 @@
     "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
     "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
     "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
-    "actual SwiftSyntax control-sound-ownership --check"
+    "actual SwiftSyntax control-sound-ownership --check",
+    "JSON preservation comparison of all prior catalog entries"
   ],
   "last_test_results": {
     "portable_XCTest": 730,
@@ -526,13 +527,14 @@
     "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
     "official_MADLAD": "BLOCKED; see BLOCKERS.md",
     "native_T5_contract_methods": 16,
-    "catalog_keys": 731,
+    "catalog_keys": 732,
     "nonempty_foreign_units": 0,
     "Foundation_shared_ownership_regressions": 11,
-    "SwiftSyntax_sound_ownership_findings": 0
+    "SwiftSyntax_sound_ownership_findings": 0,
+    "catalog_existing_entries_preserved": 731
   },
-  "next_exact_implementation_action": "Apply the same modal scope/heading focus and logical cue ownership to the existing storm note; keep pause/resume and guarded dismissal intact. Use actual overlay visibility for private diagnostic placement and add close/acknowledge/escape/background regression cases without OS-gesture or physical-sound claims.",
-  "updated_at": "2026-11-06T15:59:08.849330+00:00",
+  "next_exact_implementation_action": "Replace the gameplay HUD fixed-width single-line shrinking text with wrapping canonical controls and separately formatted numeric metadata. Reserve a measured header viewport and keep real playfield geometry synchronized below it, preserving collision/ledger logic; add available geometry regressions and Apple layout cases.",
+  "updated_at": "2026-11-06T16:11:08.206007+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

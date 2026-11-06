@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-11-06T16:11:08.206007+00:00",
+  "commands": [
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+    "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+    "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+    "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+    "actual SwiftSyntax control-sound-ownership --check",
+    "JSON preservation comparison of all prior catalog entries"
+  ],
+  "results": {
+    "portable_XCTest": 730,
+    "native_CPU_XCTest": 752,
+    "SwiftTesting_each_suite": 21,
+    "workflow_checks": 42,
+    "Swift_syntax_files": 306,
+    "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+    "official_MADLAD": "BLOCKED; see BLOCKERS.md",
+    "native_T5_contract_methods": 16,
+    "catalog_keys": 732,
+    "nonempty_foreign_units": 0,
+    "Foundation_shared_ownership_regressions": 11,
+    "SwiftSyntax_sound_ownership_findings": 0,
+    "catalog_existing_entries_preserved": 731
+  }
+}

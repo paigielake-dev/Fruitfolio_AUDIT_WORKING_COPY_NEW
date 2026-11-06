@@ -62,6 +62,9 @@ struct Prompt28FruitBasketView: View {
     private enum UsernameFocus: Hashable { case back, input, error }
     @AccessibilityFocusState private var usernameFocus: UsernameFocus?
     @AccessibilityFocusState private var tourHeadingFocused: Bool
+    @AccessibilityFocusState private var stormHeadingFocused: Bool
+    private enum GameplayFocus: Hashable { case pause, classificationProgress }
+    @AccessibilityFocusState private var gameplayFocus: GameplayFocus?
     @FocusState private var usernameKeyboardFocused: Bool
     private var usernameLabelKey: FruitfolioControlTranslationState.Key {
         .init(source: "public username", language: settings.language)
@@ -157,6 +160,9 @@ struct Prompt28FruitBasketView: View {
         .font(.custom("Chalkboard SE", size: 15, relativeTo: .body))
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
+        #if DEBUG
+        .preference(key: Prompt28GameOverlayVisibilityKey.self, value: showTour || showStormNote)
+        #endif
         .onAppear {
             rootIsVisible = true
             if usernameExitSession == nil { usernameExitSession = .init(coordinator: popupCoordinator) }
@@ -203,7 +209,10 @@ struct Prompt28FruitBasketView: View {
             lastStormNoteKey = key
             showStormNote = true
             viewModel.pause()
-            audioManager.play(.popupOpen)
+        }
+        .onChange(of: showStormNote) { _, visible in
+            audioManager.play(visible ? .popupOpen : .popupClose)
+            if !visible { stormHeadingFocused = false }
         }
         .onChange(of: showTour) { _, visible in
             audioManager.play(visible ? .popupOpen : .popupClose)
@@ -212,8 +221,10 @@ struct Prompt28FruitBasketView: View {
         .onChange(of: scenePhase) { _, newPhase in
             if newPhase != .active {
                 tourHeadingFocused = false
+                stormHeadingFocused = false
                 viewModel.sceneBecameInactive()
-            } else if showTour { tourHeadingFocused = true }
+            } else if showStormNote { stormHeadingFocused = true }
+            else if showTour { tourHeadingFocused = true }
         }
         .sheet(isPresented: $showingSaveDestination) {
             if let pending = viewModel.savePendingContent() {
@@ -434,33 +445,66 @@ struct Prompt28FruitBasketView: View {
     }
 
     private var stormNote: some View {
-        ZStack {
+        let serious = viewModel.currentQuestion?.usesSeriousFeedback == true
+        return ZStack {
             DesignTokens.ColorToken.backgroundCream.opacity(0.72).ignoresSafeArea()
             FruitfolioLargeControlCardPopup {
                 VStack(spacing: 10) {
                     HStack {
-                        FruitfolioImage(id: .fruit_strawberry_silly).frame(width: 44, height: 44)
-                            .accessibilityLabel("Strawberry")
+                        if !serious {
+                            FruitfolioImage(id: .fruit_strawberry_silly).frame(width: 44, height: 44)
+                                .accessibilityLabel("Strawberry")
+                        }
                         Spacer()
                         CloseControl(action: dismissStormNote)
+                            .accessibilityIdentifier("fruitBasket.storm.close")
                     }
-                    FruitfolioTranslatedText(source: "uh oh! a little storm is passing. o__o", protectedLiterals: ["o__o"],
-                        font: Prompt28TextRole.sectionHeading.font)
+                    FruitfolioTranslatedContent(source: serious ? "a rain obstacle is active." : "uh oh! a little storm is passing. o__o", protectedLiterals: ["o__o"]) { display, _ in
+                        FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.sectionHeading.font, serious: serious)
+                            .accessibilityAddTraits(.isHeader)
+                            .accessibilityFocused($stormHeadingFocused)
+                            .accessibilityIdentifier("fruitBasket.storm.heading")
+                    }
                     FruitfolioTranslatedText(source: "puddles gently resist your basket while it moves through the water.",
-                        font: Prompt28TextRole.secondary.font)
+                        font: Prompt28TextRole.secondary.font, serious: serious)
                     FruitfolioControlPillButton(label: "got it") { dismissStormNote() }
+                        .accessibilityIdentifier("fruitBasket.storm.acknowledge")
+                    #if DEBUG
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+                        if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQAEscape") {
+                            FruitfolioControlPillButton(label: "QA accessibility escape", action: dismissStormNote)
+                                .controlSize(.small).accessibilityIdentifier("gameQA.stormEscape")
+                        }
+                        if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                            FruitfolioInteractionSoundDiagnostics()
+                        }
+                    }
+                    #endif
                 }
             }
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
         .accessibilityIdentifier("fruitBasket.stormNote")
         .accessibilityAction(.escape) { dismissStormNote() }
+        .task {
+            await Task.yield()
+            guard showStormNote, !Task.isCancelled else { return }
+            stormHeadingFocused = true
+        }
     }
 
     private func dismissStormNote() {
         guard showStormNote else { return }
-        audioManager.play(.popupClose)
         showStormNote = false
+        stormHeadingFocused = false
         if viewModel.screen == .paused { viewModel.resume() }
+        Task { @MainActor in
+            await Task.yield()
+            guard rootIsVisible, !showStormNote, scenePhase == .active,
+                  viewModel.screen == .catchActive else { return }
+            gameplayFocus = store.controlMode == .classification ? .classificationProgress : .pause
+        }
     }
 
     private func performQuestionOperation(_ operation: @MainActor @escaping () async -> Void) {
@@ -1137,6 +1181,7 @@ struct Prompt28FruitBasketView: View {
                             viewModel.pause()
                         }
                         .prompt28Text(.button)
+                        .accessibilityFocused($gameplayFocus, equals: .pause)
                         .frame(width: 58, alignment: .leading)
                         .frame(minHeight: 44)
 
@@ -1342,6 +1387,7 @@ struct Prompt28FruitBasketView: View {
             Text("basket \(viewModel.basketCount) of \(viewModel.engine.rules.goodFruitTarget); star passes \(viewModel.session?.availableStarPasses ?? 0)")
                 .prompt28Text(.secondary)
                 .accessibilityIdentifier("fruitBasket.classification.progress")
+                .accessibilityFocused($gameplayFocus, equals: .classificationProgress)
 
             if let fruit =
                 viewModel.classificationFruit {

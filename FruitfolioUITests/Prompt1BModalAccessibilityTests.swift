@@ -191,6 +191,48 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testStormModalOwnsFocusBoundaryAndOneCloseAcrossAllDismissalHandlers() {
+        for serious in [false, true] {
+        for actionID in ["fruitBasket.storm.close", "fruitBasket.storm.acknowledge", "gameQA.stormEscape"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", serious ? "storm-serious" : "storm",
+                "-fruitfolioAudioDiagnostics", "-fruitfolioGameQAEscape",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion", "-fruitfolioGameRTL", "-fruitfolioAudioMuted"] }
+            app.launch()
+            let note = app.otherElements["fruitBasket.stormNote"]
+            XCTAssertTrue(note.waitForExistence(timeout: 5))
+            XCTAssertFalse(app.buttons["fruitBasket.classification.catchFruit"].exists)
+            let heading = app.descendants(matching: .any).matching(identifier: "fruitBasket.storm.heading").firstMatch
+            XCTAssertEqual(heading.label, serious ? "a rain obstacle is active." : "uh oh! a little storm is passing. o__o")
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCUIDevice.shared.press(.home)
+            app.activate()
+            XCTAssertTrue(note.waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: 0")
+            let action = app.buttons[actionID]
+            for _ in 0..<24 {
+                if action.isHittable { break }
+                if actionID == "fruitBasket.storm.close" { note.swipeDown() } else { note.swipeUp() }
+            }
+            XCTAssertTrue(action.isHittable)
+            XCTAssertGreaterThanOrEqual(action.frame.height, 44)
+            action.tap()
+            XCTAssertFalse(note.exists)
+            XCTAssertTrue(app.scrollViews["fruitBasket.classification.scroll"].waitForExistence(timeout: 3))
+            let closed = app.staticTexts["audioQA.closeRequests"]
+            let once = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "popup close requests: 1"), object: closed)
+            XCTAssertEqual(XCTWaiter.wait(for: [once], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["audioQA.openRequests"].label, "popup open requests: 1")
+            captureGame(app, name: "storm-serious-\(serious)-action-\(actionID)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameTutorialBackgroundKeepsPageAndEscapeHandlerClosesOnePresentation() {
         for language in ["en", "ar"] {
         for muted in [false, true] {
