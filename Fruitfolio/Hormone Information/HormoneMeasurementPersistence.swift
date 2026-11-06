@@ -51,10 +51,12 @@ nonisolated final class FruitfolioHormoneMeasurementPersistence {
         }
     }
 
-    func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current) throws {
+    func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current,
+              intent: FruitfolioMeasurementSaveIntent? = nil) throws {
         try requireWritable()
         var recorded = measurement
         let previous = records.first { $0.id == recorded.id }
+        try intent?.validate(candidate: recorded, current: previous)
         if recorded.resultLocaleIdentifier == nil, let previous, previous.resultLocaleIdentifier == nil {
             guard recorded.result == previous.result, recorded.unit == previous.unit else {
                 throw FruitfolioHormoneMeasurementError.resultFormatRequired

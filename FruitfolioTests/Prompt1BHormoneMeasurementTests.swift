@@ -3,6 +3,129 @@ import XCTest
 
 @MainActor
 final class Prompt1BHormoneMeasurementTests: XCTestCase {
+    func testEditingIntentRejectsNewerSameStoreRecordWithoutChangingBytesOrRevision() async throws {
+        let suite = "Prompt1BHormoneEditConflict.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement()
+        record.result = "12.50"; record.unit = "pg/mL"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let baseline = try XCTUnwrap(store.records.first)
+        var draft = baseline; draft.notes = "unsaved draft"
+        var newer = baseline; newer.result = "13.500"; newer.unit = "nmol/L"; newer.notes = "newer saved note"
+        try store.save(newer)
+        let bytes = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        let revision = store.savedRecordRevision
+        XCTAssertThrowsError(try store.save(draft, intent: .edit(baseline))) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .editingConflict)
+        }
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), bytes)
+        XCTAssertEqual(store.savedRecordRevision, revision)
+        XCTAssertEqual(store.records.first, newer)
+        XCTAssertEqual(draft.notes, "unsaved draft")
+        XCTAssertNil(store.storageProtectionReason)
+    }
+
+    func testEditingIntentCannotRecreateDeletedRecordOrOverwriteRecreatedIdentity() async throws {
+        let suite = "Prompt1BHormoneDeletedEdit.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement(); record.result = "12.50"; record.unit = "pg/mL"
+        try store.save(record, locale: Locale(identifier: "en_US"))
+        let baseline = try XCTUnwrap(store.records.first)
+        try store.delete(id: baseline.id)
+        let empty = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        XCTAssertThrowsError(try store.save(baseline, intent: .edit(baseline)))
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), empty)
+        XCTAssertTrue(store.records.isEmpty)
+        var replacement = baseline; replacement.result = "20.5"; replacement.notes = "recreated record"
+        try store.save(replacement)
+        let bytes = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        XCTAssertThrowsError(try store.save(baseline, intent: .edit(baseline)))
+        var wrongID = baseline; wrongID.id = UUID()
+        XCTAssertThrowsError(try store.save(wrongID, intent: .edit(baseline)))
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), bytes)
+        XCTAssertEqual(store.records.first, replacement)
+    }
+
+    func testCreationIntentIsSingleUseAndRequiresItsAllocatedIdentity() async throws {
+        let suite = "Prompt1BHormoneCreateIntent.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement(); record.result = "12.50"; record.unit = "pg/mL"
+        let intent = FruitfolioMeasurementSaveIntent.create(record.id)
+        XCTAssertThrowsError(try store.save(record, intent: .create(UUID())))
+        XCTAssertNil(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey))
+        try store.save(record, locale: Locale(identifier: "en_US"), intent: intent)
+        let bytes = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        record.notes = "replayed write"
+        XCTAssertThrowsError(try store.save(record, intent: intent)) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .editingConflict)
+        }
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), bytes)
+        XCTAssertEqual(store.records.count, 1)
+        XCTAssertEqual(store.records.first?.notes, "")
+    }
+
+    func testRecordSpecificEditingAllowsOtherMeasurementsToChangeAndPreservesReportedMetadata() async throws {
+        let suite = "Prompt1BHormoneIndependentEdit.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let store = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var first = FruitfolioHormoneMeasurement(); first.result = "12,50"; first.unit = "pg/mL"
+        var calendar = Calendar(identifier: .gregorian); calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        try first.setReportedTestDate(Date(timeIntervalSince1970: 1_792_108_800), calendar: calendar)
+        try store.save(first, locale: Locale(identifier: "fr_FR"))
+        let baseline = try XCTUnwrap(store.records.first)
+        var second = FruitfolioHormoneMeasurement(); second.result = "3.20"; second.unit = "nmol/L"
+        second.notes = "independent newer measurement"
+        try store.save(second, locale: Locale(identifier: "en_US"))
+        let savedSecond = try XCTUnwrap(store.records.first { $0.id == second.id })
+        var draft = baseline; draft.notes = "updated first notes"
+        try store.save(draft, locale: Locale(identifier: "en_US"), intent: .edit(baseline))
+        let restored = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        let actual = try XCTUnwrap(restored.records.first { $0.id == baseline.id })
+        XCTAssertEqual(actual.result, baseline.result)
+        XCTAssertEqual(actual.unit, baseline.unit)
+        XCTAssertEqual(actual.resultLocaleIdentifier, "fr_FR")
+        XCTAssertEqual(actual.reportedTestDay, baseline.reportedTestDay)
+        XCTAssertEqual(actual.testDate, baseline.testDate)
+        XCTAssertEqual(actual.testDateEntryTimeZoneIdentifier, baseline.testDateEntryTimeZoneIdentifier)
+        XCTAssertEqual(actual.notes, "updated first notes")
+        XCTAssertEqual(restored.records.first { $0.id == second.id }, savedSecond)
+    }
+
+    func testEditingIntentCannotBypassOutsideWriterOrReloadedNewerBaseline() async throws {
+        let suite = "Prompt1BHormoneExternalEdit.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let first = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var record = FruitfolioHormoneMeasurement(); record.result = "12.50"; record.unit = "pg/mL"
+        try first.save(record, locale: Locale(identifier: "en_US"))
+        let baseline = try XCTUnwrap(first.records.first)
+        let writer = FruitfolioHormoneMeasurementStore(defaults: defaults)
+        var newer = try XCTUnwrap(writer.records.first); newer.result = "14.50"
+        try writer.save(newer)
+        let bytes = defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey)
+        var draft = baseline; draft.notes = "old draft"
+        XCTAssertThrowsError(try first.save(draft, intent: .edit(baseline))) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .storageChanged)
+        }
+        first.reloadSavedMeasurements()
+        XCTAssertThrowsError(try first.save(draft, intent: .edit(baseline))) {
+            XCTAssertEqual($0 as? FruitfolioHormoneMeasurementError, .editingConflict)
+        }
+        XCTAssertEqual(defaults.data(forKey: FruitfolioHormoneMeasurementStore.persistenceKey), bytes)
+        let current = try XCTUnwrap(first.records.first)
+        var reviewed = current; reviewed.notes = "notes against current baseline"
+        try first.save(reviewed, intent: .edit(current))
+        XCTAssertEqual(first.records.first?.result, "14.50")
+        XCTAssertEqual(first.records.first?.notes, reviewed.notes)
+    }
+
     func testCycleDayAcceptsDecimalScriptsAndRejectsPartialOrOverflowingValues() throws {
         for text in ["12", "١٢", "۱۲", "१२", "１２", " ١٢\n"] {
             XCTAssertEqual(try FruitfolioHormoneMeasurement.parseCycleDay(text), 12)

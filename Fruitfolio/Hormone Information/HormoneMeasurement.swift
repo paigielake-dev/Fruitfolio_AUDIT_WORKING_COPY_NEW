@@ -109,10 +109,30 @@ struct FruitfolioHormoneMeasurement: Identifiable, Codable, Equatable, Sendable 
     }
 }
 
+/// Snapshot of one editor session, checked against the actual current record.
+/// Other measurements can change independently; no draft is merged implicitly.
+enum FruitfolioMeasurementSaveIntent: Equatable, Sendable {
+    case create(UUID)
+    case edit(FruitfolioHormoneMeasurement)
+
+    func validate(candidate: FruitfolioHormoneMeasurement, current: FruitfolioHormoneMeasurement?) throws {
+        switch self {
+        case .create(let id):
+            guard candidate.id == id, current == nil else { throw FruitfolioHormoneMeasurementError.editingConflict }
+        case .edit(let baseline):
+            guard candidate.id == baseline.id, current == baseline else {
+                throw FruitfolioHormoneMeasurementError.editingConflict
+            }
+        }
+    }
+}
+
 enum FruitfolioHormoneMeasurementError: LocalizedError, Equatable {
-    case resultFormatRequired, invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
+    case editingConflict, resultFormatRequired, invalidRequiredFields, unreadableStorage, unsupportedStorage, storageChanged, confirmationChanged
     var errorDescription: String? {
         switch self {
+        case .editingConflict:
+            return "this measurement changed or was removed while you were editing. your draft is still here. close the editor to review the latest saved record before trying again."
         case .resultFormatRequired:
             return "choose the decimal separator used on the report before changing this result. the original value and unknown format have been preserved."
         case .invalidRequiredFields:

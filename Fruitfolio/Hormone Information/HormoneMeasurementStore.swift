@@ -33,9 +33,10 @@ final class FruitfolioHormoneMeasurementStore {
     func history(hormone: FruitfolioMeasuredHormone? = nil) -> [FruitfolioHormoneMeasurement] {
         persistence.history(hormone: hormone)
     }
-    func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current) throws {
+    func save(_ measurement: FruitfolioHormoneMeasurement, locale: Locale = .current,
+              intent: FruitfolioMeasurementSaveIntent? = nil) throws {
         defer { refresh() }
-        try persistence.save(measurement, locale: locale)
+        try persistence.save(measurement, locale: locale, intent: intent)
     }
     func delete(id: UUID) throws { defer { refresh() }; try persistence.delete(id: id) }
     func exportJSON() throws -> Data { defer { refresh() }; return try persistence.exportJSON() }

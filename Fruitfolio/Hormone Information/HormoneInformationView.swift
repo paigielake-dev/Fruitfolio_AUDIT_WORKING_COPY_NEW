@@ -20,6 +20,7 @@ struct FruitfolioHormoneInformationView: View {
     @State private var showingLibrary = false
     @State private var filter: FruitfolioMeasuredHormone?
     @State private var editing: FruitfolioHormoneMeasurement?
+    @State private var editingIntent: FruitfolioMeasurementSaveIntent?
     @State private var errorMessage: String?
     @State private var showExport = false
     @State private var measurementSavedThisVisit = false
@@ -51,7 +52,9 @@ struct FruitfolioHormoneInformationView: View {
                     Text("have hormone results you’d like to keep track of? add them whenever you’re ready.")
                 }
                 WatercolorPrimaryButton(label: "Add Measurement") {
-                    editing = FruitfolioHormoneMeasurement()
+                    let record = FruitfolioHormoneMeasurement()
+                    editingIntent = .create(record.id)
+                    editing = record
                 }
                 .disabled(store.storageProtectionReason != nil)
                 .accessibilityIdentifier("measurements.add")
@@ -78,7 +81,10 @@ struct FruitfolioHormoneInformationView: View {
                             Text(verbatim: measurement.laboratoryReferenceRange)
                         }
                         if !measurement.notes.isEmpty { Text(verbatim: measurement.notes) }
-                        WatercolorSecondaryButton(label: "edit measurement") { editing = measurement }
+                        WatercolorSecondaryButton(label: "edit measurement") {
+                            editingIntent = .edit(measurement)
+                            editing = measurement
+                        }
                             .accessibilityIdentifier("measurements.edit." + measurement.id.uuidString)
                             .disabled(store.storageProtectionReason != nil)
                         WatercolorSecondaryButton(label: "delete measurement") { requestDeletion(.one(measurement.id)) }
@@ -122,13 +128,15 @@ struct FruitfolioHormoneInformationView: View {
                 FruitfolioHormoneLibraryView(onBack: { showingLibrary = false })
             }
         }
-        .sheet(item: $editing) { record in
+        .sheet(item: $editing, onDismiss: { if editing == nil { editingIntent = nil } }) { record in
             FruitfolioPresentedPopupHost {
-            FruitfolioHormoneMeasurementEditor(original: record, captureInitialTestDay: !store.records.contains(where: { $0.id == record.id }), onCancel: { editing = nil }) { updated in
-                try store.save(updated, locale: appLocale)
-                measurementSavedThisVisit = true
-                editing = nil
-            }
+                FruitfolioHormoneMeasurementEditor(original: record, intent: editingIntent ?? .edit(record),
+                    onCancel: { editing = nil; editingIntent = nil }) { updated, intent in
+                    try store.save(updated, locale: appLocale, intent: intent)
+                    measurementSavedThisVisit = true
+                    editing = nil
+                    editingIntent = nil
+                }
             }
         }
         .fileExporter(isPresented: $showExport, document: exportDocument, contentType: .json,
@@ -191,10 +199,11 @@ struct FruitfolioHormoneInformationView: View {
 }
 
 private struct FruitfolioHormoneMeasurementEditor: View {
-    let original: FruitfolioHormoneMeasurement
+    @State private var original: FruitfolioHormoneMeasurement
+    @State private var saveIntent: FruitfolioMeasurementSaveIntent
     @Environment(\.locale) private var appLocale
     let onCancel: () -> Void
-    let onSave: (FruitfolioHormoneMeasurement) throws -> Void
+    let onSave: (FruitfolioHormoneMeasurement, FruitfolioMeasurementSaveIntent) throws -> Void
     @State private var draft: FruitfolioHormoneMeasurement
     @State private var cycleDayText: String
     @State private var errorMessage: String?
@@ -204,15 +213,18 @@ private struct FruitfolioHormoneMeasurementEditor: View {
     @State private var discardAfterDismissal = false
     @State private var returnCancelFocus = false
     @AccessibilityFocusState private var cancelFocused: Bool
+    @AccessibilityFocusState private var errorFocused: Bool
     @State private var popupInstanceID = UUID()
     @FocusState private var editorFocus: EditorField?
     private enum EditorField: Hashable { case otherName, result, unit, sample, cycleDay, reference, notes }
 
-    init(original: FruitfolioHormoneMeasurement, captureInitialTestDay: Bool = false, onCancel: @escaping () -> Void,
-         onSave: @escaping (FruitfolioHormoneMeasurement) throws -> Void) {
+    init(original: FruitfolioHormoneMeasurement, intent: FruitfolioMeasurementSaveIntent,
+         onCancel: @escaping () -> Void,
+         onSave: @escaping (FruitfolioHormoneMeasurement, FruitfolioMeasurementSaveIntent) throws -> Void) {
         var initial = original
-        if captureInitialTestDay { try? initial.setReportedTestDate(original.testDate, calendar: .autoupdatingCurrent) }
-        self.original = initial
+        if case .create = intent { try? initial.setReportedTestDate(original.testDate, calendar: .autoupdatingCurrent) }
+        _original = State(initialValue: initial)
+        _saveIntent = State(initialValue: intent)
         self.onCancel = onCancel
         self.onSave = onSave
         _draft = State(initialValue: initial)
@@ -279,13 +291,24 @@ private struct FruitfolioHormoneMeasurementEditor: View {
                     .accessibilityIdentifier("measurements.editor.notes")
                     .focused($editorFocus, equals: .notes)
                 if let errorMessage {
-                    FruitfolioTranslatedText(source: errorMessage,
-                        font: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                    FruitfolioTranslatedContent(source: errorMessage) { display, _ in
+                        FruitfolioSemanticText(markdown: display,
+                            baseFont: .custom("Chalkboard SE", size: 14, relativeTo: .body), serious: true)
+                            .accessibilityFocused($errorFocused)
+                    }
+                    .accessibilityIdentifier("measurements.editor.error")
+                    .task(id: errorMessage) {
+                        errorFocused = false
+                        await Task.yield()
+                        guard !Task.isCancelled, viewIsVisible, self.errorMessage == errorMessage,
+                              popupCoordinator.currentPopup == nil else { return }
+                        errorFocused = true
+                    }
                 }
                 WatercolorPrimaryButton(label: "save measurement") {
                     do {
                         draft.cycleDay = try FruitfolioHormoneMeasurement.parseCycleDay(cycleDayText)
-                        try onSave(draft)
+                        try onSave(draft, saveIntent)
                     } catch { errorMessage = error.localizedDescription }
                 }
                 .accessibilityIdentifier("measurements.editor.save")
