@@ -213,6 +213,72 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         action.tap()
     }
 
+    private func expectGuidePopupRequests(open: Int, close: Int, in app: XCUIApplication) {
+        let opened = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "popup open requests: \(open)"), object: app.staticTexts["audioQA.openRequests"])
+        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "popup close requests: \(close)"), object: app.staticTexts["audioQA.closeRequests"])
+        // The successful save card has its own real accessibility-aware timer;
+        // this verifies the settled logical counts, not physical audibility.
+        XCTAssertEqual(XCTWaiter.wait(for: [opened, closed], timeout: 6), .completed)
+    }
+
+    func testGuidePageDestinationSurvivesBackgroundAndSavesOnlyToChosenSection() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = launchGuideSave("pages", reduced: reduced, rtl: rtl)
+            let open = app.buttons["guide.savedPages.open"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            let workspace = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; workspace.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            let destination = app.buttons["guide.savedPages.destination"]
+            XCTAssertTrue(destination.waitForExistence(timeout: 3))
+            let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
+            for _ in 0..<24 { if destination.isHittable { break }; scroll.swipeUp() }
+            destination.tap()
+            app.buttons["QA second section"].tap()
+            let selected = destination.label + " " + (destination.value as? String ?? "")
+            XCTAssertTrue(selected.contains("QA second section"))
+            let candidate = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "guide.savedPages.candidate.")).firstMatch
+            for _ in 0..<24 { if candidate.isHittable { break }; scroll.swipeUp() }
+            XCTAssertTrue(candidate.isHittable); candidate.tap()
+            XCUIDevice.shared.press(.home); app.activate()
+            XCTAssertTrue(destination.waitForExistence(timeout: 5))
+            XCTAssertEqual(destination.label + " " + (destination.value as? String ?? ""), selected)
+            expectGuidePopupRequests(open: 1, close: 0, in: app)
+            tapGuideFormAction("guide.savedPages.add", in: app)
+            let second = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", "second section pages: 1"), object: app.staticTexts["guideQA.secondSectionPages"])
+            XCTAssertEqual(XCTWaiter.wait(for: [second], timeout: 3), .completed)
+            XCTAssertEqual(app.staticTexts["guideQA.firstSectionPages"].label, "first section pages: 0")
+            expectGuidePopupRequests(open: 2, close: 2, in: app)
+            captureGame(app, name: "guide-page-destination-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
+    func testGuideFormReplacementClosesAndOpensOneOwnerWithoutSavingOnCancel() {
+        for reduced in [false, true] {
+        for rtl in [false, true] {
+            let app = launchGuideSave("description", reduced: reduced, rtl: rtl)
+            let open = app.buttons["guide.savedPages.open"]
+            XCTAssertTrue(open.waitForExistence(timeout: 5))
+            let workspace = app.scrollViews.firstMatch
+            for _ in 0..<24 { if open.isHittable { break }; workspace.swipeUp() }
+            XCTAssertTrue(open.isHittable); open.tap()
+            expectGuidePopupRequests(open: 1, close: 0, in: app)
+            tapGuideFormAction("guide.savedPages.newSection", in: app)
+            XCTAssertTrue(app.buttons["guide.section.cancel"].waitForExistence(timeout: 3))
+            expectGuidePopupRequests(open: 2, close: 1, in: app)
+            tapGuideFormAction("guide.section.cancel", in: app)
+            expectGuidePopupRequests(open: 2, close: 2, in: app)
+            XCTAssertEqual(app.staticTexts["guideQA.originalBytesIntact"].label, "original bytes intact: true")
+            XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, "saved status requests: 0")
+            captureGame(app, name: "guide-form-replacement-reduced-\(reduced)-rtl-\(rtl)")
+            app.terminate()
+        }
+        }
+    }
+
     func testGuideCreationSaveAndCancelUseActualPersistenceAndCallbacks() {
         for reduced in [false, true] {
         for rtl in [false, true] {
@@ -225,6 +291,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             open.tap()
             let name = app.descendants(matching: .any).matching(identifier: "guide.create.name").firstMatch
             XCTAssertTrue(name.waitForExistence(timeout: 3))
+            expectGuidePopupRequests(open: 1, close: 0, in: app)
             name.tap(); name.typeText("QA created guide")
             let description = app.descendants(matching: .any).matching(identifier: "guide.create.description").firstMatch
             let scroll = app.scrollViews["fruitfolio.notebookPopup.scroll"]
@@ -243,6 +310,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 XCTAssertEqual(app.staticTexts["guideQA.persistedName"].label, "persisted name: QA created guide")
                 XCTAssertEqual(app.staticTexts["guideQA.persistedDescription"].label, "persisted description: QA created description")
             } else { XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "guide.savedConfirmation").firstMatch.exists) }
+            expectGuidePopupRequests(open: save ? 2 : 1, close: save ? 2 : 1, in: app)
             XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 2")
             captureGame(app, name: "guide-create-save-\(save)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()
@@ -273,6 +341,7 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
             XCTAssertTrue(input.waitForExistence(timeout: 5))
             XCTAssertEqual(input.value as? String, draft)
             XCTAssertEqual(app.staticTexts["guideQA.owner"].label, owner)
+            expectGuidePopupRequests(open: 1, close: 0, in: app)
             tapGuideFormAction(action == "cancel" ? "guide.description.cancel" : "guide.description.save", in: app)
             let expected = "saved status requests: \(action == "save" ? 1 : 0)"
             let settled = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@", expected), object: app.staticTexts["guideQA.savedStatusRequests"])
@@ -297,6 +366,8 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
                 }
             }
             XCTAssertEqual(app.staticTexts["guideQA.savedStatusRequests"].label, expected)
+            expectGuidePopupRequests(open: action == "save" ? 2 : 1,
+                close: action == "save" ? 2 : (action == "cancel" ? 1 : 0), in: app)
             XCTAssertEqual(app.staticTexts["audioQA.softPopRequests"].label, "soft pop requests: 3")
             captureGame(app, name: "guide-description-\(action)-reduced-\(reduced)-rtl-\(rtl)")
             app.terminate()

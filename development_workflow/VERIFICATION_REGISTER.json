@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06T17:55:10.912813+00:00",
+  "updated_at": "2026-11-06T18:27:28.458418+00:00",
   "checks": [
     {
       "name": "WorkflowIntegrityTests",
@@ -3765,6 +3765,65 @@
         ]
       },
       "timestamp": "2026-11-06T17:55:10.912813+00:00"
+    },
+    {
+      "batch": "Ticketed-Guide-form-lifecycle-and-retained-destination",
+      "commands": [
+        "portable focused Prompt1BGuideFormOwnershipTests: 4 passed",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift",
+        "python3 Tools/run_portable_swift_tests.py --swift /workspace/toolchains/swift-6.2.1/usr/bin/swift --native-llama-build /tmp/fruitfolio-llama-build",
+        "FRUITFOLIO_SWIFTC=/workspace/toolchains/swift-6.2.1/usr/bin/swiftc python3 -m unittest discover -s development_workflow/tests",
+        "python3 Tools/check_swift_syntax.py --swiftc /workspace/toolchains/swift-6.2.1/usr/bin/swiftc",
+        "swift Tools/validate_xcode_project.swift",
+        "actual SwiftSyntax control-sound ownership --check",
+        "39 original assignments/12 scoped calls/11 child types and operation cue preservation comparison"
+      ],
+      "results": {
+        "portable_XCTest": 757,
+        "native_CPU_XCTest": 779,
+        "SwiftTesting_each_suite": 21,
+        "workflow_checks": 50,
+        "Swift_syntax_files": 311,
+        "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable",
+        "official_MADLAD": "BLOCKED; see BLOCKERS.md",
+        "native_T5_contract_methods": 16,
+        "catalog_keys": 801,
+        "nonempty_foreign_units": 0,
+        "Foundation_shared_ownership_regressions": 11,
+        "SwiftSyntax_sound_ownership_findings": 0,
+        "Xcode_project_references": "PASS; not an Apple build",
+        "batch_recorder_integrity_tests": 6,
+        "Guide_core_XCTest": 10,
+        "Guide_original_focused_XCTest": 8,
+        "SwiftSyntax_sound_tool_tests": 9,
+        "Guide_form_owner_XCTest": 4,
+        "Apple_UI_Guide_form_launches_written_NOT_RUN": 28,
+        "Apple_UI_Guide_form_new_launches_NOT_RUN": 8
+      },
+      "verification": {
+        "executed": {
+          "Guide_form_owner": "4 actual Foundation cases passed; includes real Guide store cancellation/replay/retry",
+          "portable_XCTest": "757 passed, 0 failures",
+          "native_CPU_XCTest": "779 passed, 0 failures; official MADLAD not established",
+          "SwiftTesting": "21 passed per overlapping run",
+          "workflow": "50 passed",
+          "Swift_parser": "311 files syntax parsed, not Apple typecheck; project references resolve",
+          "source_preservation": "39 real AST assignment migrations, 12 scoped actual constructions/11 child types, 22 child popup requests removed; distinct operation cue order preserved"
+        },
+        "not_run": [
+          "28 actual Guide Apple UI launch cases: 20 extended and 8 new destination/replacement cases",
+          "Apple typecheck/link, real callback wiring, keyboard/picker presentation, VoiceOver/DT/RTL, scene lifecycle and saved-card rendering",
+          "Actual AVAudioPlayer playback/physical audio and device performance",
+          "Official MADLAD resources, native language compatibility and clinical translation acceptance"
+        ],
+        "remaining": [
+          "Execute all 28 Apple cases to prove one form cue pair, correct save-card ordering/timer, background draft/destination retention, active-ticket rebinding and persisted selected chapter",
+          "Verify old/replaced/inactive UIKit actions cannot mutate or dismiss a new form, including navigation/cover/scene paths not covered by Foundation alone",
+          "Make multi-page Guide submission one canonical acknowledged transaction so later write failure cannot leave hidden earlier commits",
+          "Reconcile all other original popup/data/interaction requirements and clinical/device acceptance; this batch does not certify whole app-wide items"
+        ]
+      },
+      "timestamp": "2026-11-06T18:27:28.458418+00:00"
     }
   ]
 }

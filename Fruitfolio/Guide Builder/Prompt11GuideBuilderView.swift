@@ -12,7 +12,10 @@ struct Prompt11GuideBuilderView: View {
     @EnvironmentObject private var motionPreferences: MotionPreferences
 
     @State private var selectedGuideID: UUID?
-    @State private var overlay: Prompt11Overlay?
+    @StateObject private var formSession = Prompt11GuideFormSession()
+    @State private var rootIsVisible = false
+    @Environment(\.scenePhase) private var scenePhase
+    private var overlay: Prompt11Overlay? { formSession.current }
     @State private var showingReadMode = false
     @State private var showingGuideOptions = false
     @State private var reorderMode = false
@@ -88,7 +91,20 @@ struct Prompt11GuideBuilderView: View {
                 }
             }
         }
-        .onDisappear { dismissSavedStatus() }
+        .onAppear {
+            rootIsVisible = true
+            if scenePhase == .active { formSession.resume() }
+            else { formSession.suspend() }
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if rootIsVisible, phase == .active { formSession.resume() }
+            else { formSession.suspend() }
+        }
+        .onDisappear {
+            rootIsVisible = false
+            formSession.suspend()
+            dismissSavedStatus()
+        }
         .onChange(of: selectedGuideID) { _, guideID in
             if savedStatusGuideID != guideID { dismissSavedStatus() }
         }
@@ -231,7 +247,7 @@ struct Prompt11GuideBuilderView: View {
                 label: "make my first guide",
                 reduceMotion: motionPreferences.reduceMotionActive
             ) {
-                overlay = .createGuide
+                setGuideOverlay(.createGuide)
             }
             .accessibilityIdentifier("guide.create.open")
 
@@ -265,7 +281,7 @@ struct Prompt11GuideBuilderView: View {
                 reduceMotion: motionPreferences.reduceMotionActive
             ) {
                 audioManager.play(.buttonSoftPop)
-                overlay = .createGuide
+                setGuideOverlay(.createGuide)
             }
 
             ForEach(store.prompt11Guides) { guide in
@@ -313,8 +329,9 @@ struct Prompt11GuideBuilderView: View {
                             label: "+ add saved pages",
                             reduceMotion: motionPreferences.reduceMotionActive
                         ) {
-                            overlay = .addSavedPages(guide.id)
+                            setGuideOverlay(.addSavedPages(guide.id))
                         }
+                        .accessibilityIdentifier("guide.savedPages.open")
 
                         Prompt11GuideIconButton(
                             assetName: "guide_sort",
@@ -337,7 +354,7 @@ struct Prompt11GuideBuilderView: View {
 
                     Button("+ new section") {
                         audioManager.play(.buttonSoftPop)
-                        overlay = .addSection(guide.id)
+                        setGuideOverlay(.addSection(guide.id))
                     }
                     .font(.custom("Chalkboard SE", size: 11.5))
                     .fontWeight(.bold)
@@ -483,7 +500,7 @@ struct Prompt11GuideBuilderView: View {
             HStack(spacing: 10) {
                 Button {
                     audioManager.play(.buttonSoftPop)
-                    overlay = .renameGuide(guide.id, guide.name)
+                    setGuideOverlay(.renameGuide(guide.id, guide.name))
                 } label: {
                     HStack(spacing: 5) {
                         Image("guide_rename")
@@ -498,22 +515,22 @@ struct Prompt11GuideBuilderView: View {
 
                 Button("change cover") {
                     audioManager.play(.buttonSoftPop)
-                    overlay = .changeCover(guide.id, guide.style)
+                    setGuideOverlay(.changeCover(guide.id, guide.style))
                 }
 
                 Button("description") {
                     audioManager.play(.buttonSoftPop)
-                    overlay = .editDescription(
+                    setGuideOverlay(.editDescription(
                         guide.id,
                         guide.subtitle ?? ""
-                    )
+                    ))
                 }
                 .accessibilityIdentifier("guide.description.open")
             }
 
             Button {
                 audioManager.play(.buttonSoftPop)
-                overlay = .deleteGuide(guide.id)
+                setGuideOverlay(.deleteGuide(guide.id))
             } label: {
                 HStack(spacing: 5) {
                     Image("guide_delete")
@@ -732,11 +749,11 @@ struct Prompt11GuideBuilderView: View {
 
             HStack(spacing: 10) {
                 Button("rename") {
-                    overlay = .renameSection(
+                    setGuideOverlay(.renameSection(
                         guide.id,
                         chapter.id,
                         chapter.name
-                    )
+                    ))
                 }
 
                 if reorderMode {
@@ -780,12 +797,12 @@ struct Prompt11GuideBuilderView: View {
                         pageNumber: pageNumber(for: page.id, in: guide),
                         sourceStillExists: sourceStillExists(page),
                         onAddNote: {
-                            overlay = .addNote(
+                            setGuideOverlay(.addNote(
                                 guide.id,
                                 chapter.id,
                                 page.id,
                                 page.notes
-                            )
+                            ))
                         }
                     )
                     .id(page.id)
@@ -811,25 +828,25 @@ struct Prompt11GuideBuilderView: View {
     ) -> some View {
         Menu("page options") {
             Button("move") {
-                overlay = .movePage(
+                setGuideOverlay(.movePage(
                     guide.id,
                     chapter.id,
                     page.id
-                )
+                ))
             }
 
             Button("add a note") {
-                overlay = .addNote(
+                setGuideOverlay(.addNote(
                     guide.id,
                     chapter.id,
                     page.id,
                     page.notes
-                )
+                ))
             }
 
             if let sourceKey = page.sourceSavedPageID {
                 Button("view original") {
-                    overlay = .viewOriginal(sourceKey)
+                    setGuideOverlay(.viewOriginal(sourceKey))
                 }
             }
 
@@ -856,11 +873,11 @@ struct Prompt11GuideBuilderView: View {
             }
 
             Button("remove from guide") {
-                overlay = .removePage(
+                setGuideOverlay(.removePage(
                     guide.id,
                     chapter.id,
                     page.id
-                )
+                ))
             }
         }
         .font(.custom("Chalkboard SE", size: 10.5))
@@ -881,14 +898,15 @@ struct Prompt11GuideBuilderView: View {
             Prompt11CreateGuidePopup(
                 store: store,
                 onCreated: { guideID in
-                    overlay = nil
+                    setGuideOverlay(nil)
                     selectedGuideID = guideID
                     audioManager.play(.pageTurn)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .renameGuide(let guideID, let currentName):
@@ -897,12 +915,13 @@ struct Prompt11GuideBuilderView: View {
                 encyclopediaID: guideID,
                 currentName: currentName,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .editDescription(let guideID, let currentDescription):
@@ -911,12 +930,13 @@ struct Prompt11GuideBuilderView: View {
                 encyclopediaID: guideID,
                 currentDescription: currentDescription,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .changeCover(let guideID, let currentStyle):
@@ -925,12 +945,13 @@ struct Prompt11GuideBuilderView: View {
                 encyclopediaID: guideID,
                 currentStyle: currentStyle,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .deleteGuide(let guideID):
@@ -938,14 +959,15 @@ struct Prompt11GuideBuilderView: View {
                 store: store,
                 encyclopediaID: guideID,
                 onDeleted: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     selectedGuideID = nil
                     showingGuideOptions = false
                     reorderMode = false
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .addSection(let guideID):
@@ -953,12 +975,13 @@ struct Prompt11GuideBuilderView: View {
                 store: store,
                 encyclopediaID: guideID,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .renameSection(let guideID, let chapterID, let currentName):
@@ -968,12 +991,13 @@ struct Prompt11GuideBuilderView: View {
                 chapterID: chapterID,
                 initialName: currentName,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .addNote(let guideID, let chapterID, let pageID, let currentNote):
@@ -984,12 +1008,13 @@ struct Prompt11GuideBuilderView: View {
                 pageID: pageID,
                 initialNote: currentNote,
                 onSaved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .addSavedPages(let guideID):
@@ -998,7 +1023,7 @@ struct Prompt11GuideBuilderView: View {
                 encyclopediaID: guideID,
                 onAdded: { count in
                     let wasEmpty = store.encyclopedia(id: guideID)?.savedPageCount == count
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
 
                     if wasEmpty && count > 0 {
@@ -1006,11 +1031,12 @@ struct Prompt11GuideBuilderView: View {
                     }
                 },
                 onNeedsSection: {
-                    overlay = .addSection(guideID)
+                    setGuideOverlay(.addSection(guideID))
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .movePage(let guideID, let chapterID, let pageID):
@@ -1020,15 +1046,16 @@ struct Prompt11GuideBuilderView: View {
                 fromChapterID: chapterID,
                 pageID: pageID,
                 onMoved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onNewSection: {
-                    overlay = .addSection(guideID)
+                    setGuideOverlay(.addSection(guideID))
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .removePage(let guideID, let chapterID, let pageID):
@@ -1038,20 +1065,22 @@ struct Prompt11GuideBuilderView: View {
                 chapterID: chapterID,
                 pageID: pageID,
                 onRemoved: {
-                    overlay = nil
+                    setGuideOverlay(nil)
                     showSavedStatus()
                 },
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
 
         case .viewOriginal(let sourceKey):
             Prompt11OriginalAnswerPopup(
                 sourcePage: store.prompt11SourcePage(sourceKey: sourceKey),
                 onDismiss: {
-                    overlay = nil
-                }
+                    setGuideOverlay(nil)
+                },
+                isCurrent: formIsCurrent(formSession.ticket)
             )
         }
     }
@@ -1175,6 +1204,18 @@ struct Prompt11GuideBuilderView: View {
         } catch {
             return
         }
+    }
+
+    private func setGuideOverlay(_ next: Prompt11Overlay?) {
+        if next != nil { dismissSavedStatus() }
+        for cue in formSession.transition(to: next) {
+            audioManager.play(cue == .open ? .popupOpen : .popupClose)
+        }
+    }
+
+    private func formIsCurrent(_ ticket: Prompt11GuideFormTicket?) -> @MainActor () -> Bool {
+        let owner = formSession
+        return { [weak owner] in owner?.isCurrent(ticket) == true }
     }
 
     private func dismissSavedStatus() {

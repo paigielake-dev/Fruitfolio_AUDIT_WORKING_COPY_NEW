@@ -1,5 +1,8 @@
 import SwiftUI
 
+// The parent Guide form session owns logical open/close cues. Children own
+// their interaction/operation cues and validate the captured form ticket.
+
 struct Prompt11SavedPagePicker: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
 
@@ -7,6 +10,7 @@ struct Prompt11SavedPagePicker: View {
     let onAdded: (Int) -> Void
     let onNeedsSection: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -67,6 +71,8 @@ struct Prompt11SavedPagePicker: View {
                 HStack(spacing: 6) {
                     ForEach(Prompt11SavedMaterialFilter.allCases) { option in
                         Button(option.label) {
+                            guard isCurrent() else { return }
+                            audioManager.play(.buttonSoftPop)
                             filter = option
                         }
                         .font(.custom("Chalkboard SE", size: 10.5))
@@ -103,7 +109,11 @@ struct Prompt11SavedPagePicker: View {
                                         .first?
                                         .id
                             },
-                            set: { selectedChapterID = $0 }
+                            set: {
+                                guard isCurrent() else { return }
+                                audioManager.play(.buttonSoftPop)
+                                selectedChapterID = $0
+                            }
                         )
                     ) {
                         ForEach(
@@ -115,6 +125,7 @@ struct Prompt11SavedPagePicker: View {
                     }
                     .pickerStyle(.menu)
                     .accessibilityLabel("Section")
+                    .accessibilityIdentifier("guide.savedPages.destination")
 
                 } else {
                     VStack(spacing: 6) {
@@ -126,8 +137,11 @@ struct Prompt11SavedPagePicker: View {
                             .multilineTextAlignment(.center)
 
                         Button("+ new section") {
+                            guard isCurrent() else { return }
+                            audioManager.play(.buttonSoftPop)
                             onNeedsSection()
                         }
+                        .accessibilityIdentifier("guide.savedPages.newSection")
                         .font(.custom("Chalkboard SE", size: 11.5))
                         .fontWeight(.bold)
                         .foregroundStyle(
@@ -181,25 +195,29 @@ struct Prompt11SavedPagePicker: View {
                         : "add \(selectedSourceKeys.count) \(selectedSourceKeys.count == 1 ? "page" : "pages")",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     addSelected()
                 }
+                .accessibilityIdentifier("guide.savedPages.add")
                 .disabled(
                     selectedSourceKeys.isEmpty || selectedChapterID == nil
                 )
 
                 WatercolorSecondaryButton(label: "not yet") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
+                .accessibilityIdentifier("guide.savedPages.cancel")
             }
             .padding(.vertical, 10)
         }
         .onAppear {
-            audioManager.play(.popupOpen)
-            selectedChapterID = guide?.chapters
-                .sorted { $0.order < $1.order }
-                .first?
-                .id
+            if selectedChapterID == nil {
+                selectedChapterID = guide?.chapters
+                    .sorted { $0.order < $1.order }
+                    .first?
+                    .id
+            }
         }
     }
 
@@ -207,9 +225,11 @@ struct Prompt11SavedPagePicker: View {
         _ candidate: Prompt11SavedMaterialCandidate
     ) -> some View {
         Button {
+            guard isCurrent() else { return }
             guard !candidate.isAlreadyInGuide else {
                 return
             }
+            audioManager.play(.buttonSoftPop)
 
             if selectedSourceKeys.contains(candidate.sourceKey) {
                 selectedSourceKeys.remove(candidate.sourceKey)
@@ -296,6 +316,7 @@ struct Prompt11SavedPagePicker: View {
                 ? "\(candidate.page.question). Already in this guide."
                 : candidate.page.question
         )
+        .accessibilityIdentifier("guide.savedPages.candidate." + candidate.id.uuidString)
     }
 
     private func addSelected() {

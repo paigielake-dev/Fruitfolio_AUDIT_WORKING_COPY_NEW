@@ -1,10 +1,14 @@
 import SwiftUI
 
+// The parent Guide form session owns logical open/close cues. Children own
+// their interaction/operation cues and validate the captured form ticket.
+
 struct Prompt11CreateGuidePopup: View {
     @ObservedObject var store: Prompt10SavedLibraryStore
 
     let onCreated: (UUID) -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -90,6 +94,7 @@ struct Prompt11CreateGuidePopup: View {
                 HStack(spacing: 7) {
                     ForEach(Prompt10BookStyle.allCases, id: \.self) { option in
                         Button {
+                            guard isCurrent() else { return }
                             audioManager.play(.buttonSoftPop)
                             style = option
                         } label: {
@@ -140,6 +145,7 @@ struct Prompt11CreateGuidePopup: View {
                     label: "create my guide",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     createGuide()
                 }
                 .accessibilityIdentifier("guide.create.save")
@@ -147,7 +153,7 @@ struct Prompt11CreateGuidePopup: View {
                 WatercolorSecondaryButton(
                     label: "not yet"
                 ) {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
                 .accessibilityIdentifier("guide.create.cancel")
@@ -156,12 +162,10 @@ struct Prompt11CreateGuidePopup: View {
             .padding(.bottom, 18)
         }
         .accessibilityIdentifier("guide.create.form")
-        .onAppear {
-            audioManager.play(.popupOpen)
-        }
     }
 
     private func createGuide() {
+        guard isCurrent() else { return }
         do {
             let guide = try store.createGuideEncyclopedia(
                 name: name,
@@ -184,6 +188,7 @@ struct Prompt11RenameGuidePopup: View {
     let currentName: String
     let onSaved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -196,13 +201,15 @@ struct Prompt11RenameGuidePopup: View {
         encyclopediaID: UUID,
         currentName: String,
         onSaved: @escaping () -> Void,
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping () -> Void,
+        isCurrent: @escaping @MainActor () -> Bool = { true }
     ) {
         self.store = store
         self.encyclopediaID = encyclopediaID
         self.currentName = currentName
         self.onSaved = onSaved
         self.onDismiss = onDismiss
+        self.isCurrent = isCurrent
         _name = State(initialValue: currentName)
     }
 
@@ -251,6 +258,7 @@ struct Prompt11RenameGuidePopup: View {
                     label: "save name",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     do {
                         try store.renameEncyclopedia(
                             id: encyclopediaID,
@@ -263,13 +271,10 @@ struct Prompt11RenameGuidePopup: View {
                 }
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }
@@ -281,6 +286,7 @@ struct Prompt11DescriptionPopup: View {
     let currentDescription: String
     let onSaved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -293,13 +299,15 @@ struct Prompt11DescriptionPopup: View {
         encyclopediaID: UUID,
         currentDescription: String,
         onSaved: @escaping () -> Void,
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping () -> Void,
+        isCurrent: @escaping @MainActor () -> Bool = { true }
     ) {
         self.store = store
         self.encyclopediaID = encyclopediaID
         self.currentDescription = currentDescription
         self.onSaved = onSaved
         self.onDismiss = onDismiss
+        self.isCurrent = isCurrent
         _guideDescription = State(initialValue: currentDescription)
     }
 
@@ -347,6 +355,7 @@ struct Prompt11DescriptionPopup: View {
                     label: "save description",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     do {
                         try store.updateEncyclopediaDescription(
                             id: encyclopediaID,
@@ -360,16 +369,13 @@ struct Prompt11DescriptionPopup: View {
                 .accessibilityIdentifier("guide.description.save")
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
                 .accessibilityIdentifier("guide.description.cancel")
             }
         }
         .accessibilityIdentifier("guide.description.form")
-        .onAppear {
-            audioManager.play(.popupOpen)
-        }
     }
 }
 
@@ -380,6 +386,7 @@ struct Prompt11ChangeCoverPopup: View {
     let currentStyle: Prompt10BookStyle
     let onSaved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -392,13 +399,15 @@ struct Prompt11ChangeCoverPopup: View {
         encyclopediaID: UUID,
         currentStyle: Prompt10BookStyle,
         onSaved: @escaping () -> Void,
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping () -> Void,
+        isCurrent: @escaping @MainActor () -> Bool = { true }
     ) {
         self.store = store
         self.encyclopediaID = encyclopediaID
         self.currentStyle = currentStyle
         self.onSaved = onSaved
         self.onDismiss = onDismiss
+        self.isCurrent = isCurrent
         _style = State(initialValue: currentStyle)
     }
 
@@ -421,6 +430,7 @@ struct Prompt11ChangeCoverPopup: View {
                 HStack(spacing: 7) {
                     ForEach(Prompt10BookStyle.allCases, id: \.self) { option in
                         Button {
+                            guard isCurrent() else { return }
                             audioManager.play(.buttonSoftPop)
                             style = option
                         } label: {
@@ -470,6 +480,7 @@ struct Prompt11ChangeCoverPopup: View {
                     label: "use this cover",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     do {
                         try store.changeEncyclopediaStyle(
                             id: encyclopediaID,
@@ -482,13 +493,10 @@ struct Prompt11ChangeCoverPopup: View {
                 }
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }
@@ -499,6 +507,7 @@ struct Prompt11DeleteGuidePopup: View {
     let encyclopediaID: UUID
     let onDeleted: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -542,11 +551,12 @@ struct Prompt11DeleteGuidePopup: View {
                     label: "keep it",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
 
                 WatercolorSecondaryButton(label: "delete guide") {
+                    guard isCurrent() else { return }
                     do {
                         try store.deleteEncyclopedia(id: encyclopediaID)
                         audioManager.play(.bookClose)
@@ -556,9 +566,6 @@ struct Prompt11DeleteGuidePopup: View {
                     }
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }
@@ -571,6 +578,7 @@ struct Prompt11SectionPopup: View {
     let initialName: String
     let onSaved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -584,7 +592,8 @@ struct Prompt11SectionPopup: View {
         chapterID: UUID? = nil,
         initialName: String = "",
         onSaved: @escaping () -> Void,
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping () -> Void,
+        isCurrent: @escaping @MainActor () -> Bool = { true }
     ) {
         self.store = store
         self.encyclopediaID = encyclopediaID
@@ -592,6 +601,7 @@ struct Prompt11SectionPopup: View {
         self.initialName = initialName
         self.onSaved = onSaved
         self.onDismiss = onDismiss
+        self.isCurrent = isCurrent
         _name = State(initialValue: initialName)
     }
 
@@ -633,6 +643,7 @@ struct Prompt11SectionPopup: View {
                     label: chapterID == nil ? "add section" : "save section",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     do {
                         if let chapterID {
                             try store.renameChapter(
@@ -654,13 +665,11 @@ struct Prompt11SectionPopup: View {
                 }
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
+                .accessibilityIdentifier("guide.section.cancel")
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }
@@ -674,6 +683,7 @@ struct Prompt11NotePopup: View {
     let initialNote: String
     let onSaved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -688,7 +698,8 @@ struct Prompt11NotePopup: View {
         pageID: UUID,
         initialNote: String,
         onSaved: @escaping () -> Void,
-        onDismiss: @escaping () -> Void
+        onDismiss: @escaping () -> Void,
+        isCurrent: @escaping @MainActor () -> Bool = { true }
     ) {
         self.store = store
         self.encyclopediaID = encyclopediaID
@@ -697,6 +708,7 @@ struct Prompt11NotePopup: View {
         self.initialNote = initialNote
         self.onSaved = onSaved
         self.onDismiss = onDismiss
+        self.isCurrent = isCurrent
         _note = State(initialValue: initialNote)
     }
 
@@ -742,6 +754,7 @@ struct Prompt11NotePopup: View {
                     label: "save note",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
+                    guard isCurrent() else { return }
                     do {
                         try store.updatePageNotes(
                             encyclopediaID: encyclopediaID,
@@ -756,13 +769,10 @@ struct Prompt11NotePopup: View {
                 }
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }
@@ -776,6 +786,7 @@ struct Prompt11MovePagePopup: View {
     let onMoved: () -> Void
     let onNewSection: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -801,6 +812,7 @@ struct Prompt11MovePagePopup: View {
                         guide.chapters.sorted { $0.order < $1.order }
                     ) { chapter in
                         Button {
+                            guard isCurrent() else { return }
                             move(to: chapter.id)
                         } label: {
                             HStack {
@@ -839,6 +851,7 @@ struct Prompt11MovePagePopup: View {
                 }
 
                 Button("+ new section") {
+                    guard isCurrent() else { return }
                     onNewSection()
                 }
                 .font(.custom("Chalkboard SE", size: 11.5))
@@ -854,13 +867,10 @@ struct Prompt11MovePagePopup: View {
                 )
 
                 WatercolorSecondaryButton(label: "cancel") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 
@@ -888,6 +898,7 @@ struct Prompt11RemovePagePopup: View {
     let pageID: UUID
     let onRemoved: () -> Void
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var motionPreferences: MotionPreferences
@@ -924,11 +935,12 @@ struct Prompt11RemovePagePopup: View {
                     label: "keep it here",
                     reduceMotion: motionPreferences.reduceMotionActive
                 ) {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
 
                 WatercolorSecondaryButton(label: "remove page") {
+                    guard isCurrent() else { return }
                     do {
                         try store.deletePage(
                             encyclopediaID: encyclopediaID,
@@ -943,15 +955,13 @@ struct Prompt11RemovePagePopup: View {
                 }
             }
         }
-        .onAppear {
-            audioManager.play(.popupOpen)
-        }
     }
 }
 
 struct Prompt11OriginalAnswerPopup: View {
     let sourcePage: Prompt10SavedPage?
     let onDismiss: () -> Void
+    var isCurrent: @MainActor () -> Bool = { true }
 
     @EnvironmentObject private var audioManager: AudioManager
 
@@ -992,13 +1002,10 @@ struct Prompt11OriginalAnswerPopup: View {
                 }
 
                 WatercolorSecondaryButton(label: "close") {
-                    audioManager.play(.popupClose)
+                    guard isCurrent() else { return }
                     onDismiss()
                 }
             }
-        }
-        .onAppear {
-            audioManager.play(.popupOpen)
         }
     }
 }

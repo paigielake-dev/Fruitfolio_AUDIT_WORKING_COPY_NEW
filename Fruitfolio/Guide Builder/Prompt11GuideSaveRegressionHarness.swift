@@ -25,6 +25,17 @@ private final class Prompt11GuideSaveFixture: ObservableObject {
                     subtitle: "QA original description", style: .sage).id
             } catch { preconditionFailure("Could not create the private Guide Builder fixture") }
         }
+        if scenario == "pages", let guideID = initialGuideID {
+            do {
+                _ = try store.createChapter(in: guideID, name: "QA first section")
+                _ = try store.createChapter(in: guideID, name: "QA second section")
+                let source = try store.createEncyclopedia(name: "QA source book", style: .pink)
+                let section = source.chapters[0]
+                let page = Prompt10SavedPage(chapterID: section.id, question: "QA source page",
+                    answer: "Nonclinical private fixture only.", saveType: .fullAnswer)
+                _ = try store.savePage(page, to: source.id, chapterID: section.id)
+            } catch { preconditionFailure("Could not create the private saved-page fixture") }
+        }
         if scenario == "stale-description" {
             // A real external byte replacement after the store loaded: the
             // normal save baseline guard must reject it, not a fake UI flag.
@@ -47,7 +58,8 @@ struct Prompt11GuideSaveRegressionHarness: View {
             .overlay(alignment: .bottomLeading) {
                 VStack(alignment: .leading) {
                     Prompt11GuideSaveReadback(store: fixture.store, defaults: fixture.defaults,
-                        baseline: fixture.baselineBytes, token: fixture.token, savedStatusRequests: savedStatusRequests)
+                        baseline: fixture.baselineBytes, token: fixture.token, savedStatusRequests: savedStatusRequests,
+                        guideID: fixture.initialGuideID)
                     if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
                         FruitfolioInteractionSoundDiagnostics()
                     }
@@ -72,6 +84,7 @@ private struct Prompt11GuideSaveReadback: View {
     let baseline: Data?
     let token: String
     let savedStatusRequests: Int
+    let guideID: UUID?
     var body: some View {
         // Independently load actual acknowledged bytes rather than equating
         // the editor's memory or a displayed “saved” label with persistence.
@@ -84,6 +97,11 @@ private struct Prompt11GuideSaveReadback: View {
             Text("write protected: \(store.storageProtectionReason != nil)").accessibilityIdentifier("guideQA.writeProtected")
             Text("fixture owner: " + token).accessibilityIdentifier("guideQA.owner")
             Text("saved status requests: \(savedStatusRequests)").accessibilityIdentifier("guideQA.savedStatusRequests")
+            if let guideID, let guide = persisted.encyclopedia(id: guideID) {
+                let sections = guide.chapters.sorted { $0.order < $1.order }
+                Text("first section pages: \(sections.first?.pages.count ?? 0)").accessibilityIdentifier("guideQA.firstSectionPages")
+                Text("second section pages: \(sections.count > 1 ? sections[1].pages.count : 0)").accessibilityIdentifier("guideQA.secondSectionPages")
+            }
         }
     }
 }
