@@ -191,6 +191,54 @@ final class Prompt1BModalAccessibilityTests: XCTestCase {
         }
     }
 
+    func testPauseMenuOwnsOneCuePairAcrossBackgroundResumeAndEscapeHandler() {
+        for actionID in ["fruitBasket.pause.resume", "gameQA.pauseEscape"] {
+        for language in ["en", "ar"] {
+        for reduced in [false, true] {
+            let app = XCUIApplication()
+            app.launchArguments += ["-fruitfolioGameQA", "-fruitfolioGameQAScenario", "hud-classification",
+                "-fruitfolioGameQALanguage", language, "-fruitfolioGameQAPauseInference",
+                "-fruitfolioAudioDiagnostics", "-fruitfolioGameQAEscape",
+                "-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            if reduced { app.launchArguments += ["-fruitfolioGameReduceMotion", "-fruitfolioAudioMuted"] }
+            app.launch()
+            let pause = app.buttons["fruitBasket.gameplay.pause"]
+            XCTAssertTrue(pause.waitForExistence(timeout: 5))
+            let header = app.scrollViews["fruitBasket.gameplayHeader.scroll"]
+            for presentation in 1...2 {
+                for _ in 0..<16 { if pause.isHittable { break }; header.swipeDown() }
+                XCTAssertTrue(pause.isHittable)
+                pause.tap()
+                let menu = app.scrollViews["fruitBasket.pause.scroll"]
+                XCTAssertTrue(menu.waitForExistence(timeout: 3))
+                XCTAssertFalse(pause.exists)
+                XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "fruitBasket.pause.heading").firstMatch.exists)
+                let opened = app.staticTexts["audioQA.openRequests"]
+                let openOnce = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@",
+                    "popup open requests: \(presentation)"), object: opened)
+                XCTAssertEqual(XCTWaiter.wait(for: [openOnce], timeout: 3), .completed)
+                XCUIDevice.shared.press(.home)
+                app.activate()
+                XCTAssertTrue(menu.waitForExistence(timeout: 5))
+                XCTAssertEqual(opened.label, "popup open requests: \(presentation)")
+                XCTAssertEqual(app.staticTexts["audioQA.closeRequests"].label, "popup close requests: \(presentation - 1)")
+                let action = app.buttons[actionID]
+                for _ in 0..<24 { if action.isHittable { break }; menu.swipeUp() }
+                XCTAssertTrue(action.isHittable)
+                action.tap()
+                XCTAssertTrue(pause.waitForExistence(timeout: 3))
+                let closed = app.staticTexts["audioQA.closeRequests"]
+                let closeOnce = XCTNSPredicateExpectation(predicate: NSPredicate(format: "label == %@",
+                    "popup close requests: \(presentation)"), object: closed)
+                XCTAssertEqual(XCTWaiter.wait(for: [closeOnce], timeout: 3), .completed)
+            }
+            captureGame(app, name: "pause-action-\(actionID)-language-\(language)-reduced-\(reduced)")
+            app.terminate()
+        }
+        }
+        }
+    }
+
     func testGameplayHeaderReservesASeparateVisiblePlayfieldAtAccessibilitySize() {
         for scenario in ["hud-catch", "hud-classification"] {
         for language in ["en", "ar"] {

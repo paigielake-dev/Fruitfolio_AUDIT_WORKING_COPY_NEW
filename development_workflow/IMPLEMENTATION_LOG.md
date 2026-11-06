@@ -2136,3 +2136,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 732, "native_CPU_XCTest": 754, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 739, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 732, "focused_geometry_XCTest": 12, "Apple_UI_layout_launches_added_NOT_RUN": 16}.
 - Next action: Own logical pause-menu visibility open/close cues without counting storm pauses as menu presentations, preserve foreground focus and teardown ownership, and extend actual modal diagnostics and Apple regressions. Then proceed to remaining shared presentation requirements.
 - Commit: containing commit for batch Gameplay-measured-HUD-and-reserved-playfield.
+
+## Pause-menu-presentation-cue-and-focus-ownership
+
+- Parent checkpoint: 4a8f94ee2f6f718e012a52c88aafd98914245aa8.
+- Source-order requirements: [6, 11, 26, 27, 63, 443, 446, 447, 468, 471, 472, 473, 476, 477].
+- Source files: Fruitfolio/Fruit Basket/Prompt28FruitBasketView.swift.
+- Rendered pause menu owns idempotent open/close cue requests, separate from storm-induced model pauses; actual disappearance/root teardown close once. Background clears focus, foreground restores heading focus, canceled/inactive tasks cannot focus. Actual private overlay diagnostics follow menu scope. Eight Apple reopen/background/resume/shared-escape cue cases added but NOT_RUN; no assets, schemas, inference or physics changed.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift.
+- Verification: {"portable_XCTest": 732, "native_CPU_XCTest": 754, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "Apple_UI_typecheck": "NOT_RUN; Apple SDK unavailable", "official_MADLAD": "BLOCKED; see BLOCKERS.md", "native_T5_contract_methods": 16, "catalog_keys": 739, "nonempty_foreign_units": 0, "Foundation_shared_ownership_regressions": 11, "SwiftSyntax_sound_ownership_findings": 0, "catalog_existing_entries_preserved": 732, "Apple_UI_pause_launches_added_NOT_RUN": 8}.
+- Next action: Continue shared wrapping/semantic/localization coverage in actual classification gameplay: replace remaining interpolated progress text with fixed translated labels and immutable locale-formatted values; translate real prompt/fruit accessibility descriptions and use neutral decision labels in serious question context. Preserve catch/pass semantics and add Apple transition cases.
+- Commit: containing commit for batch Pause-menu-presentation-cue-and-focus-ownership.

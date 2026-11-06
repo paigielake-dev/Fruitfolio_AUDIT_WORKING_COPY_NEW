@@ -1,0 +1,9 @@
+# Pause menu cue and focus ownership
+
+The real rendered pause scroll view now owns an idempotent presentation state. Its task opens that state once; disappearance or root teardown closes it once. Cue requests follow those transitions, covering resume, navigation, geometry removal and root removal without assigning a popup cue merely because the model paused for the storm note. Canonical controls retain their own single interaction pop. Actual accepted AVAudioPlayer starts and physical audibility are distinct from request counts.
+
+Backgrounding clears pause heading focus and foreground return restores it while that presentation exists. A canceled or inactive task cannot request focus. Guarded resume and the accessibility escape callback retain the same actual game transition and return-focus path. Private diagnostic placement now follows the real pause visibility as well as tutorial/storm ownership; menu audio diagnostics reside within its modal scope.
+
+Eight new Apple UI launches cover resume/shared escape handler, English/Arabic, and paired normal-unmuted versus reduced-muted settings. Each opens twice, backgrounds each presentation, checks excluded background and exact cue request pairs. Existing storm cases check that storm pauses do not open a second menu. These tests are NOT_RUN without Apple SDK/runtime. The QA escape button invokes the same handler; it does not prove OS VoiceOver gesture dispatch. Geometry, SwiftUI lifecycle scheduling, actual focus, device audio and animations still require Apple verification.
+
+No new Foundation tests mirror this SwiftUI-only lifecycle. Available full portable/native/workflow checks and syntax results are recorded in the batch log; they cannot validate SwiftUI lifecycle behavior. No resources, artwork, inference pipeline, physics or persistent schemas change.

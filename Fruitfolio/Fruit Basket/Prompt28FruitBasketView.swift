@@ -65,6 +65,7 @@ struct Prompt28FruitBasketView: View {
     @AccessibilityFocusState private var stormHeadingFocused: Bool
     @AccessibilityFocusState private var pauseHeadingFocused: Bool
     @State private var gameplayHeaderContentHeight: CGFloat = 100
+    @State private var pauseMenuVisible = false
     private enum GameplayFocus: Hashable { case pause, classificationProgress }
     @AccessibilityFocusState private var gameplayFocus: GameplayFocus?
     @FocusState private var usernameKeyboardFocused: Bool
@@ -163,7 +164,7 @@ struct Prompt28FruitBasketView: View {
         .foregroundStyle(DesignTokens.ColorToken.primaryBurgundy)
         .navigationBarBackButtonHidden(true)
         #if DEBUG
-        .preference(key: Prompt28GameOverlayVisibilityKey.self, value: showTour || showStormNote)
+        .preference(key: Prompt28GameOverlayVisibilityKey.self, value: showTour || showStormNote || pauseMenuVisible)
         #endif
         .onAppear {
             rootIsVisible = true
@@ -178,6 +179,7 @@ struct Prompt28FruitBasketView: View {
         }
         .onDisappear {
             rootIsVisible = false
+            setPauseMenuVisible(false)
             returnExitFocus = false
             usernameExitSession?.cancel()
             questionOperationTask?.cancel()
@@ -224,9 +226,11 @@ struct Prompt28FruitBasketView: View {
             if newPhase != .active {
                 tourHeadingFocused = false
                 stormHeadingFocused = false
+                pauseHeadingFocused = false
                 viewModel.sceneBecameInactive()
             } else if showStormNote { stormHeadingFocused = true }
             else if showTour { tourHeadingFocused = true }
+            else if pauseMenuVisible { pauseHeadingFocused = true }
         }
         .sheet(isPresented: $showingSaveDestination) {
             if let pending = viewModel.savePendingContent() {
@@ -1240,10 +1244,14 @@ struct Prompt28FruitBasketView: View {
                         .accessibilityIdentifier("fruitBasket.pause.scroll")
                         .accessibilityAction(.escape) { resumeGameFromPause() }
                         .task {
-                            await Task.yield()
                             guard rootIsVisible, viewModel.screen == .paused, !showStormNote else { return }
+                            setPauseMenuVisible(true)
+                            await Task.yield()
+                            guard !Task.isCancelled, rootIsVisible, pauseMenuVisible, scenePhase == .active,
+                                  viewModel.screen == .paused, !showStormNote else { return }
                             pauseHeadingFocused = true
                         }
+                        .onDisappear { setPauseMenuVisible(false) }
                     }
                 }
                 .frame(width: available.width, height: available.height)
@@ -1275,6 +1283,14 @@ struct Prompt28FruitBasketView: View {
         .onChange(of: viewModel.session?.availableStarPasses ?? 0) { oldValue, newValue in
             if newValue > oldValue { audioManager.play(.starChime) }
         }
+    }
+
+    /// The rendered menu owns its cues; a storm-induced pause has no menu owner.
+    private func setPauseMenuVisible(_ visible: Bool) {
+        guard pauseMenuVisible != visible else { return }
+        pauseMenuVisible = visible
+        audioManager.play(visible ? .popupOpen : .popupClose)
+        if !visible { pauseHeadingFocused = false }
     }
 
     private func resumeGameFromPause() {
@@ -1514,6 +1530,7 @@ struct Prompt28FruitBasketView: View {
                     FruitfolioSemanticText(markdown: display, baseFont: Prompt28TextRole.sectionHeading.font, serious: true)
                         .accessibilityAddTraits(.isHeader)
                         .accessibilityFocused($pauseHeadingFocused)
+                        .accessibilityIdentifier("fruitBasket.pause.heading")
                 }
 
                 Prompt28WatercolorButton(
@@ -1523,6 +1540,18 @@ struct Prompt28FruitBasketView: View {
                     resumeGameFromPause()
                 }
                 .accessibilityIdentifier("fruitBasket.pause.resume")
+
+                #if DEBUG
+                if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQA") {
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioGameQAEscape") {
+                        FruitfolioControlPillButton(label: "QA accessibility escape", action: resumeGameFromPause)
+                            .controlSize(.small).accessibilityIdentifier("gameQA.pauseEscape")
+                    }
+                    if ProcessInfo.processInfo.arguments.contains("-fruitfolioAudioDiagnostics") {
+                        FruitfolioInteractionSoundDiagnostics()
+                    }
+                }
+                #endif
 
                 Prompt28WatercolorButton(
                     title: "change topic",
