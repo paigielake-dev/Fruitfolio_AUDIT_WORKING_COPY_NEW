@@ -1905,3 +1905,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 729, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 11, "actual_C_API_typecheck": "PASS; not Apple ABI/link", "before_budget_regression": "1 actual native test, 2 failures against 4a6f1c4 allocation behavior", "overbudget_current": "model-only state, one sampled load, no context/encoder/decoder; valid retry reuses model", "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; synthetic T5 metadata/execution contracts do not approve official model/language/clinical/device behavior"}.
 - Next action: Exercise concurrent real native translation and resource-release requests against the existing serialized actor; verify no partial output/resource use-after-free and successful final release/reload without claiming device/official-model performance.
 - Commit: containing commit for batch Lazy-native-T5-context-after-exact-token-validation.
+
+## Concurrent-real-native-T5-translation-release-and-reload
+
+- Parent checkpoint: 59e8b545770e5958c5dc53c52069358151cf7fb3.
+- Source-order requirements: [418, 419, 426, 427, 428, 443, 444, 466, 476, 477, 478].
+- Source files: Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift.
+- Actual native actor regression runs eight concurrent child tasks, each translating/releasing/translating with synthetic untrained T5. Sixteen complete fixed-token outputs, actual encode/decode/reload/thread counts and final release/reload pass. No scheduler/C replacements, no device stress/performance/leak/translation-quality claim.
+- Tests added/updated: FruitfolioTests/Prompt1BT5ExecutionContractTests.swift.
+- Verification: {"portable_XCTest": 712, "native_CPU_XCTest": 730, "SwiftTesting_each_suite": 21, "workflow_checks": 42, "Swift_syntax_files": 306, "native_T5_contract_methods": 12, "native_concurrent_child_tasks": 8, "complete_native_translations_in_concurrent_phase": 16, "Apple_UI_typecheck": "NOT_RUN", "official_MADLAD": "BLOCKED; untrained synthetic execution does not approve official model, linguistic/clinical or device behavior"}.
+- Next action: Replace game compact selector fixed-height/one-line shrinking text with existing canonical wrapping control while preserving selected artwork/traits and one cue owner; verify actual UI source scenarios without claiming Apple runtime.
+- Commit: containing commit for batch Concurrent-real-native-T5-translation-release-and-reload.

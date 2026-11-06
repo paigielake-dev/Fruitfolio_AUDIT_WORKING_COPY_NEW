@@ -1,10 +1,10 @@
 {
   "active_branch": "development/prompt-1b-complete",
-  "current_HEAD": "4a6f1c4bbc65783840e58da40547dd5b513be17a",
+  "current_HEAD": "59e8b545770e5958c5dc53c52069358151cf7fb3",
   "latest_verified_commit": null,
   "current_checklist_part": 9,
-  "current_requirement": 428,
-  "current_implementation_batch": "Lazy-native-T5-context-after-exact-token-validation",
+  "current_requirement": 18,
+  "current_implementation_batch": "Concurrent-real-native-T5-translation-release-and-reload",
   "completed_requirements": [],
   "remaining_requirements": [
     1,
@@ -493,13 +493,9 @@
     "Reduce Motion modal open/close"
   ],
   "uncommitted_changes": [
-    "Fruitfolio/Core/Translation/FruitfolioMADLADRuntime.swift",
     "FruitfolioTests/Prompt1BT5ExecutionContractTests.swift",
-    "development_workflow/MADLAD_LAZY_CONTEXT_VERIFICATION.md",
-    "development_workflow/MADLAD_NATIVE_THREAD_VERIFICATION.md",
-    "development_workflow/MADLAD_TOKENIZER_VARIANTS_VERIFICATION.md",
-    "development_workflow/MASTER_CHECKLIST.json",
-    "development_workflow/RUN_LOGS/T5-budget-context-before.json"
+    "development_workflow/MADLAD_CONCURRENT_RELEASE_VERIFICATION.md",
+    "development_workflow/MASTER_CHECKLIST.json"
   ],
   "known_blockers": [
     "Research quarantine, full-source expansion and clinical/citation review remain open; see BLOCKERS.md",
@@ -520,19 +516,18 @@
   ],
   "last_test_results": {
     "portable_XCTest": 712,
-    "native_CPU_XCTest": 729,
+    "native_CPU_XCTest": 730,
     "SwiftTesting_each_suite": 21,
     "workflow_checks": 42,
     "Swift_syntax_files": 306,
-    "native_T5_contract_methods": 11,
-    "actual_C_API_typecheck": "PASS; not Apple ABI/link",
-    "before_budget_regression": "1 actual native test, 2 failures against 4a6f1c4 allocation behavior",
-    "overbudget_current": "model-only state, one sampled load, no context/encoder/decoder; valid retry reuses model",
+    "native_T5_contract_methods": 12,
+    "native_concurrent_child_tasks": 8,
+    "complete_native_translations_in_concurrent_phase": 16,
     "Apple_UI_typecheck": "NOT_RUN",
-    "official_MADLAD": "BLOCKED; synthetic T5 metadata/execution contracts do not approve official model/language/clinical/device behavior"
+    "official_MADLAD": "BLOCKED; untrained synthetic execution does not approve official model, linguistic/clinical or device behavior"
   },
-  "next_exact_implementation_action": "Exercise concurrent real native translation and resource-release requests against the existing serialized actor; verify no partial output/resource use-after-free and successful final release/reload without claiming device/official-model performance.",
-  "updated_at": "2026-11-06T13:16:55.018403+00:00",
+  "next_exact_implementation_action": "Replace game compact selector fixed-height/one-line shrinking text with existing canonical wrapping control while preserving selected artwork/traits and one cue owner; verify actual UI source scenarios without claiming Apple runtime.",
+  "updated_at": "2026-11-06T13:22:23.847663+00:00",
   "blocker_register": "development_workflow/BLOCKERS.md",
   "open_source_work": [
     "Connect character/Tour dialogue raw English renderers to the shared selected-language pipeline with consistent action controls/feedback",

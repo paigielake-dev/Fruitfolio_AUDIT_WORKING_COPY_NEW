@@ -135,6 +135,43 @@ final class Prompt1BT5ExecutionContractTests: XCTestCase {
         await runtime.releaseResources()
     }
 
+    func testConcurrentNativeRequestsAndReleaseReuseRespectActorOwnership() async throws {
+        let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let runtime = FruitfolioMADLADRuntime(resourceDirectory: directory)
+        var completed = 0
+        try await withThrowingTaskGroup(of: [String].self) { group in
+            for index in 0..<8 {
+                group.addTask {
+                    let first = try await runtime.translate("fixture", targetTag: index.isMultiple(of: 2) ? "de" : "en")
+                    await runtime.releaseResources()
+                    let second = try await runtime.translate("fixture", targetTag: index.isMultiple(of: 2) ? "en" : "de")
+                    return [first, second]
+                }
+            }
+            for try await pair in group {
+                XCTAssertEqual(pair, ["fixture", "fixture"], "Synthetic token output only, not linguistic translation")
+                completed += pair.count
+            }
+        }
+        XCTAssertEqual(completed, 16)
+        let actual = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(actual.encoderCalls, 16)
+        XCTAssertEqual(actual.decoderCalls, 32)
+        XCTAssertGreaterThanOrEqual(actual.checkedBlockingCalls, 52)
+        XCTAssertEqual(actual.mainThreadBlockingCalls, 0)
+        await runtime.releaseResources()
+        let released = await runtime.debugExecutionStatistics()
+        XCTAssertFalse(released.modelLoaded); XCTAssertFalse(released.resourcesLoaded)
+        let final = try await runtime.translate("fixture", targetTag: "de")
+        XCTAssertEqual(final, "fixture")
+        let reloaded = await runtime.debugExecutionStatistics()
+        XCTAssertEqual(reloaded.encoderCalls, 17)
+        XCTAssertEqual(reloaded.decoderCalls, 34)
+        XCTAssertEqual(reloaded.checkedBlockingCalls, actual.checkedBlockingCalls + 5)
+        await runtime.releaseResources()
+    }
+
     @MainActor
     func testActualControlStateRejectsScientificLossAfterNativeOutput() async throws {
         let directory = try SyntheticT5Contract.write(gated: true, oneTokenThenEOS: true)
