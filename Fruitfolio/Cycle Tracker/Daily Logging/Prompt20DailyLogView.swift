@@ -162,7 +162,7 @@ public struct Prompt20DailyLogView: View {
     private var header: some View {
         HStack(alignment: .top, spacing: 12) {
             VStack(alignment: .leading, spacing: 6) {
-                Text("daily log")
+                FruitfolioFixedText(source: "daily log", font: Prompt20Type.title, serious: true)
                     .font(Prompt20Type.title)
                     .foregroundStyle(Prompt20Palette.burgundy)
                     .accessibilityAddTraits(.isHeader)
@@ -171,7 +171,7 @@ public struct Prompt20DailyLogView: View {
                     .font(Prompt20Type.date)
                     .foregroundStyle(Prompt20Palette.coral)
 
-                Text("notice something today? jot it down here ♡")
+                FruitfolioFixedText(source: "notice something today? jot it down here ♡", font: Prompt20Type.body, serious: true)
                     .font(Prompt20Type.body)
                     .foregroundStyle(Prompt20Palette.burgundy.opacity(0.68))
                     .padding(.top, 2)
@@ -199,7 +199,7 @@ public struct Prompt20DailyLogView: View {
                     .frame(width: 34, height: 34)
                     .accessibilityHidden(true)
 
-                Text("opening your day…")
+                FruitfolioFixedText(source: "opening your day…", font: Prompt20Type.body, serious: true)
                     .font(Prompt20Type.body)
                     .foregroundStyle(Prompt20Palette.burgundy.opacity(0.58))
             }
@@ -646,7 +646,7 @@ public struct Prompt20DailyLogView: View {
             .opacity(model.canSave ? 1 : 0.52)
 
             if showSavedMessage {
-                Text("saved to your day ♡")
+                FruitfolioFixedText(source: "saved to your day ♡", font: Prompt20Type.summary, serious: true)
                     .font(Prompt20Type.summary)
                     .foregroundStyle(Prompt20Palette.sage)
                     .transition(.opacity)
@@ -679,7 +679,7 @@ public struct Prompt20DailyLogView: View {
                 .frame(width: 76)
                 .accessibilityHidden(true)
 
-            Text("daily log")
+            FruitfolioFixedText(source: "daily log", font: Prompt20Type.title, serious: true)
                 .font(Prompt20Type.title)
                 .foregroundStyle(Prompt20Palette.burgundy)
 
@@ -754,13 +754,13 @@ public struct Prompt20DailyLogView: View {
     }
 
     private func prompt(_ text: String) -> some View {
-        Text(text)
+        FruitfolioFixedText(source: text, font: Prompt20Type.prompt, serious: true)
             .font(Prompt20Type.prompt)
             .foregroundStyle(Prompt20Palette.burgundy.opacity(0.80))
     }
 
     private func notePrompt(_ text: String) -> some View {
-        Text(text)
+        FruitfolioFixedText(source: text, font: Prompt20Type.micro, serious: true)
             .font(Prompt20Type.micro)
             .foregroundStyle(Prompt20Palette.burgundy.opacity(0.60))
     }
@@ -833,15 +833,16 @@ public struct Prompt20DailyLogView: View {
     ) -> some View {
         ZStack(alignment: .topLeading) {
             if text.wrappedValue.isEmpty {
-                Text(placeholder)
+                FruitfolioFixedText(source: placeholder, font: Prompt20Type.input, serious: true)
                     .font(Prompt20Type.input)
+                    .accessibilityHidden(true)
                     .foregroundStyle(Prompt20Palette.burgundy.opacity(0.34))
                     .padding(.horizontal, 13)
                     .padding(.vertical, 13)
                     .allowsHitTesting(false)
             }
 
-            TextEditor(text: text)
+            FruitfolioFixedTextEditor(placeholder, text: text)
                 .accessibilityIdentifier(identifier ?? placeholder)
                 .font(Prompt20Type.input)
                 .foregroundStyle(Prompt20Palette.burgundy)

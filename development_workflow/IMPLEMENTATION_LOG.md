@@ -2664,3 +2664,14 @@ Available verification:557 portable XCTest +21 Swift Testing and562 native-linke
 - Verification: {"workflow_checks": 60, "syntax_files": 311, "Apple_daily_exit_launches_extended_NOT_RUN": 12, "Foundation": "unchanged; last796/818 XCTest +21SwiftTesting each not rerun"}.
 - Next action: Continue actual journal fixed prompts/native editor labels via existing translation controls without sending private patient note values through translation or changing draft bindings.
 - Commit: containing commit for batch Daily-log-active-owner-and-cancelled-save-task-entry.
+
+## Daily-journal-fixed-prompts-and-native-editor-labels
+
+- Parent checkpoint: da73cfec186f1bcb3f68db769b5977de2ed73bfd.
+- Source-order requirements: [297, 300, 303, 433, 467, 476, 477, 478].
+- Source files: Fruitfolio/Cycle Tracker/Daily Logging/Prompt20DailyLogView.swift, Fruitfolio/Localizable.xcstrings.
+- Actual fixed prompt/notePrompt helpers and journal title/loading/saved feedback use shared semantic translation. Five existing native note editors use fixed-label wrapper with exact prior binding/placeholder/minHeight/identifier arguments; visible placeholder is AX-hidden to avoid duplicate label. Patient strings never translation source. Eleven English additions preserve924 prior entries,935 total. Source receipt hashes five exact unchanged argument blocks; no repository/model/assets changes.
+- Tests added/updated: FruitfolioUITests/Prompt1BModalAccessibilityTests.swift (existing12-launch dirty-note exit matrix; NOT_RUN).
+- Verification: {"workflow_checks": 60, "syntax_files": 311, "English_catalog_keys": 935, "preserved_entries": 924, "new_English_entries": 11, "native_editor_call_sites_preserved": 5, "Apple_dirty_note_matrix": "12existing launches NOT_RUN", "Foundation": "unchanged; prior796/818 XCTest +21SwiftTesting each not rerun"}.
+- Next action: Continue original context-appropriate explanatory limitations and semantic warnings in logging/educational source paths; preserve raw patient observations and unitless educational versus measured-data separation.
+- Commit: containing commit for batch Daily-journal-fixed-prompts-and-native-editor-labels.
